@@ -266,6 +266,9 @@ namespace ReloadersWorkShop.Ballistics
 
 		private void Calculate()
 			{
+			if (BallisticCoefficient <= 0.0)
+				return;
+
 			//----------------------------------------------------------------------------*
 			// Calculate gravity and velocities
 			//----------------------------------------------------------------------------*
@@ -285,7 +288,7 @@ namespace ReloadersWorkShop.Ballistics
 
 			double dBC = AtmosphericBCCorrection;
 
-			m_dRemainingVelocity = Math.Pow(Math.Sqrt(MuzzleVelocity) - 0.00863 * m_dRange / dBC, 2.0);
+			m_dRemainingVelocity = Math.Pow(Math.Sqrt(MuzzleVelocity) - 0.00863 * m_dRange / (dBC != 0.0 ? dBC : 1.0), 2.0);
 
 			//----------------------------------------------------------------------------*
 			// Calculate time of flight
@@ -389,7 +392,7 @@ namespace ReloadersWorkShop.Ballistics
 
 			double dBC = AtmosphericBCCorrection;
 
-			m_dRemainingVelocity = Math.Pow(Math.Sqrt((double) MuzzleVelocity) - 0.00863 * m_dZeroRange / dBC, 2);
+			m_dRemainingVelocity = Math.Pow(Math.Sqrt((double) MuzzleVelocity) - 0.00863 * m_dZeroRange / (dBC != 0.0 ? dBC : 1.0), 2);
 
 			m_dDK = 2.878 / (dBC * Math.Sqrt((double) MuzzleVelocity));
 

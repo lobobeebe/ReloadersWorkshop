@@ -57,18 +57,12 @@
 			this.BatchTestOKButton = new System.Windows.Forms.Button();
 			this.BatchTestCancelButton = new System.Windows.Forms.Button();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.BadDateLabel = new System.Windows.Forms.Label();
-			this.TestDatePicker = new CommonLib.Controls.cDateTimePicker();
-			this.LocationTextBox = new CommonLib.Controls.cTextBox();
 			this.BestGroupTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			this.BestGroupRangeTextBox = new CommonLib.Controls.cIntegerValueTextBox();
 			this.NumShotsTextBox = new CommonLib.Controls.cIntegerValueTextBox();
 			this.RejectLoadRadioButton = new System.Windows.Forms.RadioButton();
 			this.NotesTextBox = new System.Windows.Forms.TextBox();
 			this.FavoriteLoadRadioButton = new System.Windows.Forms.RadioButton();
-			this.TwistLabel = new System.Windows.Forms.Label();
-			this.BarrelLengthLabel = new System.Windows.Forms.Label();
-			this.FirearmCombo = new System.Windows.Forms.ComboBox();
 			this.EditShotsButton = new System.Windows.Forms.Button();
 			this.ShotListView = new System.Windows.Forms.ListView();
 			this.ShotHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -76,8 +70,27 @@
 			this.PressureHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.MFHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.SQHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.BadDateLabel = new System.Windows.Forms.Label();
+			this.TestDatePicker = new CommonLib.Controls.cDateTimePicker();
+			this.LocationTextBox = new CommonLib.Controls.cTextBox();
+			this.TwistLabel = new System.Windows.Forms.Label();
+			this.BarrelLengthLabel = new System.Windows.Forms.Label();
+			this.FirearmCombo = new System.Windows.Forms.ComboBox();
 			this.BatchTestDeleteButton = new System.Windows.Forms.Button();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.label27 = new System.Windows.Forms.Label();
+			this.CrosswindLabel = new System.Windows.Forms.Label();
+			this.label13 = new System.Windows.Forms.Label();
+			this.HeadwindLabel = new System.Windows.Forms.Label();
+			this.WindSpeedMeasurementLabel = new System.Windows.Forms.Label();
+			this.label23 = new System.Windows.Forms.Label();
+			this.WindSpeedTextBox = new CommonLib.Controls.cIntegerValueTextBox();
+			this.label24 = new System.Windows.Forms.Label();
+			this.WindDirectionTextBox = new CommonLib.Controls.cIntegerValueTextBox();
+			this.label26 = new System.Windows.Forms.Label();
+			this.SuppressedCheckBox = new System.Windows.Forms.CheckBox();
+			this.label21 = new System.Windows.Forms.Label();
+			this.label20 = new System.Windows.Forms.Label();
 			this.StationPressureLabel = new System.Windows.Forms.Label();
 			this.TemperatureMeasurementLabel = new System.Windows.Forms.Label();
 			this.label14 = new System.Windows.Forms.Label();
@@ -92,19 +105,8 @@
 			this.label25 = new System.Windows.Forms.Label();
 			this.label19 = new System.Windows.Forms.Label();
 			this.PressureTextBox = new CommonLib.Controls.cDoubleValueTextBox();
-			this.label20 = new System.Windows.Forms.Label();
-			this.label21 = new System.Windows.Forms.Label();
-			this.SuppressedCheckBox = new System.Windows.Forms.CheckBox();
-			this.WindSpeedMeasurementLabel = new System.Windows.Forms.Label();
-			this.label23 = new System.Windows.Forms.Label();
-			this.WindSpeedTextBox = new CommonLib.Controls.cIntegerValueTextBox();
-			this.label24 = new System.Windows.Forms.Label();
-			this.WindDirectionTextBox = new CommonLib.Controls.cIntegerValueTextBox();
-			this.label26 = new System.Windows.Forms.Label();
-			this.label13 = new System.Windows.Forms.Label();
-			this.HeadwindLabel = new System.Windows.Forms.Label();
-			this.label27 = new System.Windows.Forms.Label();
-			this.CrosswindLabel = new System.Windows.Forms.Label();
+			this.label28 = new System.Windows.Forms.Label();
+			this.TargetCalculatorButton = new System.Windows.Forms.Button();
 			label1 = new System.Windows.Forms.Label();
 			label2 = new System.Windows.Forms.Label();
 			label16 = new System.Windows.Forms.Label();
@@ -326,16 +328,16 @@
 			this.BestGroupDistanceLabel.Location = new System.Drawing.Point(140, 50);
 			this.BestGroupDistanceLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.BestGroupDistanceLabel.Name = "BestGroupDistanceLabel";
-			this.BestGroupDistanceLabel.Size = new System.Drawing.Size(30, 13);
+			this.BestGroupDistanceLabel.Size = new System.Drawing.Size(18, 13);
 			this.BestGroupDistanceLabel.TabIndex = 20;
-			this.BestGroupDistanceLabel.Text = "in. at";
+			this.BestGroupDistanceLabel.Text = "in.";
 			// 
 			// BestGroupRangeDistanceLabel
 			// 
 			this.BestGroupRangeDistanceLabel.AutoSize = true;
 			this.BestGroupRangeDistanceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BestGroupRangeDistanceLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.BestGroupRangeDistanceLabel.Location = new System.Drawing.Point(222, 50);
+			this.BestGroupRangeDistanceLabel.Location = new System.Drawing.Point(222, 25);
 			this.BestGroupRangeDistanceLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.BestGroupRangeDistanceLabel.Name = "BestGroupRangeDistanceLabel";
 			this.BestGroupRangeDistanceLabel.Size = new System.Drawing.Size(32, 13);
@@ -478,6 +480,8 @@
 			// 
 			// groupBox2
 			// 
+			this.groupBox2.Controls.Add(this.TargetCalculatorButton);
+			this.groupBox2.Controls.Add(this.label28);
 			this.groupBox2.Controls.Add(this.BestGroupTextBox);
 			this.groupBox2.Controls.Add(this.BestGroupRangeTextBox);
 			this.groupBox2.Controls.Add(this.NumShotsTextBox);
@@ -502,41 +506,6 @@
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Test Data";
 			// 
-			// BadDateLabel
-			// 
-			this.BadDateLabel.AutoSize = true;
-			this.BadDateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BadDateLabel.ForeColor = System.Drawing.Color.Red;
-			this.BadDateLabel.Location = new System.Drawing.Point(157, 25);
-			this.BadDateLabel.Name = "BadDateLabel";
-			this.BadDateLabel.Size = new System.Drawing.Size(49, 13);
-			this.BadDateLabel.TabIndex = 30;
-			this.BadDateLabel.Text = "Invalid!";
-			// 
-			// TestDatePicker
-			// 
-			this.TestDatePicker.BackColor = System.Drawing.SystemColors.Window;
-			this.TestDatePicker.DateBackColor = System.Drawing.SystemColors.Window;
-			this.TestDatePicker.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.TestDatePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-			this.TestDatePicker.Location = new System.Drawing.Point(66, 22);
-			this.TestDatePicker.Name = "TestDatePicker";
-			this.TestDatePicker.Size = new System.Drawing.Size(85, 20);
-			this.TestDatePicker.TabIndex = 0;
-			// 
-			// LocationTextBox
-			// 
-			this.LocationTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.LocationTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.LocationTextBox.Location = new System.Drawing.Point(66, 47);
-			this.LocationTextBox.MaxLength = 60;
-			this.LocationTextBox.Name = "LocationTextBox";
-			this.LocationTextBox.Required = false;
-			this.LocationTextBox.Size = new System.Drawing.Size(166, 20);
-			this.LocationTextBox.TabIndex = 2;
-			this.LocationTextBox.ToolTip = "";
-			this.LocationTextBox.Value = "";
-			// 
 			// BestGroupTextBox
 			// 
 			this.BestGroupTextBox.BackColor = System.Drawing.SystemColors.Window;
@@ -548,7 +517,7 @@
 			this.BestGroupTextBox.Name = "BestGroupTextBox";
 			this.BestGroupTextBox.NumDecimals = 3;
 			this.BestGroupTextBox.Size = new System.Drawing.Size(42, 20);
-			this.BestGroupTextBox.TabIndex = 1;
+			this.BestGroupTextBox.TabIndex = 2;
 			this.BestGroupTextBox.Text = "0.000";
 			this.BestGroupTextBox.ToolTip = "";
 			this.BestGroupTextBox.Value = 0D;
@@ -558,14 +527,14 @@
 			// 
 			this.BestGroupRangeTextBox.BackColor = System.Drawing.Color.LightPink;
 			this.BestGroupRangeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BestGroupRangeTextBox.Location = new System.Drawing.Point(175, 47);
+			this.BestGroupRangeTextBox.Location = new System.Drawing.Point(175, 22);
 			this.BestGroupRangeTextBox.MaxLength = 4;
 			this.BestGroupRangeTextBox.MaxValue = 5000;
 			this.BestGroupRangeTextBox.MinValue = 5;
 			this.BestGroupRangeTextBox.Name = "BestGroupRangeTextBox";
 			this.BestGroupRangeTextBox.Required = false;
 			this.BestGroupRangeTextBox.Size = new System.Drawing.Size(42, 20);
-			this.BestGroupRangeTextBox.TabIndex = 2;
+			this.BestGroupRangeTextBox.TabIndex = 1;
 			this.BestGroupRangeTextBox.Text = "0";
 			this.BestGroupRangeTextBox.ToolTip = "";
 			this.BestGroupRangeTextBox.Value = 0;
@@ -597,7 +566,7 @@
 			this.RejectLoadRadioButton.Margin = new System.Windows.Forms.Padding(2);
 			this.RejectLoadRadioButton.Name = "RejectLoadRadioButton";
 			this.RejectLoadRadioButton.Size = new System.Drawing.Size(59, 17);
-			this.RejectLoadRadioButton.TabIndex = 4;
+			this.RejectLoadRadioButton.TabIndex = 5;
 			this.RejectLoadRadioButton.TabStop = true;
 			this.RejectLoadRadioButton.Text = "Reject:";
 			this.RejectLoadRadioButton.UseVisualStyleBackColor = true;
@@ -611,7 +580,7 @@
 			this.NotesTextBox.Multiline = true;
 			this.NotesTextBox.Name = "NotesTextBox";
 			this.NotesTextBox.Size = new System.Drawing.Size(250, 117);
-			this.NotesTextBox.TabIndex = 5;
+			this.NotesTextBox.TabIndex = 6;
 			// 
 			// FavoriteLoadRadioButton
 			// 
@@ -624,43 +593,10 @@
 			this.FavoriteLoadRadioButton.Margin = new System.Windows.Forms.Padding(2);
 			this.FavoriteLoadRadioButton.Name = "FavoriteLoadRadioButton";
 			this.FavoriteLoadRadioButton.Size = new System.Drawing.Size(93, 17);
-			this.FavoriteLoadRadioButton.TabIndex = 3;
+			this.FavoriteLoadRadioButton.TabIndex = 4;
 			this.FavoriteLoadRadioButton.TabStop = true;
 			this.FavoriteLoadRadioButton.Text = "Favorite Load:";
 			this.FavoriteLoadRadioButton.UseVisualStyleBackColor = true;
-			// 
-			// TwistLabel
-			// 
-			this.TwistLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.TwistLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.TwistLabel.Location = new System.Drawing.Point(437, 50);
-			this.TwistLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.TwistLabel.Name = "TwistLabel";
-			this.TwistLabel.Size = new System.Drawing.Size(93, 14);
-			this.TwistLabel.TabIndex = 4;
-			this.TwistLabel.Text = "16";
-			// 
-			// BarrelLengthLabel
-			// 
-			this.BarrelLengthLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BarrelLengthLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.BarrelLengthLabel.Location = new System.Drawing.Point(320, 50);
-			this.BarrelLengthLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.BarrelLengthLabel.Name = "BarrelLengthLabel";
-			this.BarrelLengthLabel.Size = new System.Drawing.Size(69, 14);
-			this.BarrelLengthLabel.TabIndex = 3;
-			this.BarrelLengthLabel.Text = "5";
-			// 
-			// FirearmCombo
-			// 
-			this.FirearmCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.FirearmCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.FirearmCombo.FormattingEnabled = true;
-			this.FirearmCombo.Location = new System.Drawing.Point(297, 22);
-			this.FirearmCombo.Margin = new System.Windows.Forms.Padding(2);
-			this.FirearmCombo.Name = "FirearmCombo";
-			this.FirearmCombo.Size = new System.Drawing.Size(337, 21);
-			this.FirearmCombo.TabIndex = 1;
 			// 
 			// EditShotsButton
 			// 
@@ -718,6 +654,74 @@
 			this.SQHeader.Text = "SQ";
 			this.SQHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.SQHeader.Width = 40;
+			// 
+			// BadDateLabel
+			// 
+			this.BadDateLabel.AutoSize = true;
+			this.BadDateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BadDateLabel.ForeColor = System.Drawing.Color.Red;
+			this.BadDateLabel.Location = new System.Drawing.Point(157, 25);
+			this.BadDateLabel.Name = "BadDateLabel";
+			this.BadDateLabel.Size = new System.Drawing.Size(49, 13);
+			this.BadDateLabel.TabIndex = 30;
+			this.BadDateLabel.Text = "Invalid!";
+			// 
+			// TestDatePicker
+			// 
+			this.TestDatePicker.BackColor = System.Drawing.SystemColors.Window;
+			this.TestDatePicker.DateBackColor = System.Drawing.SystemColors.Window;
+			this.TestDatePicker.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TestDatePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+			this.TestDatePicker.Location = new System.Drawing.Point(66, 22);
+			this.TestDatePicker.Name = "TestDatePicker";
+			this.TestDatePicker.Size = new System.Drawing.Size(85, 20);
+			this.TestDatePicker.TabIndex = 0;
+			// 
+			// LocationTextBox
+			// 
+			this.LocationTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.LocationTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.LocationTextBox.Location = new System.Drawing.Point(66, 47);
+			this.LocationTextBox.MaxLength = 60;
+			this.LocationTextBox.Name = "LocationTextBox";
+			this.LocationTextBox.Required = false;
+			this.LocationTextBox.Size = new System.Drawing.Size(166, 20);
+			this.LocationTextBox.TabIndex = 2;
+			this.LocationTextBox.ToolTip = "";
+			this.LocationTextBox.Value = "";
+			// 
+			// TwistLabel
+			// 
+			this.TwistLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TwistLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.TwistLabel.Location = new System.Drawing.Point(437, 50);
+			this.TwistLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.TwistLabel.Name = "TwistLabel";
+			this.TwistLabel.Size = new System.Drawing.Size(93, 14);
+			this.TwistLabel.TabIndex = 4;
+			this.TwistLabel.Text = "16";
+			// 
+			// BarrelLengthLabel
+			// 
+			this.BarrelLengthLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BarrelLengthLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.BarrelLengthLabel.Location = new System.Drawing.Point(320, 50);
+			this.BarrelLengthLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.BarrelLengthLabel.Name = "BarrelLengthLabel";
+			this.BarrelLengthLabel.Size = new System.Drawing.Size(69, 14);
+			this.BarrelLengthLabel.TabIndex = 3;
+			this.BarrelLengthLabel.Text = "5";
+			// 
+			// FirearmCombo
+			// 
+			this.FirearmCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.FirearmCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmCombo.FormattingEnabled = true;
+			this.FirearmCombo.Location = new System.Drawing.Point(297, 22);
+			this.FirearmCombo.Margin = new System.Windows.Forms.Padding(2);
+			this.FirearmCombo.Name = "FirearmCombo";
+			this.FirearmCombo.Size = new System.Drawing.Size(337, 21);
+			this.FirearmCombo.TabIndex = 1;
 			// 
 			// BatchTestDeleteButton
 			// 
@@ -778,6 +782,171 @@
 			this.groupBox1.TabIndex = 1;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Test Environment";
+			// 
+			// label27
+			// 
+			this.label27.AutoSize = true;
+			this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label27.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label27.Location = new System.Drawing.Point(494, 74);
+			this.label27.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.label27.Name = "label27";
+			this.label27.Size = new System.Drawing.Size(58, 13);
+			this.label27.TabIndex = 95;
+			this.label27.Text = "Crosswind:";
+			// 
+			// CrosswindLabel
+			// 
+			this.CrosswindLabel.AutoSize = true;
+			this.CrosswindLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.CrosswindLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.CrosswindLabel.Location = new System.Drawing.Point(556, 75);
+			this.CrosswindLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.CrosswindLabel.Name = "CrosswindLabel";
+			this.CrosswindLabel.Size = new System.Drawing.Size(52, 13);
+			this.CrosswindLabel.TabIndex = 94;
+			this.CrosswindLabel.Text = "10 MPH";
+			// 
+			// label13
+			// 
+			this.label13.AutoSize = true;
+			this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label13.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label13.Location = new System.Drawing.Point(350, 75);
+			this.label13.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.label13.Name = "label13";
+			this.label13.Size = new System.Drawing.Size(58, 13);
+			this.label13.TabIndex = 93;
+			this.label13.Text = "Headwind:";
+			// 
+			// HeadwindLabel
+			// 
+			this.HeadwindLabel.AutoSize = true;
+			this.HeadwindLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.HeadwindLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.HeadwindLabel.Location = new System.Drawing.Point(412, 75);
+			this.HeadwindLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.HeadwindLabel.Name = "HeadwindLabel";
+			this.HeadwindLabel.Size = new System.Drawing.Size(52, 13);
+			this.HeadwindLabel.TabIndex = 92;
+			this.HeadwindLabel.Text = "10 MPH";
+			// 
+			// WindSpeedMeasurementLabel
+			// 
+			this.WindSpeedMeasurementLabel.AutoSize = true;
+			this.WindSpeedMeasurementLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.WindSpeedMeasurementLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.WindSpeedMeasurementLabel.Location = new System.Drawing.Point(122, 75);
+			this.WindSpeedMeasurementLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.WindSpeedMeasurementLabel.Name = "WindSpeedMeasurementLabel";
+			this.WindSpeedMeasurementLabel.Size = new System.Drawing.Size(31, 13);
+			this.WindSpeedMeasurementLabel.TabIndex = 91;
+			this.WindSpeedMeasurementLabel.Text = "MPH";
+			// 
+			// label23
+			// 
+			this.label23.AutoSize = true;
+			this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label23.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label23.Location = new System.Drawing.Point(179, 75);
+			this.label23.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.label23.Name = "label23";
+			this.label23.Size = new System.Drawing.Size(80, 13);
+			this.label23.TabIndex = 90;
+			this.label23.Text = "Wind Direction:";
+			// 
+			// WindSpeedTextBox
+			// 
+			this.WindSpeedTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.WindSpeedTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.WindSpeedTextBox.Location = new System.Drawing.Point(79, 71);
+			this.WindSpeedTextBox.MaxLength = 3;
+			this.WindSpeedTextBox.MaxValue = 120;
+			this.WindSpeedTextBox.MinValue = 0;
+			this.WindSpeedTextBox.Name = "WindSpeedTextBox";
+			this.WindSpeedTextBox.Required = false;
+			this.WindSpeedTextBox.Size = new System.Drawing.Size(38, 20);
+			this.WindSpeedTextBox.TabIndex = 4;
+			this.WindSpeedTextBox.Text = "0";
+			this.WindSpeedTextBox.ToolTip = "";
+			this.WindSpeedTextBox.Value = 0;
+			// 
+			// label24
+			// 
+			this.label24.AutoSize = true;
+			this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label24.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label24.Location = new System.Drawing.Point(5, 75);
+			this.label24.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.label24.Name = "label24";
+			this.label24.Size = new System.Drawing.Size(69, 13);
+			this.label24.TabIndex = 88;
+			this.label24.Text = "Wind Speed:";
+			// 
+			// WindDirectionTextBox
+			// 
+			this.WindDirectionTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.WindDirectionTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.WindDirectionTextBox.Location = new System.Drawing.Point(264, 72);
+			this.WindDirectionTextBox.MaxLength = 5;
+			this.WindDirectionTextBox.MaxValue = 15000;
+			this.WindDirectionTextBox.MinValue = 0;
+			this.WindDirectionTextBox.Name = "WindDirectionTextBox";
+			this.WindDirectionTextBox.Required = false;
+			this.WindDirectionTextBox.Size = new System.Drawing.Size(38, 20);
+			this.WindDirectionTextBox.TabIndex = 5;
+			this.WindDirectionTextBox.Text = "0";
+			this.WindDirectionTextBox.ToolTip = "";
+			this.WindDirectionTextBox.Value = 0;
+			// 
+			// label26
+			// 
+			this.label26.AutoSize = true;
+			this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label26.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label26.Location = new System.Drawing.Point(307, 75);
+			this.label26.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.label26.Name = "label26";
+			this.label26.Size = new System.Drawing.Size(25, 13);
+			this.label26.TabIndex = 89;
+			this.label26.Text = "deg";
+			// 
+			// SuppressedCheckBox
+			// 
+			this.SuppressedCheckBox.AutoCheck = false;
+			this.SuppressedCheckBox.AutoSize = true;
+			this.SuppressedCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.SuppressedCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.SuppressedCheckBox.Location = new System.Drawing.Point(545, 50);
+			this.SuppressedCheckBox.Name = "SuppressedCheckBox";
+			this.SuppressedCheckBox.Size = new System.Drawing.Size(82, 17);
+			this.SuppressedCheckBox.TabIndex = 3;
+			this.SuppressedCheckBox.Text = "Suppressed";
+			this.SuppressedCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// label21
+			// 
+			this.label21.AutoSize = true;
+			this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label21.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label21.Location = new System.Drawing.Point(134, 125);
+			this.label21.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.label21.Name = "label21";
+			this.label21.Size = new System.Drawing.Size(83, 13);
+			this.label21.TabIndex = 84;
+			this.label21.Text = "Density Altitude:";
+			// 
+			// label20
+			// 
+			this.label20.AutoSize = true;
+			this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label20.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label20.Location = new System.Drawing.Point(323, 125);
+			this.label20.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.label20.Name = "label20";
+			this.label20.Size = new System.Drawing.Size(87, 13);
+			this.label20.TabIndex = 83;
+			this.label20.Text = "Station Pressure:";
 			// 
 			// StationPressureLabel
 			// 
@@ -964,170 +1133,29 @@
 			this.PressureTextBox.Value = 0D;
 			this.PressureTextBox.ZeroAllowed = true;
 			// 
-			// label20
+			// label28
 			// 
-			this.label20.AutoSize = true;
-			this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label20.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label20.Location = new System.Drawing.Point(323, 125);
-			this.label20.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.label20.Name = "label20";
-			this.label20.Size = new System.Drawing.Size(87, 13);
-			this.label20.TabIndex = 83;
-			this.label20.Text = "Station Pressure:";
+			this.label28.AutoSize = true;
+			this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label28.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label28.Location = new System.Drawing.Point(142, 25);
+			this.label28.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.label28.Name = "label28";
+			this.label28.Size = new System.Drawing.Size(16, 13);
+			this.label28.TabIndex = 26;
+			this.label28.Text = "at";
 			// 
-			// label21
+			// TargetCalculatorButton
 			// 
-			this.label21.AutoSize = true;
-			this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label21.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label21.Location = new System.Drawing.Point(134, 125);
-			this.label21.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.label21.Name = "label21";
-			this.label21.Size = new System.Drawing.Size(83, 13);
-			this.label21.TabIndex = 84;
-			this.label21.Text = "Density Altitude:";
-			// 
-			// SuppressedCheckBox
-			// 
-			this.SuppressedCheckBox.AutoCheck = false;
-			this.SuppressedCheckBox.AutoSize = true;
-			this.SuppressedCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.SuppressedCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.SuppressedCheckBox.Location = new System.Drawing.Point(545, 50);
-			this.SuppressedCheckBox.Name = "SuppressedCheckBox";
-			this.SuppressedCheckBox.Size = new System.Drawing.Size(82, 17);
-			this.SuppressedCheckBox.TabIndex = 3;
-			this.SuppressedCheckBox.Text = "Suppressed";
-			this.SuppressedCheckBox.UseVisualStyleBackColor = true;
-			// 
-			// WindSpeedMeasurementLabel
-			// 
-			this.WindSpeedMeasurementLabel.AutoSize = true;
-			this.WindSpeedMeasurementLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.WindSpeedMeasurementLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.WindSpeedMeasurementLabel.Location = new System.Drawing.Point(122, 75);
-			this.WindSpeedMeasurementLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.WindSpeedMeasurementLabel.Name = "WindSpeedMeasurementLabel";
-			this.WindSpeedMeasurementLabel.Size = new System.Drawing.Size(31, 13);
-			this.WindSpeedMeasurementLabel.TabIndex = 91;
-			this.WindSpeedMeasurementLabel.Text = "MPH";
-			// 
-			// label23
-			// 
-			this.label23.AutoSize = true;
-			this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label23.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label23.Location = new System.Drawing.Point(179, 75);
-			this.label23.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.label23.Name = "label23";
-			this.label23.Size = new System.Drawing.Size(80, 13);
-			this.label23.TabIndex = 90;
-			this.label23.Text = "Wind Direction:";
-			// 
-			// WindSpeedTextBox
-			// 
-			this.WindSpeedTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.WindSpeedTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.WindSpeedTextBox.Location = new System.Drawing.Point(79, 71);
-			this.WindSpeedTextBox.MaxLength = 3;
-			this.WindSpeedTextBox.MaxValue = 120;
-			this.WindSpeedTextBox.MinValue = 0;
-			this.WindSpeedTextBox.Name = "WindSpeedTextBox";
-			this.WindSpeedTextBox.Required = false;
-			this.WindSpeedTextBox.Size = new System.Drawing.Size(38, 20);
-			this.WindSpeedTextBox.TabIndex = 4;
-			this.WindSpeedTextBox.Text = "0";
-			this.WindSpeedTextBox.ToolTip = "";
-			this.WindSpeedTextBox.Value = 0;
-			// 
-			// label24
-			// 
-			this.label24.AutoSize = true;
-			this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label24.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label24.Location = new System.Drawing.Point(5, 75);
-			this.label24.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.label24.Name = "label24";
-			this.label24.Size = new System.Drawing.Size(69, 13);
-			this.label24.TabIndex = 88;
-			this.label24.Text = "Wind Speed:";
-			// 
-			// WindDirectionTextBox
-			// 
-			this.WindDirectionTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.WindDirectionTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.WindDirectionTextBox.Location = new System.Drawing.Point(264, 72);
-			this.WindDirectionTextBox.MaxLength = 5;
-			this.WindDirectionTextBox.MaxValue = 15000;
-			this.WindDirectionTextBox.MinValue = 0;
-			this.WindDirectionTextBox.Name = "WindDirectionTextBox";
-			this.WindDirectionTextBox.Required = false;
-			this.WindDirectionTextBox.Size = new System.Drawing.Size(38, 20);
-			this.WindDirectionTextBox.TabIndex = 5;
-			this.WindDirectionTextBox.Text = "0";
-			this.WindDirectionTextBox.ToolTip = "";
-			this.WindDirectionTextBox.Value = 0;
-			// 
-			// label26
-			// 
-			this.label26.AutoSize = true;
-			this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label26.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label26.Location = new System.Drawing.Point(307, 75);
-			this.label26.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.label26.Name = "label26";
-			this.label26.Size = new System.Drawing.Size(25, 13);
-			this.label26.TabIndex = 89;
-			this.label26.Text = "deg";
-			// 
-			// label13
-			// 
-			this.label13.AutoSize = true;
-			this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label13.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label13.Location = new System.Drawing.Point(350, 75);
-			this.label13.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.label13.Name = "label13";
-			this.label13.Size = new System.Drawing.Size(58, 13);
-			this.label13.TabIndex = 93;
-			this.label13.Text = "Headwind:";
-			// 
-			// HeadwindLabel
-			// 
-			this.HeadwindLabel.AutoSize = true;
-			this.HeadwindLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.HeadwindLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.HeadwindLabel.Location = new System.Drawing.Point(412, 75);
-			this.HeadwindLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.HeadwindLabel.Name = "HeadwindLabel";
-			this.HeadwindLabel.Size = new System.Drawing.Size(52, 13);
-			this.HeadwindLabel.TabIndex = 92;
-			this.HeadwindLabel.Text = "10 MPH";
-			// 
-			// label27
-			// 
-			this.label27.AutoSize = true;
-			this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label27.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label27.Location = new System.Drawing.Point(494, 74);
-			this.label27.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.label27.Name = "label27";
-			this.label27.Size = new System.Drawing.Size(58, 13);
-			this.label27.TabIndex = 95;
-			this.label27.Text = "Crosswind:";
-			// 
-			// CrosswindLabel
-			// 
-			this.CrosswindLabel.AutoSize = true;
-			this.CrosswindLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.CrosswindLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.CrosswindLabel.Location = new System.Drawing.Point(556, 75);
-			this.CrosswindLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.CrosswindLabel.Name = "CrosswindLabel";
-			this.CrosswindLabel.Size = new System.Drawing.Size(52, 13);
-			this.CrosswindLabel.TabIndex = 94;
-			this.CrosswindLabel.Text = "10 MPH";
+			this.TargetCalculatorButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TargetCalculatorButton.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.TargetCalculatorButton.Location = new System.Drawing.Point(174, 47);
+			this.TargetCalculatorButton.Margin = new System.Windows.Forms.Padding(2);
+			this.TargetCalculatorButton.Name = "TargetCalculatorButton";
+			this.TargetCalculatorButton.Size = new System.Drawing.Size(89, 45);
+			this.TargetCalculatorButton.TabIndex = 3;
+			this.TargetCalculatorButton.Text = "Target Calculator";
+			this.TargetCalculatorButton.UseVisualStyleBackColor = true;
 			// 
 			// cBatchTestForm
 			// 
@@ -1135,7 +1163,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.BatchTestCancelButton;
-			this.ClientSize = new System.Drawing.Size(670, 603);
+			this.ClientSize = new System.Drawing.Size(666, 599);
 			this.ControlBox = false;
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.BatchTestDeleteButton);
@@ -1225,5 +1253,7 @@
 		private System.Windows.Forms.Label label24;
 		private CommonLib.Controls.cIntegerValueTextBox WindDirectionTextBox;
 		private System.Windows.Forms.Label label26;
+		private System.Windows.Forms.Button TargetCalculatorButton;
+		private System.Windows.Forms.Label label28;
 		}
 	}
