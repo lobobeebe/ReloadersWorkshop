@@ -195,7 +195,8 @@ namespace ReloadersWorkShop
 			ToolsSAAMIUnsafeArmsAmmoMenuItem.Click += OnToolsSAAMIUnsafeArmsAmmoClicked;
 
 			ToolsStabilityCalculatorMenuItem.Click += OnToolsStabilityCalculatorClicked;
-			//			ToolsStabilityCalculatorMenuItem.Visible = false;
+			ToolsTargetCalculatorMenuItem.Click += OnToolsTargetCalculatorClicked;
+
 
 			// Help Menu
 
@@ -1874,6 +1875,17 @@ namespace ReloadersWorkShop
 			cStabilityForm StabilityForm = new cStabilityForm(m_DataFiles);
 
 			StabilityForm.ShowDialog();
+			}
+
+		//============================================================================*
+		// OnToolsTargetCalculatorClicked()
+		//============================================================================*
+
+		private void OnToolsTargetCalculatorClicked(Object sender, EventArgs e)
+			{
+			cTargetCalculatorForm TargetCalculatorForm = new cTargetCalculatorForm(m_DataFiles);
+
+			TargetCalculatorForm.ShowDialog();
 			}
 
 		//============================================================================*

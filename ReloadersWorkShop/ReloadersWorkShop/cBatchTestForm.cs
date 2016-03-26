@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cBatchTestForm.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2016, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -40,6 +40,7 @@ namespace ReloadersWorkShop
 		private const string cm_strNumTestShotsToolTip = "Enter the number of shots fired for this test.";
 		private const string cm_strBestGroupToolTip = "Enter the best group size achieved for this test.";
 		private const string cm_strBestGroupRangeToolTip = "The range at which the best group was achieved.";
+		private const string cm_strTargetCalculatorToolTip = "Click to open the target calculator for precise measurement of group sizes.";
 		private const string cm_strFavoriteLoadToolTip = "Check if this is one of your favorite loads.";
 		private const string cm_strRejectLoadToolTip = "Check if this load should go to the reject pile.";
 		private const string cm_strNotesToolTip = "Enter any notes you may have regarding this batch and/or load.";
@@ -74,6 +75,7 @@ namespace ReloadersWorkShop
 		private ToolTip m_NumTestShotsToolTip = new ToolTip();
 		private ToolTip m_BestGroupToolTip = new ToolTip();
 		private ToolTip m_BestGroupRangeToolTip = new ToolTip();
+		private ToolTip m_TargetCalculatorToolTip = new ToolTip();
 		private ToolTip m_FavoriteLoadToolTip = new ToolTip();
 		private ToolTip m_RejectLoadToolTip = new ToolTip();
 		private ToolTip m_NotesToolTip = new ToolTip();
@@ -175,6 +177,8 @@ namespace ReloadersWorkShop
 				NotesTextBox.TextChanged += OnNotesChanged;
 
 				BestGroupRangeTextBox.TextChanged += OnBestGroupRangeChanged;
+
+				TargetCalculatorButton.Click += OnTargetCalculatorClicked;
 
 				FavoriteLoadRadioButton.Click += OnFavoriteLoadClicked;
 				RejectLoadRadioButton.Click += OnRejectLoadClicked;
@@ -567,6 +571,16 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// OnTargetCalculatorClicked()
+		//============================================================================*
+
+		public void OnTargetCalculatorClicked(object sender, EventArgs args)
+			{
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
 		// OnTemperatureChanged()
 		//============================================================================*
 
@@ -687,8 +701,8 @@ namespace ReloadersWorkShop
 			BestGroupTextBox.Value = m_DataFiles.StandardToMetric(m_BatchTest.BestGroup, cDataFiles.eDataType.GroupSize);
 			BestGroupRangeTextBox.Value = (int) m_DataFiles.StandardToMetric(m_BatchTest.BestGroupRange, cDataFiles.eDataType.Range);
 
-			BestGroupDistanceLabel.Text = m_DataFiles.Preferences.MetricGroups ? "cm at" : "in at";
-			BestGroupRangeDistanceLabel.Text = m_DataFiles.Preferences.MetricRanges ? "m" : "yds";
+			BestGroupDistanceLabel.Text = m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize);
+			BestGroupRangeDistanceLabel.Text = m_DataFiles.MetricString(cDataFiles.eDataType.Range);
 
 			FavoriteLoadRadioButton.Checked = false;
 
@@ -767,6 +781,10 @@ namespace ReloadersWorkShop
 			NumShotsTextBox.ToolTip = cm_strNumTestShotsToolTip;
 			BestGroupTextBox.ToolTip = cm_strBestGroupToolTip;
 			BestGroupRangeTextBox.ToolTip = cm_strBestGroupRangeToolTip;
+
+			m_TargetCalculatorToolTip.ShowAlways = true;
+			m_TargetCalculatorToolTip.RemoveAll();
+			m_TargetCalculatorToolTip.SetToolTip(TargetCalculatorButton, cm_strTargetCalculatorToolTip);
 
 			m_FavoriteLoadToolTip.ShowAlways = true;
 			m_FavoriteLoadToolTip.RemoveAll();
@@ -942,6 +960,12 @@ namespace ReloadersWorkShop
 
 			if (m_DataFiles.Preferences.ToolTips)
 				m_BestGroupRangeToolTip.SetToolTip(BestGroupRangeTextBox, strText);
+
+			//----------------------------------------------------------------------------*
+			// Enable/disable Target Calculator Button
+			//----------------------------------------------------------------------------*
+
+			TargetCalculatorButton.Enabled = NumShotsTextBox.ValueOK && BestGroupRangeTextBox.ValueOK;
 
 			//----------------------------------------------------------------------------*
 			// Shot List

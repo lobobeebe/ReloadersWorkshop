@@ -75,6 +75,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="cAbout.cs">
@@ -235,6 +236,13 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="cEvaluationItem.cs" />
+    <Compile Include="cTarget.cs" />
+    <Compile Include="cTargetImageBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="cTargetImageBox.Designer.cs">
+      <DependentUpon>cTargetImageBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="cTestStatistics.cs" />
     <Compile Include="cEvaluationListView.cs">
       <SubType>Component</SubType>
@@ -455,6 +463,12 @@
       <DependentUpon>cTransactionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="cTargetCalculatorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="cTargetCalculatorForm.Designer.cs">
+      <DependentUpon>cTargetCalculatorForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="cAbout.resx">
       <DependentUpon>cAbout.cs</DependentUpon>
     </EmbeddedResource>
@@ -546,6 +560,9 @@
     <EmbeddedResource Include="cStabilityForm.resx">
       <DependentUpon>cStabilityForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="cTargetCalculatorForm.resx">
+      <DependentUpon>cTargetCalculatorForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="cTestShotForm.resx">
       <DependentUpon>cTestShotForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -591,6 +608,7 @@
     <None Include="Resources\Images\GroundStrike.png" />
     <None Include="Resources\Images\DriftChartShooter.png" />
     <None Include="Resources\BuyNowButton.gif" />
+    <None Include="Resources\OpenTarget.bmp" />
     <Content Include="SAAMI_README.txt" />
     <Content Include="Share_README.TXT.txt" />
     <None Include="Resources\Images\SortDescending.bmp" />

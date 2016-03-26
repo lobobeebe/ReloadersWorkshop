@@ -115,7 +115,7 @@ namespace ReloadersWorkShop
 		private int m_nDropChartHeight = 210;
 		private int m_nDropChartWidth = 1426;
 
-//		private cRWKestrel m_RWKestrel = new cRWKestrel();
+		//		private cRWKestrel m_RWKestrel = new cRWKestrel();
 		private Timer m_KestrelTimer = new Timer();
 
 		private ToolTip m_BallisticsBatchToolTip = new ToolTip();
@@ -211,7 +211,7 @@ namespace ReloadersWorkShop
 				BallisticsBatchTestVelocityRadioButton.Click += OnBallisticsBatchTestVelocityClicked;
 				BallisticsLoadDataVelocityRadioButton.Click += OnBallisticsLoadDataVelocityClicked;
 
-//				BallisticsKestrelButton.Click += OnBallisticsKestrelButtonClicked;
+				//				BallisticsKestrelButton.Click += OnBallisticsKestrelButtonClicked;
 
 				BallisticsResetButton.Click += OnBallisticsResetClicked;
 
@@ -276,7 +276,7 @@ namespace ReloadersWorkShop
 
 				m_KestrelTimer.Interval = 1000;
 
-//				m_KestrelTimer.Tick += OnKestrelTimer;
+				//				m_KestrelTimer.Tick += OnKestrelTimer;
 
 				//----------------------------------------------------------------------------*
 				// Set tooltips and Initialized Flag
@@ -524,28 +524,28 @@ namespace ReloadersWorkShop
 		//============================================================================*
 		// OnBallisticsKestrelButtonClicked()
 		//============================================================================*
-/*
-		protected void OnBallisticsKestrelButtonClicked(Object sender, EventArgs args)
-			{
-			if (m_RWKestrel.Connected)
-				{
-				m_KestrelTimer.Stop();
-
-				m_RWKestrel.Disconnect();
-				}
-			else
-				{
-				if (m_RWKestrel.Connect())
+		/*
+				protected void OnBallisticsKestrelButtonClicked(Object sender, EventArgs args)
 					{
-					PopulateBallisticsAtmosphericData();
+					if (m_RWKestrel.Connected)
+						{
+						m_KestrelTimer.Stop();
 
-					m_KestrelTimer.Start();
+						m_RWKestrel.Disconnect();
+						}
+					else
+						{
+						if (m_RWKestrel.Connect())
+							{
+							PopulateBallisticsAtmosphericData();
+
+							m_KestrelTimer.Start();
+							}
+						}
+
+					UpdateBallisticsTabButtons();
 					}
-				}
-
-			UpdateBallisticsTabButtons();
-			}
-*/
+		*/
 		//============================================================================*
 		// OnBallisticsLoadSelected()
 		//============================================================================*
@@ -938,25 +938,25 @@ namespace ReloadersWorkShop
 		//============================================================================*
 		// OnKestrelTimer()
 		//============================================================================*
-/*
-		protected void OnKestrelTimer(Object sender, EventArgs args)
-			{
-			if (!m_RWKestrel.Connected)
-				{
-				m_KestrelTimer.Stop();
+		/*
+				protected void OnKestrelTimer(Object sender, EventArgs args)
+					{
+					if (!m_RWKestrel.Connected)
+						{
+						m_KestrelTimer.Stop();
 
-				m_RWKestrel.Disconnect();
+						m_RWKestrel.Disconnect();
 
-				UpdateBallisticsTabButtons();
-				}
-			else
-				{
-				m_RWKestrel.SnapShot();
+						UpdateBallisticsTabButtons();
+						}
+					else
+						{
+						m_RWKestrel.SnapShot();
 
-				PopulateBallisticsAtmosphericData();
-				}
-			}
-*/
+						PopulateBallisticsAtmosphericData();
+						}
+					}
+		*/
 		//============================================================================*
 		// OnRestoreReferenceBulletClicked()
 		//============================================================================*
@@ -2937,12 +2937,24 @@ namespace ReloadersWorkShop
 			// Set Bullet Data Min/Max
 			//----------------------------------------------------------------------------*
 
+			double dBCMin = 0.001;
+			double dBCMax = 1.2;
+			double dDiameterMin = 1000.0;
+			double dDiameterMax = 0.0;
+			double dWeightMin = 0.0;
+			double dWeightMax = 1000.0;
+
 			if (Bullet != null)
 				{
-				BallisticsBCTextBox.Enabled = false;
-				BallisticsBulletDiameterTextBox.Enabled = false;
-				BallisticsBulletWeightTextBox.Enabled = false;
+				BallisticsBCTextBox.Enabled = Bullet.BallisticCoefficient == 0.0;
+				BallisticsBulletDiameterTextBox.Enabled = Bullet.Diameter == 0.0;
+				BallisticsBulletWeightTextBox.Enabled = Bullet.Weight == 0.0;
 				BallisticsBulletLengthTextBox.Enabled = Bullet.Length == 0.0;
+
+				dDiameterMin = 0.170;
+				dDiameterMax = 0.650;
+				dWeightMin = 15;
+				dWeightMax = 750.0;
 				}
 			else
 				{
@@ -2950,13 +2962,6 @@ namespace ReloadersWorkShop
 				BallisticsBulletDiameterTextBox.Enabled = true;
 				BallisticsBulletWeightTextBox.Enabled = true;
 				BallisticsBulletLengthTextBox.Enabled = true;
-
-				double dBCMin = 0.001;
-				double dBCMax = 1.2;
-				double dDiameterMin = 1000.0;
-				double dDiameterMax = 0.0;
-				double dWeightMin = 0.0;
-				double dWeightMax = 1000.0;
 
 				if (Caliber != null)
 					{
@@ -2998,16 +3003,16 @@ namespace ReloadersWorkShop
 							dDiameterMax = CheckBullet.Diameter;
 						}
 					}
-
-				BallisticsBCTextBox.MinValue = dBCMin;
-				BallisticsBCTextBox.MaxValue = dBCMax;
-				BallisticsBulletDiameterTextBox.MinValue = dDiameterMin;
-				BallisticsBulletDiameterTextBox.MaxValue = dDiameterMax;
-				BallisticsBulletWeightTextBox.MinValue = dWeightMin;
-				BallisticsBulletWeightTextBox.MaxValue = dWeightMax;
-				BallisticsBulletLengthTextBox.MinValue = 0.0;
-				BallisticsBulletLengthTextBox.MaxValue = m_DataFiles.Preferences.MetricDimensions ? cConversions.InchesToMillimeters(3.0) : 3.0;
 				}
+
+			BallisticsBCTextBox.MinValue = dBCMin;
+			BallisticsBCTextBox.MaxValue = dBCMax;
+			BallisticsBulletDiameterTextBox.MinValue = dDiameterMin;
+			BallisticsBulletDiameterTextBox.MaxValue = dDiameterMax;
+			BallisticsBulletWeightTextBox.MinValue = dWeightMin;
+			BallisticsBulletWeightTextBox.MaxValue = dWeightMax;
+			BallisticsBulletLengthTextBox.MinValue = 0.0;
+			BallisticsBulletLengthTextBox.MaxValue = m_DataFiles.Preferences.MetricDimensions ? cConversions.InchesToMillimeters(3.0) : 3.0;
 
 			//----------------------------------------------------------------------------*
 			// Set Muzzle Velocity Min/Max
@@ -3196,10 +3201,10 @@ namespace ReloadersWorkShop
 		private void SetDensityAltitude()
 			{
 			double dDensityAltitude = m_DataFiles.StandardToMetric(m_BallisticsData.DensityAltitude, cDataFiles.eDataType.Altitude);
-/*
-			if (m_RWKestrel.Connected)
-				dDensityAltitude = m_RWKestrel.DensityAltitude;
-*/
+			/*
+						if (m_RWKestrel.Connected)
+							dDensityAltitude = m_RWKestrel.DensityAltitude;
+			*/
 			BallisticsDensityAltitudeLabel.Text = String.Format("{0:F0} {1}", dDensityAltitude, m_DataFiles.MetricString(cDataFiles.eDataType.Altitude));
 
 			SetStationPressure();
@@ -3610,27 +3615,27 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 			// Kestrel Button
 			//----------------------------------------------------------------------------*
-/*
-			if (m_RWKestrel.Connected)
-				{
-				BallisticsKestrelButton.Text = "Kestrel Stop";
+			/*
+						if (m_RWKestrel.Connected)
+							{
+							BallisticsKestrelButton.Text = "Kestrel Stop";
 
-				BallisticsKestrelButton.BackColor = Color.Red;
-				}
-			else
-				{
-				BallisticsKestrelButton.Text = "Kestrel Start";
+							BallisticsKestrelButton.BackColor = Color.Red;
+							}
+						else
+							{
+							BallisticsKestrelButton.Text = "Kestrel Start";
 
-				BallisticsKestrelButton.BackColor = Color.Green;
-				}
+							BallisticsKestrelButton.BackColor = Color.Green;
+							}
 
-			BallisticsAltitudeTextBox.Enabled = !m_RWKestrel.UseAltitude;
-			BallisticsHumidityTextBox.Enabled = !m_RWKestrel.UseHumidity;
-			BallisticsPressureTextBox.Enabled = !m_RWKestrel.UseBarometricPressure;
-			BallisticsTemperatureTextBox.Enabled = !m_RWKestrel.UseTemperature;
-			BallisticsWindSpeedTextBox.Enabled = !m_RWKestrel.UseWindSpeed;
-			BallisticsWindDirectionTextBox.Enabled = !m_RWKestrel.UseWindDirection;
-*/
+						BallisticsAltitudeTextBox.Enabled = !m_RWKestrel.UseAltitude;
+						BallisticsHumidityTextBox.Enabled = !m_RWKestrel.UseHumidity;
+						BallisticsPressureTextBox.Enabled = !m_RWKestrel.UseBarometricPressure;
+						BallisticsTemperatureTextBox.Enabled = !m_RWKestrel.UseTemperature;
+						BallisticsWindSpeedTextBox.Enabled = !m_RWKestrel.UseWindSpeed;
+						BallisticsWindDirectionTextBox.Enabled = !m_RWKestrel.UseWindDirection;
+			*/
 			//----------------------------------------------------------------------------*
 			// Enable Buttons
 			//----------------------------------------------------------------------------*

@@ -379,6 +379,7 @@ namespace ReloadersWorkShop
 			this.EditManufacturerButton = new System.Windows.Forms.Button();
 			this.AddManufacturerButton = new System.Windows.Forms.Button();
 			this.MainTabControl = new System.Windows.Forms.TabControl();
+			this.ToolsTargetCalculatorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			label54 = new System.Windows.Forms.Label();
 			label56 = new System.Windows.Forms.Label();
 			LoadDataFiltersFirearmTypeLabel = new System.Windows.Forms.Label();
@@ -883,7 +884,8 @@ namespace ReloadersWorkShop
 			this.ToolsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolsStabilityCalculatorMenuItem,
             this.ToolsConversionCalculatorMenuItem,
-            this.SAAMIDocumentsToolStripMenuItem});
+            this.SAAMIDocumentsToolStripMenuItem,
+            this.ToolsTargetCalculatorMenuItem});
 			this.ToolsMenuItem.Name = "ToolsMenuItem";
 			this.ToolsMenuItem.Size = new System.Drawing.Size(48, 20);
 			this.ToolsMenuItem.Text = "&Tools";
@@ -892,14 +894,14 @@ namespace ReloadersWorkShop
 			// 
 			this.ToolsStabilityCalculatorMenuItem.Name = "ToolsStabilityCalculatorMenuItem";
 			this.ToolsStabilityCalculatorMenuItem.Size = new System.Drawing.Size(216, 22);
-			this.ToolsStabilityCalculatorMenuItem.Text = "Bullet Stability Calculator";
+			this.ToolsStabilityCalculatorMenuItem.Text = "Bullet &Stability Calculator";
 			// 
 			// ToolsConversionCalculatorMenuItem
 			// 
 			this.ToolsConversionCalculatorMenuItem.Name = "ToolsConversionCalculatorMenuItem";
 			this.ToolsConversionCalculatorMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F12;
 			this.ToolsConversionCalculatorMenuItem.Size = new System.Drawing.Size(216, 22);
-			this.ToolsConversionCalculatorMenuItem.Text = "Conversion Calculator";
+			this.ToolsConversionCalculatorMenuItem.Text = "Conversion &Calculator";
 			// 
 			// SAAMIDocumentsToolStripMenuItem
 			// 
@@ -1778,6 +1780,8 @@ namespace ReloadersWorkShop
 			this.BallisticsFirearmTypeCombo.FormattingEnabled = true;
 			this.BallisticsFirearmTypeCombo.IncludeShotgun = false;
 			this.BallisticsFirearmTypeCombo.Items.AddRange(new object[] {
+            "Handgun",
+            "Rifle",
             "Handgun",
             "Rifle",
             "Handgun",
@@ -3879,6 +3883,8 @@ namespace ReloadersWorkShop
             "Handgun",
             "Rifle",
             "Handgun",
+            "Rifle",
+            "Handgun",
             "Rifle"});
 			this.BatchFirearmTypeCombo.Location = new System.Drawing.Point(83, 22);
 			this.BatchFirearmTypeCombo.Name = "BatchFirearmTypeCombo";
@@ -4054,6 +4060,8 @@ namespace ReloadersWorkShop
 			this.LoadDataFirearmTypeCombo.FormattingEnabled = true;
 			this.LoadDataFirearmTypeCombo.IncludeShotgun = false;
 			this.LoadDataFirearmTypeCombo.Items.AddRange(new object[] {
+            "Handgun",
+            "Rifle",
             "Handgun",
             "Rifle",
             "Handgun",
@@ -5006,6 +5014,13 @@ namespace ReloadersWorkShop
 			this.MainTabControl.Size = new System.Drawing.Size(1473, 1051);
 			this.MainTabControl.TabIndex = 0;
 			// 
+			// ToolsTargetCalculatorMenuItem
+			// 
+			this.ToolsTargetCalculatorMenuItem.Name = "ToolsTargetCalculatorMenuItem";
+			this.ToolsTargetCalculatorMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F11;
+			this.ToolsTargetCalculatorMenuItem.Size = new System.Drawing.Size(216, 22);
+			this.ToolsTargetCalculatorMenuItem.Text = "&Target Calculator";
+			// 
 			// cMainForm
 			// 
 			this.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
@@ -5391,6 +5406,7 @@ namespace ReloadersWorkShop
 		private System.Windows.Forms.CheckBox AmmoPrintBelowStockCheckBox;
 		private System.Windows.Forms.ToolStripMenuItem FilePrintAmmoShoppingListMenuItem;
 		private System.Windows.Forms.Button BallisticsKestrelButton;
+		private System.Windows.Forms.ToolStripMenuItem ToolsTargetCalculatorMenuItem;
 		}
 	}
 
