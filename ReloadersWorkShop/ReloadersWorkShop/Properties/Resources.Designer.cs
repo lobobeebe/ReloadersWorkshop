@@ -183,6 +183,16 @@ namespace ReloadersWorkShop.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap OpenTarget {
+            get {
+                object obj = ResourceManager.GetObject("OpenTarget", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Reject {
             get {
                 object obj = ResourceManager.GetObject("Reject", resourceCulture);
