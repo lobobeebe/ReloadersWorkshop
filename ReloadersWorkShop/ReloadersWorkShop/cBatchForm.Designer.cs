@@ -55,20 +55,31 @@
 			System.Windows.Forms.Label label21;
 			System.Windows.Forms.Label label24;
 			System.Windows.Forms.Label label28;
+			System.Windows.Forms.Label label3;
 			this.PowderChargeMeasurementLabel = new System.Windows.Forms.Label();
 			this.BatchOKButton = new System.Windows.Forms.Button();
 			this.BatchCancelButton = new System.Windows.Forms.Button();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.AnnealedCheckBox = new System.Windows.Forms.CheckBox();
 			this.NeckTurnedCheckBox = new System.Windows.Forms.CheckBox();
 			this.ExpandedNeckRadioButton = new System.Windows.Forms.RadioButton();
 			this.NeckSizedRadioButton = new System.Windows.Forms.RadioButton();
 			this.FullLengthSizedRadioButton = new System.Windows.Forms.RadioButton();
 			this.NumRoundsRangeLabel = new System.Windows.Forms.Label();
+			this.BulletDiameterTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			this.BulletDiameterMeasurementLabel = new System.Windows.Forms.Label();
 			this.NeckTensionlabel = new System.Windows.Forms.Label();
 			this.TimesFiredLabel = new System.Windows.Forms.Label();
+			this.NeckWallTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			this.NeckWallMeasurementLabel = new System.Windows.Forms.Label();
 			this.TrimLengthMeasurementLabel = new System.Windows.Forms.Label();
+			this.HeadSpaceTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.NumRoundsTextBox = new CommonLib.Controls.cIntegerValueTextBox();
+			this.TimesFiredTextBox = new CommonLib.Controls.cIntegerValueTextBox();
+			this.NeckSizeTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.CBTOTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.COALTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.CaseTrimLengthTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			this.TestDataButton = new System.Windows.Forms.Button();
 			this.HeadspaceMeasurementLabel = new System.Windows.Forms.Label();
 			this.NeckSizeMeasurementLabel = new System.Windows.Forms.Label();
@@ -101,16 +112,8 @@
 			this.BulletCombo = new System.Windows.Forms.ComboBox();
 			this.CaliberCombo = new System.Windows.Forms.ComboBox();
 			this.PrintButton = new System.Windows.Forms.Button();
-			this.AnnealedCheckBox = new System.Windows.Forms.CheckBox();
-			this.BulletDiameterTextBox = new CommonLib.Controls.cDoubleValueTextBox();
-			this.NeckWallTextBox = new CommonLib.Controls.cDoubleValueTextBox();
-			this.HeadSpaceTextBox = new CommonLib.Controls.cDoubleValueTextBox();
-			this.NumRoundsTextBox = new CommonLib.Controls.cIntegerValueTextBox();
-			this.TimesFiredTextBox = new CommonLib.Controls.cIntegerValueTextBox();
-			this.NeckSizeTextBox = new CommonLib.Controls.cDoubleValueTextBox();
-			this.CBTOTextBox = new CommonLib.Controls.cDoubleValueTextBox();
-			this.COALTextBox = new CommonLib.Controls.cDoubleValueTextBox();
-			this.CaseTrimLengthTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.UserIDTextBox = new CommonLib.Controls.cTextBox();
+			this.ModifiedBulletCheckBox = new System.Windows.Forms.CheckBox();
 			this.FirearmTypeCombo = new ReloadersWorkShop.Controls.cFirearmTypeCombo();
 			label13 = new System.Windows.Forms.Label();
 			label10 = new System.Windows.Forms.Label();
@@ -139,6 +142,7 @@
 			label21 = new System.Windows.Forms.Label();
 			label24 = new System.Windows.Forms.Label();
 			label28 = new System.Windows.Forms.Label();
+			label3 = new System.Windows.Forms.Label();
 			this.groupBox2.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.LoadDetailsGroup.SuspendLayout();
@@ -210,7 +214,7 @@
 			label11.AutoSize = true;
 			label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			label11.ForeColor = System.Drawing.SystemColors.ControlText;
-			label11.Location = new System.Drawing.Point(392, 30);
+			label11.Location = new System.Drawing.Point(412, 30);
 			label11.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			label11.Name = "label11";
 			label11.Size = new System.Drawing.Size(57, 13);
@@ -222,7 +226,7 @@
 			label6.AutoSize = true;
 			label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			label6.ForeColor = System.Drawing.SystemColors.ControlText;
-			label6.Location = new System.Drawing.Point(199, 30);
+			label6.Location = new System.Drawing.Point(273, 30);
 			label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			label6.Name = "label6";
 			label6.Size = new System.Drawing.Size(46, 13);
@@ -505,6 +509,9 @@
 			// 
 			// groupBox2
 			// 
+			this.groupBox2.Controls.Add(this.ModifiedBulletCheckBox);
+			this.groupBox2.Controls.Add(this.UserIDTextBox);
+			this.groupBox2.Controls.Add(label3);
 			this.groupBox2.Controls.Add(this.AnnealedCheckBox);
 			this.groupBox2.Controls.Add(this.NeckTurnedCheckBox);
 			this.groupBox2.Controls.Add(this.ExpandedNeckRadioButton);
@@ -559,16 +566,29 @@
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Batch Details";
 			// 
+			// AnnealedCheckBox
+			// 
+			this.AnnealedCheckBox.AutoCheck = false;
+			this.AnnealedCheckBox.AutoSize = true;
+			this.AnnealedCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.AnnealedCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.AnnealedCheckBox.Location = new System.Drawing.Point(303, 120);
+			this.AnnealedCheckBox.Name = "AnnealedCheckBox";
+			this.AnnealedCheckBox.Size = new System.Drawing.Size(71, 17);
+			this.AnnealedCheckBox.TabIndex = 15;
+			this.AnnealedCheckBox.Text = "Annealed";
+			this.AnnealedCheckBox.UseVisualStyleBackColor = true;
+			// 
 			// NeckTurnedCheckBox
 			// 
 			this.NeckTurnedCheckBox.AutoCheck = false;
 			this.NeckTurnedCheckBox.AutoSize = true;
 			this.NeckTurnedCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.NeckTurnedCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.NeckTurnedCheckBox.Location = new System.Drawing.Point(188, 98);
+			this.NeckTurnedCheckBox.Location = new System.Drawing.Point(190, 120);
 			this.NeckTurnedCheckBox.Name = "NeckTurnedCheckBox";
 			this.NeckTurnedCheckBox.Size = new System.Drawing.Size(89, 17);
-			this.NeckTurnedCheckBox.TabIndex = 11;
+			this.NeckTurnedCheckBox.TabIndex = 14;
 			this.NeckTurnedCheckBox.Text = "Neck Turned";
 			this.NeckTurnedCheckBox.UseVisualStyleBackColor = true;
 			// 
@@ -578,10 +598,10 @@
 			this.ExpandedNeckRadioButton.AutoSize = true;
 			this.ExpandedNeckRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.ExpandedNeckRadioButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.ExpandedNeckRadioButton.Location = new System.Drawing.Point(483, 97);
+			this.ExpandedNeckRadioButton.Location = new System.Drawing.Point(389, 97);
 			this.ExpandedNeckRadioButton.Name = "ExpandedNeckRadioButton";
 			this.ExpandedNeckRadioButton.Size = new System.Drawing.Size(102, 17);
-			this.ExpandedNeckRadioButton.TabIndex = 14;
+			this.ExpandedNeckRadioButton.TabIndex = 13;
 			this.ExpandedNeckRadioButton.TabStop = true;
 			this.ExpandedNeckRadioButton.Text = "Expanded Neck";
 			this.ExpandedNeckRadioButton.UseVisualStyleBackColor = true;
@@ -592,10 +612,10 @@
 			this.NeckSizedRadioButton.AutoSize = true;
 			this.NeckSizedRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.NeckSizedRadioButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.NeckSizedRadioButton.Location = new System.Drawing.Point(397, 97);
+			this.NeckSizedRadioButton.Location = new System.Drawing.Point(303, 97);
 			this.NeckSizedRadioButton.Name = "NeckSizedRadioButton";
 			this.NeckSizedRadioButton.Size = new System.Drawing.Size(80, 17);
-			this.NeckSizedRadioButton.TabIndex = 13;
+			this.NeckSizedRadioButton.TabIndex = 12;
 			this.NeckSizedRadioButton.TabStop = true;
 			this.NeckSizedRadioButton.Text = "Neck Sized";
 			this.NeckSizedRadioButton.UseVisualStyleBackColor = true;
@@ -606,10 +626,10 @@
 			this.FullLengthSizedRadioButton.AutoSize = true;
 			this.FullLengthSizedRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FullLengthSizedRadioButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FullLengthSizedRadioButton.Location = new System.Drawing.Point(285, 97);
+			this.FullLengthSizedRadioButton.Location = new System.Drawing.Point(191, 97);
 			this.FullLengthSizedRadioButton.Name = "FullLengthSizedRadioButton";
 			this.FullLengthSizedRadioButton.Size = new System.Drawing.Size(106, 17);
-			this.FullLengthSizedRadioButton.TabIndex = 12;
+			this.FullLengthSizedRadioButton.TabIndex = 11;
 			this.FullLengthSizedRadioButton.TabStop = true;
 			this.FullLengthSizedRadioButton.Text = "Full-Length Sized";
 			this.FullLengthSizedRadioButton.UseVisualStyleBackColor = true;
@@ -619,12 +639,29 @@
 			this.NumRoundsRangeLabel.AutoSize = true;
 			this.NumRoundsRangeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.NumRoundsRangeLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.NumRoundsRangeLabel.Location = new System.Drawing.Point(504, 30);
+			this.NumRoundsRangeLabel.Location = new System.Drawing.Point(524, 30);
 			this.NumRoundsRangeLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.NumRoundsRangeLabel.Name = "NumRoundsRangeLabel";
 			this.NumRoundsRangeLabel.Size = new System.Drawing.Size(79, 13);
 			this.NumRoundsRangeLabel.TabIndex = 47;
 			this.NumRoundsRangeLabel.Text = "Allowed Range";
+			// 
+			// BulletDiameterTextBox
+			// 
+			this.BulletDiameterTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.BulletDiameterTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BulletDiameterTextBox.Location = new System.Drawing.Point(97, 73);
+			this.BulletDiameterTextBox.MaxLength = 6;
+			this.BulletDiameterTextBox.MaxValue = 0D;
+			this.BulletDiameterTextBox.MinValue = 0D;
+			this.BulletDiameterTextBox.Name = "BulletDiameterTextBox";
+			this.BulletDiameterTextBox.NumDecimals = 4;
+			this.BulletDiameterTextBox.Size = new System.Drawing.Size(45, 20);
+			this.BulletDiameterTextBox.TabIndex = 7;
+			this.BulletDiameterTextBox.Text = "0.0000";
+			this.BulletDiameterTextBox.ToolTip = "";
+			this.BulletDiameterTextBox.Value = 0D;
+			this.BulletDiameterTextBox.ZeroAllowed = true;
 			// 
 			// BulletDiameterMeasurementLabel
 			// 
@@ -662,6 +699,23 @@
 			this.TimesFiredLabel.TabIndex = 41;
 			this.TimesFiredLabel.Text = "times";
 			// 
+			// NeckWallTextBox
+			// 
+			this.NeckWallTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.NeckWallTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.NeckWallTextBox.Location = new System.Drawing.Point(388, 73);
+			this.NeckWallTextBox.MaxLength = 6;
+			this.NeckWallTextBox.MaxValue = 0D;
+			this.NeckWallTextBox.MinValue = 0D;
+			this.NeckWallTextBox.Name = "NeckWallTextBox";
+			this.NeckWallTextBox.NumDecimals = 4;
+			this.NeckWallTextBox.Size = new System.Drawing.Size(45, 20);
+			this.NeckWallTextBox.TabIndex = 9;
+			this.NeckWallTextBox.Text = "0.0000";
+			this.NeckWallTextBox.ToolTip = "";
+			this.NeckWallTextBox.Value = 0D;
+			this.NeckWallTextBox.ZeroAllowed = true;
+			// 
 			// NeckWallMeasurementLabel
 			// 
 			this.NeckWallMeasurementLabel.AutoSize = true;
@@ -686,6 +740,123 @@
 			this.TrimLengthMeasurementLabel.TabIndex = 36;
 			this.TrimLengthMeasurementLabel.Text = "in.";
 			// 
+			// HeadSpaceTextBox
+			// 
+			this.HeadSpaceTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.HeadSpaceTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.HeadSpaceTextBox.Location = new System.Drawing.Point(541, 50);
+			this.HeadSpaceTextBox.MaxLength = 5;
+			this.HeadSpaceTextBox.MaxValue = 0D;
+			this.HeadSpaceTextBox.MinValue = 0D;
+			this.HeadSpaceTextBox.Name = "HeadSpaceTextBox";
+			this.HeadSpaceTextBox.NumDecimals = 3;
+			this.HeadSpaceTextBox.Size = new System.Drawing.Size(46, 20);
+			this.HeadSpaceTextBox.TabIndex = 6;
+			this.HeadSpaceTextBox.Text = "0.000";
+			this.HeadSpaceTextBox.ToolTip = "";
+			this.HeadSpaceTextBox.Value = 0D;
+			this.HeadSpaceTextBox.ZeroAllowed = true;
+			// 
+			// NumRoundsTextBox
+			// 
+			this.NumRoundsTextBox.BackColor = System.Drawing.Color.LightPink;
+			this.NumRoundsTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.NumRoundsTextBox.Location = new System.Drawing.Point(474, 27);
+			this.NumRoundsTextBox.MaxLength = 5;
+			this.NumRoundsTextBox.MaxValue = 0;
+			this.NumRoundsTextBox.MinValue = 1;
+			this.NumRoundsTextBox.Name = "NumRoundsTextBox";
+			this.NumRoundsTextBox.Required = false;
+			this.NumRoundsTextBox.Size = new System.Drawing.Size(45, 20);
+			this.NumRoundsTextBox.TabIndex = 2;
+			this.NumRoundsTextBox.Text = "0";
+			this.NumRoundsTextBox.ToolTip = "";
+			this.NumRoundsTextBox.Value = 0;
+			// 
+			// TimesFiredTextBox
+			// 
+			this.TimesFiredTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.TimesFiredTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TimesFiredTextBox.Location = new System.Drawing.Point(98, 96);
+			this.TimesFiredTextBox.MaxLength = 2;
+			this.TimesFiredTextBox.MaxValue = 50;
+			this.TimesFiredTextBox.MinValue = 0;
+			this.TimesFiredTextBox.Name = "TimesFiredTextBox";
+			this.TimesFiredTextBox.Required = false;
+			this.TimesFiredTextBox.Size = new System.Drawing.Size(43, 20);
+			this.TimesFiredTextBox.TabIndex = 10;
+			this.TimesFiredTextBox.Text = "0";
+			this.TimesFiredTextBox.ToolTip = "";
+			this.TimesFiredTextBox.Value = 0;
+			// 
+			// NeckSizeTextBox
+			// 
+			this.NeckSizeTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.NeckSizeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.NeckSizeTextBox.Location = new System.Drawing.Point(244, 73);
+			this.NeckSizeTextBox.MaxLength = 6;
+			this.NeckSizeTextBox.MaxValue = 0D;
+			this.NeckSizeTextBox.MinValue = 0D;
+			this.NeckSizeTextBox.Name = "NeckSizeTextBox";
+			this.NeckSizeTextBox.NumDecimals = 4;
+			this.NeckSizeTextBox.Size = new System.Drawing.Size(45, 20);
+			this.NeckSizeTextBox.TabIndex = 8;
+			this.NeckSizeTextBox.Text = "0.0000";
+			this.NeckSizeTextBox.ToolTip = "";
+			this.NeckSizeTextBox.Value = 0D;
+			this.NeckSizeTextBox.ZeroAllowed = true;
+			// 
+			// CBTOTextBox
+			// 
+			this.CBTOTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.CBTOTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.CBTOTextBox.Location = new System.Drawing.Point(388, 47);
+			this.CBTOTextBox.MaxLength = 5;
+			this.CBTOTextBox.MaxValue = 0D;
+			this.CBTOTextBox.MinValue = 0D;
+			this.CBTOTextBox.Name = "CBTOTextBox";
+			this.CBTOTextBox.NumDecimals = 3;
+			this.CBTOTextBox.Size = new System.Drawing.Size(44, 20);
+			this.CBTOTextBox.TabIndex = 5;
+			this.CBTOTextBox.Text = "0.000";
+			this.CBTOTextBox.ToolTip = "";
+			this.CBTOTextBox.Value = 0D;
+			this.CBTOTextBox.ZeroAllowed = true;
+			// 
+			// COALTextBox
+			// 
+			this.COALTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.COALTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.COALTextBox.Location = new System.Drawing.Point(245, 50);
+			this.COALTextBox.MaxLength = 5;
+			this.COALTextBox.MaxValue = 0D;
+			this.COALTextBox.MinValue = 0D;
+			this.COALTextBox.Name = "COALTextBox";
+			this.COALTextBox.NumDecimals = 3;
+			this.COALTextBox.Size = new System.Drawing.Size(44, 20);
+			this.COALTextBox.TabIndex = 4;
+			this.COALTextBox.Text = "0.000";
+			this.COALTextBox.ToolTip = "";
+			this.COALTextBox.Value = 0D;
+			this.COALTextBox.ZeroAllowed = true;
+			// 
+			// CaseTrimLengthTextBox
+			// 
+			this.CaseTrimLengthTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.CaseTrimLengthTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.CaseTrimLengthTextBox.Location = new System.Drawing.Point(97, 50);
+			this.CaseTrimLengthTextBox.MaxLength = 5;
+			this.CaseTrimLengthTextBox.MaxValue = 0D;
+			this.CaseTrimLengthTextBox.MinValue = 0D;
+			this.CaseTrimLengthTextBox.Name = "CaseTrimLengthTextBox";
+			this.CaseTrimLengthTextBox.NumDecimals = 3;
+			this.CaseTrimLengthTextBox.Size = new System.Drawing.Size(44, 20);
+			this.CaseTrimLengthTextBox.TabIndex = 3;
+			this.CaseTrimLengthTextBox.Text = "0.000";
+			this.CaseTrimLengthTextBox.ToolTip = "";
+			this.CaseTrimLengthTextBox.Value = 0D;
+			this.CaseTrimLengthTextBox.ZeroAllowed = true;
+			// 
 			// TestDataButton
 			// 
 			this.TestDataButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -694,7 +865,7 @@
 			this.TestDataButton.Margin = new System.Windows.Forms.Padding(2);
 			this.TestDataButton.Name = "TestDataButton";
 			this.TestDataButton.Size = new System.Drawing.Size(65, 19);
-			this.TestDataButton.TabIndex = 16;
+			this.TestDataButton.TabIndex = 17;
 			this.TestDataButton.Text = "Test Data";
 			this.TestDataButton.UseVisualStyleBackColor = true;
 			// 
@@ -772,11 +943,11 @@
 			// 
 			this.BatchDateTimePicker.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BatchDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-			this.BatchDateTimePicker.Location = new System.Drawing.Point(244, 28);
+			this.BatchDateTimePicker.Location = new System.Drawing.Point(318, 28);
 			this.BatchDateTimePicker.Margin = new System.Windows.Forms.Padding(2);
 			this.BatchDateTimePicker.Name = "BatchDateTimePicker";
 			this.BatchDateTimePicker.Size = new System.Drawing.Size(80, 19);
-			this.BatchDateTimePicker.TabIndex = 0;
+			this.BatchDateTimePicker.TabIndex = 1;
 			// 
 			// BatchIDLabel
 			// 
@@ -941,7 +1112,7 @@
 			this.LoadDetailsGroup.Name = "LoadDetailsGroup";
 			this.LoadDetailsGroup.Padding = new System.Windows.Forms.Padding(2);
 			this.LoadDetailsGroup.Size = new System.Drawing.Size(260, 101);
-			this.LoadDetailsGroup.TabIndex = 0;
+			this.LoadDetailsGroup.TabIndex = 4;
 			this.LoadDetailsGroup.TabStop = false;
 			this.LoadDetailsGroup.Text = "Load Details";
 			// 
@@ -1095,169 +1266,43 @@
 			this.PrintButton.Text = "Print";
 			this.PrintButton.UseVisualStyleBackColor = true;
 			// 
-			// AnnealedCheckBox
+			// label3
 			// 
-			this.AnnealedCheckBox.AutoCheck = false;
-			this.AnnealedCheckBox.AutoSize = true;
-			this.AnnealedCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.AnnealedCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.AnnealedCheckBox.Location = new System.Drawing.Point(188, 119);
-			this.AnnealedCheckBox.Name = "AnnealedCheckBox";
-			this.AnnealedCheckBox.Size = new System.Drawing.Size(71, 17);
-			this.AnnealedCheckBox.TabIndex = 15;
-			this.AnnealedCheckBox.Text = "Annealed";
-			this.AnnealedCheckBox.UseVisualStyleBackColor = true;
+			label3.AutoSize = true;
+			label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			label3.ForeColor = System.Drawing.SystemColors.ControlText;
+			label3.Location = new System.Drawing.Point(111, 30);
+			label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			label3.Name = "label3";
+			label3.Size = new System.Drawing.Size(46, 13);
+			label3.TabIndex = 48;
+			label3.Text = "User ID:";
 			// 
-			// BulletDiameterTextBox
+			// UserIDTextBox
 			// 
-			this.BulletDiameterTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.BulletDiameterTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BulletDiameterTextBox.Location = new System.Drawing.Point(97, 73);
-			this.BulletDiameterTextBox.MaxLength = 6;
-			this.BulletDiameterTextBox.MaxValue = 0D;
-			this.BulletDiameterTextBox.MinValue = 0D;
-			this.BulletDiameterTextBox.Name = "BulletDiameterTextBox";
-			this.BulletDiameterTextBox.NumDecimals = 4;
-			this.BulletDiameterTextBox.Size = new System.Drawing.Size(45, 20);
-			this.BulletDiameterTextBox.TabIndex = 6;
-			this.BulletDiameterTextBox.Text = "0.0000";
-			this.BulletDiameterTextBox.ToolTip = "";
-			this.BulletDiameterTextBox.Value = 0D;
-			this.BulletDiameterTextBox.ZeroAllowed = true;
+			this.UserIDTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.UserIDTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.UserIDTextBox.Location = new System.Drawing.Point(162, 27);
+			this.UserIDTextBox.MaxLength = 15;
+			this.UserIDTextBox.Name = "UserIDTextBox";
+			this.UserIDTextBox.Required = false;
+			this.UserIDTextBox.Size = new System.Drawing.Size(105, 20);
+			this.UserIDTextBox.TabIndex = 0;
+			this.UserIDTextBox.ToolTip = "";
+			this.UserIDTextBox.Value = "";
 			// 
-			// NeckWallTextBox
+			// ModifiedBulletCheckBox
 			// 
-			this.NeckWallTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.NeckWallTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.NeckWallTextBox.Location = new System.Drawing.Point(388, 73);
-			this.NeckWallTextBox.MaxLength = 6;
-			this.NeckWallTextBox.MaxValue = 0D;
-			this.NeckWallTextBox.MinValue = 0D;
-			this.NeckWallTextBox.Name = "NeckWallTextBox";
-			this.NeckWallTextBox.NumDecimals = 4;
-			this.NeckWallTextBox.Size = new System.Drawing.Size(45, 20);
-			this.NeckWallTextBox.TabIndex = 8;
-			this.NeckWallTextBox.Text = "0.0000";
-			this.NeckWallTextBox.ToolTip = "";
-			this.NeckWallTextBox.Value = 0D;
-			this.NeckWallTextBox.ZeroAllowed = true;
-			// 
-			// HeadSpaceTextBox
-			// 
-			this.HeadSpaceTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.HeadSpaceTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.HeadSpaceTextBox.Location = new System.Drawing.Point(541, 50);
-			this.HeadSpaceTextBox.MaxLength = 5;
-			this.HeadSpaceTextBox.MaxValue = 0D;
-			this.HeadSpaceTextBox.MinValue = 0D;
-			this.HeadSpaceTextBox.Name = "HeadSpaceTextBox";
-			this.HeadSpaceTextBox.NumDecimals = 3;
-			this.HeadSpaceTextBox.Size = new System.Drawing.Size(46, 20);
-			this.HeadSpaceTextBox.TabIndex = 5;
-			this.HeadSpaceTextBox.Text = "0.000";
-			this.HeadSpaceTextBox.ToolTip = "";
-			this.HeadSpaceTextBox.Value = 0D;
-			this.HeadSpaceTextBox.ZeroAllowed = true;
-			// 
-			// NumRoundsTextBox
-			// 
-			this.NumRoundsTextBox.BackColor = System.Drawing.Color.LightPink;
-			this.NumRoundsTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.NumRoundsTextBox.Location = new System.Drawing.Point(454, 27);
-			this.NumRoundsTextBox.MaxLength = 5;
-			this.NumRoundsTextBox.MaxValue = 0;
-			this.NumRoundsTextBox.MinValue = 1;
-			this.NumRoundsTextBox.Name = "NumRoundsTextBox";
-			this.NumRoundsTextBox.Required = false;
-			this.NumRoundsTextBox.Size = new System.Drawing.Size(45, 20);
-			this.NumRoundsTextBox.TabIndex = 1;
-			this.NumRoundsTextBox.Text = "0";
-			this.NumRoundsTextBox.ToolTip = "";
-			this.NumRoundsTextBox.Value = 0;
-			// 
-			// TimesFiredTextBox
-			// 
-			this.TimesFiredTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.TimesFiredTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.TimesFiredTextBox.Location = new System.Drawing.Point(98, 96);
-			this.TimesFiredTextBox.MaxLength = 2;
-			this.TimesFiredTextBox.MaxValue = 50;
-			this.TimesFiredTextBox.MinValue = 0;
-			this.TimesFiredTextBox.Name = "TimesFiredTextBox";
-			this.TimesFiredTextBox.Required = false;
-			this.TimesFiredTextBox.Size = new System.Drawing.Size(43, 20);
-			this.TimesFiredTextBox.TabIndex = 10;
-			this.TimesFiredTextBox.Text = "0";
-			this.TimesFiredTextBox.ToolTip = "";
-			this.TimesFiredTextBox.Value = 0;
-			// 
-			// NeckSizeTextBox
-			// 
-			this.NeckSizeTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.NeckSizeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.NeckSizeTextBox.Location = new System.Drawing.Point(244, 73);
-			this.NeckSizeTextBox.MaxLength = 6;
-			this.NeckSizeTextBox.MaxValue = 0D;
-			this.NeckSizeTextBox.MinValue = 0D;
-			this.NeckSizeTextBox.Name = "NeckSizeTextBox";
-			this.NeckSizeTextBox.NumDecimals = 4;
-			this.NeckSizeTextBox.Size = new System.Drawing.Size(45, 20);
-			this.NeckSizeTextBox.TabIndex = 7;
-			this.NeckSizeTextBox.Text = "0.0000";
-			this.NeckSizeTextBox.ToolTip = "";
-			this.NeckSizeTextBox.Value = 0D;
-			this.NeckSizeTextBox.ZeroAllowed = true;
-			// 
-			// CBTOTextBox
-			// 
-			this.CBTOTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.CBTOTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.CBTOTextBox.Location = new System.Drawing.Point(388, 47);
-			this.CBTOTextBox.MaxLength = 5;
-			this.CBTOTextBox.MaxValue = 0D;
-			this.CBTOTextBox.MinValue = 0D;
-			this.CBTOTextBox.Name = "CBTOTextBox";
-			this.CBTOTextBox.NumDecimals = 3;
-			this.CBTOTextBox.Size = new System.Drawing.Size(44, 20);
-			this.CBTOTextBox.TabIndex = 4;
-			this.CBTOTextBox.Text = "0.000";
-			this.CBTOTextBox.ToolTip = "";
-			this.CBTOTextBox.Value = 0D;
-			this.CBTOTextBox.ZeroAllowed = true;
-			// 
-			// COALTextBox
-			// 
-			this.COALTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.COALTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.COALTextBox.Location = new System.Drawing.Point(245, 50);
-			this.COALTextBox.MaxLength = 5;
-			this.COALTextBox.MaxValue = 0D;
-			this.COALTextBox.MinValue = 0D;
-			this.COALTextBox.Name = "COALTextBox";
-			this.COALTextBox.NumDecimals = 3;
-			this.COALTextBox.Size = new System.Drawing.Size(44, 20);
-			this.COALTextBox.TabIndex = 3;
-			this.COALTextBox.Text = "0.000";
-			this.COALTextBox.ToolTip = "";
-			this.COALTextBox.Value = 0D;
-			this.COALTextBox.ZeroAllowed = true;
-			// 
-			// CaseTrimLengthTextBox
-			// 
-			this.CaseTrimLengthTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.CaseTrimLengthTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.CaseTrimLengthTextBox.Location = new System.Drawing.Point(97, 50);
-			this.CaseTrimLengthTextBox.MaxLength = 5;
-			this.CaseTrimLengthTextBox.MaxValue = 0D;
-			this.CaseTrimLengthTextBox.MinValue = 0D;
-			this.CaseTrimLengthTextBox.Name = "CaseTrimLengthTextBox";
-			this.CaseTrimLengthTextBox.NumDecimals = 3;
-			this.CaseTrimLengthTextBox.Size = new System.Drawing.Size(44, 20);
-			this.CaseTrimLengthTextBox.TabIndex = 2;
-			this.CaseTrimLengthTextBox.Text = "0.000";
-			this.CaseTrimLengthTextBox.ToolTip = "";
-			this.CaseTrimLengthTextBox.Value = 0D;
-			this.CaseTrimLengthTextBox.ZeroAllowed = true;
+			this.ModifiedBulletCheckBox.AutoCheck = false;
+			this.ModifiedBulletCheckBox.AutoSize = true;
+			this.ModifiedBulletCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ModifiedBulletCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.ModifiedBulletCheckBox.Location = new System.Drawing.Point(388, 120);
+			this.ModifiedBulletCheckBox.Name = "ModifiedBulletCheckBox";
+			this.ModifiedBulletCheckBox.Size = new System.Drawing.Size(95, 17);
+			this.ModifiedBulletCheckBox.TabIndex = 16;
+			this.ModifiedBulletCheckBox.Text = "Modified Bullet";
+			this.ModifiedBulletCheckBox.UseVisualStyleBackColor = true;
 			// 
 			// FirearmTypeCombo
 			// 
@@ -1267,6 +1312,8 @@
 			this.FirearmTypeCombo.FormattingEnabled = true;
 			this.FirearmTypeCombo.IncludeShotgun = false;
 			this.FirearmTypeCombo.Items.AddRange(new object[] {
+            "Handgun",
+            "Rifle",
             "Handgun",
             "Rifle",
             "Handgun",
@@ -1330,7 +1377,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.BatchCancelButton;
-			this.ClientSize = new System.Drawing.Size(686, 626);
+			this.ClientSize = new System.Drawing.Size(682, 622);
 			this.ControlBox = false;
 			this.Controls.Add(this.PrintButton);
 			this.Controls.Add(this.BatchCancelButton);
@@ -1417,5 +1464,7 @@
 		private System.Windows.Forms.RadioButton FullLengthSizedRadioButton;
 		private System.Windows.Forms.CheckBox NeckTurnedCheckBox;
 		private System.Windows.Forms.CheckBox AnnealedCheckBox;
+		private System.Windows.Forms.CheckBox ModifiedBulletCheckBox;
+		private CommonLib.Controls.cTextBox UserIDTextBox;
 		}
 	}

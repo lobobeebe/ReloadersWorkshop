@@ -94,7 +94,7 @@ namespace ReloadersWorkShop
 				// Date
 				//----------------------------------------------------------------------------*
 
-				case 1:
+				case 2:
 					rc = Batch1.DateLoaded.CompareTo(Batch2.DateLoaded);
 
 					if (rc == 0)
@@ -108,7 +108,7 @@ namespace ReloadersWorkShop
 				// test Data
 				//----------------------------------------------------------------------------*
 
-				case 2:
+				case 3:
 					rc = 0;
 
 					if (Batch1.BatchTest != null)
@@ -134,7 +134,7 @@ namespace ReloadersWorkShop
 				// Num Rounds
 				//----------------------------------------------------------------------------*
 
-				case 4:
+				case 5:
 					rc = Batch1.NumRounds.CompareTo(Batch2.NumRounds);
 
 					if (rc == 0)
@@ -148,7 +148,7 @@ namespace ReloadersWorkShop
 				// Bullet
 				//----------------------------------------------------------------------------*
 
-				case 5:
+				case 6:
 					rc = Batch1.Load.Bullet.CompareTo(Batch2.Load.Bullet);
 
 					if (rc == 0)
@@ -162,7 +162,7 @@ namespace ReloadersWorkShop
 				// Powder
 				//----------------------------------------------------------------------------*
 
-				case 6:
+				case 7:
 					rc = Batch1.Load.Powder.CompareTo(Batch2.Load.Powder);
 
 					if (rc == 0)
