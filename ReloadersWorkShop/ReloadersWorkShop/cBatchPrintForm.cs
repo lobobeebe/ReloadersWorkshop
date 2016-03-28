@@ -305,7 +305,7 @@ namespace ReloadersWorkShop
 
 			// Batch # and Date
 
-			Graphics.DrawString(String.Format("Batch #{0:G0}", Batch.BatchID), LabelHeaderFont, Brushes.Black, dX, dY);
+			Graphics.DrawString(String.Format("Batch #{0:G0} - {1}", Batch.BatchID, String.IsNullOrEmpty(Batch.UserID) ? "" : Batch.UserID), LabelHeaderFont, Brushes.Black, dX, dY);
 
 			String strString = String.Format("Date Loaded: {0}", Batch.DateLoaded.ToShortDateString());
 
