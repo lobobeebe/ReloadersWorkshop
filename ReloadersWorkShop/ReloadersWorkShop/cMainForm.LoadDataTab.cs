@@ -362,9 +362,9 @@ namespace ReloadersWorkShop
 			// Operations that are always performed
 			//----------------------------------------------------------------------------*
 
-			PopulateLoadDataTab();
+			m_LoadDataListView.SetColumns();
 
-			PopulateLoadDataListViewColumns();
+			PopulateLoadDataTab();
 			}
 
 		//============================================================================*
