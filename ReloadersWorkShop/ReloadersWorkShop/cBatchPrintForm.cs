@@ -305,7 +305,7 @@ namespace ReloadersWorkShop
 
 			// Batch # and Date
 
-			Graphics.DrawString(String.Format("Batch #{0:G0}", Batch.BatchID), LabelHeaderFont, Brushes.Black, dX, dY);
+			Graphics.DrawString(String.Format("Batch #{0:G0} - {1}", Batch.BatchID, String.IsNullOrEmpty(Batch.UserID) ? "" : Batch.UserID), LabelHeaderFont, Brushes.Black, dX, dY);
 
 			String strString = String.Format("Date Loaded: {0}", Batch.DateLoaded.ToShortDateString());
 
@@ -363,7 +363,12 @@ namespace ReloadersWorkShop
 
 			dY -= (int) (BoldSize.Height - LabelSize.Height);
 
-			Graphics.DrawString(Batch.Load.Bullet.ToWeightString(), LabelBoldFont, Brushes.Black, dDataX, dY);
+			strString = Batch.Load.Bullet.ToWeightString();
+
+			if (Batch.ModifiedBullet)
+				strString += " (Modified)";
+
+			Graphics.DrawString(strString, LabelBoldFont, Brushes.Black, dDataX, dY);
 
 			dY += LabelBoldFont.Height;
 
@@ -415,24 +420,50 @@ namespace ReloadersWorkShop
 
 			Graphics.DrawString(strString, LabelBoldFont, Brushes.Black, dDataX, dY);
 
-			if (Batch.Load.FirearmType == cFirearm.eFireArmType.Rifle && (Batch.FullLengthSized || Batch.NeckSized || Batch.ExpandedNeck || Batch.NeckTurned))
+			if (Batch.Load.FirearmType == cFirearm.eFireArmType.Rifle && (Batch.FullLengthSized || Batch.NeckSized || Batch.ExpandedNeck || Batch.NeckTurned || Batch.Annealed))
 				{
 				BoldSize = Graphics.MeasureString(strString, LabelBoldFont);
 
 				dX = dDataX + BoldSize.Width;
 
-				strString = Batch.NeckTurned ? "- Neck Turned" : "";
+				strString = "- ";
+
+				if (Batch.NeckTurned)
+					strString += "Neck Turned";
+
+				if (Batch.Annealed)
+					{
+					if (strString.Length > 2)
+						strString += ", ";
+
+					strString += "Annealed";
+					}
 
 				if (Batch.FullLengthSized)
-					strString += " - Full Length Sized";
+					{
+					if (strString.Length > 2)
+						strString += ", ";
+
+					strString += "FL Sized";
+					}
 				else
 					{
 					if (Batch.NeckSized)
-						strString += " - Neck Sized";
+						{
+						if (strString.Length > 2)
+							strString += ", ";
+
+						strString += "Neck Sized";
+						}
 					else
 						{
 						if (Batch.ExpandedNeck)
-							strString += " - Neck Expanded";
+							{
+							if (strString.Length > 2)
+								strString += ", ";
+
+							strString += "Neck Exp";
+							}
 						}
 					}
 
@@ -546,7 +577,7 @@ namespace ReloadersWorkShop
 
 				Graphics.DrawString("Headspace:", LabelFont, Brushes.Black, dX, dY);
 
-				dX += (int) LabelSize.Width;
+				dX = dDataX;
 
 				BoldSize = Graphics.MeasureString("Headspace: ", LabelBoldFont);
 
@@ -564,7 +595,7 @@ namespace ReloadersWorkShop
 
 				Graphics.DrawString("CBTO:", LabelFont, Brushes.Black, dX, dY);
 
-				dX += (int) LabelSize.Width;
+				dX = dData1X;
 
 				BoldSize = Graphics.MeasureString("CBTO: ", LabelBoldFont);
 
@@ -595,7 +626,7 @@ namespace ReloadersWorkShop
 
 				Graphics.DrawString("Neck sized to:", LabelFont, Brushes.Black, dX, dY);
 
-				dX += (int) LabelSize.Width;
+				dX = dData2X;
 
 				BoldSize = Graphics.MeasureString("Neck sized to: ", LabelBoldFont);
 

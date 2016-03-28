@@ -704,6 +704,9 @@ namespace ReloadersWorkShop
 			BestGroupDistanceLabel.Text = m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize);
 			BestGroupRangeDistanceLabel.Text = m_DataFiles.MetricString(cDataFiles.eDataType.Range);
 
+			BestGroupDistanceLabel.Text = m_DataFiles.Preferences.MetricGroups ? "cm" : "in";
+			BestGroupRangeDistanceLabel.Text = m_DataFiles.Preferences.MetricRanges ? "m" : "yds";
+
 			FavoriteLoadRadioButton.Checked = false;
 
 			if (m_BatchTest.Batch != null && m_BatchTest.Batch.Load != null)

@@ -33,7 +33,8 @@ namespace ReloadersWorkShop
 		//============================================================================*
 
 		private const string cm_strNumRoundsToolTip = "Number of rounds to be loaded.";
-		private const string cm_strTimesFiredToolTip = "Number of time the cases in this batch have been fired previously.";
+		private const string cm_strUserIDToolTip = "Optional user-defined, alpha-numeric ID for this batch.";
+		private const string cm_strTimesFiredToolTip = "Number of times the cases in this batch have been fired previously.";
 		private const string cm_strCOLToolTip = "Overall length of the cartridges loaded from the head of the case to the tip of the bullet.";
 		private const string cm_strTrimLengthToolTip = "Trim length of the cases loaded.";
 		private const string cm_strHeadSpaceToolTip = "Headspace of the cartridges loaded. If not known, enter 0.000.";
@@ -187,6 +188,12 @@ namespace ReloadersWorkShop
 			m_Batch.BatchID = Int32.Parse(BatchIDLabel.Text);
 
 			//----------------------------------------------------------------------------*
+			// User ID
+			//----------------------------------------------------------------------------*
+
+			m_Batch.UserID = UserIDTextBox.Value;
+
+			//----------------------------------------------------------------------------*
 			// Date Loaded
 			//----------------------------------------------------------------------------*
 
@@ -254,6 +261,7 @@ namespace ReloadersWorkShop
 			m_Batch.NeckSized = NeckSizedRadioButton.Checked;
 			m_Batch.ExpandedNeck = ExpandedNeckRadioButton.Checked;
 			m_Batch.NeckTurned = NeckTurnedCheckBox.Checked;
+			m_Batch.ModifiedBullet = ModifiedBulletCheckBox.Checked;
 			}
 
 		//============================================================================*
@@ -364,6 +372,7 @@ namespace ReloadersWorkShop
 				ExpandedNeckRadioButton.Click += OnExpandedNeckClicked;
 				NeckTurnedCheckBox.Click += OnNeckTurnedClicked;
 				AnnealedCheckBox.Click += OnAnnealedClicked;
+				ModifiedBulletCheckBox.Click += OnModifiedBulletClicked;
 
 				BatchOKButton.Click += OnOKClicked;
 				}
@@ -389,6 +398,7 @@ namespace ReloadersWorkShop
 				ExpandedNeckRadioButton.Enabled = false;
 				NeckTurnedCheckBox.Enabled = false;
 				AnnealedCheckBox.Enabled = false;
+				ModifiedBulletCheckBox.Enabled = false;
 				}
 
 			//----------------------------------------------------------------------------*
@@ -786,6 +796,22 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// OnModifiedBulletClicked()
+		//============================================================================*
+
+		private void OnModifiedBulletClicked(object sender, EventArgs e)
+			{
+			if (m_fViewOnly || m_fUserViewOnly || m_fPopulating)
+				return;
+
+			ModifiedBulletCheckBox.Checked = !ModifiedBulletCheckBox.Checked;
+
+			m_Batch.ModifiedBullet = ModifiedBulletCheckBox.Checked;
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
 		// OnNeckSizedClicked()
 		//============================================================================*
 
@@ -1061,6 +1087,8 @@ namespace ReloadersWorkShop
 			if (m_Batch.Archived)
 				BatchIDLabel.Text += " - Archived";
 
+			UserIDTextBox.Value = String.IsNullOrEmpty(m_Batch.UserID) ? "" : m_Batch.UserID;
+
 			if (m_Batch.DateLoaded < BatchDateTimePicker.MinDate)
 				m_Batch.DateLoaded = BatchDateTimePicker.MinDate;
 
@@ -1110,6 +1138,7 @@ namespace ReloadersWorkShop
 			ExpandedNeckRadioButton.Checked = m_Batch.ExpandedNeck;
 			NeckTurnedCheckBox.Checked = m_Batch.NeckTurned;
 			AnnealedCheckBox.Checked = m_Batch.Annealed;
+			ModifiedBulletCheckBox.Checked = m_Batch.ModifiedBullet;
 
 			if (m_Batch.BulletDiameter != 0.0)
 				BulletDiameterTextBox.Value = m_DataFiles.StandardToMetric(m_Batch.BulletDiameter, cDataFiles.eDataType.Dimension);
@@ -1929,6 +1958,8 @@ namespace ReloadersWorkShop
 			{
 			if (!m_DataFiles.Preferences.ToolTips)
 				return;
+
+			UserIDTextBox.ToolTip = cm_strUserIDToolTip;
 
 			NumRoundsTextBox.ToolTip = cm_strNumRoundsToolTip;
 			CaseTrimLengthTextBox.ToolTip = cm_strTrimLengthToolTip;

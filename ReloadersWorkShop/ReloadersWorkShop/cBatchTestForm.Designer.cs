@@ -57,6 +57,7 @@
 			this.BatchTestOKButton = new System.Windows.Forms.Button();
 			this.BatchTestCancelButton = new System.Windows.Forms.Button();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.label28 = new System.Windows.Forms.Label();
 			this.BestGroupTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			this.BestGroupRangeTextBox = new CommonLib.Controls.cIntegerValueTextBox();
 			this.NumShotsTextBox = new CommonLib.Controls.cIntegerValueTextBox();
@@ -105,8 +106,6 @@
 			this.label25 = new System.Windows.Forms.Label();
 			this.label19 = new System.Windows.Forms.Label();
 			this.PressureTextBox = new CommonLib.Controls.cDoubleValueTextBox();
-			this.label28 = new System.Windows.Forms.Label();
-			this.TargetCalculatorButton = new System.Windows.Forms.Button();
 			label1 = new System.Windows.Forms.Label();
 			label2 = new System.Windows.Forms.Label();
 			label16 = new System.Windows.Forms.Label();
@@ -480,7 +479,6 @@
 			// 
 			// groupBox2
 			// 
-			this.groupBox2.Controls.Add(this.TargetCalculatorButton);
 			this.groupBox2.Controls.Add(this.label28);
 			this.groupBox2.Controls.Add(this.BestGroupTextBox);
 			this.groupBox2.Controls.Add(this.BestGroupRangeTextBox);
@@ -505,6 +503,18 @@
 			this.groupBox2.TabIndex = 2;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Test Data";
+			// 
+			// label28
+			// 
+			this.label28.AutoSize = true;
+			this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label28.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label28.Location = new System.Drawing.Point(142, 25);
+			this.label28.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.label28.Name = "label28";
+			this.label28.Size = new System.Drawing.Size(16, 13);
+			this.label28.TabIndex = 26;
+			this.label28.Text = "at";
 			// 
 			// BestGroupTextBox
 			// 
@@ -1133,37 +1143,13 @@
 			this.PressureTextBox.Value = 0D;
 			this.PressureTextBox.ZeroAllowed = true;
 			// 
-			// label28
-			// 
-			this.label28.AutoSize = true;
-			this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label28.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label28.Location = new System.Drawing.Point(142, 25);
-			this.label28.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.label28.Name = "label28";
-			this.label28.Size = new System.Drawing.Size(16, 13);
-			this.label28.TabIndex = 26;
-			this.label28.Text = "at";
-			// 
-			// TargetCalculatorButton
-			// 
-			this.TargetCalculatorButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.TargetCalculatorButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.TargetCalculatorButton.Location = new System.Drawing.Point(174, 47);
-			this.TargetCalculatorButton.Margin = new System.Windows.Forms.Padding(2);
-			this.TargetCalculatorButton.Name = "TargetCalculatorButton";
-			this.TargetCalculatorButton.Size = new System.Drawing.Size(89, 45);
-			this.TargetCalculatorButton.TabIndex = 3;
-			this.TargetCalculatorButton.Text = "Target Calculator";
-			this.TargetCalculatorButton.UseVisualStyleBackColor = true;
-			// 
 			// cBatchTestForm
 			// 
 			this.AcceptButton = this.BatchTestOKButton;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.BatchTestCancelButton;
-			this.ClientSize = new System.Drawing.Size(666, 599);
+			this.ClientSize = new System.Drawing.Size(662, 595);
 			this.ControlBox = false;
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.BatchTestDeleteButton);
@@ -1253,7 +1239,6 @@
 		private System.Windows.Forms.Label label24;
 		private CommonLib.Controls.cIntegerValueTextBox WindDirectionTextBox;
 		private System.Windows.Forms.Label label26;
-		private System.Windows.Forms.Button TargetCalculatorButton;
 		private System.Windows.Forms.Label label28;
 		}
 	}

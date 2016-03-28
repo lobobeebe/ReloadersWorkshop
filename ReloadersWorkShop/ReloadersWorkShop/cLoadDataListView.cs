@@ -467,7 +467,7 @@ namespace ReloadersWorkShop
 			// Check the filters
 			//----------------------------------------------------------------------------*
 
-			if (eFirearmType != cFirearm.eFireArmType.None && Load.FirearmType != eFirearmType ||
+			if (Load.FirearmType != eFirearmType ||
 				(Caliber != null && Load.Caliber.CompareTo(Caliber) != 0) ||
 				(Bullet != null && Load.Bullet.CompareTo(Bullet) != 0) ||
 				(Powder != null && Load.Powder.CompareTo(Powder) != 0))

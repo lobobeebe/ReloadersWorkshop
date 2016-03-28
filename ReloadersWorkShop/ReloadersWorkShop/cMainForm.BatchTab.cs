@@ -928,6 +928,7 @@ namespace ReloadersWorkShop
 						}
 
 					CheckBatch.BatchID = NewBatch.BatchID;
+					CheckBatch.UserID = NewBatch.UserID;
 					CheckBatch.DateLoaded = NewBatch.DateLoaded;
 					CheckBatch.Load = NewBatch.Load;
 					CheckBatch.PowderWeight = NewBatch.PowderWeight;
@@ -945,6 +946,7 @@ namespace ReloadersWorkShop
 					CheckBatch.ExpandedNeck = NewBatch.ExpandedNeck;
 					CheckBatch.NeckTurned = NewBatch.NeckTurned;
 					CheckBatch.Annealed = NewBatch.Annealed;
+					CheckBatch.ModifiedBullet = NewBatch.ModifiedBullet;
 					CheckBatch.Firearm = NewBatch.Firearm;
 					CheckBatch.BatchTest = NewBatch.BatchTest;
 					CheckBatch.Archived = NewBatch.Archived;

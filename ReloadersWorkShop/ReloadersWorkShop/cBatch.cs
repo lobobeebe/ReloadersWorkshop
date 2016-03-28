@@ -33,6 +33,7 @@ namespace ReloadersWorkShop
 		//----------------------------------------------------------------------------*
 
 		private int m_nBatchID = 0;
+		private string m_strUserID = "";
 
 		private DateTime m_DateLoaded = DateTime.Today;
 
@@ -60,8 +61,10 @@ namespace ReloadersWorkShop
 		private bool m_fFullLengthSized = false;
 		private bool m_fNeckSized = false;
 		private bool m_fExpandedNeck = false;
+
 		private bool m_fNeckTurned = false;
 		private bool m_fAnnealed = false;
+		private bool m_fModifiedBullet = false;
 
 		private cBatchTest m_BatchTest = null;
 
@@ -88,6 +91,7 @@ namespace ReloadersWorkShop
 		public cBatch(cBatch Batch)
 			{
 			m_nBatchID = Batch.m_nBatchID;
+			m_strUserID = Batch.m_strUserID;
 			m_DateLoaded = new DateTime(Batch.DateLoaded.Ticks);
 			m_dPowderWeight = Batch.m_dPowderWeight;
 			m_nNumRounds = Batch.m_nNumRounds;
@@ -103,8 +107,10 @@ namespace ReloadersWorkShop
 			m_fFullLengthSized = Batch.m_fFullLengthSized;
 			m_fNeckSized = Batch.m_fNeckSized;
 			m_fExpandedNeck = Batch.m_fExpandedNeck;
+
 			m_fNeckTurned = Batch.m_fNeckTurned;
 			m_fAnnealed = Batch.m_fAnnealed;
+			m_fModifiedBullet = Batch.m_fModifiedBullet;
 
 			m_Firearm = Batch.m_Firearm;
 
@@ -372,6 +378,22 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// ModifiedBullet Property
+		//============================================================================*
+
+		public bool ModifiedBullet
+			{
+			get
+				{
+				return (m_fModifiedBullet);
+				}
+			set
+				{
+				m_fModifiedBullet = value;
+				}
+			}
+
+		//============================================================================*
 		// NeckSize Property
 		//============================================================================*
 
@@ -520,6 +542,22 @@ namespace ReloadersWorkShop
 			{
 			get { return (m_fTrackInventory); }
 			set { m_fTrackInventory = value; }
+			}
+
+		//============================================================================*
+		// UserID Property
+		//============================================================================*
+
+		public string UserID
+			{
+			get
+				{
+				return (m_strUserID);
+				}
+			set
+				{
+				m_strUserID = value;
+				}
 			}
 		}
 	}
