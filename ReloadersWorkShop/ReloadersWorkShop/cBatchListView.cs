@@ -35,15 +35,16 @@ namespace ReloadersWorkShop
 		private cListViewColumn[] m_arColumns = new cListViewColumn[]
 			{
 			new cListViewColumn(0, "BatchIDHeader","Batch ID", HorizontalAlignment.Left, 100),
-			new cListViewColumn(1, "DateHeader", "Date", HorizontalAlignment.Left, 80),
-			new cListViewColumn(2, "TestHeader", "Test Data?", HorizontalAlignment.Center, 80),
-			new cListViewColumn(3, "CaliberHeader", "Caliber", HorizontalAlignment.Left, 150),
-			new cListViewColumn(4, "NumRoundsHeader", "# Rounds", HorizontalAlignment.Center, 80),
-			new cListViewColumn(5, "BulletHeader", "Bullet", HorizontalAlignment.Left, 150),
-			new cListViewColumn(6, "PowderHeader", "Powder", HorizontalAlignment.Left, 150),
-			new cListViewColumn(7, "PrimerHeader", "Primer", HorizontalAlignment.Left, 150),
-			new cListViewColumn(8, "CaseHeader", "Case", HorizontalAlignment.Left, 150),
-			new cListViewColumn(9, "FirearmHeader", "Firearm", HorizontalAlignment.Left, 200)
+			new cListViewColumn(1, "UserIDHeader","User Batch ID", HorizontalAlignment.Left, 100),
+			new cListViewColumn(2, "DateHeader", "Date", HorizontalAlignment.Left, 80),
+			new cListViewColumn(3, "TestHeader", "Test Data?", HorizontalAlignment.Center, 80),
+			new cListViewColumn(4, "CaliberHeader", "Caliber", HorizontalAlignment.Left, 150),
+			new cListViewColumn(5, "NumRoundsHeader", "# Rounds", HorizontalAlignment.Center, 80),
+			new cListViewColumn(6, "BulletHeader", "Bullet", HorizontalAlignment.Left, 150),
+			new cListViewColumn(7, "PowderHeader", "Powder", HorizontalAlignment.Left, 150),
+			new cListViewColumn(8, "PrimerHeader", "Primer", HorizontalAlignment.Left, 150),
+			new cListViewColumn(9, "CaseHeader", "Case", HorizontalAlignment.Left, 150),
+			new cListViewColumn(10, "FirearmHeader", "Firearm", HorizontalAlignment.Left, 200)
 			};
 
 		//============================================================================*
@@ -200,6 +201,7 @@ namespace ReloadersWorkShop
 			Item.Group = Groups[(int)Batch.Load.FirearmType];
 			Item.Tag = Batch;
 
+			Item.SubItems.Add(String.IsNullOrEmpty(Batch.UserID) ? "" : Batch.UserID);
 			Item.SubItems.Add(Batch.DateLoaded.ToShortDateString());
 			Item.SubItems.Add(Batch.BatchTest != null ? "Y" : "");
 			Item.SubItems.Add(Batch.Load.Caliber.ToString());

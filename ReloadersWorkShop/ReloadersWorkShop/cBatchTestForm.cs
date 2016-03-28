@@ -687,7 +687,7 @@ namespace ReloadersWorkShop
 			BestGroupTextBox.Value = m_DataFiles.StandardToMetric(m_BatchTest.BestGroup, cDataFiles.eDataType.GroupSize);
 			BestGroupRangeTextBox.Value = (int) m_DataFiles.StandardToMetric(m_BatchTest.BestGroupRange, cDataFiles.eDataType.Range);
 
-			BestGroupDistanceLabel.Text = m_DataFiles.Preferences.MetricGroups ? "cm at" : "in at";
+			BestGroupDistanceLabel.Text = m_DataFiles.Preferences.MetricGroups ? "cm" : "in";
 			BestGroupRangeDistanceLabel.Text = m_DataFiles.Preferences.MetricRanges ? "m" : "yds";
 
 			FavoriteLoadRadioButton.Checked = false;
