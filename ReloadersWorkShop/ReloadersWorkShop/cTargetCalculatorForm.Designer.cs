@@ -245,7 +245,7 @@
 			this.RangeMeasurementLabel.AutoSize = true;
 			this.RangeMeasurementLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.RangeMeasurementLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.RangeMeasurementLabel.Location = new System.Drawing.Point(133, 31);
+			this.RangeMeasurementLabel.Location = new System.Drawing.Point(116, 31);
 			this.RangeMeasurementLabel.Name = "RangeMeasurementLabel";
 			this.RangeMeasurementLabel.Size = new System.Drawing.Size(34, 13);
 			this.RangeMeasurementLabel.TabIndex = 10;
@@ -263,7 +263,7 @@
 			// 
 			// RangeTextBox
 			// 
-			this.RangeTextBox.BackColor = System.Drawing.Color.LightPink;
+			this.RangeTextBox.BackColor = System.Drawing.SystemColors.Window;
 			this.RangeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.RangeTextBox.Location = new System.Drawing.Point(75, 28);
 			this.RangeTextBox.MaxLength = 4;
@@ -271,11 +271,11 @@
 			this.RangeTextBox.MinValue = 25;
 			this.RangeTextBox.Name = "RangeTextBox";
 			this.RangeTextBox.Required = false;
-			this.RangeTextBox.Size = new System.Drawing.Size(52, 20);
+			this.RangeTextBox.Size = new System.Drawing.Size(35, 20);
 			this.RangeTextBox.TabIndex = 7;
-			this.RangeTextBox.Text = "0";
+			this.RangeTextBox.Text = "9999";
 			this.RangeTextBox.ToolTip = "";
-			this.RangeTextBox.Value = 0;
+			this.RangeTextBox.Value = 9999;
 			// 
 			// label3
 			// 
@@ -290,6 +290,7 @@
 			// 
 			// CaliberCombo
 			// 
+			this.CaliberCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.CaliberCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.CaliberCombo.FormattingEnabled = true;
 			this.CaliberCombo.Location = new System.Drawing.Point(259, 28);
@@ -318,9 +319,9 @@
 			this.BulletDiameterTextBox.MinValue = 0D;
 			this.BulletDiameterTextBox.Name = "BulletDiameterTextBox";
 			this.BulletDiameterTextBox.NumDecimals = 0;
-			this.BulletDiameterTextBox.Size = new System.Drawing.Size(50, 20);
+			this.BulletDiameterTextBox.Size = new System.Drawing.Size(39, 20);
 			this.BulletDiameterTextBox.TabIndex = 16;
-			this.BulletDiameterTextBox.Text = "0";
+			this.BulletDiameterTextBox.Text = "0.000";
 			this.BulletDiameterTextBox.ToolTip = "";
 			this.BulletDiameterTextBox.Value = 0D;
 			this.BulletDiameterTextBox.ZeroAllowed = true;
@@ -330,7 +331,7 @@
 			this.DiameterMeasurementLabel.AutoSize = true;
 			this.DiameterMeasurementLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.DiameterMeasurementLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.DiameterMeasurementLabel.Location = new System.Drawing.Point(315, 56);
+			this.DiameterMeasurementLabel.Location = new System.Drawing.Point(304, 56);
 			this.DiameterMeasurementLabel.Name = "DiameterMeasurementLabel";
 			this.DiameterMeasurementLabel.Size = new System.Drawing.Size(18, 13);
 			this.DiameterMeasurementLabel.TabIndex = 17;

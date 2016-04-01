@@ -52,6 +52,10 @@ namespace ReloadersWorkShop
 
 		private cTarget m_Target = new cTarget();
 
+		private cBatch m_Batch = null;
+
+		private bool m_fMouseDown = false;
+
 		//============================================================================*
 		// cTargetCalculatorForm()
 		//============================================================================*
@@ -78,8 +82,6 @@ namespace ReloadersWorkShop
 			m_Target.NumShots = nNumShots;
 			m_Target.Range = nRange;
 
-			SetInputData();
-
 			Initialize();
 			}
 
@@ -91,7 +93,7 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				return (3.23);
+				return (m_Target.GroupSize);
 				}
 			}
 
@@ -108,8 +110,12 @@ namespace ReloadersWorkShop
 			OpenTargetImageMenuItem.Click += OnOpenTargetImageClicked;
 
 			CaliberCombo.SelectedIndexChanged += OnCaliberSelected;
+			BulletDiameterTextBox.TextChanged += OnBulletDiameterChanged;
 
 			TargetImageBox.Click += OnTargetClicked;
+			TargetImageBox.MouseDown += OnTargetMouseDown;
+			TargetImageBox.MouseUp += OnTargetMouseUp;
+			TargetImageBox.MouseMove += OnTargetMouseMove;
 
 			//----------------------------------------------------------------------------*
 			// Set Target Size
@@ -123,13 +129,22 @@ namespace ReloadersWorkShop
 			// Populate Data
 			//----------------------------------------------------------------------------*
 
+			if (m_Target.BatchID != 0)
+				m_Batch = m_DataFiles.GetBatchByID(m_Target.BatchID);
+			else
+				m_Batch = null;
+
 			SetTitle();
 
 			PopulateCaliberCombo();
 
+			SetInputParameters();
+
 			SetInputData();
 
 			SetMode(eMode.LoadTarget);
+
+			SetTargetImageSize();
 
 			//----------------------------------------------------------------------------*
 			// Clean up and exit
@@ -140,6 +155,19 @@ namespace ReloadersWorkShop
 			m_fInitialized = true;
 
 			OnResize(null);
+			}
+
+		//============================================================================*
+		// OnBulletDiameterChanged()
+		//============================================================================*
+
+		private void OnBulletDiameterChanged(Object sender, EventArgs e)
+			{
+			m_Target.BulletDiameter = BulletDiameterTextBox.Value;
+
+			SetOutputData();
+
+			UpdateButtons();
 			}
 
 		//============================================================================*
@@ -181,9 +209,20 @@ namespace ReloadersWorkShop
 					{
 					m_Target.Image = new Bitmap(OpenTargetDialog.FileName);
 
-					TargetImageBox.Image = m_Target.Image;
+					if (m_Target.Image.Width < m_Target.MinImageWidth || m_Target.Image.Height < m_Target.MinImageHeight)
+						{
+						string strMessage = String.Format("Target image must be at least {0:G0} x {1:G0} pixels in size", m_Target.MinImageWidth, m_Target.MinImageHeight);
+
+						MessageBox.Show(strMessage, "Invalid Target Image", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+						m_Target.Image = null;
+
+						return;
+						}
 
 					SetTargetImageSize();
+
+					SetImage();
 
 					SetMode(eMode.Calibrate);
 
@@ -241,6 +280,87 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// OnTargetMouseDown()
+		//============================================================================*
+
+		private void OnTargetMouseDown(Object sender, MouseEventArgs e)
+			{
+			if (m_eMode != eMode.Calibrate)
+				return;
+
+			m_fMouseDown = true;
+
+			m_Target.CalibrationStart = e.Location;
+			m_Target.CalibrationEnd = e.Location;
+
+			SetImage();
+			}
+
+		//============================================================================*
+		// OnTargetMouseMove()
+		//============================================================================*
+
+		private void OnTargetMouseMove(Object sender, MouseEventArgs e)
+			{
+			if (m_eMode != eMode.Calibrate || !m_fMouseDown)
+				return;
+
+			m_Target.CalibrationEnd = e.Location;
+
+			SetImage();
+			}
+
+		//============================================================================*
+		// OnTargetMouseUp()
+		//============================================================================*
+
+		private void OnTargetMouseUp(Object sender, MouseEventArgs e)
+			{
+			if (m_eMode != eMode.Calibrate || !m_fMouseDown)
+				return;
+
+			m_fMouseDown = false;
+
+			m_Target.CalibrationEnd = e.Location;
+
+			SetImage();
+
+			//----------------------------------------------------------------------------*
+			// Get Calibration Line Length
+			//----------------------------------------------------------------------------*
+
+			if (m_Target.CalibrationPixels < m_Target.MinCalibrationPixels)
+				{
+				string strMsg = string.Format("Your calibration line is only {0:N0} pixels long.  You must mark a line of at least {1:N0} pixels.\n\nTry again.", m_Target.CalibrationPixels, m_Target.MinCalibrationPixels);
+
+				MessageBox.Show(strMsg, "Invalid Calibration Line", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+				m_Target.CalibrationStart = new Point(0, 0);
+				m_Target.CalibrationEnd = new Point(0, 0);
+				m_Target.CalibrationLength = 0.0;
+				}
+			else
+				{
+				cTargetCalibrationForm CalibrationForm = new cTargetCalibrationForm(m_DataFiles, m_Target);
+
+				DialogResult rc = CalibrationForm.ShowDialog();
+
+				if (rc == DialogResult.OK)
+					{
+					SetMode(eMode.MarkShots);
+					}
+				else
+					{
+					m_Target.CalibrationStart = new Point(0, 0);
+					m_Target.CalibrationEnd = new Point(0, 0);
+					m_Target.CalibrationLength = 0.0;
+					}
+				}
+
+			SetImage();
+			}
+
+		//============================================================================*
 		// PopulateCaliberCombo()
 		//============================================================================*
 
@@ -251,32 +371,81 @@ namespace ReloadersWorkShop
 
 			CaliberCombo.Items.Clear();
 
-			CaliberCombo.Items.Add("No Specific Caliber");
-
-			foreach (cCaliber Caliber in m_DataFiles.CaliberList)
+			if (m_Batch == null)
 				{
-				if (m_DataFiles.Preferences.HideUncheckedCalibers || Caliber.Checked)
-					CaliberCombo.Items.Add(Caliber);
+				CaliberCombo.Items.Add("No Specific Caliber");
 
-				if (dMinDiameter > Caliber.MinBulletDiameter)
-					dMinDiameter = Caliber.MinBulletDiameter;
+				foreach (cCaliber Caliber in m_DataFiles.CaliberList)
+					{
+					if (m_DataFiles.Preferences.HideUncheckedCalibers || Caliber.Checked)
+						CaliberCombo.Items.Add(Caliber);
 
-				if (dMaxDiameter > Caliber.MaxBulletDiameter)
-					dMaxDiameter = Caliber.MaxBulletDiameter;
+					if (dMinDiameter > Caliber.MinBulletDiameter)
+						dMinDiameter = Caliber.MinBulletDiameter;
+
+					if (dMaxDiameter > Caliber.MaxBulletDiameter)
+						dMaxDiameter = Caliber.MaxBulletDiameter;
+					}
+
+				if (m_Target.Caliber == null)
+					CaliberCombo.SelectedIndex = 0;
+				else
+					CaliberCombo.SelectedItem = m_Target.Caliber;
+
+				if (CaliberCombo.SelectedIndex < 0)
+					CaliberCombo.SelectedIndex = 0;
+
+				BulletDiameterTextBox.MinValue = dMinDiameter;
+				BulletDiameterTextBox.MaxValue = dMaxDiameter;
 				}
-
-			if (m_Target.Caliber == null)
-				CaliberCombo.SelectedIndex = 0;
 			else
-				CaliberCombo.SelectedItem = m_Target.Caliber;
+				{
+				CaliberCombo.Items.Add(m_Batch.Load.Caliber);
 
-			if (CaliberCombo.SelectedIndex < 0)
 				CaliberCombo.SelectedIndex = 0;
-
-			BulletDiameterTextBox.MinValue = dMinDiameter;
-			BulletDiameterTextBox.MaxValue = dMaxDiameter;
+				}
 			}
 
+		//============================================================================*
+		// SetImage()
+		//============================================================================*
+
+		private void SetImage()
+			{
+			if (m_Target.Image == null)
+				return;
+
+			//----------------------------------------------------------------------------*
+			// Create a new bitmap for drawing
+			//----------------------------------------------------------------------------*
+
+			Bitmap TargetImage = new Bitmap(TargetImageBox.Width, TargetImageBox.Height);
+
+			Graphics g = Graphics.FromImage(TargetImage);
+
+			g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+
+			g.DrawImage(m_Target.Image, 0, 0, TargetImage.Width, TargetImage.Height);
+
+			//----------------------------------------------------------------------------*
+			// Set the image
+			//----------------------------------------------------------------------------*
+
+			TargetImageBox.Image = TargetImage;
+
+			//----------------------------------------------------------------------------*
+			// Draw Calibration Line
+			//----------------------------------------------------------------------------*
+
+			if (m_eMode == eMode.Calibrate && m_Target.CalibrationPixels > 0)
+				{
+				Pen LinePen = new Pen(m_Target.CalibrationPixels < m_Target.MinCalibrationPixels ? Brushes.Red : Brushes.Green, 3);
+
+				g.DrawLine(LinePen, m_Target.CalibrationStart, m_Target.CalibrationEnd);
+
+				g.DrawString(String.Format("{0:G0}", m_Target.CalibrationPixels), SystemFonts.DefaultFont, Brushes.White, new Point(10, 10));
+				}
+			}
 
 		//============================================================================*
 		// SetInputData()
@@ -289,13 +458,13 @@ namespace ReloadersWorkShop
 
 			RangeMeasurementLabel.Text = m_DataFiles.MetricLongString(cDataFiles.eDataType.Range);
 
-			RangeTextBox.Enabled = m_Target.BatchID == 0;
+			RangeTextBox.Enabled = m_Batch == null;
 
 			BulletDiameterTextBox.NumDecimals = m_DataFiles.Preferences.DimensionDecimals;
 
 			DiameterMeasurementLabel.Text = m_DataFiles.MetricLongString(cDataFiles.eDataType.Dimension);
 
-			if (m_Target.BatchID == 0)
+			if (m_Batch == null)
 				{
 				if (m_Target.Caliber != null)
 					{
@@ -310,8 +479,24 @@ namespace ReloadersWorkShop
 					BulletDiameterTextBox.Enabled = true;
 					}
 				}
+			else
+				{
+				BulletDiameterTextBox.Value = m_Batch.BulletDiameter;
+
+				BulletDiameterTextBox.Enabled = false;
+				}
 
 			SetOutputData();
+			}
+
+		//============================================================================*
+		// SetInputParameters()
+		//============================================================================*
+
+		private void SetInputParameters()
+			{
+			m_DataFiles.SetInputParameters(BulletDiameterTextBox, cDataFiles.eDataType.Dimension);
+			m_DataFiles.SetInputParameters(RangeTextBox, cDataFiles.eDataType.Range);
 			}
 
 		//============================================================================*
@@ -325,6 +510,7 @@ namespace ReloadersWorkShop
 			if (m_Target.Image == null)
 				{
 				ModeLabel.ForeColor = Color.Red;
+
 				ModeLabel.Text = "Load a Target Image to continue.";
 
 				m_eMode = eMode.LoadTarget;
@@ -356,6 +542,10 @@ namespace ReloadersWorkShop
 				}
 
 			ModeLabel.Location = new Point((ClientRectangle.Width / 2) - (ModeLabel.Width / 2), ModeLabel.Location.Y);
+
+			SetImage();
+
+			UpdateButtons();
 			}
 
 		//============================================================================*
@@ -373,7 +563,11 @@ namespace ReloadersWorkShop
 				dMOA = GroupSize / ((m_Target.Range / 100.0) * 1.047);
 				}
 
-			GroupSizeLabel.Text = String.Format("{0:F3} {1}", dGroupSize, m_DataFiles.MetricLongString(cDataFiles.eDataType.GroupSize));
+			string strGroupFormat = "{0:F";
+			strGroupFormat += String.Format("{0:G0}", m_DataFiles.Preferences.GroupDecimals);
+			strGroupFormat += "} {1}";
+
+			GroupSizeLabel.Text = String.Format(strGroupFormat, dGroupSize, m_DataFiles.MetricLongString(cDataFiles.eDataType.GroupSize));
 			MOALabel.Text = String.Format("{0:F3}", dMOA);
 			}
 
@@ -472,6 +666,25 @@ namespace ReloadersWorkShop
 
 		private void UpdateButtons()
 			{
+			bool fEnableOK = m_fChanged;
+
+			if (!RangeTextBox.ValueOK || !BulletDiameterTextBox.ValueOK)
+				{
+				ModeLabel.Text = "Enter valid Input Data above to continue.";
+
+				TargetImageBox.Enabled = false;
+				}
+			else
+				{
+				}
+
+			if (fEnableOK)
+				{
+				if (m_Target.Image == null || !m_Target.Calibrated || m_Target.ShotList.Count < 2)
+					fEnableOK = false;
+				}
+
+			OKButton.Enabled = fEnableOK;
 			}
 		}
 	}

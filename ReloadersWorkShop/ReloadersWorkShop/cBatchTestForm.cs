@@ -576,6 +576,9 @@ namespace ReloadersWorkShop
 
 		public void OnTargetCalculatorClicked(object sender, EventArgs args)
 			{
+			cTargetCalculatorForm TargetCalculatorForm = new cTargetCalculatorForm(m_DataFiles, m_BatchTest.Batch.BatchID, m_BatchTest.NumRounds, m_BatchTest.BestGroupRange);
+
+			TargetCalculatorForm.ShowDialog();
 
 			UpdateButtons();
 			}
