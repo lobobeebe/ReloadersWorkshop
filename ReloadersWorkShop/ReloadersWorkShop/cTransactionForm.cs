@@ -499,7 +499,8 @@ namespace ReloadersWorkShop
 				{
 				TransactionTypeCombo.Items.Add(cTransaction.TransactionTypeString(m_Transaction.TransactionType));
 
-				TransactionTypeCombo.SelectedIndex = 0;
+				if (TransactionTypeCombo.Items.Count > 0)
+					TransactionTypeCombo.SelectedIndex = 0;
 				}
 			else
 				{
@@ -535,7 +536,7 @@ namespace ReloadersWorkShop
 
 				TransactionTypeCombo.SelectedItem = cTransaction.TransactionTypeString(m_Transaction.TransactionType);
 
-				if (TransactionTypeCombo.SelectedIndex < 0)
+				if (TransactionTypeCombo.SelectedIndex < 0 && TransactionTypeCombo.Items.Count > 0)
 					{
 					TransactionTypeCombo.SelectedIndex = 0;
 
