@@ -163,7 +163,14 @@ namespace ReloadersWorkShop
 			PopulateManufacturerCombo();
 
 			ModelTextBox.Text = m_Powder.Model;
-			ShapeCombo.SelectedIndex = (int) m_Powder.PowderType;
+
+			if ((int) m_Powder.PowderType < ShapeCombo.Items.Count)
+				ShapeCombo.SelectedIndex = (int) m_Powder.PowderType;
+			else
+				{
+				if (ShapeCombo.Items.Count > 0)
+					ShapeCombo.SelectedIndex = 0;
+				}
 
 			PopulateInventoryData();
 
@@ -395,8 +402,9 @@ namespace ReloadersWorkShop
 					}
 
 				if (SelectManufacturer != null)
-					ManufacturerCombo.SelectedIndex = ManufacturerCombo.Items.IndexOf(SelectManufacturer);
-				else
+					ManufacturerCombo.SelectedItem = SelectManufacturer;
+
+				if (ManufacturerCombo.SelectedIndex < 0 && ManufacturerCombo.Items.Count > 0)
 					ManufacturerCombo.SelectedIndex = 0;
 				}
 			else

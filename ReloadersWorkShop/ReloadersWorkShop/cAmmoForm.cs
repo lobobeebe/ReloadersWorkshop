@@ -547,8 +547,10 @@ namespace ReloadersWorkShop
 
 			m_Ammo.Manufacturer = Manufacturer;
 
-			PartNumberTextBox.Value = "";
-			TypeTextBox.Value = "";
+			m_Ammo.PartNumber = "";
+			m_Ammo.Type = "";
+
+			PopulateAmmoData();
 
 			m_DataFiles.Preferences.LastAmmoManufacturer = m_Ammo.Manufacturer;
 
@@ -782,6 +784,8 @@ namespace ReloadersWorkShop
 
 			CaliberCombo.Items.Clear();
 
+			cCaliber SelectCaliber = null;
+
 			if (m_fViewOnly)
 				{
 				if (m_Ammo.Caliber != null)
@@ -795,12 +799,15 @@ namespace ReloadersWorkShop
 						Caliber.FirearmType == FirearmTypeCombo.Value)
 						{
 						CaliberCombo.Items.Add(Caliber);
+
+						if (Caliber.CompareTo(m_Ammo.Caliber) == 0)
+							SelectCaliber = Caliber;
 						}
 					}
 				}
 
-			if (m_Ammo.Caliber != null)
-				CaliberCombo.SelectedItem = m_Ammo.Caliber;
+			if (SelectCaliber != null)
+				CaliberCombo.SelectedItem = SelectCaliber;
 			else
 				{
 				if (m_DataFiles.Preferences.LastAmmoCaliber != null)
@@ -856,12 +863,15 @@ namespace ReloadersWorkShop
 
 			ManufacturerCombo.Items.Clear();
 
+			cManufacturer SelectManufacturer = null;
+
 			if (m_fViewOnly)
 				{
 				if (m_Ammo.Manufacturer != null)
 					ManufacturerCombo.Items.Add(m_Ammo.Manufacturer);
 
-				ManufacturerCombo.SelectedIndex = 0;
+				if (ManufacturerCombo.Items.Count > 0)
+					ManufacturerCombo.SelectedIndex = 0;
 				}
 			else
 				{
@@ -872,15 +882,18 @@ namespace ReloadersWorkShop
 
 					if (Manufacturer.Ammo)
 						ManufacturerCombo.Items.Add(Manufacturer);
+
+					if (Manufacturer.CompareTo(m_Ammo.Manufacturer) == 0)
+						SelectManufacturer = Manufacturer;
 					}
 
-				if (m_Ammo.Manufacturer == null)
+				if (SelectManufacturer == null)
 					{
 					if (m_DataFiles.Preferences.LastAmmoManufacturer != null)
 						ManufacturerCombo.SelectedItem = m_DataFiles.Preferences.LastAmmoManufacturer;
 					}
 				else
-					ManufacturerCombo.SelectedItem = m_Ammo.Manufacturer;
+					ManufacturerCombo.SelectedItem = SelectManufacturer;
 
 				if (ManufacturerCombo.SelectedIndex < 0 && ManufacturerCombo.Items.Count > 0)
 					{
