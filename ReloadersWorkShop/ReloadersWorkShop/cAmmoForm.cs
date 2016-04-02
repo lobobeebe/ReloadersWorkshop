@@ -547,8 +547,10 @@ namespace ReloadersWorkShop
 
 			m_Ammo.Manufacturer = Manufacturer;
 
-			PartNumberTextBox.Value = "";
-			TypeTextBox.Value = "";
+			m_Ammo.PartNumber = "";
+			m_Ammo.Type = "";
+
+			PopulateAmmoData();
 
 			m_DataFiles.Preferences.LastAmmoManufacturer = m_Ammo.Manufacturer;
 
