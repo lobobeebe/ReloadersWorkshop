@@ -32,13 +32,13 @@
 			this.OKButton = new System.Windows.Forms.Button();
 			this.TargetCalculatorMenuStrip = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-			this.openTargetFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.saveTargetFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.FileNewMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.FileOpenMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.FileSaveMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.FileSaveAsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.FileCloseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.OpenTargetImageMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.FileOpenTargetImageMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.NumShotsLabel = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
 			this.TotalShotsLabel = new System.Windows.Forms.Label();
@@ -96,57 +96,62 @@
 			// fileToolStripMenuItem
 			// 
 			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1,
-            this.openTargetFileToolStripMenuItem,
-            this.saveTargetFileToolStripMenuItem,
-            this.saveAsToolStripMenuItem,
-            this.closeToolStripMenuItem,
+            this.FileNewMenuItem,
+            this.FileOpenMenuItem,
+            this.FileSaveMenuItem,
+            this.FileSaveAsMenuItem,
+            this.FileCloseMenuItem,
             this.toolStripSeparator1,
-            this.OpenTargetImageMenuItem});
+            this.FileOpenTargetImageMenuItem});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
 			this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
 			this.fileToolStripMenuItem.Text = "&File";
 			// 
-			// toolStripMenuItem1
+			// FileNewMenuItem
 			// 
-			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-			this.toolStripMenuItem1.Size = new System.Drawing.Size(176, 22);
-			this.toolStripMenuItem1.Text = "&New";
+			this.FileNewMenuItem.Name = "FileNewMenuItem";
+			this.FileNewMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+			this.FileNewMenuItem.Size = new System.Drawing.Size(186, 22);
+			this.FileNewMenuItem.Text = "&New";
 			// 
-			// openTargetFileToolStripMenuItem
+			// FileOpenMenuItem
 			// 
-			this.openTargetFileToolStripMenuItem.Name = "openTargetFileToolStripMenuItem";
-			this.openTargetFileToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
-			this.openTargetFileToolStripMenuItem.Text = "&Open";
+			this.FileOpenMenuItem.Name = "FileOpenMenuItem";
+			this.FileOpenMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+			this.FileOpenMenuItem.Size = new System.Drawing.Size(186, 22);
+			this.FileOpenMenuItem.Text = "&Open";
 			// 
-			// saveTargetFileToolStripMenuItem
+			// FileSaveMenuItem
 			// 
-			this.saveTargetFileToolStripMenuItem.Name = "saveTargetFileToolStripMenuItem";
-			this.saveTargetFileToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
-			this.saveTargetFileToolStripMenuItem.Text = "&Save";
+			this.FileSaveMenuItem.Name = "FileSaveMenuItem";
+			this.FileSaveMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+			this.FileSaveMenuItem.Size = new System.Drawing.Size(186, 22);
+			this.FileSaveMenuItem.Text = "&Save";
 			// 
-			// saveAsToolStripMenuItem
+			// FileSaveAsMenuItem
 			// 
-			this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-			this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
-			this.saveAsToolStripMenuItem.Text = "Save *As";
+			this.FileSaveAsMenuItem.Name = "FileSaveAsMenuItem";
+			this.FileSaveAsMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.S)));
+			this.FileSaveAsMenuItem.Size = new System.Drawing.Size(186, 22);
+			this.FileSaveAsMenuItem.Text = "Save &As";
 			// 
-			// closeToolStripMenuItem
+			// FileCloseMenuItem
 			// 
-			this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-			this.closeToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
-			this.closeToolStripMenuItem.Text = "&Close";
+			this.FileCloseMenuItem.Name = "FileCloseMenuItem";
+			this.FileCloseMenuItem.Size = new System.Drawing.Size(176, 22);
+			this.FileCloseMenuItem.Text = "&Close";
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
 			this.toolStripSeparator1.Size = new System.Drawing.Size(173, 6);
 			// 
-			// OpenTargetImageMenuItem
+			// FileOpenTargetImageMenuItem
 			// 
-			this.OpenTargetImageMenuItem.Name = "OpenTargetImageMenuItem";
-			this.OpenTargetImageMenuItem.Size = new System.Drawing.Size(176, 22);
-			this.OpenTargetImageMenuItem.Text = "Open &Target Image";
+			this.FileOpenTargetImageMenuItem.Name = "FileOpenTargetImageMenuItem";
+			this.FileOpenTargetImageMenuItem.Size = new System.Drawing.Size(176, 22);
+			this.FileOpenTargetImageMenuItem.Text = "Open &Target Image";
 			// 
 			// NumShotsLabel
 			// 
@@ -321,7 +326,7 @@
 			this.BulletDiameterTextBox.NumDecimals = 0;
 			this.BulletDiameterTextBox.Size = new System.Drawing.Size(39, 20);
 			this.BulletDiameterTextBox.TabIndex = 16;
-			this.BulletDiameterTextBox.Text = "0.000";
+			this.BulletDiameterTextBox.Text = "0";
 			this.BulletDiameterTextBox.ToolTip = "";
 			this.BulletDiameterTextBox.Value = 0D;
 			this.BulletDiameterTextBox.ZeroAllowed = true;
@@ -407,13 +412,13 @@
 		private System.Windows.Forms.Button OKButton;
 		private System.Windows.Forms.MenuStrip TargetCalculatorMenuStrip;
 		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-		private System.Windows.Forms.ToolStripMenuItem openTargetFileToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem saveTargetFileToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem FileNewMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem FileOpenMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem FileSaveMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem FileSaveAsMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem FileCloseMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-		private System.Windows.Forms.ToolStripMenuItem OpenTargetImageMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem FileOpenTargetImageMenuItem;
 		private System.Windows.Forms.Label NumShotsLabel;
 		private System.Windows.Forms.Label label1;
 		private CommonLib.Controls.cIntegerValueTextBox RangeTextBox;

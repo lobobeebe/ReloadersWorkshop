@@ -107,10 +107,12 @@ namespace ReloadersWorkShop
 			// Event Handlers
 			//----------------------------------------------------------------------------*
 
-			OpenTargetImageMenuItem.Click += OnOpenTargetImageClicked;
+			FileNewMenuItem.Click += OnFileNew;
+			FileOpenTargetImageMenuItem.Click += OnFileOpenTargetImage;
 
 			CaliberCombo.SelectedIndexChanged += OnCaliberSelected;
 			BulletDiameterTextBox.TextChanged += OnBulletDiameterChanged;
+			RangeTextBox.TextChanged += OnRangeChanged;
 
 			TargetImageBox.Click += OnTargetClicked;
 			TargetImageBox.MouseDown += OnTargetMouseDown;
@@ -163,7 +165,7 @@ namespace ReloadersWorkShop
 
 		private void OnBulletDiameterChanged(Object sender, EventArgs e)
 			{
-			m_Target.BulletDiameter = BulletDiameterTextBox.Value;
+			m_Target.BulletDiameter = m_DataFiles.MetricToStandard(BulletDiameterTextBox.Value, cDataFiles.eDataType.Dimension);
 
 			SetOutputData();
 
@@ -187,10 +189,28 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// OnOpenTargetImageClicked()
+		// OnFileNew()
 		//============================================================================*
 
-		private void OnOpenTargetImageClicked(Object sender, EventArgs e)
+		private void OnFileNew(Object sender, EventArgs e)
+			{
+			m_Target.Image = null;
+			m_Target.CalibrationStart = new Point(0, 0);
+			m_Target.CalibrationEnd = new Point(0, 0);
+			m_Target.CalibrationLength = 0.0;
+
+			SetImage();
+
+			SetMode(eMode.LoadTarget);
+
+			SetOutputData();
+			}
+
+		//============================================================================*
+		// OnFileOpenTargetImage()
+		//============================================================================*
+
+		private void OnFileOpenTargetImage(Object sender, EventArgs e)
 			{
 			OpenFileDialog OpenTargetDialog = new OpenFileDialog();
 
@@ -241,6 +261,19 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// OnRangeChanged()
+		//============================================================================*
+
+		private void OnRangeChanged(Object sender, EventArgs e)
+			{
+			m_Target.Range = (int) m_DataFiles.MetricToStandard(RangeTextBox.Value, cDataFiles.eDataType.Range);
+
+			SetOutputData();
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
 		// OnResize()
 		//============================================================================*
 
@@ -268,7 +301,7 @@ namespace ReloadersWorkShop
 			switch (m_eMode)
 				{
 				case eMode.LoadTarget:
-					OnOpenTargetImageClicked(sender, e);
+					OnFileOpenTargetImage(sender, e);
 					break;
 
 				case eMode.Calibrate:
@@ -413,7 +446,11 @@ namespace ReloadersWorkShop
 		private void SetImage()
 			{
 			if (m_Target.Image == null)
+				{
+				TargetImageBox.Image = null;
+
 				return;
+				}
 
 			//----------------------------------------------------------------------------*
 			// Create a new bitmap for drawing
@@ -509,10 +546,6 @@ namespace ReloadersWorkShop
 
 			if (m_Target.Image == null)
 				{
-				ModeLabel.ForeColor = Color.Red;
-
-				ModeLabel.Text = "Load a Target Image to continue.";
-
 				m_eMode = eMode.LoadTarget;
 
 				Bitmap MousePointer = new Bitmap(Properties.Resources.OpenTarget);
@@ -541,11 +574,42 @@ namespace ReloadersWorkShop
 					}
 				}
 
-			ModeLabel.Location = new Point((ClientRectangle.Width / 2) - (ModeLabel.Width / 2), ModeLabel.Location.Y);
-
 			SetImage();
 
+			SetModeLabel();
+
 			UpdateButtons();
+			}
+
+		//============================================================================*
+		// SetModeLabel()
+		//============================================================================*
+
+		private void SetModeLabel()
+			{
+			ModeLabel.ForeColor = SystemColors.ControlText;
+			ModeLabel.Text = "Mode: ";
+
+			switch (m_eMode)
+				{
+				case eMode.LoadTarget:
+					ModeLabel.Text += "Load Target Image";
+
+					break;
+
+				case eMode.Calibrate:
+					ModeLabel.Text += "Calibration";
+
+					TargetImageBox.Cursor = Cursors.Default;
+
+					break;
+
+				default:
+					ModeLabel.Text += "Mark Shots";
+					break;
+				}
+
+			ModeLabel.Location = new Point((ClientRectangle.Width / 2) - (ModeLabel.Width / 2), ModeLabel.Location.Y);
 			}
 
 		//============================================================================*
@@ -670,12 +734,17 @@ namespace ReloadersWorkShop
 
 			if (!RangeTextBox.ValueOK || !BulletDiameterTextBox.ValueOK)
 				{
+				ModeLabel.ForeColor = Color.Red;
+
 				ModeLabel.Text = "Enter valid Input Data above to continue.";
 
 				TargetImageBox.Enabled = false;
 				}
 			else
 				{
+				SetModeLabel();
+
+				TargetImageBox.Enabled = true;
 				}
 
 			if (fEnableOK)
