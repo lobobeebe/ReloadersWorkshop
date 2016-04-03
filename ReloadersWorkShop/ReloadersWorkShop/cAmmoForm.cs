@@ -113,6 +113,8 @@ namespace ReloadersWorkShop
 					m_Ammo.PartNumber = "";
 					m_Ammo.Type = "";
 					m_Ammo.BallisticCoefficient = 0.0;
+					m_Ammo.BatchID = 0;
+					m_Ammo.Reload = false;
 
 					m_Ammo.ResetAllInventoryData();
 
