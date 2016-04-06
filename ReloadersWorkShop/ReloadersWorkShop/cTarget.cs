@@ -55,7 +55,41 @@ namespace ReloadersWorkShop
 
 		private Bitmap m_TargetImage = null;
 
+		private Point m_AimPoint = new Point(0, 0);
+
 		private List<Point> m_ShotList = new List<Point>();
+
+		//============================================================================*
+		// AddShot()
+		//============================================================================*
+
+		public bool AddShot(Point Shot)
+			{
+			if (m_nBatchID == 0 || (m_nBatchID != 0 && m_ShotList.Count < m_nNumShots))
+				{
+				m_ShotList.Add(Shot);
+
+				return (true);
+				}
+
+			return (false);
+			}
+
+		//============================================================================*
+		// AimPoint Property
+		//============================================================================*
+
+		public Point AimPoint
+			{
+			get
+				{
+				return (m_AimPoint);
+				}
+			set
+				{
+				m_AimPoint = value;
+				}
+			}
 
 		//============================================================================*
 		// BatchID Property
@@ -90,6 +124,25 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// BulletPixels Property
+		//============================================================================*
+
+		public int BulletPixels
+			{
+			get
+				{
+				int nPixels = 0;
+
+				if (Calibrated && PixelsPerInch > 0 && m_dBulletDiameter > 0.0)
+					{
+					nPixels = (int) ((double) PixelsPerInch * m_dBulletDiameter);
+					}
+
+				return (nPixels);
+				}
+			}
+
+		//============================================================================*
 		// Caliber Property
 		//============================================================================*
 
@@ -102,6 +155,11 @@ namespace ReloadersWorkShop
 			set
 				{
 				m_Caliber = value;
+
+				if (m_Caliber != null)
+					m_dBulletDiameter = m_Caliber.MinBulletDiameter;
+				else
+					m_dBulletDiameter = 0.0;
 				}
 			}
 
@@ -113,7 +171,7 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				return (CalibrationPixels > cm_nMinCalibrationPixels && CalibrationLength > cm_dMinCalibrationLength);
+				return (CalibrationPixels >= cm_nMinCalibrationPixels && CalibrationLength >= cm_dMinCalibrationLength);
 				}
 			}
 
@@ -206,11 +264,34 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
+				m_dGroupSize = 0.0;
+
+				int nShotNum = 0;
+
+				if (Calibrated)
+					{
+					foreach (Point Shot in m_ShotList)
+						{
+						for (int i = 0; i < m_ShotList.Count; i++)
+							{
+							if (i == nShotNum)
+								continue;
+
+							Point CheckShotShot = m_ShotList[i];
+
+							double dGroupSize = Math.Sqrt(Math.Pow(Math.Abs(Shot.X - CheckShotShot.X), 2) + Math.Pow(Math.Abs(Shot.Y - CheckShotShot.Y), 2));
+
+							if (dGroupSize > m_dGroupSize)
+								m_dGroupSize = dGroupSize;
+							}
+
+						nShotNum++;
+						}
+
+					m_dGroupSize /= PixelsPerInch;
+					}
+
 				return (m_dGroupSize);
-				}
-			set
-				{
-				m_dGroupSize = value;
 				}
 			}
 
@@ -233,6 +314,35 @@ namespace ReloadersWorkShop
 				m_CalibrationEnd = Point.Empty;
 
 				m_ShotList.Clear();
+				}
+			}
+
+		//============================================================================*
+		// MeanOffset Property
+		//============================================================================*
+
+		public PointF MeanOffset
+			{
+			get
+				{
+				PointF OffsetPoint = new PointF(0.0f, 0.0f);
+
+				if (m_AimPoint.X != 0 && AimPoint.Y != 0 && m_ShotList.Count != 0 && PixelsPerInch != 0)
+					{
+					foreach (Point Shot in m_ShotList)
+						{
+						OffsetPoint.X += (Shot.X - m_AimPoint.X);
+						OffsetPoint.Y += (m_AimPoint.Y - Shot.Y);
+						}
+
+					OffsetPoint.X /= PixelsPerInch;
+					OffsetPoint.Y /= PixelsPerInch;
+
+					OffsetPoint.X /= m_ShotList.Count;
+					OffsetPoint.Y /= m_ShotList.Count;
+					}
+
+				return (OffsetPoint);
 				}
 			}
 

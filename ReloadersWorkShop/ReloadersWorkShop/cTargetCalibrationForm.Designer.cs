@@ -41,7 +41,7 @@
 			this.OKButton.Location = new System.Drawing.Point(129, 91);
 			this.OKButton.Name = "OKButton";
 			this.OKButton.Size = new System.Drawing.Size(75, 23);
-			this.OKButton.TabIndex = 0;
+			this.OKButton.TabIndex = 1;
 			this.OKButton.Text = "OK";
 			this.OKButton.UseVisualStyleBackColor = true;
 			// 
@@ -51,7 +51,7 @@
 			this.FormCancelButton.Location = new System.Drawing.Point(226, 91);
 			this.FormCancelButton.Name = "FormCancelButton";
 			this.FormCancelButton.Size = new System.Drawing.Size(75, 23);
-			this.FormCancelButton.TabIndex = 1;
+			this.FormCancelButton.TabIndex = 2;
 			this.FormCancelButton.Text = "Cancel";
 			this.FormCancelButton.UseVisualStyleBackColor = true;
 			// 
@@ -74,8 +74,8 @@
 			this.CalibrationLengthTextBox.Name = "CalibrationLengthTextBox";
 			this.CalibrationLengthTextBox.NumDecimals = 0;
 			this.CalibrationLengthTextBox.Size = new System.Drawing.Size(46, 20);
-			this.CalibrationLengthTextBox.TabIndex = 3;
-			this.CalibrationLengthTextBox.Text = "3.0";
+			this.CalibrationLengthTextBox.TabIndex = 0;
+			this.CalibrationLengthTextBox.Text = "3";
 			this.CalibrationLengthTextBox.ToolTip = "";
 			this.CalibrationLengthTextBox.Value = 3D;
 			this.CalibrationLengthTextBox.ZeroAllowed = true;

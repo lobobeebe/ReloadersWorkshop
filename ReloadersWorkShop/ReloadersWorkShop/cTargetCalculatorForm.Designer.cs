@@ -53,10 +53,13 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.CaliberCombo = new System.Windows.Forms.ComboBox();
 			this.label4 = new System.Windows.Forms.Label();
-			this.BulletDiameterTextBox = new CommonLib.Controls.cDoubleValueTextBox();
-			this.DiameterMeasurementLabel = new System.Windows.Forms.Label();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.TargetImageBox = new System.Windows.Forms.PictureBox();
+			this.BulletDiameterLabel = new System.Windows.Forms.Label();
+			this.MilsLabel = new System.Windows.Forms.Label();
+			this.label7 = new System.Windows.Forms.Label();
+			this.OffsetLabel = new System.Windows.Forms.Label();
+			this.label8 = new System.Windows.Forms.Label();
 			this.TargetCalculatorMenuStrip.SuspendLayout();
 			this.OutputGroupBox.SuspendLayout();
 			this.groupBox1.SuspendLayout();
@@ -139,18 +142,18 @@
 			// FileCloseMenuItem
 			// 
 			this.FileCloseMenuItem.Name = "FileCloseMenuItem";
-			this.FileCloseMenuItem.Size = new System.Drawing.Size(176, 22);
+			this.FileCloseMenuItem.Size = new System.Drawing.Size(186, 22);
 			this.FileCloseMenuItem.Text = "&Close";
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(173, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(183, 6);
 			// 
 			// FileOpenTargetImageMenuItem
 			// 
 			this.FileOpenTargetImageMenuItem.Name = "FileOpenTargetImageMenuItem";
-			this.FileOpenTargetImageMenuItem.Size = new System.Drawing.Size(176, 22);
+			this.FileOpenTargetImageMenuItem.Size = new System.Drawing.Size(186, 22);
 			this.FileOpenTargetImageMenuItem.Text = "Open &Target Image";
 			// 
 			// NumShotsLabel
@@ -188,6 +191,10 @@
 			// 
 			// OutputGroupBox
 			// 
+			this.OutputGroupBox.Controls.Add(this.OffsetLabel);
+			this.OutputGroupBox.Controls.Add(this.label8);
+			this.OutputGroupBox.Controls.Add(this.MilsLabel);
+			this.OutputGroupBox.Controls.Add(this.label7);
 			this.OutputGroupBox.Controls.Add(this.MOALabel);
 			this.OutputGroupBox.Controls.Add(this.label5);
 			this.OutputGroupBox.Controls.Add(this.GroupSizeLabel);
@@ -206,7 +213,7 @@
 			this.MOALabel.AutoSize = true;
 			this.MOALabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.MOALabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.MOALabel.Location = new System.Drawing.Point(84, 56);
+			this.MOALabel.Location = new System.Drawing.Point(197, 31);
 			this.MOALabel.Name = "MOALabel";
 			this.MOALabel.Size = new System.Drawing.Size(39, 13);
 			this.MOALabel.TabIndex = 3;
@@ -217,7 +224,7 @@
 			this.label5.AutoSize = true;
 			this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label5.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label5.Location = new System.Drawing.Point(43, 56);
+			this.label5.Location = new System.Drawing.Point(156, 31);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(34, 13);
 			this.label5.TabIndex = 2;
@@ -230,9 +237,9 @@
 			this.GroupSizeLabel.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.GroupSizeLabel.Location = new System.Drawing.Point(84, 31);
 			this.GroupSizeLabel.Name = "GroupSizeLabel";
-			this.GroupSizeLabel.Size = new System.Drawing.Size(81, 13);
+			this.GroupSizeLabel.Size = new System.Drawing.Size(54, 13);
 			this.GroupSizeLabel.TabIndex = 1;
-			this.GroupSizeLabel.Text = "0.000 Inches";
+			this.GroupSizeLabel.Text = "0.000 In";
 			// 
 			// label2
 			// 
@@ -260,7 +267,7 @@
 			// 
 			this.ModeLabel.AutoSize = true;
 			this.ModeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.ModeLabel.Location = new System.Drawing.Point(507, 115);
+			this.ModeLabel.Location = new System.Drawing.Point(26, 118);
 			this.ModeLabel.Name = "ModeLabel";
 			this.ModeLabel.Size = new System.Drawing.Size(55, 16);
 			this.ModeLabel.TabIndex = 11;
@@ -314,40 +321,11 @@
 			this.label4.TabIndex = 15;
 			this.label4.Text = "Bullet Diameter:";
 			// 
-			// BulletDiameterTextBox
-			// 
-			this.BulletDiameterTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.BulletDiameterTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BulletDiameterTextBox.Location = new System.Drawing.Point(259, 53);
-			this.BulletDiameterTextBox.MaxLength = 5;
-			this.BulletDiameterTextBox.MaxValue = 0D;
-			this.BulletDiameterTextBox.MinValue = 0D;
-			this.BulletDiameterTextBox.Name = "BulletDiameterTextBox";
-			this.BulletDiameterTextBox.NumDecimals = 0;
-			this.BulletDiameterTextBox.Size = new System.Drawing.Size(39, 20);
-			this.BulletDiameterTextBox.TabIndex = 16;
-			this.BulletDiameterTextBox.Text = "0";
-			this.BulletDiameterTextBox.ToolTip = "";
-			this.BulletDiameterTextBox.Value = 0D;
-			this.BulletDiameterTextBox.ZeroAllowed = true;
-			// 
-			// DiameterMeasurementLabel
-			// 
-			this.DiameterMeasurementLabel.AutoSize = true;
-			this.DiameterMeasurementLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.DiameterMeasurementLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.DiameterMeasurementLabel.Location = new System.Drawing.Point(304, 56);
-			this.DiameterMeasurementLabel.Name = "DiameterMeasurementLabel";
-			this.DiameterMeasurementLabel.Size = new System.Drawing.Size(18, 13);
-			this.DiameterMeasurementLabel.TabIndex = 17;
-			this.DiameterMeasurementLabel.Text = "in.";
-			// 
 			// groupBox1
 			// 
+			this.groupBox1.Controls.Add(this.BulletDiameterLabel);
 			this.groupBox1.Controls.Add(this.NumShotsLabel);
-			this.groupBox1.Controls.Add(this.DiameterMeasurementLabel);
 			this.groupBox1.Controls.Add(this.label1);
-			this.groupBox1.Controls.Add(this.BulletDiameterTextBox);
 			this.groupBox1.Controls.Add(this.RangeTextBox);
 			this.groupBox1.Controls.Add(this.label4);
 			this.groupBox1.Controls.Add(this.TotalShotsLabel);
@@ -371,6 +349,61 @@
 			this.TargetImageBox.Size = new System.Drawing.Size(984, 519);
 			this.TargetImageBox.TabIndex = 12;
 			this.TargetImageBox.TabStop = false;
+			// 
+			// BulletDiameterLabel
+			// 
+			this.BulletDiameterLabel.AutoSize = true;
+			this.BulletDiameterLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BulletDiameterLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.BulletDiameterLabel.Location = new System.Drawing.Point(259, 56);
+			this.BulletDiameterLabel.Name = "BulletDiameterLabel";
+			this.BulletDiameterLabel.Size = new System.Drawing.Size(28, 13);
+			this.BulletDiameterLabel.TabIndex = 16;
+			this.BulletDiameterLabel.Text = "999";
+			// 
+			// MilsLabel
+			// 
+			this.MilsLabel.AutoSize = true;
+			this.MilsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.MilsLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.MilsLabel.Location = new System.Drawing.Point(296, 31);
+			this.MilsLabel.Name = "MilsLabel";
+			this.MilsLabel.Size = new System.Drawing.Size(39, 13);
+			this.MilsLabel.TabIndex = 5;
+			this.MilsLabel.Text = "0.000";
+			// 
+			// label7
+			// 
+			this.label7.AutoSize = true;
+			this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label7.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label7.Location = new System.Drawing.Point(262, 31);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(28, 13);
+			this.label7.TabIndex = 4;
+			this.label7.Text = "Mils:";
+			// 
+			// OffsetLabel
+			// 
+			this.OffsetLabel.AutoSize = true;
+			this.OffsetLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.OffsetLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.OffsetLabel.Location = new System.Drawing.Point(197, 56);
+			this.OffsetLabel.Name = "OffsetLabel";
+			this.OffsetLabel.Size = new System.Drawing.Size(54, 13);
+			this.OffsetLabel.TabIndex = 7;
+			this.OffsetLabel.Text = "0.000 In";
+			// 
+			// label8
+			// 
+			this.label8.AutoSize = true;
+			this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label8.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label8.Location = new System.Drawing.Point(52, 56);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(138, 13);
+			this.label8.TabIndex = 6;
+			this.label8.Text = "Mean Offset from Aim Point:";
 			// 
 			// cTargetCalculatorForm
 			// 
@@ -433,9 +466,12 @@
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.ComboBox CaliberCombo;
 		private System.Windows.Forms.Label label4;
-		private CommonLib.Controls.cDoubleValueTextBox BulletDiameterTextBox;
-		private System.Windows.Forms.Label DiameterMeasurementLabel;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.PictureBox TargetImageBox;
+		private System.Windows.Forms.Label BulletDiameterLabel;
+		private System.Windows.Forms.Label MilsLabel;
+		private System.Windows.Forms.Label label7;
+		private System.Windows.Forms.Label OffsetLabel;
+		private System.Windows.Forms.Label label8;
 		}
 	}
