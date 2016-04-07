@@ -24,6 +24,7 @@ namespace ReloadersWorkShop
 	// cTarget Class
 	//============================================================================*
 
+	[Serializable]
 	public class cTarget
 		{
 		//============================================================================*
@@ -335,11 +336,11 @@ namespace ReloadersWorkShop
 						OffsetPoint.Y += (m_AimPoint.Y - Shot.Y);
 						}
 
-					OffsetPoint.X /= PixelsPerInch;
-					OffsetPoint.Y /= PixelsPerInch;
+					OffsetPoint.X /= (float) m_ShotList.Count;
+					OffsetPoint.Y /= (float) m_ShotList.Count;
 
-					OffsetPoint.X /= m_ShotList.Count;
-					OffsetPoint.Y /= m_ShotList.Count;
+					OffsetPoint.X /= (float) PixelsPerInch;
+					OffsetPoint.Y /= (float) PixelsPerInch;
 					}
 
 				return (OffsetPoint);

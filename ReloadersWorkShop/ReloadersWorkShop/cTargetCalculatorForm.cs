@@ -60,6 +60,7 @@ namespace ReloadersWorkShop
 		private bool m_fMouseDown = false;
 
 		private Bitmap m_TargetImage = null;
+		private Bitmap m_CalibrationBar = null;
 
 		//============================================================================*
 		// cTargetCalculatorForm()
@@ -88,6 +89,63 @@ namespace ReloadersWorkShop
 			m_Target.Range = nRange;
 
 			Initialize();
+			}
+
+		//============================================================================*
+		// CreateCalibrationBar()
+		//============================================================================*
+
+		private Bitmap CreateCalibrationBar()
+			{
+			if (!m_Target.Calibrated)
+				return (null);
+
+			Font BarFont = new Font(SystemFonts.DefaultFont, FontStyle.Bold);
+
+			Bitmap CalibrationBar = new Bitmap(m_TargetImage.Width, (int) ((double) BarFont.Height * 4.5));
+
+			Graphics g = Graphics.FromImage(CalibrationBar);
+
+			g.FillRectangle(Brushes.Yellow, 0, 0, CalibrationBar.Width, CalibrationBar.Height);
+
+			int nY = CalibrationBar.Height;
+			int nInches = CalibrationBar.Width / m_Target.PixelsPerInch;
+
+			for (int i = 0; i <= nInches * 4; i++)
+				{
+				int nX = 20 + (i * (m_Target.PixelsPerInch / 4));
+				int nY1 = nY - BarFont.Height;
+
+				if (i % 4 == 0)
+					{
+					nY1 -= (BarFont.Height * 2);
+
+					g.DrawLine(Pens.Black, nX, nY, nX, nY1);
+
+					nY1 -= BarFont.Height;
+
+					string strText = String.Format("{0:G0}", i / 4);
+
+					SizeF FontSize = g.MeasureString(strText, BarFont);
+
+					g.DrawString(strText, BarFont, Brushes.Black, nX - (FontSize.Width / 2), nY1);
+					}
+				else
+					{
+					if (i % 2 == 0)
+						{
+						nY1 -= BarFont.Height;
+
+						g.DrawLine(Pens.Black, nX, nY, nX, nY1);
+						}
+					else
+						{
+						g.DrawLine(Pens.Black, nX, nY, nX, nY1);
+						}
+					}
+				}
+
+			return (CalibrationBar);
 			}
 
 		//============================================================================*
@@ -216,11 +274,11 @@ namespace ReloadersWorkShop
 			CaliberCombo.SelectedIndexChanged += OnCaliberSelected;
 			RangeTextBox.TextChanged += OnRangeChanged;
 
-			//			TargetImageBox.Click += OnTargetClicked;
-			TargetImageBox.MouseClick += OnTargetMouseClick;
 			TargetImageBox.MouseDown += OnTargetMouseDown;
 			TargetImageBox.MouseUp += OnTargetMouseUp;
 			TargetImageBox.MouseMove += OnTargetMouseMove;
+
+			ShowCalibrationCheckBox.Click += OnShowCalibrationClicked;
 
 			//----------------------------------------------------------------------------*
 			// Set Target Size
@@ -292,6 +350,8 @@ namespace ReloadersWorkShop
 			m_Target.CalibrationStart = new Point(0, 0);
 			m_Target.CalibrationEnd = new Point(0, 0);
 			m_Target.CalibrationLength = 0.0;
+
+			m_TargetImage = null;
 
 			SetImage();
 
@@ -392,10 +452,21 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// OnTargetMouseClick()
+		// OnShowCalibrationClicked()
 		//============================================================================*
 
-		private void OnTargetMouseClick(Object sender, MouseEventArgs e)
+		private void OnShowCalibrationClicked(Object sender, EventArgs e)
+			{
+			SetImage();
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
+		// OnTargetMouseDown()
+		//============================================================================*
+
+		private void OnTargetMouseDown(Object sender, MouseEventArgs e)
 			{
 			switch (m_eMode)
 				{
@@ -404,13 +475,17 @@ namespace ReloadersWorkShop
 					break;
 
 				case eMode.Calibrate:
+					m_fMouseDown = true;
+
+					m_Target.CalibrationStart = e.Location;
+					m_Target.CalibrationEnd = e.Location;
+
+					SetImage();
+
 					break;
 
 				case eMode.AimPoint:
 					Point AimPoint = new Point(e.X, e.Y);
-					AimPoint.X -= TargetImageBox.Cursor.HotSpot.X;
-					AimPoint.Y -= TargetImageBox.Cursor.HotSpot.Y;
-
 					m_Target.AimPoint = AimPoint;
 
 					SetMode(eMode.MarkShots);
@@ -437,23 +512,6 @@ namespace ReloadersWorkShop
 				}
 
 			UpdateButtons();
-			}
-
-		//============================================================================*
-		// OnTargetMouseDown()
-		//============================================================================*
-
-		private void OnTargetMouseDown(Object sender, MouseEventArgs e)
-			{
-			if (m_eMode != eMode.Calibrate)
-				return;
-
-			m_fMouseDown = true;
-
-			m_Target.CalibrationStart = e.Location;
-			m_Target.CalibrationEnd = e.Location;
-
-			SetImage();
 			}
 
 		//============================================================================*
@@ -498,6 +556,8 @@ namespace ReloadersWorkShop
 				m_Target.CalibrationStart = new Point(0, 0);
 				m_Target.CalibrationEnd = new Point(0, 0);
 				m_Target.CalibrationLength = 0.0;
+
+				m_CalibrationBar = null;
 				}
 			else
 				{
@@ -508,12 +568,16 @@ namespace ReloadersWorkShop
 				if (rc == DialogResult.OK)
 					{
 					SetMode(eMode.AimPoint);
+
+					m_CalibrationBar = CreateCalibrationBar();
 					}
 				else
 					{
 					m_Target.CalibrationStart = new Point(0, 0);
 					m_Target.CalibrationEnd = new Point(0, 0);
 					m_Target.CalibrationLength = 0.0;
+
+					m_CalibrationBar = null;
 					}
 				}
 
@@ -590,22 +654,20 @@ namespace ReloadersWorkShop
 			// Draw Calibration Line
 			//----------------------------------------------------------------------------*
 
-			if (m_Target.CalibrationPixels > 0)
+			if (m_Target.CalibrationPixels > 0 && m_eMode == eMode.Calibrate)
 				{
-				Pen LinePen = null;
+				Pen LinePen = new Pen(m_Target.CalibrationPixels < m_Target.MinCalibrationPixels ? Brushes.Red : Brushes.Green, 3);
 
-				switch (m_eMode)
-					{
-					case eMode.Calibrate:
-						LinePen = new Pen(m_Target.CalibrationPixels < m_Target.MinCalibrationPixels ? Brushes.Red : Brushes.Green, 3);
+				g.DrawLine(LinePen, m_Target.CalibrationStart, m_Target.CalibrationEnd);
+				}
 
-						g.DrawLine(LinePen, m_Target.CalibrationStart, m_Target.CalibrationEnd);
+			//----------------------------------------------------------------------------*
+			// Draw Calibration Bar
+			//----------------------------------------------------------------------------*
 
-						break;
-
-					default:
-						break;
-					}
+			if (m_Target.Calibrated && m_CalibrationBar != null && ShowCalibrationCheckBox.Checked)
+				{
+				g.DrawImage(m_CalibrationBar, (TargetImage.Width / 2) - (m_CalibrationBar.Width / 2), TargetImage.Height - m_CalibrationBar.Height);
 				}
 
 			//----------------------------------------------------------------------------*
@@ -709,8 +771,6 @@ namespace ReloadersWorkShop
 				case eMode.Calibrate:
 					ModeLabel.Text += "Calibration";
 
-					TargetImageBox.Cursor = Cursors.Default;
-
 					break;
 
 				case eMode.AimPoint:
@@ -722,8 +782,6 @@ namespace ReloadersWorkShop
 					ModeLabel.Text += "Mark Shots";
 					break;
 				}
-
-//			ModeLabel.Location = new Point((ClientRectangle.Width / 2) - (ModeLabel.Width / 2), ModeLabel.Location.Y);
 			}
 
 		//============================================================================*
@@ -769,27 +827,29 @@ namespace ReloadersWorkShop
 			MOALabel.Text = String.Format("{0:F3}", dMOA);
 			MilsLabel.Text = String.Format("{0:F3}", dMils);
 
-			string strOffset = String.Format(strGroupFormat, Math.Abs(m_Target.MeanOffset.X), m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize));
+			PointF MeanOffset = m_Target.MeanOffset;
 
-			if (m_Target.MeanOffset.X == 0)
+			string strOffset = String.Format(strGroupFormat, Math.Abs(MeanOffset.X), m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize));
+
+			if (Math.Round(MeanOffset.X, m_DataFiles.Preferences.DimensionDecimals) == 0.0)
 				strOffset += " Horizontal";
 			else
 				{
-				if (m_Target.MeanOffset.X < 0)
+				if (MeanOffset.X < 0)
 					strOffset += " Left";
 				else
 					strOffset += " Right";
 				}
 
-			strOffset += " - ";
+			strOffset += " x ";
 
 			strOffset += String.Format(strGroupFormat, Math.Abs(m_Target.MeanOffset.Y), m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize));
 
-			if (m_Target.MeanOffset.Y == 0)
+			if (Math.Round(MeanOffset.Y, m_DataFiles.Preferences.DimensionDecimals) == 0.0)
 				strOffset += " Vertical";
 			else
 				{
-				if (m_Target.MeanOffset.Y > 0)
+				if (MeanOffset.Y > 0)
 					strOffset += " High";
 				else
 					strOffset += " Low";

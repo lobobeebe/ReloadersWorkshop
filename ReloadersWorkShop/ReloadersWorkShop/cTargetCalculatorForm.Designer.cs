@@ -60,6 +60,7 @@
 			this.label7 = new System.Windows.Forms.Label();
 			this.OffsetLabel = new System.Windows.Forms.Label();
 			this.label8 = new System.Windows.Forms.Label();
+			this.ShowCalibrationCheckBox = new System.Windows.Forms.CheckBox();
 			this.TargetCalculatorMenuStrip.SuspendLayout();
 			this.OutputGroupBox.SuspendLayout();
 			this.groupBox1.SuspendLayout();
@@ -388,7 +389,7 @@
 			this.OffsetLabel.AutoSize = true;
 			this.OffsetLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.OffsetLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.OffsetLabel.Location = new System.Drawing.Point(197, 56);
+			this.OffsetLabel.Location = new System.Drawing.Point(173, 56);
 			this.OffsetLabel.Name = "OffsetLabel";
 			this.OffsetLabel.Size = new System.Drawing.Size(54, 13);
 			this.OffsetLabel.TabIndex = 7;
@@ -401,9 +402,21 @@
 			this.label8.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.label8.Location = new System.Drawing.Point(52, 56);
 			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(138, 13);
+			this.label8.Size = new System.Drawing.Size(115, 13);
 			this.label8.TabIndex = 6;
-			this.label8.Text = "Mean Offset from Aim Point:";
+			this.label8.Text = "Mean Aim Point Offset:";
+			// 
+			// ShowCalibrationCheckBox
+			// 
+			this.ShowCalibrationCheckBox.AutoSize = true;
+			this.ShowCalibrationCheckBox.Checked = true;
+			this.ShowCalibrationCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.ShowCalibrationCheckBox.Location = new System.Drawing.Point(329, 119);
+			this.ShowCalibrationCheckBox.Name = "ShowCalibrationCheckBox";
+			this.ShowCalibrationCheckBox.Size = new System.Drawing.Size(105, 17);
+			this.ShowCalibrationCheckBox.TabIndex = 13;
+			this.ShowCalibrationCheckBox.Text = "Show Calibration";
+			this.ShowCalibrationCheckBox.UseVisualStyleBackColor = true;
 			// 
 			// cTargetCalculatorForm
 			// 
@@ -412,6 +425,7 @@
 			this.CancelButton = this.TargetCalculatorCancelButton;
 			this.ClientSize = new System.Drawing.Size(1068, 752);
 			this.ControlBox = false;
+			this.Controls.Add(this.ShowCalibrationCheckBox);
 			this.Controls.Add(this.TargetImageBox);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.ModeLabel);
@@ -473,5 +487,6 @@
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.Label OffsetLabel;
 		private System.Windows.Forms.Label label8;
+		private System.Windows.Forms.CheckBox ShowCalibrationCheckBox;
 		}
 	}
