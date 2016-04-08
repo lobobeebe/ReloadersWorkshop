@@ -12,6 +12,7 @@
 using System;
 using System.Drawing;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 
 using CommonLib.Conversions;
@@ -61,6 +62,10 @@ namespace ReloadersWorkShop
 
 		private Bitmap m_TargetImage = null;
 		private Bitmap m_CalibrationBar = null;
+		private Bitmap m_AimPoint = null;
+		private Bitmap m_AimPointOffset = null;
+
+		private string m_strFolder = null;
 
 		//============================================================================*
 		// cTargetCalculatorForm()
@@ -92,6 +97,48 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// CreateAimPointBitmap()
+		//============================================================================*
+
+		private Bitmap CreateAimPointBitmap(Brush AimPointBrush)
+			{
+			Bitmap AimPoint = new Bitmap((int) (m_Target.PixelsPerInch * 0.75), (int) (m_Target.PixelsPerInch * 0.75));
+
+			Pen AimPointPen = new Pen(AimPointBrush, 3.0f);
+
+			Graphics g = Graphics.FromImage(AimPoint);
+
+			int nX = AimPoint.Width / 2;
+			int nX1 = nX;
+			int nY = m_Target.PixelsPerInch / 8;
+			int nY1 = nY + m_Target.PixelsPerInch / 8;
+
+			g.DrawLine(AimPointPen, nX, nY, nX1, nY1);
+
+			nY = nY1 + m_Target.PixelsPerInch / 4;
+			nY1 = nY + m_Target.PixelsPerInch / 8;
+
+			g.DrawLine(AimPointPen, nX, nY, nX1, nY1);
+
+			nX = m_Target.PixelsPerInch / 8;
+			nX1 = nX + m_Target.PixelsPerInch / 8;
+			nY = AimPoint.Height / 2;
+			nY1 = nY;
+
+			g.DrawLine(AimPointPen, nX, nY, nX1, nY1);
+
+			nX = nX1 + m_Target.PixelsPerInch / 4;
+			nX1 = nX + m_Target.PixelsPerInch / 8;
+
+			g.DrawLine(AimPointPen, nX, nY, nX1, nY1);
+
+			g.DrawLine(AimPointPen, (AimPoint.Width / 2) - (m_Target.PixelsPerInch / 16), (AimPoint.Height / 2), (AimPoint.Width / 2) + (m_Target.PixelsPerInch / 16), (AimPoint.Height / 2));
+			g.DrawLine(AimPointPen, (AimPoint.Width / 2), (AimPoint.Height / 2) - (m_Target.PixelsPerInch / 16), (AimPoint.Width / 2), (AimPoint.Height / 2) + (m_Target.PixelsPerInch / 16));
+
+			return (AimPoint);
+			}
+
+		//============================================================================*
 		// CreateCalibrationBar()
 		//============================================================================*
 
@@ -109,9 +156,9 @@ namespace ReloadersWorkShop
 			g.FillRectangle(Brushes.Yellow, 0, 0, CalibrationBar.Width, CalibrationBar.Height);
 
 			int nY = CalibrationBar.Height;
-			int nInches = CalibrationBar.Width / m_Target.PixelsPerInch;
+			int nIncrements = CalibrationBar.Width / (m_Target.PixelsPerInch / 4);
 
-			for (int i = 0; i <= nInches * 4; i++)
+			for (int i = 0; i <= nIncrements; i++)
 				{
 				int nX = 20 + (i * (m_Target.PixelsPerInch / 4));
 				int nY1 = nY - BarFont.Height;
@@ -264,12 +311,19 @@ namespace ReloadersWorkShop
 
 		private void Initialize()
 			{
+			VerifyTargetFolder();
+
 			//----------------------------------------------------------------------------*
 			// Event Handlers
 			//----------------------------------------------------------------------------*
 
 			FileNewMenuItem.Click += OnFileNew;
+			FileOpenMenuItem.Click += OnFileOpen;
 			FileOpenTargetImageMenuItem.Click += OnFileOpenTargetImage;
+			FileSaveMenuItem.Click += OnFileSave;
+			FileSaveAsMenuItem.Click += OnFileSaveAs;
+
+			EditUndoMenuItem.Click += OnEditUndo;
 
 			CaliberCombo.SelectedIndexChanged += OnCaliberSelected;
 			RangeTextBox.TextChanged += OnRangeChanged;
@@ -278,7 +332,12 @@ namespace ReloadersWorkShop
 			TargetImageBox.MouseUp += OnTargetMouseUp;
 			TargetImageBox.MouseMove += OnTargetMouseMove;
 
-			ShowCalibrationCheckBox.Click += OnShowCalibrationClicked;
+			ShowAimPointCheckBox.Click += OnShowButtonClicked;
+			ShowMeanOffsetCheckBox.Click += OnShowButtonClicked;
+			ShowCalibrationCheckBox.Click += OnShowButtonClicked;
+
+			OKButton.Click += OnOKClicked;
+			FormClosing += OnFormClosing;
 
 			//----------------------------------------------------------------------------*
 			// Set Target Size
@@ -292,20 +351,27 @@ namespace ReloadersWorkShop
 			// Populate Data
 			//----------------------------------------------------------------------------*
 
+			PopulateCaliberCombo();
+
 			if (m_Target.BatchID != 0)
+				{
 				m_Batch = m_DataFiles.GetBatchByID(m_Target.BatchID);
+
+				m_strFileName = string.Format("Batch {0:G0} Target File.rwt", m_Target.BatchID);
+
+				m_strFolder = Path.Combine(m_DataFiles.GetDataPath(), "Target Files");
+
+				if (File.Exists(Path.Combine(m_strFolder, m_strFileName)))
+					Open();
+				}
 			else
 				m_Batch = null;
-
-			SetTitle();
-
-			PopulateCaliberCombo();
 
 			SetInputParameters();
 
 			SetInputData();
 
-			SetMode(eMode.LoadTarget);
+			SetMode(m_Target.BatchID == 0 ? eMode.LoadTarget : eMode.MarkShots);
 
 			SetTargetImageSize();
 
@@ -313,7 +379,7 @@ namespace ReloadersWorkShop
 			// Clean up and exit
 			//----------------------------------------------------------------------------*
 
-			UpdateButtons();
+			SetTitle();
 
 			m_fInitialized = true;
 
@@ -337,7 +403,71 @@ namespace ReloadersWorkShop
 
 			SetTargetCursor();
 
-			UpdateButtons();
+			m_fChanged = true;
+
+			SetTitle();
+			}
+
+		//============================================================================*
+		// OnFormClosing()
+		//============================================================================*
+
+		private void OnFormClosing(Object sender, FormClosingEventArgs e)
+			{
+			if (!VerifyDiscardChanges())
+				e.Cancel = true;
+			}
+
+		//============================================================================*
+		// OnEditUndo()
+		//============================================================================*
+
+		private void OnEditUndo(Object sender, EventArgs e)
+			{
+			if (m_eMode == eMode.MarkShots)
+				{
+				if (m_Target.ShotList.Count > 0)
+					m_Target.ShotList.RemoveAt(m_Target.ShotList.Count - 1);
+
+				if (m_Target.ShotList.Count == 0)
+					SetMode(eMode.AimPoint);
+				else
+					{
+					SetImage();
+
+					SetNumShotsLabel();
+
+					SetOutputData();
+					}
+
+				m_fChanged = true;
+
+				SetTitle();
+
+				return;
+				}
+
+			if (m_eMode == eMode.AimPoint)
+				{
+				SetMode(eMode.Calibrate);
+
+				m_fChanged = true;
+
+				SetTitle();
+
+				return;
+				}
+
+			if (m_eMode == eMode.Calibrate)
+				{
+				OnFileNew(sender, e);
+
+				m_fChanged = true;
+
+				SetTitle();
+
+				return;
+				}
 			}
 
 		//============================================================================*
@@ -346,6 +476,11 @@ namespace ReloadersWorkShop
 
 		private void OnFileNew(Object sender, EventArgs e)
 			{
+			if (!VerifyDiscardChanges())
+				return;
+
+			m_strFileName = null;
+
 			m_Target.Image = null;
 			m_Target.CalibrationStart = new Point(0, 0);
 			m_Target.CalibrationEnd = new Point(0, 0);
@@ -353,11 +488,47 @@ namespace ReloadersWorkShop
 
 			m_TargetImage = null;
 
+			m_AimPoint = null;
+			m_AimPointOffset = null;
+
 			SetImage();
 
 			SetMode(eMode.LoadTarget);
 
 			SetOutputData();
+
+			SetTitle();
+			}
+
+		//============================================================================*
+		// OnFileOpen()
+		//============================================================================*
+
+		private void OnFileOpen(Object sender, EventArgs e)
+			{
+			if (!VerifyDiscardChanges())
+				return;
+
+			OpenFileDialog OpenFileDialog = new OpenFileDialog();
+
+			OpenFileDialog.Title = "Open Target File";
+			OpenFileDialog.DefaultExt = "rwt";
+			OpenFileDialog.CheckFileExists = true;
+			OpenFileDialog.CheckPathExists = true;
+			OpenFileDialog.Filter = "Target Files (*.rwt)|*.rwt";
+			OpenFileDialog.InitialDirectory = m_strFolder;
+
+			if (OpenFileDialog.ShowDialog() == DialogResult.OK)
+				{
+				m_strFileName = Path.GetFileName(OpenFileDialog.FileName);
+				m_strFolder = Path.GetDirectoryName(OpenFileDialog.FileName);
+
+				Open();
+
+				m_fChanged = false;
+
+				SetTitle();
+				}
 			}
 
 		//============================================================================*
@@ -405,14 +576,84 @@ namespace ReloadersWorkShop
 					m_fChanged = true;
 
 					SetTitle();
-
-					UpdateButtons();
 					}
 				catch
 					{
 					MessageBox.Show("Unable to open Image File!", "Image File Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 					}
 				}
+			}
+
+		//============================================================================*
+		// OnFileSave()
+		//============================================================================*
+
+		private void OnFileSave(Object sender, EventArgs e)
+			{
+			if (String.IsNullOrEmpty(m_strFileName))
+				{
+				SaveFileDialog SaveFileDialog = new SaveFileDialog();
+
+				SaveFileDialog.Title = "Save Target File";
+				SaveFileDialog.DefaultExt = "rwt";
+				SaveFileDialog.CheckFileExists = false;
+				SaveFileDialog.CheckPathExists = true;
+				SaveFileDialog.Filter = "Target Files (*.rwt)|*.rwt";
+				SaveFileDialog.InitialDirectory = m_strFolder;
+
+				if (SaveFileDialog.ShowDialog() == DialogResult.OK)
+					{
+					m_strFileName = Path.GetFileName(SaveFileDialog.FileName);
+
+					m_fChanged = true;
+					}
+				}
+
+			if (m_fChanged && !String.IsNullOrEmpty(m_strFileName))
+				{
+				Save();
+
+				m_fChanged = false;
+
+				SetTitle();
+				}
+			}
+
+		//============================================================================*
+		// OnFileSaveAs()
+		//============================================================================*
+
+		private void OnFileSaveAs(Object sender, EventArgs e)
+			{
+			SaveFileDialog SaveFileDialog = new SaveFileDialog();
+
+			SaveFileDialog.Title = "Save Target File As";
+			SaveFileDialog.DefaultExt = "rwt";
+			SaveFileDialog.CheckFileExists = false;
+			SaveFileDialog.CheckPathExists = true;
+			SaveFileDialog.OverwritePrompt = true;
+			SaveFileDialog.Filter = "Target Files (*.rwt)|*.rwt";
+			SaveFileDialog.InitialDirectory = m_strFolder;
+
+			if (SaveFileDialog.ShowDialog() == DialogResult.OK)
+				{
+				m_strFileName = Path.GetFileName(SaveFileDialog.FileName);
+
+				Save();
+
+				m_fChanged = false;
+
+				SetTitle();
+				}
+			}
+
+		//============================================================================*
+		// OnOKClicked()
+		//============================================================================*
+
+		private void OnOKClicked(Object sender, EventArgs e)
+			{
+			OnFileSave(sender, e);
 			}
 
 		//============================================================================*
@@ -425,7 +666,9 @@ namespace ReloadersWorkShop
 
 			SetOutputData();
 
-			UpdateButtons();
+			m_fChanged = true;
+
+			SetTitle();
 			}
 
 		//============================================================================*
@@ -452,10 +695,10 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// OnShowCalibrationClicked()
+		// OnShowButtonClicked()
 		//============================================================================*
 
-		private void OnShowCalibrationClicked(Object sender, EventArgs e)
+		private void OnShowButtonClicked(Object sender, EventArgs e)
 			{
 			SetImage();
 
@@ -472,6 +715,9 @@ namespace ReloadersWorkShop
 				{
 				case eMode.LoadTarget:
 					OnFileOpenTargetImage(sender, e);
+
+					m_fChanged = true;
+
 					break;
 
 				case eMode.Calibrate:
@@ -482,13 +728,20 @@ namespace ReloadersWorkShop
 
 					SetImage();
 
+					m_fChanged = true;
+
 					break;
 
 				case eMode.AimPoint:
 					Point AimPoint = new Point(e.X, e.Y);
 					m_Target.AimPoint = AimPoint;
 
+					m_AimPoint = CreateAimPointBitmap(Brushes.LightGreen);
+					m_AimPointOffset = CreateAimPointBitmap(Brushes.Red);
+
 					SetMode(eMode.MarkShots);
+
+					m_fChanged = true;
 
 					break;
 
@@ -497,7 +750,7 @@ namespace ReloadersWorkShop
 
 					if (!m_Target.AddShot(Shot))
 						{
-						Console.Beep(1000, 1000);
+						Console.Beep(1000, 100);
 						}
 					else
 						{
@@ -506,12 +759,14 @@ namespace ReloadersWorkShop
 						SetNumShotsLabel();
 
 						SetOutputData();
+
+						m_fChanged = true;
 						}
 
 					break;
 				}
 
-			UpdateButtons();
+			SetTitle();
 			}
 
 		//============================================================================*
@@ -579,9 +834,119 @@ namespace ReloadersWorkShop
 
 					m_CalibrationBar = null;
 					}
+
+				m_fChanged = true;
+
+				SetTitle();
 				}
 
 			SetImage();
+			}
+
+		//============================================================================*
+		// Open()
+		//============================================================================*
+
+		private void Open()
+			{
+			Stream Stream = null;
+
+			string strFilePath = Path.Combine(m_strFolder, m_strFileName);
+
+			//----------------------------------------------------------------------------*
+			// Open Target Data File
+			//----------------------------------------------------------------------------*
+
+			try
+				{
+				//----------------------------------------------------------------------------*
+				// Open target file and create formatter
+				//----------------------------------------------------------------------------*
+
+				Stream = File.Open(strFilePath, FileMode.Open);
+
+				BinaryFormatter Formatter = new BinaryFormatter();
+
+				//----------------------------------------------------------------------------*
+				// Deserialize the cTarget object
+				//----------------------------------------------------------------------------*
+
+				m_Target = (cTarget) Formatter.Deserialize(Stream);
+
+				//----------------------------------------------------------------------------*
+				// Set the target data
+				//----------------------------------------------------------------------------*
+
+				CreateTargetImage();
+
+				m_AimPoint = CreateAimPointBitmap(Brushes.Green);
+				m_AimPointOffset = CreateAimPointBitmap(Brushes.Red);
+				m_CalibrationBar = CreateCalibrationBar();
+
+				foreach (cCaliber Caliber in m_DataFiles.CaliberList)
+					{
+					if (m_Target.Synch(Caliber))
+						break;
+					}
+
+				CaliberCombo.SelectedItem = m_Target.Caliber;
+
+				if (CaliberCombo.SelectedIndex < 0)
+					{
+					if (CaliberCombo.Items.Count > 0)
+						CaliberCombo.SelectedIndex = 0;
+					}
+
+				SetInputData();
+				SetOutputData();
+				SetTargetImageSize();
+
+				//----------------------------------------------------------------------------*
+				// Determine what mode to set
+				//----------------------------------------------------------------------------*
+
+				if (m_Target.ShotList.Count > 0 && m_Target.AimPoint != Point.Empty)
+					{
+					SetMode(eMode.MarkShots);
+					}
+				else
+					{
+					if (m_Target.Calibrated)
+						SetMode(eMode.AimPoint);
+					else
+						{
+						if (m_Target.Image != null)
+							SetMode(eMode.Calibrate);
+						else
+							SetMode(eMode.LoadTarget);
+						}
+					}
+
+				SetImage();
+
+				m_fChanged = false;
+
+				SetTitle();
+				}
+
+			//----------------------------------------------------------------------------*
+			// Oops, couldn't open or deserialize the file
+			//----------------------------------------------------------------------------*
+
+			catch (Exception e1)
+				{
+				MessageBox.Show(e1.Message);
+				}
+
+			//----------------------------------------------------------------------------*
+			// Close the stream if one was created
+			//----------------------------------------------------------------------------*
+
+			finally
+				{
+				if (Stream != null)
+					Stream.Close();
+				}
 			}
 
 		//============================================================================*
@@ -628,6 +993,47 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Save()
+		//============================================================================*
+
+		private void Save()
+			{
+			Stream Stream = null;
+
+			string strFilePath = Path.Combine(m_strFolder, m_strFileName);
+
+			//----------------------------------------------------------------------------*
+			// Save Target Data
+			//----------------------------------------------------------------------------*
+
+			try
+				{
+				//----------------------------------------------------------------------------*
+				// Open target file and create formatter
+				//----------------------------------------------------------------------------*
+
+				Stream = File.Open(strFilePath, FileMode.Create);
+
+				BinaryFormatter Formatter = new BinaryFormatter();
+
+				//----------------------------------------------------------------------------*
+				// Serialize the cTarget object
+				//----------------------------------------------------------------------------*
+
+				Formatter.Serialize(Stream, m_Target);
+				}
+			catch (Exception e1)
+				{
+				MessageBox.Show(e1.Message);
+				}
+			finally
+				{
+				if (Stream != null)
+					Stream.Close();
+				}
+			}
+
+		//============================================================================*
 		// SetImage()
 		//============================================================================*
 
@@ -668,6 +1074,30 @@ namespace ReloadersWorkShop
 			if (m_Target.Calibrated && m_CalibrationBar != null && ShowCalibrationCheckBox.Checked)
 				{
 				g.DrawImage(m_CalibrationBar, (TargetImage.Width / 2) - (m_CalibrationBar.Width / 2), TargetImage.Height - m_CalibrationBar.Height);
+				}
+
+			//----------------------------------------------------------------------------*
+			// Draw AimPoint
+			//----------------------------------------------------------------------------*
+
+			if (m_AimPoint != null && ShowAimPointCheckBox.Checked)
+				{
+				int x = m_Target.AimPoint.X - m_AimPoint.Width / 2;
+				int y = m_Target.AimPoint.Y - m_AimPoint.Height / 2;
+
+				g.DrawImage(m_AimPoint, x, y);
+				}
+
+			//----------------------------------------------------------------------------*
+			// Draw AimPointOffset
+			//----------------------------------------------------------------------------*
+
+			if (m_AimPointOffset != null && ShowMeanOffsetCheckBox.Checked && m_Target.ShotList.Count > 1)
+				{
+				int x = m_Target.AimPoint.X + (int) (m_Target.MeanOffset.X * m_Target.PixelsPerInch) - (m_AimPointOffset.Width / 2);
+				int y = m_Target.AimPoint.Y - (int) (m_Target.MeanOffset.Y * m_Target.PixelsPerInch) - (m_AimPointOffset.Height / 2);
+
+				g.DrawImage(m_AimPointOffset, x, y);
 				}
 
 			//----------------------------------------------------------------------------*
@@ -718,6 +1148,14 @@ namespace ReloadersWorkShop
 
 			SetNumShotsLabel();
 
+			CaliberCombo.SelectedItem = m_Target.Caliber;
+
+			if (CaliberCombo.SelectedIndex < 0)
+				{
+				if (CaliberCombo.Items.Count > 0)
+					CaliberCombo.SelectedIndex = 0;
+				}
+
 			SetOutputData();
 			}
 
@@ -741,6 +1179,20 @@ namespace ReloadersWorkShop
 			if (m_Target.Image == null)
 				{
 				m_eMode = eMode.LoadTarget;
+				}
+
+			if (m_eMode == eMode.AimPoint)
+				{
+				m_Target.AimPoint = new Point(0, 0);
+				m_AimPoint = null;
+				m_AimPointOffset = null;
+				}
+
+			if (m_eMode == eMode.Calibrate)
+				{
+				m_Target.CalibrationStart = new Point(0, 0);
+				m_Target.CalibrationEnd = new Point(0, 0);
+				m_Target.CalibrationLength = 0.0;
 				}
 
 			SetImage();
@@ -983,12 +1435,14 @@ namespace ReloadersWorkShop
 			if (string.IsNullOrEmpty(m_strFileName))
 				strTitle += "<Untitled>";
 			else
-				strTitle += m_strFileName;
+				strTitle += Path.GetFileNameWithoutExtension(m_strFileName);
 
 			if (m_fChanged)
 				strTitle += " *";
 
 			Text = strTitle;
+
+			UpdateButtons();
 			}
 
 		//============================================================================*
@@ -1014,6 +1468,21 @@ namespace ReloadersWorkShop
 				TargetImageBox.Enabled = true;
 				}
 
+			FileNewMenuItem.Enabled = m_Target.Image != null && m_Target.BatchID == 0;
+			FileOpenMenuItem.Enabled = m_Target.BatchID == 0;
+			EditUndoMenuItem.Enabled = m_Target.Image != null;
+
+			if (m_Target.ShotList.Count > 0)
+				{
+				FileSaveMenuItem.Enabled = m_fChanged;
+				FileSaveAsMenuItem.Enabled = m_Target.BatchID == 0;
+				}
+			else
+				{
+				FileSaveMenuItem.Enabled = false;
+				FileSaveAsMenuItem.Enabled = false;
+				}
+
 			if (fEnableOK)
 				{
 				if (m_Target.Image == null || !m_Target.Calibrated || m_Target.ShotList.Count < 2)
@@ -1021,6 +1490,51 @@ namespace ReloadersWorkShop
 				}
 
 			OKButton.Enabled = fEnableOK;
+			}
+
+		//============================================================================*
+		// VerifyDiscardChanges()
+		//============================================================================*
+
+		private bool VerifyDiscardChanges()
+			{
+			if (!m_fChanged || m_Target.ShotList.Count == 0)
+				return (true);
+
+			DialogResult rc = MessageBox.Show("You have made changes to this Target File that have not been saved.\n\nDo you wish to save changes?", "Discard Changes?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button3);
+
+			if (rc == DialogResult.Yes)
+				{
+				OnFileSave(null, new EventArgs());
+
+				return (true);
+				}
+
+			if (rc == DialogResult.No)
+				return (true);
+
+			return (false);
+			}
+
+		//============================================================================*
+		// VerifyTargetFolder()
+		//============================================================================*
+
+		private void VerifyTargetFolder()
+			{
+			m_strFolder = Path.Combine(m_DataFiles.GetDataPath(), "Target Files");
+
+			try
+				{
+				if (!Directory.Exists(m_strFolder))
+					Directory.CreateDirectory(m_strFolder);
+				}
+			catch
+				{
+				MessageBox.Show("Unable to create Target File Directory!  You will not be able to save Target Files!", "Direcotry Creation Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+				m_strFolder = null;
+				}
 			}
 		}
 	}

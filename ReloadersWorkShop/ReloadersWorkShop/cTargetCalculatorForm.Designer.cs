@@ -36,7 +36,6 @@
 			this.FileOpenMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.FileSaveMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.FileSaveAsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.FileCloseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.FileOpenTargetImageMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.NumShotsLabel = new System.Windows.Forms.Label();
@@ -49,7 +48,6 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.RangeMeasurementLabel = new System.Windows.Forms.Label();
 			this.ModeLabel = new System.Windows.Forms.Label();
-			this.RangeTextBox = new CommonLib.Controls.cIntegerValueTextBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.CaliberCombo = new System.Windows.Forms.ComboBox();
 			this.label4 = new System.Windows.Forms.Label();
@@ -61,6 +59,11 @@
 			this.OffsetLabel = new System.Windows.Forms.Label();
 			this.label8 = new System.Windows.Forms.Label();
 			this.ShowCalibrationCheckBox = new System.Windows.Forms.CheckBox();
+			this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.EditUndoMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.RangeTextBox = new CommonLib.Controls.cIntegerValueTextBox();
+			this.ShowAimPointCheckBox = new System.Windows.Forms.CheckBox();
+			this.ShowMeanOffsetCheckBox = new System.Windows.Forms.CheckBox();
 			this.TargetCalculatorMenuStrip.SuspendLayout();
 			this.OutputGroupBox.SuspendLayout();
 			this.groupBox1.SuspendLayout();
@@ -90,7 +93,8 @@
 			// TargetCalculatorMenuStrip
 			// 
 			this.TargetCalculatorMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.editToolStripMenuItem});
 			this.TargetCalculatorMenuStrip.Location = new System.Drawing.Point(0, 0);
 			this.TargetCalculatorMenuStrip.Name = "TargetCalculatorMenuStrip";
 			this.TargetCalculatorMenuStrip.Size = new System.Drawing.Size(1068, 24);
@@ -104,7 +108,6 @@
             this.FileOpenMenuItem,
             this.FileSaveMenuItem,
             this.FileSaveAsMenuItem,
-            this.FileCloseMenuItem,
             this.toolStripSeparator1,
             this.FileOpenTargetImageMenuItem});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -139,12 +142,6 @@
             | System.Windows.Forms.Keys.S)));
 			this.FileSaveAsMenuItem.Size = new System.Drawing.Size(186, 22);
 			this.FileSaveAsMenuItem.Text = "Save &As";
-			// 
-			// FileCloseMenuItem
-			// 
-			this.FileCloseMenuItem.Name = "FileCloseMenuItem";
-			this.FileCloseMenuItem.Size = new System.Drawing.Size(186, 22);
-			this.FileCloseMenuItem.Text = "&Close";
 			// 
 			// toolStripSeparator1
 			// 
@@ -182,11 +179,11 @@
 			// TotalShotsLabel
 			// 
 			this.TotalShotsLabel.AutoSize = true;
-			this.TotalShotsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TotalShotsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.TotalShotsLabel.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.TotalShotsLabel.Location = new System.Drawing.Point(75, 56);
 			this.TotalShotsLabel.Name = "TotalShotsLabel";
-			this.TotalShotsLabel.Size = new System.Drawing.Size(25, 13);
+			this.TotalShotsLabel.Size = new System.Drawing.Size(28, 13);
 			this.TotalShotsLabel.TabIndex = 8;
 			this.TotalShotsLabel.Text = "999";
 			// 
@@ -274,22 +271,6 @@
 			this.ModeLabel.TabIndex = 11;
 			this.ModeLabel.Text = "Mode: ";
 			// 
-			// RangeTextBox
-			// 
-			this.RangeTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.RangeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.RangeTextBox.Location = new System.Drawing.Point(75, 28);
-			this.RangeTextBox.MaxLength = 4;
-			this.RangeTextBox.MaxValue = 0;
-			this.RangeTextBox.MinValue = 25;
-			this.RangeTextBox.Name = "RangeTextBox";
-			this.RangeTextBox.Required = false;
-			this.RangeTextBox.Size = new System.Drawing.Size(35, 20);
-			this.RangeTextBox.TabIndex = 7;
-			this.RangeTextBox.Text = "9999";
-			this.RangeTextBox.ToolTip = "";
-			this.RangeTextBox.Value = 9999;
-			// 
 			// label3
 			// 
 			this.label3.AutoSize = true;
@@ -358,9 +339,9 @@
 			this.BulletDiameterLabel.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.BulletDiameterLabel.Location = new System.Drawing.Point(259, 56);
 			this.BulletDiameterLabel.Name = "BulletDiameterLabel";
-			this.BulletDiameterLabel.Size = new System.Drawing.Size(28, 13);
+			this.BulletDiameterLabel.Size = new System.Drawing.Size(39, 13);
 			this.BulletDiameterLabel.TabIndex = 16;
-			this.BulletDiameterLabel.Text = "999";
+			this.BulletDiameterLabel.Text = "0.999";
 			// 
 			// MilsLabel
 			// 
@@ -411,20 +392,78 @@
 			this.ShowCalibrationCheckBox.AutoSize = true;
 			this.ShowCalibrationCheckBox.Checked = true;
 			this.ShowCalibrationCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.ShowCalibrationCheckBox.Location = new System.Drawing.Point(329, 119);
+			this.ShowCalibrationCheckBox.Location = new System.Drawing.Point(320, 119);
 			this.ShowCalibrationCheckBox.Name = "ShowCalibrationCheckBox";
 			this.ShowCalibrationCheckBox.Size = new System.Drawing.Size(105, 17);
 			this.ShowCalibrationCheckBox.TabIndex = 13;
 			this.ShowCalibrationCheckBox.Text = "Show Calibration";
 			this.ShowCalibrationCheckBox.UseVisualStyleBackColor = true;
 			// 
+			// editToolStripMenuItem
+			// 
+			this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.EditUndoMenuItem});
+			this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+			this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+			this.editToolStripMenuItem.Text = "&Edit";
+			// 
+			// EditUndoMenuItem
+			// 
+			this.EditUndoMenuItem.Name = "EditUndoMenuItem";
+			this.EditUndoMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
+			this.EditUndoMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.EditUndoMenuItem.Text = "&Undo";
+			// 
+			// RangeTextBox
+			// 
+			this.RangeTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.RangeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.RangeTextBox.Location = new System.Drawing.Point(75, 28);
+			this.RangeTextBox.MaxLength = 4;
+			this.RangeTextBox.MaxValue = 0;
+			this.RangeTextBox.MinValue = 25;
+			this.RangeTextBox.Name = "RangeTextBox";
+			this.RangeTextBox.Required = false;
+			this.RangeTextBox.Size = new System.Drawing.Size(35, 20);
+			this.RangeTextBox.TabIndex = 7;
+			this.RangeTextBox.Text = "9999";
+			this.RangeTextBox.ToolTip = "";
+			this.RangeTextBox.Value = 9999;
+			// 
+			// ShowAimPointCheckBox
+			// 
+			this.ShowAimPointCheckBox.AutoSize = true;
+			this.ShowAimPointCheckBox.Checked = true;
+			this.ShowAimPointCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.ShowAimPointCheckBox.Location = new System.Drawing.Point(447, 119);
+			this.ShowAimPointCheckBox.Name = "ShowAimPointCheckBox";
+			this.ShowAimPointCheckBox.Size = new System.Drawing.Size(100, 17);
+			this.ShowAimPointCheckBox.TabIndex = 14;
+			this.ShowAimPointCheckBox.Text = "Show Aim Point";
+			this.ShowAimPointCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// ShowMeanOffsetCheckBox
+			// 
+			this.ShowMeanOffsetCheckBox.AutoSize = true;
+			this.ShowMeanOffsetCheckBox.Checked = true;
+			this.ShowMeanOffsetCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.ShowMeanOffsetCheckBox.Location = new System.Drawing.Point(569, 119);
+			this.ShowMeanOffsetCheckBox.Name = "ShowMeanOffsetCheckBox";
+			this.ShowMeanOffsetCheckBox.Size = new System.Drawing.Size(114, 17);
+			this.ShowMeanOffsetCheckBox.TabIndex = 15;
+			this.ShowMeanOffsetCheckBox.Text = "Show Mean Offset";
+			this.ShowMeanOffsetCheckBox.UseVisualStyleBackColor = true;
+			// 
 			// cTargetCalculatorForm
 			// 
+			this.AcceptButton = this.OKButton;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.TargetCalculatorCancelButton;
 			this.ClientSize = new System.Drawing.Size(1068, 752);
 			this.ControlBox = false;
+			this.Controls.Add(this.ShowMeanOffsetCheckBox);
+			this.Controls.Add(this.ShowAimPointCheckBox);
 			this.Controls.Add(this.ShowCalibrationCheckBox);
 			this.Controls.Add(this.TargetImageBox);
 			this.Controls.Add(this.groupBox1);
@@ -433,9 +472,10 @@
 			this.Controls.Add(this.TargetCalculatorMenuStrip);
 			this.Controls.Add(this.OKButton);
 			this.Controls.Add(this.TargetCalculatorCancelButton);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
 			this.MainMenuStrip = this.TargetCalculatorMenuStrip;
 			this.MinimizeBox = false;
-			this.MinimumSize = new System.Drawing.Size(1084, 768);
+			this.MinimumSize = new System.Drawing.Size(1024, 768);
 			this.Name = "cTargetCalculatorForm";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
@@ -463,7 +503,6 @@
 		private System.Windows.Forms.ToolStripMenuItem FileOpenMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem FileSaveMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem FileSaveAsMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem FileCloseMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripMenuItem FileOpenTargetImageMenuItem;
 		private System.Windows.Forms.Label NumShotsLabel;
@@ -488,5 +527,9 @@
 		private System.Windows.Forms.Label OffsetLabel;
 		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.CheckBox ShowCalibrationCheckBox;
+		private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem EditUndoMenuItem;
+		private System.Windows.Forms.CheckBox ShowAimPointCheckBox;
+		private System.Windows.Forms.CheckBox ShowMeanOffsetCheckBox;
 		}
 	}

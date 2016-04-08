@@ -452,5 +452,21 @@ namespace ReloadersWorkShop
 				return (m_ShotList);
 				}
 			}
+
+		//============================================================================*
+		// Synch() - Caliber
+		//============================================================================*
+
+		public bool Synch(cCaliber Caliber)
+			{
+			if (Caliber != null && Caliber.CompareTo(m_Caliber) == 0)
+				{
+				m_Caliber = Caliber;
+
+				return (true);
+				}
+
+			return (false);
+			}
 		}
 	}
