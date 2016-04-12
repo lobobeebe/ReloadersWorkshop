@@ -249,6 +249,12 @@
     <Compile Include="cTargetImageBox.Designer.cs">
       <DependentUpon>cTargetImageBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="cTargetPreferencesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="cTargetPreferencesForm.Designer.cs">
+      <DependentUpon>cTargetPreferencesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="cTestStatistics.cs" />
     <Compile Include="cEvaluationListView.cs">
       <SubType>Component</SubType>
@@ -571,6 +577,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="cTargetCalibrationForm.resx">
       <DependentUpon>cTargetCalibrationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="cTargetPreferencesForm.resx">
+      <DependentUpon>cTargetPreferencesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="cTestShotForm.resx">
       <DependentUpon>cTestShotForm.cs</DependentUpon>

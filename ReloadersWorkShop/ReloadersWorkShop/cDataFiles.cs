@@ -1502,6 +1502,27 @@ namespace ReloadersWorkShop
 
 			m_Preferences.BallisticsData.MuzzleHeight = 60;
 
+			if (m_Preferences.AimPointColor.A == 0)
+				m_Preferences.AimPointColor = cTarget.DefaultAimPointColor;
+
+			if (m_Preferences.OffsetColor.A == 0)
+				m_Preferences.OffsetColor = cTarget.DefaultOffsetColor;
+
+			if (m_Preferences.ShotColor.A == 0)
+				m_Preferences.ShotColor = cTarget.DefaultShotColor;
+
+			if (m_Preferences.ReticleColor.A == 0)
+				m_Preferences.ReticleColor = cTarget.DefaultReticleColor;
+
+			if (m_Preferences.CalibrationForecolor.A == 0)
+				m_Preferences.CalibrationForecolor = cTarget.DefaultCalibrationForecolor;
+
+			if (m_Preferences.CalibrationBackcolor.A == 0)
+				m_Preferences.CalibrationBackcolor = cTarget.DefaultCalibrationBackcolor;
+
+			if (m_Preferences.ExtremesColor.A == 0)
+				m_Preferences.ExtremesColor = cTarget.DefaultExtremesColor;
+
 			//----------------------------------------------------------------------------*
 			// Add the Batch Editor Manufacturer if it's not already there
 			//----------------------------------------------------------------------------*

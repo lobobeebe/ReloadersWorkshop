@@ -47,6 +47,7 @@ namespace ReloadersWorkShop
 
 		private bool m_fInitialized = false;
 		private bool m_fChanged = false;
+		private bool m_fBatchTest = false;
 
 		private eMode m_eMode = eMode.LoadTarget;
 
@@ -77,6 +78,8 @@ namespace ReloadersWorkShop
 
 			m_DataFiles = DataFiles;
 
+			m_fBatchTest = false;
+
 			Initialize();
 			}
 
@@ -93,6 +96,8 @@ namespace ReloadersWorkShop
 			m_Target.NumShots = nNumShots;
 			m_Target.Range = nRange;
 
+			m_fBatchTest = nBatchID != 0;
+
 			Initialize();
 			}
 
@@ -100,11 +105,32 @@ namespace ReloadersWorkShop
 		// CreateAimPointBitmap()
 		//============================================================================*
 
-		private Bitmap CreateAimPointBitmap(Brush AimPointBrush)
+		private Bitmap CreateAimPointBitmap()
 			{
+			return(CreateAimPointBitmap(m_Target.AimPointColor));
+			}
+
+		//============================================================================*
+		// CreateAimPointOffsetBitmap()
+		//============================================================================*
+
+		private Bitmap CreateAimPointOffsetBitmap()
+			{
+			return (CreateAimPointBitmap(m_Target.OffsetColor));
+			}
+
+		//============================================================================*
+		// CreateAimPointBitmap()
+		//============================================================================*
+
+		private Bitmap CreateAimPointBitmap(Color AimPointColor)
+			{
+			if (m_Target.AimPoint == Point.Empty)
+				return(null);
+
 			Bitmap AimPoint = new Bitmap((int) (m_Target.PixelsPerInch * 0.75), (int) (m_Target.PixelsPerInch * 0.75));
 
-			Pen AimPointPen = new Pen(AimPointBrush, 3.0f);
+			Pen AimPointPen = new Pen(AimPointColor, 3.0f);
 
 			Graphics g = Graphics.FromImage(AimPoint);
 
@@ -153,7 +179,9 @@ namespace ReloadersWorkShop
 
 			Graphics g = Graphics.FromImage(CalibrationBar);
 
-			g.FillRectangle(Brushes.Yellow, 0, 0, CalibrationBar.Width, CalibrationBar.Height);
+			SolidBrush BarBrush = new SolidBrush(m_Target.CalibrationBackcolor);
+
+			g.FillRectangle(BarBrush, 0, 0, CalibrationBar.Width, CalibrationBar.Height);
 
 			int nY = CalibrationBar.Height;
 			int nIncrements = CalibrationBar.Width / (m_Target.PixelsPerInch / 4);
@@ -175,7 +203,9 @@ namespace ReloadersWorkShop
 
 					SizeF FontSize = g.MeasureString(strText, BarFont);
 
-					g.DrawString(strText, BarFont, Brushes.Black, nX - (FontSize.Width / 2), nY1);
+					SolidBrush BarForeBrush = new SolidBrush(m_Target.CalibrationForecolor);
+
+					g.DrawString(strText, BarFont, BarForeBrush, nX - (FontSize.Width / 2), nY1);
 					}
 				else
 					{
@@ -213,23 +243,43 @@ namespace ReloadersWorkShop
 			ShotRect.Width -= 3;
 			ShotRect.Height -= 3;
 
-			Pen ReticlePen = new Pen(Brushes.Black, 3);
+			Pen ReticlePen = new Pen(m_Target.m_ReticleColor, 3);
 
 			g.DrawEllipse(ReticlePen, ShotRect);
 
 			int x = ReticleBitmap.Width / 2;
-			int y = 3;
+			int y = 0;
 			int x1 = x;
-			int y1 = y + ReticleBitmap.Height - 6;
+			int y1 = ReticleBitmap.Height;
 
-			g.DrawLine(Pens.Black, x, y, x1, y1);
+			Pen CrosshairPen = new Pen(m_Target.m_ReticleColor, 1);
+
+			g.DrawLine(CrosshairPen, x, y, x1, y1);
+
+			y1 = y + (int)  (m_Target.PixelsPerInch * 0.35);
+
+			g.DrawLine(ReticlePen, x, y, x1, y1);
+
+			y = y1 + (int) (m_Target.PixelsPerInch * 0.3);
+			y1 = ReticleBitmap.Height;
+
+			g.DrawLine(ReticlePen, x, y, x1, y1);
 
 			x = 3;
 			y = ReticleBitmap.Height / 2;
-			x1 = x + ReticleBitmap.Width - 6;
+			x1 = x + ReticleBitmap.Width;
 			y1 = y;
 
-			g.DrawLine(Pens.Black, x, y, x1, y1);
+			g.DrawLine(CrosshairPen, x, y, x1, y1);
+
+			x1 = (int) (m_Target.PixelsPerInch * 0.35);
+
+			g.DrawLine(ReticlePen, x, y, x1, y1);
+
+			x = x1 + (int) (m_Target.PixelsPerInch * 0.3);
+			x1 = ReticleBitmap.Width;
+
+			g.DrawLine(ReticlePen, x, y, x1, y1);
 
 			return (ReticleBitmap);
 			}
@@ -240,6 +290,9 @@ namespace ReloadersWorkShop
 
 		private Bitmap CreateShotBitmap()
 			{
+			if (m_Target.AimPoint == Point.Empty)
+				return(null);
+
 			if (m_Target.BulletPixels == 0 || m_Target.BulletDiameter < 0.017)
 				return (null);
 
@@ -252,21 +305,23 @@ namespace ReloadersWorkShop
 			ShotRect.Width--;
 			ShotRect.Height--;
 
-			g.DrawEllipse(Pens.White, ShotRect);
+			Pen ShotPen = new Pen(m_Target.ShotColor, 1.0f);
+
+			g.DrawEllipse(ShotPen, ShotRect);
 
 			int x = ShotBitmap.Width / 2;
 			int y = ShotBitmap.Height / 4;
 			int x1 = x;
 			int y1 = y + ShotBitmap.Height / 2;
 
-			g.DrawLine(Pens.White, x, y, x1, y1);
+			g.DrawLine(ShotPen, x, y, x1, y1);
 
 			x = ShotBitmap.Width / 4;
 			y = ShotBitmap.Height / 2;
 			x1 = x + ShotBitmap.Width / 2;
 			y1 = y;
 
-			g.DrawLine(Pens.White, x, y, x1, y1);
+			g.DrawLine(ShotPen, x, y, x1, y1);
 
 			return (ShotBitmap);
 			}
@@ -317,27 +372,32 @@ namespace ReloadersWorkShop
 			// Event Handlers
 			//----------------------------------------------------------------------------*
 
-			FileNewMenuItem.Click += OnFileNew;
-			FileOpenMenuItem.Click += OnFileOpen;
-			FileOpenTargetImageMenuItem.Click += OnFileOpenTargetImage;
-			FileSaveMenuItem.Click += OnFileSave;
-			FileSaveAsMenuItem.Click += OnFileSaveAs;
+			if (!m_fInitialized)
+				{
+				FileNewMenuItem.Click += OnFileNew;
+				FileOpenMenuItem.Click += OnFileOpen;
+				FileOpenTargetImageMenuItem.Click += OnFileOpenTargetImage;
+				FileSaveMenuItem.Click += OnFileSave;
+				FileSaveAsMenuItem.Click += OnFileSaveAs;
 
-			EditUndoMenuItem.Click += OnEditUndo;
+				EditPreferencesMenuItem.Click += OnEditPreferences;
+				EditUndoMenuItem.Click += OnEditUndo;
 
-			CaliberCombo.SelectedIndexChanged += OnCaliberSelected;
-			RangeTextBox.TextChanged += OnRangeChanged;
+				CaliberCombo.SelectedIndexChanged += OnCaliberSelected;
+				RangeTextBox.TextChanged += OnRangeChanged;
 
-			TargetImageBox.MouseDown += OnTargetMouseDown;
-			TargetImageBox.MouseUp += OnTargetMouseUp;
-			TargetImageBox.MouseMove += OnTargetMouseMove;
+				TargetImageBox.MouseDown += OnTargetMouseDown;
+				TargetImageBox.MouseUp += OnTargetMouseUp;
+				TargetImageBox.MouseMove += OnTargetMouseMove;
 
-			ShowAimPointCheckBox.Click += OnShowButtonClicked;
-			ShowMeanOffsetCheckBox.Click += OnShowButtonClicked;
-			ShowCalibrationCheckBox.Click += OnShowButtonClicked;
+				ShowAimPointCheckBox.Click += OnShowButtonClicked;
+				ShowMeanOffsetCheckBox.Click += OnShowButtonClicked;
+				ShowCalibrationCheckBox.Click += OnShowButtonClicked;
+				ShowExtremesCheckBox.Click += OnShowButtonClicked;
 
-			OKButton.Click += OnOKClicked;
-			FormClosing += OnFormClosing;
+				OKButton.Click += OnOKClicked;
+				FormClosing += OnFormClosing;
+				}
 
 			//----------------------------------------------------------------------------*
 			// Set Target Size
@@ -362,7 +422,7 @@ namespace ReloadersWorkShop
 				m_strFolder = Path.Combine(m_DataFiles.GetDataPath(), "Target Files");
 
 				if (File.Exists(Path.Combine(m_strFolder, m_strFileName)))
-					Open();
+					Open(m_strFolder, m_strFileName);
 				}
 			else
 				m_Batch = null;
@@ -378,6 +438,8 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 			// Clean up and exit
 			//----------------------------------------------------------------------------*
+
+			m_strFileName = "";
 
 			SetTitle();
 
@@ -416,6 +478,17 @@ namespace ReloadersWorkShop
 			{
 			if (!VerifyDiscardChanges())
 				e.Cancel = true;
+			}
+
+		//============================================================================*
+		// OnEditPreferences()
+		//============================================================================*
+
+		private void OnEditPreferences(Object sender, EventArgs e)
+			{
+			cTargetPreferencesForm PreferencesForm = new cTargetPreferencesForm(m_DataFiles, m_Target, this);
+
+			PreferencesForm.ShowDialog();
 			}
 
 		//============================================================================*
@@ -520,10 +593,10 @@ namespace ReloadersWorkShop
 
 			if (OpenFileDialog.ShowDialog() == DialogResult.OK)
 				{
-				m_strFileName = Path.GetFileName(OpenFileDialog.FileName);
-				m_strFolder = Path.GetDirectoryName(OpenFileDialog.FileName);
+				string strFileName = Path.GetFileName(OpenFileDialog.FileName);
+				string strFolder = Path.GetDirectoryName(OpenFileDialog.FileName);
 
-				Open();
+				Open(strFolder, strFileName);
 
 				m_fChanged = false;
 
@@ -736,8 +809,8 @@ namespace ReloadersWorkShop
 					Point AimPoint = new Point(e.X, e.Y);
 					m_Target.AimPoint = AimPoint;
 
-					m_AimPoint = CreateAimPointBitmap(Brushes.LightGreen);
-					m_AimPointOffset = CreateAimPointBitmap(Brushes.Red);
+					m_AimPoint = CreateAimPointBitmap();
+					m_AimPointOffset = CreateAimPointOffsetBitmap();
 
 					SetMode(eMode.MarkShots);
 
@@ -804,9 +877,9 @@ namespace ReloadersWorkShop
 
 			if (m_Target.CalibrationPixels < m_Target.MinCalibrationPixels)
 				{
-				string strMsg = string.Format("Your calibration line is only {0:N0} pixels long.  You must mark a line of at least {1:N0} pixels.\n\nTry again.", m_Target.CalibrationPixels, m_Target.MinCalibrationPixels);
+				string strMsg = string.Format("Your scale line is only {0:N0} pixels long.  You must mark a line of at least {1:N0} pixels.\n\nTry again.", m_Target.CalibrationPixels, m_Target.MinCalibrationPixels);
 
-				MessageBox.Show(strMsg, "Invalid Calibration Line", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show(strMsg, "Invalid Scale Line", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
 				m_Target.CalibrationStart = new Point(0, 0);
 				m_Target.CalibrationEnd = new Point(0, 0);
@@ -847,11 +920,11 @@ namespace ReloadersWorkShop
 		// Open()
 		//============================================================================*
 
-		private void Open()
+		private void Open(string strFolder, string strFileName)
 			{
 			Stream Stream = null;
 
-			string strFilePath = Path.Combine(m_strFolder, m_strFileName);
+			string strFilePath = Path.Combine(strFolder, strFileName);
 
 			//----------------------------------------------------------------------------*
 			// Open Target Data File
@@ -871,62 +944,75 @@ namespace ReloadersWorkShop
 				// Deserialize the cTarget object
 				//----------------------------------------------------------------------------*
 
-				m_Target = (cTarget) Formatter.Deserialize(Stream);
+				cTarget LoadTarget = (cTarget) Formatter.Deserialize(Stream);
 
-				//----------------------------------------------------------------------------*
-				// Set the target data
-				//----------------------------------------------------------------------------*
-
-				CreateTargetImage();
-
-				m_AimPoint = CreateAimPointBitmap(Brushes.Green);
-				m_AimPointOffset = CreateAimPointBitmap(Brushes.Red);
-				m_CalibrationBar = CreateCalibrationBar();
-
-				foreach (cCaliber Caliber in m_DataFiles.CaliberList)
+				if (!m_fBatchTest && LoadTarget.BatchID != 0)
 					{
-					if (m_Target.Synch(Caliber))
-						break;
-					}
+					string strText = String.Format("This Target file is associated with Batch {0:G0} Test Data.  Target data may only be changed via the Batch {0:G0} Test Data Editor.", LoadTarget.BatchID);
 
-				CaliberCombo.SelectedItem = m_Target.Caliber;
-
-				if (CaliberCombo.SelectedIndex < 0)
-					{
-					if (CaliberCombo.Items.Count > 0)
-						CaliberCombo.SelectedIndex = 0;
-					}
-
-				SetInputData();
-				SetOutputData();
-				SetTargetImageSize();
-
-				//----------------------------------------------------------------------------*
-				// Determine what mode to set
-				//----------------------------------------------------------------------------*
-
-				if (m_Target.ShotList.Count > 0 && m_Target.AimPoint != Point.Empty)
-					{
-					SetMode(eMode.MarkShots);
+					MessageBox.Show(strText, "Changes Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Information);
 					}
 				else
 					{
-					if (m_Target.Calibrated)
-						SetMode(eMode.AimPoint);
+					m_Target = new cTarget(LoadTarget);
+
+					m_strFolder = strFolder;
+					m_strFileName = strFileName;
+
+					//----------------------------------------------------------------------------*
+					// Set the target data
+					//----------------------------------------------------------------------------*
+
+					CreateTargetImage();
+
+					m_AimPoint = CreateAimPointBitmap();
+					m_AimPointOffset = CreateAimPointOffsetBitmap();
+					m_CalibrationBar = CreateCalibrationBar();
+
+					foreach (cCaliber Caliber in m_DataFiles.CaliberList)
+						{
+						if (m_Target.Synch(Caliber))
+							break;
+						}
+
+					if (m_Target.BatchID != 0)
+						m_Batch = m_DataFiles.GetBatchByID(m_Target.BatchID);
+					else
+						m_Batch = null;
+
+					PopulateCaliberCombo();
+
+					SetInputData();
+					SetOutputData();
+					SetTargetImageSize();
+
+					//----------------------------------------------------------------------------*
+					// Determine what mode to set
+					//----------------------------------------------------------------------------*
+
+					if (m_Target.ShotList.Count > 0 && m_Target.AimPoint != Point.Empty)
+						{
+						SetMode(eMode.MarkShots);
+						}
 					else
 						{
-						if (m_Target.Image != null)
-							SetMode(eMode.Calibrate);
+						if (m_Target.Calibrated)
+							SetMode(eMode.AimPoint);
 						else
-							SetMode(eMode.LoadTarget);
+							{
+							if (m_Target.Image != null)
+								SetMode(eMode.Calibrate);
+							else
+								SetMode(eMode.LoadTarget);
+							}
 						}
+
+					SetImage();
+
+					m_fChanged = false;
+
+					SetTitle();
 					}
-
-				SetImage();
-
-				m_fChanged = false;
-
-				SetTitle();
 				}
 
 			//----------------------------------------------------------------------------*
@@ -983,13 +1069,31 @@ namespace ReloadersWorkShop
 				CaliberCombo.SelectedIndex = 0;
 				}
 
-			if (CaliberCombo.SelectedIndex >= 0)
+			if (CaliberCombo.SelectedIndex >= 0 && (m_Target.Caliber == null || m_Target.Caliber.CompareTo((cCaliber) CaliberCombo.SelectedItem) != 0))
 				{
 				cCaliber Caliber = (cCaliber) CaliberCombo.SelectedItem;
 
 				if (Caliber != null)
 					m_Target.Caliber = Caliber;
 				}
+			}
+
+		//============================================================================*
+		// ResetBitmaps()
+		//============================================================================*
+
+		public void ResetBitmaps()
+			{
+			m_AimPoint = CreateAimPointBitmap();
+			m_AimPointOffset = CreateAimPointOffsetBitmap();
+			m_CalibrationBar = CreateCalibrationBar();
+
+			SetImage();
+
+			m_fChanged = true;
+
+			SetTitle();
+			UpdateButtons();
 			}
 
 		//============================================================================*
@@ -1037,7 +1141,7 @@ namespace ReloadersWorkShop
 		// SetImage()
 		//============================================================================*
 
-		private void SetImage()
+		public void SetImage()
 			{
 			if (m_TargetImage == null)
 				{
@@ -1098,6 +1202,23 @@ namespace ReloadersWorkShop
 				int y = m_Target.AimPoint.Y - (int) (m_Target.MeanOffset.Y * m_Target.PixelsPerInch) - (m_AimPointOffset.Height / 2);
 
 				g.DrawImage(m_AimPointOffset, x, y);
+				}
+
+			//----------------------------------------------------------------------------*
+			// Draw Group Extremes Line
+			//----------------------------------------------------------------------------*
+
+			if (m_Target.ShotList.Count > 0 && ShowExtremesCheckBox.Checked)
+				{
+				Point Extremes1;
+				Point Extremes2;
+
+				Pen ExtremesPen = new Pen(m_Target.ExtremesColor, 1);
+
+				m_Target.GroupExtremes(out Extremes1, out Extremes2);
+
+				if (Extremes1 != Point.Empty && Extremes2 != Point.Empty)
+					g.DrawLine(ExtremesPen, Extremes1, Extremes2);
 				}
 
 			//----------------------------------------------------------------------------*
@@ -1221,7 +1342,7 @@ namespace ReloadersWorkShop
 					break;
 
 				case eMode.Calibrate:
-					ModeLabel.Text += "Calibration";
+					ModeLabel.Text += "Set Scale";
 
 					break;
 
@@ -1469,13 +1590,13 @@ namespace ReloadersWorkShop
 				}
 
 			FileNewMenuItem.Enabled = m_Target.Image != null && m_Target.BatchID == 0;
-			FileOpenMenuItem.Enabled = m_Target.BatchID == 0;
-			EditUndoMenuItem.Enabled = m_Target.Image != null;
+			FileOpenMenuItem.Enabled = !m_fBatchTest;
+			EditUndoMenuItem.Enabled = m_Target.Image != null && !m_fBatchTest;
 
 			if (m_Target.ShotList.Count > 0)
 				{
-				FileSaveMenuItem.Enabled = m_fChanged;
-				FileSaveAsMenuItem.Enabled = m_Target.BatchID == 0;
+				FileSaveMenuItem.Enabled = m_fChanged && !m_fBatchTest;
+				FileSaveAsMenuItem.Enabled = !m_fBatchTest;
 				}
 			else
 				{

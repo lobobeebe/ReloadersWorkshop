@@ -12,7 +12,6 @@
 using System;
 using System.Drawing;
 using System.IO;
-using System.Windows;
 using System.Windows.Forms;
 
 using ReloadersWorkShop.Ballistics;
@@ -411,6 +410,19 @@ namespace ReloadersWorkShop.Preferences
 		private bool m_fSupplyPrintNonZero = false;
 		private bool m_fSupplyPrintBelowStock = false;
 
+		// Target Calculator Colors
+
+		private Color m_AimPointColor = Color.FromName("DarkGreen");
+		private Color m_OffsetColor = Color.FromName("Red");
+		private Color m_ShotColor = Color.FromName("White");
+
+		private Color m_ReticleColor = Color.FromName("Black");
+
+		private Color m_CalibrationForecolor = Color.FromName("Black");
+		private Color m_CalibrationBackcolor = Color.FromName("Yellow");
+
+		private Color m_ExtremesColor = Color.FromName("White");
+
 		// Transaction Form Settings
 
 		private cTransaction m_LastTransaction = null;
@@ -436,6 +448,22 @@ namespace ReloadersWorkShop.Preferences
 
 			BackupFolder = Path.Combine(BackupFolder, @"Reloader's WorkShop\Backup");
 			ShareFilePath = Path.Combine(ShareFilePath, @"Reloader's WorkShop\Share");
+			}
+
+		//============================================================================*
+		// AimPointColor Property
+		//============================================================================*
+
+		public Color AimPointColor
+			{
+			get
+				{
+				return (m_AimPointColor);
+				}
+			set
+				{
+				m_AimPointColor = value;
+				}
 			}
 
 		//============================================================================*
@@ -1239,6 +1267,38 @@ namespace ReloadersWorkShop.Preferences
 			}
 
 		//============================================================================*
+		// CalibrationBackcolor Property
+		//============================================================================*
+
+		public Color CalibrationBackcolor
+			{
+			get
+				{
+				return (m_CalibrationBackcolor);
+				}
+			set
+				{
+				m_CalibrationBackcolor = value;
+				}
+			}
+
+		//============================================================================*
+		// CalibrationForecolor Property
+		//============================================================================*
+
+		public Color CalibrationForecolor
+			{
+			get
+				{
+				return (m_CalibrationForecolor);
+				}
+			set
+				{
+				m_CalibrationForecolor = value;
+				}
+			}
+
+		//============================================================================*
 		// CanWeightDecimals Property
 		//============================================================================*
 
@@ -1587,6 +1647,22 @@ namespace ReloadersWorkShop.Preferences
 			set
 				{
 				m_EvaluationSortOrder = value;
+				}
+			}
+
+		//============================================================================*
+		// ExtremesColor Property
+		//============================================================================*
+
+		public Color ExtremesColor
+			{
+			get
+				{
+				return (m_ExtremesColor);
+				}
+			set
+				{
+				m_ExtremesColor = value;
 				}
 			}
 
@@ -3046,6 +3122,22 @@ namespace ReloadersWorkShop.Preferences
 			}
 
 		//============================================================================*
+		// OffsetColor Property
+		//============================================================================*
+
+		public Color OffsetColor
+			{
+			get
+				{
+				return (m_OffsetColor);
+				}
+			set
+				{
+				m_OffsetColor = value;
+				}
+			}
+
+		//============================================================================*
 		// PowderSortColumn Property
 		//============================================================================*
 
@@ -3122,6 +3214,22 @@ namespace ReloadersWorkShop.Preferences
 			set
 				{
 				m_PrimerSortOrder = value;
+				}
+			}
+
+		//============================================================================*
+		// ReticleColor Property
+		//============================================================================*
+
+		public Color ReticleColor
+			{
+			get
+				{
+				return (m_ReticleColor);
+				}
+			set
+				{
+				m_ReticleColor = value;
 				}
 			}
 
@@ -3248,6 +3356,22 @@ namespace ReloadersWorkShop.Preferences
 			set
 				{
 				m_ShoppingListPreviewSize = value;
+				}
+			}
+
+		//============================================================================*
+		// ShotColor Property
+		//============================================================================*
+
+		public Color ShotColor
+			{
+			get
+				{
+				return (m_ShotColor);
+				}
+			set
+				{
+				m_ShotColor = value;
 				}
 			}
 

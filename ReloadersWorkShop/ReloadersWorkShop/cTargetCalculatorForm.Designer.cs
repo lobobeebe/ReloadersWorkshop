@@ -38,10 +38,18 @@
 			this.FileSaveAsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.FileOpenTargetImageMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.EditUndoMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.EditPreferencesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.NumShotsLabel = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
 			this.TotalShotsLabel = new System.Windows.Forms.Label();
 			this.OutputGroupBox = new System.Windows.Forms.GroupBox();
+			this.OffsetLabel = new System.Windows.Forms.Label();
+			this.label8 = new System.Windows.Forms.Label();
+			this.MilsLabel = new System.Windows.Forms.Label();
+			this.label7 = new System.Windows.Forms.Label();
 			this.MOALabel = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
 			this.GroupSizeLabel = new System.Windows.Forms.Label();
@@ -52,18 +60,14 @@
 			this.CaliberCombo = new System.Windows.Forms.ComboBox();
 			this.label4 = new System.Windows.Forms.Label();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.TargetImageBox = new System.Windows.Forms.PictureBox();
 			this.BulletDiameterLabel = new System.Windows.Forms.Label();
-			this.MilsLabel = new System.Windows.Forms.Label();
-			this.label7 = new System.Windows.Forms.Label();
-			this.OffsetLabel = new System.Windows.Forms.Label();
-			this.label8 = new System.Windows.Forms.Label();
-			this.ShowCalibrationCheckBox = new System.Windows.Forms.CheckBox();
-			this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.EditUndoMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.RangeTextBox = new CommonLib.Controls.cIntegerValueTextBox();
+			this.TargetImageBox = new System.Windows.Forms.PictureBox();
+			this.ShowCalibrationCheckBox = new System.Windows.Forms.CheckBox();
 			this.ShowAimPointCheckBox = new System.Windows.Forms.CheckBox();
 			this.ShowMeanOffsetCheckBox = new System.Windows.Forms.CheckBox();
+			this.DetailsButton = new System.Windows.Forms.Button();
+			this.ShowExtremesCheckBox = new System.Windows.Forms.CheckBox();
 			this.TargetCalculatorMenuStrip.SuspendLayout();
 			this.OutputGroupBox.SuspendLayout();
 			this.groupBox1.SuspendLayout();
@@ -97,7 +101,7 @@
             this.editToolStripMenuItem});
 			this.TargetCalculatorMenuStrip.Location = new System.Drawing.Point(0, 0);
 			this.TargetCalculatorMenuStrip.Name = "TargetCalculatorMenuStrip";
-			this.TargetCalculatorMenuStrip.Size = new System.Drawing.Size(1068, 24);
+			this.TargetCalculatorMenuStrip.Size = new System.Drawing.Size(1064, 24);
 			this.TargetCalculatorMenuStrip.TabIndex = 4;
 			this.TargetCalculatorMenuStrip.Text = "menuStrip1";
 			// 
@@ -154,6 +158,36 @@
 			this.FileOpenTargetImageMenuItem.Size = new System.Drawing.Size(186, 22);
 			this.FileOpenTargetImageMenuItem.Text = "Open &Target Image";
 			// 
+			// editToolStripMenuItem
+			// 
+			this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.EditUndoMenuItem,
+            this.toolStripSeparator2,
+            this.EditPreferencesMenuItem});
+			this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+			this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+			this.editToolStripMenuItem.Text = "&Edit";
+			// 
+			// EditUndoMenuItem
+			// 
+			this.EditUndoMenuItem.Name = "EditUndoMenuItem";
+			this.EditUndoMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
+			this.EditUndoMenuItem.Size = new System.Drawing.Size(208, 22);
+			this.EditUndoMenuItem.Text = "&Undo";
+			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(205, 6);
+			// 
+			// EditPreferencesMenuItem
+			// 
+			this.EditPreferencesMenuItem.Name = "EditPreferencesMenuItem";
+			this.EditPreferencesMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.P)));
+			this.EditPreferencesMenuItem.Size = new System.Drawing.Size(208, 22);
+			this.EditPreferencesMenuItem.Text = "&Preferences";
+			// 
 			// NumShotsLabel
 			// 
 			this.NumShotsLabel.AutoSize = true;
@@ -205,6 +239,50 @@
 			this.OutputGroupBox.TabIndex = 9;
 			this.OutputGroupBox.TabStop = false;
 			this.OutputGroupBox.Text = "Output Data";
+			// 
+			// OffsetLabel
+			// 
+			this.OffsetLabel.AutoSize = true;
+			this.OffsetLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.OffsetLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.OffsetLabel.Location = new System.Drawing.Point(173, 56);
+			this.OffsetLabel.Name = "OffsetLabel";
+			this.OffsetLabel.Size = new System.Drawing.Size(54, 13);
+			this.OffsetLabel.TabIndex = 7;
+			this.OffsetLabel.Text = "0.000 In";
+			// 
+			// label8
+			// 
+			this.label8.AutoSize = true;
+			this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label8.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label8.Location = new System.Drawing.Point(52, 56);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(115, 13);
+			this.label8.TabIndex = 6;
+			this.label8.Text = "Mean Aim Point Offset:";
+			// 
+			// MilsLabel
+			// 
+			this.MilsLabel.AutoSize = true;
+			this.MilsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.MilsLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.MilsLabel.Location = new System.Drawing.Point(296, 31);
+			this.MilsLabel.Name = "MilsLabel";
+			this.MilsLabel.Size = new System.Drawing.Size(39, 13);
+			this.MilsLabel.TabIndex = 5;
+			this.MilsLabel.Text = "0.000";
+			// 
+			// label7
+			// 
+			this.label7.AutoSize = true;
+			this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label7.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label7.Location = new System.Drawing.Point(262, 31);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(28, 13);
+			this.label7.TabIndex = 4;
+			this.label7.Text = "Mils:";
 			// 
 			// MOALabel
 			// 
@@ -323,15 +401,6 @@
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Input Data";
 			// 
-			// TargetImageBox
-			// 
-			this.TargetImageBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.TargetImageBox.Location = new System.Drawing.Point(42, 148);
-			this.TargetImageBox.Name = "TargetImageBox";
-			this.TargetImageBox.Size = new System.Drawing.Size(984, 519);
-			this.TargetImageBox.TabIndex = 12;
-			this.TargetImageBox.TabStop = false;
-			// 
 			// BulletDiameterLabel
 			// 
 			this.BulletDiameterLabel.AutoSize = true;
@@ -342,77 +411,6 @@
 			this.BulletDiameterLabel.Size = new System.Drawing.Size(39, 13);
 			this.BulletDiameterLabel.TabIndex = 16;
 			this.BulletDiameterLabel.Text = "0.999";
-			// 
-			// MilsLabel
-			// 
-			this.MilsLabel.AutoSize = true;
-			this.MilsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.MilsLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.MilsLabel.Location = new System.Drawing.Point(296, 31);
-			this.MilsLabel.Name = "MilsLabel";
-			this.MilsLabel.Size = new System.Drawing.Size(39, 13);
-			this.MilsLabel.TabIndex = 5;
-			this.MilsLabel.Text = "0.000";
-			// 
-			// label7
-			// 
-			this.label7.AutoSize = true;
-			this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label7.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label7.Location = new System.Drawing.Point(262, 31);
-			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(28, 13);
-			this.label7.TabIndex = 4;
-			this.label7.Text = "Mils:";
-			// 
-			// OffsetLabel
-			// 
-			this.OffsetLabel.AutoSize = true;
-			this.OffsetLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.OffsetLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.OffsetLabel.Location = new System.Drawing.Point(173, 56);
-			this.OffsetLabel.Name = "OffsetLabel";
-			this.OffsetLabel.Size = new System.Drawing.Size(54, 13);
-			this.OffsetLabel.TabIndex = 7;
-			this.OffsetLabel.Text = "0.000 In";
-			// 
-			// label8
-			// 
-			this.label8.AutoSize = true;
-			this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label8.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label8.Location = new System.Drawing.Point(52, 56);
-			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(115, 13);
-			this.label8.TabIndex = 6;
-			this.label8.Text = "Mean Aim Point Offset:";
-			// 
-			// ShowCalibrationCheckBox
-			// 
-			this.ShowCalibrationCheckBox.AutoSize = true;
-			this.ShowCalibrationCheckBox.Checked = true;
-			this.ShowCalibrationCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.ShowCalibrationCheckBox.Location = new System.Drawing.Point(320, 119);
-			this.ShowCalibrationCheckBox.Name = "ShowCalibrationCheckBox";
-			this.ShowCalibrationCheckBox.Size = new System.Drawing.Size(105, 17);
-			this.ShowCalibrationCheckBox.TabIndex = 13;
-			this.ShowCalibrationCheckBox.Text = "Show Calibration";
-			this.ShowCalibrationCheckBox.UseVisualStyleBackColor = true;
-			// 
-			// editToolStripMenuItem
-			// 
-			this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.EditUndoMenuItem});
-			this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-			this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
-			this.editToolStripMenuItem.Text = "&Edit";
-			// 
-			// EditUndoMenuItem
-			// 
-			this.EditUndoMenuItem.Name = "EditUndoMenuItem";
-			this.EditUndoMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-			this.EditUndoMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.EditUndoMenuItem.Text = "&Undo";
 			// 
 			// RangeTextBox
 			// 
@@ -430,12 +428,33 @@
 			this.RangeTextBox.ToolTip = "";
 			this.RangeTextBox.Value = 9999;
 			// 
+			// TargetImageBox
+			// 
+			this.TargetImageBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.TargetImageBox.Location = new System.Drawing.Point(42, 148);
+			this.TargetImageBox.Name = "TargetImageBox";
+			this.TargetImageBox.Size = new System.Drawing.Size(984, 519);
+			this.TargetImageBox.TabIndex = 12;
+			this.TargetImageBox.TabStop = false;
+			// 
+			// ShowCalibrationCheckBox
+			// 
+			this.ShowCalibrationCheckBox.AutoSize = true;
+			this.ShowCalibrationCheckBox.Checked = true;
+			this.ShowCalibrationCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.ShowCalibrationCheckBox.Location = new System.Drawing.Point(320, 119);
+			this.ShowCalibrationCheckBox.Name = "ShowCalibrationCheckBox";
+			this.ShowCalibrationCheckBox.Size = new System.Drawing.Size(83, 17);
+			this.ShowCalibrationCheckBox.TabIndex = 13;
+			this.ShowCalibrationCheckBox.Text = "Show Scale";
+			this.ShowCalibrationCheckBox.UseVisualStyleBackColor = true;
+			// 
 			// ShowAimPointCheckBox
 			// 
 			this.ShowAimPointCheckBox.AutoSize = true;
 			this.ShowAimPointCheckBox.Checked = true;
 			this.ShowAimPointCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.ShowAimPointCheckBox.Location = new System.Drawing.Point(447, 119);
+			this.ShowAimPointCheckBox.Location = new System.Drawing.Point(435, 119);
 			this.ShowAimPointCheckBox.Name = "ShowAimPointCheckBox";
 			this.ShowAimPointCheckBox.Size = new System.Drawing.Size(100, 17);
 			this.ShowAimPointCheckBox.TabIndex = 14;
@@ -447,12 +466,33 @@
 			this.ShowMeanOffsetCheckBox.AutoSize = true;
 			this.ShowMeanOffsetCheckBox.Checked = true;
 			this.ShowMeanOffsetCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.ShowMeanOffsetCheckBox.Location = new System.Drawing.Point(569, 119);
+			this.ShowMeanOffsetCheckBox.Location = new System.Drawing.Point(567, 119);
 			this.ShowMeanOffsetCheckBox.Name = "ShowMeanOffsetCheckBox";
 			this.ShowMeanOffsetCheckBox.Size = new System.Drawing.Size(114, 17);
 			this.ShowMeanOffsetCheckBox.TabIndex = 15;
 			this.ShowMeanOffsetCheckBox.Text = "Show Mean Offset";
 			this.ShowMeanOffsetCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// DetailsButton
+			// 
+			this.DetailsButton.Location = new System.Drawing.Point(920, 115);
+			this.DetailsButton.Name = "DetailsButton";
+			this.DetailsButton.Size = new System.Drawing.Size(75, 23);
+			this.DetailsButton.TabIndex = 16;
+			this.DetailsButton.Text = "Details";
+			this.DetailsButton.UseVisualStyleBackColor = true;
+			// 
+			// ShowExtremesCheckBox
+			// 
+			this.ShowExtremesCheckBox.AutoSize = true;
+			this.ShowExtremesCheckBox.Checked = true;
+			this.ShowExtremesCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.ShowExtremesCheckBox.Location = new System.Drawing.Point(713, 119);
+			this.ShowExtremesCheckBox.Name = "ShowExtremesCheckBox";
+			this.ShowExtremesCheckBox.Size = new System.Drawing.Size(131, 17);
+			this.ShowExtremesCheckBox.TabIndex = 17;
+			this.ShowExtremesCheckBox.Text = "Show Group Extremes";
+			this.ShowExtremesCheckBox.UseVisualStyleBackColor = true;
 			// 
 			// cTargetCalculatorForm
 			// 
@@ -460,8 +500,10 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.TargetCalculatorCancelButton;
-			this.ClientSize = new System.Drawing.Size(1068, 752);
+			this.ClientSize = new System.Drawing.Size(1064, 758);
 			this.ControlBox = false;
+			this.Controls.Add(this.ShowExtremesCheckBox);
+			this.Controls.Add(this.DetailsButton);
 			this.Controls.Add(this.ShowMeanOffsetCheckBox);
 			this.Controls.Add(this.ShowAimPointCheckBox);
 			this.Controls.Add(this.ShowCalibrationCheckBox);
@@ -531,5 +573,9 @@
 		private System.Windows.Forms.ToolStripMenuItem EditUndoMenuItem;
 		private System.Windows.Forms.CheckBox ShowAimPointCheckBox;
 		private System.Windows.Forms.CheckBox ShowMeanOffsetCheckBox;
+		private System.Windows.Forms.Button DetailsButton;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+		private System.Windows.Forms.ToolStripMenuItem EditPreferencesMenuItem;
+		private System.Windows.Forms.CheckBox ShowExtremesCheckBox;
 		}
 	}

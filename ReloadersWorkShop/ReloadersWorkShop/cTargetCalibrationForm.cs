@@ -85,7 +85,7 @@ namespace ReloadersWorkShop
 
 		private void SetDPILabel()
 			{
-			string strDPI = string.Format("{0:N0} pixels in Calibration Line = {1:F3} {2} ({3:N0} DPI)", m_Target.CalibrationPixels, m_Target.CalibrationLength, m_DataFiles.MetricLongString(cDataFiles.eDataType.GroupSize), m_Target.CalibrationDPI);
+			string strDPI = string.Format("{0:N0} pixels in Scale Line = {1:F3} {2} ({3:N0} DPI)", m_Target.CalibrationPixels, m_Target.CalibrationLength, m_DataFiles.MetricLongString(cDataFiles.eDataType.GroupSize), m_Target.CalibrationDPI);
 
 			DPILabel.Text = strDPI;
 			}

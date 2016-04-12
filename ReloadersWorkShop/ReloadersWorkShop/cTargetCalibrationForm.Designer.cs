@@ -58,16 +58,16 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(124, 57);
+			this.label1.Location = new System.Drawing.Point(135, 57);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(130, 13);
+			this.label1.Size = new System.Drawing.Size(108, 13);
 			this.label1.TabIndex = 2;
-			this.label1.Text = "Length of Calibration Line:";
+			this.label1.Text = "Length of Scale Line:";
 			// 
 			// CalibrationLengthTextBox
 			// 
 			this.CalibrationLengthTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.CalibrationLengthTextBox.Location = new System.Drawing.Point(260, 54);
+			this.CalibrationLengthTextBox.Location = new System.Drawing.Point(249, 54);
 			this.CalibrationLengthTextBox.MaxLength = 6;
 			this.CalibrationLengthTextBox.MaxValue = 0D;
 			this.CalibrationLengthTextBox.MinValue = 0D;
@@ -87,7 +87,7 @@
 			this.DPILabel.Name = "DPILabel";
 			this.DPILabel.Size = new System.Drawing.Size(406, 13);
 			this.DPILabel.TabIndex = 4;
-			this.DPILabel.Text = "999 Calibration Pixels = 50 DPI";
+			this.DPILabel.Text = "999 Scale Pixels = 50 DPI";
 			this.DPILabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
 			// cTargetCalibrationForm
@@ -106,7 +106,7 @@
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.Name = "cTargetCalibrationForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-			this.Text = "Calibration Length";
+			this.Text = "Scale Line Length";
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
