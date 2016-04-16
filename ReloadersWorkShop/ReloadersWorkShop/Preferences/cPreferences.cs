@@ -412,16 +412,24 @@ namespace ReloadersWorkShop.Preferences
 
 		// Target Calculator Colors
 
-		private Color m_AimPointColor = Color.FromName("DarkGreen");
-		private Color m_OffsetColor = Color.FromName("Red");
-		private Color m_ShotColor = Color.FromName("White");
+		private Color m_TargetAimPointColor = cTarget.DefaultAimPointColor;
+		private Color m_TargetExtremesColor = cTarget.DefaultExtremesColor;
+		private Color m_TargetGroupBoxColor = cTarget.DefaultGroupBoxColor;
+		private Color m_TargetOffsetColor = cTarget.DefaultOffsetColor;
+		private Color m_TargetReticleColor = cTarget.DefaultReticleColor;
+		private Color m_TargetScaleBackcolor = cTarget.DefaultScaleBackcolor;
+		private Color m_TargetScaleForecolor = cTarget.DefaultScaleForecolor;
+		private Color m_TargetShotColor = cTarget.DefaultShotColor;
 
-		private Color m_ReticleColor = Color.FromName("Black");
+		// Target Calculator Settings
 
-		private Color m_CalibrationForecolor = Color.FromName("Black");
-		private Color m_CalibrationBackcolor = Color.FromName("Yellow");
+		private bool m_fTargetShowBoxesSet = false;
 
-		private Color m_ExtremesColor = Color.FromName("White");
+		private bool m_fTargetShowAimPoint = true;
+		private bool m_fTargetShowExtremes = true;
+		private bool m_fTargetShowGroupBox = true;
+		private bool m_fTargetShowOffset = true;
+		private bool m_fTargetShowScale = true;
 
 		// Transaction Form Settings
 
@@ -448,22 +456,6 @@ namespace ReloadersWorkShop.Preferences
 
 			BackupFolder = Path.Combine(BackupFolder, @"Reloader's WorkShop\Backup");
 			ShareFilePath = Path.Combine(ShareFilePath, @"Reloader's WorkShop\Share");
-			}
-
-		//============================================================================*
-		// AimPointColor Property
-		//============================================================================*
-
-		public Color AimPointColor
-			{
-			get
-				{
-				return (m_AimPointColor);
-				}
-			set
-				{
-				m_AimPointColor = value;
-				}
 			}
 
 		//============================================================================*
@@ -1267,38 +1259,6 @@ namespace ReloadersWorkShop.Preferences
 			}
 
 		//============================================================================*
-		// CalibrationBackcolor Property
-		//============================================================================*
-
-		public Color CalibrationBackcolor
-			{
-			get
-				{
-				return (m_CalibrationBackcolor);
-				}
-			set
-				{
-				m_CalibrationBackcolor = value;
-				}
-			}
-
-		//============================================================================*
-		// CalibrationForecolor Property
-		//============================================================================*
-
-		public Color CalibrationForecolor
-			{
-			get
-				{
-				return (m_CalibrationForecolor);
-				}
-			set
-				{
-				m_CalibrationForecolor = value;
-				}
-			}
-
-		//============================================================================*
 		// CanWeightDecimals Property
 		//============================================================================*
 
@@ -1647,22 +1607,6 @@ namespace ReloadersWorkShop.Preferences
 			set
 				{
 				m_EvaluationSortOrder = value;
-				}
-			}
-
-		//============================================================================*
-		// ExtremesColor Property
-		//============================================================================*
-
-		public Color ExtremesColor
-			{
-			get
-				{
-				return (m_ExtremesColor);
-				}
-			set
-				{
-				m_ExtremesColor = value;
 				}
 			}
 
@@ -3122,22 +3066,6 @@ namespace ReloadersWorkShop.Preferences
 			}
 
 		//============================================================================*
-		// OffsetColor Property
-		//============================================================================*
-
-		public Color OffsetColor
-			{
-			get
-				{
-				return (m_OffsetColor);
-				}
-			set
-				{
-				m_OffsetColor = value;
-				}
-			}
-
-		//============================================================================*
 		// PowderSortColumn Property
 		//============================================================================*
 
@@ -3214,22 +3142,6 @@ namespace ReloadersWorkShop.Preferences
 			set
 				{
 				m_PrimerSortOrder = value;
-				}
-			}
-
-		//============================================================================*
-		// ReticleColor Property
-		//============================================================================*
-
-		public Color ReticleColor
-			{
-			get
-				{
-				return (m_ReticleColor);
-				}
-			set
-				{
-				m_ReticleColor = value;
 				}
 			}
 
@@ -3356,22 +3268,6 @@ namespace ReloadersWorkShop.Preferences
 			set
 				{
 				m_ShoppingListPreviewSize = value;
-				}
-			}
-
-		//============================================================================*
-		// ShotColor Property
-		//============================================================================*
-
-		public Color ShotColor
-			{
-			get
-				{
-				return (m_ShotColor);
-				}
-			set
-				{
-				m_ShotColor = value;
 				}
 			}
 
@@ -3580,6 +3476,230 @@ namespace ReloadersWorkShop.Preferences
 			set
 				{
 				m_fSupplyPrintNonZero = value;
+				}
+			}
+
+		//============================================================================*
+		// TargetAimPointColor Property
+		//============================================================================*
+
+		public Color TargetAimPointColor
+			{
+			get
+				{
+				return (m_TargetAimPointColor);
+				}
+			set
+				{
+				m_TargetAimPointColor = value;
+				}
+			}
+
+		//============================================================================*
+		// TargetExtremesColor Property
+		//============================================================================*
+
+		public Color TargetExtremesColor
+			{
+			get
+				{
+				return (m_TargetExtremesColor);
+				}
+			set
+				{
+				m_TargetExtremesColor = value;
+				}
+			}
+
+		//============================================================================*
+		// TargetGroupBoxColor Property
+		//============================================================================*
+
+		public Color TargetGroupBoxColor
+			{
+			get
+				{
+				return (m_TargetGroupBoxColor);
+				}
+			set
+				{
+				m_TargetGroupBoxColor = value;
+				}
+			}
+
+		//============================================================================*
+		// TargetOffsetColor Property
+		//============================================================================*
+
+		public Color TargetOffsetColor
+			{
+			get
+				{
+				return (m_TargetOffsetColor);
+				}
+			set
+				{
+				m_TargetOffsetColor = value;
+				}
+			}
+
+		//============================================================================*
+		// TargetReticleColor Property
+		//============================================================================*
+
+		public Color TargetReticleColor
+			{
+			get
+				{
+				return (m_TargetReticleColor);
+				}
+			set
+				{
+				m_TargetReticleColor = value;
+				}
+			}
+
+		//============================================================================*
+		// TargetScaleBackcolor Property
+		//============================================================================*
+
+		public Color TargetScaleBackcolor
+			{
+			get
+				{
+				return (m_TargetScaleBackcolor);
+				}
+			set
+				{
+				m_TargetScaleBackcolor = value;
+				}
+			}
+
+		//============================================================================*
+		// TargetScaleForecolor Property
+		//============================================================================*
+
+		public Color TargetScaleForecolor
+			{
+			get
+				{
+				return (m_TargetScaleForecolor);
+				}
+			set
+				{
+				m_TargetScaleForecolor = value;
+				}
+			}
+
+		//============================================================================*
+		// TargetShotColor Property
+		//============================================================================*
+
+		public Color TargetShotColor
+			{
+			get
+				{
+				return (m_TargetShotColor);
+				}
+			set
+				{
+				m_TargetShotColor = value;
+				}
+			}
+
+		//============================================================================*
+		// TargetShowAimPoint Property
+		//============================================================================*
+
+		public bool TargetShowAimPoint
+			{
+			get
+				{
+				return (m_fTargetShowAimPoint);
+				}
+			set
+				{
+				m_fTargetShowAimPoint = value;
+				}
+			}
+
+		//============================================================================*
+		// TargetShowBoxesSet Property
+		//============================================================================*
+
+		public bool TargetShowBoxesSet
+			{
+			get
+				{
+				return (m_fTargetShowBoxesSet);
+				}
+			set
+				{
+				m_fTargetShowBoxesSet = value;
+				}
+			}
+
+		//============================================================================*
+		// TargetShowExtremes Property
+		//============================================================================*
+
+		public bool TargetShowExtremes
+			{
+			get
+				{
+				return (m_fTargetShowExtremes);
+				}
+			set
+				{
+				m_fTargetShowExtremes = value;
+				}
+			}
+
+		//============================================================================*
+		// TargetShowGroupBox Property
+		//============================================================================*
+
+		public bool TargetShowGroupBox
+			{
+			get
+				{
+				return (m_fTargetShowGroupBox);
+				}
+			set
+				{
+				m_fTargetShowGroupBox = value;
+				}
+			}
+
+		//============================================================================*
+		// TargetShowOffset Property
+		//============================================================================*
+
+		public bool TargetShowOffset
+			{
+			get
+				{
+				return (m_fTargetShowOffset);
+				}
+			set
+				{
+				m_fTargetShowOffset = value;
+				}
+			}
+
+		//============================================================================*
+		// TargetShowScale Property
+		//============================================================================*
+
+		public bool TargetShowScale
+			{
+			get
+				{
+				return (m_fTargetShowScale);
+				}
+			set
+				{
+				m_fTargetShowScale = value;
 				}
 			}
 

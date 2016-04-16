@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cTargetCalculatorForm.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2016, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -62,7 +62,7 @@ namespace ReloadersWorkShop
 		private bool m_fMouseDown = false;
 
 		private Bitmap m_TargetImage = null;
-		private Bitmap m_CalibrationBar = null;
+		private Bitmap m_ScaleBar = null;
 		private Bitmap m_AimPoint = null;
 		private Bitmap m_AimPointOffset = null;
 
@@ -107,7 +107,7 @@ namespace ReloadersWorkShop
 
 		private Bitmap CreateAimPointBitmap()
 			{
-			return(CreateAimPointBitmap(m_Target.AimPointColor));
+			return (CreateAimPointBitmap(m_Target.AimPointColor));
 			}
 
 		//============================================================================*
@@ -126,7 +126,7 @@ namespace ReloadersWorkShop
 		private Bitmap CreateAimPointBitmap(Color AimPointColor)
 			{
 			if (m_Target.AimPoint == Point.Empty)
-				return(null);
+				return (null);
 
 			Bitmap AimPoint = new Bitmap((int) (m_Target.PixelsPerInch * 0.75), (int) (m_Target.PixelsPerInch * 0.75));
 
@@ -165,67 +165,6 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// CreateCalibrationBar()
-		//============================================================================*
-
-		private Bitmap CreateCalibrationBar()
-			{
-			if (!m_Target.Calibrated)
-				return (null);
-
-			Font BarFont = new Font(SystemFonts.DefaultFont, FontStyle.Bold);
-
-			Bitmap CalibrationBar = new Bitmap(m_TargetImage.Width, (int) ((double) BarFont.Height * 4.5));
-
-			Graphics g = Graphics.FromImage(CalibrationBar);
-
-			SolidBrush BarBrush = new SolidBrush(m_Target.CalibrationBackcolor);
-
-			g.FillRectangle(BarBrush, 0, 0, CalibrationBar.Width, CalibrationBar.Height);
-
-			int nY = CalibrationBar.Height;
-			int nIncrements = CalibrationBar.Width / (m_Target.PixelsPerInch / 4);
-
-			for (int i = 0; i <= nIncrements; i++)
-				{
-				int nX = 20 + (i * (m_Target.PixelsPerInch / 4));
-				int nY1 = nY - BarFont.Height;
-
-				if (i % 4 == 0)
-					{
-					nY1 -= (BarFont.Height * 2);
-
-					g.DrawLine(Pens.Black, nX, nY, nX, nY1);
-
-					nY1 -= BarFont.Height;
-
-					string strText = String.Format("{0:G0}", i / 4);
-
-					SizeF FontSize = g.MeasureString(strText, BarFont);
-
-					SolidBrush BarForeBrush = new SolidBrush(m_Target.CalibrationForecolor);
-
-					g.DrawString(strText, BarFont, BarForeBrush, nX - (FontSize.Width / 2), nY1);
-					}
-				else
-					{
-					if (i % 2 == 0)
-						{
-						nY1 -= BarFont.Height;
-
-						g.DrawLine(Pens.Black, nX, nY, nX, nY1);
-						}
-					else
-						{
-						g.DrawLine(Pens.Black, nX, nY, nX, nY1);
-						}
-					}
-				}
-
-			return (CalibrationBar);
-			}
-
-		//============================================================================*
 		// CreateReticleBitmap()
 		//============================================================================*
 
@@ -256,7 +195,7 @@ namespace ReloadersWorkShop
 
 			g.DrawLine(CrosshairPen, x, y, x1, y1);
 
-			y1 = y + (int)  (m_Target.PixelsPerInch * 0.35);
+			y1 = y + (int) (m_Target.PixelsPerInch * 0.35);
 
 			g.DrawLine(ReticlePen, x, y, x1, y1);
 
@@ -285,13 +224,125 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// CreateScaleBar()
+		//============================================================================*
+
+		private Bitmap CreateScaleBar()
+			{
+			if (!m_Target.Calibrated)
+				return (null);
+
+			Font BarFont = new Font(SystemFonts.DefaultFont, FontStyle.Bold);
+
+			Bitmap CalibrationBar = new Bitmap(m_TargetImage.Width, (int) ((double) BarFont.Height * 4.5));
+
+			Graphics g = Graphics.FromImage(CalibrationBar);
+
+			SolidBrush BarBrush = new SolidBrush(m_Target.ScaleBackcolor);
+
+			g.FillRectangle(BarBrush, 0, 0, CalibrationBar.Width, CalibrationBar.Height);
+
+			int nY = CalibrationBar.Height;
+
+			string strMeasurement = m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize);
+
+			SizeF StartSizeF = g.MeasureString("MMM", BarFont);
+
+			g.DrawString(new string(strMeasurement[0], 1), BarFont, BarBrush, (int) StartSizeF.Width / 3, CalibrationBar.Height / 2 - StartSizeF.Height);
+			g.DrawString(new string(strMeasurement[1], 1), BarFont, BarBrush, (int) StartSizeF.Width / 3, CalibrationBar.Height / 2);
+
+			//----------------------------------------------------------------------------*
+			// Metric Scale Bar
+			//----------------------------------------------------------------------------*
+
+			if (m_DataFiles.Preferences.MetricGroups)
+				{
+				int nIncrements = CalibrationBar.Width / (m_Target.PixelsPerCentimeter / 10);
+
+				for (int i = 0; i <= nIncrements; i++)
+					{
+					int nX = (int) StartSizeF.Width + (i * (m_Target.PixelsPerCentimeter / 10));
+					int nY1 = nY - BarFont.Height;
+
+					if (i % 10 == 0)
+						{
+						nY1 -= (BarFont.Height * 2);
+
+						g.DrawLine(Pens.Black, nX, nY, nX, nY1);
+
+						nY1 -= BarFont.Height;
+
+						string strText = String.Format("{0:G0}", i / 10);
+
+						SizeF FontSize = g.MeasureString(strText, BarFont);
+
+						SolidBrush BarForeBrush = new SolidBrush(m_Target.ScaleForecolor);
+
+						g.DrawString(strText, BarFont, BarForeBrush, nX - (FontSize.Width / 2), nY1);
+						}
+					else
+						{
+						g.DrawLine(Pens.Black, nX, nY, nX, nY1);
+						}
+					}
+				}
+
+			//----------------------------------------------------------------------------*
+			// Standard Scale Bar
+			//----------------------------------------------------------------------------*
+
+			else
+				{
+				int nIncrements = CalibrationBar.Width / (m_Target.PixelsPerInch / 4);
+
+				for (int i = 0; i <= nIncrements; i++)
+					{
+					int nX = (int) StartSizeF.Width + (i * (m_Target.PixelsPerInch / 4));
+					int nY1 = nY - BarFont.Height;
+
+					if (i % 4 == 0)
+						{
+						nY1 -= (BarFont.Height * 2);
+
+						g.DrawLine(Pens.Black, nX, nY, nX, nY1);
+
+						nY1 -= BarFont.Height;
+
+						string strText = String.Format("{0:G0}", i / 4);
+
+						SizeF FontSize = g.MeasureString(strText, BarFont);
+
+						SolidBrush BarForeBrush = new SolidBrush(m_Target.ScaleForecolor);
+
+						g.DrawString(strText, BarFont, BarForeBrush, nX - (FontSize.Width / 2), nY1);
+						}
+					else
+						{
+						if (i % 2 == 0)
+							{
+							nY1 -= BarFont.Height;
+
+							g.DrawLine(Pens.Black, nX, nY, nX, nY1);
+							}
+						else
+							{
+							g.DrawLine(Pens.Black, nX, nY, nX, nY1);
+							}
+						}
+					}
+				}
+
+			return (CalibrationBar);
+			}
+
+		//============================================================================*
 		// CreateShotBitmap()
 		//============================================================================*
 
 		private Bitmap CreateShotBitmap()
 			{
 			if (m_Target.AimPoint == Point.Empty)
-				return(null);
+				return (null);
 
 			if (m_Target.BulletPixels == 0 || m_Target.BulletDiameter < 0.017)
 				return (null);
@@ -391,13 +442,28 @@ namespace ReloadersWorkShop
 				TargetImageBox.MouseMove += OnTargetMouseMove;
 
 				ShowAimPointCheckBox.Click += OnShowButtonClicked;
-				ShowMeanOffsetCheckBox.Click += OnShowButtonClicked;
-				ShowCalibrationCheckBox.Click += OnShowButtonClicked;
+				ShowOffsetCheckBox.Click += OnShowButtonClicked;
+				ShowScaleCheckBox.Click += OnShowButtonClicked;
 				ShowExtremesCheckBox.Click += OnShowButtonClicked;
+				ShowGroupBoxCheckBox.Click += OnShowButtonClicked;
+
+				DetailsButton.Click += OnDetailsClicked;
 
 				OKButton.Click += OnOKClicked;
 				FormClosing += OnFormClosing;
+
+				SetClientSizeCore(OutputGroupBox.Location.X + OutputGroupBox.Width + 10, FormCancelButton.Location.Y + FormCancelButton.Height + 20);
 				}
+
+			//----------------------------------------------------------------------------*
+			// Populate Option Check Boxes
+			//----------------------------------------------------------------------------*
+
+			ShowAimPointCheckBox.Checked = m_DataFiles.Preferences.TargetShowAimPoint;
+			ShowExtremesCheckBox.Checked = m_DataFiles.Preferences.TargetShowExtremes;
+			ShowGroupBoxCheckBox.Checked = m_DataFiles.Preferences.TargetShowGroupBox;
+			ShowOffsetCheckBox.Checked = m_DataFiles.Preferences.TargetShowOffset;
+			ShowScaleCheckBox.Checked = m_DataFiles.Preferences.TargetShowScale;
 
 			//----------------------------------------------------------------------------*
 			// Set Target Size
@@ -468,6 +534,33 @@ namespace ReloadersWorkShop
 			m_fChanged = true;
 
 			SetTitle();
+			}
+
+		//============================================================================*
+		// OnDetailsClicked()
+		//============================================================================*
+
+		private void OnDetailsClicked(Object sender, EventArgs e)
+			{
+			cTargetDetailsForm DetailsForm = new cTargetDetailsForm(m_DataFiles, m_Target);
+
+			DialogResult rc = DetailsForm.ShowDialog();
+
+			if (rc == DialogResult.OK)
+				{
+				cTarget Target = DetailsForm.Target;
+
+				m_Target.Date = Target.Date;
+				m_Target.Firearm = Target.Firearm;
+				m_Target.Location = Target.Location;
+				m_Target.Shooter = Target.Shooter;
+
+				m_fChanged = true;
+
+				SetTitle();
+
+				UpdateButtons();
+				}
 			}
 
 		//============================================================================*
@@ -756,7 +849,7 @@ namespace ReloadersWorkShop
 				return;
 
 			OKButton.Location = new Point((ClientRectangle.Width / 2) - OKButton.Width - 20, ClientRectangle.Height - 20 - OKButton.Height);
-			TargetCalculatorCancelButton.Location = new Point((ClientRectangle.Width / 2) + 20, ClientRectangle.Height - 20 - TargetCalculatorCancelButton.Height);
+			FormCancelButton.Location = new Point((ClientRectangle.Width / 2) + 20, ClientRectangle.Height - 20 - FormCancelButton.Height);
 
 			SetTargetImageSize();
 
@@ -774,6 +867,25 @@ namespace ReloadersWorkShop
 		private void OnShowButtonClicked(Object sender, EventArgs e)
 			{
 			SetImage();
+
+			switch ((sender as CheckBox).Name)
+				{
+				case "ShowAimPointCheckBox":
+					m_DataFiles.Preferences.TargetShowAimPoint = ShowAimPointCheckBox.Checked;
+					break;
+				case "ShowExtremesCheckBox":
+					m_DataFiles.Preferences.TargetShowExtremes = ShowExtremesCheckBox.Checked;
+					break;
+				case "ShowGroupBoxCheckBox":
+					m_DataFiles.Preferences.TargetShowGroupBox = ShowGroupBoxCheckBox.Checked;
+					break;
+				case "ShowOffsetCheckBox":
+					m_DataFiles.Preferences.TargetShowOffset = ShowOffsetCheckBox.Checked;
+					break;
+				case "ShowScaleCheckBox":
+					m_DataFiles.Preferences.TargetShowScale = ShowScaleCheckBox.Checked;
+					break;
+				}
 
 			UpdateButtons();
 			}
@@ -885,7 +997,7 @@ namespace ReloadersWorkShop
 				m_Target.CalibrationEnd = new Point(0, 0);
 				m_Target.CalibrationLength = 0.0;
 
-				m_CalibrationBar = null;
+				m_ScaleBar = null;
 				}
 			else
 				{
@@ -897,7 +1009,7 @@ namespace ReloadersWorkShop
 					{
 					SetMode(eMode.AimPoint);
 
-					m_CalibrationBar = CreateCalibrationBar();
+					m_ScaleBar = CreateScaleBar();
 					}
 				else
 					{
@@ -905,7 +1017,7 @@ namespace ReloadersWorkShop
 					m_Target.CalibrationEnd = new Point(0, 0);
 					m_Target.CalibrationLength = 0.0;
 
-					m_CalibrationBar = null;
+					m_ScaleBar = null;
 					}
 
 				m_fChanged = true;
@@ -967,7 +1079,7 @@ namespace ReloadersWorkShop
 
 					m_AimPoint = CreateAimPointBitmap();
 					m_AimPointOffset = CreateAimPointOffsetBitmap();
-					m_CalibrationBar = CreateCalibrationBar();
+					m_ScaleBar = CreateScaleBar();
 
 					foreach (cCaliber Caliber in m_DataFiles.CaliberList)
 						{
@@ -1086,7 +1198,7 @@ namespace ReloadersWorkShop
 			{
 			m_AimPoint = CreateAimPointBitmap();
 			m_AimPointOffset = CreateAimPointOffsetBitmap();
-			m_CalibrationBar = CreateCalibrationBar();
+			m_ScaleBar = CreateScaleBar();
 
 			SetImage();
 
@@ -1172,12 +1284,23 @@ namespace ReloadersWorkShop
 				}
 
 			//----------------------------------------------------------------------------*
-			// Draw Calibration Bar
+			// Draw Scale Bar
 			//----------------------------------------------------------------------------*
 
-			if (m_Target.Calibrated && m_CalibrationBar != null && ShowCalibrationCheckBox.Checked)
+			if (m_Target.Calibrated && m_ScaleBar != null && ShowScaleCheckBox.Checked)
 				{
-				g.DrawImage(m_CalibrationBar, (TargetImage.Width / 2) - (m_CalibrationBar.Width / 2), TargetImage.Height - m_CalibrationBar.Height);
+				g.DrawImage(m_ScaleBar, 0, TargetImage.Height - m_ScaleBar.Height);
+				}
+
+			//----------------------------------------------------------------------------*
+			// Draw Group Box
+			//----------------------------------------------------------------------------*
+
+			if (m_Target.Calibrated && m_Target.ShotList.Count > 2 && ShowGroupBoxCheckBox.Checked)
+				{
+				Pen GroupBoxPen = new Pen(m_Target.GroupBoxColor, 2);
+
+				g.DrawRectangle(GroupBoxPen, m_Target.GroupBox);
 				}
 
 			//----------------------------------------------------------------------------*
@@ -1196,7 +1319,7 @@ namespace ReloadersWorkShop
 			// Draw AimPointOffset
 			//----------------------------------------------------------------------------*
 
-			if (m_AimPointOffset != null && ShowMeanOffsetCheckBox.Checked && m_Target.ShotList.Count > 1)
+			if (m_AimPointOffset != null && ShowOffsetCheckBox.Checked && m_Target.ShotList.Count > 1)
 				{
 				int x = m_Target.AimPoint.X + (int) (m_Target.MeanOffset.X * m_Target.PixelsPerInch) - (m_AimPointOffset.Width / 2);
 				int y = m_Target.AimPoint.Y - (int) (m_Target.MeanOffset.Y * m_Target.PixelsPerInch) - (m_AimPointOffset.Height / 2);
@@ -1245,7 +1368,7 @@ namespace ReloadersWorkShop
 
 		private void SetInputData()
 			{
-			RangeTextBox.Value = m_Target.Range;
+			RangeTextBox.Value = (int) m_DataFiles.StandardToMetric(m_Target.Range, cDataFiles.eDataType.Range);
 			RangeMeasurementLabel.Text = m_DataFiles.MetricLongString(cDataFiles.eDataType.Range);
 
 			RangeTextBox.Enabled = m_Batch == null;
@@ -1265,7 +1388,7 @@ namespace ReloadersWorkShop
 			strDimensionFormat += "} ";
 			strDimensionFormat += m_DataFiles.MetricString(cDataFiles.eDataType.Dimension);
 
-			BulletDiameterLabel.Text = String.Format(strDimensionFormat, dBulletDiameter);
+			BulletDiameterLabel.Text = String.Format(strDimensionFormat, m_DataFiles.StandardToMetric(dBulletDiameter, cDataFiles.eDataType.Dimension));
 
 			SetNumShotsLabel();
 
@@ -1396,13 +1519,13 @@ namespace ReloadersWorkShop
 			strGroupFormat += String.Format("{0:G0}", m_DataFiles.Preferences.GroupDecimals);
 			strGroupFormat += "} {1}";
 
-			GroupSizeLabel.Text = String.Format(strGroupFormat, dGroupSize, m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize));
+			GroupSizeLabel.Text = String.Format(strGroupFormat, m_DataFiles.StandardToMetric(dGroupSize, cDataFiles.eDataType.GroupSize), m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize));
 			MOALabel.Text = String.Format("{0:F3}", dMOA);
 			MilsLabel.Text = String.Format("{0:F3}", dMils);
 
 			PointF MeanOffset = m_Target.MeanOffset;
 
-			string strOffset = String.Format(strGroupFormat, Math.Abs(MeanOffset.X), m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize));
+			string strOffset = String.Format(strGroupFormat, Math.Abs(m_DataFiles.StandardToMetric(MeanOffset.X, cDataFiles.eDataType.GroupSize)), m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize));
 
 			if (Math.Round(MeanOffset.X, m_DataFiles.Preferences.DimensionDecimals) == 0.0)
 				strOffset += " Horizontal";
@@ -1416,7 +1539,7 @@ namespace ReloadersWorkShop
 
 			strOffset += " x ";
 
-			strOffset += String.Format(strGroupFormat, Math.Abs(m_Target.MeanOffset.Y), m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize));
+			strOffset += String.Format(strGroupFormat, Math.Abs(m_DataFiles.StandardToMetric(m_Target.MeanOffset.Y, cDataFiles.eDataType.GroupSize)), m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize));
 
 			if (Math.Round(MeanOffset.Y, m_DataFiles.Preferences.DimensionDecimals) == 0.0)
 				strOffset += " Vertical";
@@ -1578,9 +1701,11 @@ namespace ReloadersWorkShop
 				{
 				ModeLabel.ForeColor = Color.Red;
 
-				ModeLabel.Text = "Enter valid Input Data above to continue.";
+				ModeLabel.Text = "Mode: Fix Input Data";
 
 				TargetImageBox.Enabled = false;
+
+				fEnableOK = false;
 				}
 			else
 				{

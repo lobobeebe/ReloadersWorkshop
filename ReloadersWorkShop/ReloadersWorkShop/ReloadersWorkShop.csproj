@@ -243,6 +243,12 @@
     <Compile Include="cTargetCalibrationForm.Designer.cs">
       <DependentUpon>cTargetCalibrationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="cTargetDetailsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="cTargetDetailsForm.Designer.cs">
+      <DependentUpon>cTargetDetailsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="cTargetImageBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -577,6 +583,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="cTargetCalibrationForm.resx">
       <DependentUpon>cTargetCalibrationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="cTargetDetailsForm.resx">
+      <DependentUpon>cTargetDetailsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="cTargetPreferencesForm.resx">
       <DependentUpon>cTargetPreferencesForm.cs</DependentUpon>

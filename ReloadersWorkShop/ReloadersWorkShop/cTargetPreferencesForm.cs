@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cTargetPreferencesForm.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2016, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -54,8 +54,12 @@ namespace ReloadersWorkShop
 			ReticleColorButton.Click += OnColorButtonClicked;
 			CalibrationForecolorButton.Click += OnColorButtonClicked;
 			CalibrationBackcolorButton.Click += OnColorButtonClicked;
+			ExtremesColorButton.Click += OnColorButtonClicked;
+			GroupBoxColorButton.Click += OnColorButtonClicked;
 
 			ResetButton.Click += OnResetDefaultsClicked;
+
+			SetClientSizeCore(ColorsGroupBox.Location.X + ColorsGroupBox.Width + 10, CloseButton.Location.Y + CloseButton.Height + 20);
 
 			//----------------------------------------------------------------------------*
 			// Populate Colors
@@ -65,10 +69,12 @@ namespace ReloadersWorkShop
 			OffsetColorButton.BackColor = m_Target.OffsetColor;
 			ShotColorButton.BackColor = m_Target.ShotColor;
 			ReticleColorButton.BackColor = m_Target.ReticleColor;
-			CalibrationForecolorButton.BackColor = m_Target.CalibrationForecolor;
-			CalibrationBackcolorButton.BackColor = m_Target.CalibrationBackcolor;
+			CalibrationForecolorButton.BackColor = m_Target.ScaleForecolor;
+			CalibrationBackcolorButton.BackColor = m_Target.ScaleBackcolor;
+			ExtremesColorButton.BackColor = m_Target.ExtremesColor;
+			GroupBoxColorButton.BackColor = m_Target.GroupBoxColor;
 
-			CalibrationBackcolorButton.ForeColor = m_Target.CalibrationForecolor;
+			CalibrationBackcolorButton.ForeColor = m_Target.ScaleForecolor;
 			}
 
 		//============================================================================*
@@ -100,7 +106,7 @@ namespace ReloadersWorkShop
 						m_Target.AimPointColor = ColorDialog.Color;
 
 						if (!TargetOnlyCheckBox.Checked)
-							m_DataFiles.Preferences.AimPointColor = ColorDialog.Color;
+							m_DataFiles.Preferences.TargetAimPointColor = ColorDialog.Color;
 
 						ColorButton.BackColor = ColorDialog.Color;
 						}
@@ -114,7 +120,35 @@ namespace ReloadersWorkShop
 						m_Target.OffsetColor = ColorDialog.Color;
 
 						if (!TargetOnlyCheckBox.Checked)
-							m_DataFiles.Preferences.OffsetColor = ColorDialog.Color;
+							m_DataFiles.Preferences.TargetOffsetColor = ColorDialog.Color;
+
+						ColorButton.BackColor = ColorDialog.Color;
+						}
+
+					//----------------------------------------------------------------------------*
+					// Extremes Color
+					//----------------------------------------------------------------------------*
+
+					if (ColorButton.Name == "ExtremesColorButton")
+						{
+						m_Target.ExtremesColor = ColorDialog.Color;
+
+						if (!TargetOnlyCheckBox.Checked)
+							m_DataFiles.Preferences.TargetExtremesColor = ColorDialog.Color;
+
+						ColorButton.BackColor = ColorDialog.Color;
+						}
+
+					//----------------------------------------------------------------------------*
+					// GroupBox Color
+					//----------------------------------------------------------------------------*
+
+					if (ColorButton.Name == "GroupBoxColorButton")
+						{
+						m_Target.GroupBoxColor = ColorDialog.Color;
+
+						if (!TargetOnlyCheckBox.Checked)
+							m_DataFiles.Preferences.TargetGroupBoxColor = ColorDialog.Color;
 
 						ColorButton.BackColor = ColorDialog.Color;
 						}
@@ -128,7 +162,7 @@ namespace ReloadersWorkShop
 						m_Target.ReticleColor = ColorDialog.Color;
 
 						if (!TargetOnlyCheckBox.Checked)
-							m_DataFiles.Preferences.ReticleColor = ColorDialog.Color;
+							m_DataFiles.Preferences.TargetReticleColor = ColorDialog.Color;
 
 						ColorButton.BackColor = ColorDialog.Color;
 						}
@@ -142,7 +176,7 @@ namespace ReloadersWorkShop
 						m_Target.ShotColor = ColorDialog.Color;
 
 						if (!TargetOnlyCheckBox.Checked)
-							m_DataFiles.Preferences.ShotColor = ColorDialog.Color;
+							m_DataFiles.Preferences.TargetShotColor = ColorDialog.Color;
 
 						ColorButton.BackColor = ColorDialog.Color;
 						}
@@ -153,10 +187,10 @@ namespace ReloadersWorkShop
 
 					if (ColorButton.Name == "CalibrationForecolorButton")
 						{
-						m_Target.CalibrationForecolor = ColorDialog.Color;
+						m_Target.ScaleForecolor = ColorDialog.Color;
 
 						if (!TargetOnlyCheckBox.Checked)
-							m_DataFiles.Preferences.CalibrationForecolor = ColorDialog.Color;
+							m_DataFiles.Preferences.TargetScaleForecolor = ColorDialog.Color;
 
 						ColorButton.BackColor = ColorDialog.Color;
 						CalibrationBackcolorButton.ForeColor = ColorDialog.Color;
@@ -168,10 +202,10 @@ namespace ReloadersWorkShop
 
 					if (ColorButton.Name == "CalibrationBackcolorButton")
 						{
-						m_Target.CalibrationBackcolor = ColorDialog.Color;
+						m_Target.ScaleBackcolor = ColorDialog.Color;
 
 						if (!TargetOnlyCheckBox.Checked)
-							m_DataFiles.Preferences.CalibrationBackcolor = ColorDialog.Color;
+							m_DataFiles.Preferences.TargetScaleBackcolor = ColorDialog.Color;
 
 						ColorButton.BackColor = ColorDialog.Color;
 						}
@@ -191,30 +225,29 @@ namespace ReloadersWorkShop
 
 		private void OnResetDefaultsClicked(Object sender, EventArgs e)
 			{
-			m_Target.AimPointColor = cTarget.DefaultAimPointColor;
-			m_Target.OffsetColor = cTarget.DefaultOffsetColor;
-			m_Target.ShotColor = cTarget.DefaultShotColor;
-			m_Target.ReticleColor = cTarget.DefaultReticleColor;
-			m_Target.CalibrationBackcolor = cTarget.DefaultCalibrationBackcolor;
-			m_Target.CalibrationForecolor = cTarget.DefaultCalibrationForecolor;
+			m_Target.SetDefaultColors();
 
 			if (!TargetOnlyCheckBox.Checked)
 				{
-				m_DataFiles.Preferences.AimPointColor = cTarget.DefaultAimPointColor;
-				m_DataFiles.Preferences.OffsetColor = cTarget.DefaultOffsetColor;
-				m_DataFiles.Preferences.ShotColor = cTarget.DefaultShotColor;
-				m_DataFiles.Preferences.ReticleColor = cTarget.DefaultReticleColor;
-				m_DataFiles.Preferences.CalibrationBackcolor = cTarget.DefaultCalibrationBackcolor;
-				m_DataFiles.Preferences.CalibrationForecolor = cTarget.DefaultCalibrationForecolor;
+				m_DataFiles.Preferences.TargetAimPointColor = cTarget.DefaultAimPointColor;
+				m_DataFiles.Preferences.TargetOffsetColor = cTarget.DefaultOffsetColor;
+				m_DataFiles.Preferences.TargetShotColor = cTarget.DefaultShotColor;
+				m_DataFiles.Preferences.TargetReticleColor = cTarget.DefaultReticleColor;
+				m_DataFiles.Preferences.TargetScaleBackcolor = cTarget.DefaultScaleBackcolor;
+				m_DataFiles.Preferences.TargetScaleForecolor = cTarget.DefaultScaleForecolor;
+				m_DataFiles.Preferences.TargetExtremesColor = cTarget.DefaultExtremesColor;
+				m_DataFiles.Preferences.TargetGroupBoxColor = cTarget.DefaultGroupBoxColor;
 				}
 
 			AimPointColorButton.BackColor = cTarget.DefaultAimPointColor;
 			OffsetColorButton.BackColor = cTarget.DefaultOffsetColor;
 			ShotColorButton.BackColor = cTarget.DefaultShotColor;
 			ReticleColorButton.BackColor = cTarget.DefaultReticleColor;
-			CalibrationForecolorButton.BackColor = cTarget.DefaultCalibrationForecolor;
-			CalibrationBackcolorButton.BackColor = cTarget.DefaultCalibrationBackcolor;
-			CalibrationBackcolorButton.ForeColor = cTarget.DefaultCalibrationForecolor;
+			CalibrationForecolorButton.BackColor = cTarget.DefaultScaleForecolor;
+			CalibrationBackcolorButton.BackColor = cTarget.DefaultScaleBackcolor;
+			CalibrationBackcolorButton.ForeColor = cTarget.DefaultScaleForecolor;
+			ExtremesColorButton.ForeColor = cTarget.DefaultExtremesColor;
+			GroupBoxColorButton.BackColor = cTarget.DefaultGroupBoxColor;
 
 			m_TargetForm.ResetBitmaps();
 			}

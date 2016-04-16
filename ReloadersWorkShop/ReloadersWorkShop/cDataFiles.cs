@@ -1502,26 +1502,39 @@ namespace ReloadersWorkShop
 
 			m_Preferences.BallisticsData.MuzzleHeight = 60;
 
-			if (m_Preferences.AimPointColor.A == 0)
-				m_Preferences.AimPointColor = cTarget.DefaultAimPointColor;
+			if (m_Preferences.TargetAimPointColor.A == 0)
+				m_Preferences.TargetAimPointColor = cTarget.DefaultAimPointColor;
 
-			if (m_Preferences.OffsetColor.A == 0)
-				m_Preferences.OffsetColor = cTarget.DefaultOffsetColor;
+			if (m_Preferences.TargetOffsetColor.A == 0)
+				m_Preferences.TargetOffsetColor = cTarget.DefaultOffsetColor;
 
-			if (m_Preferences.ShotColor.A == 0)
-				m_Preferences.ShotColor = cTarget.DefaultShotColor;
+			if (m_Preferences.TargetShotColor.A == 0)
+				m_Preferences.TargetShotColor = cTarget.DefaultShotColor;
 
-			if (m_Preferences.ReticleColor.A == 0)
-				m_Preferences.ReticleColor = cTarget.DefaultReticleColor;
+			if (m_Preferences.TargetReticleColor.A == 0)
+				m_Preferences.TargetReticleColor = cTarget.DefaultReticleColor;
 
-			if (m_Preferences.CalibrationForecolor.A == 0)
-				m_Preferences.CalibrationForecolor = cTarget.DefaultCalibrationForecolor;
+			if (m_Preferences.TargetScaleForecolor.A == 0)
+				m_Preferences.TargetScaleForecolor = cTarget.DefaultScaleForecolor;
 
-			if (m_Preferences.CalibrationBackcolor.A == 0)
-				m_Preferences.CalibrationBackcolor = cTarget.DefaultCalibrationBackcolor;
+			if (m_Preferences.TargetScaleBackcolor.A == 0)
+				m_Preferences.TargetScaleBackcolor = cTarget.DefaultScaleBackcolor;
 
-			if (m_Preferences.ExtremesColor.A == 0)
-				m_Preferences.ExtremesColor = cTarget.DefaultExtremesColor;
+			if (m_Preferences.TargetExtremesColor.A == 0)
+				m_Preferences.TargetExtremesColor = cTarget.DefaultExtremesColor;
+
+			if (m_Preferences.TargetGroupBoxColor.A == 0)
+				m_Preferences.TargetGroupBoxColor = cTarget.DefaultGroupBoxColor;
+
+			if (!m_Preferences.TargetShowBoxesSet)
+				{
+				m_Preferences.TargetShowAimPoint = true;
+				m_Preferences.TargetShowExtremes = true;
+				m_Preferences.TargetShowGroupBox = true;
+				m_Preferences.TargetShowOffset = true;
+				m_Preferences.TargetShowScale = true;
+				m_Preferences.TargetShowBoxesSet = true;
+				}
 
 			//----------------------------------------------------------------------------*
 			// Add the Batch Editor Manufacturer if it's not already there

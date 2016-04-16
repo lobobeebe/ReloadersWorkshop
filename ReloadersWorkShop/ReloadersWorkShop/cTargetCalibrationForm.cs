@@ -59,7 +59,8 @@ namespace ReloadersWorkShop
 			// Populate Form
 			//----------------------------------------------------------------------------*
 
-			CalibrationLengthTextBox.Value = m_Target.CalibrationLength;
+			CalibrationLengthTextBox.Value = m_DataFiles.StandardToMetric(m_Target.CalibrationLength, cDataFiles.eDataType.GroupSize);
+			LengthMeasurementLabel.Text = m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize);
 
 			SetDPILabel();
 
@@ -72,7 +73,7 @@ namespace ReloadersWorkShop
 
 		protected void OnLengthChanged(object sender, EventArgs e)
 			{
-			m_Target.CalibrationLength = CalibrationLengthTextBox.Value;
+			m_Target.CalibrationLength = m_DataFiles.MetricToStandard(CalibrationLengthTextBox.Value, cDataFiles.eDataType.GroupSize);
 
 			SetDPILabel();
 
@@ -85,7 +86,7 @@ namespace ReloadersWorkShop
 
 		private void SetDPILabel()
 			{
-			string strDPI = string.Format("{0:N0} pixels in Scale Line = {1:F3} {2} ({3:N0} DPI)", m_Target.CalibrationPixels, m_Target.CalibrationLength, m_DataFiles.MetricLongString(cDataFiles.eDataType.GroupSize), m_Target.CalibrationDPI);
+			string strDPI = string.Format("{0:N0} pixels in Scale Line = {1:F3} {2} ({3:N0} DP{4})", m_Target.CalibrationPixels, m_DataFiles.StandardToMetric(m_Target.CalibrationLength, cDataFiles.eDataType.GroupSize), m_DataFiles.MetricLongString(cDataFiles.eDataType.GroupSize), m_Target.CalibrationDPC, m_DataFiles.Preferences.MetricGroups ? "C" : "I");
 
 			DPILabel.Text = strDPI;
 			}

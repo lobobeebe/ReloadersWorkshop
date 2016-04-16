@@ -33,6 +33,7 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.CalibrationLengthTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			this.DPILabel = new System.Windows.Forms.Label();
+			this.LengthMeasurementLabel = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// OKButton
@@ -58,7 +59,7 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(135, 57);
+			this.label1.Location = new System.Drawing.Point(125, 57);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(108, 13);
 			this.label1.TabIndex = 2;
@@ -67,7 +68,7 @@
 			// CalibrationLengthTextBox
 			// 
 			this.CalibrationLengthTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.CalibrationLengthTextBox.Location = new System.Drawing.Point(249, 54);
+			this.CalibrationLengthTextBox.Location = new System.Drawing.Point(239, 54);
 			this.CalibrationLengthTextBox.MaxLength = 6;
 			this.CalibrationLengthTextBox.MaxValue = 0D;
 			this.CalibrationLengthTextBox.MinValue = 0D;
@@ -90,6 +91,15 @@
 			this.DPILabel.Text = "999 Scale Pixels = 50 DPI";
 			this.DPILabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
+			// LengthMeasurementLabel
+			// 
+			this.LengthMeasurementLabel.AutoSize = true;
+			this.LengthMeasurementLabel.Location = new System.Drawing.Point(291, 57);
+			this.LengthMeasurementLabel.Name = "LengthMeasurementLabel";
+			this.LengthMeasurementLabel.Size = new System.Drawing.Size(15, 13);
+			this.LengthMeasurementLabel.TabIndex = 5;
+			this.LengthMeasurementLabel.Text = "in";
+			// 
 			// cTargetCalibrationForm
 			// 
 			this.AcceptButton = this.OKButton;
@@ -98,6 +108,7 @@
 			this.CancelButton = this.FormCancelButton;
 			this.ClientSize = new System.Drawing.Size(430, 133);
 			this.ControlBox = false;
+			this.Controls.Add(this.LengthMeasurementLabel);
 			this.Controls.Add(this.DPILabel);
 			this.Controls.Add(this.CalibrationLengthTextBox);
 			this.Controls.Add(this.label1);
@@ -119,5 +130,6 @@
 		private System.Windows.Forms.Label label1;
 		private CommonLib.Controls.cDoubleValueTextBox CalibrationLengthTextBox;
 		private System.Windows.Forms.Label DPILabel;
+		private System.Windows.Forms.Label LengthMeasurementLabel;
 		}
 	}

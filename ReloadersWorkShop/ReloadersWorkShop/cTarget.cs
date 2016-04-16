@@ -12,7 +12,8 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Windows.Forms;
+
+using CommonLib.Conversions;
 
 //============================================================================*
 // NameSpace
@@ -45,10 +46,11 @@ namespace ReloadersWorkShop
 		private static Color sm_DefaultOffsetColor = Color.FromName("Red");
 		private static Color sm_DefaultShotColor = Color.FromName("White");
 		private static Color sm_DefaultReticleColor = Color.FromName("Black");
-		private static Color sm_DefaultCalibrationForecolor = Color.FromName("Black");
-		private static Color sm_DefaultCalibrationBackcolor = Color.FromName("Yellow");
+		private static Color sm_DefaultScaleForecolor = Color.FromName("Black");
+		private static Color sm_DefaultScaleBackcolor = Color.FromName("Yellow");
 		private static Color sm_DefaultExtremesColor = Color.FromName("White");
-
+		private static Color sm_DefaultGroupBoxColor = Color.FromName("LightGray");
+		
 		//============================================================================*
 		// Private Data Members
 		//============================================================================*
@@ -72,13 +74,19 @@ namespace ReloadersWorkShop
 
 		private List<Point> m_ShotList = new List<Point>();
 
+		private DateTime m_Date = DateTime.Today;
+		private string m_strShooter = "";
+		private string m_strLocation = "";
+		private cFirearm m_Firearm = null;
+
 		public Color m_AimPointColor = sm_DefaultAimPointColor;
 		public Color m_OffsetColor = sm_DefaultOffsetColor;
 		public Color m_ShotColor = sm_DefaultShotColor;
 		public Color m_ReticleColor = sm_DefaultReticleColor;
-		public Color m_CalibrationForecolor = sm_DefaultCalibrationForecolor;
-		public Color m_CalibrationBackcolor = sm_DefaultCalibrationBackcolor;
+		public Color m_ScaleForecolor = sm_DefaultScaleForecolor;
+		public Color m_ScaleBackcolor = sm_DefaultScaleBackcolor;
 		public Color m_ExtremesColor = sm_DefaultExtremesColor;
+		public Color m_GroupBoxColor = sm_DefaultGroupBoxColor;
 
 		//============================================================================*
 		// cTarget() - Default Constructor
@@ -114,13 +122,19 @@ namespace ReloadersWorkShop
 
 			m_ShotList = new List<Point>(Target.m_ShotList);
 
+			m_Date = Target.m_Date;
+			m_strShooter = Target.m_strShooter;
+			m_strLocation = Target.m_strLocation;
+			m_Firearm = Target.Firearm;
+
 			m_AimPointColor = Target.m_AimPointColor;
 			m_OffsetColor = Target.m_OffsetColor;
 			m_ShotColor = Target.m_ShotColor;
 			m_ReticleColor = Target.m_ReticleColor;
-			m_CalibrationForecolor = Target.m_CalibrationForecolor;
-			m_CalibrationBackcolor = Target.m_CalibrationBackcolor;
+			m_ScaleForecolor = Target.m_ScaleForecolor;
+			m_ScaleBackcolor = Target.m_ScaleBackcolor;
 			m_ExtremesColor = Target.m_ExtremesColor;
+			m_GroupBoxColor = Target.m_GroupBoxColor;
 			}
 
 		//============================================================================*
@@ -256,18 +270,19 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// CalibrationBackcolor Property
+		// CalibrationDPC Property
 		//============================================================================*
 
-		public Color CalibrationBackcolor
+		public int CalibrationDPC
 			{
 			get
 				{
-				return (m_CalibrationBackcolor);
-				}
-			set
-				{
-				m_CalibrationBackcolor = value;
+				int nDPC = 0;
+
+				if (m_dCalibrationLength != 0.0 && CalibrationPixels != 0)
+					nDPC = (int) ((double) CalibrationPixels / cConversions.InchesToCentimeters(m_dCalibrationLength));
+
+				return (nDPC);
 				}
 			}
 
@@ -301,22 +316,6 @@ namespace ReloadersWorkShop
 			set
 				{
 				m_CalibrationEnd = value;
-				}
-			}
-
-		//============================================================================*
-		// CalibrationForecolor Property
-		//============================================================================*
-
-		public Color CalibrationForecolor
-			{
-			get
-				{
-				return (m_CalibrationForecolor);
-				}
-			set
-				{
-				m_CalibrationForecolor = value;
 				}
 			}
 
@@ -369,6 +368,22 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Date Property
+		//============================================================================*
+
+		public DateTime Date
+			{
+			get
+				{
+				return (m_Date);
+				}
+			set
+				{
+				m_Date = value;
+				}
+			}
+
+		//============================================================================*
 		// DefaultAimPointColor Property
 		//============================================================================*
 
@@ -381,26 +396,26 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// DefaultCalibrationBackcolor Property
+		// DefaultScaleBackcolor Property
 		//============================================================================*
 
-		public static Color DefaultCalibrationBackcolor
+		public static Color DefaultScaleBackcolor
 			{
 			get
 				{
-				return (sm_DefaultCalibrationBackcolor);
+				return (sm_DefaultScaleBackcolor);
 				}
 			}
 
 		//============================================================================*
-		// DefaultCalibrationForecolor Property
+		// DefaultScaleForecolor Property
 		//============================================================================*
 
-		public static Color DefaultCalibrationForecolor
+		public static Color DefaultScaleForecolor
 			{
 			get
 				{
-				return (sm_DefaultCalibrationForecolor);
+				return (sm_DefaultScaleForecolor);
 				}
 			}
 
@@ -413,6 +428,18 @@ namespace ReloadersWorkShop
 			get
 				{
 				return (sm_DefaultExtremesColor);
+				}
+			}
+
+		//============================================================================*
+		// DefaultGroupBoxColor Property
+		//============================================================================*
+
+		public static Color DefaultGroupBoxColor
+			{
+			get
+				{
+				return (sm_DefaultGroupBoxColor);
 				}
 			}
 
@@ -465,6 +492,78 @@ namespace ReloadersWorkShop
 			set
 				{
 				m_ExtremesColor = value;
+				}
+			}
+
+		//============================================================================*
+		// Firearm Property
+		//============================================================================*
+
+		public cFirearm Firearm
+			{
+			get
+				{
+				return (m_Firearm);
+				}
+			set
+				{
+				m_Firearm = value;
+				}
+			}
+
+		//============================================================================*
+		// GroupBox Property
+		//============================================================================*
+
+		public Rectangle GroupBox
+			{
+			get
+				{
+				Point UpperLeft = new Point(1080, 768);
+				Point LowerRight = new Point();
+
+				Rectangle GroupBoxRect = new Rectangle();
+
+				if (Calibrated)
+					{
+					foreach (Point Shot in m_ShotList)
+						{
+						if (Shot.X < UpperLeft.X)
+							UpperLeft.X = Shot.X;
+
+						if (Shot.X > LowerRight.X)
+							LowerRight.X = Shot.X;
+
+						if (Shot.Y < UpperLeft.Y)
+							UpperLeft.Y = Shot.Y;
+
+						if (Shot.Y > LowerRight.Y)
+							LowerRight.Y = Shot.Y;
+						}
+
+					GroupBoxRect.X = UpperLeft.X;
+					GroupBoxRect.Y = UpperLeft.Y;
+					GroupBoxRect.Width = LowerRight.X - GroupBoxRect.X;
+					GroupBoxRect.Height = LowerRight.Y - GroupBoxRect.Y;
+					}
+
+				return (GroupBoxRect);
+				}
+			}
+
+		//============================================================================*
+		// GroupBoxColor Property
+		//============================================================================*
+
+		public Color GroupBoxColor
+			{
+			get
+				{
+				return (m_GroupBoxColor);
+				}
+			set
+				{
+				m_GroupBoxColor = value;
 				}
 			}
 
@@ -566,6 +665,22 @@ namespace ReloadersWorkShop
 				m_CalibrationEnd = Point.Empty;
 
 				m_ShotList.Clear();
+				}
+			}
+
+		//============================================================================*
+		// Location Property
+		//============================================================================*
+
+		public string Location
+			{
+			get
+				{
+				return (m_strLocation);
+				}
+			set
+				{
+				m_strLocation = value;
 				}
 			}
 
@@ -679,6 +794,36 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// PixelsPerCentimeter Property
+		//============================================================================*
+
+		public int PixelsPerCentimeter
+			{
+			get
+				{
+				double dCalibrationLength = cConversions.InchesToCentimeters(m_dCalibrationLength);
+
+				int nPixelsPerCentimeter = (m_dCalibrationLength != 0.0) ? (int) ((double) CalibrationPixels / dCalibrationLength) : 0;
+
+				return (nPixelsPerCentimeter);
+				}
+			}
+
+		//============================================================================*
+		// PixelsPerInch Property
+		//============================================================================*
+
+		public int PixelsPerInch
+			{
+			get
+				{
+				int nPixelsPerInch = (m_dCalibrationLength != 0.0) ? (int) ((double) CalibrationPixels / m_dCalibrationLength) : 0;
+
+				return (nPixelsPerInch);
+				}
+			}
+
+		//============================================================================*
 		// Range Property
 		//============================================================================*
 
@@ -711,16 +856,82 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// PixelsPerInch Property
+		// ScaleBackcolor Property
 		//============================================================================*
 
-		public int PixelsPerInch
+		public Color ScaleBackcolor
 			{
 			get
 				{
-				int nPixelsPerInch = (m_dCalibrationLength != 0.0) ? (int) ((double) CalibrationPixels / m_dCalibrationLength) : 0;
+				return (m_ScaleBackcolor);
+				}
+			set
+				{
+				m_ScaleBackcolor = value;
+				}
+			}
 
-				return (nPixelsPerInch);
+		//============================================================================*
+		// ScaleForecolor Property
+		//============================================================================*
+
+		public Color ScaleForecolor
+			{
+			get
+				{
+				return (m_ScaleForecolor);
+				}
+			set
+				{
+				m_ScaleForecolor = value;
+				}
+			}
+
+		//============================================================================*
+		// SetDefaultColors Property
+		//============================================================================*
+
+		public void SetDefaultColors()
+			{
+			m_AimPointColor = sm_DefaultAimPointColor;
+			m_OffsetColor = sm_DefaultOffsetColor;
+			m_ShotColor = sm_DefaultShotColor;
+			m_ReticleColor = sm_DefaultReticleColor;
+			m_ScaleForecolor = sm_DefaultScaleForecolor;
+			m_ScaleBackcolor = sm_DefaultScaleBackcolor;
+			m_ExtremesColor = sm_DefaultExtremesColor;
+			m_GroupBoxColor = sm_DefaultGroupBoxColor;
+			}
+
+		//============================================================================*
+		// SetPreferencesColors Property
+		//============================================================================*
+
+		public void SetPreferencesColors(cDataFiles Datafiles)
+			{
+			m_AimPointColor = Datafiles.Preferences.TargetAimPointColor;
+			m_OffsetColor = Datafiles.Preferences.TargetOffsetColor;
+			m_ShotColor = Datafiles.Preferences.TargetShotColor;
+			m_ReticleColor = Datafiles.Preferences.TargetReticleColor;
+			m_ScaleForecolor = Datafiles.Preferences.TargetScaleForecolor;
+			m_ScaleBackcolor = Datafiles.Preferences.TargetScaleBackcolor;
+			m_ExtremesColor = Datafiles.Preferences.TargetExtremesColor;
+			m_GroupBoxColor = Datafiles.Preferences.TargetGroupBoxColor;
+			}
+
+		//============================================================================*
+		// Shooter Property
+		//============================================================================*
+
+		public string Shooter
+			{
+			get
+				{
+				return (m_strShooter);
+				}
+			set
+				{
+				m_strShooter = value;
 				}
 			}
 

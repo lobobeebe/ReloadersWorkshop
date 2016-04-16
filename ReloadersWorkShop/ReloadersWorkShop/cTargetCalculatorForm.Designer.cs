@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 			{
-			this.TargetCalculatorCancelButton = new System.Windows.Forms.Button();
+			this.FormCancelButton = new System.Windows.Forms.Button();
 			this.OKButton = new System.Windows.Forms.Button();
 			this.TargetCalculatorMenuStrip = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,28 +61,29 @@
 			this.label4 = new System.Windows.Forms.Label();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.BulletDiameterLabel = new System.Windows.Forms.Label();
-			this.RangeTextBox = new CommonLib.Controls.cIntegerValueTextBox();
 			this.TargetImageBox = new System.Windows.Forms.PictureBox();
-			this.ShowCalibrationCheckBox = new System.Windows.Forms.CheckBox();
+			this.ShowScaleCheckBox = new System.Windows.Forms.CheckBox();
 			this.ShowAimPointCheckBox = new System.Windows.Forms.CheckBox();
-			this.ShowMeanOffsetCheckBox = new System.Windows.Forms.CheckBox();
+			this.ShowOffsetCheckBox = new System.Windows.Forms.CheckBox();
 			this.DetailsButton = new System.Windows.Forms.Button();
 			this.ShowExtremesCheckBox = new System.Windows.Forms.CheckBox();
+			this.ShowGroupBoxCheckBox = new System.Windows.Forms.CheckBox();
+			this.RangeTextBox = new CommonLib.Controls.cIntegerValueTextBox();
 			this.TargetCalculatorMenuStrip.SuspendLayout();
 			this.OutputGroupBox.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.TargetImageBox)).BeginInit();
 			this.SuspendLayout();
 			// 
-			// TargetCalculatorCancelButton
+			// FormCancelButton
 			// 
-			this.TargetCalculatorCancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.TargetCalculatorCancelButton.Location = new System.Drawing.Point(583, 694);
-			this.TargetCalculatorCancelButton.Name = "TargetCalculatorCancelButton";
-			this.TargetCalculatorCancelButton.Size = new System.Drawing.Size(75, 23);
-			this.TargetCalculatorCancelButton.TabIndex = 0;
-			this.TargetCalculatorCancelButton.Text = "Cancel";
-			this.TargetCalculatorCancelButton.UseVisualStyleBackColor = true;
+			this.FormCancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.FormCancelButton.Location = new System.Drawing.Point(583, 694);
+			this.FormCancelButton.Name = "FormCancelButton";
+			this.FormCancelButton.Size = new System.Drawing.Size(75, 23);
+			this.FormCancelButton.TabIndex = 0;
+			this.FormCancelButton.Text = "Cancel";
+			this.FormCancelButton.UseVisualStyleBackColor = true;
 			// 
 			// OKButton
 			// 
@@ -101,7 +102,7 @@
             this.editToolStripMenuItem});
 			this.TargetCalculatorMenuStrip.Location = new System.Drawing.Point(0, 0);
 			this.TargetCalculatorMenuStrip.Name = "TargetCalculatorMenuStrip";
-			this.TargetCalculatorMenuStrip.Size = new System.Drawing.Size(1064, 24);
+			this.TargetCalculatorMenuStrip.Size = new System.Drawing.Size(1056, 24);
 			this.TargetCalculatorMenuStrip.TabIndex = 4;
 			this.TargetCalculatorMenuStrip.Text = "menuStrip1";
 			// 
@@ -412,6 +413,84 @@
 			this.BulletDiameterLabel.TabIndex = 16;
 			this.BulletDiameterLabel.Text = "0.999";
 			// 
+			// TargetImageBox
+			// 
+			this.TargetImageBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.TargetImageBox.Location = new System.Drawing.Point(42, 148);
+			this.TargetImageBox.Name = "TargetImageBox";
+			this.TargetImageBox.Size = new System.Drawing.Size(984, 519);
+			this.TargetImageBox.TabIndex = 12;
+			this.TargetImageBox.TabStop = false;
+			// 
+			// ShowScaleCheckBox
+			// 
+			this.ShowScaleCheckBox.AutoSize = true;
+			this.ShowScaleCheckBox.Checked = true;
+			this.ShowScaleCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.ShowScaleCheckBox.Location = new System.Drawing.Point(320, 119);
+			this.ShowScaleCheckBox.Name = "ShowScaleCheckBox";
+			this.ShowScaleCheckBox.Size = new System.Drawing.Size(83, 17);
+			this.ShowScaleCheckBox.TabIndex = 13;
+			this.ShowScaleCheckBox.Text = "Show Scale";
+			this.ShowScaleCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// ShowAimPointCheckBox
+			// 
+			this.ShowAimPointCheckBox.AutoSize = true;
+			this.ShowAimPointCheckBox.Checked = true;
+			this.ShowAimPointCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.ShowAimPointCheckBox.Location = new System.Drawing.Point(416, 119);
+			this.ShowAimPointCheckBox.Name = "ShowAimPointCheckBox";
+			this.ShowAimPointCheckBox.Size = new System.Drawing.Size(100, 17);
+			this.ShowAimPointCheckBox.TabIndex = 14;
+			this.ShowAimPointCheckBox.Text = "Show Aim Point";
+			this.ShowAimPointCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// ShowOffsetCheckBox
+			// 
+			this.ShowOffsetCheckBox.AutoSize = true;
+			this.ShowOffsetCheckBox.Checked = true;
+			this.ShowOffsetCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.ShowOffsetCheckBox.Location = new System.Drawing.Point(529, 119);
+			this.ShowOffsetCheckBox.Name = "ShowOffsetCheckBox";
+			this.ShowOffsetCheckBox.Size = new System.Drawing.Size(114, 17);
+			this.ShowOffsetCheckBox.TabIndex = 15;
+			this.ShowOffsetCheckBox.Text = "Show Mean Offset";
+			this.ShowOffsetCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// DetailsButton
+			// 
+			this.DetailsButton.Location = new System.Drawing.Point(920, 115);
+			this.DetailsButton.Name = "DetailsButton";
+			this.DetailsButton.Size = new System.Drawing.Size(75, 23);
+			this.DetailsButton.TabIndex = 16;
+			this.DetailsButton.Text = "Details";
+			this.DetailsButton.UseVisualStyleBackColor = true;
+			// 
+			// ShowExtremesCheckBox
+			// 
+			this.ShowExtremesCheckBox.AutoSize = true;
+			this.ShowExtremesCheckBox.Checked = true;
+			this.ShowExtremesCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.ShowExtremesCheckBox.Location = new System.Drawing.Point(656, 119);
+			this.ShowExtremesCheckBox.Name = "ShowExtremesCheckBox";
+			this.ShowExtremesCheckBox.Size = new System.Drawing.Size(131, 17);
+			this.ShowExtremesCheckBox.TabIndex = 17;
+			this.ShowExtremesCheckBox.Text = "Show Group Extremes";
+			this.ShowExtremesCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// ShowGroupBoxCheckBox
+			// 
+			this.ShowGroupBoxCheckBox.AutoSize = true;
+			this.ShowGroupBoxCheckBox.Checked = true;
+			this.ShowGroupBoxCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.ShowGroupBoxCheckBox.Location = new System.Drawing.Point(800, 119);
+			this.ShowGroupBoxCheckBox.Name = "ShowGroupBoxCheckBox";
+			this.ShowGroupBoxCheckBox.Size = new System.Drawing.Size(106, 17);
+			this.ShowGroupBoxCheckBox.TabIndex = 18;
+			this.ShowGroupBoxCheckBox.Text = "Show Group Box";
+			this.ShowGroupBoxCheckBox.UseVisualStyleBackColor = true;
+			// 
 			// RangeTextBox
 			// 
 			this.RangeTextBox.BackColor = System.Drawing.SystemColors.Window;
@@ -428,92 +507,27 @@
 			this.RangeTextBox.ToolTip = "";
 			this.RangeTextBox.Value = 9999;
 			// 
-			// TargetImageBox
-			// 
-			this.TargetImageBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.TargetImageBox.Location = new System.Drawing.Point(42, 148);
-			this.TargetImageBox.Name = "TargetImageBox";
-			this.TargetImageBox.Size = new System.Drawing.Size(984, 519);
-			this.TargetImageBox.TabIndex = 12;
-			this.TargetImageBox.TabStop = false;
-			// 
-			// ShowCalibrationCheckBox
-			// 
-			this.ShowCalibrationCheckBox.AutoSize = true;
-			this.ShowCalibrationCheckBox.Checked = true;
-			this.ShowCalibrationCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.ShowCalibrationCheckBox.Location = new System.Drawing.Point(320, 119);
-			this.ShowCalibrationCheckBox.Name = "ShowCalibrationCheckBox";
-			this.ShowCalibrationCheckBox.Size = new System.Drawing.Size(83, 17);
-			this.ShowCalibrationCheckBox.TabIndex = 13;
-			this.ShowCalibrationCheckBox.Text = "Show Scale";
-			this.ShowCalibrationCheckBox.UseVisualStyleBackColor = true;
-			// 
-			// ShowAimPointCheckBox
-			// 
-			this.ShowAimPointCheckBox.AutoSize = true;
-			this.ShowAimPointCheckBox.Checked = true;
-			this.ShowAimPointCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.ShowAimPointCheckBox.Location = new System.Drawing.Point(435, 119);
-			this.ShowAimPointCheckBox.Name = "ShowAimPointCheckBox";
-			this.ShowAimPointCheckBox.Size = new System.Drawing.Size(100, 17);
-			this.ShowAimPointCheckBox.TabIndex = 14;
-			this.ShowAimPointCheckBox.Text = "Show Aim Point";
-			this.ShowAimPointCheckBox.UseVisualStyleBackColor = true;
-			// 
-			// ShowMeanOffsetCheckBox
-			// 
-			this.ShowMeanOffsetCheckBox.AutoSize = true;
-			this.ShowMeanOffsetCheckBox.Checked = true;
-			this.ShowMeanOffsetCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.ShowMeanOffsetCheckBox.Location = new System.Drawing.Point(567, 119);
-			this.ShowMeanOffsetCheckBox.Name = "ShowMeanOffsetCheckBox";
-			this.ShowMeanOffsetCheckBox.Size = new System.Drawing.Size(114, 17);
-			this.ShowMeanOffsetCheckBox.TabIndex = 15;
-			this.ShowMeanOffsetCheckBox.Text = "Show Mean Offset";
-			this.ShowMeanOffsetCheckBox.UseVisualStyleBackColor = true;
-			// 
-			// DetailsButton
-			// 
-			this.DetailsButton.Location = new System.Drawing.Point(920, 115);
-			this.DetailsButton.Name = "DetailsButton";
-			this.DetailsButton.Size = new System.Drawing.Size(75, 23);
-			this.DetailsButton.TabIndex = 16;
-			this.DetailsButton.Text = "Details";
-			this.DetailsButton.UseVisualStyleBackColor = true;
-			// 
-			// ShowExtremesCheckBox
-			// 
-			this.ShowExtremesCheckBox.AutoSize = true;
-			this.ShowExtremesCheckBox.Checked = true;
-			this.ShowExtremesCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.ShowExtremesCheckBox.Location = new System.Drawing.Point(713, 119);
-			this.ShowExtremesCheckBox.Name = "ShowExtremesCheckBox";
-			this.ShowExtremesCheckBox.Size = new System.Drawing.Size(131, 17);
-			this.ShowExtremesCheckBox.TabIndex = 17;
-			this.ShowExtremesCheckBox.Text = "Show Group Extremes";
-			this.ShowExtremesCheckBox.UseVisualStyleBackColor = true;
-			// 
 			// cTargetCalculatorForm
 			// 
 			this.AcceptButton = this.OKButton;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.CancelButton = this.TargetCalculatorCancelButton;
-			this.ClientSize = new System.Drawing.Size(1064, 758);
+			this.CancelButton = this.FormCancelButton;
+			this.ClientSize = new System.Drawing.Size(1056, 758);
 			this.ControlBox = false;
+			this.Controls.Add(this.ShowGroupBoxCheckBox);
 			this.Controls.Add(this.ShowExtremesCheckBox);
 			this.Controls.Add(this.DetailsButton);
-			this.Controls.Add(this.ShowMeanOffsetCheckBox);
+			this.Controls.Add(this.ShowOffsetCheckBox);
 			this.Controls.Add(this.ShowAimPointCheckBox);
-			this.Controls.Add(this.ShowCalibrationCheckBox);
+			this.Controls.Add(this.ShowScaleCheckBox);
 			this.Controls.Add(this.TargetImageBox);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.ModeLabel);
 			this.Controls.Add(this.OutputGroupBox);
 			this.Controls.Add(this.TargetCalculatorMenuStrip);
 			this.Controls.Add(this.OKButton);
-			this.Controls.Add(this.TargetCalculatorCancelButton);
+			this.Controls.Add(this.FormCancelButton);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
 			this.MainMenuStrip = this.TargetCalculatorMenuStrip;
 			this.MinimizeBox = false;
@@ -537,7 +551,7 @@
 
 		#endregion
 
-		private System.Windows.Forms.Button TargetCalculatorCancelButton;
+		private System.Windows.Forms.Button FormCancelButton;
 		private System.Windows.Forms.Button OKButton;
 		private System.Windows.Forms.MenuStrip TargetCalculatorMenuStrip;
 		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
@@ -568,14 +582,15 @@
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.Label OffsetLabel;
 		private System.Windows.Forms.Label label8;
-		private System.Windows.Forms.CheckBox ShowCalibrationCheckBox;
+		private System.Windows.Forms.CheckBox ShowScaleCheckBox;
 		private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem EditUndoMenuItem;
 		private System.Windows.Forms.CheckBox ShowAimPointCheckBox;
-		private System.Windows.Forms.CheckBox ShowMeanOffsetCheckBox;
+		private System.Windows.Forms.CheckBox ShowOffsetCheckBox;
 		private System.Windows.Forms.Button DetailsButton;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripMenuItem EditPreferencesMenuItem;
 		private System.Windows.Forms.CheckBox ShowExtremesCheckBox;
+		private System.Windows.Forms.CheckBox ShowGroupBoxCheckBox;
 		}
 	}
