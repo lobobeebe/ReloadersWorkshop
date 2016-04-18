@@ -420,16 +420,18 @@ namespace ReloadersWorkShop.Preferences
 		private Color m_TargetScaleBackcolor = cTarget.DefaultScaleBackcolor;
 		private Color m_TargetScaleForecolor = cTarget.DefaultScaleForecolor;
 		private Color m_TargetShotColor = cTarget.DefaultShotColor;
+		private Color m_TargetShotForecolor = cTarget.DefaultShotForecolor;
 
 		// Target Calculator Settings
 
 		private bool m_fTargetShowBoxesSet = false;
 
 		private bool m_fTargetShowAimPoint = true;
-		private bool m_fTargetShowExtremes = true;
-		private bool m_fTargetShowGroupBox = true;
+		private bool m_fTargetShowExtremes = false;
+		private bool m_fTargetShowGroupBox = false;
 		private bool m_fTargetShowOffset = true;
 		private bool m_fTargetShowScale = true;
+		private bool m_fTargetShowShotNum = false;
 
 		// Transaction Form Settings
 
@@ -3608,6 +3610,22 @@ namespace ReloadersWorkShop.Preferences
 			}
 
 		//============================================================================*
+		// TargetShotForecolor Property
+		//============================================================================*
+
+		public Color TargetShotForecolor
+			{
+			get
+				{
+				return (m_TargetShotForecolor);
+				}
+			set
+				{
+				m_TargetShotForecolor = value;
+				}
+			}
+
+		//============================================================================*
 		// TargetShowAimPoint Property
 		//============================================================================*
 
@@ -3692,6 +3710,22 @@ namespace ReloadersWorkShop.Preferences
 		//============================================================================*
 
 		public bool TargetShowScale
+			{
+			get
+				{
+				return (m_fTargetShowScale);
+				}
+			set
+				{
+				m_fTargetShowScale = value;
+				}
+			}
+
+		//============================================================================*
+		// TargetShowShotNum Property
+		//============================================================================*
+
+		public bool TargetShowShotNum
 			{
 			get
 				{

@@ -10,6 +10,7 @@
 //============================================================================*
 
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 //============================================================================*
@@ -33,6 +34,8 @@ namespace ReloadersWorkShop
 		private cDataFiles m_DataFiles = null;
 		private cTarget m_Target = null;
 
+		private cTargetShotListView m_ShotListView = null;
+
 		//============================================================================*
 		// cTargetDetailsForm() - Constructor
 		//============================================================================*
@@ -54,7 +57,20 @@ namespace ReloadersWorkShop
 
 			FirearmCombo.SelectedIndexChanged += OnFirearmChanged;
 
+			//----------------------------------------------------------------------------*
+			// Size Dialog and create Sho tList View
+			//----------------------------------------------------------------------------*
+
 			SetClientSizeCore(GeneralGroupBox.Location.X + GeneralGroupBox.Width + 10, OKButton.Location.Y + OKButton.Height + 20);
+
+			m_ShotListView = new cTargetShotListView(m_DataFiles, m_Target);
+
+			m_ShotListView.Location = new Point(6, 25);
+			m_ShotListView.Size = new Size(ShotDataGroupBox.Width - 12, ShotDataGroupBox.Height - 31);
+
+			m_ShotListView.TabIndex = 0;
+
+			ShotDataGroupBox.Controls.Add(m_ShotListView);
 
 			//----------------------------------------------------------------------------*
 			// Populate Data

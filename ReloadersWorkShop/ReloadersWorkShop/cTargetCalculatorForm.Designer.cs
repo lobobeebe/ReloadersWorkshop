@@ -61,14 +61,15 @@
 			this.label4 = new System.Windows.Forms.Label();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.BulletDiameterLabel = new System.Windows.Forms.Label();
+			this.RangeTextBox = new CommonLib.Controls.cIntegerValueTextBox();
 			this.TargetImageBox = new System.Windows.Forms.PictureBox();
 			this.ShowScaleCheckBox = new System.Windows.Forms.CheckBox();
 			this.ShowAimPointCheckBox = new System.Windows.Forms.CheckBox();
 			this.ShowOffsetCheckBox = new System.Windows.Forms.CheckBox();
-			this.DetailsButton = new System.Windows.Forms.Button();
 			this.ShowExtremesCheckBox = new System.Windows.Forms.CheckBox();
 			this.ShowGroupBoxCheckBox = new System.Windows.Forms.CheckBox();
-			this.RangeTextBox = new CommonLib.Controls.cIntegerValueTextBox();
+			this.ShowShotNumCheckBox = new System.Windows.Forms.CheckBox();
+			this.EditDetailsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.TargetCalculatorMenuStrip.SuspendLayout();
 			this.OutputGroupBox.SuspendLayout();
 			this.groupBox1.SuspendLayout();
@@ -102,7 +103,7 @@
             this.editToolStripMenuItem});
 			this.TargetCalculatorMenuStrip.Location = new System.Drawing.Point(0, 0);
 			this.TargetCalculatorMenuStrip.Name = "TargetCalculatorMenuStrip";
-			this.TargetCalculatorMenuStrip.Size = new System.Drawing.Size(1056, 24);
+			this.TargetCalculatorMenuStrip.Size = new System.Drawing.Size(1052, 24);
 			this.TargetCalculatorMenuStrip.TabIndex = 4;
 			this.TargetCalculatorMenuStrip.Text = "menuStrip1";
 			// 
@@ -164,6 +165,7 @@
 			this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.EditUndoMenuItem,
             this.toolStripSeparator2,
+            this.EditDetailsMenuItem,
             this.EditPreferencesMenuItem});
 			this.editToolStripMenuItem.Name = "editToolStripMenuItem";
 			this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
@@ -173,20 +175,20 @@
 			// 
 			this.EditUndoMenuItem.Name = "EditUndoMenuItem";
 			this.EditUndoMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-			this.EditUndoMenuItem.Size = new System.Drawing.Size(208, 22);
+			this.EditUndoMenuItem.Size = new System.Drawing.Size(220, 22);
 			this.EditUndoMenuItem.Text = "&Undo";
 			// 
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(205, 6);
+			this.toolStripSeparator2.Size = new System.Drawing.Size(217, 6);
 			// 
 			// EditPreferencesMenuItem
 			// 
 			this.EditPreferencesMenuItem.Name = "EditPreferencesMenuItem";
 			this.EditPreferencesMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.P)));
-			this.EditPreferencesMenuItem.Size = new System.Drawing.Size(208, 22);
+			this.EditPreferencesMenuItem.Size = new System.Drawing.Size(220, 22);
 			this.EditPreferencesMenuItem.Text = "&Preferences";
 			// 
 			// NumShotsLabel
@@ -246,7 +248,7 @@
 			this.OffsetLabel.AutoSize = true;
 			this.OffsetLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.OffsetLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.OffsetLabel.Location = new System.Drawing.Point(173, 56);
+			this.OffsetLabel.Location = new System.Drawing.Point(84, 56);
 			this.OffsetLabel.Name = "OffsetLabel";
 			this.OffsetLabel.Size = new System.Drawing.Size(54, 13);
 			this.OffsetLabel.TabIndex = 7;
@@ -257,11 +259,11 @@
 			this.label8.AutoSize = true;
 			this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label8.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label8.Location = new System.Drawing.Point(52, 56);
+			this.label8.Location = new System.Drawing.Point(10, 56);
 			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(115, 13);
+			this.label8.Size = new System.Drawing.Size(68, 13);
 			this.label8.TabIndex = 6;
-			this.label8.Text = "Mean Aim Point Offset:";
+			this.label8.Text = "Mean Offset:";
 			// 
 			// MilsLabel
 			// 
@@ -413,84 +415,6 @@
 			this.BulletDiameterLabel.TabIndex = 16;
 			this.BulletDiameterLabel.Text = "0.999";
 			// 
-			// TargetImageBox
-			// 
-			this.TargetImageBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.TargetImageBox.Location = new System.Drawing.Point(42, 148);
-			this.TargetImageBox.Name = "TargetImageBox";
-			this.TargetImageBox.Size = new System.Drawing.Size(984, 519);
-			this.TargetImageBox.TabIndex = 12;
-			this.TargetImageBox.TabStop = false;
-			// 
-			// ShowScaleCheckBox
-			// 
-			this.ShowScaleCheckBox.AutoSize = true;
-			this.ShowScaleCheckBox.Checked = true;
-			this.ShowScaleCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.ShowScaleCheckBox.Location = new System.Drawing.Point(320, 119);
-			this.ShowScaleCheckBox.Name = "ShowScaleCheckBox";
-			this.ShowScaleCheckBox.Size = new System.Drawing.Size(83, 17);
-			this.ShowScaleCheckBox.TabIndex = 13;
-			this.ShowScaleCheckBox.Text = "Show Scale";
-			this.ShowScaleCheckBox.UseVisualStyleBackColor = true;
-			// 
-			// ShowAimPointCheckBox
-			// 
-			this.ShowAimPointCheckBox.AutoSize = true;
-			this.ShowAimPointCheckBox.Checked = true;
-			this.ShowAimPointCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.ShowAimPointCheckBox.Location = new System.Drawing.Point(416, 119);
-			this.ShowAimPointCheckBox.Name = "ShowAimPointCheckBox";
-			this.ShowAimPointCheckBox.Size = new System.Drawing.Size(100, 17);
-			this.ShowAimPointCheckBox.TabIndex = 14;
-			this.ShowAimPointCheckBox.Text = "Show Aim Point";
-			this.ShowAimPointCheckBox.UseVisualStyleBackColor = true;
-			// 
-			// ShowOffsetCheckBox
-			// 
-			this.ShowOffsetCheckBox.AutoSize = true;
-			this.ShowOffsetCheckBox.Checked = true;
-			this.ShowOffsetCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.ShowOffsetCheckBox.Location = new System.Drawing.Point(529, 119);
-			this.ShowOffsetCheckBox.Name = "ShowOffsetCheckBox";
-			this.ShowOffsetCheckBox.Size = new System.Drawing.Size(114, 17);
-			this.ShowOffsetCheckBox.TabIndex = 15;
-			this.ShowOffsetCheckBox.Text = "Show Mean Offset";
-			this.ShowOffsetCheckBox.UseVisualStyleBackColor = true;
-			// 
-			// DetailsButton
-			// 
-			this.DetailsButton.Location = new System.Drawing.Point(920, 115);
-			this.DetailsButton.Name = "DetailsButton";
-			this.DetailsButton.Size = new System.Drawing.Size(75, 23);
-			this.DetailsButton.TabIndex = 16;
-			this.DetailsButton.Text = "Details";
-			this.DetailsButton.UseVisualStyleBackColor = true;
-			// 
-			// ShowExtremesCheckBox
-			// 
-			this.ShowExtremesCheckBox.AutoSize = true;
-			this.ShowExtremesCheckBox.Checked = true;
-			this.ShowExtremesCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.ShowExtremesCheckBox.Location = new System.Drawing.Point(656, 119);
-			this.ShowExtremesCheckBox.Name = "ShowExtremesCheckBox";
-			this.ShowExtremesCheckBox.Size = new System.Drawing.Size(131, 17);
-			this.ShowExtremesCheckBox.TabIndex = 17;
-			this.ShowExtremesCheckBox.Text = "Show Group Extremes";
-			this.ShowExtremesCheckBox.UseVisualStyleBackColor = true;
-			// 
-			// ShowGroupBoxCheckBox
-			// 
-			this.ShowGroupBoxCheckBox.AutoSize = true;
-			this.ShowGroupBoxCheckBox.Checked = true;
-			this.ShowGroupBoxCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.ShowGroupBoxCheckBox.Location = new System.Drawing.Point(800, 119);
-			this.ShowGroupBoxCheckBox.Name = "ShowGroupBoxCheckBox";
-			this.ShowGroupBoxCheckBox.Size = new System.Drawing.Size(106, 17);
-			this.ShowGroupBoxCheckBox.TabIndex = 18;
-			this.ShowGroupBoxCheckBox.Text = "Show Group Box";
-			this.ShowGroupBoxCheckBox.UseVisualStyleBackColor = true;
-			// 
 			// RangeTextBox
 			// 
 			this.RangeTextBox.BackColor = System.Drawing.SystemColors.Window;
@@ -507,17 +431,106 @@
 			this.RangeTextBox.ToolTip = "";
 			this.RangeTextBox.Value = 9999;
 			// 
+			// TargetImageBox
+			// 
+			this.TargetImageBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.TargetImageBox.Location = new System.Drawing.Point(42, 148);
+			this.TargetImageBox.Name = "TargetImageBox";
+			this.TargetImageBox.Size = new System.Drawing.Size(984, 519);
+			this.TargetImageBox.TabIndex = 12;
+			this.TargetImageBox.TabStop = false;
+			// 
+			// ShowScaleCheckBox
+			// 
+			this.ShowScaleCheckBox.AutoSize = true;
+			this.ShowScaleCheckBox.Checked = true;
+			this.ShowScaleCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.ShowScaleCheckBox.Location = new System.Drawing.Point(274, 119);
+			this.ShowScaleCheckBox.Name = "ShowScaleCheckBox";
+			this.ShowScaleCheckBox.Size = new System.Drawing.Size(83, 17);
+			this.ShowScaleCheckBox.TabIndex = 13;
+			this.ShowScaleCheckBox.Text = "Show Scale";
+			this.ShowScaleCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// ShowAimPointCheckBox
+			// 
+			this.ShowAimPointCheckBox.AutoSize = true;
+			this.ShowAimPointCheckBox.Checked = true;
+			this.ShowAimPointCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.ShowAimPointCheckBox.Location = new System.Drawing.Point(368, 119);
+			this.ShowAimPointCheckBox.Name = "ShowAimPointCheckBox";
+			this.ShowAimPointCheckBox.Size = new System.Drawing.Size(100, 17);
+			this.ShowAimPointCheckBox.TabIndex = 14;
+			this.ShowAimPointCheckBox.Text = "Show Aim Point";
+			this.ShowAimPointCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// ShowOffsetCheckBox
+			// 
+			this.ShowOffsetCheckBox.AutoSize = true;
+			this.ShowOffsetCheckBox.Checked = true;
+			this.ShowOffsetCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.ShowOffsetCheckBox.Location = new System.Drawing.Point(479, 119);
+			this.ShowOffsetCheckBox.Name = "ShowOffsetCheckBox";
+			this.ShowOffsetCheckBox.Size = new System.Drawing.Size(114, 17);
+			this.ShowOffsetCheckBox.TabIndex = 15;
+			this.ShowOffsetCheckBox.Text = "Show Mean Offset";
+			this.ShowOffsetCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// ShowExtremesCheckBox
+			// 
+			this.ShowExtremesCheckBox.AutoSize = true;
+			this.ShowExtremesCheckBox.Checked = true;
+			this.ShowExtremesCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.ShowExtremesCheckBox.Location = new System.Drawing.Point(604, 119);
+			this.ShowExtremesCheckBox.Name = "ShowExtremesCheckBox";
+			this.ShowExtremesCheckBox.Size = new System.Drawing.Size(131, 17);
+			this.ShowExtremesCheckBox.TabIndex = 17;
+			this.ShowExtremesCheckBox.Text = "Show Group Extremes";
+			this.ShowExtremesCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// ShowGroupBoxCheckBox
+			// 
+			this.ShowGroupBoxCheckBox.AutoSize = true;
+			this.ShowGroupBoxCheckBox.Checked = true;
+			this.ShowGroupBoxCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.ShowGroupBoxCheckBox.Location = new System.Drawing.Point(746, 119);
+			this.ShowGroupBoxCheckBox.Name = "ShowGroupBoxCheckBox";
+			this.ShowGroupBoxCheckBox.Size = new System.Drawing.Size(106, 17);
+			this.ShowGroupBoxCheckBox.TabIndex = 18;
+			this.ShowGroupBoxCheckBox.Text = "Show Group Box";
+			this.ShowGroupBoxCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// ShowShotNumCheckBox
+			// 
+			this.ShowShotNumCheckBox.AutoSize = true;
+			this.ShowShotNumCheckBox.Checked = true;
+			this.ShowShotNumCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.ShowShotNumCheckBox.Location = new System.Drawing.Point(863, 119);
+			this.ShowShotNumCheckBox.Name = "ShowShotNumCheckBox";
+			this.ShowShotNumCheckBox.Size = new System.Drawing.Size(95, 17);
+			this.ShowShotNumCheckBox.TabIndex = 19;
+			this.ShowShotNumCheckBox.Text = "Show Shot #\'s";
+			this.ShowShotNumCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// EditDetailsMenuItem
+			// 
+			this.EditDetailsMenuItem.Name = "EditDetailsMenuItem";
+			this.EditDetailsMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.D)));
+			this.EditDetailsMenuItem.Size = new System.Drawing.Size(220, 22);
+			this.EditDetailsMenuItem.Text = "Target &Details";
+			// 
 			// cTargetCalculatorForm
 			// 
 			this.AcceptButton = this.OKButton;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.FormCancelButton;
-			this.ClientSize = new System.Drawing.Size(1056, 758);
+			this.ClientSize = new System.Drawing.Size(1052, 758);
 			this.ControlBox = false;
+			this.Controls.Add(this.ShowShotNumCheckBox);
 			this.Controls.Add(this.ShowGroupBoxCheckBox);
 			this.Controls.Add(this.ShowExtremesCheckBox);
-			this.Controls.Add(this.DetailsButton);
 			this.Controls.Add(this.ShowOffsetCheckBox);
 			this.Controls.Add(this.ShowAimPointCheckBox);
 			this.Controls.Add(this.ShowScaleCheckBox);
@@ -587,10 +600,11 @@
 		private System.Windows.Forms.ToolStripMenuItem EditUndoMenuItem;
 		private System.Windows.Forms.CheckBox ShowAimPointCheckBox;
 		private System.Windows.Forms.CheckBox ShowOffsetCheckBox;
-		private System.Windows.Forms.Button DetailsButton;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripMenuItem EditPreferencesMenuItem;
 		private System.Windows.Forms.CheckBox ShowExtremesCheckBox;
 		private System.Windows.Forms.CheckBox ShowGroupBoxCheckBox;
+		private System.Windows.Forms.ToolStripMenuItem EditDetailsMenuItem;
+		private System.Windows.Forms.CheckBox ShowShotNumCheckBox;
 		}
 	}

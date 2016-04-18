@@ -1511,6 +1511,9 @@ namespace ReloadersWorkShop
 			if (m_Preferences.TargetShotColor.A == 0)
 				m_Preferences.TargetShotColor = cTarget.DefaultShotColor;
 
+			if (m_Preferences.TargetShotForecolor.A == 0)
+				m_Preferences.TargetShotForecolor = cTarget.DefaultShotForecolor;
+
 			if (m_Preferences.TargetReticleColor.A == 0)
 				m_Preferences.TargetReticleColor = cTarget.DefaultReticleColor;
 
@@ -1529,10 +1532,12 @@ namespace ReloadersWorkShop
 			if (!m_Preferences.TargetShowBoxesSet)
 				{
 				m_Preferences.TargetShowAimPoint = true;
-				m_Preferences.TargetShowExtremes = true;
-				m_Preferences.TargetShowGroupBox = true;
+				m_Preferences.TargetShowExtremes = false;
+				m_Preferences.TargetShowGroupBox = false;
 				m_Preferences.TargetShowOffset = true;
 				m_Preferences.TargetShowScale = true;
+				m_Preferences.TargetShowShotNum = false;
+
 				m_Preferences.TargetShowBoxesSet = true;
 				}
 

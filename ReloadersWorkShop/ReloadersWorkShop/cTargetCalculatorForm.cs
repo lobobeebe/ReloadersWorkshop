@@ -182,7 +182,7 @@ namespace ReloadersWorkShop
 			ShotRect.Width -= 3;
 			ShotRect.Height -= 3;
 
-			Pen ReticlePen = new Pen(m_Target.m_ReticleColor, 3);
+			Pen ReticlePen = new Pen(m_Target.m_ReticleColor, 2);
 
 			g.DrawEllipse(ReticlePen, ShotRect);
 
@@ -339,7 +339,7 @@ namespace ReloadersWorkShop
 		// CreateShotBitmap()
 		//============================================================================*
 
-		private Bitmap CreateShotBitmap()
+		private Bitmap CreateShotBitmap(bool fPointer = false)
 			{
 			if (m_Target.AimPoint == Point.Empty)
 				return (null);
@@ -356,23 +356,34 @@ namespace ReloadersWorkShop
 			ShotRect.Width--;
 			ShotRect.Height--;
 
-			Pen ShotPen = new Pen(m_Target.ShotColor, 1.0f);
+			if (!fPointer && ShowShotNumCheckBox.Checked)
+				{
+				SolidBrush ShotBrush = new SolidBrush(m_Target.ShotColor);
+				Pen ShotPen = new Pen(Color.Black, 1.0f);
 
-			g.DrawEllipse(ShotPen, ShotRect);
+				g.FillEllipse(ShotBrush, ShotRect);
+				g.DrawEllipse(ShotPen, ShotRect);
+				}
+			else
+				{
+				Pen ShotPen = new Pen(m_Target.ShotColor, 1.0f);
 
-			int x = ShotBitmap.Width / 2;
-			int y = ShotBitmap.Height / 4;
-			int x1 = x;
-			int y1 = y + ShotBitmap.Height / 2;
+				g.DrawEllipse(ShotPen, ShotRect);
 
-			g.DrawLine(ShotPen, x, y, x1, y1);
+				int x = ShotBitmap.Width / 2;
+				int y = ShotBitmap.Height / 4;
+				int x1 = x;
+				int y1 = y + ShotBitmap.Height / 2;
 
-			x = ShotBitmap.Width / 4;
-			y = ShotBitmap.Height / 2;
-			x1 = x + ShotBitmap.Width / 2;
-			y1 = y;
+				g.DrawLine(ShotPen, x, y, x1, y1);
 
-			g.DrawLine(ShotPen, x, y, x1, y1);
+				x = ShotBitmap.Width / 4;
+				y = ShotBitmap.Height / 2;
+				x1 = x + ShotBitmap.Width / 2;
+				y1 = y;
+
+				g.DrawLine(ShotPen, x, y, x1, y1);
+				}
 
 			return (ShotBitmap);
 			}
@@ -431,6 +442,7 @@ namespace ReloadersWorkShop
 				FileSaveMenuItem.Click += OnFileSave;
 				FileSaveAsMenuItem.Click += OnFileSaveAs;
 
+				EditDetailsMenuItem.Click += OnEditDetails;
 				EditPreferencesMenuItem.Click += OnEditPreferences;
 				EditUndoMenuItem.Click += OnEditUndo;
 
@@ -446,8 +458,7 @@ namespace ReloadersWorkShop
 				ShowScaleCheckBox.Click += OnShowButtonClicked;
 				ShowExtremesCheckBox.Click += OnShowButtonClicked;
 				ShowGroupBoxCheckBox.Click += OnShowButtonClicked;
-
-				DetailsButton.Click += OnDetailsClicked;
+				ShowShotNumCheckBox.Click += OnShowButtonClicked;
 
 				OKButton.Click += OnOKClicked;
 				FormClosing += OnFormClosing;
@@ -464,6 +475,7 @@ namespace ReloadersWorkShop
 			ShowGroupBoxCheckBox.Checked = m_DataFiles.Preferences.TargetShowGroupBox;
 			ShowOffsetCheckBox.Checked = m_DataFiles.Preferences.TargetShowOffset;
 			ShowScaleCheckBox.Checked = m_DataFiles.Preferences.TargetShowScale;
+			ShowShotNumCheckBox.Checked = m_DataFiles.Preferences.TargetShowShotNum;
 
 			//----------------------------------------------------------------------------*
 			// Set Target Size
@@ -537,10 +549,10 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// OnDetailsClicked()
+		// OnEditDetails()
 		//============================================================================*
 
-		private void OnDetailsClicked(Object sender, EventArgs e)
+		private void OnEditDetails(Object sender, EventArgs e)
 			{
 			cTargetDetailsForm DetailsForm = new cTargetDetailsForm(m_DataFiles, m_Target);
 
@@ -884,6 +896,9 @@ namespace ReloadersWorkShop
 					break;
 				case "ShowScaleCheckBox":
 					m_DataFiles.Preferences.TargetShowScale = ShowScaleCheckBox.Checked;
+					break;
+				case "ShowShotNumCheckBox":
+					m_DataFiles.Preferences.TargetShowShotNum = ShowShotNumCheckBox.Checked;
 					break;
 				}
 
@@ -1352,12 +1367,25 @@ namespace ReloadersWorkShop
 				{
 				Bitmap ShotBitmap = CreateShotBitmap();
 
+				int nShotNum = 1;
+
 				foreach (Point Shot in m_Target.ShotList)
 					{
 					int x = Shot.X - ShotBitmap.Width / 2;
 					int y = Shot.Y - ShotBitmap.Height / 2;
 
 					g.DrawImage(ShotBitmap, x, y);
+
+					if (ShowShotNumCheckBox.Checked)
+						{
+						string strShot = String.Format("{0:G0}", nShotNum);
+
+						SizeF ShotSize = g.MeasureString(strShot, SystemFonts.DefaultFont);
+
+						g.DrawString(strShot, SystemFonts.DefaultFont, Brushes.Black, Shot.X - (ShotSize.Width / 2), Shot.Y - (ShotSize.Height / 2));
+						}
+
+					nShotNum++;
 					}
 				}
 			}
@@ -1584,7 +1612,7 @@ namespace ReloadersWorkShop
 					break;
 
 				case eMode.MarkShots:
-					MousePointer = CreateShotBitmap();
+					MousePointer = CreateShotBitmap(true);
 
 					ptr = MousePointer.GetHicon();
 

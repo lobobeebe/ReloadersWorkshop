@@ -32,28 +32,24 @@
 			this.GeneralGroupBox = new System.Windows.Forms.GroupBox();
 			this.label4 = new System.Windows.Forms.Label();
 			this.FirearmCombo = new System.Windows.Forms.ComboBox();
+			this.LocationTextBox = new CommonLib.Controls.cTextBox();
 			this.label3 = new System.Windows.Forms.Label();
+			this.ShooterTextBox = new CommonLib.Controls.cTextBox();
 			this.DatePicker = new System.Windows.Forms.DateTimePicker();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
 			this.FormCancelButton = new System.Windows.Forms.Button();
-			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.LocationTextBox = new CommonLib.Controls.cTextBox();
-			this.ShooterTextBox = new CommonLib.Controls.cTextBox();
-			this.ShotListView = new ReloadersWorkShop.cListView();
-			this.ShotHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.OffsetHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.ShotDataGroupBox = new System.Windows.Forms.GroupBox();
 			this.GeneralGroupBox.SuspendLayout();
-			this.groupBox2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// OKButton
 			// 
 			this.OKButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.OKButton.Location = new System.Drawing.Point(173, 345);
+			this.OKButton.Location = new System.Drawing.Point(211, 345);
 			this.OKButton.Name = "OKButton";
 			this.OKButton.Size = new System.Drawing.Size(75, 23);
-			this.OKButton.TabIndex = 0;
+			this.OKButton.TabIndex = 2;
 			this.OKButton.Text = "OK";
 			this.OKButton.UseVisualStyleBackColor = true;
 			// 
@@ -71,7 +67,7 @@
 			this.GeneralGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
 			this.GeneralGroupBox.Location = new System.Drawing.Point(12, 12);
 			this.GeneralGroupBox.Name = "GeneralGroupBox";
-			this.GeneralGroupBox.Size = new System.Drawing.Size(520, 141);
+			this.GeneralGroupBox.Size = new System.Drawing.Size(598, 120);
 			this.GeneralGroupBox.TabIndex = 1;
 			this.GeneralGroupBox.TabStop = false;
 			this.GeneralGroupBox.Text = "General";
@@ -81,7 +77,7 @@
 			this.label4.AutoSize = true;
 			this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label4.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label4.Location = new System.Drawing.Point(27, 105);
+			this.label4.Location = new System.Drawing.Point(27, 81);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(44, 13);
 			this.label4.TabIndex = 8;
@@ -92,21 +88,45 @@
 			this.FirearmCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.FirearmCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmCombo.FormattingEnabled = true;
-			this.FirearmCombo.Location = new System.Drawing.Point(77, 102);
+			this.FirearmCombo.Location = new System.Drawing.Point(77, 78);
 			this.FirearmCombo.Name = "FirearmCombo";
 			this.FirearmCombo.Size = new System.Drawing.Size(221, 21);
-			this.FirearmCombo.TabIndex = 7;
+			this.FirearmCombo.TabIndex = 3;
+			// 
+			// LocationTextBox
+			// 
+			this.LocationTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.LocationTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.LocationTextBox.Location = new System.Drawing.Point(354, 52);
+			this.LocationTextBox.Name = "LocationTextBox";
+			this.LocationTextBox.Required = false;
+			this.LocationTextBox.Size = new System.Drawing.Size(221, 20);
+			this.LocationTextBox.TabIndex = 2;
+			this.LocationTextBox.ToolTip = "";
+			this.LocationTextBox.Value = "";
 			// 
 			// label3
 			// 
 			this.label3.AutoSize = true;
 			this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label3.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label3.Location = new System.Drawing.Point(20, 80);
+			this.label3.Location = new System.Drawing.Point(297, 55);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(51, 13);
 			this.label3.TabIndex = 5;
 			this.label3.Text = "Location:";
+			// 
+			// ShooterTextBox
+			// 
+			this.ShooterTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.ShooterTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ShooterTextBox.Location = new System.Drawing.Point(77, 52);
+			this.ShooterTextBox.Name = "ShooterTextBox";
+			this.ShooterTextBox.Required = false;
+			this.ShooterTextBox.Size = new System.Drawing.Size(186, 20);
+			this.ShooterTextBox.TabIndex = 1;
+			this.ShooterTextBox.ToolTip = "";
+			this.ShooterTextBox.Value = "";
 			// 
 			// DatePicker
 			// 
@@ -116,7 +136,7 @@
 			this.DatePicker.Location = new System.Drawing.Point(77, 26);
 			this.DatePicker.Name = "DatePicker";
 			this.DatePicker.Size = new System.Drawing.Size(107, 20);
-			this.DatePicker.TabIndex = 3;
+			this.DatePicker.TabIndex = 0;
 			// 
 			// label2
 			// 
@@ -143,72 +163,23 @@
 			// FormCancelButton
 			// 
 			this.FormCancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.FormCancelButton.Location = new System.Drawing.Point(301, 345);
+			this.FormCancelButton.Location = new System.Drawing.Point(339, 345);
 			this.FormCancelButton.Name = "FormCancelButton";
 			this.FormCancelButton.Size = new System.Drawing.Size(75, 23);
-			this.FormCancelButton.TabIndex = 2;
+			this.FormCancelButton.TabIndex = 3;
 			this.FormCancelButton.Text = "Cancel";
 			this.FormCancelButton.UseVisualStyleBackColor = true;
 			// 
-			// groupBox2
+			// ShotDataGroupBox
 			// 
-			this.groupBox2.Controls.Add(this.ShotListView);
-			this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.groupBox2.ForeColor = System.Drawing.SystemColors.HotTrack;
-			this.groupBox2.Location = new System.Drawing.Point(12, 159);
-			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(520, 145);
-			this.groupBox2.TabIndex = 4;
-			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Shot Data";
-			// 
-			// LocationTextBox
-			// 
-			this.LocationTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.LocationTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.LocationTextBox.Location = new System.Drawing.Point(77, 77);
-			this.LocationTextBox.Name = "LocationTextBox";
-			this.LocationTextBox.Required = false;
-			this.LocationTextBox.Size = new System.Drawing.Size(221, 20);
-			this.LocationTextBox.TabIndex = 6;
-			this.LocationTextBox.ToolTip = "";
-			this.LocationTextBox.Value = "";
-			// 
-			// ShooterTextBox
-			// 
-			this.ShooterTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.ShooterTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.ShooterTextBox.Location = new System.Drawing.Point(77, 52);
-			this.ShooterTextBox.Name = "ShooterTextBox";
-			this.ShooterTextBox.Required = false;
-			this.ShooterTextBox.Size = new System.Drawing.Size(186, 20);
-			this.ShooterTextBox.TabIndex = 4;
-			this.ShooterTextBox.ToolTip = "";
-			this.ShooterTextBox.Value = "";
-			// 
-			// ShotListView
-			// 
-			this.ShotListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.ShotHeader,
-            this.OffsetHeader});
-			this.ShotListView.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.ShotListView.Location = new System.Drawing.Point(6, 19);
-			this.ShotListView.Name = "ShotListView";
-			this.ShotListView.Size = new System.Drawing.Size(508, 110);
-			this.ShotListView.SortingColumn = 0;
-			this.ShotListView.SortingOrder = System.Windows.Forms.SortOrder.Ascending;
-			this.ShotListView.TabIndex = 3;
-			this.ShotListView.UseCompatibleStateImageBehavior = false;
-			this.ShotListView.View = System.Windows.Forms.View.Details;
-			// 
-			// ShotHeader
-			// 
-			this.ShotHeader.Text = "Shot #";
-			// 
-			// OffsetHeader
-			// 
-			this.OffsetHeader.Text = "Offset";
-			this.OffsetHeader.Width = 200;
+			this.ShotDataGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ShotDataGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
+			this.ShotDataGroupBox.Location = new System.Drawing.Point(12, 138);
+			this.ShotDataGroupBox.Name = "ShotDataGroupBox";
+			this.ShotDataGroupBox.Size = new System.Drawing.Size(598, 189);
+			this.ShotDataGroupBox.TabIndex = 0;
+			this.ShotDataGroupBox.TabStop = false;
+			this.ShotDataGroupBox.Text = "Shot Data";
 			// 
 			// cTargetDetailsForm
 			// 
@@ -216,18 +187,18 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.FormCancelButton;
-			this.ClientSize = new System.Drawing.Size(548, 382);
+			this.ClientSize = new System.Drawing.Size(625, 382);
 			this.ControlBox = false;
-			this.Controls.Add(this.groupBox2);
+			this.Controls.Add(this.ShotDataGroupBox);
 			this.Controls.Add(this.FormCancelButton);
 			this.Controls.Add(this.GeneralGroupBox);
 			this.Controls.Add(this.OKButton);
 			this.Name = "cTargetDetailsForm";
+			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Target Details";
 			this.GeneralGroupBox.ResumeLayout(false);
 			this.GeneralGroupBox.PerformLayout();
-			this.groupBox2.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 			}
@@ -245,9 +216,6 @@
 		private CommonLib.Controls.cTextBox LocationTextBox;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.Button FormCancelButton;
-		private cListView ShotListView;
-		private System.Windows.Forms.GroupBox groupBox2;
-		private System.Windows.Forms.ColumnHeader ShotHeader;
-		private System.Windows.Forms.ColumnHeader OffsetHeader;
+		private System.Windows.Forms.GroupBox ShotDataGroupBox;
 		}
 	}
