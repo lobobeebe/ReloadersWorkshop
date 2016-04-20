@@ -51,6 +51,7 @@ namespace ReloadersWorkShop
 			AimPointColorButton.Click += OnColorButtonClicked;
 			OffsetColorButton.Click += OnColorButtonClicked;
 			ShotColorButton.Click += OnColorButtonClicked;
+			ShotForecolorButton.Click += OnColorButtonClicked;
 			ReticleColorButton.Click += OnColorButtonClicked;
 			CalibrationForecolorButton.Click += OnColorButtonClicked;
 			CalibrationBackcolorButton.Click += OnColorButtonClicked;
@@ -68,6 +69,8 @@ namespace ReloadersWorkShop
 			AimPointColorButton.BackColor = m_Target.AimPointColor;
 			OffsetColorButton.BackColor = m_Target.OffsetColor;
 			ShotColorButton.BackColor = m_Target.ShotColor;
+			ShotColorButton.ForeColor = m_Target.ShotForecolor;
+			ShotForecolorButton.BackColor = m_Target.ShotForecolor;
 			ReticleColorButton.BackColor = m_Target.ReticleColor;
 			CalibrationForecolorButton.BackColor = m_Target.ScaleForecolor;
 			CalibrationBackcolorButton.BackColor = m_Target.ScaleBackcolor;
@@ -182,7 +185,36 @@ namespace ReloadersWorkShop
 						}
 
 					//----------------------------------------------------------------------------*
-					// Calibration Fore Color
+					// Shot Forecolor
+					//----------------------------------------------------------------------------*
+
+					if (ColorButton.Name == "ShotForecolorButton")
+						{
+						m_Target.ShotForecolor = ColorDialog.Color;
+
+						if (!TargetOnlyCheckBox.Checked)
+							m_DataFiles.Preferences.TargetShotForecolor = ColorDialog.Color;
+
+						ColorButton.BackColor = ColorDialog.Color;
+						ShotColorButton.ForeColor = ColorDialog.Color;
+						}
+
+					//----------------------------------------------------------------------------*
+					// Scale Back Color
+					//----------------------------------------------------------------------------*
+
+					if (ColorButton.Name == "CalibrationBackcolorButton")
+						{
+						m_Target.ScaleBackcolor = ColorDialog.Color;
+
+						if (!TargetOnlyCheckBox.Checked)
+							m_DataFiles.Preferences.TargetScaleBackcolor = ColorDialog.Color;
+
+						ColorButton.BackColor = ColorDialog.Color;
+						}
+
+					//----------------------------------------------------------------------------*
+					// Scale Fore Color
 					//----------------------------------------------------------------------------*
 
 					if (ColorButton.Name == "CalibrationForecolorButton")
@@ -194,20 +226,6 @@ namespace ReloadersWorkShop
 
 						ColorButton.BackColor = ColorDialog.Color;
 						CalibrationBackcolorButton.ForeColor = ColorDialog.Color;
-						}
-
-					//----------------------------------------------------------------------------*
-					// Calibration Back Color
-					//----------------------------------------------------------------------------*
-
-					if (ColorButton.Name == "CalibrationBackcolorButton")
-						{
-						m_Target.ScaleBackcolor = ColorDialog.Color;
-
-						if (!TargetOnlyCheckBox.Checked)
-							m_DataFiles.Preferences.TargetScaleBackcolor = ColorDialog.Color;
-
-						ColorButton.BackColor = ColorDialog.Color;
 						}
 
 					//----------------------------------------------------------------------------*
@@ -232,6 +250,7 @@ namespace ReloadersWorkShop
 				m_DataFiles.Preferences.TargetAimPointColor = cTarget.DefaultAimPointColor;
 				m_DataFiles.Preferences.TargetOffsetColor = cTarget.DefaultOffsetColor;
 				m_DataFiles.Preferences.TargetShotColor = cTarget.DefaultShotColor;
+				m_DataFiles.Preferences.TargetShotForecolor = cTarget.DefaultShotForecolor;
 				m_DataFiles.Preferences.TargetReticleColor = cTarget.DefaultReticleColor;
 				m_DataFiles.Preferences.TargetScaleBackcolor = cTarget.DefaultScaleBackcolor;
 				m_DataFiles.Preferences.TargetScaleForecolor = cTarget.DefaultScaleForecolor;
@@ -242,6 +261,8 @@ namespace ReloadersWorkShop
 			AimPointColorButton.BackColor = cTarget.DefaultAimPointColor;
 			OffsetColorButton.BackColor = cTarget.DefaultOffsetColor;
 			ShotColorButton.BackColor = cTarget.DefaultShotColor;
+			ShotColorButton.ForeColor = cTarget.DefaultShotForecolor;
+			ShotForecolorButton.BackColor = cTarget.DefaultShotForecolor;
 			ReticleColorButton.BackColor = cTarget.DefaultReticleColor;
 			CalibrationForecolorButton.BackColor = cTarget.DefaultScaleForecolor;
 			CalibrationBackcolorButton.BackColor = cTarget.DefaultScaleBackcolor;

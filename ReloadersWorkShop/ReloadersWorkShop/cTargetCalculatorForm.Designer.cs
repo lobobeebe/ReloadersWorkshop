@@ -41,6 +41,7 @@
 			this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.EditUndoMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.EditDetailsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.EditPreferencesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.NumShotsLabel = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
@@ -69,7 +70,8 @@
 			this.ShowExtremesCheckBox = new System.Windows.Forms.CheckBox();
 			this.ShowGroupBoxCheckBox = new System.Windows.Forms.CheckBox();
 			this.ShowShotNumCheckBox = new System.Windows.Forms.CheckBox();
-			this.EditDetailsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.FilePrintMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.TargetCalculatorMenuStrip.SuspendLayout();
 			this.OutputGroupBox.SuspendLayout();
 			this.groupBox1.SuspendLayout();
@@ -103,7 +105,7 @@
             this.editToolStripMenuItem});
 			this.TargetCalculatorMenuStrip.Location = new System.Drawing.Point(0, 0);
 			this.TargetCalculatorMenuStrip.Name = "TargetCalculatorMenuStrip";
-			this.TargetCalculatorMenuStrip.Size = new System.Drawing.Size(1052, 24);
+			this.TargetCalculatorMenuStrip.Size = new System.Drawing.Size(1048, 24);
 			this.TargetCalculatorMenuStrip.TabIndex = 4;
 			this.TargetCalculatorMenuStrip.Text = "menuStrip1";
 			// 
@@ -115,6 +117,8 @@
             this.FileSaveMenuItem,
             this.FileSaveAsMenuItem,
             this.toolStripSeparator1,
+            this.FilePrintMenuItem,
+            this.toolStripSeparator3,
             this.FileOpenTargetImageMenuItem});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
 			this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -182,6 +186,14 @@
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
 			this.toolStripSeparator2.Size = new System.Drawing.Size(217, 6);
+			// 
+			// EditDetailsMenuItem
+			// 
+			this.EditDetailsMenuItem.Name = "EditDetailsMenuItem";
+			this.EditDetailsMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.D)));
+			this.EditDetailsMenuItem.Size = new System.Drawing.Size(220, 22);
+			this.EditDetailsMenuItem.Text = "Target &Details";
 			// 
 			// EditPreferencesMenuItem
 			// 
@@ -512,13 +524,17 @@
 			this.ShowShotNumCheckBox.Text = "Show Shot #\'s";
 			this.ShowShotNumCheckBox.UseVisualStyleBackColor = true;
 			// 
-			// EditDetailsMenuItem
+			// FilePrintMenuItem
 			// 
-			this.EditDetailsMenuItem.Name = "EditDetailsMenuItem";
-			this.EditDetailsMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.D)));
-			this.EditDetailsMenuItem.Size = new System.Drawing.Size(220, 22);
-			this.EditDetailsMenuItem.Text = "Target &Details";
+			this.FilePrintMenuItem.Name = "FilePrintMenuItem";
+			this.FilePrintMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+			this.FilePrintMenuItem.Size = new System.Drawing.Size(186, 22);
+			this.FilePrintMenuItem.Text = "&Print";
+			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(183, 6);
 			// 
 			// cTargetCalculatorForm
 			// 
@@ -526,7 +542,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.FormCancelButton;
-			this.ClientSize = new System.Drawing.Size(1052, 758);
+			this.ClientSize = new System.Drawing.Size(1048, 758);
 			this.ControlBox = false;
 			this.Controls.Add(this.ShowShotNumCheckBox);
 			this.Controls.Add(this.ShowGroupBoxCheckBox);
@@ -606,5 +622,7 @@
 		private System.Windows.Forms.CheckBox ShowGroupBoxCheckBox;
 		private System.Windows.Forms.ToolStripMenuItem EditDetailsMenuItem;
 		private System.Windows.Forms.CheckBox ShowShotNumCheckBox;
+		private System.Windows.Forms.ToolStripMenuItem FilePrintMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		}
 	}

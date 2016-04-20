@@ -63,7 +63,7 @@ namespace ReloadersWorkShop
 		private double m_dBulletDiameter = 0.0;
 		private cCaliber m_Caliber = null;
 
-		private double m_dCalibrationLength = cm_dMinCalibrationLength;
+		private double m_dCalibrationLength = 0.0;
 		private Point m_CalibrationStart = new Point(0, 0);
 		private Point m_CalibrationEnd = new Point(0, 0);
 
@@ -79,6 +79,8 @@ namespace ReloadersWorkShop
 		private string m_strShooter = "";
 		private string m_strLocation = "";
 		private cFirearm m_Firearm = null;
+		private string m_strEvent = "";
+		private string m_strNotes = "";
 
 		public Color m_AimPointColor = sm_DefaultAimPointColor;
 		public Color m_OffsetColor = sm_DefaultOffsetColor;
@@ -96,6 +98,23 @@ namespace ReloadersWorkShop
 
 		public cTarget()
 			{
+			}
+
+		//============================================================================*
+		// cTarget() - Constructor
+		//============================================================================*
+
+		public cTarget(cDataFiles DataFiles)
+			{
+			m_AimPointColor = DataFiles.Preferences.TargetAimPointColor;
+			m_OffsetColor = DataFiles.Preferences.TargetOffsetColor;
+			m_ShotColor = DataFiles.Preferences.TargetShotColor;
+			m_ShotForecolor = DataFiles.Preferences.TargetShotForecolor;
+			m_ReticleColor = DataFiles.Preferences.TargetReticleColor;
+			m_ScaleForecolor = DataFiles.Preferences.TargetScaleForecolor;
+			m_ScaleBackcolor = DataFiles.Preferences.TargetScaleBackcolor;
+			m_ExtremesColor = DataFiles.Preferences.TargetExtremesColor;
+			m_GroupBoxColor = DataFiles.Preferences.TargetGroupBoxColor;
 			}
 
 		//============================================================================*
@@ -127,11 +146,14 @@ namespace ReloadersWorkShop
 			m_Date = Target.m_Date;
 			m_strShooter = Target.m_strShooter;
 			m_strLocation = Target.m_strLocation;
+			m_strEvent = Target.m_strEvent;
+			m_strNotes = Target.m_strNotes;
 			m_Firearm = Target.Firearm;
 
 			m_AimPointColor = Target.m_AimPointColor;
 			m_OffsetColor = Target.m_OffsetColor;
 			m_ShotColor = Target.m_ShotColor;
+			m_ShotForecolor = Target.m_ShotForecolor;
 			m_ReticleColor = Target.m_ReticleColor;
 			m_ScaleForecolor = Target.m_ScaleForecolor;
 			m_ScaleBackcolor = Target.m_ScaleBackcolor;
@@ -494,6 +516,22 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Event Property
+		//============================================================================*
+
+		public string Event
+			{
+			get
+				{
+				return (m_strEvent);
+				}
+			set
+				{
+				m_strEvent = value;
+				}
+			}
+
+		//============================================================================*
 		// ExtremesColor Property
 		//============================================================================*
 
@@ -622,6 +660,35 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// GroupMils Property
+		//============================================================================*
+
+		public double GroupMils
+			{
+			get
+				{
+				return (cConversions.MOAToMils(GroupMOA));
+				}
+			}
+
+		//============================================================================*
+		// GroupMOA Property
+		//============================================================================*
+
+		public double GroupMOA
+			{
+			get
+				{
+				double dMOA = 0.0;
+
+				if (m_nRange > 0)
+					dMOA = GroupSize / ((m_nRange / 100.0) * 1.047);
+
+				return (dMOA);
+				}
+			}
+
+		//============================================================================*
 		// GroupSize Property
 		//============================================================================*
 
@@ -728,6 +795,45 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// MeanOffsetString()
+		//============================================================================*
+
+		public string MeanOffsetString(cDataFiles DataFiles)
+			{
+			string strGroupFormat = "{0:F";
+			strGroupFormat += String.Format("{0:G0}", DataFiles.Preferences.GroupDecimals);
+			strGroupFormat += "} {1}";
+
+			string strOffset = String.Format(strGroupFormat, Math.Abs(DataFiles.StandardToMetric(MeanOffset.X, cDataFiles.eDataType.GroupSize)), DataFiles.MetricString(cDataFiles.eDataType.GroupSize));
+
+			if (Math.Round(MeanOffset.X, DataFiles.Preferences.DimensionDecimals) == 0.0)
+				strOffset += " Horizontal";
+			else
+				{
+				if (MeanOffset.X < 0)
+					strOffset += " Left";
+				else
+					strOffset += " Right";
+				}
+
+			strOffset += " x ";
+
+			strOffset += String.Format(strGroupFormat, Math.Abs(DataFiles.StandardToMetric(MeanOffset.Y, cDataFiles.eDataType.GroupSize)), DataFiles.MetricString(cDataFiles.eDataType.GroupSize));
+
+			if (Math.Round(MeanOffset.Y, DataFiles.Preferences.DimensionDecimals) == 0.0)
+				strOffset += " Vertical";
+			else
+				{
+				if (MeanOffset.Y > 0)
+					strOffset += " High";
+				else
+					strOffset += " Low";
+				}
+
+			return (strOffset);
+			}
+
+		//============================================================================*
 		// MinCalibrationLength Property
 		//============================================================================*
 
@@ -772,6 +878,22 @@ namespace ReloadersWorkShop
 			get
 				{
 				return (cm_nMinImageWidth);
+				}
+			}
+
+		//============================================================================*
+		// Notes Property
+		//============================================================================*
+
+		public string Notes
+			{
+			get
+				{
+				return (m_strNotes);
+				}
+			set
+				{
+				m_strNotes = value;
 				}
 			}
 
@@ -880,7 +1002,7 @@ namespace ReloadersWorkShop
 				strOffset += "Vert.";
 			else
 				{
-				if (dXOffset > 0.0)
+				if (dYOffset < 0.0)
 					strOffset += "High";
 				else
 					strOffset += "Low";
@@ -912,158 +1034,158 @@ namespace ReloadersWorkShop
 		//============================================================================*
 
 		public int PixelsPerCentimeter
-		{
-		get
 			{
-			double dCalibrationLength = cConversions.InchesToCentimeters(m_dCalibrationLength);
+			get
+				{
+				double dCalibrationLength = cConversions.InchesToCentimeters(m_dCalibrationLength);
 
-			int nPixelsPerCentimeter = (m_dCalibrationLength != 0.0) ? (int) ((double) CalibrationPixels / dCalibrationLength) : 0;
+				int nPixelsPerCentimeter = (m_dCalibrationLength != 0.0) ? (int) ((double) CalibrationPixels / dCalibrationLength) : 0;
 
-			return (nPixelsPerCentimeter);
+				return (nPixelsPerCentimeter);
+				}
 			}
-		}
 
-	//============================================================================*
-	// PixelsPerInch Property
-	//============================================================================*
+		//============================================================================*
+		// PixelsPerInch Property
+		//============================================================================*
 
-	public int PixelsPerInch
-		{
-		get
+		public int PixelsPerInch
 			{
-			int nPixelsPerInch = (m_dCalibrationLength != 0.0) ? (int) ((double) CalibrationPixels / m_dCalibrationLength) : 0;
+			get
+				{
+				int nPixelsPerInch = (m_dCalibrationLength != 0.0) ? (int) ((double) CalibrationPixels / m_dCalibrationLength) : 0;
 
-			return (nPixelsPerInch);
+				return (nPixelsPerInch);
+				}
 			}
-		}
 
-	//============================================================================*
-	// Range Property
-	//============================================================================*
+		//============================================================================*
+		// Range Property
+		//============================================================================*
 
-	public int Range
-		{
-		get
+		public int Range
 			{
-			return (m_nRange);
+			get
+				{
+				return (m_nRange);
+				}
+			set
+				{
+				m_nRange = value;
+				}
 			}
-		set
+
+		//============================================================================*
+		// ReticleColor Property
+		//============================================================================*
+
+		public Color ReticleColor
 			{
-			m_nRange = value;
+			get
+				{
+				return (m_ReticleColor);
+				}
+			set
+				{
+				m_ReticleColor = value;
+				}
 			}
-		}
 
-	//============================================================================*
-	// ReticleColor Property
-	//============================================================================*
+		//============================================================================*
+		// ScaleBackcolor Property
+		//============================================================================*
 
-	public Color ReticleColor
-		{
-		get
+		public Color ScaleBackcolor
 			{
-			return (m_ReticleColor);
+			get
+				{
+				return (m_ScaleBackcolor);
+				}
+			set
+				{
+				m_ScaleBackcolor = value;
+				}
 			}
-		set
+
+		//============================================================================*
+		// ScaleForecolor Property
+		//============================================================================*
+
+		public Color ScaleForecolor
 			{
-			m_ReticleColor = value;
+			get
+				{
+				return (m_ScaleForecolor);
+				}
+			set
+				{
+				m_ScaleForecolor = value;
+				}
 			}
-		}
 
-	//============================================================================*
-	// ScaleBackcolor Property
-	//============================================================================*
+		//============================================================================*
+		// SetDefaultColors Property
+		//============================================================================*
 
-	public Color ScaleBackcolor
-		{
-		get
+		public void SetDefaultColors()
 			{
-			return (m_ScaleBackcolor);
+			m_AimPointColor = sm_DefaultAimPointColor;
+			m_OffsetColor = sm_DefaultOffsetColor;
+			m_ShotColor = sm_DefaultShotColor;
+			m_ReticleColor = sm_DefaultReticleColor;
+			m_ScaleForecolor = sm_DefaultScaleForecolor;
+			m_ScaleBackcolor = sm_DefaultScaleBackcolor;
+			m_ExtremesColor = sm_DefaultExtremesColor;
+			m_GroupBoxColor = sm_DefaultGroupBoxColor;
 			}
-		set
+
+		//============================================================================*
+		// SetPreferencesColors Property
+		//============================================================================*
+
+		public void SetPreferencesColors(cDataFiles Datafiles)
 			{
-			m_ScaleBackcolor = value;
+			m_AimPointColor = Datafiles.Preferences.TargetAimPointColor;
+			m_OffsetColor = Datafiles.Preferences.TargetOffsetColor;
+			m_ShotColor = Datafiles.Preferences.TargetShotColor;
+			m_ReticleColor = Datafiles.Preferences.TargetReticleColor;
+			m_ScaleForecolor = Datafiles.Preferences.TargetScaleForecolor;
+			m_ScaleBackcolor = Datafiles.Preferences.TargetScaleBackcolor;
+			m_ExtremesColor = Datafiles.Preferences.TargetExtremesColor;
+			m_GroupBoxColor = Datafiles.Preferences.TargetGroupBoxColor;
 			}
-		}
 
-	//============================================================================*
-	// ScaleForecolor Property
-	//============================================================================*
+		//============================================================================*
+		// Shooter Property
+		//============================================================================*
 
-	public Color ScaleForecolor
-		{
-		get
+		public string Shooter
 			{
-			return (m_ScaleForecolor);
+			get
+				{
+				return (m_strShooter);
+				}
+			set
+				{
+				m_strShooter = value;
+				}
 			}
-		set
+
+		//============================================================================*
+		// ShotColor Property
+		//============================================================================*
+
+		public Color ShotColor
 			{
-			m_ScaleForecolor = value;
+			get
+				{
+				return (m_ShotColor);
+				}
+			set
+				{
+				m_ShotColor = value;
+				}
 			}
-		}
-
-	//============================================================================*
-	// SetDefaultColors Property
-	//============================================================================*
-
-	public void SetDefaultColors()
-		{
-		m_AimPointColor = sm_DefaultAimPointColor;
-		m_OffsetColor = sm_DefaultOffsetColor;
-		m_ShotColor = sm_DefaultShotColor;
-		m_ReticleColor = sm_DefaultReticleColor;
-		m_ScaleForecolor = sm_DefaultScaleForecolor;
-		m_ScaleBackcolor = sm_DefaultScaleBackcolor;
-		m_ExtremesColor = sm_DefaultExtremesColor;
-		m_GroupBoxColor = sm_DefaultGroupBoxColor;
-		}
-
-	//============================================================================*
-	// SetPreferencesColors Property
-	//============================================================================*
-
-	public void SetPreferencesColors(cDataFiles Datafiles)
-		{
-		m_AimPointColor = Datafiles.Preferences.TargetAimPointColor;
-		m_OffsetColor = Datafiles.Preferences.TargetOffsetColor;
-		m_ShotColor = Datafiles.Preferences.TargetShotColor;
-		m_ReticleColor = Datafiles.Preferences.TargetReticleColor;
-		m_ScaleForecolor = Datafiles.Preferences.TargetScaleForecolor;
-		m_ScaleBackcolor = Datafiles.Preferences.TargetScaleBackcolor;
-		m_ExtremesColor = Datafiles.Preferences.TargetExtremesColor;
-		m_GroupBoxColor = Datafiles.Preferences.TargetGroupBoxColor;
-		}
-
-	//============================================================================*
-	// Shooter Property
-	//============================================================================*
-
-	public string Shooter
-		{
-		get
-			{
-			return (m_strShooter);
-			}
-		set
-			{
-			m_strShooter = value;
-			}
-		}
-
-	//============================================================================*
-	// ShotColor Property
-	//============================================================================*
-
-	public Color ShotColor
-		{
-		get
-			{
-			return (m_ShotColor);
-			}
-		set
-			{
-			m_ShotColor = value;
-			}
-		}
 
 		//============================================================================*
 		// ShotForecolor Property
@@ -1086,27 +1208,114 @@ namespace ReloadersWorkShop
 		//============================================================================*
 
 		public List<Point> ShotList
-		{
-		get
 			{
-			return (m_ShotList);
-			}
-		}
-
-	//============================================================================*
-	// Synch() - Caliber
-	//============================================================================*
-
-	public bool Synch(cCaliber Caliber)
-		{
-		if (Caliber != null && Caliber.CompareTo(m_Caliber) == 0)
-			{
-			m_Caliber = Caliber;
-
-			return (true);
+			get
+				{
+				return (m_ShotList);
+				}
 			}
 
-		return (false);
+		//============================================================================*
+		// SuggestedFileName Property
+		//============================================================================*
+
+		public string SuggestedFileName
+			{
+			get
+				{
+				string strFileName = String.Format("{0:D4}{1:D2}{2:D2}", m_Date.Year, m_Date.Month, m_Date.Day);
+
+				if (!String.IsNullOrEmpty(m_strShooter))
+					{
+					strFileName += " - ";
+					strFileName += m_strShooter;
+					}
+
+				if (!String.IsNullOrEmpty(m_strEvent))
+					{
+					strFileName += " - ";
+					strFileName += m_strEvent;
+					}
+
+				if (m_Firearm != null)
+					{
+					if (!String.IsNullOrEmpty(m_strEvent))
+						strFileName += " with ";
+					else
+						strFileName += " - ";
+
+					strFileName += m_Firearm.ToString();
+					}
+				else
+					{
+					if (m_Caliber != null)
+						{
+						strFileName += " - ";
+						strFileName += m_Caliber.ToString();
+						}
+					}
+
+				if (!String.IsNullOrEmpty(m_strLocation))
+					{
+					strFileName += " at ";
+					strFileName += m_strLocation;
+					}
+
+				strFileName += ".rwt";
+
+				return (strFileName);
+				}
+			}
+
+		//============================================================================*
+		// Synch() - All
+		//============================================================================*
+
+		public void Synch(cDataFiles Datafiles)
+			{
+			foreach (cFirearm Firearm in Datafiles.FirearmList)
+				{
+				if (Synch(Firearm))
+					break;
+				}
+
+			foreach (cCaliber Caliber in Datafiles.CaliberList)
+				{
+				if (Synch(Caliber))
+					break;
+				}
+			}
+
+		//============================================================================*
+		// Synch() - Firearm
+		//============================================================================*
+
+		public bool Synch(cFirearm Firearm)
+			{
+			if (Firearm != null && Firearm.CompareTo(m_Firearm) == 0)
+				{
+				m_Firearm = Firearm;
+
+				return (true);
+				}
+
+			return (false);
+			}
+
+		//============================================================================*
+		// Synch() - Caliber
+		//============================================================================*
+
+		public bool Synch(cCaliber Caliber)
+			{
+			if (Caliber != null && Caliber.CompareTo(m_Caliber) == 0)
+				{
+				m_Caliber = Caliber;
+
+				return (true);
+				}
+
+			return (false);
+			}
 		}
-	}
 	}

@@ -30,6 +30,7 @@ namespace ReloadersWorkShop
 		//============================================================================*
 
 		private bool m_fInitialized = false;
+		private bool m_fChanged = false;
 
 		private cDataFiles m_DataFiles = null;
 		private cTarget m_Target = null;
@@ -54,6 +55,8 @@ namespace ReloadersWorkShop
 			DatePicker.ValueChanged += OnDateChanged;
 			ShooterTextBox.TextChanged += OnShooterChanged;
 			LocationTextBox.TextChanged += OnLocationChanged;
+			EventTextBox.TextChanged += OnEventChanged;
+			NotesTextBox.TextChanged += OnNotesChanged;
 
 			FirearmCombo.SelectedIndexChanged += OnFirearmChanged;
 
@@ -85,6 +88,8 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			m_fInitialized = true;
+
+			UpdateButtons();
 			}
 
 		//============================================================================*
@@ -97,6 +102,26 @@ namespace ReloadersWorkShop
 				return;
 
 			m_Target.Date = DatePicker.Value;
+
+			m_fChanged = true;
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
+		// OnEventChanged()
+		//============================================================================*
+
+		private void OnEventChanged(Object sender, EventArgs e)
+			{
+			if (!m_fInitialized)
+				return;
+
+			m_Target.Event = EventTextBox.Value;
+
+			m_fChanged = true;
+
+			UpdateButtons();
 			}
 
 		//============================================================================*
@@ -112,6 +137,10 @@ namespace ReloadersWorkShop
 				m_Target.Firearm = (cFirearm) FirearmCombo.SelectedItem;
 			else
 				m_Target.Firearm = null;
+
+			m_fChanged = true;
+
+			UpdateButtons();
 			}
 
 		//============================================================================*
@@ -124,6 +153,26 @@ namespace ReloadersWorkShop
 				return;
 
 			m_Target.Location = LocationTextBox.Value;
+
+			m_fChanged = true;
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
+		// OnNotesChanged()
+		//============================================================================*
+
+		private void OnNotesChanged(Object sender, EventArgs e)
+			{
+			if (!m_fInitialized)
+				return;
+
+			m_Target.Notes = NotesTextBox.Value;
+
+			m_fChanged = true;
+
+			UpdateButtons();
 			}
 
 		//============================================================================*
@@ -136,6 +185,10 @@ namespace ReloadersWorkShop
 				return;
 
 			m_Target.Shooter = ShooterTextBox.Value;
+
+			m_fChanged = true;
+
+			UpdateButtons();
 			}
 
 		//============================================================================*
@@ -147,6 +200,8 @@ namespace ReloadersWorkShop
 			DatePicker.Value = m_Target.Date;
 			LocationTextBox.Value = m_Target.Location;
 			ShooterTextBox.Value = m_Target.Shooter;
+			EventTextBox.Value = m_Target.Event;
+			NotesTextBox.Value = m_Target.Notes;
 			}
 
 		//============================================================================*
@@ -189,6 +244,17 @@ namespace ReloadersWorkShop
 				{
 				return (m_Target);
 				}
+			}
+
+		//============================================================================*
+		// UpdateButtons()
+		//============================================================================*
+
+		private void UpdateButtons()
+			{
+			bool fEnableOK = m_fChanged;
+
+			OKButton.Enabled = fEnableOK;
 			}
 		}
 	}

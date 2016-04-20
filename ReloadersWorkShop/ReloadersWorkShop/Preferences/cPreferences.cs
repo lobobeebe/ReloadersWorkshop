@@ -433,6 +433,10 @@ namespace ReloadersWorkShop.Preferences
 		private bool m_fTargetShowScale = true;
 		private bool m_fTargetShowShotNum = false;
 
+		private bool m_fTargetPrintMaximized = false;
+		private Point m_TargetPrintLocation = new Point(100, 100);
+		private Size m_TargetPrintSize = new Size(425, 550);
+
 		// Transaction Form Settings
 
 		private cTransaction m_LastTransaction = null;
@@ -3546,6 +3550,54 @@ namespace ReloadersWorkShop.Preferences
 			}
 
 		//============================================================================*
+		// TargetPrintLocation Property
+		//============================================================================*
+
+		public Point TargetPrintLocation
+			{
+			get
+				{
+				return (m_TargetPrintLocation);
+				}
+			set
+				{
+				m_TargetPrintLocation = value;
+				}
+			}
+
+		//============================================================================*
+		// TargetPrintMaximized Property
+		//============================================================================*
+
+		public bool TargetPrintMaximized
+			{
+			get
+				{
+				return (m_fTargetPrintMaximized);
+				}
+			set
+				{
+				m_fTargetPrintMaximized = value;
+				}
+			}
+
+		//============================================================================*
+		// FirearmListPreviewSize Property
+		//============================================================================*
+
+		public Size TargetPrintSize
+			{
+			get
+				{
+				return (m_TargetPrintSize);
+				}
+			set
+				{
+				m_TargetPrintSize = value;
+				}
+			}
+
+		//============================================================================*
 		// TargetReticleColor Property
 		//============================================================================*
 
@@ -3729,11 +3781,11 @@ namespace ReloadersWorkShop.Preferences
 			{
 			get
 				{
-				return (m_fTargetShowScale);
+				return (m_fTargetShowShotNum);
 				}
 			set
 				{
-				m_fTargetShowScale = value;
+				m_fTargetShowShotNum = value;
 				}
 			}
 

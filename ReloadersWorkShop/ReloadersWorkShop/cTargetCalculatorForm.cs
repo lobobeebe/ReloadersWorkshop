@@ -55,7 +55,7 @@ namespace ReloadersWorkShop
 
 		private string m_strFileName = "";
 
-		private cTarget m_Target = new cTarget();
+		private cTarget m_Target = null;
 
 		private cBatch m_Batch = null;
 
@@ -359,7 +359,7 @@ namespace ReloadersWorkShop
 			if (!fPointer && ShowShotNumCheckBox.Checked)
 				{
 				SolidBrush ShotBrush = new SolidBrush(m_Target.ShotColor);
-				Pen ShotPen = new Pen(Color.Black, 1.0f);
+				Pen ShotPen = new Pen(m_Target.ShotForecolor);
 
 				g.FillEllipse(ShotBrush, ShotRect);
 				g.DrawEllipse(ShotPen, ShotRect);
@@ -411,6 +411,26 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// GetUniqueFileName()
+		//============================================================================*
+
+		private string GetUniqueFileName()
+			{
+			string strFileName = m_Target.SuggestedFileName;
+
+			int nIndex = 1;
+
+			while (File.Exists(Path.Combine(m_strFolder, strFileName)))
+				{
+				strFileName = string.Format("{0} ({1})", m_Target.SuggestedFileName, nIndex);
+
+				nIndex++;
+				}
+
+			return (strFileName);
+			}
+
+		//============================================================================*
 		// GroupSize Property
 		//============================================================================*
 
@@ -430,6 +450,8 @@ namespace ReloadersWorkShop
 			{
 			VerifyTargetFolder();
 
+			m_Target = new cTarget(m_DataFiles);
+
 			//----------------------------------------------------------------------------*
 			// Event Handlers
 			//----------------------------------------------------------------------------*
@@ -439,6 +461,7 @@ namespace ReloadersWorkShop
 				FileNewMenuItem.Click += OnFileNew;
 				FileOpenMenuItem.Click += OnFileOpen;
 				FileOpenTargetImageMenuItem.Click += OnFileOpenTargetImage;
+				FilePrintMenuItem.Click += OnFilePrint;
 				FileSaveMenuItem.Click += OnFileSave;
 				FileSaveAsMenuItem.Click += OnFileSaveAs;
 
@@ -566,6 +589,8 @@ namespace ReloadersWorkShop
 				m_Target.Firearm = Target.Firearm;
 				m_Target.Location = Target.Location;
 				m_Target.Shooter = Target.Shooter;
+				m_Target.Event = Target.Event;
+				m_Target.Notes = Target.Notes;
 
 				m_fChanged = true;
 
@@ -573,16 +598,6 @@ namespace ReloadersWorkShop
 
 				UpdateButtons();
 				}
-			}
-
-		//============================================================================*
-		// OnFormClosing()
-		//============================================================================*
-
-		private void OnFormClosing(Object sender, FormClosingEventArgs e)
-			{
-			if (!VerifyDiscardChanges())
-				e.Cancel = true;
 			}
 
 		//============================================================================*
@@ -659,10 +674,8 @@ namespace ReloadersWorkShop
 
 			m_strFileName = null;
 
-			m_Target.Image = null;
-			m_Target.CalibrationStart = new Point(0, 0);
-			m_Target.CalibrationEnd = new Point(0, 0);
-			m_Target.CalibrationLength = 0.0;
+			m_Target = new cTarget(m_DataFiles);
+			m_Target.Caliber = (cCaliber) CaliberCombo.SelectedItem;
 
 			m_TargetImage = null;
 
@@ -763,6 +776,17 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// OnFilePrint()
+		//============================================================================*
+
+		private void OnFilePrint(Object sender, EventArgs e)
+			{
+			cTargetPrintPreviewDialog PrintDialog = new cTargetPrintPreviewDialog(m_DataFiles, m_Target, TargetImageBox.Image);
+
+			PrintDialog.ShowDialog();
+			}
+
+		//============================================================================*
 		// OnFileSave()
 		//============================================================================*
 
@@ -775,7 +799,8 @@ namespace ReloadersWorkShop
 				SaveFileDialog.Title = "Save Target File";
 				SaveFileDialog.DefaultExt = "rwt";
 				SaveFileDialog.CheckFileExists = false;
-				SaveFileDialog.CheckPathExists = true;
+				SaveFileDialog.CheckPathExists = false;
+				SaveFileDialog.FileName = GetUniqueFileName();
 				SaveFileDialog.Filter = "Target Files (*.rwt)|*.rwt";
 				SaveFileDialog.InitialDirectory = m_strFolder;
 
@@ -812,6 +837,7 @@ namespace ReloadersWorkShop
 			SaveFileDialog.OverwritePrompt = true;
 			SaveFileDialog.Filter = "Target Files (*.rwt)|*.rwt";
 			SaveFileDialog.InitialDirectory = m_strFolder;
+			SaveFileDialog.FileName = GetUniqueFileName();
 
 			if (SaveFileDialog.ShowDialog() == DialogResult.OK)
 				{
@@ -823,6 +849,16 @@ namespace ReloadersWorkShop
 
 				SetTitle();
 				}
+			}
+
+		//============================================================================*
+		// OnFormClosing()
+		//============================================================================*
+
+		private void OnFormClosing(Object sender, FormClosingEventArgs e)
+			{
+			if (!VerifyDiscardChanges())
+				e.Cancel = true;
 			}
 
 		//============================================================================*
@@ -1071,7 +1107,9 @@ namespace ReloadersWorkShop
 				// Deserialize the cTarget object
 				//----------------------------------------------------------------------------*
 
-				cTarget LoadTarget = (cTarget) Formatter.Deserialize(Stream);
+				cTarget LoadTarget = new cTarget();
+
+				LoadTarget = (cTarget) Formatter.Deserialize(Stream);
 
 				if (!m_fBatchTest && LoadTarget.BatchID != 0)
 					{
@@ -1096,11 +1134,7 @@ namespace ReloadersWorkShop
 					m_AimPointOffset = CreateAimPointOffsetBitmap();
 					m_ScaleBar = CreateScaleBar();
 
-					foreach (cCaliber Caliber in m_DataFiles.CaliberList)
-						{
-						if (m_Target.Synch(Caliber))
-							break;
-						}
+					m_Target.Synch(m_DataFiles);
 
 					if (m_Target.BatchID != 0)
 						m_Batch = m_DataFiles.GetBatchByID(m_Target.BatchID);
@@ -1174,7 +1208,7 @@ namespace ReloadersWorkShop
 				{
 				foreach (cCaliber Caliber in m_DataFiles.CaliberList)
 					{
-					if (m_DataFiles.Preferences.HideUncheckedCalibers || Caliber.Checked)
+					if (!m_DataFiles.Preferences.HideUncheckedCalibers || Caliber.Checked)
 						CaliberCombo.Items.Add(Caliber);
 					}
 
@@ -1214,6 +1248,8 @@ namespace ReloadersWorkShop
 			m_AimPoint = CreateAimPointBitmap();
 			m_AimPointOffset = CreateAimPointOffsetBitmap();
 			m_ScaleBar = CreateScaleBar();
+
+			SetTargetCursor();
 
 			SetImage();
 
@@ -1369,6 +1405,8 @@ namespace ReloadersWorkShop
 
 				int nShotNum = 1;
 
+				SolidBrush ShotForeBrush = new SolidBrush(m_Target.ShotForecolor);
+
 				foreach (Point Shot in m_Target.ShotList)
 					{
 					int x = Shot.X - ShotBitmap.Width / 2;
@@ -1382,7 +1420,7 @@ namespace ReloadersWorkShop
 
 						SizeF ShotSize = g.MeasureString(strShot, SystemFonts.DefaultFont);
 
-						g.DrawString(strShot, SystemFonts.DefaultFont, Brushes.Black, Shot.X - (ShotSize.Width / 2), Shot.Y - (ShotSize.Height / 2));
+						g.DrawString(strShot, SystemFonts.DefaultFont, ShotForeBrush, Shot.X - (ShotSize.Width / 2), Shot.Y - (ShotSize.Height / 2));
 						}
 
 					nShotNum++;
@@ -1539,8 +1577,8 @@ namespace ReloadersWorkShop
 			if (RangeTextBox.ValueOK)
 				{
 				dGroupSize = m_Target.GroupSize;
-				dMOA = dGroupSize / ((m_Target.Range / 100.0) * 1.047);
-				dMils = cConversions.MOAToMils(dMOA);
+				dMOA = m_Target.GroupMOA;
+				dMils = m_Target.GroupMils;
 				}
 
 			string strGroupFormat = "{0:F";
@@ -1551,35 +1589,7 @@ namespace ReloadersWorkShop
 			MOALabel.Text = String.Format("{0:F3}", dMOA);
 			MilsLabel.Text = String.Format("{0:F3}", dMils);
 
-			PointF MeanOffset = m_Target.MeanOffset;
-
-			string strOffset = String.Format(strGroupFormat, Math.Abs(m_DataFiles.StandardToMetric(MeanOffset.X, cDataFiles.eDataType.GroupSize)), m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize));
-
-			if (Math.Round(MeanOffset.X, m_DataFiles.Preferences.DimensionDecimals) == 0.0)
-				strOffset += " Horizontal";
-			else
-				{
-				if (MeanOffset.X < 0)
-					strOffset += " Left";
-				else
-					strOffset += " Right";
-				}
-
-			strOffset += " x ";
-
-			strOffset += String.Format(strGroupFormat, Math.Abs(m_DataFiles.StandardToMetric(m_Target.MeanOffset.Y, cDataFiles.eDataType.GroupSize)), m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize));
-
-			if (Math.Round(MeanOffset.Y, m_DataFiles.Preferences.DimensionDecimals) == 0.0)
-				strOffset += " Vertical";
-			else
-				{
-				if (MeanOffset.Y > 0)
-					strOffset += " High";
-				else
-					strOffset += " Low";
-				}
-
-			OffsetLabel.Text = strOffset;
+			OffsetLabel.Text = m_Target.MeanOffsetString(m_DataFiles);
 			}
 
 		//============================================================================*
@@ -1614,9 +1624,12 @@ namespace ReloadersWorkShop
 				case eMode.MarkShots:
 					MousePointer = CreateShotBitmap(true);
 
-					ptr = MousePointer.GetHicon();
+					if (MousePointer != null)
+						{
+						ptr = MousePointer.GetHicon();
 
-					TargetImageBox.Cursor = new Cursor(ptr);
+						TargetImageBox.Cursor = new Cursor(ptr);
+						}
 
 					break;
 
@@ -1750,9 +1763,11 @@ namespace ReloadersWorkShop
 				{
 				FileSaveMenuItem.Enabled = m_fChanged && !m_fBatchTest;
 				FileSaveAsMenuItem.Enabled = !m_fBatchTest;
+				FilePrintMenuItem.Enabled = true;
 				}
 			else
 				{
+				FilePrintMenuItem.Enabled = false;
 				FileSaveMenuItem.Enabled = false;
 				FileSaveAsMenuItem.Enabled = false;
 				}

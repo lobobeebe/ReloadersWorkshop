@@ -261,6 +261,9 @@
     <Compile Include="cTargetPreferencesForm.Designer.cs">
       <DependentUpon>cTargetPreferencesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="cTargetPrintPreviewDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="cTargetShotListView.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -48,6 +48,8 @@
 			this.ExtremesColorButton = new System.Windows.Forms.Button();
 			this.label7 = new System.Windows.Forms.Label();
 			this.ResetButton = new System.Windows.Forms.Button();
+			this.ShotForecolorButton = new System.Windows.Forms.Button();
+			this.label9 = new System.Windows.Forms.Label();
 			this.ColorsGroupBox.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -101,6 +103,7 @@
 			this.ShotColorButton.Name = "ShotColorButton";
 			this.ShotColorButton.Size = new System.Drawing.Size(75, 23);
 			this.ShotColorButton.TabIndex = 5;
+			this.ShotColorButton.Text = "1  2  3  4";
 			this.ShotColorButton.UseVisualStyleBackColor = false;
 			// 
 			// label3
@@ -117,7 +120,7 @@
 			// CloseButton
 			// 
 			this.CloseButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.CloseButton.Location = new System.Drawing.Point(187, 233);
+			this.CloseButton.Location = new System.Drawing.Point(187, 250);
 			this.CloseButton.Name = "CloseButton";
 			this.CloseButton.Size = new System.Drawing.Size(75, 23);
 			this.CloseButton.TabIndex = 7;
@@ -171,7 +174,7 @@
 			// 
 			this.ReticleColorButton.BackColor = System.Drawing.Color.Red;
 			this.ReticleColorButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.ReticleColorButton.Location = new System.Drawing.Point(121, 92);
+			this.ReticleColorButton.Location = new System.Drawing.Point(121, 150);
 			this.ReticleColorButton.Name = "ReticleColorButton";
 			this.ReticleColorButton.Size = new System.Drawing.Size(75, 23);
 			this.ReticleColorButton.TabIndex = 13;
@@ -182,7 +185,7 @@
 			this.label6.AutoSize = true;
 			this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label6.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label6.Location = new System.Drawing.Point(45, 97);
+			this.label6.Location = new System.Drawing.Point(45, 155);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(70, 13);
 			this.label6.TabIndex = 12;
@@ -191,7 +194,7 @@
 			// TargetOnlyCheckBox
 			// 
 			this.TargetOnlyCheckBox.AutoSize = true;
-			this.TargetOnlyCheckBox.Location = new System.Drawing.Point(66, 197);
+			this.TargetOnlyCheckBox.Location = new System.Drawing.Point(66, 217);
 			this.TargetOnlyCheckBox.Name = "TargetOnlyCheckBox";
 			this.TargetOnlyCheckBox.Size = new System.Drawing.Size(144, 17);
 			this.TargetOnlyCheckBox.TabIndex = 14;
@@ -200,6 +203,8 @@
 			// 
 			// ColorsGroupBox
 			// 
+			this.ColorsGroupBox.Controls.Add(this.ShotForecolorButton);
+			this.ColorsGroupBox.Controls.Add(this.label9);
 			this.ColorsGroupBox.Controls.Add(this.GroupBoxColorButton);
 			this.ColorsGroupBox.Controls.Add(this.label8);
 			this.ColorsGroupBox.Controls.Add(this.ExtremesColorButton);
@@ -220,7 +225,7 @@
 			this.ColorsGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
 			this.ColorsGroupBox.Location = new System.Drawing.Point(12, 12);
 			this.ColorsGroupBox.Name = "ColorsGroupBox";
-			this.ColorsGroupBox.Size = new System.Drawing.Size(430, 158);
+			this.ColorsGroupBox.Size = new System.Drawing.Size(430, 195);
 			this.ColorsGroupBox.TabIndex = 15;
 			this.ColorsGroupBox.TabStop = false;
 			this.ColorsGroupBox.Text = "Colors";
@@ -269,19 +274,40 @@
 			// 
 			// ResetButton
 			// 
-			this.ResetButton.Location = new System.Drawing.Point(276, 193);
+			this.ResetButton.Location = new System.Drawing.Point(276, 213);
 			this.ResetButton.Name = "ResetButton";
 			this.ResetButton.Size = new System.Drawing.Size(106, 23);
 			this.ResetButton.TabIndex = 16;
 			this.ResetButton.Text = "Restore Defaults";
 			this.ResetButton.UseVisualStyleBackColor = true;
 			// 
+			// ShotForecolorButton
+			// 
+			this.ShotForecolorButton.BackColor = System.Drawing.Color.Red;
+			this.ShotForecolorButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ShotForecolorButton.Location = new System.Drawing.Point(121, 92);
+			this.ShotForecolorButton.Name = "ShotForecolorButton";
+			this.ShotForecolorButton.Size = new System.Drawing.Size(75, 23);
+			this.ShotForecolorButton.TabIndex = 19;
+			this.ShotForecolorButton.UseVisualStyleBackColor = false;
+			// 
+			// label9
+			// 
+			this.label9.AutoSize = true;
+			this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label9.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label9.Location = new System.Drawing.Point(36, 97);
+			this.label9.Name = "label9";
+			this.label9.Size = new System.Drawing.Size(79, 13);
+			this.label9.TabIndex = 18;
+			this.label9.Text = "Shot Forecolor:";
+			// 
 			// cTargetPreferencesForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.CloseButton;
-			this.ClientSize = new System.Drawing.Size(449, 268);
+			this.ClientSize = new System.Drawing.Size(449, 284);
 			this.ControlBox = false;
 			this.Controls.Add(this.ResetButton);
 			this.Controls.Add(this.ColorsGroupBox);
@@ -320,5 +346,7 @@
 		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.Button ExtremesColorButton;
 		private System.Windows.Forms.Label label7;
+		private System.Windows.Forms.Button ShotForecolorButton;
+		private System.Windows.Forms.Label label9;
 		}
 	}
