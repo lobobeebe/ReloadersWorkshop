@@ -37,6 +37,8 @@
 			this.FileSaveMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.FileSaveAsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.FilePrintMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.FileOpenTargetImageMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.EditUndoMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,6 +49,8 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.TotalShotsLabel = new System.Windows.Forms.Label();
 			this.OutputGroupBox = new System.Windows.Forms.GroupBox();
+			this.GroupBoxLabel = new System.Windows.Forms.Label();
+			this.label9 = new System.Windows.Forms.Label();
 			this.OffsetLabel = new System.Windows.Forms.Label();
 			this.label8 = new System.Windows.Forms.Label();
 			this.MilsLabel = new System.Windows.Forms.Label();
@@ -70,8 +74,7 @@
 			this.ShowExtremesCheckBox = new System.Windows.Forms.CheckBox();
 			this.ShowGroupBoxCheckBox = new System.Windows.Forms.CheckBox();
 			this.ShowShotNumCheckBox = new System.Windows.Forms.CheckBox();
-			this.FilePrintMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+			this.FileSaveTargetImageMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.TargetCalculatorMenuStrip.SuspendLayout();
 			this.OutputGroupBox.SuspendLayout();
 			this.groupBox1.SuspendLayout();
@@ -105,7 +108,7 @@
             this.editToolStripMenuItem});
 			this.TargetCalculatorMenuStrip.Location = new System.Drawing.Point(0, 0);
 			this.TargetCalculatorMenuStrip.Name = "TargetCalculatorMenuStrip";
-			this.TargetCalculatorMenuStrip.Size = new System.Drawing.Size(1048, 24);
+			this.TargetCalculatorMenuStrip.Size = new System.Drawing.Size(1067, 24);
 			this.TargetCalculatorMenuStrip.TabIndex = 4;
 			this.TargetCalculatorMenuStrip.Text = "menuStrip1";
 			// 
@@ -119,7 +122,8 @@
             this.toolStripSeparator1,
             this.FilePrintMenuItem,
             this.toolStripSeparator3,
-            this.FileOpenTargetImageMenuItem});
+            this.FileOpenTargetImageMenuItem,
+            this.FileSaveTargetImageMenuItem});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
 			this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
 			this.fileToolStripMenuItem.Text = "&File";
@@ -157,6 +161,18 @@
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
 			this.toolStripSeparator1.Size = new System.Drawing.Size(183, 6);
+			// 
+			// FilePrintMenuItem
+			// 
+			this.FilePrintMenuItem.Name = "FilePrintMenuItem";
+			this.FilePrintMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+			this.FilePrintMenuItem.Size = new System.Drawing.Size(186, 22);
+			this.FilePrintMenuItem.Text = "&Print";
+			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(183, 6);
 			// 
 			// FileOpenTargetImageMenuItem
 			// 
@@ -238,6 +254,8 @@
 			// 
 			// OutputGroupBox
 			// 
+			this.OutputGroupBox.Controls.Add(this.GroupBoxLabel);
+			this.OutputGroupBox.Controls.Add(this.label9);
 			this.OutputGroupBox.Controls.Add(this.OffsetLabel);
 			this.OutputGroupBox.Controls.Add(this.label8);
 			this.OutputGroupBox.Controls.Add(this.MilsLabel);
@@ -255,6 +273,28 @@
 			this.OutputGroupBox.TabStop = false;
 			this.OutputGroupBox.Text = "Output Data";
 			// 
+			// GroupBoxLabel
+			// 
+			this.GroupBoxLabel.AutoSize = true;
+			this.GroupBoxLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.GroupBoxLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.GroupBoxLabel.Location = new System.Drawing.Point(345, 56);
+			this.GroupBoxLabel.Name = "GroupBoxLabel";
+			this.GroupBoxLabel.Size = new System.Drawing.Size(121, 13);
+			this.GroupBoxLabel.TabIndex = 9;
+			this.GroupBoxLabel.Text = "9.999 in. x 9.999 in.";
+			// 
+			// label9
+			// 
+			this.label9.AutoSize = true;
+			this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label9.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label9.Location = new System.Drawing.Point(286, 56);
+			this.label9.Name = "label9";
+			this.label9.Size = new System.Drawing.Size(63, 13);
+			this.label9.TabIndex = 8;
+			this.label9.Text = "Group Box::";
+			// 
 			// OffsetLabel
 			// 
 			this.OffsetLabel.AutoSize = true;
@@ -262,9 +302,9 @@
 			this.OffsetLabel.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.OffsetLabel.Location = new System.Drawing.Point(84, 56);
 			this.OffsetLabel.Name = "OffsetLabel";
-			this.OffsetLabel.Size = new System.Drawing.Size(54, 13);
+			this.OffsetLabel.Size = new System.Drawing.Size(189, 13);
 			this.OffsetLabel.TabIndex = 7;
-			this.OffsetLabel.Text = "0.000 In";
+			this.OffsetLabel.Text = "9.999 in. Horiz. x 9.999 in. Vert.";
 			// 
 			// label8
 			// 
@@ -524,17 +564,11 @@
 			this.ShowShotNumCheckBox.Text = "Show Shot #\'s";
 			this.ShowShotNumCheckBox.UseVisualStyleBackColor = true;
 			// 
-			// FilePrintMenuItem
+			// FileSaveTargetImageMenuItem
 			// 
-			this.FilePrintMenuItem.Name = "FilePrintMenuItem";
-			this.FilePrintMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-			this.FilePrintMenuItem.Size = new System.Drawing.Size(186, 22);
-			this.FilePrintMenuItem.Text = "&Print";
-			// 
-			// toolStripSeparator3
-			// 
-			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(183, 6);
+			this.FileSaveTargetImageMenuItem.Name = "FileSaveTargetImageMenuItem";
+			this.FileSaveTargetImageMenuItem.Size = new System.Drawing.Size(186, 22);
+			this.FileSaveTargetImageMenuItem.Text = "Save Target &Image";
 			// 
 			// cTargetCalculatorForm
 			// 
@@ -542,7 +576,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.FormCancelButton;
-			this.ClientSize = new System.Drawing.Size(1048, 758);
+			this.ClientSize = new System.Drawing.Size(1067, 758);
 			this.ControlBox = false;
 			this.Controls.Add(this.ShowShotNumCheckBox);
 			this.Controls.Add(this.ShowGroupBoxCheckBox);
@@ -624,5 +658,8 @@
 		private System.Windows.Forms.CheckBox ShowShotNumCheckBox;
 		private System.Windows.Forms.ToolStripMenuItem FilePrintMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+		private System.Windows.Forms.Label GroupBoxLabel;
+		private System.Windows.Forms.Label label9;
+		private System.Windows.Forms.ToolStripMenuItem FileSaveTargetImageMenuItem;
 		}
 	}

@@ -57,7 +57,6 @@ namespace ReloadersWorkShop
 		//============================================================================*
 
 		private int m_nBatchID = 0;
-		private int m_nNumShots = 0;
 		private int m_nRange = 100;
 
 		private double m_dBulletDiameter = 0.0;
@@ -124,7 +123,6 @@ namespace ReloadersWorkShop
 		public cTarget(cTarget Target)
 			{
 			m_nBatchID = Target.m_nBatchID;
-			m_nNumShots = Target.m_nNumShots;
 			m_nRange = Target.m_nRange;
 
 			m_dBulletDiameter = Target.m_dBulletDiameter;
@@ -167,14 +165,9 @@ namespace ReloadersWorkShop
 
 		public bool AddShot(Point Shot)
 			{
-			if (m_nBatchID == 0 || (m_nBatchID != 0 && m_ShotList.Count < m_nNumShots))
-				{
-				m_ShotList.Add(Shot);
+			m_ShotList.Add(Shot);
 
-				return (true);
-				}
-
-			return (false);
+			return (true);
 			}
 
 		//============================================================================*
@@ -620,6 +613,45 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// GroupBoxString Property
+		//============================================================================*
+
+		public string GroupBoxString(cDataFiles DataFiles)
+			{
+			string strGroupFormat = "{0:F";
+			strGroupFormat += String.Format("{0:G0}", DataFiles.Preferences.GroupDecimals);
+			strGroupFormat += "} {1}";
+
+			Rectangle GroupBoxRect = GroupBox;
+
+			double dWidth = 0.0;
+			double dHeight = 0.0;
+
+			if (DataFiles.Preferences.MetricGroups)
+				{
+				if (PixelsPerCentimeter > 0.0)
+					{
+					dWidth = (double) ((double) GroupBoxRect.Width / (double) PixelsPerCentimeter);
+					dHeight = (double) ((double) GroupBoxRect.Height / (double) PixelsPerCentimeter);
+					}
+				}
+			else
+				{
+				if (PixelsPerInch > 0.0)
+					{
+					dWidth = (double) ((double) GroupBoxRect.Width / (double) PixelsPerInch);
+					dHeight = (double) ((double) GroupBoxRect.Height / (double) PixelsPerInch);
+					}
+				}
+
+			string strGroupBox = String.Format(strGroupFormat, dWidth, DataFiles.MetricString(cDataFiles.eDataType.GroupSize));
+			strGroupBox += " x ";
+			strGroupBox += String.Format(strGroupFormat, dHeight, DataFiles.MetricString(cDataFiles.eDataType.GroupSize));
+
+			return (strGroupBox);
+			}
+
+		//============================================================================*
 		// GroupExtremes()
 		//============================================================================*
 
@@ -807,7 +839,7 @@ namespace ReloadersWorkShop
 			string strOffset = String.Format(strGroupFormat, Math.Abs(DataFiles.StandardToMetric(MeanOffset.X, cDataFiles.eDataType.GroupSize)), DataFiles.MetricString(cDataFiles.eDataType.GroupSize));
 
 			if (Math.Round(MeanOffset.X, DataFiles.Preferences.DimensionDecimals) == 0.0)
-				strOffset += " Horizontal";
+				strOffset += " Horiz.";
 			else
 				{
 				if (MeanOffset.X < 0)
@@ -821,7 +853,7 @@ namespace ReloadersWorkShop
 			strOffset += String.Format(strGroupFormat, Math.Abs(DataFiles.StandardToMetric(MeanOffset.Y, cDataFiles.eDataType.GroupSize)), DataFiles.MetricString(cDataFiles.eDataType.GroupSize));
 
 			if (Math.Round(MeanOffset.Y, DataFiles.Preferences.DimensionDecimals) == 0.0)
-				strOffset += " Vertical";
+				strOffset += " Vert.";
 			else
 				{
 				if (MeanOffset.Y > 0)
@@ -905,11 +937,7 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				return (m_nNumShots);
-				}
-			set
-				{
-				m_nNumShots = value;
+				return (m_ShotList.Count);
 				}
 			}
 

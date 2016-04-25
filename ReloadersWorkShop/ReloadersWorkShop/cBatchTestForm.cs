@@ -62,6 +62,7 @@ namespace ReloadersWorkShop
 
 		private bool m_fViewOnly = false;
 		private bool m_fInitialized = false;
+		private bool m_fPopulating = false;
 
 		private bool m_fChanged = false;
 
@@ -255,7 +256,7 @@ namespace ReloadersWorkShop
 
 		public void OnAltitudeChanged(object sender, EventArgs args)
 			{
-			if (!m_fInitialized)
+			if (!m_fInitialized || m_fPopulating)
 				return;
 
 			m_BatchTest.Altitude = (int) m_DataFiles.MetricToStandard(AltitudeTextBox.Value, cDataFiles.eDataType.Altitude);
@@ -273,7 +274,7 @@ namespace ReloadersWorkShop
 
 		public void OnBarometricPressureChanged(object sender, EventArgs args)
 			{
-			if (!m_fInitialized)
+			if (!m_fInitialized || m_fPopulating)
 				return;
 
 			m_BatchTest.BarometricPressure = m_DataFiles.MetricToStandard(PressureTextBox.Value, cDataFiles.eDataType.Pressure);
@@ -291,7 +292,7 @@ namespace ReloadersWorkShop
 
 		public void OnBestGroupChanged(object sender, EventArgs args)
 			{
-			if (!m_fInitialized)
+			if (!m_fInitialized || m_fPopulating)
 				return;
 
 			m_BatchTest.BestGroup = m_DataFiles.MetricToStandard(BestGroupTextBox.Value, cDataFiles.eDataType.GroupSize);
@@ -307,7 +308,7 @@ namespace ReloadersWorkShop
 
 		public void OnBestGroupRangeChanged(object sender, EventArgs args)
 			{
-			if (!m_fInitialized)
+			if (!m_fInitialized || m_fPopulating)
 				return;
 
 			m_BatchTest.BestGroupRange = (int) m_DataFiles.MetricToStandard(BestGroupRangeTextBox.Value, cDataFiles.eDataType.Range);
@@ -323,7 +324,7 @@ namespace ReloadersWorkShop
 
 		private void OnDateChanged(object sender, EventArgs e)
 			{
-			if (!m_fInitialized)
+			if (!m_fInitialized || m_fPopulating)
 				return;
 
 			m_BatchTest.TestDate = TestDatePicker.Value;
@@ -377,7 +378,7 @@ namespace ReloadersWorkShop
 
 		public void OnFirearmChanged(object sender, EventArgs args)
 			{
-			if (!m_fInitialized)
+			if (!m_fInitialized || m_fPopulating)
 				return;
 
 			m_BatchTest.Firearm = (cFirearm) FirearmCombo.SelectedItem;
@@ -395,7 +396,7 @@ namespace ReloadersWorkShop
 
 		public void OnHumidityChanged(object sender, EventArgs args)
 			{
-			if (!m_fInitialized)
+			if (!m_fInitialized || m_fPopulating)
 				return;
 
 			m_BatchTest.Humidity = (double)  ((double) HumidityTextBox.Value / 100.0);
@@ -413,7 +414,7 @@ namespace ReloadersWorkShop
 
 		private void OnLocationTextChanged(object sender, EventArgs e)
 			{
-			if (!m_fInitialized)
+			if (!m_fInitialized || m_fPopulating)
 				return;
 
 			m_BatchTest.Location = LocationTextBox.Value;
@@ -429,7 +430,7 @@ namespace ReloadersWorkShop
 
 		public void OnNotesChanged(object sender, EventArgs args)
 			{
-			if (!m_fInitialized)
+			if (!m_fInitialized || m_fPopulating)
 				return;
 
 			m_BatchTest.Notes = NotesTextBox.Text;
@@ -445,7 +446,7 @@ namespace ReloadersWorkShop
 
 		private void OnNumShotsTextChanged(object sender, EventArgs e)
 			{
-			if (!m_fInitialized)
+			if (!m_fInitialized || m_fPopulating)
 				return;
 
 			int nNumShots = NumShotsTextBox.Value;
@@ -576,11 +577,27 @@ namespace ReloadersWorkShop
 
 		public void OnTargetCalculatorClicked(object sender, EventArgs args)
 			{
-			cTargetCalculatorForm TargetCalculatorForm = new cTargetCalculatorForm(m_DataFiles, m_BatchTest.Batch.BatchID, m_BatchTest.NumRounds, m_BatchTest.BestGroupRange);
+			cTargetCalculatorForm TargetCalculatorForm = new cTargetCalculatorForm(m_DataFiles, m_BatchTest);
 
-			TargetCalculatorForm.ShowDialog();
+			if (TargetCalculatorForm.ShowDialog() == DialogResult.OK)
+				{
+				m_BatchTest.TestDate = TargetCalculatorForm.Target.Date;
+				m_BatchTest.NumRounds = TargetCalculatorForm.Target.NumShots;
+				m_BatchTest.BestGroup = TargetCalculatorForm.Target.GroupSize;
+				m_BatchTest.BestGroupRange = TargetCalculatorForm.Target.Range;
+				m_BatchTest.Location = TargetCalculatorForm.Target.Location;
+				m_BatchTest.Firearm = TargetCalculatorForm.Target.Firearm;
 
-			UpdateButtons();
+				TestDatePicker.Value = m_BatchTest.TestDate;
+				BestGroupTextBox.Value = m_BatchTest.BestGroup;
+				BestGroupRangeTextBox.Value = m_BatchTest.BestGroupRange;
+				NumShotsTextBox.Value = m_BatchTest.NumRounds;
+				LocationTextBox.Value = m_BatchTest.Location;
+
+				FirearmCombo.SelectedItem = m_BatchTest.Firearm;
+
+				OnNumShotsTextChanged(sender, args);
+				}
 			}
 
 		//============================================================================*
@@ -589,7 +606,7 @@ namespace ReloadersWorkShop
 
 		public void OnTemperatureChanged(object sender, EventArgs args)
 			{
-			if (!m_fInitialized)
+			if (!m_fInitialized || m_fPopulating)
 				return;
 
 			m_BatchTest.Temperature = (int) m_DataFiles.MetricToStandard(TemperatureTextBox.Value, cDataFiles.eDataType.Temperature);
@@ -607,7 +624,7 @@ namespace ReloadersWorkShop
 
 		public void OnWindDirectionChanged(object sender, EventArgs args)
 			{
-			if (!m_fInitialized)
+			if (!m_fInitialized || m_fPopulating)
 				return;
 
 			m_BatchTest.WindDirection = WindDirectionTextBox.Value;
@@ -625,7 +642,7 @@ namespace ReloadersWorkShop
 
 		public void OnWindSpeedChanged(object sender, EventArgs args)
 			{
-			if (!m_fInitialized)
+			if (!m_fInitialized || m_fPopulating)
 				return;
 
 			m_BatchTest.WindSpeed = (int) m_DataFiles.MetricToStandard(WindSpeedTextBox.Value, cDataFiles.eDataType.Speed);
@@ -643,6 +660,8 @@ namespace ReloadersWorkShop
 
 		public void PopulateBatchTestData()
 			{
+			m_fPopulating = true;
+
 			cFirearm Firearm = m_BatchTest.Firearm;
 
 			if (Firearm == null)
@@ -727,6 +746,8 @@ namespace ReloadersWorkShop
 				}
 
 			NotesTextBox.Text = m_BatchTest.Notes;
+
+			m_fPopulating = false;
 			}
 
 		//============================================================================*
@@ -966,12 +987,6 @@ namespace ReloadersWorkShop
 
 			if (m_DataFiles.Preferences.ToolTips)
 				m_BestGroupRangeToolTip.SetToolTip(BestGroupRangeTextBox, strText);
-
-			//----------------------------------------------------------------------------*
-			// Enable/disable Target Calculator Button
-			//----------------------------------------------------------------------------*
-
-			TargetCalculatorButton.Enabled = NumShotsTextBox.ValueOK && BestGroupRangeTextBox.ValueOK;
 
 			//----------------------------------------------------------------------------*
 			// Shot List

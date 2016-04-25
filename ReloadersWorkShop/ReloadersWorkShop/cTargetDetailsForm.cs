@@ -37,6 +37,8 @@ namespace ReloadersWorkShop
 
 		private cTargetShotListView m_ShotListView = null;
 
+		private cBatch m_Batch = null;
+
 		//============================================================================*
 		// cTargetDetailsForm() - Constructor
 		//============================================================================*
@@ -47,6 +49,9 @@ namespace ReloadersWorkShop
 
 			m_DataFiles = DataFiles;
 			m_Target = new cTarget(Target);
+
+			if (m_Target.BatchID != 0)
+				m_Batch = m_DataFiles.GetBatchByID(m_Target.BatchID);
 
 			//----------------------------------------------------------------------------*
 			// Event Handlers
@@ -198,8 +203,16 @@ namespace ReloadersWorkShop
 		private void PopulateDetailData()
 			{
 			DatePicker.Value = m_Target.Date;
-			LocationTextBox.Value = m_Target.Location;
 			ShooterTextBox.Value = m_Target.Shooter;
+
+			if (m_Target.BatchID != 0)
+				{
+				m_Target.Event = String.Format("Batch {0:G0} Testing", m_Target.BatchID);
+
+				EventTextBox.Enabled = false;
+				}
+
+			LocationTextBox.Value = m_Target.Location;
 			EventTextBox.Value = m_Target.Event;
 			NotesTextBox.Value = m_Target.Notes;
 			}
@@ -214,21 +227,35 @@ namespace ReloadersWorkShop
 
 			FirearmCombo.Items.Add("No Specific Firearm");
 
-			cFirearm SelectFirearm = null;
-
-			foreach (cFirearm Firearm in m_DataFiles.FirearmList)
+			if (m_Target.BatchID == 0)
 				{
-				if (Firearm.HasCaliber(m_Target.Caliber))
-					{
-					FirearmCombo.Items.Add(Firearm);
+				cFirearm SelectFirearm = null;
 
-					if (m_Target.Firearm != null && Firearm.CompareTo(m_Target.Firearm) == 0)
-						SelectFirearm = Firearm;
+				foreach (cFirearm Firearm in m_DataFiles.FirearmList)
+					{
+					if (Firearm.HasCaliber(m_Target.Caliber))
+						{
+						FirearmCombo.Items.Add(Firearm);
+
+						if (m_Target.Firearm != null && Firearm.CompareTo(m_Target.Firearm) == 0)
+							SelectFirearm = Firearm;
+						}
+					}
+
+				if (SelectFirearm != null)
+					FirearmCombo.SelectedItem = SelectFirearm;
+				}
+			else
+				{
+				if (m_Target.Firearm != null)
+					{
+					FirearmCombo.Items.Clear();
+
+					FirearmCombo.Items.Add(m_Target.Firearm);
+
+					FirearmCombo.SelectedItem = m_Target.Firearm;
 					}
 				}
-
-			if (SelectFirearm != null)
-				FirearmCombo.SelectedItem = SelectFirearm;
 
 			if (FirearmCombo.SelectedIndex < 0 && FirearmCombo.Items.Count > 0)
 				FirearmCombo.SelectedIndex = 0;

@@ -11,6 +11,7 @@
 
 using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
@@ -52,12 +53,11 @@ namespace ReloadersWorkShop
 		private eMode m_eMode = eMode.LoadTarget;
 
 		private cDataFiles m_DataFiles = null;
+		private cBatchTest m_BatchTest = null;
 
 		private string m_strFileName = "";
 
 		private cTarget m_Target = null;
-
-		private cBatch m_Batch = null;
 
 		private bool m_fMouseDown = false;
 
@@ -87,16 +87,13 @@ namespace ReloadersWorkShop
 		// cTargetCalculatorForm()
 		//============================================================================*
 
-		public cTargetCalculatorForm(cDataFiles DataFiles, int nBatchID = 0, int nNumShots = 0, int nRange = 100)
+		public cTargetCalculatorForm(cDataFiles DataFiles, cBatchTest BatchTest = null)
 			{
 			InitializeComponent();
 
 			m_DataFiles = DataFiles;
-			m_Target.BatchID = nBatchID;
-			m_Target.NumShots = nNumShots;
-			m_Target.Range = nRange;
 
-			m_fBatchTest = nBatchID != 0;
+			m_BatchTest = BatchTest;
 
 			Initialize();
 			}
@@ -239,6 +236,7 @@ namespace ReloadersWorkShop
 			Graphics g = Graphics.FromImage(CalibrationBar);
 
 			SolidBrush BarBrush = new SolidBrush(m_Target.ScaleBackcolor);
+			SolidBrush BarForeBrush = new SolidBrush(m_Target.ScaleForecolor);
 
 			g.FillRectangle(BarBrush, 0, 0, CalibrationBar.Width, CalibrationBar.Height);
 
@@ -247,10 +245,14 @@ namespace ReloadersWorkShop
 			string strMeasurement = m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize);
 
 			SizeF StartSizeF = g.MeasureString("MMM", BarFont);
+			SizeF CharSizeF = g.MeasureString(m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize), BarFont);
 
-			g.DrawString(new string(strMeasurement[0], 1), BarFont, BarBrush, (int) StartSizeF.Width / 3, CalibrationBar.Height / 2 - StartSizeF.Height);
-			g.DrawString(new string(strMeasurement[1], 1), BarFont, BarBrush, (int) StartSizeF.Width / 3, CalibrationBar.Height / 2);
+			g.DrawString(m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize), BarFont, BarForeBrush, (int) (StartSizeF.Width / 2) - (int) (CharSizeF.Width / 2), CalibrationBar.Height / 2);
+			/*
+						CharSizeF = g.MeasureString(new string(strMeasurement[1], 1), BarFont);
 
+						g.DrawString(new string(strMeasurement[1], 1), BarFont, BarForeBrush, (int) (StartSizeF.Width / 2) - (int) (CharSizeF.Width / 2), CalibrationBar.Height / 2);
+			*/
 			//----------------------------------------------------------------------------*
 			// Metric Scale Bar
 			//----------------------------------------------------------------------------*
@@ -275,8 +277,6 @@ namespace ReloadersWorkShop
 						string strText = String.Format("{0:G0}", i / 10);
 
 						SizeF FontSize = g.MeasureString(strText, BarFont);
-
-						SolidBrush BarForeBrush = new SolidBrush(m_Target.ScaleForecolor);
 
 						g.DrawString(strText, BarFont, BarForeBrush, nX - (FontSize.Width / 2), nY1);
 						}
@@ -311,8 +311,6 @@ namespace ReloadersWorkShop
 						string strText = String.Format("{0:G0}", i / 4);
 
 						SizeF FontSize = g.MeasureString(strText, BarFont);
-
-						SolidBrush BarForeBrush = new SolidBrush(m_Target.ScaleForecolor);
 
 						g.DrawString(strText, BarFont, BarForeBrush, nX - (FontSize.Width / 2), nY1);
 						}
@@ -452,6 +450,11 @@ namespace ReloadersWorkShop
 
 			m_Target = new cTarget(m_DataFiles);
 
+			if (m_BatchTest != null)
+				SetBatchTestInfo();
+
+			m_fBatchTest = m_BatchTest != null;
+
 			//----------------------------------------------------------------------------*
 			// Event Handlers
 			//----------------------------------------------------------------------------*
@@ -462,8 +465,9 @@ namespace ReloadersWorkShop
 				FileOpenMenuItem.Click += OnFileOpen;
 				FileOpenTargetImageMenuItem.Click += OnFileOpenTargetImage;
 				FilePrintMenuItem.Click += OnFilePrint;
-				FileSaveMenuItem.Click += OnFileSave;
 				FileSaveAsMenuItem.Click += OnFileSaveAs;
+				FileSaveMenuItem.Click += OnFileSave;
+				FileSaveTargetImageMenuItem.Click += OnFileSaveTargetImage;
 
 				EditDetailsMenuItem.Click += OnEditDetails;
 				EditPreferencesMenuItem.Click += OnEditPreferences;
@@ -512,41 +516,50 @@ namespace ReloadersWorkShop
 			// Populate Data
 			//----------------------------------------------------------------------------*
 
-			PopulateCaliberCombo();
+			bool fFileOpened = false;
 
-			if (m_Target.BatchID != 0)
+			if (m_BatchTest != null)
 				{
-				m_Batch = m_DataFiles.GetBatchByID(m_Target.BatchID);
-
 				m_strFileName = string.Format("Batch {0:G0} Target File.rwt", m_Target.BatchID);
 
 				m_strFolder = Path.Combine(m_DataFiles.GetDataPath(), "Target Files");
 
 				if (File.Exists(Path.Combine(m_strFolder, m_strFileName)))
+					{
 					Open(m_strFolder, m_strFileName);
+
+					SetBatchTestInfo();
+
+					fFileOpened = true;
+					}
 				}
-			else
-				m_Batch = null;
 
-			SetInputParameters();
+			if (!fFileOpened)
+				{
+				PopulateCaliberCombo();
 
-			SetInputData();
+				SetInputParameters();
 
-			SetMode(m_Target.BatchID == 0 ? eMode.LoadTarget : eMode.MarkShots);
+				SetInputData();
 
-			SetTargetImageSize();
+				SetMode(m_Target.BatchID == 0 ? eMode.LoadTarget : eMode.MarkShots);
+
+				SetTargetImageSize();
+
+				m_strFileName = "";
+
+				SetTitle();
+				}
 
 			//----------------------------------------------------------------------------*
 			// Clean up and exit
 			//----------------------------------------------------------------------------*
 
-			m_strFileName = "";
-
-			SetTitle();
-
 			m_fInitialized = true;
 
 			OnResize(null);
+
+			UpdateButtons();
 			}
 
 		//============================================================================*
@@ -852,6 +865,32 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// OnFileSaveTargetImage()
+		//============================================================================*
+
+		private void OnFileSaveTargetImage(Object sender, EventArgs e)
+			{
+			SaveFileDialog SaveTargetDialog = new SaveFileDialog();
+
+			SaveTargetDialog.CheckFileExists = false;
+			SaveTargetDialog.CheckPathExists = false;
+			SaveTargetDialog.Filter = "Jpeg|*.jpg";
+			SaveTargetDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+			SaveTargetDialog.Title = "Save Target Image";
+
+			DialogResult rc = SaveTargetDialog.ShowDialog();
+
+			if (rc == DialogResult.OK)
+				{
+				string strFileName = SaveTargetDialog.FileName;
+
+				Path.ChangeExtension(strFileName, "jpg");
+
+				TargetImageBox.Image.Save(strFileName, ImageFormat.Jpeg);
+				}
+			}
+
+		//============================================================================*
 		// OnFormClosing()
 		//============================================================================*
 
@@ -1136,11 +1175,6 @@ namespace ReloadersWorkShop
 
 					m_Target.Synch(m_DataFiles);
 
-					if (m_Target.BatchID != 0)
-						m_Batch = m_DataFiles.GetBatchByID(m_Target.BatchID);
-					else
-						m_Batch = null;
-
 					PopulateCaliberCombo();
 
 					SetInputData();
@@ -1204,7 +1238,7 @@ namespace ReloadersWorkShop
 			{
 			CaliberCombo.Items.Clear();
 
-			if (m_Batch == null)
+			if (m_BatchTest == null)
 				{
 				foreach (cCaliber Caliber in m_DataFiles.CaliberList)
 					{
@@ -1225,7 +1259,7 @@ namespace ReloadersWorkShop
 				}
 			else
 				{
-				CaliberCombo.Items.Add(m_Batch.Load.Caliber);
+				CaliberCombo.Items.Add(m_BatchTest.Batch.Load.Caliber);
 
 				CaliberCombo.SelectedIndex = 0;
 				}
@@ -1298,6 +1332,26 @@ namespace ReloadersWorkShop
 				if (Stream != null)
 					Stream.Close();
 				}
+			}
+
+		//============================================================================*
+		// SetBatchTestInfo()
+		//============================================================================*
+
+		private void SetBatchTestInfo()
+			{
+			m_Target.BatchID = m_BatchTest.Batch.BatchID;
+
+			if (m_BatchTest.BestGroupRange != 0)
+				m_Target.Range = m_BatchTest.BestGroupRange;
+
+			m_Target.Date = m_BatchTest.TestDate;
+			m_Target.Location = m_BatchTest.Location;
+			m_Target.Firearm = m_BatchTest.Firearm;
+			m_Target.Caliber = m_BatchTest.Batch.Load.Caliber;
+
+			if (m_Target.Range == 0)
+				m_Target.Range = m_BatchTest.Batch.Load.FirearmType == cFirearm.eFireArmType.Rifle ? 100 : 25;
 			}
 
 		//============================================================================*
@@ -1437,17 +1491,15 @@ namespace ReloadersWorkShop
 			RangeTextBox.Value = (int) m_DataFiles.StandardToMetric(m_Target.Range, cDataFiles.eDataType.Range);
 			RangeMeasurementLabel.Text = m_DataFiles.MetricLongString(cDataFiles.eDataType.Range);
 
-			RangeTextBox.Enabled = m_Batch == null;
-
 			double dBulletDiameter = 0.0;
 
-			if (m_Batch == null)
+			if (m_BatchTest == null)
 				{
 				if (m_Target.Caliber != null)
 					dBulletDiameter = m_Target.Caliber.MinBulletDiameter;
 				}
 			else
-				dBulletDiameter = m_Batch.BulletDiameter;
+				dBulletDiameter = m_BatchTest.Batch.BulletDiameter;
 
 			string strDimensionFormat = "{0:F";
 			strDimensionFormat += String.Format("{0:G0}", m_DataFiles.Preferences.DimensionDecimals);
@@ -1552,12 +1604,7 @@ namespace ReloadersWorkShop
 
 		private void SetNumShotsLabel()
 			{
-			string strText = String.Format("{0:G0}", m_Target.ShotList.Count);
-
-			if (m_Target.BatchID != 0)
-				strText += String.Format(" of {0:G0}", m_Target.NumShots);
-
-			TotalShotsLabel.Text = strText;
+			TotalShotsLabel.Text =  String.Format("{0:G0}", m_Target.ShotList.Count);
 			}
 
 		//============================================================================*
@@ -1590,6 +1637,7 @@ namespace ReloadersWorkShop
 			MilsLabel.Text = String.Format("{0:F3}", dMils);
 
 			OffsetLabel.Text = m_Target.MeanOffsetString(m_DataFiles);
+			GroupBoxLabel.Text = m_Target.GroupBoxString(m_DataFiles);
 			}
 
 		//============================================================================*
@@ -1715,7 +1763,7 @@ namespace ReloadersWorkShop
 			string strTitle = "Target Calculator - ";
 
 			if (string.IsNullOrEmpty(m_strFileName) && m_Target.BatchID != 0)
-				m_strFileName = String.Format("Batch {0:G0} Target File", m_Target.BatchID);
+				m_strFileName = String.Format("Batch {0:G0} Target File.rwt", m_Target.BatchID);
 
 			if (string.IsNullOrEmpty(m_strFileName))
 				strTitle += "<Untitled>";
@@ -1728,6 +1776,18 @@ namespace ReloadersWorkShop
 			Text = strTitle;
 
 			UpdateButtons();
+			}
+
+		//============================================================================*
+		// Target Property
+		//============================================================================*
+
+		public cTarget Target
+			{
+			get
+				{
+				return (m_Target);
+				}
 			}
 
 		//============================================================================*
@@ -1757,6 +1817,7 @@ namespace ReloadersWorkShop
 
 			FileNewMenuItem.Enabled = m_Target.Image != null && m_Target.BatchID == 0;
 			FileOpenMenuItem.Enabled = !m_fBatchTest;
+			FileSaveTargetImageMenuItem.Enabled = m_TargetImage != null;
 			EditUndoMenuItem.Enabled = m_Target.Image != null && !m_fBatchTest;
 
 			if (m_Target.ShotList.Count > 0)

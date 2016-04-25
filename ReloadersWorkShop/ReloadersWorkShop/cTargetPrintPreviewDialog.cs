@@ -126,11 +126,30 @@ namespace ReloadersWorkShop
 			nY = cPrintObject.PrintReportTitle("Target Detail", PageRect, e.Graphics);
 
 			//----------------------------------------------------------------------------*
+			// Event
+			//----------------------------------------------------------------------------*
+
+			string strText = "Event: ";
+			SizeF TextSize = e.Graphics.MeasureString(strText, ShooterFont);
+
+			if (!String.IsNullOrEmpty(m_Target.Event))
+				{
+				strText += String.Format("{0}", m_Target.Event);
+
+				TextSize = e.Graphics.MeasureString(strText, ShooterFont);
+
+				e.Graphics.DrawString(strText, ShooterFont, Brushes.Black, nX + (PageRect.Width / 2) - (TextSize.Width / 2), nY);
+
+				nY += TextSize.Height;
+				}
+
+			nY += (int) (TextSize.Height * 1.5);
+
+			//----------------------------------------------------------------------------*
 			// Shot by and where
 			//----------------------------------------------------------------------------*
 
-			string strText = "Shot ";
-			SizeF TextSize;
+			strText = "Shot ";
 
 			if (!String.IsNullOrEmpty(m_Target.Shooter))
 				{
@@ -199,21 +218,6 @@ namespace ReloadersWorkShop
 				nY += TextSize.Height;
 				}
 
-			//----------------------------------------------------------------------------*
-			// Event
-			//----------------------------------------------------------------------------*
-
-			if (!String.IsNullOrEmpty(m_Target.Event))
-				{
-				strText = String.Format("Event: {0}", m_Target.Event);
-
-				TextSize = e.Graphics.MeasureString(strText, ShooterFont);
-
-				e.Graphics.DrawString(strText, ShooterFont, Brushes.Black, nX + (PageRect.Width / 2) - (TextSize.Width / 2), nY);
-
-				nY += TextSize.Height;
-				}
-
 			nY += TextSize.Height;
 
 			//----------------------------------------------------------------------------*
@@ -254,6 +258,20 @@ namespace ReloadersWorkShop
 			strText += String.Format("MOA: {0:F3}   ", m_Target.GroupMOA);
 
 			strText += String.Format("Mils: {0:F3}   ", m_Target.GroupMils);
+
+			TextSize = e.Graphics.MeasureString(strText, DataFont);
+
+			e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX + (PageRect.Width / 2) - (TextSize.Width / 2), nY);
+
+			nY += (int) (TextSize.Height * 1.5);
+
+			//----------------------------------------------------------------------------*
+			// Group Box
+			//----------------------------------------------------------------------------*
+
+			strText = "Group Box: ";
+
+			strText += String.Format(strGroupFormat, m_Target.GroupBoxString(m_DataFiles));
 
 			TextSize = e.Graphics.MeasureString(strText, DataFont);
 

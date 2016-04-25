@@ -249,12 +249,6 @@
     <Compile Include="cTargetDetailsForm.Designer.cs">
       <DependentUpon>cTargetDetailsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="cTargetImageBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="cTargetImageBox.Designer.cs">
-      <DependentUpon>cTargetImageBox.cs</DependentUpon>
-    </Compile>
     <Compile Include="cTargetPreferencesForm.cs">
       <SubType>Form</SubType>
     </Compile>
