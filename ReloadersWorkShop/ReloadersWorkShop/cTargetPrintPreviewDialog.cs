@@ -244,6 +244,20 @@ namespace ReloadersWorkShop
 			nY += TextSize.Height;
 
 			//----------------------------------------------------------------------------*
+			// Range Info
+			//----------------------------------------------------------------------------*
+
+			strText = String.Format("{0:D0} Shot{1} at ", m_Target.NumShots, m_Target.NumShots > 1 ? "s" : "");
+
+			strText += String.Format("{0:D0} {1}", m_Target.Range, m_DataFiles.MetricLongString(cDataFiles.eDataType.Range));
+
+			TextSize = e.Graphics.MeasureString(strText, HeaderFont);
+
+			e.Graphics.DrawString(strText, HeaderFont, Brushes.Black, nX + (PageRect.Width / 2) - (TextSize.Width / 2), nY);
+
+			nY += (int) (TextSize.Height * 1.5);
+
+			//----------------------------------------------------------------------------*
 			// Group Size Info
 			//----------------------------------------------------------------------------*
 
@@ -251,13 +265,11 @@ namespace ReloadersWorkShop
 
 			string strGroupFormat = "{0:F";
 			strGroupFormat += String.Format("{0:G0}", m_DataFiles.Preferences.GroupDecimals);
-			strGroupFormat += "}   ";
+			strGroupFormat += "}";
 
 			strText += String.Format(strGroupFormat, m_Target.GroupSize);
 
-			strText += String.Format("MOA: {0:F3}   ", m_Target.GroupMOA);
-
-			strText += String.Format("Mils: {0:F3}   ", m_Target.GroupMils);
+			strText += String.Format(" {0}   MOA: {1:F3}   Mils: {2:F3}", m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize), m_Target.GroupMOA, m_Target.GroupMils);
 
 			TextSize = e.Graphics.MeasureString(strText, DataFont);
 
@@ -269,9 +281,7 @@ namespace ReloadersWorkShop
 			// Group Box
 			//----------------------------------------------------------------------------*
 
-			strText = "Group Box: ";
-
-			strText += String.Format(strGroupFormat, m_Target.GroupBoxString(m_DataFiles));
+			strText = String.Format("Group Box: {0}", m_Target.GroupBoxString(m_DataFiles));
 
 			TextSize = e.Graphics.MeasureString(strText, DataFont);
 
@@ -283,9 +293,7 @@ namespace ReloadersWorkShop
 			// Mean Offset Info
 			//----------------------------------------------------------------------------*
 
-			strText = "Mean Offset from Aim Point: ";
-
-			strText += String.Format(strGroupFormat, m_Target.MeanOffsetString(m_DataFiles));
+			strText = String.Format("Mean Offset from Aim Point: {0}", m_Target.MeanOffsetString(m_DataFiles));
 
 			TextSize = e.Graphics.MeasureString(strText, DataFont);
 

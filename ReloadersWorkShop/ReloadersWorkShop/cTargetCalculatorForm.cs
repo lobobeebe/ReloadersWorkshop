@@ -872,8 +872,13 @@ namespace ReloadersWorkShop
 			{
 			SaveFileDialog SaveTargetDialog = new SaveFileDialog();
 
+			string strFileName = m_Target.SuggestedFileName;
+
+			strFileName = Path.ChangeExtension(strFileName, "jpg");
+
 			SaveTargetDialog.CheckFileExists = false;
 			SaveTargetDialog.CheckPathExists = false;
+			SaveTargetDialog.FileName = strFileName;
 			SaveTargetDialog.Filter = "Jpeg|*.jpg";
 			SaveTargetDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
 			SaveTargetDialog.Title = "Save Target Image";
@@ -882,9 +887,7 @@ namespace ReloadersWorkShop
 
 			if (rc == DialogResult.OK)
 				{
-				string strFileName = SaveTargetDialog.FileName;
-
-				Path.ChangeExtension(strFileName, "jpg");
+				strFileName = SaveTargetDialog.FileName;
 
 				TargetImageBox.Image.Save(strFileName, ImageFormat.Jpeg);
 				}
