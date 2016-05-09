@@ -1160,6 +1160,7 @@ namespace ReloadersWorkShop
 			m_AimPointColor = sm_DefaultAimPointColor;
 			m_OffsetColor = sm_DefaultOffsetColor;
 			m_ShotColor = sm_DefaultShotColor;
+			m_ShotForecolor = sm_DefaultShotForecolor;
 			m_ReticleColor = sm_DefaultReticleColor;
 			m_ScaleForecolor = sm_DefaultScaleForecolor;
 			m_ScaleBackcolor = sm_DefaultScaleBackcolor;
@@ -1176,6 +1177,7 @@ namespace ReloadersWorkShop
 			m_AimPointColor = Datafiles.Preferences.TargetAimPointColor;
 			m_OffsetColor = Datafiles.Preferences.TargetOffsetColor;
 			m_ShotColor = Datafiles.Preferences.TargetShotColor;
+			m_ShotForecolor = Datafiles.Preferences.TargetShotForecolor;
 			m_ReticleColor = Datafiles.Preferences.TargetReticleColor;
 			m_ScaleForecolor = Datafiles.Preferences.TargetScaleForecolor;
 			m_ScaleBackcolor = Datafiles.Preferences.TargetScaleBackcolor;

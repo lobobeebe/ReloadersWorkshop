@@ -40,6 +40,7 @@
 			this.FilePrintMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.FileOpenTargetImageMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.FileSaveTargetImageMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.EditUndoMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -66,7 +67,6 @@
 			this.label4 = new System.Windows.Forms.Label();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.BulletDiameterLabel = new System.Windows.Forms.Label();
-			this.RangeTextBox = new CommonLib.Controls.cIntegerValueTextBox();
 			this.TargetImageBox = new System.Windows.Forms.PictureBox();
 			this.ShowScaleCheckBox = new System.Windows.Forms.CheckBox();
 			this.ShowAimPointCheckBox = new System.Windows.Forms.CheckBox();
@@ -74,7 +74,7 @@
 			this.ShowExtremesCheckBox = new System.Windows.Forms.CheckBox();
 			this.ShowGroupBoxCheckBox = new System.Windows.Forms.CheckBox();
 			this.ShowShotNumCheckBox = new System.Windows.Forms.CheckBox();
-			this.FileSaveTargetImageMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.RangeTextBox = new CommonLib.Controls.cIntegerValueTextBox();
 			this.TargetCalculatorMenuStrip.SuspendLayout();
 			this.OutputGroupBox.SuspendLayout();
 			this.groupBox1.SuspendLayout();
@@ -108,7 +108,7 @@
             this.editToolStripMenuItem});
 			this.TargetCalculatorMenuStrip.Location = new System.Drawing.Point(0, 0);
 			this.TargetCalculatorMenuStrip.Name = "TargetCalculatorMenuStrip";
-			this.TargetCalculatorMenuStrip.Size = new System.Drawing.Size(1067, 24);
+			this.TargetCalculatorMenuStrip.Size = new System.Drawing.Size(1063, 24);
 			this.TargetCalculatorMenuStrip.TabIndex = 4;
 			this.TargetCalculatorMenuStrip.Text = "menuStrip1";
 			// 
@@ -179,6 +179,12 @@
 			this.FileOpenTargetImageMenuItem.Name = "FileOpenTargetImageMenuItem";
 			this.FileOpenTargetImageMenuItem.Size = new System.Drawing.Size(186, 22);
 			this.FileOpenTargetImageMenuItem.Text = "Open &Target Image";
+			// 
+			// FileSaveTargetImageMenuItem
+			// 
+			this.FileSaveTargetImageMenuItem.Name = "FileSaveTargetImageMenuItem";
+			this.FileSaveTargetImageMenuItem.Size = new System.Drawing.Size(186, 22);
+			this.FileSaveTargetImageMenuItem.Text = "Save Target &Image";
 			// 
 			// editToolStripMenuItem
 			// 
@@ -467,22 +473,6 @@
 			this.BulletDiameterLabel.TabIndex = 16;
 			this.BulletDiameterLabel.Text = "0.999";
 			// 
-			// RangeTextBox
-			// 
-			this.RangeTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.RangeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.RangeTextBox.Location = new System.Drawing.Point(75, 28);
-			this.RangeTextBox.MaxLength = 4;
-			this.RangeTextBox.MaxValue = 0;
-			this.RangeTextBox.MinValue = 25;
-			this.RangeTextBox.Name = "RangeTextBox";
-			this.RangeTextBox.Required = false;
-			this.RangeTextBox.Size = new System.Drawing.Size(35, 20);
-			this.RangeTextBox.TabIndex = 7;
-			this.RangeTextBox.Text = "9999";
-			this.RangeTextBox.ToolTip = "";
-			this.RangeTextBox.Value = 9999;
-			// 
 			// TargetImageBox
 			// 
 			this.TargetImageBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -564,11 +554,21 @@
 			this.ShowShotNumCheckBox.Text = "Show Shot #\'s";
 			this.ShowShotNumCheckBox.UseVisualStyleBackColor = true;
 			// 
-			// FileSaveTargetImageMenuItem
+			// RangeTextBox
 			// 
-			this.FileSaveTargetImageMenuItem.Name = "FileSaveTargetImageMenuItem";
-			this.FileSaveTargetImageMenuItem.Size = new System.Drawing.Size(186, 22);
-			this.FileSaveTargetImageMenuItem.Text = "Save Target &Image";
+			this.RangeTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.RangeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.RangeTextBox.Location = new System.Drawing.Point(75, 28);
+			this.RangeTextBox.MaxLength = 4;
+			this.RangeTextBox.MaxValue = 0;
+			this.RangeTextBox.MinValue = 5;
+			this.RangeTextBox.Name = "RangeTextBox";
+			this.RangeTextBox.Required = false;
+			this.RangeTextBox.Size = new System.Drawing.Size(35, 20);
+			this.RangeTextBox.TabIndex = 7;
+			this.RangeTextBox.Text = "9999";
+			this.RangeTextBox.ToolTip = "";
+			this.RangeTextBox.Value = 9999;
 			// 
 			// cTargetCalculatorForm
 			// 
@@ -576,7 +576,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.FormCancelButton;
-			this.ClientSize = new System.Drawing.Size(1067, 758);
+			this.ClientSize = new System.Drawing.Size(1063, 758);
 			this.ControlBox = false;
 			this.Controls.Add(this.ShowShotNumCheckBox);
 			this.Controls.Add(this.ShowGroupBoxCheckBox);

@@ -170,9 +170,11 @@ namespace ReloadersWorkShop
 			if (m_Target.PixelsPerInch < 7)
 				return (null);
 
-			Bitmap ReticleBitmap = new Bitmap(m_Target.PixelsPerInch, m_Target.PixelsPerInch);
+			Bitmap ReticleBitmap= new Bitmap(m_Target.PixelsPerInch, m_Target.PixelsPerInch, PixelFormat.Format32bppArgb);
 
 			Graphics g = Graphics.FromImage(ReticleBitmap);
+
+			g.FillRectangle(Brushes.AliceBlue, 0, 0, m_Target.PixelsPerInch, m_Target.PixelsPerInch);
 
 			GraphicsUnit eGraphicsUnit = GraphicsUnit.Pixel;
 			RectangleF ShotRect = ReticleBitmap.GetBounds(ref eGraphicsUnit);
@@ -216,6 +218,8 @@ namespace ReloadersWorkShop
 			x1 = ReticleBitmap.Width;
 
 			g.DrawLine(ReticlePen, x, y, x1, y1);
+
+			ReticleBitmap.MakeTransparent(Color.AliceBlue);
 
 			return (ReticleBitmap);
 			}
@@ -357,7 +361,7 @@ namespace ReloadersWorkShop
 			if (!fPointer && ShowShotNumCheckBox.Checked)
 				{
 				SolidBrush ShotBrush = new SolidBrush(m_Target.ShotColor);
-				Pen ShotPen = new Pen(m_Target.ShotForecolor);
+				Pen ShotPen = new Pen(m_Target.ShotForecolor, 2.0f);
 
 				g.FillEllipse(ShotBrush, ShotRect);
 				g.DrawEllipse(ShotPen, ShotRect);
@@ -365,8 +369,9 @@ namespace ReloadersWorkShop
 			else
 				{
 				Pen ShotPen = new Pen(m_Target.ShotColor, 1.0f);
+				Pen ShotPen2 = new Pen(m_Target.ShotColor, 2.0f);
 
-				g.DrawEllipse(ShotPen, ShotRect);
+				g.DrawEllipse(ShotPen2, ShotRect);
 
 				int x = ShotBitmap.Width / 2;
 				int y = ShotBitmap.Height / 4;
@@ -746,7 +751,12 @@ namespace ReloadersWorkShop
 			OpenTargetDialog.CheckFileExists = true;
 			OpenTargetDialog.CheckPathExists = true;
 			OpenTargetDialog.Filter = "Image Files (*.bmp;*.jpg)|*.bmp;*.jpg";
-			OpenTargetDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+
+			if (!String.IsNullOrEmpty(m_DataFiles.Preferences.TargetFolder))
+				OpenTargetDialog.InitialDirectory = m_DataFiles.Preferences.TargetFolder;
+			else
+				OpenTargetDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+
 			OpenTargetDialog.Multiselect = false;
 			OpenTargetDialog.Title = "Open Target Image";
 
@@ -768,6 +778,8 @@ namespace ReloadersWorkShop
 
 						return;
 						}
+
+					m_DataFiles.Preferences.TargetFolder = Path.GetDirectoryName(OpenTargetDialog.FileName);
 
 					SetTargetImageSize();
 

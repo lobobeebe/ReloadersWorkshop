@@ -437,6 +437,8 @@ namespace ReloadersWorkShop.Preferences
 		private Point m_TargetPrintLocation = new Point(100, 100);
 		private Size m_TargetPrintSize = new Size(425, 550);
 
+		private string m_strTargetFolder = "";
+
 		// Transaction Form Settings
 
 		private cTransaction m_LastTransaction = null;
@@ -3514,6 +3516,22 @@ namespace ReloadersWorkShop.Preferences
 			set
 				{
 				m_TargetExtremesColor = value;
+				}
+			}
+
+		//============================================================================*
+		// TargetFolder Property
+		//============================================================================*
+
+		public string TargetFolder
+			{
+			get
+				{
+				return (m_strTargetFolder);
+				}
+			set
+				{
+				m_strTargetFolder = value;
 				}
 			}
 
