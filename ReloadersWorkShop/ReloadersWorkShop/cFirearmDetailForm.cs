@@ -10,6 +10,7 @@
 //============================================================================*
 
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -57,6 +58,12 @@ namespace ReloadersWorkShop
 		private ToolTip m_FirearmOKButtonToolTip = new ToolTip();
 		private ToolTip m_FirearmCancelButtonToolTip = new ToolTip();
 
+		private string m_strImagePath = "";
+
+		private string m_strCurrentImagePath = "";
+
+		private List<string> m_ImageList = new List<string>();
+
 		//============================================================================*
 		// cFirearmDetailForm() - Constructor
 		//============================================================================*
@@ -81,7 +88,10 @@ namespace ReloadersWorkShop
 
 			if (!m_fViewOnly)
 				{
-				BrowseImageButton.Click += OnBrowseImageClicked;
+				AddImageButton.Click += OnAddImageClicked;
+				PreviousImageButton.Click += OnPreviousImageClicked;
+				NextImageButton.Click += OnNextImageClicked;
+				MakePrimaryButton.Click += OnMakePrimaryClicked;
 
 				SourceComboBox.TextChanged += OnSourceChanged;
 				PurchaseDateTimePicker.TextChanged += OnPurchaseDateChanged;
@@ -116,8 +126,6 @@ namespace ReloadersWorkShop
 				NotesTextBox.TextChanged += OnNotesChanged;
 				}
 
-			ImageFileTextBox.ReadOnly = true;
-
 			//----------------------------------------------------------------------------*
 			// Set Measurement Labels
 			//----------------------------------------------------------------------------*
@@ -125,8 +133,43 @@ namespace ReloadersWorkShop
 			PriceLabel.Text = String.Format("Price ({0}):", m_DataFiles.Preferences.Currency);
 
 			//----------------------------------------------------------------------------*
-			// Set Decimal Places
+			// Verify Firearm Image Info
 			//----------------------------------------------------------------------------*
+
+			m_strImagePath = Path.Combine(m_DataFiles.GetDataPath(), "Firearm Images");
+
+			if (!Directory.Exists(m_strImagePath))
+				Directory.CreateDirectory(m_strImagePath);
+
+			string strFileName = m_Firearm.ImageFileName;
+
+			string[] astrImageFiles = Directory.GetFiles(m_strImagePath, strFileName + "*.*");
+
+			foreach (string strImage in astrImageFiles)
+				m_ImageList.Add(strImage);
+
+			if (m_ImageList.Count == 0)
+				{
+				if (!String.IsNullOrEmpty(m_Firearm.ImageFile))
+					{
+					try
+						{
+						string strNewFileName = Path.Combine(m_strImagePath, strFileName);
+
+						strNewFileName = Path.ChangeExtension(strNewFileName, Path.GetExtension(m_Firearm.ImageFile));
+
+						File.Copy(m_Firearm.ImageFile, Path.Combine(m_strImagePath, strNewFileName));
+
+						m_ImageList.Add(strNewFileName);
+
+						m_Firearm.ImageFile = strNewFileName;
+						}
+					catch
+						{
+						m_Firearm.ImageFile = "";
+						}
+					}
+				}
 
 			//----------------------------------------------------------------------------*
 			// Fill in the firearm data
@@ -136,28 +179,24 @@ namespace ReloadersWorkShop
 
 			SetFinishLabels();
 
+			SetStaticToolTips();
+
 			//----------------------------------------------------------------------------*
-			// Set title and text fields
+			// Set title
 			//----------------------------------------------------------------------------*
 
 			string strTitle;
 
 			if (!m_fViewOnly)
-				strTitle = "Edit ";
+				strTitle = "Edit Firearm Details";
 			else
-				strTitle = "View ";
-
-			//----------------------------------------------------------------------------*
-			// Set Title
-			//----------------------------------------------------------------------------*
-
-			strTitle += m_Firearm.ToString();
-
-			strTitle += " Details";
+				strTitle = "View Firearm Details";
 
 			Text = strTitle;
 
-			SetStaticToolTips();
+			//----------------------------------------------------------------------------*
+			// Finish up and exit
+			//----------------------------------------------------------------------------*
 
 			UpdateButtons();
 
@@ -170,7 +209,10 @@ namespace ReloadersWorkShop
 
 		public cFirearm Firearm
 			{
-			get { return (m_Firearm); }
+			get
+				{
+				return (m_Firearm);
+				}
 			}
 
 		//============================================================================*
@@ -197,26 +239,10 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// OnBarrelFinishChanged()
+		// OnAddImageClicked()
 		//============================================================================*
 
-		protected void OnBarrelFinishChanged(object sender, EventArgs e)
-			{
-			if (!m_fInitialized)
-				return;
-
-			m_Firearm.BarrelFinish = BarrelFinishComboBox.Text;
-
-			m_fChanged = true;
-
-			UpdateButtons();
-			}
-
-		//============================================================================*
-		// OnBrowseImageClicked()
-		//============================================================================*
-
-		private void OnBrowseImageClicked(object sender, EventArgs e)
+		private void OnAddImageClicked(object sender, EventArgs e)
 			{
 			//----------------------------------------------------------------------------*
 			// Show the file dialog
@@ -228,14 +254,14 @@ namespace ReloadersWorkShop
 			FileDlg.AddExtension = true;
 			FileDlg.CheckFileExists = true;
 
-			if (m_Firearm.ImageFile != null && m_Firearm.ImageFile.Length > 0)
+			if (!String.IsNullOrEmpty(m_Firearm.ImageFile))
 				FileDlg.InitialDirectory = Path.GetDirectoryName(m_Firearm.ImageFile);
 			else
 				FileDlg.InitialDirectory = Environment.SpecialFolder.MyPictures.ToString();
 
 			FileDlg.Filter = "Image Files (*.jpg, *.bmp, *.gif, *.png, *.tiff)|*.jpg;*.bmp;*.gif;*.png;*.tiff";
 
-			FileDlg.FileName = Path.GetFileName(m_Firearm.ImageFile);
+			FileDlg.FileName = "";
 
 			DialogResult rc = FileDlg.ShowDialog();
 
@@ -244,13 +270,60 @@ namespace ReloadersWorkShop
 
 			m_Firearm.ImageFile = FileDlg.FileName;
 
-			Bitmap FirearmImage = new Bitmap(m_Firearm.ImageFile);
+			try
+				{
+				string strImagePath = Path.Combine(m_DataFiles.GetDataPath(), "Firearm Images");
 
-			FirearmPictureBox.Image = FirearmImage;
+				string strImageFilePath = Path.Combine(strImagePath, m_Firearm.ImageFileName);
 
-			ImageFileTextBox.Text = m_Firearm.ImageFile;
+				string strCheckFile = strImageFilePath;
 
-			SetImageDimensions();
+				int nImageNum = 1;
+
+				while (File.Exists(Path.ChangeExtension(strCheckFile, Path.GetExtension(FileDlg.FileName))))
+					{
+					strCheckFile = strImageFilePath + String.Format(" ({0:D0})", nImageNum);
+
+					nImageNum++;
+					}
+
+				strImageFilePath = strCheckFile;
+
+				strImageFilePath = Path.ChangeExtension(strImageFilePath, Path.GetExtension(FileDlg.FileName));
+
+				m_ImageList.Add(strImageFilePath);
+
+				File.Copy(FileDlg.FileName, strImageFilePath);
+
+				Bitmap FirearmImage = new Bitmap(strImageFilePath);
+
+				FirearmPictureBox.Image = FirearmImage;
+
+				if (Path.GetDirectoryName(strImageFilePath) != Path.GetDirectoryName(m_Firearm.ImageFile))
+					m_Firearm.ImageFile = strImageFilePath;
+
+				SetImageDimensions();
+
+				m_fChanged = true;
+				}
+			catch
+				{
+				MessageBox.Show("Unable to add the selected image file to this firearm.  Try another", "Image File Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
+		// OnBarrelFinishChanged()
+		//============================================================================*
+
+		protected void OnBarrelFinishChanged(object sender, EventArgs e)
+			{
+			if (!m_fInitialized)
+				return;
+
+			m_Firearm.BarrelFinish = BarrelFinishComboBox.Text;
 
 			m_fChanged = true;
 
@@ -317,6 +390,58 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// OnMakePrimaryClicked()
+		//============================================================================*
+
+		private void OnMakePrimaryClicked(object sender, EventArgs e)
+			{
+			m_Firearm.ImageFile = m_strCurrentImagePath;
+
+			m_fChanged = true;
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
+		// OnNextImageClicked()
+		//============================================================================*
+
+		private void OnNextImageClicked(object sender, EventArgs e)
+			{
+			int nImageNum = -1;
+
+			for (int i = 0; i < m_ImageList.Count; i++)
+				{
+				if (m_ImageList[i] == m_strCurrentImagePath)
+					{
+					nImageNum = i;
+
+					break;
+					}
+				}
+
+			if (nImageNum >= 0 && nImageNum < m_ImageList.Count - 1)
+				{
+				nImageNum++;
+
+				try
+					{
+					Bitmap ImageBitmap = new Bitmap(m_ImageList[nImageNum]);
+
+					FirearmPictureBox.Image = ImageBitmap;
+
+					m_strCurrentImagePath = m_ImageList[nImageNum];
+					}
+				catch
+					{
+					// No need to do anything here
+					}
+				}
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
 		// OnNotesChanged()
 		//============================================================================*
 
@@ -328,6 +453,45 @@ namespace ReloadersWorkShop
 			m_Firearm.Notes = NotesTextBox.Text;
 
 			m_fChanged = true;
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
+		// OnPreviousImageClicked()
+		//============================================================================*
+
+		private void OnPreviousImageClicked(object sender, EventArgs e)
+			{
+			int nImageNum = -1;
+
+			for (int i = 0; i < m_ImageList.Count; i++)
+				{
+				if (m_ImageList[i] == m_strCurrentImagePath)
+					{
+					nImageNum = i;
+
+					break;
+					}
+				}
+
+			if (nImageNum > 0)
+				{
+				nImageNum--;
+
+				try
+					{
+					Bitmap ImageBitmap = new Bitmap(m_ImageList[nImageNum]);
+
+					FirearmPictureBox.Image = ImageBitmap;
+
+					m_strCurrentImagePath = m_ImageList[nImageNum];
+					}
+				catch
+					{
+					// No need to do anything here
+					}
+				}
 
 			UpdateButtons();
 			}
@@ -389,10 +553,10 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_Firearm.ScopeManufacturer = ScopeManufacturerComboBox.SelectedIndex > 0 ? (cManufacturer)ScopeManufacturerComboBox.SelectedItem : null;
+			m_Firearm.ScopeManufacturer = ScopeManufacturerComboBox.SelectedIndex > 0 ? (cManufacturer) ScopeManufacturerComboBox.SelectedItem : null;
 
-//			if (m_Firearm.ScopeManufacturer == null)
-//				m_Firearm.Scoped = false;
+			//			if (m_Firearm.ScopeManufacturer == null)
+			//				m_Firearm.Scoped = false;
 
 			m_fChanged = true;
 
@@ -488,7 +652,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_Firearm.StockManufacturer = (cManufacturer)StockManufacturerComboBox.SelectedItem;
+			m_Firearm.StockManufacturer = (cManufacturer) StockManufacturerComboBox.SelectedItem;
 
 			m_fChanged = true;
 
@@ -520,7 +684,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_Firearm.TriggerManufacturer = (cManufacturer)TriggerManufacturerComboBox.SelectedItem;
+			m_Firearm.TriggerManufacturer = (cManufacturer) TriggerManufacturerComboBox.SelectedItem;
 
 			m_fChanged = true;
 
@@ -787,18 +951,37 @@ namespace ReloadersWorkShop
 
 			try
 				{
-				if (m_Firearm != null && m_Firearm.ImageFile != null && m_Firearm.ImageFile.Length > 0)
-					FirearmImage = new Bitmap(m_Firearm.ImageFile);
+				if (m_ImageList.Count > 0 || !String.IsNullOrEmpty(m_Firearm.ImageFile))
+					{
+					if (!String.IsNullOrEmpty(m_Firearm.ImageFile))
+						{
+						FirearmImage = new Bitmap(m_Firearm.ImageFile);
+
+						m_strCurrentImagePath = m_Firearm.ImageFile;
+						}
+					else
+						{
+						FirearmImage = new Bitmap(m_ImageList[0]);
+
+						m_strCurrentImagePath = m_ImageList[0];
+						}
+					}
 				else
-					FirearmImage = Properties.Resources.No_Photo_Available; // new Bitmap(@"Images\CartridgeDimensions.jpg");
+					{
+					FirearmImage = Properties.Resources.No_Photo_Available;
+
+					m_strCurrentImagePath = "";
+					}
 				}
 			catch
 				{
-				MessageBox.Show("The image file for this firearm has been moved or deleted.  You will need to select a new image.", "Image File Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show("One or more images file for this firearm have been moved or deleted.  You will need to select a new image.", "Image File Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
 				m_Firearm.ImageFile = null;
 
-				FirearmImage = Properties.Resources.No_Photo_Available; // new Bitmap(@"Images\CartridgeDimensions.jpg");
+				FirearmImage = Properties.Resources.No_Photo_Available;
+
+				m_strCurrentImagePath = "";
 
 				m_fChanged = true;
 				}
@@ -806,8 +989,6 @@ namespace ReloadersWorkShop
 			FirearmPictureBox.Image = FirearmImage;
 
 			SetImageDimensions();
-
-			ImageFileTextBox.Text = m_Firearm.ImageFile;
 
 			//----------------------------------------------------------------------------*
 			// Purchase Data
@@ -1122,7 +1303,7 @@ namespace ReloadersWorkShop
 			string strReceiver = "";
 			string strBarrel = "";
 
-			switch(TypeComboBox.Text)
+			switch (TypeComboBox.Text)
 				{
 				case "Rifle":
 				case "Shotgun":
@@ -1164,7 +1345,7 @@ namespace ReloadersWorkShop
 
 			BarrelFinishLabel.Text = strBarrel;
 
-			BarrelFinishLabel.Location = new Point((int)(LabelLocation.X + LabelSize.Width - TextSize.Width), (int)LabelLocation.Y);
+			BarrelFinishLabel.Location = new Point((int) (LabelLocation.X + LabelSize.Width - TextSize.Width), (int) LabelLocation.Y);
 			}
 
 		//============================================================================*
@@ -1215,7 +1396,7 @@ namespace ReloadersWorkShop
 					}
 				}
 
-			FirearmPictureBox.Size = new Size((int)dWidth, (int)dHeight);
+			FirearmPictureBox.Size = new Size((int) dWidth, (int) dHeight);
 
 			FirearmPictureBox.Location = new Point((FirearmImageGroupBox.Width / 2) - (FirearmPictureBox.Width / 2), FirearmPictureBox.Location.Y + 135 - (FirearmPictureBox.Height / 2));
 			}
@@ -1271,7 +1452,7 @@ namespace ReloadersWorkShop
 
 			if (ScopeManufacturerComboBox.SelectedIndex == 0)
 				{
-//				m_Firearm.Scoped = false;
+				//				m_Firearm.Scoped = false;
 				m_Firearm.ScopeManufacturer = null;
 
 				ScopeModelTextBox.Text = "";
@@ -1289,7 +1470,7 @@ namespace ReloadersWorkShop
 			else
 				{
 				m_Firearm.Scoped = true;
-				m_Firearm.ScopeManufacturer = (cManufacturer)ScopeManufacturerComboBox.SelectedItem;
+				m_Firearm.ScopeManufacturer = (cManufacturer) ScopeManufacturerComboBox.SelectedItem;
 
 				ScopeModelTextBox.Enabled = true;
 				ScopeModelTextBox.Required = true;
@@ -1303,6 +1484,42 @@ namespace ReloadersWorkShop
 
 			if (!ScopeModelTextBox.ValueOK || !ScopePowerTextBox.ValueOK || !ScopeObjectiveTextBox.ValueOK)
 				fEnableOK = false;
+
+			//----------------------------------------------------------------------------*
+			// Check Image Buttons
+			//----------------------------------------------------------------------------*
+
+			if (!String.IsNullOrEmpty(m_strCurrentImagePath))
+				{
+				if (m_strCurrentImagePath != m_Firearm.ImageFile)
+					MakePrimaryButton.Enabled = true;
+				else
+					MakePrimaryButton.Enabled = false;
+
+				if (m_ImageList.Count < 2)
+					{
+					PreviousImageButton.Enabled = false;
+					NextImageButton.Enabled = false;
+					}
+				else
+					{
+					for (int i = 0; i < m_ImageList.Count; i++)
+						{
+						if (m_ImageList[i] == m_strCurrentImagePath)
+							{
+							if (i > 0)
+								PreviousImageButton.Enabled = true;
+							else
+								PreviousImageButton.Enabled = false;
+
+							if (i < m_ImageList.Count - 1)
+								NextImageButton.Enabled = true;
+							else
+								NextImageButton.Enabled = false;
+							}
+						}
+					}
+				}
 
 			//----------------------------------------------------------------------------*
 			// Set Buttons

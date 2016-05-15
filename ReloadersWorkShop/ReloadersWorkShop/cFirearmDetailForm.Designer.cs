@@ -51,38 +51,40 @@
 			this.DetailCancelButton = new System.Windows.Forms.Button();
 			this.FirearmPictureBox = new System.Windows.Forms.PictureBox();
 			this.FirearmNameLabel = new System.Windows.Forms.Label();
-			this.ImageFileTextBox = new System.Windows.Forms.TextBox();
-			this.label1 = new System.Windows.Forms.Label();
-			this.BrowseImageButton = new System.Windows.Forms.Button();
+			this.AddImageButton = new System.Windows.Forms.Button();
 			this.AcquisitionDetailsGroupBox = new System.Windows.Forms.GroupBox();
 			this.SourceComboBox = new System.Windows.Forms.ComboBox();
+			this.PriceTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			this.PurchaseDateTimePicker = new System.Windows.Forms.DateTimePicker();
 			this.TypeComboBox = new System.Windows.Forms.ComboBox();
 			this.ActionComboBox = new System.Windows.Forms.ComboBox();
 			this.FirearmImageGroupBox = new System.Windows.Forms.GroupBox();
+			this.NextImageButton = new System.Windows.Forms.Button();
+			this.PreviousImageButton = new System.Windows.Forms.Button();
+			this.RemoveImageButton = new System.Windows.Forms.Button();
 			this.HammerComboBox = new System.Windows.Forms.ComboBox();
 			this.AccessoriesGroupBox = new System.Windows.Forms.GroupBox();
 			this.StockFinishComboBox = new System.Windows.Forms.ComboBox();
+			this.StockModelTextBox = new CommonLib.Controls.cTextBox();
 			this.StockManufacturerComboBox = new System.Windows.Forms.ComboBox();
+			this.ScopeObjectiveTextBox = new CommonLib.Controls.cIntegerValueTextBox();
+			this.ScopePowerTextBox = new CommonLib.Controls.cTextBox();
+			this.ScopeModelTextBox = new CommonLib.Controls.cTextBox();
 			this.ScopeManufacturerComboBox = new System.Windows.Forms.ComboBox();
+			this.TriggerModelTextBox = new CommonLib.Controls.cTextBox();
+			this.TriggerPullTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			this.TriggerManufacturerComboBox = new System.Windows.Forms.ComboBox();
 			this.MagazineComboBox = new System.Windows.Forms.ComboBox();
 			this.NotesGroupBox = new System.Windows.Forms.GroupBox();
 			this.NotesTextBox = new System.Windows.Forms.TextBox();
 			this.OKButton = new System.Windows.Forms.Button();
 			this.FirearmDetailsGroupBox = new System.Windows.Forms.GroupBox();
-			this.ReceiverFinishComboBox = new System.Windows.Forms.ComboBox();
-			this.ReceiverFinishLabel = new System.Windows.Forms.Label();
 			this.BarrelFinishComboBox = new System.Windows.Forms.ComboBox();
 			this.BarrelFinishLabel = new System.Windows.Forms.Label();
+			this.ReceiverFinishComboBox = new System.Windows.Forms.ComboBox();
+			this.ReceiverFinishLabel = new System.Windows.Forms.Label();
 			this.CapacityTextBox = new CommonLib.Controls.cIntegerValueTextBox();
-			this.StockModelTextBox = new CommonLib.Controls.cTextBox();
-			this.ScopeObjectiveTextBox = new CommonLib.Controls.cIntegerValueTextBox();
-			this.ScopePowerTextBox = new CommonLib.Controls.cTextBox();
-			this.ScopeModelTextBox = new CommonLib.Controls.cTextBox();
-			this.TriggerModelTextBox = new CommonLib.Controls.cTextBox();
-			this.TriggerPullTextBox = new CommonLib.Controls.cDoubleValueTextBox();
-			this.PriceTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.MakePrimaryButton = new System.Windows.Forms.Button();
 			label5 = new System.Windows.Forms.Label();
 			label2 = new System.Windows.Forms.Label();
 			label3 = new System.Windows.Forms.Label();
@@ -365,7 +367,7 @@
 			// 
 			this.FirearmPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
 			this.FirearmPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.FirearmPictureBox.Location = new System.Drawing.Point(60, 23);
+			this.FirearmPictureBox.Location = new System.Drawing.Point(65, 23);
 			this.FirearmPictureBox.Name = "FirearmPictureBox";
 			this.FirearmPictureBox.Size = new System.Drawing.Size(480, 270);
 			this.FirearmPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -375,46 +377,26 @@
 			// FirearmNameLabel
 			// 
 			this.FirearmNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.FirearmNameLabel.Location = new System.Drawing.Point(118, 18);
+			this.FirearmNameLabel.Location = new System.Drawing.Point(12, 18);
 			this.FirearmNameLabel.Name = "FirearmNameLabel";
-			this.FirearmNameLabel.Size = new System.Drawing.Size(470, 23);
+			this.FirearmNameLabel.Size = new System.Drawing.Size(926, 23);
 			this.FirearmNameLabel.TabIndex = 8;
 			this.FirearmNameLabel.Text = "Firearm Name";
 			this.FirearmNameLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
-			// ImageFileTextBox
+			// AddImageButton
 			// 
-			this.ImageFileTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.ImageFileTextBox.Location = new System.Drawing.Point(77, 305);
-			this.ImageFileTextBox.Name = "ImageFileTextBox";
-			this.ImageFileTextBox.ReadOnly = true;
-			this.ImageFileTextBox.Size = new System.Drawing.Size(480, 20);
-			this.ImageFileTextBox.TabIndex = 0;
-			this.ImageFileTextBox.TabStop = false;
-			// 
-			// label1
-			// 
-			this.label1.AutoSize = true;
-			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label1.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label1.Location = new System.Drawing.Point(13, 308);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(58, 13);
-			this.label1.TabIndex = 10;
-			this.label1.Text = "Image File:";
-			// 
-			// BrowseImageButton
-			// 
-			this.BrowseImageButton.AutoSize = true;
-			this.BrowseImageButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.BrowseImageButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BrowseImageButton.Location = new System.Drawing.Point(562, 303);
-			this.BrowseImageButton.Margin = new System.Windows.Forms.Padding(2);
-			this.BrowseImageButton.Name = "BrowseImageButton";
-			this.BrowseImageButton.Size = new System.Drawing.Size(26, 23);
-			this.BrowseImageButton.TabIndex = 0;
-			this.BrowseImageButton.Text = "...";
-			this.BrowseImageButton.UseVisualStyleBackColor = true;
+			this.AddImageButton.AutoSize = true;
+			this.AddImageButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.AddImageButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.AddImageButton.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.AddImageButton.Location = new System.Drawing.Point(188, 308);
+			this.AddImageButton.Margin = new System.Windows.Forms.Padding(2);
+			this.AddImageButton.Name = "AddImageButton";
+			this.AddImageButton.Size = new System.Drawing.Size(36, 23);
+			this.AddImageButton.TabIndex = 0;
+			this.AddImageButton.Text = "Add";
+			this.AddImageButton.UseVisualStyleBackColor = true;
 			// 
 			// AcquisitionDetailsGroupBox
 			// 
@@ -444,6 +426,25 @@
 			this.SourceComboBox.Size = new System.Drawing.Size(207, 21);
 			this.SourceComboBox.Sorted = true;
 			this.SourceComboBox.TabIndex = 0;
+			// 
+			// PriceTextBox
+			// 
+			this.PriceTextBox.AllowDrop = true;
+			this.PriceTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.PriceTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.PriceTextBox.Location = new System.Drawing.Point(90, 76);
+			this.PriceTextBox.MaxLength = 8;
+			this.PriceTextBox.MaxValue = 0D;
+			this.PriceTextBox.MinValue = 0D;
+			this.PriceTextBox.Name = "PriceTextBox";
+			this.PriceTextBox.NumDecimals = 2;
+			this.PriceTextBox.Size = new System.Drawing.Size(60, 20);
+			this.PriceTextBox.TabIndex = 2;
+			this.PriceTextBox.Text = "0.00";
+			this.PriceTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.PriceTextBox.ToolTip = "";
+			this.PriceTextBox.Value = 0D;
+			this.PriceTextBox.ZeroAllowed = true;
 			// 
 			// PurchaseDateTimePicker
 			// 
@@ -480,9 +481,11 @@
 			// 
 			// FirearmImageGroupBox
 			// 
-			this.FirearmImageGroupBox.Controls.Add(this.BrowseImageButton);
-			this.FirearmImageGroupBox.Controls.Add(this.label1);
-			this.FirearmImageGroupBox.Controls.Add(this.ImageFileTextBox);
+			this.FirearmImageGroupBox.Controls.Add(this.MakePrimaryButton);
+			this.FirearmImageGroupBox.Controls.Add(this.NextImageButton);
+			this.FirearmImageGroupBox.Controls.Add(this.PreviousImageButton);
+			this.FirearmImageGroupBox.Controls.Add(this.RemoveImageButton);
+			this.FirearmImageGroupBox.Controls.Add(this.AddImageButton);
 			this.FirearmImageGroupBox.Controls.Add(this.FirearmPictureBox);
 			this.FirearmImageGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmImageGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
@@ -492,6 +495,48 @@
 			this.FirearmImageGroupBox.TabIndex = 0;
 			this.FirearmImageGroupBox.TabStop = false;
 			this.FirearmImageGroupBox.Text = "Firearm Image";
+			// 
+			// NextImageButton
+			// 
+			this.NextImageButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.NextImageButton.Enabled = false;
+			this.NextImageButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.NextImageButton.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.NextImageButton.Location = new System.Drawing.Point(453, 308);
+			this.NextImageButton.Margin = new System.Windows.Forms.Padding(2);
+			this.NextImageButton.Name = "NextImageButton";
+			this.NextImageButton.Size = new System.Drawing.Size(79, 23);
+			this.NextImageButton.TabIndex = 10;
+			this.NextImageButton.Text = "Next - >";
+			this.NextImageButton.UseVisualStyleBackColor = true;
+			// 
+			// PreviousImageButton
+			// 
+			this.PreviousImageButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.PreviousImageButton.Enabled = false;
+			this.PreviousImageButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.PreviousImageButton.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.PreviousImageButton.Location = new System.Drawing.Point(78, 308);
+			this.PreviousImageButton.Margin = new System.Windows.Forms.Padding(2);
+			this.PreviousImageButton.Name = "PreviousImageButton";
+			this.PreviousImageButton.Size = new System.Drawing.Size(79, 23);
+			this.PreviousImageButton.TabIndex = 9;
+			this.PreviousImageButton.Text = "<- Previous";
+			this.PreviousImageButton.UseVisualStyleBackColor = true;
+			// 
+			// RemoveImageButton
+			// 
+			this.RemoveImageButton.AutoSize = true;
+			this.RemoveImageButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.RemoveImageButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.RemoveImageButton.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.RemoveImageButton.Location = new System.Drawing.Point(255, 308);
+			this.RemoveImageButton.Margin = new System.Windows.Forms.Padding(2);
+			this.RemoveImageButton.Name = "RemoveImageButton";
+			this.RemoveImageButton.Size = new System.Drawing.Size(57, 23);
+			this.RemoveImageButton.TabIndex = 8;
+			this.RemoveImageButton.Text = "Remove";
+			this.RemoveImageButton.UseVisualStyleBackColor = true;
 			// 
 			// HammerComboBox
 			// 
@@ -550,6 +595,19 @@
 			this.StockFinishComboBox.Sorted = true;
 			this.StockFinishComboBox.TabIndex = 6;
 			// 
+			// StockModelTextBox
+			// 
+			this.StockModelTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.StockModelTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.StockModelTextBox.Location = new System.Drawing.Point(339, 49);
+			this.StockModelTextBox.MaxLength = 30;
+			this.StockModelTextBox.Name = "StockModelTextBox";
+			this.StockModelTextBox.Required = false;
+			this.StockModelTextBox.Size = new System.Drawing.Size(117, 20);
+			this.StockModelTextBox.TabIndex = 5;
+			this.StockModelTextBox.ToolTip = "";
+			this.StockModelTextBox.Value = "";
+			// 
 			// StockManufacturerComboBox
 			// 
 			this.StockManufacturerComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
@@ -563,6 +621,48 @@
 			this.StockManufacturerComboBox.Sorted = true;
 			this.StockManufacturerComboBox.TabIndex = 4;
 			// 
+			// ScopeObjectiveTextBox
+			// 
+			this.ScopeObjectiveTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.ScopeObjectiveTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ScopeObjectiveTextBox.Location = new System.Drawing.Point(665, 23);
+			this.ScopeObjectiveTextBox.MaxLength = 2;
+			this.ScopeObjectiveTextBox.MaxValue = 0;
+			this.ScopeObjectiveTextBox.MinValue = 0;
+			this.ScopeObjectiveTextBox.Name = "ScopeObjectiveTextBox";
+			this.ScopeObjectiveTextBox.Required = false;
+			this.ScopeObjectiveTextBox.Size = new System.Drawing.Size(25, 20);
+			this.ScopeObjectiveTextBox.TabIndex = 3;
+			this.ScopeObjectiveTextBox.Text = "0";
+			this.ScopeObjectiveTextBox.ToolTip = "";
+			this.ScopeObjectiveTextBox.Value = 0;
+			// 
+			// ScopePowerTextBox
+			// 
+			this.ScopePowerTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.ScopePowerTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ScopePowerTextBox.Location = new System.Drawing.Point(532, 23);
+			this.ScopePowerTextBox.MaxLength = 30;
+			this.ScopePowerTextBox.Name = "ScopePowerTextBox";
+			this.ScopePowerTextBox.Required = false;
+			this.ScopePowerTextBox.Size = new System.Drawing.Size(59, 20);
+			this.ScopePowerTextBox.TabIndex = 2;
+			this.ScopePowerTextBox.ToolTip = "";
+			this.ScopePowerTextBox.Value = "";
+			// 
+			// ScopeModelTextBox
+			// 
+			this.ScopeModelTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.ScopeModelTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ScopeModelTextBox.Location = new System.Drawing.Point(339, 23);
+			this.ScopeModelTextBox.MaxLength = 30;
+			this.ScopeModelTextBox.Name = "ScopeModelTextBox";
+			this.ScopeModelTextBox.Required = false;
+			this.ScopeModelTextBox.Size = new System.Drawing.Size(117, 20);
+			this.ScopeModelTextBox.TabIndex = 1;
+			this.ScopeModelTextBox.ToolTip = "";
+			this.ScopeModelTextBox.Value = "";
+			// 
 			// ScopeManufacturerComboBox
 			// 
 			this.ScopeManufacturerComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
@@ -574,6 +674,36 @@
 			this.ScopeManufacturerComboBox.Name = "ScopeManufacturerComboBox";
 			this.ScopeManufacturerComboBox.Size = new System.Drawing.Size(121, 21);
 			this.ScopeManufacturerComboBox.TabIndex = 0;
+			// 
+			// TriggerModelTextBox
+			// 
+			this.TriggerModelTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.TriggerModelTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TriggerModelTextBox.Location = new System.Drawing.Point(339, 73);
+			this.TriggerModelTextBox.MaxLength = 30;
+			this.TriggerModelTextBox.Name = "TriggerModelTextBox";
+			this.TriggerModelTextBox.Required = false;
+			this.TriggerModelTextBox.Size = new System.Drawing.Size(117, 20);
+			this.TriggerModelTextBox.TabIndex = 8;
+			this.TriggerModelTextBox.ToolTip = "";
+			this.TriggerModelTextBox.Value = "";
+			// 
+			// TriggerPullTextBox
+			// 
+			this.TriggerPullTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.TriggerPullTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TriggerPullTextBox.Location = new System.Drawing.Point(531, 73);
+			this.TriggerPullTextBox.MaxLength = 5;
+			this.TriggerPullTextBox.MaxValue = 0D;
+			this.TriggerPullTextBox.MinValue = 0D;
+			this.TriggerPullTextBox.Name = "TriggerPullTextBox";
+			this.TriggerPullTextBox.NumDecimals = 2;
+			this.TriggerPullTextBox.Size = new System.Drawing.Size(46, 20);
+			this.TriggerPullTextBox.TabIndex = 9;
+			this.TriggerPullTextBox.Text = "0.00";
+			this.TriggerPullTextBox.ToolTip = "";
+			this.TriggerPullTextBox.Value = 0D;
+			this.TriggerPullTextBox.ZeroAllowed = true;
 			// 
 			// TriggerManufacturerComboBox
 			// 
@@ -658,30 +788,6 @@
 			this.FirearmDetailsGroupBox.TabStop = false;
 			this.FirearmDetailsGroupBox.Text = "Firearm Details";
 			// 
-			// ReceiverFinishComboBox
-			// 
-			this.ReceiverFinishComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-			this.ReceiverFinishComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-			this.ReceiverFinishComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.ReceiverFinishComboBox.FormattingEnabled = true;
-			this.ReceiverFinishComboBox.Location = new System.Drawing.Point(95, 50);
-			this.ReceiverFinishComboBox.Name = "ReceiverFinishComboBox";
-			this.ReceiverFinishComboBox.Size = new System.Drawing.Size(153, 21);
-			this.ReceiverFinishComboBox.Sorted = true;
-			this.ReceiverFinishComboBox.TabIndex = 1;
-			// 
-			// ReceiverFinishLabel
-			// 
-			this.ReceiverFinishLabel.AutoSize = true;
-			this.ReceiverFinishLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.ReceiverFinishLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.ReceiverFinishLabel.Location = new System.Drawing.Point(7, 53);
-			this.ReceiverFinishLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.ReceiverFinishLabel.Name = "ReceiverFinishLabel";
-			this.ReceiverFinishLabel.Size = new System.Drawing.Size(83, 13);
-			this.ReceiverFinishLabel.TabIndex = 58;
-			this.ReceiverFinishLabel.Text = "Receiver Finish:";
-			// 
 			// BarrelFinishComboBox
 			// 
 			this.BarrelFinishComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
@@ -706,6 +812,30 @@
 			this.BarrelFinishLabel.TabIndex = 60;
 			this.BarrelFinishLabel.Text = "Barrel Finish:";
 			// 
+			// ReceiverFinishComboBox
+			// 
+			this.ReceiverFinishComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+			this.ReceiverFinishComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+			this.ReceiverFinishComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ReceiverFinishComboBox.FormattingEnabled = true;
+			this.ReceiverFinishComboBox.Location = new System.Drawing.Point(95, 50);
+			this.ReceiverFinishComboBox.Name = "ReceiverFinishComboBox";
+			this.ReceiverFinishComboBox.Size = new System.Drawing.Size(153, 21);
+			this.ReceiverFinishComboBox.Sorted = true;
+			this.ReceiverFinishComboBox.TabIndex = 1;
+			// 
+			// ReceiverFinishLabel
+			// 
+			this.ReceiverFinishLabel.AutoSize = true;
+			this.ReceiverFinishLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ReceiverFinishLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.ReceiverFinishLabel.Location = new System.Drawing.Point(7, 53);
+			this.ReceiverFinishLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.ReceiverFinishLabel.Name = "ReceiverFinishLabel";
+			this.ReceiverFinishLabel.Size = new System.Drawing.Size(83, 13);
+			this.ReceiverFinishLabel.TabIndex = 58;
+			this.ReceiverFinishLabel.Text = "Receiver Finish:";
+			// 
 			// CapacityTextBox
 			// 
 			this.CapacityTextBox.BackColor = System.Drawing.SystemColors.Window;
@@ -722,107 +852,18 @@
 			this.CapacityTextBox.ToolTip = "";
 			this.CapacityTextBox.Value = 0;
 			// 
-			// StockModelTextBox
+			// MakePrimaryButton
 			// 
-			this.StockModelTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.StockModelTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.StockModelTextBox.Location = new System.Drawing.Point(339, 49);
-			this.StockModelTextBox.MaxLength = 30;
-			this.StockModelTextBox.Name = "StockModelTextBox";
-			this.StockModelTextBox.Required = false;
-			this.StockModelTextBox.Size = new System.Drawing.Size(117, 20);
-			this.StockModelTextBox.TabIndex = 5;
-			this.StockModelTextBox.ToolTip = "";
-			this.StockModelTextBox.Value = "";
-			// 
-			// ScopeObjectiveTextBox
-			// 
-			this.ScopeObjectiveTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.ScopeObjectiveTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.ScopeObjectiveTextBox.Location = new System.Drawing.Point(665, 23);
-			this.ScopeObjectiveTextBox.MaxLength = 2;
-			this.ScopeObjectiveTextBox.MaxValue = 0;
-			this.ScopeObjectiveTextBox.MinValue = 0;
-			this.ScopeObjectiveTextBox.Name = "ScopeObjectiveTextBox";
-			this.ScopeObjectiveTextBox.Required = false;
-			this.ScopeObjectiveTextBox.Size = new System.Drawing.Size(25, 20);
-			this.ScopeObjectiveTextBox.TabIndex = 3;
-			this.ScopeObjectiveTextBox.Text = "0";
-			this.ScopeObjectiveTextBox.ToolTip = "";
-			this.ScopeObjectiveTextBox.Value = 0;
-			// 
-			// ScopePowerTextBox
-			// 
-			this.ScopePowerTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.ScopePowerTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.ScopePowerTextBox.Location = new System.Drawing.Point(532, 23);
-			this.ScopePowerTextBox.MaxLength = 30;
-			this.ScopePowerTextBox.Name = "ScopePowerTextBox";
-			this.ScopePowerTextBox.Required = false;
-			this.ScopePowerTextBox.Size = new System.Drawing.Size(59, 20);
-			this.ScopePowerTextBox.TabIndex = 2;
-			this.ScopePowerTextBox.ToolTip = "";
-			this.ScopePowerTextBox.Value = "";
-			// 
-			// ScopeModelTextBox
-			// 
-			this.ScopeModelTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.ScopeModelTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.ScopeModelTextBox.Location = new System.Drawing.Point(339, 23);
-			this.ScopeModelTextBox.MaxLength = 30;
-			this.ScopeModelTextBox.Name = "ScopeModelTextBox";
-			this.ScopeModelTextBox.Required = false;
-			this.ScopeModelTextBox.Size = new System.Drawing.Size(117, 20);
-			this.ScopeModelTextBox.TabIndex = 1;
-			this.ScopeModelTextBox.ToolTip = "";
-			this.ScopeModelTextBox.Value = "";
-			// 
-			// TriggerModelTextBox
-			// 
-			this.TriggerModelTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.TriggerModelTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.TriggerModelTextBox.Location = new System.Drawing.Point(339, 73);
-			this.TriggerModelTextBox.MaxLength = 30;
-			this.TriggerModelTextBox.Name = "TriggerModelTextBox";
-			this.TriggerModelTextBox.Required = false;
-			this.TriggerModelTextBox.Size = new System.Drawing.Size(117, 20);
-			this.TriggerModelTextBox.TabIndex = 8;
-			this.TriggerModelTextBox.ToolTip = "";
-			this.TriggerModelTextBox.Value = "";
-			// 
-			// TriggerPullTextBox
-			// 
-			this.TriggerPullTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.TriggerPullTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.TriggerPullTextBox.Location = new System.Drawing.Point(531, 73);
-			this.TriggerPullTextBox.MaxLength = 5;
-			this.TriggerPullTextBox.MaxValue = 0D;
-			this.TriggerPullTextBox.MinValue = 0D;
-			this.TriggerPullTextBox.Name = "TriggerPullTextBox";
-			this.TriggerPullTextBox.NumDecimals = 2;
-			this.TriggerPullTextBox.Size = new System.Drawing.Size(46, 20);
-			this.TriggerPullTextBox.TabIndex = 9;
-			this.TriggerPullTextBox.Text = "0.00";
-			this.TriggerPullTextBox.ToolTip = "";
-			this.TriggerPullTextBox.Value = 0D;
-			// 
-			// PriceTextBox
-			// 
-			this.PriceTextBox.AllowDrop = true;
-			this.PriceTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.PriceTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.PriceTextBox.Location = new System.Drawing.Point(90, 76);
-			this.PriceTextBox.MaxLength = 8;
-			this.PriceTextBox.MaxValue = 0D;
-			this.PriceTextBox.MinValue = 0D;
-			this.PriceTextBox.Name = "PriceTextBox";
-			this.PriceTextBox.NumDecimals = 2;
-			this.PriceTextBox.Size = new System.Drawing.Size(60, 20);
-			this.PriceTextBox.TabIndex = 2;
-			this.PriceTextBox.Text = "0.00";
-			this.PriceTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.PriceTextBox.ToolTip = "";
-			this.PriceTextBox.Value = 0D;
+			this.MakePrimaryButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.MakePrimaryButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.MakePrimaryButton.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.MakePrimaryButton.Location = new System.Drawing.Point(343, 308);
+			this.MakePrimaryButton.Margin = new System.Windows.Forms.Padding(2);
+			this.MakePrimaryButton.Name = "MakePrimaryButton";
+			this.MakePrimaryButton.Size = new System.Drawing.Size(79, 23);
+			this.MakePrimaryButton.TabIndex = 11;
+			this.MakePrimaryButton.Text = "Make Primary";
+			this.MakePrimaryButton.UseVisualStyleBackColor = true;
 			// 
 			// cFirearmDetailForm
 			// 
@@ -830,7 +871,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.DetailCancelButton;
-			this.ClientSize = new System.Drawing.Size(954, 671);
+			this.ClientSize = new System.Drawing.Size(942, 659);
 			this.ControlBox = false;
 			this.Controls.Add(this.FirearmDetailsGroupBox);
 			this.Controls.Add(this.OKButton);
@@ -868,9 +909,7 @@
 		private System.Windows.Forms.Button DetailCancelButton;
 		private System.Windows.Forms.PictureBox FirearmPictureBox;
 		private System.Windows.Forms.Label FirearmNameLabel;
-		private System.Windows.Forms.TextBox ImageFileTextBox;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Button BrowseImageButton;
+		private System.Windows.Forms.Button AddImageButton;
 		private System.Windows.Forms.GroupBox AcquisitionDetailsGroupBox;
 		private CommonLib.Controls.cDoubleValueTextBox PriceTextBox;
 		private System.Windows.Forms.DateTimePicker PurchaseDateTimePicker;
@@ -901,5 +940,9 @@
 		private System.Windows.Forms.ComboBox ReceiverFinishComboBox;
 		private System.Windows.Forms.Label BarrelFinishLabel;
 		private System.Windows.Forms.Label ReceiverFinishLabel;
+		private System.Windows.Forms.Button NextImageButton;
+		private System.Windows.Forms.Button PreviousImageButton;
+		private System.Windows.Forms.Button RemoveImageButton;
+		private System.Windows.Forms.Button MakePrimaryButton;
 		}
 	}

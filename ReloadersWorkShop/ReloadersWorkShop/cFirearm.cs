@@ -567,6 +567,23 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// ImageFilename Property
+		//============================================================================*
+
+		public string ImageFileName
+			{
+			get
+				{
+				if (Manufacturer == null || String.IsNullOrEmpty(m_strModel) || String.IsNullOrEmpty(m_strSerialNumber))
+					return ("");
+
+				string strFileName = String.Format("{0} {1} ({2})", Manufacturer.ToString(), m_strModel, m_strSerialNumber);
+
+				return (strFileName);
+				}
+			}
+
+		//============================================================================*
 		// Magazine Property
 		//============================================================================*
 
