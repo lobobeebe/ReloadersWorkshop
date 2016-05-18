@@ -278,6 +278,10 @@ namespace ReloadersWorkShop.Preferences
 		private int m_nFirearmBulletSortColumn = 0;
 		private SortOrder m_FirearmBulletSortOrder = SortOrder.Ascending;
 
+		// Firearm Image Settings
+
+		private string m_strFirearmImagePath = "";
+
 		// Firearm List Settings
 
 		private bool m_fFirearmPrintAll = true;
@@ -1647,6 +1651,22 @@ namespace ReloadersWorkShop.Preferences
 			set
 				{
 				m_FirearmBulletSortOrder = value;
+				}
+			}
+
+		//============================================================================*
+		// FirearmImagePath Property
+		//============================================================================*
+
+		public string FirearmImagePath
+			{
+			get
+				{
+				return (m_strFirearmImagePath);
+				}
+			set
+				{
+				m_strFirearmImagePath = value;
 				}
 			}
 

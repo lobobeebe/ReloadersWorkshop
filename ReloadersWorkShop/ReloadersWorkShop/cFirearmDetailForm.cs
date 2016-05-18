@@ -90,6 +90,7 @@ namespace ReloadersWorkShop
 				{
 				AddImageButton.Click += OnAddImageClicked;
 				PreviousImageButton.Click += OnPreviousImageClicked;
+				RemoveImageButton.Click += OnRemoveImageClicked;
 				NextImageButton.Click += OnNextImageClicked;
 				MakePrimaryButton.Click += OnMakePrimaryClicked;
 
@@ -254,8 +255,8 @@ namespace ReloadersWorkShop
 			FileDlg.AddExtension = true;
 			FileDlg.CheckFileExists = true;
 
-			if (!String.IsNullOrEmpty(m_Firearm.ImageFile))
-				FileDlg.InitialDirectory = Path.GetDirectoryName(m_Firearm.ImageFile);
+			if (!String.IsNullOrEmpty(m_DataFiles.Preferences.FirearmImagePath))
+				FileDlg.InitialDirectory = m_DataFiles.Preferences.FirearmImagePath;
 			else
 				FileDlg.InitialDirectory = Environment.SpecialFolder.MyPictures.ToString();
 
@@ -268,7 +269,7 @@ namespace ReloadersWorkShop
 			if (rc == DialogResult.Cancel)
 				return;
 
-			m_Firearm.ImageFile = FileDlg.FileName;
+			m_DataFiles.Preferences.FirearmImagePath = Path.GetDirectoryName(FileDlg.FileName);
 
 			try
 				{
@@ -540,6 +541,59 @@ namespace ReloadersWorkShop
 			m_Firearm.ReceiverFinish = ReceiverFinishComboBox.Text;
 
 			m_fChanged = true;
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
+		// OnRemoveImageClicked()
+		//============================================================================*
+
+		private void OnRemoveImageClicked(object sender, EventArgs e)
+			{
+			DialogResult rc = MessageBox.Show("Warning: Image file will be deleted from the Reloader's WorkShop data folder\n\nAre you sure you wish to remove this photo?", "Image Deletion Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+
+			if (rc == DialogResult.No)
+				return;
+
+			try
+				{
+				string strFilePath = m_strCurrentImagePath;
+
+				Image FirearmImage = FirearmPictureBox.Image;
+
+				FirearmPictureBox.Image = null;
+
+				FirearmImage.Dispose();
+
+				File.Delete(strFilePath);
+
+				m_ImageList.Remove(m_strCurrentImagePath);
+
+				bool fPrimary = m_Firearm.ImageFile == m_strCurrentImagePath;
+
+				if (m_ImageList.Count > 0)
+					{
+					m_strCurrentImagePath = m_ImageList[0];
+
+					if (fPrimary)
+						m_Firearm.ImageFile = m_strCurrentImagePath;
+					}
+				else
+					{
+					m_strCurrentImagePath = "";
+
+					m_Firearm.ImageFile = m_strCurrentImagePath;
+					}
+
+				m_fChanged = true;
+
+				PopulateFirearmData();
+				}
+			catch
+				{
+				// No need to do anything here
+				}
 
 			UpdateButtons();
 			}
