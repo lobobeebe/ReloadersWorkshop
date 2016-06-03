@@ -215,7 +215,8 @@ namespace ReloadersWorkShop
 			HelpVideoRWBatchEditorMenuItem.Click += OnHelpVideoRWBatchEditorClicked;
 			HelpVideoRWInventoryMenuItem.Click += OnHelpVideoRWInventoryClicked;
 			HelpVideoRWLoadDataMenuItem.Click += OnHelpVideoRWLoadDataClicked;
-			HelpVideoRWOperationMenuItem.Click += OnHelpVideoRWOperationClicked;
+            HelpVideoRWTargetCalculatorMenuItem.Click += OnHelpVideoRWTargetCalculatorClicked;
+            HelpVideoRWOperationMenuItem.Click += OnHelpVideoRWOperationClicked;
 			HelpVideoSDBCMenuItem.Click += OnHelpVideoSDBCClicked;
 
 			//----------------------------------------------------------------------------*
@@ -1095,11 +1096,6 @@ namespace ReloadersWorkShop
 				{
 				MessageBox.Show("Unable to navigate to YouTube at this time, try again later.  Please make sure you are connected to the Internet.", "YouTube Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
-			/*
-						cVideoForm VideoForm = new cVideoForm("Bullet Selection", "https://www.youtube.com/v/bBy36tpgfTI?autoplay=1&rel=0&showinfo=0");
-
-						VideoForm.Show();
-			*/
 			}
 
 		//============================================================================*
@@ -1116,11 +1112,6 @@ namespace ReloadersWorkShop
 				{
 				MessageBox.Show("Unable to navigate to YouTube at this time, try again later.  Please make sure you are connected to the Internet.", "YouTube Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
-			/*
-						cVideoForm VideoForm = new cVideoForm("Crimping Handgun and Rifle Cartridges", "https://www.youtube.com/v/MXWEfLE-tJg?autoplay=1&rel=0&showinfo=0");
-
-						VideoForm.Show();
-			*/
 			}
 
 		//============================================================================*
@@ -1137,11 +1128,6 @@ namespace ReloadersWorkShop
 				{
 				MessageBox.Show("Unable to navigate to YouTube at this time, try again later.  Please make sure you are connected to the Internet.", "YouTube Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
-			/*
-						cVideoForm VideoForm = new cVideoForm("Understanding Headspace", "https://www.youtube.com/v/OS5bfJ_2HNQ?autoplay=1&rel=0&showinfo=0");
-
-						VideoForm.Show();
-			*/
 			}
 
 		//============================================================================*
@@ -1158,11 +1144,6 @@ namespace ReloadersWorkShop
 				{
 				MessageBox.Show("Unable to navigate to YouTube at this time, try again later.  Please make sure you are connected to the Internet.", "YouTube Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
-			/*
-						cVideoForm VideoForm = new cVideoForm("Batch Editor Tutorial", "https://www.youtube.com/v/6syoP-_TvZI?autoplay=1&rel=0&showinfo=0");
-
-						VideoForm.Show();
-*/
 			}
 
 		//============================================================================*
@@ -1179,11 +1160,6 @@ namespace ReloadersWorkShop
 				{
 				MessageBox.Show("Unable to navigate to YouTube at this time, try again later.  Please make sure you are connected to the Internet.", "YouTube Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
-			/*
-			cVideoForm VideoForm = new cVideoForm("Batch Editor Tutorial", "https://www.youtube.com/v/FO5z6Qvo-Lg?autoplay=1&rel=0&showinfo=0");
-
-			VideoForm.Show();
-*/
 			}
 
 		//============================================================================*
@@ -1200,11 +1176,6 @@ namespace ReloadersWorkShop
 				{
 				MessageBox.Show("Unable to navigate to YouTube at this time, try again later.  Please make sure you are connected to the Internet.", "YouTube Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
-			/*
-			cVideoForm VideoForm = new cVideoForm("Inventory Control Tutorial", "https://www.youtube.com/v/xrkLTBP9jZs?autoplay=1&rel=0&showinfo=0");
-
-			VideoForm.Show();
-*/
 			}
 
 		//============================================================================*
@@ -1221,11 +1192,6 @@ namespace ReloadersWorkShop
 				{
 				MessageBox.Show("Unable to navigate to YouTube at this time, try again later.  Please make sure you are connected to the Internet.", "YouTube Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
-			/*
-			cVideoForm VideoForm = new cVideoForm("Load Data Tutorial", "https://www.youtube.com/v/w2v_E3GaTbE?autoplay=1&rel=0&showinfo=0");
-
-			VideoForm.Show();
-*/
 			}
 
 		//============================================================================*
@@ -1242,18 +1208,29 @@ namespace ReloadersWorkShop
 				{
 				MessageBox.Show("Unable to navigate to YouTube at this time, try again later.  Please make sure you are connected to the Internet.", "YouTube Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
-			/*
-			cVideoForm VideoForm = new cVideoForm("General Operation Tutorial", "https://www.youtube.com/v/MOWC-ljqo6s?autoplay=1&rel=0&showinfo=0");
-
-			VideoForm.Show();
-*/
 			}
 
-		//============================================================================*
-		// OnHelpVideoSDBCClicked()
-		//============================================================================*
+        //============================================================================*
+        // OnHelpVideoRWTargetCalculatorClicked()
+        //============================================================================*
 
-		protected void OnHelpVideoSDBCClicked(object sender, EventArgs args)
+        protected void OnHelpVideoRWTargetCalculatorClicked(object sender, EventArgs args)
+            {
+            try
+                {
+                System.Diagnostics.Process.Start("https://www.youtube.com/v/WgaOR49oU-c?autoplay=1&rel=0");
+                }
+            catch
+                {
+                MessageBox.Show("Unable to navigate to YouTube at this time, try again later.  Please make sure you are connected to the Internet.", "YouTube Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+
+        //============================================================================*
+        // OnHelpVideoSDBCClicked()
+        //============================================================================*
+
+        protected void OnHelpVideoSDBCClicked(object sender, EventArgs args)
 			{
 			try
 				{
@@ -1263,11 +1240,6 @@ namespace ReloadersWorkShop
 				{
 				MessageBox.Show("Unable to navigate to YouTube at this time, try again later.  Please make sure you are connected to the Internet.", "YouTube Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
-			/*
-			cVideoForm VideoForm = new cVideoForm("Sectional Density & Ballistic Coefficient", "https://www.youtube.com/v/r5JdL_7saWg?autoplay=1&rel=0&showinfo=0");
-
-			VideoForm.Show();
-*/
 			}
 
 		//============================================================================*

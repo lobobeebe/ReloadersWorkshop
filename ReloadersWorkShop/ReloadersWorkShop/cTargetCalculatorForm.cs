@@ -24,902 +24,904 @@ using CommonLib.Conversions;
 
 namespace ReloadersWorkShop
 	{
-	//============================================================================*
-	// cTargetCalculatorForm Class
-	//============================================================================*
+    //============================================================================*
+    // cTargetCalculatorForm Class
+    //============================================================================*
 
-	public partial class cTargetCalculatorForm : Form
-		{
-		//============================================================================*
-		// Private Enumerations
-		//============================================================================*
+    public partial class cTargetCalculatorForm : Form
+        {
+        //============================================================================*
+        // Private Enumerations
+        //============================================================================*
 
-		private enum eMode
-			{
-			LoadTarget = 0,
-			Calibrate,
-			AimPoint,
-			MarkShots
-			};
+        private enum eMode
+            {
+            LoadTarget = 0,
+            Calibrate,
+            AimPoint,
+            MarkShots
+            };
 
-		//============================================================================*
-		// Private Data Members
-		//============================================================================*
+        //============================================================================*
+        // Private Data Members
+        //============================================================================*
 
-		private bool m_fInitialized = false;
-		private bool m_fChanged = false;
-		private bool m_fBatchTest = false;
+        private bool m_fInitialized = false;
+        private bool m_fChanged = false;
+        private bool m_fBatchTest = false;
 
-		private eMode m_eMode = eMode.LoadTarget;
+        private eMode m_eMode = eMode.LoadTarget;
 
-		private cDataFiles m_DataFiles = null;
-		private cBatchTest m_BatchTest = null;
+        private cDataFiles m_DataFiles = null;
+        private cBatchTest m_BatchTest = null;
 
-		private string m_strFileName = "";
+        private string m_strFileName = "";
 
-		private cTarget m_Target = null;
+        private cTarget m_Target = null;
 
-		private bool m_fMouseDown = false;
+        private bool m_fMouseDown = false;
 
-		private Bitmap m_TargetImage = null;
-		private Bitmap m_ScaleBar = null;
-		private Bitmap m_AimPoint = null;
-		private Bitmap m_AimPointOffset = null;
+        private Bitmap m_TargetImage = null;
+        private Bitmap m_ScaleBar = null;
+        private Bitmap m_AimPoint = null;
+        private Bitmap m_AimPointOffset = null;
 
-		private string m_strFolder = null;
+        private string m_strFolder = null;
 
-		//============================================================================*
-		// cTargetCalculatorForm()
-		//============================================================================*
+        private Bitmap m_MousePointer = null;
 
-		public cTargetCalculatorForm(cDataFiles DataFiles)
-			{
-			InitializeComponent();
+        //============================================================================*
+        // cTargetCalculatorForm()
+        //============================================================================*
 
-			m_DataFiles = DataFiles;
+        public cTargetCalculatorForm(cDataFiles DataFiles)
+            {
+            InitializeComponent();
 
-			m_fBatchTest = false;
+            m_DataFiles = DataFiles;
 
-			Initialize();
-			}
+            m_fBatchTest = false;
 
-		//============================================================================*
-		// cTargetCalculatorForm()
-		//============================================================================*
+            Initialize();
+            }
 
-		public cTargetCalculatorForm(cDataFiles DataFiles, cBatchTest BatchTest = null)
-			{
-			InitializeComponent();
+        //============================================================================*
+        // cTargetCalculatorForm()
+        //============================================================================*
 
-			m_DataFiles = DataFiles;
+        public cTargetCalculatorForm(cDataFiles DataFiles, cBatchTest BatchTest = null)
+            {
+            InitializeComponent();
 
-			m_BatchTest = BatchTest;
+            m_DataFiles = DataFiles;
 
-			Initialize();
-			}
+            m_BatchTest = BatchTest;
 
-		//============================================================================*
-		// CreateAimPointBitmap()
-		//============================================================================*
+            Initialize();
+            }
 
-		private Bitmap CreateAimPointBitmap()
-			{
-			return (CreateAimPointBitmap(m_Target.AimPointColor));
-			}
+        //============================================================================*
+        // CreateAimPointBitmap()
+        //============================================================================*
 
-		//============================================================================*
-		// CreateAimPointOffsetBitmap()
-		//============================================================================*
+        private Bitmap CreateAimPointBitmap()
+            {
+            return (CreateAimPointBitmap(m_Target.AimPointColor));
+            }
 
-		private Bitmap CreateAimPointOffsetBitmap()
-			{
-			return (CreateAimPointBitmap(m_Target.OffsetColor));
-			}
+        //============================================================================*
+        // CreateAimPointOffsetBitmap()
+        //============================================================================*
 
-		//============================================================================*
-		// CreateAimPointBitmap()
-		//============================================================================*
+        private Bitmap CreateAimPointOffsetBitmap()
+            {
+            return (CreateAimPointBitmap(m_Target.OffsetColor));
+            }
 
-		private Bitmap CreateAimPointBitmap(Color AimPointColor)
-			{
-			if (m_Target.AimPoint == Point.Empty)
-				return (null);
+        //============================================================================*
+        // CreateAimPointBitmap()
+        //============================================================================*
 
-			Bitmap AimPoint = new Bitmap((int) (m_Target.PixelsPerInch * 0.75), (int) (m_Target.PixelsPerInch * 0.75));
+        private Bitmap CreateAimPointBitmap(Color AimPointColor)
+            {
+            if (m_Target.AimPoint == Point.Empty)
+                return (null);
 
-			Pen AimPointPen = new Pen(AimPointColor, 3.0f);
+            Bitmap AimPoint = new Bitmap((int) (m_Target.PixelsPerInch * 0.75), (int) (m_Target.PixelsPerInch * 0.75));
 
-			Graphics g = Graphics.FromImage(AimPoint);
+            Pen AimPointPen = new Pen(AimPointColor, 3.0f);
 
-			int nX = AimPoint.Width / 2;
-			int nX1 = nX;
-			int nY = m_Target.PixelsPerInch / 8;
-			int nY1 = nY + m_Target.PixelsPerInch / 8;
+            Graphics g = Graphics.FromImage(AimPoint);
 
-			g.DrawLine(AimPointPen, nX, nY, nX1, nY1);
+            int nX = AimPoint.Width / 2;
+            int nX1 = nX;
+            int nY = m_Target.PixelsPerInch / 8;
+            int nY1 = nY + m_Target.PixelsPerInch / 8;
 
-			nY = nY1 + m_Target.PixelsPerInch / 4;
-			nY1 = nY + m_Target.PixelsPerInch / 8;
+            g.DrawLine(AimPointPen, nX, nY, nX1, nY1);
 
-			g.DrawLine(AimPointPen, nX, nY, nX1, nY1);
+            nY = nY1 + m_Target.PixelsPerInch / 4;
+            nY1 = nY + m_Target.PixelsPerInch / 8;
 
-			nX = m_Target.PixelsPerInch / 8;
-			nX1 = nX + m_Target.PixelsPerInch / 8;
-			nY = AimPoint.Height / 2;
-			nY1 = nY;
+            g.DrawLine(AimPointPen, nX, nY, nX1, nY1);
 
-			g.DrawLine(AimPointPen, nX, nY, nX1, nY1);
+            nX = m_Target.PixelsPerInch / 8;
+            nX1 = nX + m_Target.PixelsPerInch / 8;
+            nY = AimPoint.Height / 2;
+            nY1 = nY;
 
-			nX = nX1 + m_Target.PixelsPerInch / 4;
-			nX1 = nX + m_Target.PixelsPerInch / 8;
+            g.DrawLine(AimPointPen, nX, nY, nX1, nY1);
 
-			g.DrawLine(AimPointPen, nX, nY, nX1, nY1);
+            nX = nX1 + m_Target.PixelsPerInch / 4;
+            nX1 = nX + m_Target.PixelsPerInch / 8;
 
-			g.DrawLine(AimPointPen, (AimPoint.Width / 2) - (m_Target.PixelsPerInch / 16), (AimPoint.Height / 2), (AimPoint.Width / 2) + (m_Target.PixelsPerInch / 16), (AimPoint.Height / 2));
-			g.DrawLine(AimPointPen, (AimPoint.Width / 2), (AimPoint.Height / 2) - (m_Target.PixelsPerInch / 16), (AimPoint.Width / 2), (AimPoint.Height / 2) + (m_Target.PixelsPerInch / 16));
+            g.DrawLine(AimPointPen, nX, nY, nX1, nY1);
 
-			return (AimPoint);
-			}
+            g.DrawLine(AimPointPen, (AimPoint.Width / 2) - (m_Target.PixelsPerInch / 16), (AimPoint.Height / 2), (AimPoint.Width / 2) + (m_Target.PixelsPerInch / 16), (AimPoint.Height / 2));
+            g.DrawLine(AimPointPen, (AimPoint.Width / 2), (AimPoint.Height / 2) - (m_Target.PixelsPerInch / 16), (AimPoint.Width / 2), (AimPoint.Height / 2) + (m_Target.PixelsPerInch / 16));
 
-		//============================================================================*
-		// CreateReticleBitmap()
-		//============================================================================*
+            return (AimPoint);
+            }
 
-		private Bitmap CreateReticleBitmap()
-			{
-			if (m_Target.PixelsPerInch < 7)
-				return (null);
+        //============================================================================*
+        // CreateReticleBitmap()
+        //============================================================================*
 
-			Bitmap ReticleBitmap= new Bitmap(m_Target.PixelsPerInch, m_Target.PixelsPerInch, PixelFormat.Format32bppArgb);
+        private Bitmap CreateReticleBitmap()
+            {
+            if (m_Target.PixelsPerInch < 7)
+                return (null);
 
-			Graphics g = Graphics.FromImage(ReticleBitmap);
+            Bitmap ReticleBitmap = new Bitmap(m_Target.PixelsPerInch, m_Target.PixelsPerInch, PixelFormat.Format32bppArgb);
 
-			g.FillRectangle(Brushes.AliceBlue, 0, 0, m_Target.PixelsPerInch, m_Target.PixelsPerInch);
+            Graphics g = Graphics.FromImage(ReticleBitmap);
 
-			GraphicsUnit eGraphicsUnit = GraphicsUnit.Pixel;
-			RectangleF ShotRect = ReticleBitmap.GetBounds(ref eGraphicsUnit);
-			ShotRect.Width -= 3;
-			ShotRect.Height -= 3;
+            g.FillRectangle(Brushes.AliceBlue, 0, 0, m_Target.PixelsPerInch, m_Target.PixelsPerInch);
 
-			Pen ReticlePen = new Pen(m_Target.m_ReticleColor, 2);
+            GraphicsUnit eGraphicsUnit = GraphicsUnit.Pixel;
+            RectangleF ShotRect = ReticleBitmap.GetBounds(ref eGraphicsUnit);
+            ShotRect.Width -= 3;
+            ShotRect.Height -= 3;
 
-			g.DrawEllipse(ReticlePen, ShotRect);
+            Pen ReticlePen = new Pen(m_Target.m_ReticleColor, 2);
 
-			int x = ReticleBitmap.Width / 2;
-			int y = 0;
-			int x1 = x;
-			int y1 = ReticleBitmap.Height;
+            g.DrawEllipse(ReticlePen, ShotRect);
 
-			Pen CrosshairPen = new Pen(m_Target.m_ReticleColor, 1);
+            int x = ReticleBitmap.Width / 2;
+            int y = 0;
+            int x1 = x;
+            int y1 = ReticleBitmap.Height;
 
-			g.DrawLine(CrosshairPen, x, y, x1, y1);
+            Pen CrosshairPen = new Pen(m_Target.m_ReticleColor, 1);
 
-			y1 = y + (int) (m_Target.PixelsPerInch * 0.35);
+            g.DrawLine(CrosshairPen, x, y, x1, y1);
 
-			g.DrawLine(ReticlePen, x, y, x1, y1);
+            y1 = y + (int) (m_Target.PixelsPerInch * 0.35);
 
-			y = y1 + (int) (m_Target.PixelsPerInch * 0.3);
-			y1 = ReticleBitmap.Height;
+            g.DrawLine(ReticlePen, x, y, x1, y1);
 
-			g.DrawLine(ReticlePen, x, y, x1, y1);
+            y = y1 + (int) (m_Target.PixelsPerInch * 0.3);
+            y1 = ReticleBitmap.Height;
 
-			x = 3;
-			y = ReticleBitmap.Height / 2;
-			x1 = x + ReticleBitmap.Width;
-			y1 = y;
+            g.DrawLine(ReticlePen, x, y, x1, y1);
 
-			g.DrawLine(CrosshairPen, x, y, x1, y1);
+            x = 3;
+            y = ReticleBitmap.Height / 2;
+            x1 = x + ReticleBitmap.Width;
+            y1 = y;
 
-			x1 = (int) (m_Target.PixelsPerInch * 0.35);
+            g.DrawLine(CrosshairPen, x, y, x1, y1);
 
-			g.DrawLine(ReticlePen, x, y, x1, y1);
+            x1 = (int) (m_Target.PixelsPerInch * 0.35);
 
-			x = x1 + (int) (m_Target.PixelsPerInch * 0.3);
-			x1 = ReticleBitmap.Width;
+            g.DrawLine(ReticlePen, x, y, x1, y1);
 
-			g.DrawLine(ReticlePen, x, y, x1, y1);
+            x = x1 + (int) (m_Target.PixelsPerInch * 0.3);
+            x1 = ReticleBitmap.Width;
 
-			ReticleBitmap.MakeTransparent(Color.AliceBlue);
+            g.DrawLine(ReticlePen, x, y, x1, y1);
 
-			return (ReticleBitmap);
-			}
+            ReticleBitmap.MakeTransparent(Color.AliceBlue);
 
-		//============================================================================*
-		// CreateScaleBar()
-		//============================================================================*
+            return (ReticleBitmap);
+            }
 
-		private Bitmap CreateScaleBar()
-			{
-			if (!m_Target.Calibrated)
-				return (null);
+        //============================================================================*
+        // CreateScaleBar()
+        //============================================================================*
 
-			Font BarFont = new Font(SystemFonts.DefaultFont, FontStyle.Bold);
+        private Bitmap CreateScaleBar()
+            {
+            if (!m_Target.Calibrated)
+                return (null);
 
-			Bitmap CalibrationBar = new Bitmap(m_TargetImage.Width, (int) ((double) BarFont.Height * 4.5));
+            Font BarFont = new Font(SystemFonts.DefaultFont, FontStyle.Bold);
 
-			Graphics g = Graphics.FromImage(CalibrationBar);
+            Bitmap CalibrationBar = new Bitmap(m_TargetImage.Width, (int) ((double) BarFont.Height * 4.5));
 
-			SolidBrush BarBrush = new SolidBrush(m_Target.ScaleBackcolor);
-			SolidBrush BarForeBrush = new SolidBrush(m_Target.ScaleForecolor);
+            Graphics g = Graphics.FromImage(CalibrationBar);
 
-			g.FillRectangle(BarBrush, 0, 0, CalibrationBar.Width, CalibrationBar.Height);
+            SolidBrush BarBrush = new SolidBrush(m_Target.ScaleBackcolor);
+            SolidBrush BarForeBrush = new SolidBrush(m_Target.ScaleForecolor);
 
-			int nY = CalibrationBar.Height;
+            g.FillRectangle(BarBrush, 0, 0, CalibrationBar.Width, CalibrationBar.Height);
 
-			string strMeasurement = m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize);
+            int nY = CalibrationBar.Height;
 
-			SizeF StartSizeF = g.MeasureString("MMM", BarFont);
-			SizeF CharSizeF = g.MeasureString(m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize), BarFont);
+            string strMeasurement = m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize);
 
-			g.DrawString(m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize), BarFont, BarForeBrush, (int) (StartSizeF.Width / 2) - (int) (CharSizeF.Width / 2), CalibrationBar.Height / 2);
-			/*
+            SizeF StartSizeF = g.MeasureString("MMM", BarFont);
+            SizeF CharSizeF = g.MeasureString(m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize), BarFont);
+
+            g.DrawString(m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize), BarFont, BarForeBrush, (int) (StartSizeF.Width / 2) - (int) (CharSizeF.Width / 2), CalibrationBar.Height / 2);
+            /*
 						CharSizeF = g.MeasureString(new string(strMeasurement[1], 1), BarFont);
 
 						g.DrawString(new string(strMeasurement[1], 1), BarFont, BarForeBrush, (int) (StartSizeF.Width / 2) - (int) (CharSizeF.Width / 2), CalibrationBar.Height / 2);
 			*/
-			//----------------------------------------------------------------------------*
-			// Metric Scale Bar
-			//----------------------------------------------------------------------------*
+            //----------------------------------------------------------------------------*
+            // Metric Scale Bar
+            //----------------------------------------------------------------------------*
 
-			if (m_DataFiles.Preferences.MetricGroups)
-				{
-				int nIncrements = CalibrationBar.Width / (m_Target.PixelsPerCentimeter / 10);
+            if (m_DataFiles.Preferences.MetricGroups)
+                {
+                int nIncrements = CalibrationBar.Width / (m_Target.PixelsPerCentimeter / 10);
 
-				for (int i = 0; i <= nIncrements; i++)
-					{
-					int nX = (int) StartSizeF.Width + (i * (m_Target.PixelsPerCentimeter / 10));
-					int nY1 = nY - BarFont.Height;
-
-					if (i % 10 == 0)
-						{
-						nY1 -= (BarFont.Height * 2);
+                for (int i = 0; i <= nIncrements; i++)
+                    {
+                    int nX = (int) StartSizeF.Width + (i * (m_Target.PixelsPerCentimeter / 10));
+                    int nY1 = nY - BarFont.Height;
+
+                    if (i % 10 == 0)
+                        {
+                        nY1 -= (BarFont.Height * 2);
 
-						g.DrawLine(Pens.Black, nX, nY, nX, nY1);
-
-						nY1 -= BarFont.Height;
-
-						string strText = String.Format("{0:G0}", i / 10);
-
-						SizeF FontSize = g.MeasureString(strText, BarFont);
+                        g.DrawLine(Pens.Black, nX, nY, nX, nY1);
+
+                        nY1 -= BarFont.Height;
+
+                        string strText = String.Format("{0:G0}", i / 10);
+
+                        SizeF FontSize = g.MeasureString(strText, BarFont);
 
-						g.DrawString(strText, BarFont, BarForeBrush, nX - (FontSize.Width / 2), nY1);
-						}
-					else
-						{
-						g.DrawLine(Pens.Black, nX, nY, nX, nY1);
-						}
-					}
-				}
-
-			//----------------------------------------------------------------------------*
-			// Standard Scale Bar
-			//----------------------------------------------------------------------------*
-
-			else
-				{
-				int nIncrements = CalibrationBar.Width / (m_Target.PixelsPerInch / 4);
-
-				for (int i = 0; i <= nIncrements; i++)
-					{
-					int nX = (int) StartSizeF.Width + (i * (m_Target.PixelsPerInch / 4));
-					int nY1 = nY - BarFont.Height;
-
-					if (i % 4 == 0)
-						{
-						nY1 -= (BarFont.Height * 2);
+                        g.DrawString(strText, BarFont, BarForeBrush, nX - (FontSize.Width / 2), nY1);
+                        }
+                    else
+                        {
+                        g.DrawLine(Pens.Black, nX, nY, nX, nY1);
+                        }
+                    }
+                }
+
+            //----------------------------------------------------------------------------*
+            // Standard Scale Bar
+            //----------------------------------------------------------------------------*
+
+            else
+                {
+                int nIncrements = CalibrationBar.Width / (m_Target.PixelsPerInch / 4);
+
+                for (int i = 0; i <= nIncrements; i++)
+                    {
+                    int nX = (int) StartSizeF.Width + (i * (m_Target.PixelsPerInch / 4));
+                    int nY1 = nY - BarFont.Height;
+
+                    if (i % 4 == 0)
+                        {
+                        nY1 -= (BarFont.Height * 2);
 
-						g.DrawLine(Pens.Black, nX, nY, nX, nY1);
+                        g.DrawLine(Pens.Black, nX, nY, nX, nY1);
 
-						nY1 -= BarFont.Height;
+                        nY1 -= BarFont.Height;
 
-						string strText = String.Format("{0:G0}", i / 4);
+                        string strText = String.Format("{0:G0}", i / 4);
 
-						SizeF FontSize = g.MeasureString(strText, BarFont);
+                        SizeF FontSize = g.MeasureString(strText, BarFont);
 
-						g.DrawString(strText, BarFont, BarForeBrush, nX - (FontSize.Width / 2), nY1);
-						}
-					else
-						{
-						if (i % 2 == 0)
-							{
-							nY1 -= BarFont.Height;
+                        g.DrawString(strText, BarFont, BarForeBrush, nX - (FontSize.Width / 2), nY1);
+                        }
+                    else
+                        {
+                        if (i % 2 == 0)
+                            {
+                            nY1 -= BarFont.Height;
 
-							g.DrawLine(Pens.Black, nX, nY, nX, nY1);
-							}
-						else
-							{
-							g.DrawLine(Pens.Black, nX, nY, nX, nY1);
-							}
-						}
-					}
-				}
+                            g.DrawLine(Pens.Black, nX, nY, nX, nY1);
+                            }
+                        else
+                            {
+                            g.DrawLine(Pens.Black, nX, nY, nX, nY1);
+                            }
+                        }
+                    }
+                }
 
-			return (CalibrationBar);
-			}
+            return (CalibrationBar);
+            }
 
-		//============================================================================*
-		// CreateShotBitmap()
-		//============================================================================*
+        //============================================================================*
+        // CreateShotBitmap()
+        //============================================================================*
 
-		private Bitmap CreateShotBitmap(bool fPointer = false)
-			{
-			if (m_Target.AimPoint == Point.Empty)
-				return (null);
+        private Bitmap CreateShotBitmap(bool fPointer = false)
+            {
+            if (m_Target.AimPoint == Point.Empty)
+                return (null);
 
-			if (m_Target.BulletPixels == 0 || m_Target.BulletDiameter < 0.017)
-				return (null);
+            if (m_Target.BulletPixels == 0 || m_Target.BulletDiameter < 0.017)
+                return (null);
 
-			Bitmap ShotBitmap = new Bitmap(m_Target.BulletPixels, m_Target.BulletPixels);
+            Bitmap ShotBitmap = new Bitmap(m_Target.BulletPixels, m_Target.BulletPixels);
 
-			Graphics g = Graphics.FromImage(ShotBitmap);
+            Graphics g = Graphics.FromImage(ShotBitmap);
 
-			GraphicsUnit eGraphicsUnit = GraphicsUnit.Pixel;
-			RectangleF ShotRect = ShotBitmap.GetBounds(ref eGraphicsUnit);
-			ShotRect.Width--;
-			ShotRect.Height--;
+            GraphicsUnit eGraphicsUnit = GraphicsUnit.Pixel;
+            RectangleF ShotRect = ShotBitmap.GetBounds(ref eGraphicsUnit);
+            ShotRect.Width--;
+            ShotRect.Height--;
 
-			if (!fPointer && ShowShotNumCheckBox.Checked)
-				{
-				SolidBrush ShotBrush = new SolidBrush(m_Target.ShotColor);
-				Pen ShotPen = new Pen(m_Target.ShotForecolor, 2.0f);
+            if (!fPointer && ShowShotNumCheckBox.Checked)
+                {
+                SolidBrush ShotBrush = new SolidBrush(m_Target.ShotColor);
+                Pen ShotPen = new Pen(m_Target.ShotForecolor, 2.0f);
 
-				g.FillEllipse(ShotBrush, ShotRect);
-				g.DrawEllipse(ShotPen, ShotRect);
-				}
-			else
-				{
-				Pen ShotPen = new Pen(m_Target.ShotColor, 1.0f);
-				Pen ShotPen2 = new Pen(m_Target.ShotColor, 2.0f);
+                g.FillEllipse(ShotBrush, ShotRect);
+                g.DrawEllipse(ShotPen, ShotRect);
+                }
+            else
+                {
+                Pen ShotPen = new Pen(m_Target.ShotColor, 1.0f);
+                Pen ShotPen2 = new Pen(m_Target.ShotColor, 2.0f);
 
-				g.DrawEllipse(ShotPen2, ShotRect);
+                g.DrawEllipse(ShotPen2, ShotRect);
 
-				int x = ShotBitmap.Width / 2;
-				int y = ShotBitmap.Height / 4;
-				int x1 = x;
-				int y1 = y + ShotBitmap.Height / 2;
+                int x = ShotBitmap.Width / 2;
+                int y = ShotBitmap.Height / 4;
+                int x1 = x;
+                int y1 = y + ShotBitmap.Height / 2;
 
-				g.DrawLine(ShotPen, x, y, x1, y1);
+                g.DrawLine(ShotPen, x, y, x1, y1);
 
-				x = ShotBitmap.Width / 4;
-				y = ShotBitmap.Height / 2;
-				x1 = x + ShotBitmap.Width / 2;
-				y1 = y;
+                x = ShotBitmap.Width / 4;
+                y = ShotBitmap.Height / 2;
+                x1 = x + ShotBitmap.Width / 2;
+                y1 = y;
 
-				g.DrawLine(ShotPen, x, y, x1, y1);
-				}
+                g.DrawLine(ShotPen, x, y, x1, y1);
+                }
 
-			return (ShotBitmap);
-			}
+            return (ShotBitmap);
+            }
 
-		//============================================================================*
-		// CreateTargetImage()
-		//============================================================================*
+        //============================================================================*
+        // CreateTargetImage()
+        //============================================================================*
 
-		private void CreateTargetImage()
-			{
-			if (m_Target.Image == null)
-				{
-				m_TargetImage = null;
+        private void CreateTargetImage()
+            {
+            if (m_Target.Image == null)
+                {
+                m_TargetImage = null;
 
-				return;
-				}
+                return;
+                }
 
-			m_TargetImage = new Bitmap(TargetImageBox.Width, TargetImageBox.Height);
+            m_TargetImage = new Bitmap(TargetImageBox.Width, TargetImageBox.Height);
 
-			Graphics g = Graphics.FromImage(m_TargetImage);
+            Graphics g = Graphics.FromImage(m_TargetImage);
 
-			g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
 
-			g.DrawImage(m_Target.Image, 0, 0, m_TargetImage.Width, m_TargetImage.Height);
-			}
+            g.DrawImage(m_Target.Image, 0, 0, m_TargetImage.Width, m_TargetImage.Height);
+            }
 
-		//============================================================================*
-		// GetUniqueFileName()
-		//============================================================================*
+        //============================================================================*
+        // GetUniqueFileName()
+        //============================================================================*
 
-		private string GetUniqueFileName()
-			{
-			string strFileName = m_Target.SuggestedFileName;
+        private string GetUniqueFileName()
+            {
+            string strFileName = m_Target.SuggestedFileName;
 
-			int nIndex = 1;
+            int nIndex = 1;
 
-			while (File.Exists(Path.Combine(m_strFolder, strFileName)))
-				{
-				strFileName = string.Format("{0} ({1})", m_Target.SuggestedFileName, nIndex);
+            while (File.Exists(Path.Combine(m_strFolder, strFileName)))
+                {
+                strFileName = string.Format("{0} ({1})", m_Target.SuggestedFileName, nIndex);
 
-				nIndex++;
-				}
+                nIndex++;
+                }
 
-			return (strFileName);
-			}
+            return (strFileName);
+            }
 
-		//============================================================================*
-		// GroupSize Property
-		//============================================================================*
+        //============================================================================*
+        // GroupSize Property
+        //============================================================================*
 
-		private double GroupSize
-			{
-			get
-				{
-				return (m_Target.GroupSize);
-				}
-			}
+        private double GroupSize
+            {
+            get
+                {
+                return (m_Target.GroupSize);
+                }
+            }
 
-		//============================================================================*
-		// Initialize()
-		//============================================================================*
+        //============================================================================*
+        // Initialize()
+        //============================================================================*
 
-		private void Initialize()
-			{
-			VerifyTargetFolder();
+        private void Initialize()
+            {
+            VerifyTargetFolder();
 
-			m_Target = new cTarget(m_DataFiles);
+            m_Target = new cTarget(m_DataFiles);
 
-			if (m_BatchTest != null)
-				SetBatchTestInfo();
+            if (m_BatchTest != null)
+                SetBatchTestInfo();
 
-			m_fBatchTest = m_BatchTest != null;
+            m_fBatchTest = m_BatchTest != null;
 
-			//----------------------------------------------------------------------------*
-			// Event Handlers
-			//----------------------------------------------------------------------------*
+            //----------------------------------------------------------------------------*
+            // Event Handlers
+            //----------------------------------------------------------------------------*
 
-			if (!m_fInitialized)
-				{
-				FileNewMenuItem.Click += OnFileNew;
-				FileOpenMenuItem.Click += OnFileOpen;
-				FileOpenTargetImageMenuItem.Click += OnFileOpenTargetImage;
-				FilePrintMenuItem.Click += OnFilePrint;
-				FileSaveAsMenuItem.Click += OnFileSaveAs;
-				FileSaveMenuItem.Click += OnFileSave;
-				FileSaveTargetImageMenuItem.Click += OnFileSaveTargetImage;
+            if (!m_fInitialized)
+                {
+                FileNewMenuItem.Click += OnFileNew;
+                FileOpenMenuItem.Click += OnFileOpen;
+                FileOpenTargetImageMenuItem.Click += OnFileOpenTargetImage;
+                FilePrintMenuItem.Click += OnFilePrint;
+                FileSaveAsMenuItem.Click += OnFileSaveAs;
+                FileSaveMenuItem.Click += OnFileSave;
+                FileSaveTargetImageMenuItem.Click += OnFileSaveTargetImage;
 
-				EditDetailsMenuItem.Click += OnEditDetails;
-				EditPreferencesMenuItem.Click += OnEditPreferences;
-				EditUndoMenuItem.Click += OnEditUndo;
+                EditDetailsMenuItem.Click += OnEditDetails;
+                EditPreferencesMenuItem.Click += OnEditPreferences;
+                EditUndoMenuItem.Click += OnEditUndo;
 
-				CaliberCombo.SelectedIndexChanged += OnCaliberSelected;
-				RangeTextBox.TextChanged += OnRangeChanged;
+                CaliberCombo.SelectedIndexChanged += OnCaliberSelected;
+                RangeTextBox.TextChanged += OnRangeChanged;
 
-				TargetImageBox.MouseDown += OnTargetMouseDown;
-				TargetImageBox.MouseUp += OnTargetMouseUp;
-				TargetImageBox.MouseMove += OnTargetMouseMove;
+                TargetImageBox.MouseDown += OnTargetMouseDown;
+                TargetImageBox.MouseUp += OnTargetMouseUp;
+                TargetImageBox.MouseMove += OnTargetMouseMove;
 
-				ShowAimPointCheckBox.Click += OnShowButtonClicked;
-				ShowOffsetCheckBox.Click += OnShowButtonClicked;
-				ShowScaleCheckBox.Click += OnShowButtonClicked;
-				ShowExtremesCheckBox.Click += OnShowButtonClicked;
-				ShowGroupBoxCheckBox.Click += OnShowButtonClicked;
-				ShowShotNumCheckBox.Click += OnShowButtonClicked;
+                ShowAimPointCheckBox.Click += OnShowButtonClicked;
+                ShowOffsetCheckBox.Click += OnShowButtonClicked;
+                ShowScaleCheckBox.Click += OnShowButtonClicked;
+                ShowExtremesCheckBox.Click += OnShowButtonClicked;
+                ShowGroupBoxCheckBox.Click += OnShowButtonClicked;
+                ShowShotNumCheckBox.Click += OnShowButtonClicked;
 
-				OKButton.Click += OnOKClicked;
-				FormClosing += OnFormClosing;
+                OKButton.Click += OnOKClicked;
+                FormClosing += OnFormClosing;
 
-				SetClientSizeCore(OutputGroupBox.Location.X + OutputGroupBox.Width + 10, FormCancelButton.Location.Y + FormCancelButton.Height + 20);
-				}
+                SetClientSizeCore(OutputGroupBox.Location.X + OutputGroupBox.Width + 10, FormCancelButton.Location.Y + FormCancelButton.Height + 20);
+                }
 
-			//----------------------------------------------------------------------------*
-			// Populate Option Check Boxes
-			//----------------------------------------------------------------------------*
+            //----------------------------------------------------------------------------*
+            // Populate Option Check Boxes
+            //----------------------------------------------------------------------------*
 
-			ShowAimPointCheckBox.Checked = m_DataFiles.Preferences.TargetShowAimPoint;
-			ShowExtremesCheckBox.Checked = m_DataFiles.Preferences.TargetShowExtremes;
-			ShowGroupBoxCheckBox.Checked = m_DataFiles.Preferences.TargetShowGroupBox;
-			ShowOffsetCheckBox.Checked = m_DataFiles.Preferences.TargetShowOffset;
-			ShowScaleCheckBox.Checked = m_DataFiles.Preferences.TargetShowScale;
-			ShowShotNumCheckBox.Checked = m_DataFiles.Preferences.TargetShowShotNum;
+            ShowAimPointCheckBox.Checked = m_DataFiles.Preferences.TargetShowAimPoint;
+            ShowExtremesCheckBox.Checked = m_DataFiles.Preferences.TargetShowExtremes;
+            ShowGroupBoxCheckBox.Checked = m_DataFiles.Preferences.TargetShowGroupBox;
+            ShowOffsetCheckBox.Checked = m_DataFiles.Preferences.TargetShowOffset;
+            ShowScaleCheckBox.Checked = m_DataFiles.Preferences.TargetShowScale;
+            ShowShotNumCheckBox.Checked = m_DataFiles.Preferences.TargetShowShotNum;
 
-			//----------------------------------------------------------------------------*
-			// Set Target Size
-			//----------------------------------------------------------------------------*
+            //----------------------------------------------------------------------------*
+            // Set Target Size
+            //----------------------------------------------------------------------------*
 
-			TargetImageBox.Size = new Size(990, 554);
+            TargetImageBox.Size = new Size(990, 554);
 
-			SetTargetImageSize();
+            SetTargetImageSize();
 
-			//----------------------------------------------------------------------------*
-			// Populate Data
-			//----------------------------------------------------------------------------*
+            //----------------------------------------------------------------------------*
+            // Populate Data
+            //----------------------------------------------------------------------------*
 
-			bool fFileOpened = false;
+            bool fFileOpened = false;
 
-			if (m_BatchTest != null)
-				{
-				m_strFileName = string.Format("Batch {0:G0} Target File.rwt", m_Target.BatchID);
+            if (m_BatchTest != null)
+                {
+                m_strFileName = string.Format("Batch {0:G0} Target File.rwt", m_Target.BatchID);
 
-				m_strFolder = Path.Combine(m_DataFiles.GetDataPath(), "Target Files");
+                m_strFolder = Path.Combine(m_DataFiles.GetDataPath(), "Target Files");
 
-				if (File.Exists(Path.Combine(m_strFolder, m_strFileName)))
-					{
-					Open(m_strFolder, m_strFileName);
+                if (File.Exists(Path.Combine(m_strFolder, m_strFileName)))
+                    {
+                    Open(m_strFolder, m_strFileName);
 
-					SetBatchTestInfo();
+                    SetBatchTestInfo();
 
-					fFileOpened = true;
-					}
-				}
+                    fFileOpened = true;
+                    }
+                }
 
-			if (!fFileOpened)
-				{
-				PopulateCaliberCombo();
+            if (!fFileOpened)
+                {
+                PopulateCaliberCombo();
 
-				SetInputParameters();
+                SetInputParameters();
 
-				SetInputData();
+                SetInputData();
 
-				SetMode(m_Target.BatchID == 0 ? eMode.LoadTarget : eMode.MarkShots);
+                SetMode(m_Target.BatchID == 0 ? eMode.LoadTarget : eMode.MarkShots);
 
-				SetTargetImageSize();
+                SetTargetImageSize();
 
-				m_strFileName = "";
+                m_strFileName = "";
 
-				SetTitle();
-				}
+                SetTitle();
+                }
 
-			//----------------------------------------------------------------------------*
-			// Clean up and exit
-			//----------------------------------------------------------------------------*
+            //----------------------------------------------------------------------------*
+            // Clean up and exit
+            //----------------------------------------------------------------------------*
 
-			m_fInitialized = true;
+            m_fInitialized = true;
 
-			OnResize(null);
+            OnResize(null);
 
-			UpdateButtons();
-			}
+            UpdateButtons();
+            }
 
-		//============================================================================*
-		// OnCaliberSelected()
-		//============================================================================*
+        //============================================================================*
+        // OnCaliberSelected()
+        //============================================================================*
 
-		private void OnCaliberSelected(Object sender, EventArgs e)
-			{
-			if (CaliberCombo.SelectedIndex >= 0)
-				m_Target.Caliber = (cCaliber) CaliberCombo.SelectedItem;
-			else
-				m_Target.Caliber = null;
+        private void OnCaliberSelected(Object sender, EventArgs e)
+            {
+            if (CaliberCombo.SelectedIndex >= 0)
+                m_Target.Caliber = (cCaliber) CaliberCombo.SelectedItem;
+            else
+                m_Target.Caliber = null;
 
-			SetInputData();
+            SetInputData();
 
-			SetImage();
+            SetImage();
 
-			SetTargetCursor();
+            SetTargetCursor();
 
-			m_fChanged = true;
+            m_fChanged = true;
 
-			SetTitle();
-			}
+            SetTitle();
+            }
 
-		//============================================================================*
-		// OnEditDetails()
-		//============================================================================*
+        //============================================================================*
+        // OnEditDetails()
+        //============================================================================*
 
-		private void OnEditDetails(Object sender, EventArgs e)
-			{
-			cTargetDetailsForm DetailsForm = new cTargetDetailsForm(m_DataFiles, m_Target);
+        private void OnEditDetails(Object sender, EventArgs e)
+            {
+            cTargetDetailsForm DetailsForm = new cTargetDetailsForm(m_DataFiles, m_Target);
 
-			DialogResult rc = DetailsForm.ShowDialog();
+            DialogResult rc = DetailsForm.ShowDialog();
 
-			if (rc == DialogResult.OK)
-				{
-				cTarget Target = DetailsForm.Target;
+            if (rc == DialogResult.OK)
+                {
+                cTarget Target = DetailsForm.Target;
 
-				m_Target.Date = Target.Date;
-				m_Target.Firearm = Target.Firearm;
-				m_Target.Location = Target.Location;
-				m_Target.Shooter = Target.Shooter;
-				m_Target.Event = Target.Event;
-				m_Target.Notes = Target.Notes;
+                m_Target.Date = Target.Date;
+                m_Target.Firearm = Target.Firearm;
+                m_Target.Location = Target.Location;
+                m_Target.Shooter = Target.Shooter;
+                m_Target.Event = Target.Event;
+                m_Target.Notes = Target.Notes;
 
-				m_fChanged = true;
+                m_fChanged = true;
 
-				SetTitle();
+                SetTitle();
 
-				UpdateButtons();
-				}
-			}
+                UpdateButtons();
+                }
+            }
 
-		//============================================================================*
-		// OnEditPreferences()
-		//============================================================================*
+        //============================================================================*
+        // OnEditPreferences()
+        //============================================================================*
 
-		private void OnEditPreferences(Object sender, EventArgs e)
-			{
-			cTargetPreferencesForm PreferencesForm = new cTargetPreferencesForm(m_DataFiles, m_Target, this);
+        private void OnEditPreferences(Object sender, EventArgs e)
+            {
+            cTargetPreferencesForm PreferencesForm = new cTargetPreferencesForm(m_DataFiles, m_Target, this);
 
-			PreferencesForm.ShowDialog();
-			}
+            PreferencesForm.ShowDialog();
+            }
 
-		//============================================================================*
-		// OnEditUndo()
-		//============================================================================*
+        //============================================================================*
+        // OnEditUndo()
+        //============================================================================*
 
-		private void OnEditUndo(Object sender, EventArgs e)
-			{
-			if (m_eMode == eMode.MarkShots)
-				{
-				if (m_Target.ShotList.Count > 0)
-					m_Target.ShotList.RemoveAt(m_Target.ShotList.Count - 1);
+        private void OnEditUndo(Object sender, EventArgs e)
+            {
+            if (m_eMode == eMode.MarkShots)
+                {
+                if (m_Target.ShotList.Count > 0)
+                    m_Target.ShotList.RemoveAt(m_Target.ShotList.Count - 1);
 
-				if (m_Target.ShotList.Count == 0)
-					SetMode(eMode.AimPoint);
-				else
-					{
-					SetImage();
+                if (m_Target.ShotList.Count == 0)
+                    SetMode(eMode.AimPoint);
+                else
+                    {
+                    SetImage();
 
-					SetNumShotsLabel();
+                    SetNumShotsLabel();
 
-					SetOutputData();
-					}
+                    SetOutputData();
+                    }
 
-				m_fChanged = true;
+                m_fChanged = true;
 
-				SetTitle();
+                SetTitle();
 
-				return;
-				}
+                return;
+                }
 
-			if (m_eMode == eMode.AimPoint)
-				{
-				SetMode(eMode.Calibrate);
+            if (m_eMode == eMode.AimPoint)
+                {
+                SetMode(eMode.Calibrate);
 
-				m_fChanged = true;
+                m_fChanged = true;
 
-				SetTitle();
+                SetTitle();
 
-				return;
-				}
+                return;
+                }
 
-			if (m_eMode == eMode.Calibrate)
-				{
-				OnFileNew(sender, e);
+            if (m_eMode == eMode.Calibrate)
+                {
+                OnFileNew(sender, e);
 
-				m_fChanged = true;
+                m_fChanged = true;
 
-				SetTitle();
+                SetTitle();
 
-				return;
-				}
-			}
+                return;
+                }
+            }
 
-		//============================================================================*
-		// OnFileNew()
-		//============================================================================*
+        //============================================================================*
+        // OnFileNew()
+        //============================================================================*
 
-		private void OnFileNew(Object sender, EventArgs e)
-			{
-			if (!VerifyDiscardChanges())
-				return;
+        private void OnFileNew(Object sender, EventArgs e)
+            {
+            if (!VerifyDiscardChanges())
+                return;
 
-			m_strFileName = null;
+            m_strFileName = null;
 
-			m_Target = new cTarget(m_DataFiles);
-			m_Target.Caliber = (cCaliber) CaliberCombo.SelectedItem;
+            m_Target = new cTarget(m_DataFiles);
+            m_Target.Caliber = (cCaliber) CaliberCombo.SelectedItem;
 
-			m_TargetImage = null;
+            m_TargetImage = null;
 
-			m_AimPoint = null;
-			m_AimPointOffset = null;
+            m_AimPoint = null;
+            m_AimPointOffset = null;
 
-			SetImage();
+            SetImage();
 
-			SetMode(eMode.LoadTarget);
+            SetMode(eMode.LoadTarget);
 
-			SetOutputData();
+            SetOutputData();
 
-			SetTitle();
-			}
+            SetTitle();
+            }
 
-		//============================================================================*
-		// OnFileOpen()
-		//============================================================================*
+        //============================================================================*
+        // OnFileOpen()
+        //============================================================================*
 
-		private void OnFileOpen(Object sender, EventArgs e)
-			{
-			if (!VerifyDiscardChanges())
-				return;
+        private void OnFileOpen(Object sender, EventArgs e)
+            {
+            if (!VerifyDiscardChanges())
+                return;
 
-			OpenFileDialog OpenFileDialog = new OpenFileDialog();
+            OpenFileDialog OpenFileDialog = new OpenFileDialog();
 
-			OpenFileDialog.Title = "Open Target File";
-			OpenFileDialog.DefaultExt = "rwt";
-			OpenFileDialog.CheckFileExists = true;
-			OpenFileDialog.CheckPathExists = true;
-			OpenFileDialog.Filter = "Target Files (*.rwt)|*.rwt";
-			OpenFileDialog.InitialDirectory = m_strFolder;
+            OpenFileDialog.Title = "Open Target File";
+            OpenFileDialog.DefaultExt = "rwt";
+            OpenFileDialog.CheckFileExists = true;
+            OpenFileDialog.CheckPathExists = true;
+            OpenFileDialog.Filter = "Target Files (*.rwt)|*.rwt";
+            OpenFileDialog.InitialDirectory = m_strFolder;
 
-			if (OpenFileDialog.ShowDialog() == DialogResult.OK)
-				{
-				string strFileName = Path.GetFileName(OpenFileDialog.FileName);
-				string strFolder = Path.GetDirectoryName(OpenFileDialog.FileName);
+            if (OpenFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                string strFileName = Path.GetFileName(OpenFileDialog.FileName);
+                string strFolder = Path.GetDirectoryName(OpenFileDialog.FileName);
 
-				Open(strFolder, strFileName);
+                Open(strFolder, strFileName);
 
-				m_fChanged = false;
+                m_fChanged = false;
 
-				SetTitle();
-				}
-			}
+                SetTitle();
+                }
+            }
 
-		//============================================================================*
-		// OnFileOpenTargetImage()
-		//============================================================================*
+        //============================================================================*
+        // OnFileOpenTargetImage()
+        //============================================================================*
 
-		private void OnFileOpenTargetImage(Object sender, EventArgs e)
-			{
-			OpenFileDialog OpenTargetDialog = new OpenFileDialog();
+        private void OnFileOpenTargetImage(Object sender, EventArgs e)
+            {
+            OpenFileDialog OpenTargetDialog = new OpenFileDialog();
 
-			OpenTargetDialog.CheckFileExists = true;
-			OpenTargetDialog.CheckPathExists = true;
-			OpenTargetDialog.Filter = "Image Files (*.bmp;*.jpg)|*.bmp;*.jpg";
+            OpenTargetDialog.CheckFileExists = true;
+            OpenTargetDialog.CheckPathExists = true;
+            OpenTargetDialog.Filter = "Image Files (*.bmp;*.jpg)|*.bmp;*.jpg";
 
-			if (!String.IsNullOrEmpty(m_DataFiles.Preferences.TargetFolder))
-				OpenTargetDialog.InitialDirectory = m_DataFiles.Preferences.TargetFolder;
-			else
-				OpenTargetDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            if (!String.IsNullOrEmpty(m_DataFiles.Preferences.TargetFolder))
+                OpenTargetDialog.InitialDirectory = m_DataFiles.Preferences.TargetFolder;
+            else
+                OpenTargetDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
 
-			OpenTargetDialog.Multiselect = false;
-			OpenTargetDialog.Title = "Open Target Image";
+            OpenTargetDialog.Multiselect = false;
+            OpenTargetDialog.Title = "Open Target Image";
 
-			DialogResult rc = OpenTargetDialog.ShowDialog();
+            DialogResult rc = OpenTargetDialog.ShowDialog();
 
-			if (rc == DialogResult.OK)
-				{
-				try
-					{
-					m_Target.Image = new Bitmap(OpenTargetDialog.FileName);
+            if (rc == DialogResult.OK)
+                {
+                try
+                    {
+                    m_Target.Image = new Bitmap(OpenTargetDialog.FileName);
 
-					if (m_Target.Image.Width < m_Target.MinImageWidth || m_Target.Image.Height < m_Target.MinImageHeight)
-						{
-						string strMessage = String.Format("Target image must be at least {0:G0} x {1:G0} pixels in size", m_Target.MinImageWidth, m_Target.MinImageHeight);
+                    if (m_Target.Image.Width < m_Target.MinImageWidth || m_Target.Image.Height < m_Target.MinImageHeight)
+                        {
+                        string strMessage = String.Format("Target image must be at least {0:G0} x {1:G0} pixels in size", m_Target.MinImageWidth, m_Target.MinImageHeight);
 
-						MessageBox.Show(strMessage, "Invalid Target Image", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show(strMessage, "Invalid Target Image", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-						m_Target.Image = null;
+                        m_Target.Image = null;
 
-						return;
-						}
+                        return;
+                        }
 
-					m_DataFiles.Preferences.TargetFolder = Path.GetDirectoryName(OpenTargetDialog.FileName);
+                    m_DataFiles.Preferences.TargetFolder = Path.GetDirectoryName(OpenTargetDialog.FileName);
 
-					SetTargetImageSize();
+                    SetTargetImageSize();
 
-					CreateTargetImage();
+                    CreateTargetImage();
 
-					SetImage();
+                    SetImage();
 
-					SetMode(eMode.Calibrate);
+                    SetMode(eMode.Calibrate);
 
-					m_fChanged = true;
+                    m_fChanged = true;
 
-					SetTitle();
-					}
-				catch
-					{
-					MessageBox.Show("Unable to open Image File!", "Image File Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					}
-				}
-			}
+                    SetTitle();
+                    }
+                catch
+                    {
+                    MessageBox.Show("Unable to open Image File!", "Image File Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
 
-		//============================================================================*
-		// OnFilePrint()
-		//============================================================================*
+        //============================================================================*
+        // OnFilePrint()
+        //============================================================================*
 
-		private void OnFilePrint(Object sender, EventArgs e)
-			{
-			cTargetPrintPreviewDialog PrintDialog = new cTargetPrintPreviewDialog(m_DataFiles, m_Target, TargetImageBox.Image);
+        private void OnFilePrint(Object sender, EventArgs e)
+            {
+            cTargetPrintPreviewDialog PrintDialog = new cTargetPrintPreviewDialog(m_DataFiles, m_Target, TargetImageBox.Image);
 
-			PrintDialog.ShowDialog();
-			}
+            PrintDialog.ShowDialog();
+            }
 
-		//============================================================================*
-		// OnFileSave()
-		//============================================================================*
+        //============================================================================*
+        // OnFileSave()
+        //============================================================================*
 
-		private void OnFileSave(Object sender, EventArgs e)
-			{
-			if (String.IsNullOrEmpty(m_strFileName))
-				{
-				SaveFileDialog SaveFileDialog = new SaveFileDialog();
+        private void OnFileSave(Object sender, EventArgs e)
+            {
+            if (String.IsNullOrEmpty(m_strFileName))
+                {
+                SaveFileDialog SaveFileDialog = new SaveFileDialog();
 
-				SaveFileDialog.Title = "Save Target File";
-				SaveFileDialog.DefaultExt = "rwt";
-				SaveFileDialog.CheckFileExists = false;
-				SaveFileDialog.CheckPathExists = false;
-				SaveFileDialog.FileName = GetUniqueFileName();
-				SaveFileDialog.Filter = "Target Files (*.rwt)|*.rwt";
-				SaveFileDialog.InitialDirectory = m_strFolder;
+                SaveFileDialog.Title = "Save Target File";
+                SaveFileDialog.DefaultExt = "rwt";
+                SaveFileDialog.CheckFileExists = false;
+                SaveFileDialog.CheckPathExists = false;
+                SaveFileDialog.FileName = GetUniqueFileName();
+                SaveFileDialog.Filter = "Target Files (*.rwt)|*.rwt";
+                SaveFileDialog.InitialDirectory = m_strFolder;
 
-				if (SaveFileDialog.ShowDialog() == DialogResult.OK)
-					{
-					m_strFileName = Path.GetFileName(SaveFileDialog.FileName);
+                if (SaveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                    m_strFileName = Path.GetFileName(SaveFileDialog.FileName);
 
-					m_fChanged = true;
-					}
-				}
+                    m_fChanged = true;
+                    }
+                }
 
-			if (m_fChanged && !String.IsNullOrEmpty(m_strFileName))
-				{
-				Save();
+            if (m_fChanged && !String.IsNullOrEmpty(m_strFileName))
+                {
+                Save();
 
-				m_fChanged = false;
+                m_fChanged = false;
 
-				SetTitle();
-				}
-			}
+                SetTitle();
+                }
+            }
 
-		//============================================================================*
-		// OnFileSaveAs()
-		//============================================================================*
+        //============================================================================*
+        // OnFileSaveAs()
+        //============================================================================*
 
-		private void OnFileSaveAs(Object sender, EventArgs e)
-			{
-			SaveFileDialog SaveFileDialog = new SaveFileDialog();
+        private void OnFileSaveAs(Object sender, EventArgs e)
+            {
+            SaveFileDialog SaveFileDialog = new SaveFileDialog();
 
-			SaveFileDialog.Title = "Save Target File As";
-			SaveFileDialog.DefaultExt = "rwt";
-			SaveFileDialog.CheckFileExists = false;
-			SaveFileDialog.CheckPathExists = true;
-			SaveFileDialog.OverwritePrompt = true;
-			SaveFileDialog.Filter = "Target Files (*.rwt)|*.rwt";
-			SaveFileDialog.InitialDirectory = m_strFolder;
-			SaveFileDialog.FileName = GetUniqueFileName();
+            SaveFileDialog.Title = "Save Target File As";
+            SaveFileDialog.DefaultExt = "rwt";
+            SaveFileDialog.CheckFileExists = false;
+            SaveFileDialog.CheckPathExists = true;
+            SaveFileDialog.OverwritePrompt = true;
+            SaveFileDialog.Filter = "Target Files (*.rwt)|*.rwt";
+            SaveFileDialog.InitialDirectory = m_strFolder;
+            SaveFileDialog.FileName = GetUniqueFileName();
 
-			if (SaveFileDialog.ShowDialog() == DialogResult.OK)
-				{
-				m_strFileName = Path.GetFileName(SaveFileDialog.FileName);
+            if (SaveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                m_strFileName = Path.GetFileName(SaveFileDialog.FileName);
 
-				Save();
+                Save();
 
-				m_fChanged = false;
+                m_fChanged = false;
 
-				SetTitle();
-				}
-			}
+                SetTitle();
+                }
+            }
 
-		//============================================================================*
-		// OnFileSaveTargetImage()
-		//============================================================================*
+        //============================================================================*
+        // OnFileSaveTargetImage()
+        //============================================================================*
 
-		private void OnFileSaveTargetImage(Object sender, EventArgs e)
-			{
-			SaveFileDialog SaveTargetDialog = new SaveFileDialog();
+        private void OnFileSaveTargetImage(Object sender, EventArgs e)
+            {
+            SaveFileDialog SaveTargetDialog = new SaveFileDialog();
 
-			string strFileName = m_Target.SuggestedFileName;
+            string strFileName = m_Target.SuggestedFileName;
 
-			strFileName = Path.ChangeExtension(strFileName, "jpg");
+            strFileName = Path.ChangeExtension(strFileName, "jpg");
 
-			SaveTargetDialog.CheckFileExists = false;
-			SaveTargetDialog.CheckPathExists = false;
-			SaveTargetDialog.FileName = strFileName;
-			SaveTargetDialog.Filter = "Jpeg|*.jpg";
-			SaveTargetDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-			SaveTargetDialog.Title = "Save Target Image";
+            SaveTargetDialog.CheckFileExists = false;
+            SaveTargetDialog.CheckPathExists = false;
+            SaveTargetDialog.FileName = strFileName;
+            SaveTargetDialog.Filter = "Jpeg|*.jpg";
+            SaveTargetDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            SaveTargetDialog.Title = "Save Target Image";
 
-			DialogResult rc = SaveTargetDialog.ShowDialog();
+            DialogResult rc = SaveTargetDialog.ShowDialog();
 
-			if (rc == DialogResult.OK)
-				{
-				strFileName = SaveTargetDialog.FileName;
+            if (rc == DialogResult.OK)
+                {
+                strFileName = SaveTargetDialog.FileName;
 
-				TargetImageBox.Image.Save(strFileName, ImageFormat.Jpeg);
-				}
-			}
+                TargetImageBox.Image.Save(strFileName, ImageFormat.Jpeg);
+                }
+            }
 
-		//============================================================================*
-		// OnFormClosing()
-		//============================================================================*
+        //============================================================================*
+        // OnFormClosing()
+        //============================================================================*
 
-		private void OnFormClosing(Object sender, FormClosingEventArgs e)
-			{
-			if (!VerifyDiscardChanges())
-				e.Cancel = true;
-			}
+        private void OnFormClosing(Object sender, FormClosingEventArgs e)
+            {
+            if (!VerifyDiscardChanges())
+                e.Cancel = true;
+            }
 
-		//============================================================================*
-		// OnOKClicked()
-		//============================================================================*
+        //============================================================================*
+        // OnOKClicked()
+        //============================================================================*
 
-		private void OnOKClicked(Object sender, EventArgs e)
+        private void OnOKClicked(Object sender, EventArgs e)
 			{
 			OnFileSave(sender, e);
 			}
@@ -1065,10 +1067,11 @@ namespace ReloadersWorkShop
 
 		private void OnTargetMouseMove(Object sender, MouseEventArgs e)
 			{
-			if (m_eMode != eMode.Calibrate || !m_fMouseDown)
-				return;
+            if (m_eMode != eMode.Calibrate || !m_fMouseDown)
+                return;
 
-			m_Target.CalibrationEnd = e.Location;
+            if (m_eMode == eMode.Calibrate && m_fMouseDown)
+                m_Target.CalibrationEnd = e.Location;
 
 			SetImage();
 			}
@@ -1495,13 +1498,21 @@ namespace ReloadersWorkShop
 					nShotNum++;
 					}
 				}
-			}
 
-		//============================================================================*
-		// SetInputData()
-		//============================================================================*
+            //----------------------------------------------------------------------------*
+            // Draw MousePointer - TODO: Remove this
+            //----------------------------------------------------------------------------*
+/*
+            if (m_MousePointer != null)
+                g.DrawImage(m_MousePointer, m_nMouseX - (m_MousePointer.Width / 2), m_nMouseY - (m_MousePointer.Height / 2));
+*/
+            }
 
-		private void SetInputData()
+        //============================================================================*
+        // SetInputData()
+        //============================================================================*
+
+        private void SetInputData()
 			{
 			RangeTextBox.Value = (int) m_DataFiles.StandardToMetric(m_Target.Range, cDataFiles.eDataType.Range);
 			RangeMeasurementLabel.Text = m_DataFiles.MetricLongString(cDataFiles.eDataType.Range);
@@ -1661,35 +1672,35 @@ namespace ReloadersWorkShop
 
 		private void SetTargetCursor()
 			{
-			Bitmap MousePointer = null;
+			m_MousePointer = null;
 			IntPtr ptr;
 
 			switch (m_eMode)
 				{
 				case eMode.LoadTarget:
-					MousePointer = new Bitmap(Properties.Resources.OpenTarget);
+					m_MousePointer = new Bitmap(Properties.Resources.OpenTarget);
 
-					ptr = MousePointer.GetHicon();
+					ptr = m_MousePointer.GetHicon();
 
 					TargetImageBox.Cursor = new Cursor(ptr);
 
 					break;
 
 				case eMode.AimPoint:
-					MousePointer = CreateReticleBitmap();
+					m_MousePointer = CreateReticleBitmap();
 
-					ptr = MousePointer.GetHicon();
+					ptr = m_MousePointer.GetHicon();
 
 					TargetImageBox.Cursor = new Cursor(ptr);
 
 					break;
 
 				case eMode.MarkShots:
-					MousePointer = CreateShotBitmap(true);
+                    m_MousePointer = CreateShotBitmap(true);
 
-					if (MousePointer != null)
+					if (m_MousePointer != null)
 						{
-						ptr = MousePointer.GetHicon();
+						ptr = m_MousePointer.GetHicon();
 
 						TargetImageBox.Cursor = new Cursor(ptr);
 						}
