@@ -208,16 +208,16 @@ namespace ReloadersWorkShop
 			HelpProgramUpdateMenuItem.Click += OnHelpProgramUpdateClicked;
 			HelpDataUpdateMenuItem.Click += OnHelpDataUpdateClicked;
 
-			HelpVideoBulletSelectionMenuItem.Click += OnHelpVideoBulletSelectionClicked;
-			HelpVideoCrimpingMenuItem.Click += OnHelpVideoCrimpingClicked;
-			HelpVideoHeadspaceMenuItem.Click += OnHelpVideoHeadspaceClicked;
-			HelpVideoRWBallisticsCalculatorMenuItem.Click += OnHelpVideoRWBallisticsCalculatorClicked;
-			HelpVideoRWBatchEditorMenuItem.Click += OnHelpVideoRWBatchEditorClicked;
-			HelpVideoRWInventoryMenuItem.Click += OnHelpVideoRWInventoryClicked;
-			HelpVideoRWLoadDataMenuItem.Click += OnHelpVideoRWLoadDataClicked;
-            HelpVideoRWTargetCalculatorMenuItem.Click += OnHelpVideoRWTargetCalculatorClicked;
-            HelpVideoRWOperationMenuItem.Click += OnHelpVideoRWOperationClicked;
-			HelpVideoSDBCMenuItem.Click += OnHelpVideoSDBCClicked;
+			HelpVideoBulletSelectionMenuItem.Click += OnHelpVideoClicked;
+			HelpVideoCrimpingMenuItem.Click += OnHelpVideoClicked;
+			HelpVideoHeadspaceMenuItem.Click += OnHelpVideoClicked;
+			HelpVideoRWBallisticsCalculatorMenuItem.Click += OnHelpVideoClicked;
+			HelpVideoRWBatchEditorMenuItem.Click += OnHelpVideoClicked;
+			HelpVideoRWInventoryMenuItem.Click += OnHelpVideoClicked;
+			HelpVideoRWLoadDataMenuItem.Click += OnHelpVideoClicked;
+            HelpVideoRWTargetCalculatorMenuItem.Click += OnHelpVideoClicked;
+            HelpVideoRWOperationMenuItem.Click += OnHelpVideoClicked;
+			HelpVideoSDBCMenuItem.Click += OnHelpVideoClicked;
 
 			//----------------------------------------------------------------------------*
 			// Make sure we're not minimized
@@ -1083,160 +1083,48 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// OnHelpVideoBulletSelectionClicked()
+		// OnHelpVideoClicked()
 		//============================================================================*
 
-		protected void OnHelpVideoBulletSelectionClicked(object sender, EventArgs args)
+		protected void OnHelpVideoClicked(object sender, EventArgs args)
 			{
 			try
 				{
-				System.Diagnostics.Process.Start("https://www.youtube.com/v/bBy36tpgfTI?autoplay=1&rel=0");
-				}
-			catch
-				{
-				MessageBox.Show("Unable to navigate to YouTube at this time, try again later.  Please make sure you are connected to the Internet.", "YouTube Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
-			}
-
-		//============================================================================*
-		// OnHelpVideoCrimpingClicked()
-		//============================================================================*
-
-		protected void OnHelpVideoCrimpingClicked(object sender, EventArgs args)
-			{
-			try
-				{
-				System.Diagnostics.Process.Start("https://www.youtube.com/v/MXWEfLE-tJg?autoplay=1&rel=0");
-				}
-			catch
-				{
-				MessageBox.Show("Unable to navigate to YouTube at this time, try again later.  Please make sure you are connected to the Internet.", "YouTube Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
-			}
-
-		//============================================================================*
-		// OnHelpVideoHeadspaceClicked()
-		//============================================================================*
-
-		protected void OnHelpVideoHeadspaceClicked(object sender, EventArgs args)
-			{
-			try
-				{
-				System.Diagnostics.Process.Start("https://www.youtube.com/v/OS5bfJ_2HNQ?autoplay=1&rel=0");
-				}
-			catch
-				{
-				MessageBox.Show("Unable to navigate to YouTube at this time, try again later.  Please make sure you are connected to the Internet.", "YouTube Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
-			}
-
-		//============================================================================*
-		// OnHelpVideoRWBaBallisticsCalculatorClicked()
-		//============================================================================*
-
-		protected void OnHelpVideoRWBallisticsCalculatorClicked(object sender, EventArgs args)
-			{
-			try
-				{
-				System.Diagnostics.Process.Start("https://www.youtube.com/v/6syoP-_TvZI?autoplay=1&rel=0");
-				}
-			catch
-				{
-				MessageBox.Show("Unable to navigate to YouTube at this time, try again later.  Please make sure you are connected to the Internet.", "YouTube Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
-			}
-
-		//============================================================================*
-		// OnHelpVideoRWBatchEditorClicked()
-		//============================================================================*
-
-		protected void OnHelpVideoRWBatchEditorClicked(object sender, EventArgs args)
-			{
-			try
-				{
-				System.Diagnostics.Process.Start("https://www.youtube.com/v/FO5z6Qvo-Lg?autoplay=1&rel=0");
-				}
-			catch
-				{
-				MessageBox.Show("Unable to navigate to YouTube at this time, try again later.  Please make sure you are connected to the Internet.", "YouTube Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
-			}
-
-		//============================================================================*
-		// OnHelpVideoRWInventoryClicked()
-		//============================================================================*
-
-		protected void OnHelpVideoRWInventoryClicked(object sender, EventArgs args)
-			{
-			try
-				{
-				System.Diagnostics.Process.Start("https://www.youtube.com/v/xrkLTBP9jZs?autoplay=1&rel=0");
-				}
-			catch
-				{
-				MessageBox.Show("Unable to navigate to YouTube at this time, try again later.  Please make sure you are connected to the Internet.", "YouTube Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
-			}
-
-		//============================================================================*
-		// OnHelpVideoRWLoadDataClicked()
-		//============================================================================*
-
-		protected void OnHelpVideoRWLoadDataClicked(object sender, EventArgs args)
-			{
-			try
-				{
-				System.Diagnostics.Process.Start("https://www.youtube.com/v/w2v_E3GaTbE?autoplay=1&rel=0");
-				}
-			catch
-				{
-				MessageBox.Show("Unable to navigate to YouTube at this time, try again later.  Please make sure you are connected to the Internet.", "YouTube Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
-			}
-
-		//============================================================================*
-		// OnHelpVideoRWOperationClicked()
-		//============================================================================*
-
-		protected void OnHelpVideoRWOperationClicked(object sender, EventArgs args)
-			{
-			try
-				{
-				System.Diagnostics.Process.Start("https://www.youtube.com/v/MOWC-ljqo6s?autoplay=1&rel=0");
-				}
-			catch
-				{
-				MessageBox.Show("Unable to navigate to YouTube at this time, try again later.  Please make sure you are connected to the Internet.", "YouTube Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
-			}
-
-        //============================================================================*
-        // OnHelpVideoRWTargetCalculatorClicked()
-        //============================================================================*
-
-        protected void OnHelpVideoRWTargetCalculatorClicked(object sender, EventArgs args)
-            {
-            try
-                {
-                System.Diagnostics.Process.Start("https://www.youtube.com/v/WgaOR49oU-c?autoplay=1&rel=0");
+                switch ((sender as ToolStripDropDownItem).Name)
+                    {
+                    case "HelpVideoBulletSelectionMenuItem":
+                        System.Diagnostics.Process.Start("https://www.youtube.com/v/bBy36tpgfTI?autoplay=1&rel=0&showinfo=0");
+                        break;
+                    case "HelpVideoCrimpingMenuItem":
+                        System.Diagnostics.Process.Start("https://www.youtube.com/v/MXWEfLE-tJg?autoplay=1&rel=0&showinfo=0");
+                        break;
+                    case "HelpVideoHeadspaceMenuItem":
+                        System.Diagnostics.Process.Start("https://www.youtube.com/v/OS5bfJ_2HNQ?autoplay=1&rel=0&showinfo=0");
+                        break;
+                    case "HelpVideoRWBallisticsCalculatorMenuItem":
+                        System.Diagnostics.Process.Start("https://www.youtube.com/v/6syoP-_TvZI?autoplay=1&rel=0&showinfo=0");
+                        break;
+                    case "HelpVideoRWBatchEditorMenuItem":
+                        System.Diagnostics.Process.Start("https://www.youtube.com/v/FO5z6Qvo-Lg?autoplay=1&rel=0&showinfo=0");
+                        break;
+                    case "HelpVideoRWInventoryMenuItem":
+                        System.Diagnostics.Process.Start("https://www.youtube.com/v/xrkLTBP9jZs?autoplay=1&rel=0&showinfo=0");
+                        break;
+                    case "HelpVideoRWLoadDataMenuItem":
+                        System.Diagnostics.Process.Start("https://www.youtube.com/v/w2v_E3GaTbE?autoplay=1&rel=0&showinfo=0");
+                        break;
+                    case "HelpVideoRWOperationMenuItem":
+                        System.Diagnostics.Process.Start("https://www.youtube.com/v/MOWC-ljqo6s?autoplay=1&rel=0&showinfo=0");
+                        break;
+                    case "HelpVideoRWTargetCalculatorMenuItem":
+                        System.Diagnostics.Process.Start("https://www.youtube.com/v/WgaOR49oU-c?autoplay=1&rel=0&showinfo=0");
+                        break;
+                    case "HelpVideoSDBCMenuItem":
+                        System.Diagnostics.Process.Start("https://www.youtube.com/v/r5JdL_7saWg?autoplay=1&rel=0&showinfo=0");
+                        break;
+                    }
                 }
-            catch
-                {
-                MessageBox.Show("Unable to navigate to YouTube at this time, try again later.  Please make sure you are connected to the Internet.", "YouTube Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-
-        //============================================================================*
-        // OnHelpVideoSDBCClicked()
-        //============================================================================*
-
-        protected void OnHelpVideoSDBCClicked(object sender, EventArgs args)
-			{
-			try
-				{
-				System.Diagnostics.Process.Start("https://www.youtube.com/v/r5JdL_7saWg?autoplay=1&rel=0&showinfo=0");
-				}
-			catch
+			catch(Exception e)
 				{
 				MessageBox.Show("Unable to navigate to YouTube at this time, try again later.  Please make sure you are connected to the Internet.", "YouTube Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
