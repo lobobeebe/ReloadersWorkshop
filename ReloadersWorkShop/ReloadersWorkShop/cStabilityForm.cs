@@ -717,7 +717,7 @@ namespace ReloadersWorkShop
 			double dMinDiameter = m_DataFiles.StandardToMetric(1000.0, cDataFiles.eDataType.Dimension);
 			double dMaxDiameter = m_DataFiles.StandardToMetric(0.0, cDataFiles.eDataType.Dimension);
 
-			double dMinWeight = m_DataFiles.StandardToMetric(750.0, cDataFiles.eDataType.BulletWeight);
+			double dMinWeight = m_DataFiles.StandardToMetric(cBullet.MaxBulletWeight, cDataFiles.eDataType.BulletWeight);
 			double dMaxWeight = m_DataFiles.StandardToMetric(0.0, cDataFiles.eDataType.BulletWeight);
 
 			foreach (cCaliber Caliber in CaliberList)

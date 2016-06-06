@@ -87,10 +87,6 @@ namespace ReloadersWorkShop
 			MainTabControl.GotFocus += OnMainTabGotFocus;
 
 			//----------------------------------------------------------------------------*
-			// Check the registry to see if this is a trial version
-			//----------------------------------------------------------------------------*
-
-			//----------------------------------------------------------------------------*
 			// Initialize Tabs
 			//----------------------------------------------------------------------------*
 
@@ -227,16 +223,12 @@ namespace ReloadersWorkShop
 
 			if (m_DataFiles.Preferences.Maximized)
 				{
-				//				WindowState = FormWindowState.Maximized;
-
 				NativeMethods.ShowWindowAsync(this.Handle, 3);
 
 				OnResize(new EventArgs());
 				}
 			else
 				{
-				//				WindowState = FormWindowState.Normal;
-
 				Size = m_DataFiles.Preferences.MainFormSize;
 				Location = m_DataFiles.Preferences.MainFormLocation;
 
@@ -244,12 +236,6 @@ namespace ReloadersWorkShop
 
 				OnResize(new EventArgs());
 				}
-
-			//----------------------------------------------------------------------------*
-			// Update Buttons and Exit
-			//----------------------------------------------------------------------------*
-
-			//			UpdateButtons();
 			}
 
 		//============================================================================*
@@ -1124,7 +1110,7 @@ namespace ReloadersWorkShop
                         break;
                     }
                 }
-			catch(Exception e)
+			catch
 				{
 				MessageBox.Show("Unable to navigate to YouTube at this time, try again later.  Please make sure you are connected to the Internet.", "YouTube Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
@@ -1493,22 +1479,6 @@ namespace ReloadersWorkShop
 			m_BatchListView.Location = new Point(0, BatchFiltersGroupBox.Location.Y + BatchFiltersGroupBox.Height + 20);
 			m_BatchListView.Size = new Size(MainTabControl.Width, nButtonY - m_BatchListView.Location.Y - 20);
 
-			//----------------------------------------------------------------------------*
-			// Ballistics Tab
-			//----------------------------------------------------------------------------*
-			/*
-						int nX = (this.Width / 2) - (BallisticsDatabaseGroupBox.Width / 2);
-
-						BallisticsDatabaseGroupBox.Location = new Point(nX, BallisticsDatabaseGroupBox.Location.Y);
-
-						nX = (this.Width / 2) - (BallisticsInputDataGroupBox.Width / 2);
-
-						BallisticsInputDataGroupBox.Location = new Point(nX, BallisticsInputDataGroupBox.Location.Y);
-
-						nX = (BallisticsInputDataGroupBox.Width / 2) - (BallisticsCalculateButton.Width / 2);
-
-						BallisticsCalculateButton.Location = new Point(nX, BallisticsCalculateButton.Location.Y);
-			*/
 			//----------------------------------------------------------------------------*
 			// Ammo Tab
 			//----------------------------------------------------------------------------*
@@ -2028,7 +1998,7 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// OnViewsuppliesClicked()
+		// OnViewSuppliesClicked()
 		//============================================================================*
 
 		private void OnViewSuppliesClicked(Object sender, EventArgs e)

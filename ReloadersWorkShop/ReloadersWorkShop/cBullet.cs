@@ -40,11 +40,14 @@ namespace ReloadersWorkShop
 		private static int sm_nDimensionDecimals = 3;
 		private static int sm_nWeightDecimals = 0;
 
-		//============================================================================*
-		// Private Data Members
-		//============================================================================*
+        private static double sm_dMinBulletWeight = cBullet.MinBulletWeight;
+        private static double sm_dMaxBulletWeight = cBullet.MaxBulletWeight;
 
-		private string m_strPartNumber = "";
+        //============================================================================*
+        // Private Data Members
+        //============================================================================*
+
+        private string m_strPartNumber = "";
 		private string m_strType = "";
 		private Double m_dDiameter = 0.0;
 		private double m_dLength = 0.0;
@@ -318,11 +321,35 @@ namespace ReloadersWorkShop
 				}
 			}
 
-		//============================================================================*
-		// MetricDimensions Property
-		//============================================================================*
+        //============================================================================*
+        // MaxBulletWeight Property
+        //============================================================================*
 
-		public static bool MetricDimensions
+        public static double MaxBulletWeight
+            {
+            get
+                {
+                return (sm_dMinBulletWeight);
+                }
+            }
+
+        //============================================================================*
+        // MinBulletWeight Property
+        //============================================================================*
+
+        public static double MinBulletWeight
+            {
+            get
+                {
+                return (sm_dMinBulletWeight);
+                }
+            }
+
+        //============================================================================*
+        // MetricDimensions Property
+        //============================================================================*
+
+        public static bool MetricDimensions
 			{
 			get
 				{

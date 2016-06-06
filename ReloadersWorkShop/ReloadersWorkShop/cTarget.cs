@@ -987,9 +987,12 @@ namespace ReloadersWorkShop
 
 		public double OffsetMOA(Point Shot)
 			{
-			double dMOA = OffsetLength(Shot) / 1.047;
+            double dMOA = 0.0;
 
-			return (dMOA);
+            if (m_nRange > 0)
+                dMOA = OffsetLength(Shot) / ((m_nRange / 100.0) * 1.047);
+
+            return (dMOA);
 			}
 
 		//============================================================================*

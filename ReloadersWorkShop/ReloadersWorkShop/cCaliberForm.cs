@@ -426,8 +426,8 @@ namespace ReloadersWorkShop
 					MaxBulletDiameterTextBox.Enabled = true;
 					MaxBulletDiameterMeasurementLabel.Enabled = true;
 
-					MinBulletWeightTextBox.MinValue = 20.0;
-					MinBulletWeightTextBox.MaxValue = 750.0;
+					MinBulletWeightTextBox.MinValue = cBullet.MinBulletWeight;
+					MinBulletWeightTextBox.MaxValue = cBullet.MaxBulletWeight;
 
 					break;
 
@@ -895,11 +895,11 @@ namespace ReloadersWorkShop
 			MaxBulletDiameterTextBox.MinValue = MinBulletDiameterTextBox.Value;
 			MaxBulletDiameterTextBox.MaxValue = m_DataFiles.StandardToMetric(0.6, cDataFiles.eDataType.Dimension);
 
-			MinBulletWeightTextBox.MinValue = m_DataFiles.StandardToMetric(m_Caliber.FirearmType == cFirearm.eFireArmType.Shotgun ? 0.1 : 20.0, m_Caliber.FirearmType == cFirearm.eFireArmType.Shotgun ? cDataFiles.eDataType.ShotWeight : cDataFiles.eDataType.BulletWeight);
-			MinBulletWeightTextBox.MaxValue = m_DataFiles.StandardToMetric(m_Caliber.FirearmType == cFirearm.eFireArmType.Shotgun ? 10.0 : 800.0, m_Caliber.FirearmType == cFirearm.eFireArmType.Shotgun ? cDataFiles.eDataType.ShotWeight : cDataFiles.eDataType.BulletWeight);
+			MinBulletWeightTextBox.MinValue = m_DataFiles.StandardToMetric(m_Caliber.FirearmType == cFirearm.eFireArmType.Shotgun ? 0.1 : cBullet.MinBulletWeight, m_Caliber.FirearmType == cFirearm.eFireArmType.Shotgun ? cDataFiles.eDataType.ShotWeight : cDataFiles.eDataType.BulletWeight);
+			MinBulletWeightTextBox.MaxValue = m_DataFiles.StandardToMetric(m_Caliber.FirearmType == cFirearm.eFireArmType.Shotgun ? 10.0 : cBullet.MaxBulletWeight, m_Caliber.FirearmType == cFirearm.eFireArmType.Shotgun ? cDataFiles.eDataType.ShotWeight : cDataFiles.eDataType.BulletWeight);
 
 			MaxBulletWeightTextBox.MinValue = MinBulletWeightTextBox.Value;
-			MaxBulletWeightTextBox.MaxValue = m_DataFiles.StandardToMetric(m_Caliber.FirearmType == cFirearm.eFireArmType.Shotgun ? 10.0 : 800.0, m_Caliber.FirearmType == cFirearm.eFireArmType.Shotgun ? cDataFiles.eDataType.ShotWeight : cDataFiles.eDataType.BulletWeight);
+			MaxBulletWeightTextBox.MaxValue = m_DataFiles.StandardToMetric(m_Caliber.FirearmType == cFirearm.eFireArmType.Shotgun ? 10.0 : cBullet.MaxBulletWeight, m_Caliber.FirearmType == cFirearm.eFireArmType.Shotgun ? cDataFiles.eDataType.ShotWeight : cDataFiles.eDataType.BulletWeight);
 
 			CaseTrimLengthTextBox.MinValue = m_DataFiles.StandardToMetric(0.5, cDataFiles.eDataType.Dimension);
 			CaseTrimLengthTextBox.MaxValue = MaxCaseLengthTextBox.Value;

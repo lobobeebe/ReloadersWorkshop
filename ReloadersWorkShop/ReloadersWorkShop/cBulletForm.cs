@@ -932,8 +932,8 @@ namespace ReloadersWorkShop
 					{
 					dMinDiameter = 0.0;
 					dMaxDiameter = 1.0;
-					dMinWeight = 20;
-					dMaxWeight = 750;
+					dMinWeight = cBullet.MinBulletWeight;
+					dMaxWeight = cBullet.MaxBulletWeight;
 					}
 				}
 

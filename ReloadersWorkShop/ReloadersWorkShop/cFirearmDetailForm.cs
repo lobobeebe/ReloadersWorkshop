@@ -260,7 +260,7 @@ namespace ReloadersWorkShop
 			else
 				FileDlg.InitialDirectory = Environment.SpecialFolder.MyPictures.ToString();
 
-			FileDlg.Filter = "Image Files (*.jpg, *.bmp, *.gif, *.png, *.tiff)|*.jpg;*.bmp;*.gif;*.png;*.tiff";
+			FileDlg.Filter = "Image Files (*.jpg, *.jpeg, *.bmp, *.gif, *.png, *.tiff)|*.jpg;*.jpeg;*.bmp;*.gif;*.png;*.tiff";
 
 			FileDlg.FileName = "";
 

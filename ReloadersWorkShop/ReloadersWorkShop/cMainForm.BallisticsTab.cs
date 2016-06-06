@@ -2953,8 +2953,8 @@ namespace ReloadersWorkShop
 
 				dDiameterMin = 0.170;
 				dDiameterMax = 0.650;
-				dWeightMin = 15;
-				dWeightMax = 750.0;
+				dWeightMin = cBullet.MinBulletWeight;
+				dWeightMax = cBullet.MaxBulletWeight;
 				}
 			else
 				{
