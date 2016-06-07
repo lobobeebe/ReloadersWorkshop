@@ -146,7 +146,7 @@ namespace ReloadersWorkShop
 				cAmmo NewAmmo = AmmoForm.Ammo;
 				m_DataFiles.Preferences.LastAmmo = AmmoForm.Ammo;
 
-				m_FirearmsListView.Focus();
+				m_AmmoListView.Focus();
 
 				//----------------------------------------------------------------------------*
 				// See if the ammo already exists
@@ -535,7 +535,8 @@ namespace ReloadersWorkShop
 					CheckAmmo.BallisticCoefficient = NewAmmo.BallisticCoefficient;
 					CheckAmmo.BulletDiameter = NewAmmo.BulletDiameter;
 					CheckAmmo.BulletWeight = NewAmmo.BulletWeight;
-					CheckAmmo.TestList = NewAmmo.TestList;
+                    CheckAmmo.Reload = NewAmmo.Reload;
+                    CheckAmmo.TestList = NewAmmo.TestList;
 
 					CheckAmmo.TransactionList = new cTransactionList(NewAmmo.TransactionList);
 
