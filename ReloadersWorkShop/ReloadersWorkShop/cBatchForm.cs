@@ -13,8 +13,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-using ReloadersWorkShop.Controls;
-using ReloadersWorkShop.Preferences;
+using RWCommonLib.Registry;
 
 //============================================================================*
 // NameSpace
@@ -62,12 +61,13 @@ namespace ReloadersWorkShop
 		private cBatch m_Batch = null;
 
 		private cDataFiles m_DataFiles = null;
+		private cRWRegistry m_RWRegistry  = null;
 
 		//============================================================================*
 		// cBatchForm() - Constructor
 		//============================================================================*
 
-		public cBatchForm(cBatch Batch, cDataFiles DataFiles, cFirearm.eFireArmType eFirearmType = cFirearm.eFireArmType.None, bool fViewOnly = false)
+		public cBatchForm(cBatch Batch, cDataFiles DataFiles, cRWRegistry RWRegistry, cFirearm.eFireArmType eFirearmType = cFirearm.eFireArmType.None, bool fViewOnly = false)
 			{
 			Cursor = Cursors.WaitCursor;
 
@@ -75,6 +75,8 @@ namespace ReloadersWorkShop
 
 			m_Batch = Batch;
 			m_DataFiles = DataFiles;
+			m_RWRegistry = RWRegistry;
+
 			m_eFirearmType = eFirearmType;
 
 			m_fViewOnly = fViewOnly;
@@ -975,7 +977,7 @@ namespace ReloadersWorkShop
 
 		private void OnTestDataClicked(object sender, EventArgs e)
 			{
-			cBatchTestForm BatchTestForm = new cBatchTestForm(m_Batch, m_DataFiles, m_fUserViewOnly);
+			cBatchTestForm BatchTestForm = new cBatchTestForm(m_Batch, m_DataFiles, m_RWRegistry, m_fUserViewOnly);
 
 			DialogResult rc = BatchTestForm.ShowDialog();
 

@@ -1713,7 +1713,7 @@ namespace ReloadersWorkShop
 
 		private void OnToolsTargetCalculatorClicked(Object sender, EventArgs e)
 			{
-			cTargetCalculatorForm TargetCalculatorForm = new cTargetCalculatorForm(m_DataFiles);
+			cTargetCalculatorForm TargetCalculatorForm = new cTargetCalculatorForm(m_DataFiles, m_RWRegistry);
 
 			TargetCalculatorForm.ShowDialog();
 			}

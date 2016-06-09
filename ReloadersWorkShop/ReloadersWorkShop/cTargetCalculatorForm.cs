@@ -17,6 +17,8 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 using WIA;
 
+using RWCommonLib.Registry;
+
 //============================================================================*
 // NameSpace
 //============================================================================*
@@ -52,6 +54,7 @@ namespace ReloadersWorkShop
         private eMode m_eMode = eMode.LoadTarget;
 
         private cDataFiles m_DataFiles = null;
+        private cRWRegistry m_RWRegistry = null;
         private cBatchTest m_BatchTest = null;
 
         private string m_strFileName = "";
@@ -73,11 +76,12 @@ namespace ReloadersWorkShop
         // cTargetCalculatorForm()
         //============================================================================*
 
-        public cTargetCalculatorForm(cDataFiles DataFiles)
+        public cTargetCalculatorForm(cDataFiles DataFiles, cRWRegistry RWRegistry)
             {
             InitializeComponent();
 
             m_DataFiles = DataFiles;
+            m_RWRegistry = RWRegistry;
 
             m_fBatchTest = false;
 
@@ -88,11 +92,12 @@ namespace ReloadersWorkShop
         // cTargetCalculatorForm()
         //============================================================================*
 
-        public cTargetCalculatorForm(cDataFiles DataFiles, cBatchTest BatchTest = null)
+        public cTargetCalculatorForm(cDataFiles DataFiles, cRWRegistry RWRegistry, cBatchTest BatchTest = null)
             {
             InitializeComponent();
 
             m_DataFiles = DataFiles;
+            m_RWRegistry = RWRegistry;
 
             m_BatchTest = BatchTest;
 
@@ -535,6 +540,14 @@ namespace ReloadersWorkShop
                 EditPreferencesMenuItem.Click += OnEditPreferences;
                 EditUndoMenuItem.Click += OnEditUndo;
 
+                ImageRotateRightMenuItem.Click += OnRotateRight;
+                ImageRotateLeftMenuItem.Click += OnRotateLeft;
+                ImageFlipMenuItem.Click += OnFlip;
+
+                HelpAboutMenuItem.Click += OnHelpAboutClicked;
+                HelpVideoTargetCalculatorMenuItem.Click += OnHelpVideoClicked;
+                HelpVideoScanningTargetsMenuItem.Click += OnHelpVideoClicked;
+
                 CaliberCombo.SelectedIndexChanged += OnCaliberSelected;
                 RangeTextBox.TextChanged += OnRangeChanged;
 
@@ -570,7 +583,7 @@ namespace ReloadersWorkShop
             // Set Target Size
             //----------------------------------------------------------------------------*
 
-            TargetImageBox.Size = new Size(990, 554);
+            Reset();
 
             FitImage();
 
@@ -843,6 +856,19 @@ namespace ReloadersWorkShop
                         return;
                         }
 
+                    Bitmap NewBitmap = new Bitmap(984, 519);
+
+                    if (m_Target.Image != null)
+                        {
+                        Graphics g = Graphics.FromImage(NewBitmap);
+
+                        g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+
+                        g.DrawImage(m_Target.Image, 0, 0, m_TargetImage.Width, m_TargetImage.Height);
+                        }
+
+                    m_Target.Image = NewBitmap;
+
                     m_DataFiles.Preferences.TargetFolder = Path.GetDirectoryName(OpenTargetDialog.FileName);
 
                     FitImage();
@@ -1016,6 +1042,18 @@ namespace ReloadersWorkShop
             }
 
         //============================================================================*
+        // OnFlip()
+        //============================================================================*
+
+        private void OnFlip(Object sender, EventArgs e)
+            {
+            Reset();
+
+            RotateRight(false);
+            RotateRight(false);
+            }
+
+        //============================================================================*
         // OnFormClosing()
         //============================================================================*
 
@@ -1023,6 +1061,115 @@ namespace ReloadersWorkShop
             {
             if (!VerifyDiscardChanges())
                 e.Cancel = true;
+            }
+
+        //============================================================================*
+        // OnHelpAboutClicked()
+        //============================================================================*
+
+        protected void OnHelpAboutClicked(object sender, EventArgs args)
+            {
+            AboutDialog AboutDlg = new AboutDialog(m_RWRegistry);
+
+            AboutDlg.ShowDialog();
+            }
+
+        //============================================================================*
+        // OnHelpVideoClicked()
+        //============================================================================*
+
+        private void OnHelpVideoClicked(Object sender, EventArgs e)
+            {
+            try
+                {
+                switch ((sender as ToolStripDropDownItem).Name)
+                    {
+                    case "HelpVideoTargetCalculatorMenuItem":
+                        System.Diagnostics.Process.Start("https://www.youtube.com/v/WgaOR49oU-c?autoplay=1&rel=0&showinfo=0");
+                        break;
+                    case "HelpVideoScanningTargetsMenuItem":
+                        System.Diagnostics.Process.Start("https://www.youtube.com/v/wQmP49edQBo?autoplay=1&rel=0&showinfo=0");
+                        break;
+                    }
+                }
+            catch
+                {
+                MessageBox.Show("Unable to navigate to YouTube at this time, try again later.  Please make sure you are connected to the Internet.", "YouTube Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+
+        //============================================================================*
+        // OnRotateLeft()
+        //============================================================================*
+
+        private void OnRotateLeft(Object sender, EventArgs e)
+            {
+            Reset();
+
+            RotateLeft();
+            }
+
+        //============================================================================*
+        // RotateLeft()
+        //============================================================================*
+
+        private void RotateLeft(bool fRotateOnly = false)
+            {
+            Bitmap NewBitmap = new Bitmap(m_Target.Image.Height, m_Target.Image.Width);
+
+            for (int nInCol = 0; nInCol < m_Target.Image.Width; nInCol++)
+                {
+                for (int nInRow = 0; nInRow < m_Target.Image.Height; nInRow++)
+                    {
+                    Color PixelColor = (m_Target.Image as Bitmap).GetPixel(nInCol, nInRow);
+
+                    NewBitmap.SetPixel(nInRow, m_Target.Image.Width - 1 - nInCol, PixelColor);
+                    }
+                }
+
+            m_Target.Image = NewBitmap;
+
+            TargetImageBox.Image = NewBitmap;
+
+            if (!fRotateOnly)
+                FitImage();
+            }
+
+        //============================================================================*
+        // OnRotateRight()
+        //============================================================================*
+
+        private void OnRotateRight(Object sender, EventArgs e)
+            {
+            Reset();
+
+            RotateRight();
+            }
+
+        //============================================================================*
+        // RotateRight()
+        //============================================================================*
+
+        private void RotateRight(bool fRotateOnly = false)
+            {
+            Bitmap NewBitmap = new Bitmap(m_Target.Image.Height, m_Target.Image.Width);
+
+            for (int nInCol = 0; nInCol < m_Target.Image.Width; nInCol++)
+                {
+                for (int nInRow = 0; nInRow < m_Target.Image.Height; nInRow++)
+                    {
+                    Color PixelColor = (m_Target.Image as Bitmap).GetPixel(nInCol, nInRow);
+
+                    NewBitmap.SetPixel(NewBitmap.Width - 1 - nInRow, nInCol, PixelColor);
+                    }
+                }
+
+            m_Target.Image = NewBitmap;
+
+            TargetImageBox.Image = NewBitmap;
+
+            if (!fRotateOnly)
+                FitImage();
             }
 
         //============================================================================*
@@ -1396,6 +1543,27 @@ namespace ReloadersWorkShop
                 if (Caliber != null)
                     m_Target.Caliber = Caliber;
                 }
+            }
+
+        //============================================================================*
+        // Reset()
+        //============================================================================*
+
+        public void Reset()
+            {
+            m_Target.AimPoint = new Point(0, 0);
+            m_Target.CalibrationStart = new Point(0, 0);
+            m_Target.CalibrationEnd = new Point(0, 0);
+
+            while (m_Target.ShotList.Count > 0)
+                m_Target.ShotList.RemoveAt(0);
+
+            if (m_Target.Image == null)
+                SetMode(eMode.LoadTarget);
+            else
+                SetMode(eMode.Calibrate);
+
+            m_fChanged = false;
             }
 
         //============================================================================*

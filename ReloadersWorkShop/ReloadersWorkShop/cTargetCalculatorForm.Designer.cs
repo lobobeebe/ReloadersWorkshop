@@ -41,6 +41,7 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.FileOpenTargetImageMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FileSaveTargetImageMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.FileScanTargetImageMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EditUndoMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -75,7 +76,17 @@
             this.ShowExtremesCheckBox = new System.Windows.Forms.CheckBox();
             this.ShowGroupBoxCheckBox = new System.Windows.Forms.CheckBox();
             this.ShowShotNumCheckBox = new System.Windows.Forms.CheckBox();
-            this.FileScanTargetImageMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.imageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ImageRotateMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ImageRotateRightMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ImageRotateLeftMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ImageFlipMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.VideoTutorialsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.HelpAboutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.HelpVideoTargetCalculatorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.HelpVideoScanningTargetsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TargetCalculatorMenuStrip.SuspendLayout();
             this.OutputGroupBox.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -106,10 +117,12 @@
             // 
             this.TargetCalculatorMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.editToolStripMenuItem});
+            this.editToolStripMenuItem,
+            this.imageToolStripMenuItem,
+            this.helpToolStripMenuItem});
             this.TargetCalculatorMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.TargetCalculatorMenuStrip.Name = "TargetCalculatorMenuStrip";
-            this.TargetCalculatorMenuStrip.Size = new System.Drawing.Size(1059, 24);
+            this.TargetCalculatorMenuStrip.Size = new System.Drawing.Size(1055, 24);
             this.TargetCalculatorMenuStrip.TabIndex = 4;
             this.TargetCalculatorMenuStrip.Text = "menuStrip1";
             // 
@@ -187,6 +200,12 @@
             this.FileSaveTargetImageMenuItem.Name = "FileSaveTargetImageMenuItem";
             this.FileSaveTargetImageMenuItem.Size = new System.Drawing.Size(186, 22);
             this.FileSaveTargetImageMenuItem.Text = "Save Target &Image";
+            // 
+            // FileScanTargetImageMenuItem
+            // 
+            this.FileScanTargetImageMenuItem.Name = "FileScanTargetImageMenuItem";
+            this.FileScanTargetImageMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.FileScanTargetImageMenuItem.Text = "S&can Target Image";
             // 
             // editToolStripMenuItem
             // 
@@ -572,11 +591,83 @@
             this.ShowShotNumCheckBox.Text = "Show Shot #\'s";
             this.ShowShotNumCheckBox.UseVisualStyleBackColor = true;
             // 
-            // FileScanTargetImageMenuItem
+            // imageToolStripMenuItem
             // 
-            this.FileScanTargetImageMenuItem.Name = "FileScanTargetImageMenuItem";
-            this.FileScanTargetImageMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.FileScanTargetImageMenuItem.Text = "S&can Target Image";
+            this.imageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ImageRotateMenuItem,
+            this.ImageFlipMenuItem});
+            this.imageToolStripMenuItem.Name = "imageToolStripMenuItem";
+            this.imageToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.imageToolStripMenuItem.Text = "&Image";
+            // 
+            // ImageRotateMenuItem
+            // 
+            this.ImageRotateMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ImageRotateRightMenuItem,
+            this.ImageRotateLeftMenuItem});
+            this.ImageRotateMenuItem.Name = "ImageRotateMenuItem";
+            this.ImageRotateMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ImageRotateMenuItem.Text = "&Rotate";
+            // 
+            // ImageRotateRightMenuItem
+            // 
+            this.ImageRotateRightMenuItem.Name = "ImageRotateRightMenuItem";
+            this.ImageRotateRightMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ImageRotateRightMenuItem.Text = "&Right 90 Deg.";
+            // 
+            // ImageRotateLeftMenuItem
+            // 
+            this.ImageRotateLeftMenuItem.Name = "ImageRotateLeftMenuItem";
+            this.ImageRotateLeftMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ImageRotateLeftMenuItem.Text = "&Left 90 Deg.";
+            // 
+            // ImageFlipMenuItem
+            // 
+            this.ImageFlipMenuItem.Name = "ImageFlipMenuItem";
+            this.ImageFlipMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ImageFlipMenuItem.Text = "&Flip";
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.VideoTutorialsMenuItem,
+            this.toolStripSeparator4,
+            this.HelpAboutMenuItem});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "&Help";
+            // 
+            // VideoTutorialsMenuItem
+            // 
+            this.VideoTutorialsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.HelpVideoTargetCalculatorMenuItem,
+            this.HelpVideoScanningTargetsMenuItem});
+            this.VideoTutorialsMenuItem.Name = "VideoTutorialsMenuItem";
+            this.VideoTutorialsMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.VideoTutorialsMenuItem.Text = "Video &Tutorials";
+            // 
+            // HelpAboutMenuItem
+            // 
+            this.HelpAboutMenuItem.Name = "HelpAboutMenuItem";
+            this.HelpAboutMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.HelpAboutMenuItem.Text = "&About";
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(150, 6);
+            // 
+            // HelpVideoTargetCalculatorMenuItem
+            // 
+            this.HelpVideoTargetCalculatorMenuItem.Name = "HelpVideoTargetCalculatorMenuItem";
+            this.HelpVideoTargetCalculatorMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.HelpVideoTargetCalculatorMenuItem.Text = "&Target Calculator";
+            // 
+            // HelpVideoScanningTargetsMenuItem
+            // 
+            this.HelpVideoScanningTargetsMenuItem.Name = "HelpVideoScanningTargetsMenuItem";
+            this.HelpVideoScanningTargetsMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.HelpVideoScanningTargetsMenuItem.Text = "&Scanning Targets";
             // 
             // cTargetCalculatorForm
             // 
@@ -584,7 +675,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.FormCancelButton;
-            this.ClientSize = new System.Drawing.Size(1059, 758);
+            this.ClientSize = new System.Drawing.Size(1055, 758);
             this.ControlBox = false;
             this.Controls.Add(this.ShowShotNumCheckBox);
             this.Controls.Add(this.ShowGroupBoxCheckBox);
@@ -670,5 +761,16 @@
 		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.ToolStripMenuItem FileSaveTargetImageMenuItem;
         private System.Windows.Forms.ToolStripMenuItem FileScanTargetImageMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem imageToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ImageRotateMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ImageRotateRightMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ImageRotateLeftMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ImageFlipMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem VideoTutorialsMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem HelpVideoTargetCalculatorMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem HelpVideoScanningTargetsMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem HelpAboutMenuItem;
         }
 	}
