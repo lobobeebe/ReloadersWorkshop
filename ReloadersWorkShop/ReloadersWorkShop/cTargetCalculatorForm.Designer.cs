@@ -88,7 +88,7 @@
 			this.ShowGroupBoxCheckBox = new System.Windows.Forms.CheckBox();
 			this.ShowShotNumCheckBox = new System.Windows.Forms.CheckBox();
 			this.RangeTextBox = new CommonLib.Controls.cIntegerValueTextBox();
-			this.HelpVideoManupulatingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.HelpVideoManipulatingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.TargetCalculatorMenuStrip.SuspendLayout();
 			this.OutputGroupBox.SuspendLayout();
 			this.groupBox1.SuspendLayout();
@@ -264,7 +264,7 @@
             this.ImageRotateRightMenuItem,
             this.ImageRotateLeftMenuItem});
 			this.ImageRotateMenuItem.Name = "ImageRotateMenuItem";
-			this.ImageRotateMenuItem.Size = new System.Drawing.Size(170, 22);
+			this.ImageRotateMenuItem.Size = new System.Drawing.Size(220, 22);
 			this.ImageRotateMenuItem.Text = "&Rotate";
 			// 
 			// ImageRotateRightMenuItem
@@ -288,7 +288,7 @@
 			this.ImageFlipMenuItem.Name = "ImageFlipMenuItem";
 			this.ImageFlipMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
             | System.Windows.Forms.Keys.F)));
-			this.ImageFlipMenuItem.Size = new System.Drawing.Size(170, 22);
+			this.ImageFlipMenuItem.Size = new System.Drawing.Size(220, 22);
 			this.ImageFlipMenuItem.Text = "&Flip";
 			// 
 			// ImageZoomMenuItem
@@ -296,7 +296,7 @@
 			this.ImageZoomMenuItem.Name = "ImageZoomMenuItem";
 			this.ImageZoomMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
             | System.Windows.Forms.Keys.Z)));
-			this.ImageZoomMenuItem.Size = new System.Drawing.Size(170, 22);
+			this.ImageZoomMenuItem.Size = new System.Drawing.Size(220, 22);
 			this.ImageZoomMenuItem.Text = "&Zoom";
 			// 
 			// helpToolStripMenuItem
@@ -314,7 +314,7 @@
 			this.VideoTutorialsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.HelpVideoTargetCalculatorMenuItem,
             this.HelpVideoScanningTargetsMenuItem,
-            this.HelpVideoManupulatingMenuItem});
+            this.HelpVideoManipulatingMenuItem});
 			this.VideoTutorialsMenuItem.Name = "VideoTutorialsMenuItem";
 			this.VideoTutorialsMenuItem.Size = new System.Drawing.Size(153, 22);
 			this.VideoTutorialsMenuItem.Text = "Video &Tutorials";
@@ -687,11 +687,11 @@
 			this.RangeTextBox.ToolTip = "";
 			this.RangeTextBox.Value = 9999;
 			// 
-			// HelpVideoManupulatingMenuItem
+			// HelpVideoManipulatingMenuItem
 			// 
-			this.HelpVideoManupulatingMenuItem.Name = "HelpVideoManupulatingMenuItem";
-			this.HelpVideoManupulatingMenuItem.Size = new System.Drawing.Size(191, 22);
-			this.HelpVideoManupulatingMenuItem.Text = "&Manupulating Targets";
+			this.HelpVideoManipulatingMenuItem.Name = "HelpVideoManipulatingMenuItem";
+			this.HelpVideoManipulatingMenuItem.Size = new System.Drawing.Size(191, 22);
+			this.HelpVideoManipulatingMenuItem.Text = "&Manupulating Targets";
 			// 
 			// cTargetCalculatorForm
 			// 
@@ -797,6 +797,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem HelpAboutMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem ImageZoomMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem HelpVideoManupulatingMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem HelpVideoManipulatingMenuItem;
 		}
 	}

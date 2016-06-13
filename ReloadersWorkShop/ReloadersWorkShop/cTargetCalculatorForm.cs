@@ -654,6 +654,7 @@ namespace ReloadersWorkShop
 				HelpAboutMenuItem.Click += OnHelpAboutClicked;
 				HelpVideoTargetCalculatorMenuItem.Click += OnHelpVideoClicked;
 				HelpVideoScanningTargetsMenuItem.Click += OnHelpVideoClicked;
+				HelpVideoManipulatingMenuItem.Click += OnHelpVideoClicked;
 
 				CaliberCombo.SelectedIndexChanged += OnCaliberSelected;
 				RangeTextBox.TextChanged += OnRangeChanged;
@@ -690,7 +691,7 @@ namespace ReloadersWorkShop
 			// Set Target Size
 			//----------------------------------------------------------------------------*
 
-			Reset();
+			Reset(true);
 
 			FitImage();
 
@@ -850,6 +851,13 @@ namespace ReloadersWorkShop
 
 		private void OnEditUndo(Object sender, EventArgs e)
 			{
+			if (m_eMode == eMode.Zoom)
+				{
+				SetMode(eMode.Calibrate);
+
+				return;
+				}
+
 			if (m_eMode == eMode.MarkShots)
 				{
 				if (m_Target.ShotList.Count > 0)
@@ -907,7 +915,9 @@ namespace ReloadersWorkShop
 			if (!VerifyDiscardChanges())
 				return;
 
-			Reset();
+			Reset(true);
+
+			SetColors();
 
 			m_nRightCount = 0;
 
@@ -943,7 +953,7 @@ namespace ReloadersWorkShop
 			if (!VerifyDiscardChanges())
 				return;
 
-			Reset();
+			Reset(true);
 
 			m_nRightCount = 0;
 
@@ -975,12 +985,14 @@ namespace ReloadersWorkShop
 
 		private void OnFileOpenTargetImage(Object sender, EventArgs e)
 			{
-			if (!OKToLoseData())
+			if (!VerifyDiscardChanges())
 				return;
 
-			Reset();
+			Reset(true);
 
 			m_Target.Image = null;
+
+			SetColors();
 
 			m_nRightCount = 0;
 
@@ -1152,7 +1164,7 @@ namespace ReloadersWorkShop
 			if (!OKToLoseData())
 				return;
 
-			Reset();
+			Reset(true);
 
 			m_Target.Image = null;
 
@@ -1259,8 +1271,8 @@ namespace ReloadersWorkShop
 					case "HelpVideoScanningTargetsMenuItem":
 						System.Diagnostics.Process.Start("https://www.youtube.com/v/wQmP49edQBo?autoplay=1&rel=0&showinfo=0");
 						break;
-					case "HelpVideoManipulatingMenuItem":       //TODO: Set target for this video
-						System.Diagnostics.Process.Start("https://www.youtube.com/v/wQmP49edQBo?autoplay=1&rel=0&showinfo=0");
+					case "HelpVideoManipulatingMenuItem":
+						System.Diagnostics.Process.Start("https://www.youtube.com/v/IlI_sHs-lJ0?autoplay=1&rel=0&showinfo=0");
 						break;
 					}
 				}
@@ -1310,7 +1322,7 @@ namespace ReloadersWorkShop
 			if (!OKToLoseData())
 				return;
 
-				Reset();
+			Reset();
 
 			m_Target.ShotList.Clear();
 
@@ -1613,7 +1625,7 @@ namespace ReloadersWorkShop
 
 		private void Open(string strFolder, string strFileName)
 			{
-			Cursor = Cursors.WaitCursor;
+			TargetImageBox.Cursor = Cursors.WaitCursor;
 
 			Stream Stream = null;
 
@@ -1714,7 +1726,7 @@ namespace ReloadersWorkShop
 
 				m_Target.Image = null;
 
-				Reset();
+				Reset(true);
 
 				FitImage();
 
@@ -1735,7 +1747,7 @@ namespace ReloadersWorkShop
 					Stream.Close();
 				}
 
-			Cursor = Cursors.Default;
+			TargetImageBox.Cursor = Cursors.Default;
 			}
 
 		//============================================================================*
@@ -1785,7 +1797,7 @@ namespace ReloadersWorkShop
 		// Reset()
 		//============================================================================*
 
-		public void Reset(bool fSetZoom = false)
+		public void Reset(bool fResetDetails = false, bool fSetZoom = false)
 			{
 			m_Target.AimPoint = new Point(0, 0);
 			m_Target.CalibrationStart = new Point(0, 0);
@@ -1798,6 +1810,9 @@ namespace ReloadersWorkShop
 				SetMode(eMode.LoadTarget);
 			else
 				SetMode(fSetZoom ? eMode.Calibrate : eMode.Zoom);
+
+			if (fResetDetails)
+				ResetDetails();
 
 			m_fChanged = false;
 			}
@@ -1820,6 +1835,19 @@ namespace ReloadersWorkShop
 
 			SetTitle();
 			UpdateButtons();
+			}
+
+		//============================================================================*
+		// ResetDetails()
+		//============================================================================*
+
+		public void ResetDetails()
+			{
+			m_Target.Shooter = "";
+			m_Target.Location = "";
+			m_Target.Firearm = null;
+			m_Target.Event = "";
+			m_Target.Notes = "";
 			}
 
 		//============================================================================*
@@ -1937,6 +1965,23 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// SetColors()
+		//============================================================================*
+
+		public void SetColors()
+			{
+			m_Target.AimPointColor = m_DataFiles.Preferences.TargetAimPointColor;
+			m_Target.OffsetColor = m_DataFiles.Preferences.TargetOffsetColor;
+			m_Target.ScaleBackcolor = m_DataFiles.Preferences.TargetScaleBackcolor;
+			m_Target.ScaleForecolor = m_DataFiles.Preferences.TargetScaleForecolor;
+			m_Target.ShotColor = m_DataFiles.Preferences.TargetShotColor;
+			m_Target.ShotForecolor = m_DataFiles.Preferences.TargetShotForecolor;
+			m_Target.ExtremesColor = m_DataFiles.Preferences.TargetExtremesColor;
+			m_Target.GroupBoxColor = m_DataFiles.Preferences.TargetGroupBoxColor;
+			m_Target.ReticleColor = m_DataFiles.Preferences.TargetReticleColor;
+			}
+
+		//============================================================================*
 		// SetImage()
 		//============================================================================*
 
@@ -2026,7 +2071,7 @@ namespace ReloadersWorkShop
 				Point Extremes1;
 				Point Extremes2;
 
-				Pen ExtremesPen = new Pen(m_Target.ExtremesColor, 1);
+				Pen ExtremesPen = new Pen(m_Target.ExtremesColor, 2);
 
 				m_Target.GroupExtremes(out Extremes1, out Extremes2);
 
@@ -2394,7 +2439,7 @@ namespace ReloadersWorkShop
 
 			m_fChanged = true;
 
-			Reset(true);
+			Reset(false, true);
 			}
 
 		//============================================================================*
@@ -2452,22 +2497,30 @@ namespace ReloadersWorkShop
 				FileSaveAsMenuItem.Enabled = false;
 				}
 
-			if (m_Target.ShotList.Count > 0)
-				EditUndoMenuItem.Text = "Undo Last Shot Marker";
-			else
+			if (m_eMode != eMode.Zoom)
 				{
-				if (m_Target.AimPoint != Point.Empty)
-					EditUndoMenuItem.Text = "Undo Aim Point";
+				if (m_Target.ShotList.Count > 0)
+					EditUndoMenuItem.Text = "Undo Last Shot Marker";
 				else
 					{
-					if (m_Target.Calibrated)
-						EditUndoMenuItem.Text = "Undo Scale Setting";
+					if (m_Target.AimPoint != Point.Empty)
+						EditUndoMenuItem.Text = "Undo Aim Point";
 					else
 						{
-						EditUndoMenuItem.Enabled = false;
-						EditUndoMenuItem.Text = "Undo";
+						if (m_Target.Calibrated)
+							EditUndoMenuItem.Text = "Undo Scale Setting";
+						else
+							{
+							EditUndoMenuItem.Enabled = false;
+							EditUndoMenuItem.Text = "Undo";
+							}
 						}
 					}
+				}
+			else
+				{
+				EditUndoMenuItem.Enabled = true;
+				EditUndoMenuItem.Text = "Cancel Zoom Mode";
 				}
 
 			if (fEnableOK)
@@ -2487,7 +2540,7 @@ namespace ReloadersWorkShop
 			{
 			if (!m_fChanged || m_Target.ShotList.Count == 0)
 				{
-				Reset();
+				Reset(true);
 
 				m_Target.Image = null;
 
