@@ -127,7 +127,10 @@ namespace ReloadersWorkShop
 				{
 				m_AmmoTest = new cAmmoTest(AmmoTest);
 
-				if (Ammo.TestList.Count == 0)
+				if (m_AmmoTest.Ammo == null)
+					m_AmmoTest.Ammo = Ammo;
+
+				if (Ammo != null && Ammo.TestList.Count == 0)
 					m_AmmoTest.Firearm = null;
 
 				if (!m_fViewOnly)
@@ -264,6 +267,9 @@ namespace ReloadersWorkShop
 				{
 				BarrelLengthTextBox.Value = m_DataFiles.StandardToMetric(m_AmmoTest.BarrelLength, cDataFiles.eDataType.Firearm);
 				TwistTextBox.Value = m_DataFiles.StandardToMetric(m_AmmoTest.Twist, cDataFiles.eDataType.Firearm);
+
+				BarrelLengthTextBox.Enabled = true;
+				TwistTextBox.Enabled = true;
 				}
 
 			PopulateShotList();
@@ -281,7 +287,13 @@ namespace ReloadersWorkShop
 				MuzzleVelocityTextBox.Enabled = true;
 				}
 			else
-				MuzzleVelocityTextBox.Enabled = false;
+				{
+				MuzzleVelocityTextBox.Enabled = true;
+				NumShotsTextBox.Enabled = true;
+				BestGroupTextBox.Enabled = true;
+				BestGroupRangeTextBox.Enabled = true;
+				MuzzleVelocityTextBox.Enabled = true;
+				}
 
 			NotesTextBox.Text = m_AmmoTest.Notes;
 

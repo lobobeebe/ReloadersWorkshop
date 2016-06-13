@@ -51,6 +51,8 @@ namespace ReloadersWorkShop
 		private static Color sm_DefaultScaleBackcolor = Color.FromName("Yellow");
 		private static Color sm_DefaultExtremesColor = Color.FromName("White");
 		private static Color sm_DefaultGroupBoxColor = Color.FromName("LightGray");
+		private static Color sm_DefaultZoomBadColor = Color.FromName("Red");
+		private static Color sm_DefaultZoomOKColor = Color.FromName("White");
 
 		//============================================================================*
 		// Private Data Members
@@ -90,6 +92,8 @@ namespace ReloadersWorkShop
 		public Color m_ScaleBackcolor = sm_DefaultScaleBackcolor;
 		public Color m_ExtremesColor = sm_DefaultExtremesColor;
 		public Color m_GroupBoxColor = sm_DefaultGroupBoxColor;
+		public Color m_ZoomBadColor = sm_DefaultZoomBadColor;
+		public Color m_ZoomOKColor = sm_DefaultZoomOKColor;
 
 		//============================================================================*
 		// cTarget() - Default Constructor
@@ -509,6 +513,30 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// DefaultZoomBadColor Property
+		//============================================================================*
+
+		public static Color DefaultZoomBadColor
+			{
+			get
+				{
+				return (sm_DefaultZoomBadColor);
+				}
+			}
+
+		//============================================================================*
+		// DefaultZoomOKColor Property
+		//============================================================================*
+
+		public static Color DefaultZoomOKColor
+			{
+			get
+				{
+				return (sm_DefaultZoomOKColor);
+				}
+			}
+
+		//============================================================================*
 		// Event Property
 		//============================================================================*
 
@@ -772,12 +800,6 @@ namespace ReloadersWorkShop
 			set
 				{
 				m_TargetImage = value;
-
-				m_dCalibrationLength = 0.0;
-				m_CalibrationStart = Point.Empty;
-				m_CalibrationEnd = Point.Empty;
-
-				m_ShotList.Clear();
 				}
 			}
 
@@ -1349,6 +1371,38 @@ namespace ReloadersWorkShop
 				}
 
 			return (false);
+			}
+
+		//============================================================================*
+		// ZoomBadColor Property
+		//============================================================================*
+
+		public Color ZoomBadColor
+			{
+			get
+				{
+				return (m_ZoomBadColor);
+				}
+			set
+				{
+				m_ZoomBadColor = value;
+				}
+			}
+
+		//============================================================================*
+		// ZoomOKColor Property
+		//============================================================================*
+
+		public Color ZoomOKColor
+			{
+			get
+				{
+				return (m_ZoomOKColor);
+				}
+			set
+				{
+				m_ZoomOKColor = value;
+				}
 			}
 		}
 	}
