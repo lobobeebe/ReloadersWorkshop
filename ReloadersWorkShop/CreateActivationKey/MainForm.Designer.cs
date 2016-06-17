@@ -41,6 +41,7 @@
 			this.VersionTextBox = new CommonLib.Controls.cTextBox();
 			this.EmailTextBox = new CommonLib.Controls.cTextBox();
 			this.NameTextBox = new CommonLib.Controls.cTextBox();
+			this.AdditionalLicenseCheckBox = new System.Windows.Forms.CheckBox();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -55,7 +56,7 @@
 			// CloseButton
 			// 
 			this.CloseButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.CloseButton.Location = new System.Drawing.Point(382, 165);
+			this.CloseButton.Location = new System.Drawing.Point(555, 165);
 			this.CloseButton.Name = "CloseButton";
 			this.CloseButton.Size = new System.Drawing.Size(75, 23);
 			this.CloseButton.TabIndex = 4;
@@ -64,7 +65,7 @@
 			// 
 			// GetKeyButton
 			// 
-			this.GetKeyButton.Location = new System.Drawing.Point(67, 165);
+			this.GetKeyButton.Location = new System.Drawing.Point(130, 165);
 			this.GetKeyButton.Name = "GetKeyButton";
 			this.GetKeyButton.Size = new System.Drawing.Size(75, 23);
 			this.GetKeyButton.TabIndex = 3;
@@ -111,7 +112,7 @@
 			// 
 			// SendButton
 			// 
-			this.SendButton.Location = new System.Drawing.Point(169, 165);
+			this.SendButton.Location = new System.Drawing.Point(324, 165);
 			this.SendButton.Name = "SendButton";
 			this.SendButton.Size = new System.Drawing.Size(75, 23);
 			this.SendButton.TabIndex = 9;
@@ -121,7 +122,7 @@
 			// AddLicenseButton
 			// 
 			this.AddLicenseButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.AddLicenseButton.Location = new System.Drawing.Point(279, 165);
+			this.AddLicenseButton.Location = new System.Drawing.Point(227, 165);
 			this.AddLicenseButton.Name = "AddLicenseButton";
 			this.AddLicenseButton.Size = new System.Drawing.Size(75, 23);
 			this.AddLicenseButton.TabIndex = 10;
@@ -174,12 +175,24 @@
 			this.NameTextBox.ToolTip = "";
 			this.NameTextBox.Value = "";
 			// 
+			// AdditionalLicenseCheckBox
+			// 
+			this.AdditionalLicenseCheckBox.AutoCheck = false;
+			this.AdditionalLicenseCheckBox.AutoSize = true;
+			this.AdditionalLicenseCheckBox.Location = new System.Drawing.Point(421, 169);
+			this.AdditionalLicenseCheckBox.Name = "AdditionalLicenseCheckBox";
+			this.AdditionalLicenseCheckBox.Size = new System.Drawing.Size(112, 17);
+			this.AdditionalLicenseCheckBox.TabIndex = 12;
+			this.AdditionalLicenseCheckBox.Text = "Additional License";
+			this.AdditionalLicenseCheckBox.UseVisualStyleBackColor = true;
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.CloseButton;
 			this.ClientSize = new System.Drawing.Size(760, 210);
+			this.Controls.Add(this.AdditionalLicenseCheckBox);
 			this.Controls.Add(this.LicenseCountLabel);
 			this.Controls.Add(this.AddLicenseButton);
 			this.Controls.Add(this.SendButton);
@@ -218,6 +231,7 @@
 		private System.Windows.Forms.Button SendButton;
 		private System.Windows.Forms.Button AddLicenseButton;
 		private System.Windows.Forms.Label LicenseCountLabel;
+		private System.Windows.Forms.CheckBox AdditionalLicenseCheckBox;
 		}
 	}
 
