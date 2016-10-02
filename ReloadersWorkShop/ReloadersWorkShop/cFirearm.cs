@@ -579,6 +579,16 @@ namespace ReloadersWorkShop
 
 				string strFileName = String.Format("{0} {1} ({2})", Manufacturer.ToString(), m_strModel, m_strSerialNumber);
 
+				strFileName = strFileName.Replace('/', '-');
+				strFileName = strFileName.Replace('\\', '-');
+				strFileName = strFileName.Replace(':', '-');
+				strFileName = strFileName.Replace('*', '-');
+				strFileName = strFileName.Replace('?', '-');
+				strFileName = strFileName.Replace('\"', '-');
+				strFileName = strFileName.Replace('<', '-');
+				strFileName = strFileName.Replace('>', '-');
+				strFileName = strFileName.Replace('|', '-');
+
 				return (strFileName);
 				}
 			}

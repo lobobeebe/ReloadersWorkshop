@@ -381,6 +381,8 @@ namespace ReloadersWorkShop
 
 		public void InitializeAllTabs()
 			{
+			m_DataFiles.CleanBackups();
+
 			InitializeManufacturerTab();
 			InitializeCaliberTab();
 			InitializeFirearmTab();

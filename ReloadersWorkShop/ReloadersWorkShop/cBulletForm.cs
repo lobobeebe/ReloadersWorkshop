@@ -487,6 +487,8 @@ namespace ReloadersWorkShop
 				m_fChanged = true;
 
 				UpdateButtons();
+
+				BulletOKButton.Focus();
 				}
 			}
 

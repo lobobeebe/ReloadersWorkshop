@@ -64,6 +64,8 @@ namespace ReloadersWorkShop
 		private double m_dBulletDiameter = 0.0;
 		private cCaliber m_Caliber = null;
 
+		private int m_nRotation = 0;
+
 		private double m_dCalibrationLength = 0.0;
 		private Point m_CalibrationStart = new Point(0, 0);
 		private Point m_CalibrationEnd = new Point(0, 0);
@@ -129,6 +131,7 @@ namespace ReloadersWorkShop
 			m_nBatchID = Target.m_nBatchID;
 			m_nRange = Target.m_nRange;
 
+			m_nRotation = Target.m_nRotation;
 			m_dBulletDiameter = Target.m_dBulletDiameter;
 			m_Caliber = Target.m_Caliber;
 
@@ -1141,6 +1144,28 @@ namespace ReloadersWorkShop
 			set
 				{
 				m_ReticleColor = value;
+				}
+			}
+
+		//============================================================================*
+		// Rotation Property
+		//============================================================================*
+
+		public int Rotation
+			{
+			get
+				{
+				return (m_nRotation);
+				}
+			set
+				{
+				m_nRotation = value;
+
+				while (m_nRotation > 3)
+					m_nRotation -= 4;
+
+				while (m_nRotation < 0)
+					m_nRotation += 4;
 				}
 			}
 

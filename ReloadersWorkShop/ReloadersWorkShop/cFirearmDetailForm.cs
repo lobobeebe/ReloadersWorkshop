@@ -300,7 +300,7 @@ namespace ReloadersWorkShop
 
 				FirearmPictureBox.Image = FirearmImage;
 
-				if (Path.GetDirectoryName(strImageFilePath) != Path.GetDirectoryName(m_Firearm.ImageFile))
+				if (String.IsNullOrEmpty(m_Firearm.ImageFile) || Path.GetDirectoryName(strImageFilePath) != Path.GetDirectoryName(m_Firearm.ImageFile))
 					m_Firearm.ImageFile = strImageFilePath;
 
 				SetImageDimensions();

@@ -1229,6 +1229,10 @@ namespace ReloadersWorkShop
 				TargetImageBox.Image = m_TargetImage;
 				}
 
+			m_Target.Rotation = m_nRightCount;
+
+			m_fChanged = true;
+
 			FitImage();
 
 			SetMode(eMode.Calibrate);
@@ -1288,10 +1292,11 @@ namespace ReloadersWorkShop
 
 		private void OnRotateLeft(Object sender, EventArgs e)
 			{
-			if (!OKToLoseData())
+			if (sender != null && !OKToLoseData())
 				return;
 
-			Reset();
+			if (sender != null)
+				Reset();
 
 			m_TargetImage = GetNewTargetImage();
 
@@ -1300,17 +1305,20 @@ namespace ReloadersWorkShop
 			if (m_nRightCount < 0)
 				m_nRightCount = 3;
 
-			if (m_nRightCount > 0)
-				{
-				for (int i = 0; i < m_nRightCount; i++)
-					RotateRight();
+			for (int i = 0;i < m_nRightCount;i++)
+				RotateRight();
 
-				TargetImageBox.Image = m_TargetImage;
-				}
+			if (sender != null)
+				m_Target.Rotation = m_nRightCount;
+
+			m_fChanged = true;
 
 			FitImage();
 
-			SetMode(eMode.Calibrate);
+			if (sender != null)
+				SetMode(eMode.Calibrate);
+			else
+				SetImage();
 			}
 
 		//============================================================================*
@@ -1319,12 +1327,15 @@ namespace ReloadersWorkShop
 
 		private void OnRotateRight(Object sender, EventArgs e)
 			{
-			if (!OKToLoseData())
+			if (sender != null && !OKToLoseData())
 				return;
 
-			Reset();
+			if (sender != null)
+				{
+				Reset();
 
-			m_Target.ShotList.Clear();
+				m_Target.ShotList.Clear();
+				}
 
 			m_TargetImage = GetNewTargetImage();
 
@@ -1333,38 +1344,17 @@ namespace ReloadersWorkShop
 			if (m_nRightCount > 3)
 				m_nRightCount = 0;
 
-			if (m_nRightCount > 0)
+			for(int i = 0;i < m_nRightCount;i++)
+				RotateRight();
+
+			if (sender != null)
 				{
-				for (int i = 0; i < m_nRightCount; i++)
-					RotateRight();
+				m_Target.Rotation = m_nRightCount;
 
-				TargetImageBox.Image = m_TargetImage;
+				m_fChanged = true;
+
+				SetMode(eMode.Calibrate);
 				}
-
-			FitImage();
-
-			SetMode(eMode.Calibrate);
-			}
-
-		//============================================================================*
-		// RotateRight()
-		//============================================================================*
-
-		private void RotateRight()
-			{
-			Bitmap NewBitmap = new Bitmap(m_TargetImage.Height, m_TargetImage.Width);
-
-			for (int nInCol = 0; nInCol < m_TargetImage.Width; nInCol++)
-				{
-				for (int nInRow = 0; nInRow < m_TargetImage.Height; nInRow++)
-					{
-					Color PixelColor = m_TargetImage.GetPixel(nInCol, nInRow);
-
-					NewBitmap.SetPixel(NewBitmap.Width - 1 - nInRow, nInCol, PixelColor);
-					}
-				}
-
-			m_TargetImage = NewBitmap;
 			}
 
 		//============================================================================*
@@ -1672,18 +1662,29 @@ namespace ReloadersWorkShop
 
 					m_TargetImage = GetNewTargetImage();
 
+					//----------------------------------------------------------------------------*
+					// Rotate it if necessary
+					//----------------------------------------------------------------------------*
+
+					m_nRightCount = 0;
+
+					while (m_Target.Rotation != m_nRightCount)
+						{
+						OnRotateRight(null, new EventArgs());
+						}
+
 					FitImage();
 
 					m_AimPoint = CreateAimPointBitmap();
 					m_AimPointOffset = CreateAimPointOffsetBitmap();
 					m_ScaleBar = CreateScaleBar();
-
 					m_Target.Synch(m_DataFiles);
 
 					PopulateCaliberCombo();
 
 					SetInputData();
 					SetOutputData();
+
 					SetImage();
 
 					//----------------------------------------------------------------------------*
@@ -1848,6 +1849,27 @@ namespace ReloadersWorkShop
 			m_Target.Firearm = null;
 			m_Target.Event = "";
 			m_Target.Notes = "";
+			}
+
+		//============================================================================*
+		// RotateRight()
+		//============================================================================*
+
+		private void RotateRight()
+			{
+			Bitmap NewBitmap = new Bitmap(m_TargetImage.Height, m_TargetImage.Width);
+
+			for (int nInCol = 0; nInCol < m_TargetImage.Width; nInCol++)
+				{
+				for (int nInRow = 0; nInRow < m_TargetImage.Height; nInRow++)
+					{
+					Color PixelColor = m_TargetImage.GetPixel(nInCol, nInRow);
+
+					NewBitmap.SetPixel(NewBitmap.Width - 1 - nInRow, nInCol, PixelColor);
+					}
+				}
+
+			m_TargetImage = NewBitmap;
 			}
 
 		//============================================================================*

@@ -510,7 +510,7 @@ namespace ReloadersWorkShop
 
 			foreach (FileInfo Backupfile in Files)
 				{
-				if (Path.GetExtension(Backupfile.Name) != "rwb")
+				if (Path.GetExtension(Backupfile.Name) != ".rwb")
 					continue;
 
 				DateTime BackupDate = Backupfile.LastWriteTime;

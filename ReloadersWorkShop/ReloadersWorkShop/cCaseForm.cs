@@ -657,7 +657,11 @@ namespace ReloadersWorkShop
 			bool fEnableOK = m_fChanged;
 
 			if (m_fViewOnly)
+				{
+				DuplicateCaseLabel.Visible = false;
+
 				return;
+				}
 
 			//----------------------------------------------------------------------------*
 			// Check for duplicate

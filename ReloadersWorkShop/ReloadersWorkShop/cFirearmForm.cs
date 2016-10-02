@@ -1358,6 +1358,15 @@ namespace ReloadersWorkShop
 			OKButton.Enabled = fEnableOK;
 
 			//----------------------------------------------------------------------------*
+			// FirearmDetailButton
+			//----------------------------------------------------------------------------*
+
+			if (m_Firearm.Manufacturer != null && !String.IsNullOrEmpty(m_Firearm.Model) && !String.IsNullOrEmpty(m_Firearm.SerialNumber))
+				FirearmDetailsButton.Enabled = true;
+			else
+				FirearmDetailsButton.Enabled = false;
+
+			//----------------------------------------------------------------------------*
 			// Add, Edit, Remove Bullet Buttons
 			//----------------------------------------------------------------------------*
 

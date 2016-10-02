@@ -145,21 +145,7 @@ namespace ReloadersWorkShop
 				//----------------------------------------------------------------------------*
 
 				nY = cPrintObject.PrintReportTitle("Firearm Detail Report", PageRect, e.Graphics);
-/*
-				string strText = "Reloader's WorkShop";
-				SizeF TextSize = e.Graphics.MeasureString(strText, TitleFont);
 
-				e.Graphics.DrawString(strText, TitleFont, Brushes.Black, nX + (PageRect.Width / 2) - (TextSize.Width / 2), nY);
-
-				nY += TextSize.Height;
-
-				strText = "Firearm Detail Report";
-				TextSize = e.Graphics.MeasureString(strText, TitleFont);
-
-				e.Graphics.DrawString(strText, TitleFont, Brushes.Black, nX + (PageRect.Width / 2) - (TextSize.Width / 2), nY);
-
-				nY += (TextSize.Height * 2);
-*/
 				//----------------------------------------------------------------------------*
 				// Firearm Name
 				//----------------------------------------------------------------------------*
@@ -677,7 +663,7 @@ namespace ReloadersWorkShop
 
 						nX += e.Graphics.MeasureString(strText, SpecsFont).Width;
 
-						strText = String.Format("{0:F3} MOA", Firearm.ScopeClick);
+						strText = String.Format("{0:F3} {1}", Firearm.ScopeClick, Firearm.TurretTypeString);
 
 						e.Graphics.DrawString(strText, SpecsFont, Brushes.Black, nX, nY);
 						}

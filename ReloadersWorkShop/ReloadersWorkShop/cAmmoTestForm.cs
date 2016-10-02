@@ -225,7 +225,7 @@ namespace ReloadersWorkShop
 			// Populate Firearm Combo
 			//----------------------------------------------------------------------------*
 
-			if (m_AmmoTest.Firearm == null || m_AmmoTest.Ammo.TestList.Count == 0)
+			if (!m_AmmoTest.Ammo.Reload && (m_AmmoTest.Firearm == null || m_AmmoTest.Ammo.TestList.Count == 0))
 				{
 				FirearmCombo.Items.Add("Factory");
 				FirearmCombo.SelectedIndex = 0;
@@ -245,8 +245,10 @@ namespace ReloadersWorkShop
 				if (FirearmCombo.SelectedIndex < 0 && FirearmCombo.Items.Count > 0)
 					FirearmCombo.SelectedIndex = 0;
 
-				m_AmmoTest.Firearm = (cFirearm)FirearmCombo.SelectedItem;
-
+				if (FirearmCombo.SelectedIndex >= 0)
+					m_AmmoTest.Firearm = (cFirearm) FirearmCombo.SelectedItem;
+				else
+					m_AmmoTest.Firearm = null;
 				}
 
 			//----------------------------------------------------------------------------*
