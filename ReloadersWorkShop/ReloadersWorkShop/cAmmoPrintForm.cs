@@ -423,7 +423,7 @@ namespace ReloadersWorkShop
 
 				foreach (cAmmoTest AmmoTest in m_Ammo.TestList)
 					{
-					cTestStatistics Statistics = AmmoTest.TestShotList.GetStatistics();
+					cTestStatistics Statistics = AmmoTest.TestShotList.GetStatistics(AmmoTest.NumRounds);
 
 					dX = LabelRect.X;
 

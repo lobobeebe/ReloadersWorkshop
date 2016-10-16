@@ -462,17 +462,18 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			if (MaxCOLTextBox.Value < CaseTrimLengthTextBox.Value)
+            if (MaxCOLTextBox.Value < CaseTrimLengthTextBox.Value)
 				MaxCOLTextBox.Value = CaseTrimLengthTextBox.Value;
 
-			if (m_Caliber.FirearmType != cFirearm.eFireArmType.Shotgun)
+            if (m_Caliber.FirearmType != cFirearm.eFireArmType.Shotgun)
 				{
-				if (MaxCaseLengthTextBox.Value < CaseTrimLengthTextBox.Value + 0.005)
-					MaxCaseLengthTextBox.Value = CaseTrimLengthTextBox.Value + 0.005;
+                if (MaxCaseLengthTextBox.Value < CaseTrimLengthTextBox.Value + m_DataFiles.StandardToMetric(0.005, cDataFiles.eDataType.Dimension))
+					MaxCaseLengthTextBox.Value = CaseTrimLengthTextBox.Value + m_DataFiles.StandardToMetric(0.005, cDataFiles.eDataType.Dimension);
 
 				MaxCOLTextBox.MinValue = CaseTrimLengthTextBox.Value;
+                MaxCOLTextBox.MaxValue = MaxCOLTextBox.MinValue + m_DataFiles.StandardToMetric(1.5, cDataFiles.eDataType.Dimension);
 
-				m_Caliber.MaxCOL = MaxCOLTextBox.Value;
+                m_Caliber.MaxCOL = m_DataFiles.MetricToStandard(MaxCOLTextBox.Value, cDataFiles.eDataType.Dimension);
 				}
 			else
 				{
@@ -485,8 +486,9 @@ namespace ReloadersWorkShop
 				}
 
 			MaxCaseLengthTextBox.MinValue = CaseTrimLengthTextBox.Value;
+            MaxCaseLengthTextBox.MaxValue = MaxCaseLengthTextBox.MinValue + m_DataFiles.StandardToMetric(0.020, cDataFiles.eDataType.Dimension);
 
-			m_Caliber.CaseTrimLength = m_DataFiles.MetricToStandard(CaseTrimLengthTextBox.Value, cDataFiles.eDataType.Dimension);
+            m_Caliber.CaseTrimLength = m_DataFiles.MetricToStandard(CaseTrimLengthTextBox.Value, cDataFiles.eDataType.Dimension);
 			m_Caliber.MaxCaseLength = m_DataFiles.MetricToStandard(MaxCaseLengthTextBox.Value, cDataFiles.eDataType.Dimension);
 
 			m_fChanged = true;

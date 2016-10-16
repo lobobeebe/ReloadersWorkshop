@@ -370,7 +370,7 @@ namespace ReloadersWorkShop
 					if (Batch1 == null || Batch1.BatchTest == null || Batch1.BatchTest.TestShotList == null || Batch2 == null || Batch2.BatchTest == null || Batch2.BatchTest.TestShotList == null)
 						rc = 0;
 					else
-						rc = Batch1.BatchTest.TestShotList.GetStatistics().MaxDeviation.CompareTo(Batch2.BatchTest.TestShotList.GetStatistics().MaxDeviation);
+						rc = Batch1.BatchTest.TestShotList.GetStatistics(Batch1.NumRounds).MaxDeviation.CompareTo(Batch2.BatchTest.TestShotList.GetStatistics(Batch2.NumRounds).MaxDeviation);
 
 					fSpecial = true;
 
@@ -387,7 +387,7 @@ namespace ReloadersWorkShop
 					if (Batch1 == null || Batch1.BatchTest == null || Batch1.BatchTest.TestShotList == null || Batch2 == null || Batch2.BatchTest == null || Batch2.BatchTest.TestShotList == null)
 						rc = 0;
 					else
-						rc = Batch1.BatchTest.TestShotList.GetStatistics().StdDev.CompareTo(Batch2.BatchTest.TestShotList.GetStatistics().StdDev);
+						rc = Batch1.BatchTest.TestShotList.GetStatistics(Batch1.NumRounds).StdDev.CompareTo(Batch2.BatchTest.TestShotList.GetStatistics(Batch2.NumRounds).StdDev);
 
 					fSpecial = true;
 

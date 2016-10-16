@@ -3086,55 +3086,55 @@ namespace ReloadersWorkShop
 			switch (LabelType)
 				{
 				case eDataType.Altitude:
-					dValue = Math.Round(m_Preferences.MetricAltitudes ? cConversions.MetersToFeet(dValue) : dValue, 0);
+					dValue = m_Preferences.MetricAltitudes ? cConversions.MetersToFeet(dValue) : dValue;
 					break;
 
 				case eDataType.BulletWeight:
-					dValue = Math.Round(m_Preferences.MetricBulletWeights ? cConversions.GramsToGrains(dValue) : dValue, m_Preferences.BulletWeightDecimals);
+					dValue = m_Preferences.MetricBulletWeights ? cConversions.GramsToGrains(dValue) : dValue;
 					break;
 
 				case eDataType.CanWeight:
-					dValue = Math.Round(m_Preferences.MetricCanWeights ? cConversions.KilosToPounds(dValue) : dValue, m_Preferences.TrackInventory ? 3 : m_Preferences.CanWeightDecimals);
+					dValue = m_Preferences.MetricCanWeights ? cConversions.KilosToPounds(dValue) : dValue;
 					break;
 
 				case eDataType.Dimension:
-					dValue = Math.Round(m_Preferences.MetricDimensions ? cConversions.MillimetersToInches(dValue) : dValue, m_Preferences.DimensionDecimals);
+					dValue = m_Preferences.MetricDimensions ? cConversions.MillimetersToInches(dValue) : dValue;
 					break;
 
 				case eDataType.Firearm:
-					dValue = Math.Round(m_Preferences.MetricFirearms ? cConversions.CentimetersToInches(dValue) : dValue, m_Preferences.FirearmDecimals);
+					dValue = m_Preferences.MetricFirearms ? cConversions.CentimetersToInches(dValue) : dValue;
 					break;
 
 				case eDataType.GroupSize:
-					dValue = Math.Round(m_Preferences.MetricGroups ? cConversions.CentimetersToInches(dValue) : dValue, m_Preferences.GroupDecimals);
+					dValue = m_Preferences.MetricGroups ? cConversions.CentimetersToInches(dValue) : dValue;
 					break;
 
 				case eDataType.PowderWeight:
-					dValue = Math.Round(m_Preferences.MetricPowderWeights ? cConversions.GramsToGrains(dValue) : dValue, m_Preferences.TrackInventory ? 3 : m_Preferences.PowderWeightDecimals);
+					dValue = m_Preferences.MetricPowderWeights ? cConversions.GramsToGrains(dValue) : dValue;
 					break;
 
 				case eDataType.Pressure:
-					dValue = Math.Round(m_Preferences.MetricPressures ? cConversions.MillibarsToInHg(dValue) : dValue, 2);
+					dValue = m_Preferences.MetricPressures ? cConversions.MillibarsToInHg(dValue) : dValue;
 					break;
 
 				case eDataType.Range:
-					dValue = Math.Round(m_Preferences.MetricRanges ? cConversions.MetersToYards(dValue, 0) : dValue, 0);
+					dValue = m_Preferences.MetricRanges ? cConversions.MetersToYards(dValue, 0) : dValue;
 					break;
 
 				case eDataType.ShotWeight:
-					dValue = Math.Round(m_Preferences.MetricShotWeights ? cConversions.GramsToOunces(dValue) : dValue, m_Preferences.ShotWeightDecimals);
+					dValue = m_Preferences.MetricShotWeights ? cConversions.GramsToOunces(dValue) : dValue;
 					break;
 
 				case eDataType.Speed:
-					dValue = Math.Round(m_Preferences.MetricVelocities ? cConversions.KPHToMPH(dValue) : dValue, 0);
+					dValue = m_Preferences.MetricVelocities ? cConversions.KPHToMPH(dValue) : dValue;
 					break;
 
 				case eDataType.Temperature:
-					dValue = Math.Round(m_Preferences.MetricTemperatures ? cConversions.CelsiusToFahrenheit(dValue) : dValue, 0);
+					dValue = m_Preferences.MetricTemperatures ? cConversions.CelsiusToFahrenheit(dValue) : dValue;
 					break;
 
 				case eDataType.Velocity:
-					dValue = Math.Round(m_Preferences.MetricVelocities ? cConversions.MSToFPS(dValue) : dValue, 0);
+					dValue = m_Preferences.MetricVelocities ? cConversions.MSToFPS(dValue) : dValue;
 					break;
 				}
 
@@ -3697,55 +3697,55 @@ namespace ReloadersWorkShop
 			switch (LabelType)
 				{
 				case eDataType.Altitude:
-					dValue = Math.Round(m_Preferences.MetricAltitudes ? cConversions.FeetToMeters(dValue) : dValue, 0);
+					dValue = m_Preferences.MetricAltitudes ? cConversions.FeetToMeters(dValue) : dValue;
 					break;
 
 				case eDataType.BulletWeight:
-					dValue = Math.Round(m_Preferences.MetricBulletWeights ? cConversions.GrainsToGrams(dValue) : dValue, m_Preferences.BulletWeightDecimals);
+					dValue = m_Preferences.MetricBulletWeights ? cConversions.GrainsToGrams(dValue) : dValue;
 					break;
 
 				case eDataType.CanWeight:
-					dValue = Math.Round(m_Preferences.MetricCanWeights ? cConversions.PoundsToKilos(dValue) : dValue, m_Preferences.TrackInventory ? 3 : m_Preferences.CanWeightDecimals);
+					dValue = m_Preferences.MetricCanWeights ? cConversions.PoundsToKilos(dValue) : dValue;
 					break;
 
 				case eDataType.Dimension:
-					dValue = Math.Round(m_Preferences.MetricDimensions ? cConversions.InchesToMillimeters(dValue) : dValue, m_Preferences.DimensionDecimals);
+					dValue = m_Preferences.MetricDimensions ? cConversions.InchesToMillimeters(dValue) : dValue;
 					break;
 
 				case eDataType.Firearm:
-					dValue = Math.Round(m_Preferences.MetricFirearms ? cConversions.InchesToCentimeters(dValue) : dValue, m_Preferences.FirearmDecimals);
+					dValue = m_Preferences.MetricFirearms ? cConversions.InchesToCentimeters(dValue) : dValue;
 					break;
 
 				case eDataType.GroupSize:
-					dValue = Math.Round(m_Preferences.MetricGroups ? cConversions.InchesToCentimeters(dValue) : dValue, m_Preferences.GroupDecimals);
+					dValue = m_Preferences.MetricGroups ? cConversions.InchesToCentimeters(dValue) : dValue;
 					break;
 
 				case eDataType.PowderWeight:
-					dValue = Math.Round(m_Preferences.MetricPowderWeights ? cConversions.GrainsToGrams(dValue) : dValue, m_Preferences.TrackInventory ? 3 : m_Preferences.PowderWeightDecimals);
+					dValue = m_Preferences.MetricPowderWeights ? cConversions.GrainsToGrams(dValue) : dValue;
 					break;
 
 				case eDataType.Pressure:
-					dValue = Math.Round(m_Preferences.MetricPressures ? cConversions.InHgToMillibars(dValue) : dValue, 2);
+					dValue = m_Preferences.MetricPressures ? cConversions.InHgToMillibars(dValue) : dValue;
 					break;
 
 				case eDataType.Range:
-					dValue = Math.Round(m_Preferences.MetricRanges ? cConversions.YardsToMeters(dValue) : dValue, 0);
+					dValue = m_Preferences.MetricRanges ? cConversions.YardsToMeters(dValue) : dValue;
 					break;
 
 				case eDataType.ShotWeight:
-					dValue = Math.Round(m_Preferences.MetricShotWeights ? cConversions.OuncesToGrams(dValue) : dValue, m_Preferences.ShotWeightDecimals);
+					dValue = m_Preferences.MetricShotWeights ? cConversions.OuncesToGrams(dValue) : dValue;
 					break;
 
 				case eDataType.Speed:
-					dValue = Math.Round(m_Preferences.MetricVelocities ? cConversions.MPHToKPH(dValue) : dValue, 0);
+					dValue = m_Preferences.MetricVelocities ? cConversions.MPHToKPH(dValue) : dValue;
 					break;
 
 				case eDataType.Temperature:
-					dValue = Math.Round(m_Preferences.MetricTemperatures ? cConversions.FahrenheitToCelsius(dValue) : dValue, 0);
+					dValue = m_Preferences.MetricTemperatures ? cConversions.FahrenheitToCelsius(dValue) : dValue;
 					break;
 
 				case eDataType.Velocity:
-					dValue = Math.Round(m_Preferences.MetricVelocities ? cConversions.FPSToMS(dValue) : dValue, 0);
+					dValue = m_Preferences.MetricVelocities ? cConversions.FPSToMS(dValue) : dValue;
 					break;
 				}
 

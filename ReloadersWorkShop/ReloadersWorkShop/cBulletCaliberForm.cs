@@ -279,8 +279,8 @@ namespace ReloadersWorkShop
 
 			foreach (cCaliber CheckCaliber in m_DataFiles.CaliberList)
 				{
-				if ((Math.Round(CheckCaliber.MinBulletDiameter, m_DataFiles.Preferences.DimensionDecimals) <= m_Bullet.Diameter && Math.Round(CheckCaliber.MaxBulletDiameter, m_DataFiles.Preferences.DimensionDecimals) >= m_Bullet.Diameter) &&
-					(Math.Round(CheckCaliber.MinBulletWeight, m_DataFiles.Preferences.BulletWeightDecimals) <= m_Bullet.Weight && Math.Round(CheckCaliber.MaxBulletWeight, m_DataFiles.Preferences.BulletWeightDecimals) >= m_Bullet.Weight) &&
+				if ((Math.Round(CheckCaliber.MinBulletDiameter, 3) <= Math.Round(m_Bullet.Diameter,  3) && Math.Round(CheckCaliber.MaxBulletDiameter, 3) >= Math.Round(m_Bullet.Diameter, 3)) &&
+					(Math.Round(CheckCaliber.MinBulletWeight, 3) <= Math.Round(m_Bullet.Weight, 3) && Math.Round(CheckCaliber.MaxBulletWeight, 3) >= Math.Round(m_Bullet.Weight, 3)) &&
 					(CheckCaliber.FirearmType == m_Bullet.FirearmType))
 					{
 					bool fAlreadyAdded = false;

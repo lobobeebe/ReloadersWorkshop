@@ -344,7 +344,7 @@ namespace ReloadersWorkShop
 
 		public void OnEditShotsClicked(object sender, EventArgs args)
 			{
-			cTestShotForm TestShotform = new cTestShotForm(m_DataFiles, NumShotsTextBox.Value, m_BatchTest.TestShotList, m_fViewOnly);
+            cTestShotForm TestShotform = new cTestShotForm(m_DataFiles, NumShotsTextBox.Value, m_BatchTest.TestShotList, m_BatchTest.Batch.NumRounds, m_fViewOnly);
 
 			TestShotform.Initialize();
 

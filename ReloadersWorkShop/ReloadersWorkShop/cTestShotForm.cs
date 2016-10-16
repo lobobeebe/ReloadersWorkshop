@@ -50,6 +50,7 @@ namespace ReloadersWorkShop
 
 		private int m_nShotNum = 0;
 		private int m_nNumShots = 0;
+        private int m_nNumRounds = 0;
 		private cTestShotList m_TestShotList = null;
 		private cDataFiles m_DataFiles = null;
 		private bool m_fViewOnly = false;
@@ -73,13 +74,14 @@ namespace ReloadersWorkShop
 		// cTestShotForm() - Constructor
 		//============================================================================*
 
-		public cTestShotForm(cDataFiles DataFiles, int nNumshots, cTestShotList TestShotList,  bool fViewOnly = false)
+		public cTestShotForm(cDataFiles DataFiles, int nNumshots, cTestShotList TestShotList, int nNumRounds, bool fViewOnly = false)
 			{
 			InitializeComponent();
 
 			m_TestShotList = TestShotList;
 			m_nNumShots = nNumshots;
-			m_DataFiles = DataFiles;
+            m_nNumRounds = nNumRounds;
+            m_DataFiles = DataFiles;
 
 			m_fViewOnly = fViewOnly;
 			
@@ -338,7 +340,7 @@ namespace ReloadersWorkShop
 
 		private void PopulateStatistics()
 			{
-			cTestStatistics Statistics = m_TestShotList.GetStatistics();
+			cTestStatistics Statistics = m_TestShotList.GetStatistics(m_nNumRounds);
 
 			AvgLabel.Text = String.Format("{0:F1} {1}", m_DataFiles.StandardToMetric(Statistics.AverageVelocity, cDataFiles.eDataType.Velocity), m_DataFiles.MetricString(cDataFiles.eDataType.Velocity));
 			MinLabel.Text = String.Format("{0:G0} {1}", m_DataFiles.StandardToMetric(Statistics.MinVelocity, cDataFiles.eDataType.Velocity), m_DataFiles.MetricString(cDataFiles.eDataType.Velocity));

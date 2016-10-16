@@ -374,7 +374,7 @@ namespace ReloadersWorkShop
 						}
 					else
 						{
-						cTestStatistics Statistics = Batch.BatchTest.TestShotList.GetStatistics();
+						cTestStatistics Statistics = Batch.BatchTest.TestShotList.GetStatistics(Batch.NumRounds);
 
 						if (Statistics.MaxDeviation == 0)
 							Item.SubItems.Add("-");

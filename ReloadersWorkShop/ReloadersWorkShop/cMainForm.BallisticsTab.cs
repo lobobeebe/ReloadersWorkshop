@@ -3007,11 +3007,11 @@ namespace ReloadersWorkShop
 
 			BallisticsBCTextBox.MinValue = dBCMin;
 			BallisticsBCTextBox.MaxValue = dBCMax;
-			BallisticsBulletDiameterTextBox.MinValue = dDiameterMin;
-			BallisticsBulletDiameterTextBox.MaxValue = dDiameterMax;
-			BallisticsBulletWeightTextBox.MinValue = dWeightMin;
-			BallisticsBulletWeightTextBox.MaxValue = dWeightMax;
-			BallisticsBulletLengthTextBox.MinValue = 0.0;
+			BallisticsBulletDiameterTextBox.MinValue = m_DataFiles.StandardToMetric(dDiameterMin, cDataFiles.eDataType.Dimension);
+			BallisticsBulletDiameterTextBox.MaxValue = m_DataFiles.StandardToMetric(dDiameterMax, cDataFiles.eDataType.Dimension);
+			BallisticsBulletWeightTextBox.MinValue = m_DataFiles.StandardToMetric(dWeightMin,  cDataFiles.eDataType.BulletWeight);
+			BallisticsBulletWeightTextBox.MaxValue = m_DataFiles.StandardToMetric(dWeightMax,  cDataFiles.eDataType.BulletWeight);
+            BallisticsBulletLengthTextBox.MinValue = 0.0;
 			BallisticsBulletLengthTextBox.MaxValue = m_DataFiles.Preferences.MetricDimensions ? cConversions.InchesToMillimeters(3.0) : 3.0;
 
 			//----------------------------------------------------------------------------*

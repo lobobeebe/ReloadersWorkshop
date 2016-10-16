@@ -333,7 +333,7 @@ namespace ReloadersWorkShop
 
 		public void OnEditShotsClicked(object sender, EventArgs args)
 			{
-			cTestShotForm TestShotform = new cTestShotForm(m_DataFiles, NumShotsTextBox.Value, m_AmmoTest.TestShotList, m_fViewOnly);
+			cTestShotForm TestShotform = new cTestShotForm(m_DataFiles, NumShotsTextBox.Value, m_AmmoTest.TestShotList, m_AmmoTest.NumRounds, m_fViewOnly);
 
 			TestShotform.Initialize();
 
@@ -487,7 +487,7 @@ namespace ReloadersWorkShop
 
 		private void PopulateStatistics()
 			{
-			cTestStatistics Statistics = m_AmmoTest.TestShotList.GetStatistics();
+			cTestStatistics Statistics = m_AmmoTest.TestShotList.GetStatistics(m_AmmoTest.NumRounds);
 
 			m_AmmoTest.MuzzleVelocity = (int) Statistics.AverageVelocity;
 
