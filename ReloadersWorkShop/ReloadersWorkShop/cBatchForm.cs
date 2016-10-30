@@ -1453,8 +1453,8 @@ namespace ReloadersWorkShop
 
 			if (m_Batch != null && m_Batch.Load != null && m_Batch.Firearm != null)
 				{
-				FirearmHeadSpaceLabel.Text = m_Batch.Load.FirearmType == cFirearm.eFireArmType.Rifle ? String.Format("{0:F3}", m_Batch.Firearm.HeadSpace) : "N/A";
-				FirearmNeckLabel.Text = m_Batch.Load.FirearmType == cFirearm.eFireArmType.Rifle ? String.Format("{0:F3}", m_Batch.Firearm.Neck) : "N/A";
+				FirearmHeadSpaceLabel.Text = m_Batch.Load.FirearmType == cFirearm.eFireArmType.Rifle ? String.Format("{0:F3}", m_DataFiles.StandardToMetric(m_Batch.Firearm.HeadSpace, cDataFiles.eDataType.Dimension)) : "N/A";
+				FirearmNeckLabel.Text = m_Batch.Load.FirearmType == cFirearm.eFireArmType.Rifle ? String.Format("{0:F3}", m_DataFiles.StandardToMetric(m_Batch.Firearm.Neck, cDataFiles.eDataType.Dimension)) : "N/A";
 
 				foreach (cFirearmBullet CheckFirearmBullet in m_Batch.Firearm.FirearmBulletList)
 					{
@@ -1472,11 +1472,11 @@ namespace ReloadersWorkShop
 					{
 					cFirearm Firearm = (cFirearm) FirearmCombo.SelectedItem;
 
-					FirearmHeadSpaceLabel.Text = String.Format("{0:F3}", Firearm.HeadSpace);
+					FirearmHeadSpaceLabel.Text = String.Format("{0:F3}", m_DataFiles.StandardToMetric(Firearm.HeadSpace, cDataFiles.eDataType.Dimension));
 
 					FirearmHeadSpaceLabel.Text += m_DataFiles.Preferences.MetricDimensions ? " mm" : " in";
 
-					FirearmNeckLabel.Text = String.Format("{0:F3}", Firearm.Neck);
+					FirearmNeckLabel.Text = String.Format("{0:F3}", m_DataFiles.StandardToMetric(Firearm.Neck, cDataFiles.eDataType.Dimension));
 					FirearmNeckLabel.Text += m_DataFiles.Preferences.MetricDimensions ? " mm" : " in";
 					}
 				else
@@ -1488,8 +1488,8 @@ namespace ReloadersWorkShop
 
 			if (FirearmBullet != null)
 				{
-				FirearmCOLLabel.Text = String.Format("{0:F3}", FirearmBullet.COL);
-				FirearmCBTOLabel.Text = m_Batch.Load.FirearmType == cFirearm.eFireArmType.Rifle ? String.Format("{0:F3}", FirearmBullet.CBTO) : "N/A";
+				FirearmCOLLabel.Text = String.Format("{0:F3}", m_DataFiles.StandardToMetric(FirearmBullet.COL, cDataFiles.eDataType.Dimension));
+				FirearmCBTOLabel.Text = m_Batch.Load.FirearmType == cFirearm.eFireArmType.Rifle ? String.Format("{0:F3}", m_DataFiles.StandardToMetric(FirearmBullet.CBTO, cDataFiles.eDataType.Dimension)) : "N/A";
 				}
 			else
 				{
@@ -2085,7 +2085,7 @@ namespace ReloadersWorkShop
 				{
 				CBTOTextBox.Enabled = true;
 
-				CBTOTextBox.MaxValue = m_Batch.Load.Caliber.MaxCOL;
+				CBTOTextBox.MaxValue = m_DataFiles.StandardToMetric(m_Batch.Load.Caliber.MaxCOL, cDataFiles.eDataType.Dimension);
 
 				if (!CBTOTextBox.ValueOK)
 					fEnableOK = false;
@@ -2108,7 +2108,7 @@ namespace ReloadersWorkShop
 				{
 				HeadSpaceTextBox.Enabled = true;
 
-				HeadSpaceTextBox.MaxValue = m_Batch.Load.Caliber.MaxCaseLength;
+				HeadSpaceTextBox.MaxValue = m_DataFiles.StandardToMetric(m_Batch.Load.Caliber.MaxCaseLength, cDataFiles.eDataType.Dimension);
 
 				if (!HeadSpaceTextBox.ValueOK)
 					fEnableOK = false;
@@ -2131,7 +2131,7 @@ namespace ReloadersWorkShop
 				{
 				NeckSizeTextBox.Enabled = true;
 
-				NeckSizeTextBox.MaxValue = m_DataFiles.StandardToMetric(m_Batch.Load.Caliber.MaxBulletDiameter + 0.60, cDataFiles.eDataType.Dimension);
+				NeckSizeTextBox.MaxValue = m_DataFiles.StandardToMetric(m_Batch.Load.Caliber.MaxBulletDiameter + m_DataFiles.StandardToMetric(0.60, cDataFiles.eDataType.Dimension), cDataFiles.eDataType.Dimension);
 
 				if (!NeckSizeTextBox.ValueOK)
 					fEnableOK = false;

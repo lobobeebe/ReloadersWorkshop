@@ -463,9 +463,10 @@ namespace ReloadersWorkShop
 
 			ComponentLabel.Text = String.Format("{0} {1}", m_Transaction.Supply.ToString(), cSupply.SupplyTypeString(m_Transaction.Supply));
 
-			TransactionTypeCombo.SelectedItem = cTransaction.TransactionTypeString(m_Transaction.TransactionType);
+            if (TransactionTypeCombo.FindString(cTransaction.TransactionTypeString(m_Transaction.TransactionType)) != -1)
+    			TransactionTypeCombo.SelectedItem = cTransaction.TransactionTypeString(m_Transaction.TransactionType);
 
-			if (TransactionTypeCombo.SelectedIndex == -1)
+			if (TransactionTypeCombo.SelectedIndex == -1 && TransactionTypeCombo.Items.Count > 0)
 				TransactionTypeCombo.SelectedIndex = 0;
 
 			SourceCombo.Text = m_Transaction.Source;
