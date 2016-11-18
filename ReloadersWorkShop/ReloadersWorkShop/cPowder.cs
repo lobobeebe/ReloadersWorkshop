@@ -129,6 +129,55 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// CSVHeader Property
+		//============================================================================*
+
+		public static string CSVHeader
+			{
+			get
+				{
+				return ("Powders");
+				}
+			}
+
+		//============================================================================*
+		// CSVLine Property
+		//============================================================================*
+
+		public string CSVLine
+			{
+			get
+				{
+				string strLine = "";
+
+				strLine += cFirearm.FirearmTypeString(FirearmType);
+				strLine += ",";
+				strLine += CrossUse ? "Yes," : "-,";
+
+				strLine += Manufacturer.Name;
+				strLine += ",";
+
+				strLine += m_strType;
+				strLine += ",";
+				strLine += TypeString;
+
+				return (strLine);
+				}
+			}
+
+		//============================================================================*
+		// CSVLineHeader Property
+		//============================================================================*
+
+		public static string CSVLineHeader
+			{
+			get
+				{
+				return ("Firearm Type,Cross Use?,Manufacturer,Type,Shape");
+				}
+			}
+
+		//============================================================================*
 		// Model Property
 		//============================================================================*
 
@@ -158,6 +207,8 @@ namespace ReloadersWorkShop
 			
 			if (Manufacturer != null && m_strType != null)
 				strString = String.Format("{0} {1}", Manufacturer.Name, m_strType);
+
+			strString = ToCrossUseString(strString);
 
 			return (strString);
 			}
@@ -194,6 +245,46 @@ namespace ReloadersWorkShop
 
 				return ("Other");
 				}	
+			}
+
+		//============================================================================*
+		// XMLHeader Property
+		//============================================================================*
+
+		public static string XMLHeader
+			{
+			get
+				{
+				return ("Powders");
+				}
+			}
+
+		//============================================================================*
+		// XMLLine Property
+		//============================================================================*
+
+		public string XMLLine
+			{
+			get
+				{
+				string strLine = "";
+
+				return (strLine);
+				}
+			}
+
+		//============================================================================*
+		// XMLLineHeader Property
+		//============================================================================*
+
+		public static string XMLLineHeader
+			{
+			get
+				{
+				string strLine = "Firearm Type,Name,Headstamp,Handgun Type,Small Primer,Large Primer,Magnum Primer,Min Bullet Dia.,Max Bullet Dia.,Min Bullet Weight,Max Bullet Weight,Case Trim Length,Max Case Length,Max COAL,Max Neck Dia";
+
+				return (strLine);
+				}
 			}
 		}
 	}

@@ -10,6 +10,7 @@
 //============================================================================*
 
 using System;
+using System.IO;
 using System.Collections.Generic;
 
 namespace ReloadersWorkShop
@@ -32,6 +33,49 @@ namespace ReloadersWorkShop
 			Add(Primer);
 
 			return(true);
+			}
+
+		//============================================================================*
+		// Export()
+		//============================================================================*
+
+		public void Export(StreamWriter Writer, cDataFiles.eExportType eType)
+			{
+			string strLine = "";
+
+			switch (eType)
+				{
+				case cDataFiles.eExportType.CSV:
+					Writer.WriteLine(cPrimer.CSVHeader);
+					Writer.WriteLine();
+
+					Writer.WriteLine(cPrimer.CSVLineHeader);
+					Writer.WriteLine();
+
+					foreach (cPrimer Primer in this)
+						{
+						strLine = Primer.CSVLine;
+
+						Writer.WriteLine(strLine);
+						}
+
+					Writer.WriteLine();
+
+					break;
+
+				case cDataFiles.eExportType.XML:
+					Writer.WriteLine(cPrimer.XMLHeader);
+					Writer.WriteLine(cPrimer.XMLLineHeader);
+
+					foreach (cPrimer Primer in this)
+						{
+						strLine = Primer.XMLLine;
+
+						Writer.WriteLine(strLine);
+						}
+
+					break;
+				}
 			}
 
 		//============================================================================*

@@ -89,9 +89,7 @@ namespace ReloadersWorkShop
 			if (!m_fViewOnly)
 				{
 				AddImageButton.Click += OnAddImageClicked;
-				PreviousImageButton.Click += OnPreviousImageClicked;
 				RemoveImageButton.Click += OnRemoveImageClicked;
-				NextImageButton.Click += OnNextImageClicked;
 				MakePrimaryButton.Click += OnMakePrimaryClicked;
 
 				SourceComboBox.TextChanged += OnSourceChanged;
@@ -126,6 +124,15 @@ namespace ReloadersWorkShop
 
 				NotesTextBox.TextChanged += OnNotesChanged;
 				}
+			else
+				{
+				AddImageButton.Enabled = false;
+				RemoveImageButton.Enabled = false;
+				MakePrimaryButton.Enabled = false;
+				}
+
+			PreviousImageButton.Click += OnPreviousImageClicked;
+			NextImageButton.Click += OnNextImageClicked;
 
 			//----------------------------------------------------------------------------*
 			// Set Measurement Labels
@@ -294,6 +301,8 @@ namespace ReloadersWorkShop
 
 				m_ImageList.Add(strImageFilePath);
 
+				m_strCurrentImagePath = strImageFilePath;
+
 				File.Copy(FileDlg.FileName, strImageFilePath);
 
 				Bitmap FirearmImage = new Bitmap(strImageFilePath);
@@ -432,6 +441,8 @@ namespace ReloadersWorkShop
 					FirearmPictureBox.Image = ImageBitmap;
 
 					m_strCurrentImagePath = m_ImageList[nImageNum];
+
+					SetImageDimensions();
 					}
 				catch
 					{
@@ -487,6 +498,8 @@ namespace ReloadersWorkShop
 					FirearmPictureBox.Image = ImageBitmap;
 
 					m_strCurrentImagePath = m_ImageList[nImageNum];
+
+					SetImageDimensions();
 					}
 				catch
 					{
@@ -1414,9 +1427,6 @@ namespace ReloadersWorkShop
 			FirearmPictureBox.Size = new Size(480, 270);
 			FirearmPictureBox.Location = new Point(126, 23);
 
-			if (FirearmPictureBox.Image == null)
-				return;
-
 			double dWidth = FirearmPictureBox.Image.Width;
 			double dHeight = FirearmPictureBox.Image.Height;
 
@@ -1472,10 +1482,50 @@ namespace ReloadersWorkShop
 
 		private void UpdateButtons()
 			{
+			bool fEnableOK = m_fChanged;
+
+			//----------------------------------------------------------------------------*
+			// Check Image Buttons
+			//----------------------------------------------------------------------------*
+
+			if (!String.IsNullOrEmpty(m_strCurrentImagePath))
+				{
+				if (m_strCurrentImagePath != m_Firearm.ImageFile)
+					MakePrimaryButton.Enabled = !m_fViewOnly;
+				else
+					MakePrimaryButton.Enabled = false;
+
+				if (m_ImageList.Count < 2)
+					{
+					PreviousImageButton.Enabled = false;
+					NextImageButton.Enabled = false;
+					}
+				else
+					{
+					for (int i = 0; i < m_ImageList.Count; i++)
+						{
+						if (m_ImageList[i] == m_strCurrentImagePath)
+							{
+							if (i > 0)
+								PreviousImageButton.Enabled = true;
+							else
+								PreviousImageButton.Enabled = false;
+
+							if (i < m_ImageList.Count - 1)
+								NextImageButton.Enabled = true;
+							else
+								NextImageButton.Enabled = false;
+							}
+						}
+					}
+				}
+
+			//----------------------------------------------------------------------------*
+			// If we're View Only, exit
+			//----------------------------------------------------------------------------*
+
 			if (m_fViewOnly)
 				return;
-
-			bool fEnableOK = m_fChanged;
 
 			//----------------------------------------------------------------------------*
 			// Check Type
@@ -1538,42 +1588,6 @@ namespace ReloadersWorkShop
 
 			if (!ScopeModelTextBox.ValueOK || !ScopePowerTextBox.ValueOK || !ScopeObjectiveTextBox.ValueOK)
 				fEnableOK = false;
-
-			//----------------------------------------------------------------------------*
-			// Check Image Buttons
-			//----------------------------------------------------------------------------*
-
-			if (!String.IsNullOrEmpty(m_strCurrentImagePath))
-				{
-				if (m_strCurrentImagePath != m_Firearm.ImageFile)
-					MakePrimaryButton.Enabled = true;
-				else
-					MakePrimaryButton.Enabled = false;
-
-				if (m_ImageList.Count < 2)
-					{
-					PreviousImageButton.Enabled = false;
-					NextImageButton.Enabled = false;
-					}
-				else
-					{
-					for (int i = 0; i < m_ImageList.Count; i++)
-						{
-						if (m_ImageList[i] == m_strCurrentImagePath)
-							{
-							if (i > 0)
-								PreviousImageButton.Enabled = true;
-							else
-								PreviousImageButton.Enabled = false;
-
-							if (i < m_ImageList.Count - 1)
-								NextImageButton.Enabled = true;
-							else
-								NextImageButton.Enabled = false;
-							}
-						}
-					}
-				}
 
 			//----------------------------------------------------------------------------*
 			// Set Buttons

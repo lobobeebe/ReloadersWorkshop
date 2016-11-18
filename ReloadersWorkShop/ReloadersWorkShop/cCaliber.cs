@@ -26,6 +26,12 @@ namespace ReloadersWorkShop
 	public class cCaliber : IComparable
 		{
 		//============================================================================*
+		// Public Static Data Members
+		//============================================================================*
+
+		public static cFirearm.eFireArmType sm_eCurrentFirearmType = cFirearm.eFireArmType.Handgun;
+
+		//============================================================================*
 		// Private Data Members
 		//============================================================================*
 
@@ -165,6 +171,116 @@ namespace ReloadersWorkShop
 				rc = Name.ToUpper().CompareTo(Caliber.Name.ToUpper());
 
 			return (rc);
+			}
+
+		//============================================================================*
+		// CSVHeader Property
+		//============================================================================*
+
+		public static string CSVHeader
+			{
+			get
+				{
+				return ("Calibers");
+				}
+			}
+
+		//============================================================================*
+		// CSVLine Property
+		//============================================================================*
+
+		public string CSVLine
+			{
+			get
+				{
+				string strLine = "";
+
+				switch (m_eFirearmType)
+					{
+					case cFirearm.eFireArmType.Handgun:
+						strLine += "Handgun,";
+						break;
+					case cFirearm.eFireArmType.Rifle:
+						strLine += "Rifle,";
+						break;
+					case cFirearm.eFireArmType.Shotgun:
+						strLine += "Shotgun,";
+						break;
+					default:
+						strLine += ",";
+						break;
+					}
+
+				strLine += m_strName;
+				strLine += ",";
+				strLine += m_strHeadStamp;
+
+				if (m_eFirearmType == cFirearm.eFireArmType.Handgun)
+					strLine += m_fPistol ? ",Pistol" : ",Revolver";
+				else
+					strLine += ",N/A";
+
+				strLine += m_fSmallPrimer ? ",Yes" : ",-";
+				strLine += m_fLargePrimer ? ",Yes" : ",-";
+				strLine += m_fMagnumPrimer ? ",Yes" : ",-";
+
+				//----------------------------------------------------------------------------*
+				// Dimensions
+				//----------------------------------------------------------------------------*
+
+				strLine += ",";
+				strLine += m_dMinBulletDiameter;
+				strLine += ",";
+				strLine += m_dMaxBulletDiameter;
+
+				strLine += ",";
+				strLine += m_dMinBulletWeight;
+				strLine += ",";
+				strLine += m_dMaxBulletWeight;
+
+				strLine += ",";
+				strLine += m_dCaseTrimLength;
+				strLine += ",";
+				strLine += m_dMaxCaseLength;
+
+				strLine += ",";
+				strLine += m_dMaxCOL;
+
+				strLine += ",";
+				strLine += m_dMaxNeckDiameter;
+
+				return (strLine);
+				}
+			}
+
+		//============================================================================*
+		// CSVLineHeader Property
+		//============================================================================*
+
+		public static string CSVLineHeader
+			{
+			get
+				{
+				string strLine = "Firearm Type,Name,Headstamp,Handgun Type,Small Primer,Large Primer,Magnum Primer,Min Bullet Dia.,Max Bullet Dia.,Min Bullet Weight,Max Bullet Weight,Case Trim Length,Max Case Length,Max COAL,Max Neck Dia";
+
+				return (strLine);
+				}
+			}
+
+		//============================================================================*
+		// CurrentFirearmType Property
+		//============================================================================*
+
+		public static cFirearm.eFireArmType CurrentFirearmType
+			{
+			get
+				{
+				return (sm_eCurrentFirearmType);
+				}
+			set
+				{
+				sm_eCurrentFirearmType = value;
+				}
 			}
 
 		//============================================================================*
@@ -388,7 +504,119 @@ namespace ReloadersWorkShop
 
 		public override string ToString()
 			{
-			return (m_strName);
+			string strString = m_strName;
+
+			if (sm_eCurrentFirearmType != m_eFirearmType)
+				{
+				switch (m_eFirearmType)
+					{
+					case cFirearm.eFireArmType.Handgun:
+						strString += " (Handgun)";
+						break;
+					case cFirearm.eFireArmType.Rifle:
+						strString += " (Rifle)";
+						break;
+					case cFirearm.eFireArmType.Shotgun:
+						strString += " (Shotgun)";
+						break;
+					}
+				}
+
+			return (strString);
+			}
+
+		//============================================================================*
+		// XMLHeader Property
+		//============================================================================*
+
+		public static string XMLHeader
+			{
+			get
+				{
+				return ("Calibers");
+				}
+			}
+
+		//============================================================================*
+		// XMLLine Property
+		//============================================================================*
+
+		public string XMLLine
+			{
+			get
+				{
+				string strLine = "";
+
+				switch (m_eFirearmType)
+					{
+					case cFirearm.eFireArmType.Handgun:
+						strLine += "Handgun,";
+						break;
+					case cFirearm.eFireArmType.Rifle:
+						strLine += "Rifle,";
+						break;
+					case cFirearm.eFireArmType.Shotgun:
+						strLine += "Shotgun,";
+						break;
+					default:
+						strLine += ",";
+						break;
+					}
+
+				strLine += m_strName;
+				strLine += ",";
+				strLine += m_strHeadStamp;
+
+				if (m_eFirearmType == cFirearm.eFireArmType.Handgun)
+					strLine += m_fPistol ? ",Pistol" : ",Revolver";
+				else
+					strLine += ",N/A";
+
+				strLine += m_fSmallPrimer ? ",Yes" : ",-";
+				strLine += m_fLargePrimer ? ",Yes" : ",-";
+				strLine += m_fMagnumPrimer ? ",Yes" : ",-";
+
+				//----------------------------------------------------------------------------*
+				// Dimensions
+				//----------------------------------------------------------------------------*
+
+				strLine += ",";
+				strLine += m_dMinBulletDiameter;
+				strLine += ",";
+				strLine += m_dMaxBulletDiameter;
+
+				strLine += ",";
+				strLine += m_dMinBulletWeight;
+				strLine += ",";
+				strLine += m_dMaxBulletWeight;
+
+				strLine += ",";
+				strLine += m_dCaseTrimLength;
+				strLine += ",";
+				strLine += m_dMaxCaseLength;
+
+				strLine += ",";
+				strLine += m_dMaxCOL;
+
+				strLine += ",";
+				strLine += m_dMaxNeckDiameter;
+
+				return (strLine);
+				}
+			}
+
+		//============================================================================*
+		// XMLLineHeader Property
+		//============================================================================*
+
+		public static string XMLLineHeader
+			{
+			get
+				{
+				string strLine = "Firearm Type,Name,Headstamp,Handgun Type,Small Primer,Large Primer,Magnum Primer,Min Bullet Dia.,Max Bullet Dia.,Min Bullet Weight,Max Bullet Weight,Case Trim Length,Max Case Length,Max COAL,Max Neck Dia";
+
+				return (strLine);
+				}
 			}
 		}
 	}

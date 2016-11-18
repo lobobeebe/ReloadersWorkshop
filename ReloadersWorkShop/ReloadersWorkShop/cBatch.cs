@@ -11,6 +11,8 @@
 
 using System;
 
+using ReloadersWorkShop.Preferences;
+
 //============================================================================*
 // NameSpace
 //============================================================================*
@@ -66,6 +68,9 @@ namespace ReloadersWorkShop
 		private bool m_fAnnealed = false;
 		private bool m_fModifiedBullet = false;
 
+		private bool m_fJumpSet = false;
+		private double m_dJump = 0.0;
+
 		private cBatchTest m_BatchTest = null;
 
 		//----------------------------------------------------------------------------*
@@ -90,37 +95,7 @@ namespace ReloadersWorkShop
 
 		public cBatch(cBatch Batch)
 			{
-			m_nBatchID = Batch.m_nBatchID;
-			m_strUserID = Batch.m_strUserID;
-			m_DateLoaded = new DateTime(Batch.DateLoaded.Ticks);
-			m_dPowderWeight = Batch.m_dPowderWeight;
-			m_nNumRounds = Batch.m_nNumRounds;
-			m_nTimesFired = Batch.m_nTimesFired;
-			m_dCOL = Batch.m_dCOL;
-			m_dCBTO = Batch.m_dCBTO;
-			m_dHeadSpace = Batch.m_dHeadSpace;
-			m_dNeckSize = Batch.m_dNeckSize;
-			m_dNeckWall = Batch.m_dNeckWall;
-			m_dCaseTrimLength = Batch.m_dCaseTrimLength;
-			m_dBulletDiameter = Batch.m_dBulletDiameter;
-
-			m_fFullLengthSized = Batch.m_fFullLengthSized;
-			m_fNeckSized = Batch.m_fNeckSized;
-			m_fExpandedNeck = Batch.m_fExpandedNeck;
-
-			m_fNeckTurned = Batch.m_fNeckTurned;
-			m_fAnnealed = Batch.m_fAnnealed;
-			m_fModifiedBullet = Batch.m_fModifiedBullet;
-
-			m_Firearm = Batch.m_Firearm;
-
-			m_Load = Batch.m_Load;
-
-			m_BatchTest = Batch.BatchTest;
-
-			m_fArchive = Batch.m_fArchive;
-
-			m_fTrackInventory = Batch.m_fTrackInventory;
+			Copy(Batch);
 			}
 
 		//============================================================================*
@@ -145,8 +120,14 @@ namespace ReloadersWorkShop
 
 		public bool Archived
 			{
-			get { return (m_fArchive); }
-			set { m_fArchive = value; }
+			get
+				{
+				return (m_fArchive);
+				}
+			set
+				{
+				m_fArchive = value;
+				}
 			}
 
 		//============================================================================*
@@ -155,8 +136,14 @@ namespace ReloadersWorkShop
 
 		public int BatchID
 			{
-			get { return (m_nBatchID); }
-			set { m_nBatchID = value; }
+			get
+				{
+				return (m_nBatchID);
+				}
+			set
+				{
+				m_nBatchID = value;
+				}
 			}
 
 		//============================================================================*
@@ -187,8 +174,14 @@ namespace ReloadersWorkShop
 
 		public cBatchTest BatchTest
 			{
-			get { return (m_BatchTest); }
-			set { m_BatchTest = value; }
+			get
+				{
+				return (m_BatchTest);
+				}
+			set
+				{
+				m_BatchTest = value;
+				}
 			}
 
 		//============================================================================*
@@ -197,8 +190,14 @@ namespace ReloadersWorkShop
 
 		public double BulletDiameter
 			{
-			get { return (m_dBulletDiameter); }
-			set { m_dBulletDiameter = value; }
+			get
+				{
+				return (m_dBulletDiameter);
+				}
+			set
+				{
+				m_dBulletDiameter = value;
+				}
 			}
 
 		//============================================================================*
@@ -221,9 +220,9 @@ namespace ReloadersWorkShop
 					dCaseCost = Load.Case.CostEach;
 
 					if (m_nTimesFired > 0)
-						dCaseCost = dCaseCost / (double)((double)m_nTimesFired + 1.0);
+						dCaseCost = dCaseCost / (double) ((double) m_nTimesFired + 1.0);
 
-					dPowderCost = Load.Powder.CostEach * (m_dPowderWeight / 7000.0);
+					dPowderCost = Load.Powder.CostEach * (m_dPowderWeight / (cPreferences.MetricCanWeights ? 1000.0 : 7000.0));
 
 					dPrimerCost = Load.Primer.CostEach;
 					}
@@ -238,8 +237,14 @@ namespace ReloadersWorkShop
 
 		public double CaseTrimLength
 			{
-			get { return (m_dCaseTrimLength); }
-			set { m_dCaseTrimLength = value; }
+			get
+				{
+				return (m_dCaseTrimLength);
+				}
+			set
+				{
+				m_dCaseTrimLength = value;
+				}
 			}
 
 		//============================================================================*
@@ -248,8 +253,14 @@ namespace ReloadersWorkShop
 
 		public bool Checked
 			{
-			get { return (m_fChecked); }
-			set { m_fChecked = value; }
+			get
+				{
+				return (m_fChecked);
+				}
+			set
+				{
+				m_fChecked = value;
+				}
 			}
 
 		//============================================================================*
@@ -258,8 +269,14 @@ namespace ReloadersWorkShop
 
 		public double COL
 			{
-			get { return (m_dCOL); }
-			set { m_dCOL = value; }
+			get
+				{
+				return (m_dCOL);
+				}
+			set
+				{
+				m_dCOL = value;
+				}
 			}
 
 		//============================================================================*
@@ -303,12 +320,152 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Copy()
+		//============================================================================*
+
+		public void Copy(cBatch Batch)
+			{
+			m_nBatchID = Batch.m_nBatchID;
+			m_strUserID = Batch.m_strUserID;
+			m_DateLoaded = new DateTime(Batch.DateLoaded.Ticks);
+			m_dPowderWeight = Batch.m_dPowderWeight;
+			m_nNumRounds = Batch.m_nNumRounds;
+			m_nTimesFired = Batch.m_nTimesFired;
+			m_dCOL = Batch.m_dCOL;
+			m_dCBTO = Batch.m_dCBTO;
+			m_dHeadSpace = Batch.m_dHeadSpace;
+			m_dNeckSize = Batch.m_dNeckSize;
+			m_dNeckWall = Batch.m_dNeckWall;
+			m_dCaseTrimLength = Batch.m_dCaseTrimLength;
+			m_dBulletDiameter = Batch.m_dBulletDiameter;
+
+			m_fFullLengthSized = Batch.m_fFullLengthSized;
+			m_fNeckSized = Batch.m_fNeckSized;
+			m_fExpandedNeck = Batch.m_fExpandedNeck;
+
+			m_fNeckTurned = Batch.m_fNeckTurned;
+			m_fAnnealed = Batch.m_fAnnealed;
+			m_fModifiedBullet = Batch.m_fModifiedBullet;
+
+			m_fJumpSet = Batch.m_fJumpSet;
+			m_dJump = Batch.m_dJump;
+
+			m_Firearm = Batch.m_Firearm;
+
+			m_Load = Batch.m_Load;
+
+			m_BatchTest = Batch.BatchTest;
+
+			m_fArchive = Batch.m_fArchive;
+
+			m_fTrackInventory = Batch.m_fTrackInventory;
+			}
+
+		//============================================================================*
 		// Cost Property
 		//============================================================================*
 
 		public double Cost
 			{
-			get { return (CartridgeCost * m_nNumRounds); }
+			get
+				{
+				return (CartridgeCost * m_nNumRounds);
+				}
+			}
+
+		//============================================================================*
+		// CSVHeader Property
+		//============================================================================*
+
+		public static string CSVHeader
+			{
+			get
+				{
+				return ("Batches");
+				}
+			}
+
+		//============================================================================*
+		// CSVLine Property
+		//============================================================================*
+
+		public string CSVLine
+			{
+			get
+				{
+				string strLine = "";
+
+				strLine += m_nBatchID;
+				strLine += ",";
+				strLine += m_strUserID;
+				strLine += ",";
+
+				strLine += m_DateLoaded;
+				strLine += ",";
+
+				strLine += m_Load.Bullet.ToString();
+				strLine += ",";
+				strLine += m_Load.Powder.ToString();
+				strLine += ",";
+				strLine += m_Load.Primer.ToString();
+				strLine += ",";
+				strLine += m_Load.Case.ToString();
+				strLine += ",";
+				strLine += m_Firearm;
+				strLine += ",";
+				strLine += m_dPowderWeight;
+				strLine += ",";
+
+				strLine += m_nNumRounds;
+				strLine += ",";
+				strLine += m_nTimesFired;
+				strLine += ",";
+
+				strLine += m_dCOL;
+				strLine += ",";
+				strLine += m_dCBTO;
+				strLine += ",";
+				strLine += m_dHeadSpace;
+				strLine += ",";
+				strLine += m_dNeckSize;
+				strLine += ",";
+				strLine += m_dNeckWall;
+				strLine += ",";
+				strLine += m_dCaseTrimLength;
+				strLine += ",";
+				strLine += m_dBulletDiameter;
+				strLine += ",";
+
+				strLine += m_fFullLengthSized ? "Yes," : "-,";
+				strLine += m_fNeckSized ? "Yes," : "-,";
+				strLine += m_fExpandedNeck ? "Yes," : "-,";
+				strLine += m_fNeckTurned ? "Yes," : "-,";
+				strLine += m_fAnnealed ? "Yes," : "-,";
+				strLine += m_fModifiedBullet ? "Yes," : "-,";
+
+				strLine += m_fJumpSet ? "Yes," : "-,";
+				strLine += m_dJump;
+				strLine += ",";
+
+				strLine += m_fArchive ? "Yes" : "-";
+
+				return (strLine);
+				}
+			}
+
+		//============================================================================*
+		// CSVLineHeader Property
+		//============================================================================*
+
+		public static string CSVLineHeader
+			{
+			get
+				{
+				string strLine = "Batch ID,User Batch ID,Date Loaded,Bullet,Powder,Primer,Case,Firearm,Powder Weight,Num Rounds,Times Case Fired,COAL,CBTO,Headspace,Neck Size,Neck Wall,";
+				strLine += "Case Trim Length,Bullet Diameter,Full-Length Sized,Neck Sized,Expanded Neck,Nect Turned,Annealed,Modified Bullet,Jumpset,Jump,Archived";
+
+				return (strLine);
+				}
 			}
 
 		//============================================================================*
@@ -317,8 +474,14 @@ namespace ReloadersWorkShop
 
 		public DateTime DateLoaded
 			{
-			get { return (m_DateLoaded); }
-			set { m_DateLoaded = value; }
+			get
+				{
+				return (m_DateLoaded);
+				}
+			set
+				{
+				m_DateLoaded = value;
+				}
 			}
 
 		//============================================================================*
@@ -343,8 +506,14 @@ namespace ReloadersWorkShop
 
 		public cFirearm Firearm
 			{
-			get { return (m_Firearm); }
-			set { m_Firearm = value; }
+			get
+				{
+				return (m_Firearm);
+				}
+			set
+				{
+				m_Firearm = value;
+				}
 			}
 
 		//============================================================================*
@@ -353,8 +522,14 @@ namespace ReloadersWorkShop
 
 		public bool FullLengthSized
 			{
-			get { return (m_fFullLengthSized); }
-			set { m_fFullLengthSized = value; }
+			get
+				{
+				return (m_fFullLengthSized);
+				}
+			set
+				{
+				m_fFullLengthSized = value;
+				}
 			}
 
 		//============================================================================*
@@ -363,8 +538,46 @@ namespace ReloadersWorkShop
 
 		public double HeadSpace
 			{
-			get { return (m_dHeadSpace); }
-			set { m_dHeadSpace = value; }
+			get
+				{
+				return (m_dHeadSpace);
+				}
+			set
+				{
+				m_dHeadSpace = value;
+				}
+			}
+
+		//============================================================================*
+		// Jump Property
+		//============================================================================*
+
+		public double Jump
+			{
+			get
+				{
+				return (m_dJump);
+				}
+			set
+				{
+				m_dJump = value;
+				}
+			}
+
+		//============================================================================*
+		// JumpSet Property
+		//============================================================================*
+
+		public bool JumpSet
+			{
+			get
+				{
+				return (m_fJumpSet);
+				}
+			set
+				{
+				m_fJumpSet = value;
+				}
 			}
 
 		//============================================================================*
@@ -373,8 +586,14 @@ namespace ReloadersWorkShop
 
 		public cLoad Load
 			{
-			get { return (m_Load); }
-			set { m_Load = value; }
+			get
+				{
+				return (m_Load);
+				}
+			set
+				{
+				m_Load = value;
+				}
 			}
 
 		//============================================================================*
@@ -399,8 +618,14 @@ namespace ReloadersWorkShop
 
 		public double NeckSize
 			{
-			get { return (m_dNeckSize); }
-			set { m_dNeckSize = value; }
+			get
+				{
+				return (m_dNeckSize);
+				}
+			set
+				{
+				m_dNeckSize = value;
+				}
 			}
 
 		//============================================================================*
@@ -441,8 +666,14 @@ namespace ReloadersWorkShop
 
 		public double NeckWall
 			{
-			get { return (m_dNeckWall); }
-			set { m_dNeckWall = value; }
+			get
+				{
+				return (m_dNeckWall);
+				}
+			set
+				{
+				m_dNeckWall = value;
+				}
 			}
 
 		//============================================================================*
@@ -451,8 +682,14 @@ namespace ReloadersWorkShop
 
 		public int NumPrinted
 			{
-			get { return (m_nNumPrinted); }
-			set { m_nNumPrinted = value; }
+			get
+				{
+				return (m_nNumPrinted);
+				}
+			set
+				{
+				m_nNumPrinted = value;
+				}
 			}
 
 		//============================================================================*
@@ -461,8 +698,14 @@ namespace ReloadersWorkShop
 
 		public int NumRounds
 			{
-			get { return (m_nNumRounds); }
-			set { m_nNumRounds = value; }
+			get
+				{
+				return (m_nNumRounds);
+				}
+			set
+				{
+				m_nNumRounds = value;
+				}
 			}
 
 		//============================================================================*
@@ -471,8 +714,14 @@ namespace ReloadersWorkShop
 
 		public double CBTO
 			{
-			get { return (m_dCBTO); }
-			set { m_dCBTO = value; }
+			get
+				{
+				return (m_dCBTO);
+				}
+			set
+				{
+				m_dCBTO = value;
+				}
 			}
 
 		//============================================================================*
@@ -481,8 +730,14 @@ namespace ReloadersWorkShop
 
 		public double PowderWeight
 			{
-			get { return (m_dPowderWeight); }
-			set { m_dPowderWeight = value; }
+			get
+				{
+				return (m_dPowderWeight);
+				}
+			set
+				{
+				m_dPowderWeight = value;
+				}
 			}
 
 		//============================================================================*
@@ -519,8 +774,14 @@ namespace ReloadersWorkShop
 
 		public int TimesFired
 			{
-			get { return (m_nTimesFired); }
-			set { m_nTimesFired = value; }
+			get
+				{
+				return (m_nTimesFired);
+				}
+			set
+				{
+				m_nTimesFired = value;
+				}
 			}
 
 		//============================================================================*
@@ -540,8 +801,14 @@ namespace ReloadersWorkShop
 
 		public bool TrackInventory
 			{
-			get { return (m_fTrackInventory); }
-			set { m_fTrackInventory = value; }
+			get
+				{
+				return (m_fTrackInventory);
+				}
+			set
+				{
+				m_fTrackInventory = value;
+				}
 			}
 
 		//============================================================================*
@@ -557,6 +824,47 @@ namespace ReloadersWorkShop
 			set
 				{
 				m_strUserID = value;
+				}
+			}
+
+		//============================================================================*
+		// XMLHeader Property
+		//============================================================================*
+
+		public static string XMLHeader
+			{
+			get
+				{
+				return ("Batches");
+				}
+			}
+
+		//============================================================================*
+		// XMLLine Property
+		//============================================================================*
+
+		public string XMLLine
+			{
+			get
+				{
+				string strLine = "";
+
+
+				return (strLine);
+				}
+			}
+
+		//============================================================================*
+		// XMLLineHeader Property
+		//============================================================================*
+
+		public static string XMLLineHeader
+			{
+			get
+				{
+				string strLine = "Firearm Type,Name,Headstamp,Handgun Type,Small Primer,Large Primer,Magnum Primer,Min Bullet Dia.,Max Bullet Dia.,Min Bullet Weight,Max Bullet Weight,Case Trim Length,Max Case Length,Max COAL,Max Neck Dia";
+
+				return (strLine);
 				}
 			}
 		}

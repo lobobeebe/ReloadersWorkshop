@@ -10,6 +10,7 @@
 //============================================================================*
 
 using System;
+using System.IO;
 using System.Collections.Generic;
 
 namespace ReloadersWorkShop
@@ -32,6 +33,49 @@ namespace ReloadersWorkShop
 			Add(Powder);
 
 			return(true);
+			}
+
+		//============================================================================*
+		// Export()
+		//============================================================================*
+
+		public void Export(StreamWriter Writer, cDataFiles.eExportType eType)
+			{
+			string strLine = "";
+
+			switch (eType)
+				{
+				case cDataFiles.eExportType.CSV:
+					Writer.WriteLine(cPowder.CSVHeader);
+					Writer.WriteLine();
+
+					Writer.WriteLine(cPowder.CSVLineHeader);
+					Writer.WriteLine();
+
+					foreach (cPowder Powder in this)
+						{
+						strLine = Powder.CSVLine;
+
+						Writer.WriteLine(strLine);
+						}
+
+					Writer.WriteLine();
+
+					break;
+
+				case cDataFiles.eExportType.XML:
+					Writer.WriteLine(cPowder.XMLHeader);
+					Writer.WriteLine(cPowder.XMLLineHeader);
+
+					foreach (cPowder Powder in this)
+						{
+						strLine = Powder.XMLLine;
+
+						Writer.WriteLine(strLine);
+						}
+
+					break;
+				}
 			}
 
 		//============================================================================*

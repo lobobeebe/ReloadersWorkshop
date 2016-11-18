@@ -148,7 +148,7 @@ namespace ReloadersWorkShop
 			// Populate data fields
 			//----------------------------------------------------------------------------*
 
-			VelocityMeasurementLabel.Text = m_DataFiles.MetricString(cDataFiles.eDataType.Velocity);
+			cDataFiles.SetMetricLabel(VelocityMeasurementLabel, cDataFiles.eDataType.Velocity);
 
 			PopulateShotData();
 
@@ -214,7 +214,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_TestShotList[m_nShotNum].MuzzleVelocity = (int) m_DataFiles.MetricToStandard(MuzzleVelocityTextBox.Value, cDataFiles.eDataType.Velocity);
+			m_TestShotList[m_nShotNum].MuzzleVelocity = (int) cDataFiles.MetricToStandard(MuzzleVelocityTextBox.Value, cDataFiles.eDataType.Velocity);
 
 			PopulateStatistics();
 
@@ -328,7 +328,7 @@ namespace ReloadersWorkShop
 				PressureTextBox.Enabled = true;
 				}
 
-			MuzzleVelocityTextBox.Value = m_TestShotList[m_nShotNum].MuzzleVelocity;
+			MuzzleVelocityTextBox.Value = (int) Math.Round(cDataFiles.StandardToMetric(m_TestShotList[m_nShotNum].MuzzleVelocity, cDataFiles.eDataType.Velocity), 0);
 			PressureTextBox.Value = m_TestShotList[m_nShotNum].Pressure;
 
 			MuzzleVelocityTextBox.Focus();
@@ -342,11 +342,11 @@ namespace ReloadersWorkShop
 			{
 			cTestStatistics Statistics = m_TestShotList.GetStatistics(m_nNumRounds);
 
-			AvgLabel.Text = String.Format("{0:F1} {1}", m_DataFiles.StandardToMetric(Statistics.AverageVelocity, cDataFiles.eDataType.Velocity), m_DataFiles.MetricString(cDataFiles.eDataType.Velocity));
-			MinLabel.Text = String.Format("{0:G0} {1}", m_DataFiles.StandardToMetric(Statistics.MinVelocity, cDataFiles.eDataType.Velocity), m_DataFiles.MetricString(cDataFiles.eDataType.Velocity));
-			MaxLabel.Text = String.Format("{0:G0} {1}", m_DataFiles.StandardToMetric(Statistics.MaxVelocity, cDataFiles.eDataType.Velocity), m_DataFiles.MetricString(cDataFiles.eDataType.Velocity));
-			DeviationLabel.Text = String.Format("{0:G0} {1}", m_DataFiles.StandardToMetric(Statistics.MaxVelocity - Statistics.MinVelocity, cDataFiles.eDataType.Velocity), m_DataFiles.MetricString(cDataFiles.eDataType.Velocity));
-			StdDevLabel.Text = String.Format("{0:F2} {1}", m_DataFiles.StandardToMetric(Statistics.StdDev, cDataFiles.eDataType.Velocity), m_DataFiles.MetricString(cDataFiles.eDataType.Velocity));
+			AvgLabel.Text = String.Format("{0:F1} {1}", cDataFiles.StandardToMetric(Statistics.AverageVelocity, cDataFiles.eDataType.Velocity), cDataFiles.MetricString(cDataFiles.eDataType.Velocity));
+			MinLabel.Text = String.Format("{0:G0} {1}", cDataFiles.StandardToMetric(Statistics.MinVelocity, cDataFiles.eDataType.Velocity), cDataFiles.MetricString(cDataFiles.eDataType.Velocity));
+			MaxLabel.Text = String.Format("{0:G0} {1}", cDataFiles.StandardToMetric(Statistics.MaxVelocity, cDataFiles.eDataType.Velocity), cDataFiles.MetricString(cDataFiles.eDataType.Velocity));
+			DeviationLabel.Text = String.Format("{0:G0} {1}", cDataFiles.StandardToMetric(Statistics.MaxVelocity - Statistics.MinVelocity, cDataFiles.eDataType.Velocity), cDataFiles.MetricString(cDataFiles.eDataType.Velocity));
+			StdDevLabel.Text = String.Format("{0:F2} {1}", cDataFiles.StandardToMetric(Statistics.StdDev, cDataFiles.eDataType.Velocity), cDataFiles.MetricString(cDataFiles.eDataType.Velocity));
 			}
 
 		//============================================================================*

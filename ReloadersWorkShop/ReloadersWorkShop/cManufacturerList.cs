@@ -41,111 +41,46 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// Load()
+		// Export()
 		//============================================================================*
 
-		public void Load()
+		public void Export(StreamWriter Writer,cDataFiles.eExportType eType)
 			{
-			//----------------------------------------------------------------------------*
-			// Load the data
-			//----------------------------------------------------------------------------*
+			Writer.WriteLine(cManufacturer.CSVHeader);
+			Writer.WriteLine();
 
-			Stream DataStream = null;
+			string strLine = "";
 
-			try
+			switch (eType)
 				{
-				//----------------------------------------------------------------------------*
-				// Open the data file
-				//----------------------------------------------------------------------------*
+				case cDataFiles.eExportType.CSV:
+					Writer.WriteLine(cManufacturer.CSVLineHeader);
+					Writer.WriteLine();
 
-				DataStream = File.Open("Manufacturers.dat", FileMode.Open);
+					foreach (cManufacturer Manufacturer in this)
+						{
+						strLine = Manufacturer.CSVLine;
 
-				if (DataStream != null)
-					{
-					//----------------------------------------------------------------------------*
-					// Create the formatter
-					//----------------------------------------------------------------------------*
+						Writer.WriteLine(strLine);
+						}
 
-					BinaryFormatter Formatter = new BinaryFormatter();
+					break;
 
-					//----------------------------------------------------------------------------*
-					// Load the data members
-					//----------------------------------------------------------------------------*
+				case cDataFiles.eExportType.XML:
+					Writer.WriteLine(cManufacturer.XMLHeader);
+					Writer.WriteLine(cManufacturer.XMLLineHeader);
 
-					cManufacturerList ManufacturerList = null;
+					foreach (cManufacturer Manufacturer in this)
+						{
+						strLine = Manufacturer.XMLLine;
 
-					ManufacturerList = (cManufacturerList)Formatter.Deserialize(DataStream);
+						Writer.WriteLine(strLine);
+						}
 
-					//----------------------------------------------------------------------------*
-					// Copy the loaded data into this list
-					//----------------------------------------------------------------------------*
-
-					Clear();
-
-					foreach (cManufacturer Manufacturer in ManufacturerList)
-						Add(Manufacturer);
-					}
+					break;
 				}
 
-			//----------------------------------------------------------------------------*
-			// If the data can't be loaded, oh well
-			//----------------------------------------------------------------------------*
-
-			catch
-				{
-				}
-
-			finally
-				{
-				if (DataStream != null)
-					DataStream.Close();
-				}
-			}
-
-		//============================================================================*
-		// Save()
-		//============================================================================*
-
-		public void Save()
-			{
-			Stream Stream = null;
-
-			//----------------------------------------------------------------------------*
-			// Save Data
-			//----------------------------------------------------------------------------*
-
-			try
-				{
-				//----------------------------------------------------------------------------*
-				// Open data file and create formatter
-				//----------------------------------------------------------------------------*
-
-				Stream = File.Open("Manufacturers.dat", FileMode.Create);
-
-				BinaryFormatter Formatter = new BinaryFormatter();
-
-				//----------------------------------------------------------------------------*
-				// Serialize the data members
-				//----------------------------------------------------------------------------*
-
-				Formatter.Serialize(Stream, this);
-
-				//----------------------------------------------------------------------------*
-				// Close the stream
-				//----------------------------------------------------------------------------*
-
-				Stream.Close();
-
-				Stream = null;
-				}
-			catch
-				{
-				}
-			finally
-				{
-				if (Stream != null)
-					Stream.Close();
-				}
+			Writer.WriteLine();
 			}
 		}
 	}

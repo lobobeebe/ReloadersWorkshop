@@ -11,6 +11,8 @@
 
 using System;
 
+using ReloadersWorkShop.Preferences;
+
 //============================================================================*
 // CommonLib Using Statements
 //============================================================================*
@@ -30,13 +32,6 @@ namespace ReloadersWorkShop
 	[Serializable]
 	public class cCharge
 		{
-		//----------------------------------------------------------------------------*
-		// Private Static Data Members
-		//----------------------------------------------------------------------------*
-
-		private static bool sm_fMetricPowderWeights = false;
-		private static int sm_nPowderWeightDecimals = 1;
-
 		//----------------------------------------------------------------------------*
 		// Private Data Members
 		//----------------------------------------------------------------------------*
@@ -175,22 +170,6 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// MetricPowderWeights Property
-		//============================================================================*
-
-		public static bool MetricPowderWeights
-			{
-			get
-				{
-				return (sm_fMetricPowderWeights);
-				}
-			set
-				{
-				sm_fMetricPowderWeights = value;
-				}
-			}
-
-		//============================================================================*
 		// PowderWeight Property
 		//============================================================================*
 
@@ -201,22 +180,6 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// PowderWeightDecimals Property
-		//============================================================================*
-
-		public static int PowderWeightDecimals
-			{
-			get
-				{
-				return (sm_nPowderWeightDecimals);
-				}
-			set
-				{
-				sm_nPowderWeightDecimals = value;
-				}
-			}
-
-		//============================================================================*
 		// Reject Property
 		//============================================================================*
 
@@ -224,6 +187,19 @@ namespace ReloadersWorkShop
 			{
 			get { return (m_fReject); }
 			set { m_fReject = value; }
+			}
+
+		//============================================================================*
+		// SetTestData()
+		//============================================================================*
+
+		public void SetTestData()
+			{
+			foreach (cChargeTest ChargeTest in TestList)
+				{
+				ChargeTest.Charge = this;
+				ChargeTest.PowderWeight = m_dPowderWeight;
+				}
 			}
 
 		//============================================================================*
@@ -256,10 +232,10 @@ namespace ReloadersWorkShop
 		public override string ToString()
 			{
 			string strFormat = "{0:F";
-			strFormat += String.Format("{0:G0}", sm_nPowderWeightDecimals);
+			strFormat += String.Format("{0:G0}", cPreferences.PowderWeightDecimals);
 			strFormat += "}{1}";
 
-			string strString = String.Format(strFormat, Math.Round(sm_fMetricPowderWeights ? cConversions.GrainsToGrams(m_dPowderWeight) :  m_dPowderWeight, sm_nPowderWeightDecimals), (m_dFillRatio > 100.0 ? "C" : ""));
+			string strString = String.Format(strFormat, Math.Round(cPreferences.MetricPowderWeights ? cConversions.GrainsToGrams(m_dPowderWeight) :  m_dPowderWeight, cPreferences.PowderWeightDecimals), (m_dFillRatio > 100.0 ? "C" : ""));
 
 			return (strString);
 			}

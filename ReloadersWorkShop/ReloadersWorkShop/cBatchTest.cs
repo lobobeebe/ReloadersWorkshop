@@ -10,6 +10,7 @@
 //============================================================================*
 
 using System;
+using System.IO;
 
 //============================================================================*
 // Application Specific Using Statements
@@ -275,6 +276,77 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// CSVHeader Property
+		//============================================================================*
+
+		public static string CSVHeader
+			{
+			get
+				{
+				return (",Batch Tests");
+				}
+			}
+
+		//============================================================================*
+		// CSVLine Property
+		//============================================================================*
+
+		public string CSVLine
+			{
+			get
+				{
+				string strLine = ",";
+
+				strLine += m_TestDate = DateTime.Today;
+				strLine += ",";
+
+				strLine += m_Firearm = null;
+				strLine += ",";
+				strLine += m_fSuppressed = false;
+				strLine += ",";
+
+				strLine += m_strLocation = "";
+				strLine += ",";
+
+				strLine += m_nAltitude;
+				strLine += ",";
+				strLine += m_dPressure;
+				strLine += ",";
+				strLine += m_nTemperature;
+				strLine += ",";
+				strLine += m_dHumidity;
+				strLine += ",";
+
+				strLine += m_nWindSpeed;
+				strLine += ",";
+				strLine += m_nWindDirection;
+				strLine += ",";
+
+				strLine += m_nNumRounds;
+				strLine += ",";
+				strLine += m_dBestGroup;
+				strLine += ",";
+				strLine += m_nBestGroupRange;
+				strLine += ",";
+				strLine += m_strNotes;
+
+				return (strLine);
+				}
+			}
+
+		//============================================================================*
+		// CSVLineHeader Property
+		//============================================================================*
+
+		public static string CSVLineHeader
+			{
+			get
+				{
+				return (",Test Date,Firearm,Suppressed,Location,Altitude,Pressure,Temperature,Humidity,Wind Speed,Wind Direction,Number of Rounds,Best Group,Best Group Range,Notes");
+				}
+			}
+
+		//============================================================================*
 		// DensityAltitude Property
 		//============================================================================*
 
@@ -290,6 +362,33 @@ namespace ReloadersWorkShop
 				Atmosperics.Humidity = m_dHumidity;
 
 				return (Atmosperics.DensityAltitude);
+				}
+			}
+
+		//============================================================================*
+		// Export()
+		//============================================================================*
+
+		public void Export(StreamWriter Writer, cDataFiles.eExportType eType)
+			{
+			string strLine = "";
+
+			switch (eType)
+				{
+				case cDataFiles.eExportType.CSV:
+					Writer.WriteLine(cBatchTest.CSVHeader);
+					Writer.WriteLine();
+
+					Writer.WriteLine(cBatchTest.CSVLineHeader);
+					Writer.WriteLine();
+
+					strLine = Batch.BatchTest.CSVLine;
+
+					Writer.WriteLine(strLine);
+
+					Writer.WriteLine();
+
+					break;
 				}
 			}
 
@@ -586,6 +685,47 @@ namespace ReloadersWorkShop
 			set
 				{
 				m_nWindSpeed = value;
+				}
+			}
+
+		//============================================================================*
+		// XMLHeader Property
+		//============================================================================*
+
+		public static string XMLHeader
+			{
+			get
+				{
+				return ("BatchTest");
+				}
+			}
+
+		//============================================================================*
+		// XMLLine Property
+		//============================================================================*
+
+		public string XMLLine
+			{
+			get
+				{
+				string strLine = "";
+
+
+				return (strLine);
+				}
+			}
+
+		//============================================================================*
+		// XMLLineHeader Property
+		//============================================================================*
+
+		public static string XMLLineHeader
+			{
+			get
+				{
+				string strLine = "";
+
+				return (strLine);
 				}
 			}
 		}

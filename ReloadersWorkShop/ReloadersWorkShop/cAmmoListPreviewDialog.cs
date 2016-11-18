@@ -14,6 +14,8 @@ using System.Drawing;
 using System.Drawing.Printing;
 using System.Windows.Forms;
 
+using ReloadersWorkShop.Preferences;
+
 //============================================================================*
 // Namespace
 //============================================================================*
@@ -40,12 +42,12 @@ namespace ReloadersWorkShop
 			{
 			new cPrintColumn("Manufacturer"),
 			new cPrintColumn("Part #"),
-			new cPrintColumn("Model/Type"),
-			new cPrintColumn("Reloads?"),
-			new cPrintColumn("Caliber"),
-			new cPrintColumn("Min. Level"),
-			new cPrintColumn("Qty on Hand"),
-			new cPrintColumn("Est. Cost")
+			new cPrintColumn("Model"),
+			new cPrintColumn("Reload?"),
+			new cPrintColumn("Cal."),
+			new cPrintColumn("Min. Qty"),
+			new cPrintColumn("On Hand"),
+			new cPrintColumn("Cost")
 			};
 
 		//============================================================================*
@@ -79,7 +81,10 @@ namespace ReloadersWorkShop
 			// Add the unit of measure to the Bullet Weight column
 			//----------------------------------------------------------------------------*
 
-			m_AmmoColumns[4].Name += String.Format(" ({0})", m_DataFiles.MetricString(cDataFiles.eDataType.BulletWeight));
+			m_AmmoColumns[4].Name += String.Format(" ({0})", cDataFiles.MetricString(cDataFiles.eDataType.BulletWeight));
+
+			if (!cPreferences.TrackInventory)
+				m_AmmoColumns[6].Name = "Box of";
 
 			//----------------------------------------------------------------------------*
 			// Gather the list of ammo, reset flags, and exit
@@ -235,7 +240,7 @@ namespace ReloadersWorkShop
 
 					nY = cPrintObject.PrintReportTitle(m_DataFiles.Preferences.AmmoPrintBelowStock ? "Ammunition Shopping List" : "Ammunition List", PageRect, e.Graphics);
 
-					if (m_DataFiles.Preferences.TrackInventory)
+					if (cPreferences.TrackInventory)
 						{
 						strText = m_DataFiles.CostText;
 
@@ -343,7 +348,7 @@ namespace ReloadersWorkShop
 
 				double dQuantity = Ammo.MinimumStockLevel;
 
-				if (m_DataFiles.Preferences.TrackInventory)
+				if (cPreferences.TrackInventory)
 					{
 					if (dQuantity != 0.0)
 						strText = String.Format("{0:G0}", dQuantity);
@@ -363,7 +368,7 @@ namespace ReloadersWorkShop
 				// Qty on Hand
 				//----------------------------------------------------------------------------*
 
-				if (m_DataFiles.Preferences.TrackInventory)
+				if (cPreferences.TrackInventory)
 					{
 					dQuantity = m_DataFiles.SupplyQuantity(Ammo);
 

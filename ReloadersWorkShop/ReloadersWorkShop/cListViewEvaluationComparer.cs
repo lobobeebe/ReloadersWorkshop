@@ -13,6 +13,8 @@ using System;
 using System.Collections;
 using System.Windows.Forms;
 
+using ReloadersWorkShop.Preferences;
+
 //============================================================================*
 // CommonLib Using Statements
 //============================================================================*
@@ -316,16 +318,16 @@ namespace ReloadersWorkShop
 					double Group1 = Item1.ChargeTest.BestGroup;
 					double Group2 = Item2.ChargeTest.BestGroup;
 
-					Group1 = m_DataFiles.MetricToStandard(Group1, cDataFiles.eDataType.GroupSize);
-					Group2 = m_DataFiles.MetricToStandard(Group2, cDataFiles.eDataType.GroupSize);
+					Group1 = cDataFiles.MetricToStandard(Group1, cDataFiles.eDataType.GroupSize);
+					Group2 = cDataFiles.MetricToStandard(Group2, cDataFiles.eDataType.GroupSize);
 
 					int Range1 = Item1.ChargeTest.BestGroupRange;
 					int Range2 = Item2.ChargeTest.BestGroupRange;
 
-					if (m_DataFiles.Preferences.MetricRanges)
+					if (cPreferences.MetricRanges)
 						{
-						Range1 = (int) cConversions.MetersToYards(Range1, 0);
-						Range2 = (int) cConversions.MetersToYards(Range2, 0);
+						Range1 = (int) cConversions.MetersToYards(Range1);
+						Range2 = (int) cConversions.MetersToYards(Range2);
 						}
 
 					double dMOA1 = (Range1 > 0) ? Group1 / ((double) ((double) Range1 / 100.0) * 1.047) : 0;

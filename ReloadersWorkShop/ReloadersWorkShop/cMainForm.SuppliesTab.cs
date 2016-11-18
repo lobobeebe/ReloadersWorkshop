@@ -14,6 +14,8 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
+using ReloadersWorkShop.Preferences;
+
 //============================================================================*
 // Application Specific Using Statements
 //============================================================================*
@@ -262,7 +264,7 @@ namespace ReloadersWorkShop
 			// Operations that are always performed
 			//----------------------------------------------------------------------------*
 
-			SuppliesInventoryGroup.Visible = m_DataFiles.Preferences.TrackInventory;
+			SuppliesInventoryGroup.Visible = cPreferences.TrackInventory;
 
 			PopulateSupplyTab();
 
@@ -1290,7 +1292,7 @@ namespace ReloadersWorkShop
 					CheckBullet.MinimumStockLevel = Bullet.MinimumStockLevel;
 					CheckBullet.Checked = Bullet.Checked;
 
-					if (!m_DataFiles.Preferences.TrackInventory)
+					if (!cPreferences.TrackInventory)
 						{
 						CheckBullet.Quantity = Bullet.Quantity;
 						CheckBullet.Cost = Bullet.Cost;
@@ -1508,13 +1510,7 @@ namespace ReloadersWorkShop
 					// Update the current Powder record
 					//----------------------------------------------------------------------------*
 
-					CheckPowder.FirearmType = NewPowder.FirearmType;
-					CheckPowder.Manufacturer = NewPowder.Manufacturer;
-
-					CheckPowder.Model = NewPowder.Model;
-					CheckPowder.PowderType = NewPowder.PowderType;
-
-					CheckPowder.TransactionList = new cTransactionList(NewPowder.TransactionList);
+					CheckPowder.Copy(NewPowder);
 
 					CheckPowder.RecalculateInventory(m_DataFiles);
 
@@ -1522,7 +1518,7 @@ namespace ReloadersWorkShop
 					// Set the quantities, costs, etc.
 					//----------------------------------------------------------------------------*
 
-					if (!m_DataFiles.Preferences.TrackInventory)
+					if (!cPreferences.TrackInventory)
 						{
 						CheckPowder.Quantity = NewPowder.Quantity;
 						CheckPowder.Cost = NewPowder.Cost;

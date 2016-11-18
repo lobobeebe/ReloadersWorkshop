@@ -42,12 +42,16 @@
 			this.CaseCancelButton = new System.Windows.Forms.Button();
 			this.CaseOKButton = new System.Windows.Forms.Button();
 			this.GeneralGroupBox = new System.Windows.Forms.GroupBox();
-			this.MilitaryCheckBox = new System.Windows.Forms.CheckBox();
+			this.DuplicateCaseLabel = new System.Windows.Forms.Label();
+			this.LargePrimerRadioButton = new System.Windows.Forms.RadioButton();
+			this.SmallPrimerRadioButton = new System.Windows.Forms.RadioButton();
 			this.MatchCheckBox = new System.Windows.Forms.CheckBox();
 			this.CaliberScopeLabel = new System.Windows.Forms.Label();
+			this.FirearmTypeCombo = new ReloadersWorkShop.Controls.cFirearmTypeCombo();
 			this.PartNumberTextBox = new System.Windows.Forms.TextBox();
 			this.HeadStampLabel = new System.Windows.Forms.Label();
 			this.CaseImage = new System.Windows.Forms.PictureBox();
+			this.MilitaryCheckBox = new System.Windows.Forms.CheckBox();
 			this.InventoryGroupBox = new System.Windows.Forms.GroupBox();
 			this.CostTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			this.QuantityTextBox = new CommonLib.Controls.cIntegerValueTextBox();
@@ -55,10 +59,7 @@
 			this.CostLabel = new System.Windows.Forms.Label();
 			this.QuantityLabel = new System.Windows.Forms.Label();
 			this.InventoryButton = new System.Windows.Forms.Button();
-			this.SmallPrimerRadioButton = new System.Windows.Forms.RadioButton();
-			this.LargePrimerRadioButton = new System.Windows.Forms.RadioButton();
-			this.FirearmTypeCombo = new ReloadersWorkShop.Controls.cFirearmTypeCombo();
-			this.DuplicateCaseLabel = new System.Windows.Forms.Label();
+			this.CrossUseCheckBox = new System.Windows.Forms.CheckBox();
 			label8 = new System.Windows.Forms.Label();
 			label3 = new System.Windows.Forms.Label();
 			label1 = new System.Windows.Forms.Label();
@@ -192,6 +193,7 @@
 			// 
 			// GeneralGroupBox
 			// 
+			this.GeneralGroupBox.Controls.Add(this.CrossUseCheckBox);
 			this.GeneralGroupBox.Controls.Add(this.DuplicateCaseLabel);
 			this.GeneralGroupBox.Controls.Add(this.LargePrimerRadioButton);
 			this.GeneralGroupBox.Controls.Add(this.SmallPrimerRadioButton);
@@ -219,18 +221,44 @@
 			this.GeneralGroupBox.TabStop = false;
 			this.GeneralGroupBox.Text = "General";
 			// 
-			// MilitaryCheckBox
+			// DuplicateCaseLabel
 			// 
-			this.MilitaryCheckBox.AutoCheck = false;
-			this.MilitaryCheckBox.AutoSize = true;
-			this.MilitaryCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.MilitaryCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.MilitaryCheckBox.Location = new System.Drawing.Point(372, 178);
-			this.MilitaryCheckBox.Name = "MilitaryCheckBox";
-			this.MilitaryCheckBox.Size = new System.Drawing.Size(87, 17);
-			this.MilitaryCheckBox.TabIndex = 0;
-			this.MilitaryCheckBox.Text = "Military Crimp";
-			this.MilitaryCheckBox.UseVisualStyleBackColor = true;
+			this.DuplicateCaseLabel.AutoSize = true;
+			this.DuplicateCaseLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.DuplicateCaseLabel.ForeColor = System.Drawing.Color.Red;
+			this.DuplicateCaseLabel.Location = new System.Drawing.Point(216, 200);
+			this.DuplicateCaseLabel.Name = "DuplicateCaseLabel";
+			this.DuplicateCaseLabel.Size = new System.Drawing.Size(82, 13);
+			this.DuplicateCaseLabel.TabIndex = 29;
+			this.DuplicateCaseLabel.Text = "Duplicate Case!";
+			// 
+			// LargePrimerRadioButton
+			// 
+			this.LargePrimerRadioButton.AutoCheck = false;
+			this.LargePrimerRadioButton.AutoSize = true;
+			this.LargePrimerRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.LargePrimerRadioButton.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.LargePrimerRadioButton.Location = new System.Drawing.Point(160, 167);
+			this.LargePrimerRadioButton.Name = "LargePrimerRadioButton";
+			this.LargePrimerRadioButton.Size = new System.Drawing.Size(84, 17);
+			this.LargePrimerRadioButton.TabIndex = 6;
+			this.LargePrimerRadioButton.TabStop = true;
+			this.LargePrimerRadioButton.Text = "Large Primer";
+			this.LargePrimerRadioButton.UseVisualStyleBackColor = true;
+			// 
+			// SmallPrimerRadioButton
+			// 
+			this.SmallPrimerRadioButton.AutoCheck = false;
+			this.SmallPrimerRadioButton.AutoSize = true;
+			this.SmallPrimerRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.SmallPrimerRadioButton.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.SmallPrimerRadioButton.Location = new System.Drawing.Point(60, 167);
+			this.SmallPrimerRadioButton.Name = "SmallPrimerRadioButton";
+			this.SmallPrimerRadioButton.Size = new System.Drawing.Size(82, 17);
+			this.SmallPrimerRadioButton.TabIndex = 5;
+			this.SmallPrimerRadioButton.TabStop = true;
+			this.SmallPrimerRadioButton.Text = "Small Primer";
+			this.SmallPrimerRadioButton.UseVisualStyleBackColor = true;
 			// 
 			// MatchCheckBox
 			// 
@@ -255,6 +283,59 @@
 			this.CaliberScopeLabel.TabIndex = 28;
 			this.CaliberScopeLabel.Text = "label10";
 			this.CaliberScopeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// FirearmTypeCombo
+			// 
+			this.FirearmTypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.FirearmTypeCombo.DropDownWidth = 115;
+			this.FirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmTypeCombo.FormattingEnabled = true;
+			this.FirearmTypeCombo.IncludeShotgun = false;
+			this.FirearmTypeCombo.Items.AddRange(new object[] {
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle"});
+			this.FirearmTypeCombo.Location = new System.Drawing.Point(92, 83);
+			this.FirearmTypeCombo.Name = "FirearmTypeCombo";
+			this.FirearmTypeCombo.Size = new System.Drawing.Size(100, 21);
+			this.FirearmTypeCombo.TabIndex = 2;
+			this.FirearmTypeCombo.ToolTip = "";
+			this.FirearmTypeCombo.Value = ReloadersWorkShop.cFirearm.eFireArmType.Handgun;
 			// 
 			// PartNumberTextBox
 			// 
@@ -287,6 +368,19 @@
 			this.CaseImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
 			this.CaseImage.TabIndex = 23;
 			this.CaseImage.TabStop = false;
+			// 
+			// MilitaryCheckBox
+			// 
+			this.MilitaryCheckBox.AutoCheck = false;
+			this.MilitaryCheckBox.AutoSize = true;
+			this.MilitaryCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.MilitaryCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.MilitaryCheckBox.Location = new System.Drawing.Point(372, 178);
+			this.MilitaryCheckBox.Name = "MilitaryCheckBox";
+			this.MilitaryCheckBox.Size = new System.Drawing.Size(87, 17);
+			this.MilitaryCheckBox.TabIndex = 0;
+			this.MilitaryCheckBox.Text = "Military Crimp";
+			this.MilitaryCheckBox.UseVisualStyleBackColor = true;
 			// 
 			// InventoryGroupBox
 			// 
@@ -391,95 +485,17 @@
 			this.InventoryButton.Text = "Inventory Totals && Activity";
 			this.InventoryButton.UseVisualStyleBackColor = true;
 			// 
-			// SmallPrimerRadioButton
+			// CrossUseCheckBox
 			// 
-			this.SmallPrimerRadioButton.AutoCheck = false;
-			this.SmallPrimerRadioButton.AutoSize = true;
-			this.SmallPrimerRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.SmallPrimerRadioButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.SmallPrimerRadioButton.Location = new System.Drawing.Point(60, 167);
-			this.SmallPrimerRadioButton.Name = "SmallPrimerRadioButton";
-			this.SmallPrimerRadioButton.Size = new System.Drawing.Size(82, 17);
-			this.SmallPrimerRadioButton.TabIndex = 5;
-			this.SmallPrimerRadioButton.TabStop = true;
-			this.SmallPrimerRadioButton.Text = "Small Primer";
-			this.SmallPrimerRadioButton.UseVisualStyleBackColor = true;
-			// 
-			// LargePrimerRadioButton
-			// 
-			this.LargePrimerRadioButton.AutoCheck = false;
-			this.LargePrimerRadioButton.AutoSize = true;
-			this.LargePrimerRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.LargePrimerRadioButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.LargePrimerRadioButton.Location = new System.Drawing.Point(160, 167);
-			this.LargePrimerRadioButton.Name = "LargePrimerRadioButton";
-			this.LargePrimerRadioButton.Size = new System.Drawing.Size(84, 17);
-			this.LargePrimerRadioButton.TabIndex = 6;
-			this.LargePrimerRadioButton.TabStop = true;
-			this.LargePrimerRadioButton.Text = "Large Primer";
-			this.LargePrimerRadioButton.UseVisualStyleBackColor = true;
-			// 
-			// FirearmTypeCombo
-			// 
-			this.FirearmTypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.FirearmTypeCombo.DropDownWidth = 115;
-			this.FirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.FirearmTypeCombo.FormattingEnabled = true;
-			this.FirearmTypeCombo.IncludeShotgun = false;
-			this.FirearmTypeCombo.Items.AddRange(new object[] {
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle"});
-			this.FirearmTypeCombo.Location = new System.Drawing.Point(92, 83);
-			this.FirearmTypeCombo.Name = "FirearmTypeCombo";
-			this.FirearmTypeCombo.Size = new System.Drawing.Size(100, 21);
-			this.FirearmTypeCombo.TabIndex = 2;
-			this.FirearmTypeCombo.ToolTip = "";
-			this.FirearmTypeCombo.Value = ReloadersWorkShop.cFirearm.eFireArmType.Handgun;
-			// 
-			// DuplicateCaseLabel
-			// 
-			this.DuplicateCaseLabel.AutoSize = true;
-			this.DuplicateCaseLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.DuplicateCaseLabel.ForeColor = System.Drawing.Color.Red;
-			this.DuplicateCaseLabel.Location = new System.Drawing.Point(216, 200);
-			this.DuplicateCaseLabel.Name = "DuplicateCaseLabel";
-			this.DuplicateCaseLabel.Size = new System.Drawing.Size(82, 13);
-			this.DuplicateCaseLabel.TabIndex = 29;
-			this.DuplicateCaseLabel.Text = "Duplicate Case!";
+			this.CrossUseCheckBox.AutoSize = true;
+			this.CrossUseCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.CrossUseCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.CrossUseCheckBox.Location = new System.Drawing.Point(198, 85);
+			this.CrossUseCheckBox.Name = "CrossUseCheckBox";
+			this.CrossUseCheckBox.Size = new System.Drawing.Size(80, 17);
+			this.CrossUseCheckBox.TabIndex = 41;
+			this.CrossUseCheckBox.Text = "Cross Use?";
+			this.CrossUseCheckBox.UseVisualStyleBackColor = true;
 			// 
 			// cCaseForm
 			// 
@@ -487,7 +503,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.CaseCancelButton;
-			this.ClientSize = new System.Drawing.Size(537, 385);
+			this.ClientSize = new System.Drawing.Size(533, 381);
 			this.ControlBox = false;
 			this.Controls.Add(this.MilitaryCheckBox);
 			this.Controls.Add(this.InventoryGroupBox);
@@ -537,5 +553,6 @@
 		private System.Windows.Forms.RadioButton LargePrimerRadioButton;
 		private System.Windows.Forms.RadioButton SmallPrimerRadioButton;
 		private System.Windows.Forms.Label DuplicateCaseLabel;
+		private System.Windows.Forms.CheckBox CrossUseCheckBox;
 		}
 	}

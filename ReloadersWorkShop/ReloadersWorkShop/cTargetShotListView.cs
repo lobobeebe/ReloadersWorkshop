@@ -71,7 +71,7 @@ namespace ReloadersWorkShop
 
 			SortingColumn = m_DataFiles.Preferences.AmmoTestSortColumn;
 
-			m_arColumns[2].Text += String.Format(" ({0})", m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize));
+			m_arColumns[2].Text += String.Format(" ({0})", cDataFiles.MetricString(cDataFiles.eDataType.GroupSize));
 
 			PopulateColumns(m_arColumns);
 
@@ -145,7 +145,7 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			m_strGroupFormat = "{0:F";
-			m_strGroupFormat += String.Format("{0:G0}", m_DataFiles.Preferences.GroupDecimals);
+			m_strGroupFormat += String.Format("{0:G0}", cPreferences.GroupDecimals);
 			m_strGroupFormat += "}";
 
 			//----------------------------------------------------------------------------*
@@ -181,8 +181,8 @@ namespace ReloadersWorkShop
 
 			Item.Text = String.Format("{0:G0}", Items.Count + 1);
 
-			Item.SubItems.Add(m_Target.OffsetString(m_DataFiles, Shot));
-			Item.SubItems.Add(String.Format(m_strGroupFormat, m_DataFiles.StandardToMetric(m_Target.OffsetLength(Shot), cDataFiles.eDataType.GroupSize)));
+			Item.SubItems.Add(m_Target.OffsetString(Shot));
+			Item.SubItems.Add(String.Format(m_strGroupFormat, cDataFiles.StandardToMetric(m_Target.OffsetLength(Shot), cDataFiles.eDataType.GroupSize)));
 			Item.SubItems.Add(String.Format("{0:F3}", m_Target.OffsetMOA(Shot)));
 			Item.SubItems.Add(String.Format("{0:F3}", m_Target.OffsetMils(Shot)));
 			}

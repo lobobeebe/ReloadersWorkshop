@@ -139,7 +139,8 @@ namespace ReloadersWorkShop
             if (!m_fViewOnly)
                 {
                 FirearmTypeCombo.SelectedIndexChanged += OnFirearmTypeSelectedChanged;
-                ManufacturerCombo.SelectedIndexChanged += OnManufacturerSelectedChanged;
+				CrossUseCheckBox.Click += OnCrossUseClicked;
+				ManufacturerCombo.SelectedIndexChanged += OnManufacturerSelectedChanged;
                 PartNumberTextBox.TextChanged += OnPartNumberChanged;
                 CaliberCombo.SelectedIndexChanged += OnCaliberChanged;
                 SmallPrimerRadioButton.Click += OnSmallPrimerClicked;
@@ -163,7 +164,7 @@ namespace ReloadersWorkShop
             // Set Labels for inventory tracking if needed
             //----------------------------------------------------------------------------*
 
-            if (m_DataFiles.Preferences.TrackInventory)
+            if (cPreferences.TrackInventory)
                 {
                 QuantityLabel.Text = "Qty on Hand:";
 
@@ -194,8 +195,9 @@ namespace ReloadersWorkShop
             //----------------------------------------------------------------------------*
 
             FirearmTypeCombo.Value = m_Case.FirearmType;
+			CrossUseCheckBox.Checked = m_Case.CrossUse;
 
-            PopulateCaliberCombo();
+			PopulateCaliberCombo();
 
             if (!m_fViewOnly)
                 cControls.PopulateManufacturerCombo(ManufacturerCombo, m_DataFiles, m_Case.Manufacturer, cFirearm.eFireArmType.None, (int) cSupply.eSupplyTypes.Cases);
@@ -321,11 +323,24 @@ namespace ReloadersWorkShop
             UpdateButtons();
             }
 
-        //============================================================================*
-        // OnFirearmTypeSelectedChanged()
-        //============================================================================*
+		//============================================================================*
+		// OnCrossUseClicked()
+		//============================================================================*
 
-        private void OnFirearmTypeSelectedChanged(object sender, EventArgs e)
+		private void OnCrossUseClicked(object sender, EventArgs e)
+			{
+			m_Case.CrossUse = CrossUseCheckBox.Checked;
+
+			m_fChanged = true;
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
+		// OnFirearmTypeSelectedChanged()
+		//============================================================================*
+
+		private void OnFirearmTypeSelectedChanged(object sender, EventArgs e)
             {
             if (!m_fInitialized)
                 return;
@@ -573,7 +588,7 @@ namespace ReloadersWorkShop
 
             CostTextBox.Value = m_DataFiles.SupplyCost(m_Case);
 
-            if (m_DataFiles.Preferences.TrackInventory)
+            if (cPreferences.TrackInventory)
                 CostTextBox.Text = String.Format("{0}{1:F2}", m_DataFiles.Preferences.Currency, m_DataFiles.SupplyCost(m_Case));
 
             SetCostEach();

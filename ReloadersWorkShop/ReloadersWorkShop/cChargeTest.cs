@@ -28,6 +28,7 @@ namespace ReloadersWorkShop
 		// Private Data Members
 		//----------------------------------------------------------------------------*
 
+		private cCharge m_Charge = null;
 		private DateTime m_TestDate = DateTime.Today;
 		private string m_strSource = "";
 		private cFirearm m_Firearm = null;
@@ -40,6 +41,7 @@ namespace ReloadersWorkShop
 		private string m_strNotes = "";
 		private bool m_fBatchTest = false;
 		private int m_nBatchID = 0;
+		private double m_dPowderWeight = 0.0;
 
 		//============================================================================*
 		// cChargeTest() - Constructor
@@ -140,6 +142,22 @@ namespace ReloadersWorkShop
 			set
 				{
 				m_nBestGroupRange = value;
+				}
+			}
+
+		//============================================================================*
+		// Charge Property
+		//============================================================================*
+
+		public cCharge Charge
+			{
+			get
+				{
+				return (m_Charge);
+				}
+			set
+				{
+				m_Charge = value;
 				}
 			}
 
@@ -258,6 +276,18 @@ namespace ReloadersWorkShop
 			if (BatchTest != null)
 				return;
 
+			m_Charge = null;
+
+			foreach (cCharge Charge in BatchTest.Batch.Load.ChargeList)
+				{
+				if (Charge.PowderWeight == BatchTest.Batch.PowderWeight)
+					{
+					m_Charge = Charge;
+
+					break;
+					}
+				}
+
 			m_dBarrelLength = BatchTest.Firearm.BarrelLength;
 			m_dBestGroup = BatchTest.BestGroup;
 			m_nBestGroupRange = BatchTest.BestGroupRange;
@@ -267,6 +297,7 @@ namespace ReloadersWorkShop
 			m_nPressure = BatchTest.Pressure;
 			m_TestDate = BatchTest.TestDate;
 			m_dTwist = BatchTest.Firearm.Twist;
+			m_dPowderWeight = BatchTest.Batch.PowderWeight;
 
 			m_fBatchTest = true;
 
@@ -279,23 +310,31 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// Copy() - ChaegeTest
+		// Copy() - ChargeTest
 		//============================================================================*
 
 		public void Copy(cChargeTest ChargeTest)
 			{
+			m_Charge = ChargeTest.m_Charge;
+
 			m_TestDate = ChargeTest.m_TestDate;
 			m_strSource = ChargeTest.m_strSource;
+
 			m_Firearm = ChargeTest.m_Firearm;
 			m_dBarrelLength = ChargeTest.m_dBarrelLength;
 			m_dTwist = ChargeTest.m_dTwist;
+
 			m_nMuzzleVelocity = ChargeTest.m_nMuzzleVelocity;
 			m_nPressure = ChargeTest.m_nPressure;
+
 			m_dBestGroup = ChargeTest.m_dBestGroup;
 			m_nBestGroupRange = ChargeTest.m_nBestGroupRange;
 			m_strNotes = ChargeTest.m_strNotes;
+
 			m_fBatchTest = ChargeTest.m_fBatchTest;
 			m_nBatchID = ChargeTest.m_nBatchID;
+
+			m_dPowderWeight = ChargeTest.m_dPowderWeight;
 			}
 
 		//============================================================================*
@@ -350,6 +389,22 @@ namespace ReloadersWorkShop
 			set
 				{
 				m_strNotes = value;
+				}
+			}
+
+		//============================================================================*
+		// PowderWeight Property
+		//============================================================================*
+
+		public double PowderWeight
+			{
+			get
+				{
+				return (m_dPowderWeight);
+				}
+			set
+				{
+				m_dPowderWeight = value;
 				}
 			}
 

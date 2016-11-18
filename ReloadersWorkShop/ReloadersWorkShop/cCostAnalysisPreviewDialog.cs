@@ -14,6 +14,9 @@ using System.Drawing;
 using System.Drawing.Printing;
 using System.Windows.Forms;
 
+using ReloadersWorkShop.Preferences;
+
+
 //============================================================================*
 // Namespace
 //============================================================================*
@@ -534,7 +537,7 @@ namespace ReloadersWorkShop
 
 				if (PowderTotals.NumInitialStock > 0)
 					{
-					strText = String.Format("{0:F3} {1}{2} {3} in initial stock with a value of {4}{5:F2}.", PowderTotals.InitialStockQty, m_DataFiles.MetricString(cDataFiles.eDataType.CanWeight), PowderTotals.InitialStockQty != 1.0 ? "s" : "", PowderTotals.InitialStockQty == 1 ? "was" : "were", m_DataFiles.Preferences.Currency, PowderTotals.InitialStockTotal);
+					strText = String.Format("{0:F3} {1}{2} {3} in initial stock with a value of {4}{5:F2}.", PowderTotals.InitialStockQty, cDataFiles.MetricString(cDataFiles.eDataType.CanWeight), PowderTotals.InitialStockQty != 1.0 ? "s" : "", PowderTotals.InitialStockQty == 1 ? "was" : "were", m_DataFiles.Preferences.Currency, PowderTotals.InitialStockTotal);
 
 					TextSize = e.Graphics.MeasureString(strText, DataFont);
 
@@ -550,10 +553,10 @@ namespace ReloadersWorkShop
 				if (PowderTotals.NumPurchases > 0)
 					{
 					string strFormat = "{0:G0} purchase{1} totaling {2:F";
-					strFormat += String.Format("{0:G0}", m_DataFiles.Preferences.CanWeightDecimals);
+					strFormat += String.Format("{0:G0}", cPreferences.CanWeightDecimals);
 					strFormat += "} {3}{4} at a cost of {5}{6:F2}.";
 
-					strText = String.Format(strFormat, PowderTotals.NumPurchases, PowderTotals.NumPurchases != 1 ? "s" : "", PowderTotals.PurchaseQty, m_DataFiles.MetricString(cDataFiles.eDataType.CanWeight), PowderTotals.PurchaseQty != 1.0 ? "s" : "", m_DataFiles.Preferences.Currency, PowderTotals.PurchaseTotal);
+					strText = String.Format(strFormat, PowderTotals.NumPurchases, PowderTotals.NumPurchases != 1 ? "s" : "", PowderTotals.PurchaseQty, cDataFiles.MetricString(cDataFiles.eDataType.CanWeight), PowderTotals.PurchaseQty != 1.0 ? "s" : "", m_DataFiles.Preferences.Currency, PowderTotals.PurchaseTotal);
 
 					TextSize = e.Graphics.MeasureString(strText, DataFont);
 
@@ -571,9 +574,9 @@ namespace ReloadersWorkShop
 					strText = String.Format("{0} adjustment{1} ", PowderTotals.NumAdjustments, PowderTotals.NumAdjustments != 1 ? "s" : "");
 
 					if (CaseTotals.AdjustmentsQty < 0.0)
-						strText += String.Format("with a net loss of {0:F3} {1}{2} at a cost of {3}{4:F2}.", Math.Abs(PowderTotals.AdjustmentsQty), m_DataFiles.MetricString(cDataFiles.eDataType.CanWeight), PowderTotals.AdjustmentsQty != 1.0 ? "s" : "", m_DataFiles.Preferences.Currency, Math.Abs(PowderTotals.AdjustmentsTotal));
+						strText += String.Format("with a net loss of {0:F3} {1}{2} at a cost of {3}{4:F2}.", Math.Abs(PowderTotals.AdjustmentsQty), cDataFiles.MetricString(cDataFiles.eDataType.CanWeight), PowderTotals.AdjustmentsQty != 1.0 ? "s" : "", m_DataFiles.Preferences.Currency, Math.Abs(PowderTotals.AdjustmentsTotal));
 					else
-						strText += String.Format("with a net gain of {0:F3} {1}{2} valued at {3}{4:F2}.", PowderTotals.AdjustmentsQty, m_DataFiles.MetricString(cDataFiles.eDataType.CanWeight), PowderTotals.AdjustmentsQty != 1.0 ? "s" : "", m_DataFiles.Preferences.Currency, PowderTotals.AdjustmentsTotal);
+						strText += String.Format("with a net gain of {0:F3} {1}{2} valued at {3}{4:F2}.", PowderTotals.AdjustmentsQty, cDataFiles.MetricString(cDataFiles.eDataType.CanWeight), PowderTotals.AdjustmentsQty != 1.0 ? "s" : "", m_DataFiles.Preferences.Currency, PowderTotals.AdjustmentsTotal);
 
 					TextSize = e.Graphics.MeasureString(strText, DataFont);
 
@@ -588,7 +591,7 @@ namespace ReloadersWorkShop
 
 				if (PowderTotals.NumUsed > 0)
 					{
-					strText = String.Format("{0:F3} {1}{2} used in {3:G0} batch{4} at a cost of {5}{6:F2}.", Math.Abs(PowderTotals.UsedQty), m_DataFiles.MetricString(cDataFiles.eDataType.CanWeight), PowderTotals.UsedQty != 1.0 ? "s" : "", PowderTotals.NumUsed, PowderTotals.NumUsed != 1.0 ? "s" : "", m_DataFiles.Preferences.Currency, Math.Abs(PowderTotals.UsedTotal));
+					strText = String.Format("{0:F3} {1}{2} used in {3:G0} batch{4} at a cost of {5}{6:F2}.", Math.Abs(PowderTotals.UsedQty), cDataFiles.MetricString(cDataFiles.eDataType.CanWeight), PowderTotals.UsedQty != 1.0 ? "s" : "", PowderTotals.NumUsed, PowderTotals.NumUsed != 1.0 ? "s" : "", m_DataFiles.Preferences.Currency, Math.Abs(PowderTotals.UsedTotal));
 
 					TextSize = e.Graphics.MeasureString(strText, DataFont);
 
@@ -603,7 +606,7 @@ namespace ReloadersWorkShop
 
 				nY += (TextSize.Height / (float)2.0);
 
-				strText = String.Format("{0:F3} {1}{2} remain{3} in stock with a value of {4}{5:F2}.", PowderTotals.InStockQty, m_DataFiles.MetricString(cDataFiles.eDataType.CanWeight), PowderTotals.InitialStockQty != 1.0 ? "s" : "", PowderTotals.InStockQty == 1.0 ? "s" : "", m_DataFiles.Preferences.Currency, PowderTotals.InStockTotal);
+				strText = String.Format("{0:F3} {1}{2} remain{3} in stock with a value of {4}{5:F2}.", PowderTotals.InStockQty, cDataFiles.MetricString(cDataFiles.eDataType.CanWeight), PowderTotals.InitialStockQty != 1.0 ? "s" : "", PowderTotals.InStockQty == 1.0 ? "s" : "", m_DataFiles.Preferences.Currency, PowderTotals.InStockTotal);
 
 				TextSize = e.Graphics.MeasureString(strText, DataFont);
 
@@ -1657,13 +1660,13 @@ namespace ReloadersWorkShop
 							dQuantity = SupplyTotals.PurchaseQty + SupplyTotals.InitialStockQty;
 
 							string strFormat = "{0:F";
-							strFormat += String.Format("{0:G0}", m_DataFiles.Preferences.CanWeightDecimals);
+							strFormat += String.Format("{0:G0}", cPreferences.CanWeightDecimals);
 							strFormat += "} {1}{2}";
 
 							if (dQuantity == 0.0)
 								strText = "-";
 							else
-								strText = String.Format(strFormat, dQuantity, m_DataFiles.MetricString(cDataFiles.eDataType.CanWeight), dQuantity != 1.0 ? "s" : "");
+								strText = String.Format(strFormat, dQuantity, cDataFiles.MetricString(cDataFiles.eDataType.CanWeight), dQuantity != 1.0 ? "s" : "");
 
 							TextSize = e.Graphics.MeasureString(strText, DataFont);
 
@@ -1693,7 +1696,7 @@ namespace ReloadersWorkShop
 							if (dAdjustments == 0.0)
 								strText = "-";
 							else
-								strText = String.Format("{0:F3} {1}{2}", dQuantity, m_DataFiles.MetricString(cDataFiles.eDataType.CanWeight), dQuantity != 1.0 ? "s" : "");
+								strText = String.Format("{0:F3} {1}{2}", dQuantity, cDataFiles.MetricString(cDataFiles.eDataType.CanWeight), dQuantity != 1.0 ? "s" : "");
 
 							TextSize = e.Graphics.MeasureString(strText, DataFont);
 
@@ -1708,7 +1711,7 @@ namespace ReloadersWorkShop
 							if (dUsed == 0.0)
 								strText = "-";
 							else
-								strText = String.Format("{0:F3} {1}{2}", dQuantity, m_DataFiles.MetricString(cDataFiles.eDataType.CanWeight), dQuantity != 1.0 ? "s" : "");
+								strText = String.Format("{0:F3} {1}{2}", dQuantity, cDataFiles.MetricString(cDataFiles.eDataType.CanWeight), dQuantity != 1.0 ? "s" : "");
 
 							TextSize = e.Graphics.MeasureString(strText, DataFont);
 
@@ -1718,12 +1721,12 @@ namespace ReloadersWorkShop
 
 							// On Hand
 
-							dQuantity = m_DataFiles.StandardToMetric( m_DataFiles.SupplyQuantity(Supply) / 7000.0, cDataFiles.eDataType.CanWeight);
+							dQuantity = cDataFiles.StandardToMetric( m_DataFiles.SupplyQuantity(Supply) / 7000.0, cDataFiles.eDataType.CanWeight);
 
 							if (dQuantity == 0.0)
 								strText = "-";
 							else
-								strText = String.Format("{0:F3} {1}{2}", dQuantity, m_DataFiles.MetricString(cDataFiles.eDataType.CanWeight), dQuantity != 1.0 ? "s" : "");
+								strText = String.Format("{0:F3} {1}{2}", dQuantity, cDataFiles.MetricString(cDataFiles.eDataType.CanWeight), dQuantity != 1.0 ? "s" : "");
 
 							TextSize = e.Graphics.MeasureString(strText, DataFont);
 

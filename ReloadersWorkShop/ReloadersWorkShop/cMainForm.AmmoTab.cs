@@ -16,6 +16,8 @@ using System.Windows.Forms;
 // Application Specific Using Statements
 //============================================================================*
 
+using ReloadersWorkShop.Preferences;
+
 //============================================================================*
 // NameSpace
 //============================================================================*
@@ -114,7 +116,7 @@ namespace ReloadersWorkShop
 			// Operations that are always performed
 			//----------------------------------------------------------------------------*
 
-			AmmoInventoryGroup.Visible = m_DataFiles.Preferences.TrackInventory;
+			AmmoInventoryGroup.Visible = cPreferences.TrackInventory;
 
 			PopulateAmmoListViewColumns();
 
@@ -546,7 +548,7 @@ namespace ReloadersWorkShop
 					// Set the quantities, costs, etc.
 					//----------------------------------------------------------------------------*
 
-					if (m_DataFiles.Preferences.TrackInventory)
+					if (cPreferences.TrackInventory)
 						{
 						CheckAmmo.QuantityOnHand = NewAmmo.QuantityOnHand;
 						CheckAmmo.Quantity = CheckAmmo.QuantityOnHand;

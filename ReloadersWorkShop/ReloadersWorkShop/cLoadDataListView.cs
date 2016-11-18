@@ -368,7 +368,7 @@ namespace ReloadersWorkShop
 			foreach (ColumnHeader Header in this.Columns)
 				{
 				if (Header.Index > 4)
-					Header.Text = String.Format("Charge {0} ({1})", Header.Index - 4, m_DataFiles.MetricString(cDataFiles.eDataType.PowderWeight));
+					Header.Text = String.Format("Charge {0} ({1})", Header.Index - 4, cDataFiles.MetricString(cDataFiles.eDataType.PowderWeight));
 				}
 			}
 
@@ -396,7 +396,7 @@ namespace ReloadersWorkShop
 				{
 				if (Columns.Count < nColumnCount)
 					{
-					ColumnHeader Column = Columns.Add(String.Format("Charge {0:G} ({1})", nColumnCount - 5, m_DataFiles.MetricString(cDataFiles.eDataType.PowderWeight)));
+					ColumnHeader Column = Columns.Add(String.Format("Charge {0:G} ({1})", nColumnCount - 5, cDataFiles.MetricString(cDataFiles.eDataType.PowderWeight)));
 					Column.TextAlign = nColumnCount == 6 ? HorizontalAlignment.Left : HorizontalAlignment.Center;
 					Column.Width = 100;
 					}
@@ -405,7 +405,7 @@ namespace ReloadersWorkShop
 //				strPowderWeightFormat += String.Format("{0:G0}", m_DataFiles.Preferences.PowderWeightDecimals);
 //				strPowderWeightFormat += "}";
 
-//				Item.SubItems.Add(String.Format(strPowderWeightFormat, m_DataFiles.StandardToMetric(Charge.PowderWeight, cDataFiles.eDataType.PowderWeight)));
+//				Item.SubItems.Add(String.Format(strPowderWeightFormat, cDataFiles.StandardToMetric(Charge.PowderWeight, cDataFiles.eDataType.PowderWeight)));
 				Item.SubItems.Add(String.Format(Charge.ToString()));
 
 				nColumnCount++;

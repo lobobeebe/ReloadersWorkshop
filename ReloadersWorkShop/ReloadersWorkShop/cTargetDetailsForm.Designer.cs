@@ -15,6 +15,8 @@
 			{
 			if (disposing && (components != null))
 				{
+				m_Target.Dispose();
+
 				components.Dispose();
 				}
 			base.Dispose(disposing);

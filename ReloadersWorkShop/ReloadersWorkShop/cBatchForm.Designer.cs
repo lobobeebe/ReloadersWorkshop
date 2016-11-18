@@ -56,30 +56,25 @@
 			System.Windows.Forms.Label label24;
 			System.Windows.Forms.Label label28;
 			System.Windows.Forms.Label label3;
+			System.Windows.Forms.Label label29;
 			this.PowderChargeMeasurementLabel = new System.Windows.Forms.Label();
 			this.BatchOKButton = new System.Windows.Forms.Button();
 			this.BatchCancelButton = new System.Windows.Forms.Button();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.JumpLabel = new System.Windows.Forms.Label();
+			this.JumpSetCheckBox = new System.Windows.Forms.CheckBox();
+			this.ModifiedBulletCheckBox = new System.Windows.Forms.CheckBox();
 			this.AnnealedCheckBox = new System.Windows.Forms.CheckBox();
 			this.NeckTurnedCheckBox = new System.Windows.Forms.CheckBox();
 			this.ExpandedNeckRadioButton = new System.Windows.Forms.RadioButton();
 			this.NeckSizedRadioButton = new System.Windows.Forms.RadioButton();
 			this.FullLengthSizedRadioButton = new System.Windows.Forms.RadioButton();
 			this.NumRoundsRangeLabel = new System.Windows.Forms.Label();
-			this.BulletDiameterTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			this.BulletDiameterMeasurementLabel = new System.Windows.Forms.Label();
 			this.NeckTensionlabel = new System.Windows.Forms.Label();
 			this.TimesFiredLabel = new System.Windows.Forms.Label();
-			this.NeckWallTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			this.NeckWallMeasurementLabel = new System.Windows.Forms.Label();
 			this.TrimLengthMeasurementLabel = new System.Windows.Forms.Label();
-			this.HeadSpaceTextBox = new CommonLib.Controls.cDoubleValueTextBox();
-			this.NumRoundsTextBox = new CommonLib.Controls.cIntegerValueTextBox();
-			this.TimesFiredTextBox = new CommonLib.Controls.cIntegerValueTextBox();
-			this.NeckSizeTextBox = new CommonLib.Controls.cDoubleValueTextBox();
-			this.CBTOTextBox = new CommonLib.Controls.cDoubleValueTextBox();
-			this.COALTextBox = new CommonLib.Controls.cDoubleValueTextBox();
-			this.CaseTrimLengthTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			this.TestDataButton = new System.Windows.Forms.Button();
 			this.HeadspaceMeasurementLabel = new System.Windows.Forms.Label();
 			this.NeckSizeMeasurementLabel = new System.Windows.Forms.Label();
@@ -90,10 +85,13 @@
 			this.BatchDateTimePicker = new System.Windows.Forms.DateTimePicker();
 			this.BatchIDLabel = new System.Windows.Forms.Label();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
-			this.FirearmNeckSizeMeasurementLabel = new System.Windows.Forms.Label();
+			this.FirearmTransferButton = new System.Windows.Forms.Button();
+			this.FirearmJumpMeasurementLabel = new System.Windows.Forms.Label();
+			this.FirearmJumpLabel = new System.Windows.Forms.Label();
+			this.FirearmNeckMeasurementLabel = new System.Windows.Forms.Label();
 			this.FirearmCOLMeasurementLabel = new System.Windows.Forms.Label();
 			this.FirearmCBTOMeasurementLabel = new System.Windows.Forms.Label();
-			this.FirearmHeadspaceMeasurementLabel = new System.Windows.Forms.Label();
+			this.FirearmHeadSpaceMeasurementLabel = new System.Windows.Forms.Label();
 			this.FirearmNeckLabel = new System.Windows.Forms.Label();
 			this.FirearmHeadSpaceLabel = new System.Windows.Forms.Label();
 			this.FirearmCBTOLabel = new System.Windows.Forms.Label();
@@ -112,8 +110,18 @@
 			this.BulletCombo = new System.Windows.Forms.ComboBox();
 			this.CaliberCombo = new System.Windows.Forms.ComboBox();
 			this.PrintButton = new System.Windows.Forms.Button();
+			this.JumpMeasurementLabel = new System.Windows.Forms.Label();
+			this.JumpTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			this.UserIDTextBox = new CommonLib.Controls.cTextBox();
-			this.ModifiedBulletCheckBox = new System.Windows.Forms.CheckBox();
+			this.BulletDiameterTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.NeckWallTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.HeadSpaceTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.NumRoundsTextBox = new CommonLib.Controls.cIntegerValueTextBox();
+			this.TimesFiredTextBox = new CommonLib.Controls.cIntegerValueTextBox();
+			this.NeckSizeTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.CBTOTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.COALTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.CaseTrimLengthTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			this.FirearmTypeCombo = new ReloadersWorkShop.Controls.cFirearmTypeCombo();
 			label13 = new System.Windows.Forms.Label();
 			label10 = new System.Windows.Forms.Label();
@@ -143,6 +151,7 @@
 			label24 = new System.Windows.Forms.Label();
 			label28 = new System.Windows.Forms.Label();
 			label3 = new System.Windows.Forms.Label();
+			label29 = new System.Windows.Forms.Label();
 			this.groupBox2.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.LoadDetailsGroup.SuspendLayout();
@@ -154,7 +163,7 @@
 			label13.AutoSize = true;
 			label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			label13.ForeColor = System.Drawing.SystemColors.ControlText;
-			label13.Location = new System.Drawing.Point(30, 148);
+			label13.Location = new System.Drawing.Point(30, 155);
 			label13.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			label13.Name = "label13";
 			label13.Size = new System.Drawing.Size(62, 13);
@@ -166,7 +175,7 @@
 			label10.AutoSize = true;
 			label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			label10.ForeColor = System.Drawing.SystemColors.ControlText;
-			label10.Location = new System.Drawing.Point(16, 125);
+			label10.Location = new System.Drawing.Point(16, 132);
 			label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			label10.Name = "label10";
 			label10.Size = new System.Drawing.Size(76, 13);
@@ -190,7 +199,7 @@
 			label20.AutoSize = true;
 			label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			label20.ForeColor = System.Drawing.SystemColors.ControlText;
-			label20.Location = new System.Drawing.Point(344, 50);
+			label20.Location = new System.Drawing.Point(344, 53);
 			label20.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			label20.Name = "label20";
 			label20.Size = new System.Drawing.Size(39, 13);
@@ -473,6 +482,30 @@
 			label28.TabIndex = 45;
 			label28.Text = "Bullet Diameter:";
 			// 
+			// label3
+			// 
+			label3.AutoSize = true;
+			label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			label3.ForeColor = System.Drawing.SystemColors.ControlText;
+			label3.Location = new System.Drawing.Point(111, 30);
+			label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			label3.Name = "label3";
+			label3.Size = new System.Drawing.Size(46, 13);
+			label3.TabIndex = 48;
+			label3.Text = "User ID:";
+			// 
+			// label29
+			// 
+			label29.AutoSize = true;
+			label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			label29.ForeColor = System.Drawing.SystemColors.ControlText;
+			label29.Location = new System.Drawing.Point(65, 90);
+			label29.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			label29.Name = "label29";
+			label29.Size = new System.Drawing.Size(35, 13);
+			label29.TabIndex = 40;
+			label29.Text = "Jump:";
+			// 
 			// PowderChargeMeasurementLabel
 			// 
 			this.PowderChargeMeasurementLabel.AutoSize = true;
@@ -488,7 +521,7 @@
 			// BatchOKButton
 			// 
 			this.BatchOKButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.BatchOKButton.Location = new System.Drawing.Point(212, 602);
+			this.BatchOKButton.Location = new System.Drawing.Point(212, 616);
 			this.BatchOKButton.Margin = new System.Windows.Forms.Padding(2);
 			this.BatchOKButton.Name = "BatchOKButton";
 			this.BatchOKButton.Size = new System.Drawing.Size(56, 19);
@@ -499,7 +532,7 @@
 			// BatchCancelButton
 			// 
 			this.BatchCancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.BatchCancelButton.Location = new System.Drawing.Point(378, 602);
+			this.BatchCancelButton.Location = new System.Drawing.Point(378, 616);
 			this.BatchCancelButton.Margin = new System.Windows.Forms.Padding(2);
 			this.BatchCancelButton.Name = "BatchCancelButton";
 			this.BatchCancelButton.Size = new System.Drawing.Size(56, 19);
@@ -509,6 +542,10 @@
 			// 
 			// groupBox2
 			// 
+			this.groupBox2.Controls.Add(this.JumpMeasurementLabel);
+			this.groupBox2.Controls.Add(this.JumpTextBox);
+			this.groupBox2.Controls.Add(this.JumpLabel);
+			this.groupBox2.Controls.Add(this.JumpSetCheckBox);
 			this.groupBox2.Controls.Add(this.ModifiedBulletCheckBox);
 			this.groupBox2.Controls.Add(this.UserIDTextBox);
 			this.groupBox2.Controls.Add(label3);
@@ -557,7 +594,7 @@
 			this.groupBox2.Controls.Add(label8);
 			this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.groupBox2.ForeColor = System.Drawing.SystemColors.HotTrack;
-			this.groupBox2.Location = new System.Drawing.Point(10, 410);
+			this.groupBox2.Location = new System.Drawing.Point(10, 424);
 			this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
@@ -565,6 +602,43 @@
 			this.groupBox2.TabIndex = 1;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Batch Details";
+			// 
+			// JumpLabel
+			// 
+			this.JumpLabel.AutoSize = true;
+			this.JumpLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.JumpLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.JumpLabel.Location = new System.Drawing.Point(501, 121);
+			this.JumpLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.JumpLabel.Name = "JumpLabel";
+			this.JumpLabel.Size = new System.Drawing.Size(35, 13);
+			this.JumpLabel.TabIndex = 51;
+			this.JumpLabel.Text = "Jump:";
+			// 
+			// JumpSetCheckBox
+			// 
+			this.JumpSetCheckBox.AutoSize = true;
+			this.JumpSetCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.JumpSetCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.JumpSetCheckBox.Location = new System.Drawing.Point(513, 98);
+			this.JumpSetCheckBox.Name = "JumpSetCheckBox";
+			this.JumpSetCheckBox.Size = new System.Drawing.Size(79, 17);
+			this.JumpSetCheckBox.TabIndex = 49;
+			this.JumpSetCheckBox.Text = "Jump  Set?";
+			this.JumpSetCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// ModifiedBulletCheckBox
+			// 
+			this.ModifiedBulletCheckBox.AutoCheck = false;
+			this.ModifiedBulletCheckBox.AutoSize = true;
+			this.ModifiedBulletCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ModifiedBulletCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.ModifiedBulletCheckBox.Location = new System.Drawing.Point(388, 120);
+			this.ModifiedBulletCheckBox.Name = "ModifiedBulletCheckBox";
+			this.ModifiedBulletCheckBox.Size = new System.Drawing.Size(95, 17);
+			this.ModifiedBulletCheckBox.TabIndex = 16;
+			this.ModifiedBulletCheckBox.Text = "Modified Bullet";
+			this.ModifiedBulletCheckBox.UseVisualStyleBackColor = true;
 			// 
 			// AnnealedCheckBox
 			// 
@@ -646,23 +720,6 @@
 			this.NumRoundsRangeLabel.TabIndex = 47;
 			this.NumRoundsRangeLabel.Text = "Allowed Range";
 			// 
-			// BulletDiameterTextBox
-			// 
-			this.BulletDiameterTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.BulletDiameterTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BulletDiameterTextBox.Location = new System.Drawing.Point(97, 73);
-			this.BulletDiameterTextBox.MaxLength = 6;
-			this.BulletDiameterTextBox.MaxValue = 0D;
-			this.BulletDiameterTextBox.MinValue = 0D;
-			this.BulletDiameterTextBox.Name = "BulletDiameterTextBox";
-			this.BulletDiameterTextBox.NumDecimals = 4;
-			this.BulletDiameterTextBox.Size = new System.Drawing.Size(45, 20);
-			this.BulletDiameterTextBox.TabIndex = 7;
-			this.BulletDiameterTextBox.Text = "0.0000";
-			this.BulletDiameterTextBox.ToolTip = "";
-			this.BulletDiameterTextBox.Value = 0D;
-			this.BulletDiameterTextBox.ZeroAllowed = true;
-			// 
 			// BulletDiameterMeasurementLabel
 			// 
 			this.BulletDiameterMeasurementLabel.AutoSize = true;
@@ -678,12 +735,12 @@
 			// NeckTensionlabel
 			// 
 			this.NeckTensionlabel.AutoSize = true;
-			this.NeckTensionlabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.NeckTensionlabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.NeckTensionlabel.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.NeckTensionlabel.Location = new System.Drawing.Point(538, 76);
 			this.NeckTensionlabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.NeckTensionlabel.Name = "NeckTensionlabel";
-			this.NeckTensionlabel.Size = new System.Drawing.Size(40, 13);
+			this.NeckTensionlabel.Size = new System.Drawing.Size(46, 13);
 			this.NeckTensionlabel.TabIndex = 9;
 			this.NeckTensionlabel.Text = "0.0000";
 			// 
@@ -698,23 +755,6 @@
 			this.TimesFiredLabel.Size = new System.Drawing.Size(31, 13);
 			this.TimesFiredLabel.TabIndex = 41;
 			this.TimesFiredLabel.Text = "times";
-			// 
-			// NeckWallTextBox
-			// 
-			this.NeckWallTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.NeckWallTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.NeckWallTextBox.Location = new System.Drawing.Point(388, 73);
-			this.NeckWallTextBox.MaxLength = 6;
-			this.NeckWallTextBox.MaxValue = 0D;
-			this.NeckWallTextBox.MinValue = 0D;
-			this.NeckWallTextBox.Name = "NeckWallTextBox";
-			this.NeckWallTextBox.NumDecimals = 4;
-			this.NeckWallTextBox.Size = new System.Drawing.Size(45, 20);
-			this.NeckWallTextBox.TabIndex = 9;
-			this.NeckWallTextBox.Text = "0.0000";
-			this.NeckWallTextBox.ToolTip = "";
-			this.NeckWallTextBox.Value = 0D;
-			this.NeckWallTextBox.ZeroAllowed = true;
 			// 
 			// NeckWallMeasurementLabel
 			// 
@@ -739,123 +779,6 @@
 			this.TrimLengthMeasurementLabel.Size = new System.Drawing.Size(18, 13);
 			this.TrimLengthMeasurementLabel.TabIndex = 36;
 			this.TrimLengthMeasurementLabel.Text = "in.";
-			// 
-			// HeadSpaceTextBox
-			// 
-			this.HeadSpaceTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.HeadSpaceTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.HeadSpaceTextBox.Location = new System.Drawing.Point(541, 50);
-			this.HeadSpaceTextBox.MaxLength = 5;
-			this.HeadSpaceTextBox.MaxValue = 0D;
-			this.HeadSpaceTextBox.MinValue = 0D;
-			this.HeadSpaceTextBox.Name = "HeadSpaceTextBox";
-			this.HeadSpaceTextBox.NumDecimals = 3;
-			this.HeadSpaceTextBox.Size = new System.Drawing.Size(46, 20);
-			this.HeadSpaceTextBox.TabIndex = 6;
-			this.HeadSpaceTextBox.Text = "0.000";
-			this.HeadSpaceTextBox.ToolTip = "";
-			this.HeadSpaceTextBox.Value = 0D;
-			this.HeadSpaceTextBox.ZeroAllowed = true;
-			// 
-			// NumRoundsTextBox
-			// 
-			this.NumRoundsTextBox.BackColor = System.Drawing.Color.LightPink;
-			this.NumRoundsTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.NumRoundsTextBox.Location = new System.Drawing.Point(474, 27);
-			this.NumRoundsTextBox.MaxLength = 5;
-			this.NumRoundsTextBox.MaxValue = 0;
-			this.NumRoundsTextBox.MinValue = 1;
-			this.NumRoundsTextBox.Name = "NumRoundsTextBox";
-			this.NumRoundsTextBox.Required = false;
-			this.NumRoundsTextBox.Size = new System.Drawing.Size(45, 20);
-			this.NumRoundsTextBox.TabIndex = 2;
-			this.NumRoundsTextBox.Text = "0";
-			this.NumRoundsTextBox.ToolTip = "";
-			this.NumRoundsTextBox.Value = 0;
-			// 
-			// TimesFiredTextBox
-			// 
-			this.TimesFiredTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.TimesFiredTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.TimesFiredTextBox.Location = new System.Drawing.Point(98, 96);
-			this.TimesFiredTextBox.MaxLength = 2;
-			this.TimesFiredTextBox.MaxValue = 50;
-			this.TimesFiredTextBox.MinValue = 0;
-			this.TimesFiredTextBox.Name = "TimesFiredTextBox";
-			this.TimesFiredTextBox.Required = false;
-			this.TimesFiredTextBox.Size = new System.Drawing.Size(43, 20);
-			this.TimesFiredTextBox.TabIndex = 10;
-			this.TimesFiredTextBox.Text = "0";
-			this.TimesFiredTextBox.ToolTip = "";
-			this.TimesFiredTextBox.Value = 0;
-			// 
-			// NeckSizeTextBox
-			// 
-			this.NeckSizeTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.NeckSizeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.NeckSizeTextBox.Location = new System.Drawing.Point(244, 73);
-			this.NeckSizeTextBox.MaxLength = 6;
-			this.NeckSizeTextBox.MaxValue = 0D;
-			this.NeckSizeTextBox.MinValue = 0D;
-			this.NeckSizeTextBox.Name = "NeckSizeTextBox";
-			this.NeckSizeTextBox.NumDecimals = 4;
-			this.NeckSizeTextBox.Size = new System.Drawing.Size(45, 20);
-			this.NeckSizeTextBox.TabIndex = 8;
-			this.NeckSizeTextBox.Text = "0.0000";
-			this.NeckSizeTextBox.ToolTip = "";
-			this.NeckSizeTextBox.Value = 0D;
-			this.NeckSizeTextBox.ZeroAllowed = true;
-			// 
-			// CBTOTextBox
-			// 
-			this.CBTOTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.CBTOTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.CBTOTextBox.Location = new System.Drawing.Point(388, 47);
-			this.CBTOTextBox.MaxLength = 5;
-			this.CBTOTextBox.MaxValue = 0D;
-			this.CBTOTextBox.MinValue = 0D;
-			this.CBTOTextBox.Name = "CBTOTextBox";
-			this.CBTOTextBox.NumDecimals = 3;
-			this.CBTOTextBox.Size = new System.Drawing.Size(44, 20);
-			this.CBTOTextBox.TabIndex = 5;
-			this.CBTOTextBox.Text = "0.000";
-			this.CBTOTextBox.ToolTip = "";
-			this.CBTOTextBox.Value = 0D;
-			this.CBTOTextBox.ZeroAllowed = true;
-			// 
-			// COALTextBox
-			// 
-			this.COALTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.COALTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.COALTextBox.Location = new System.Drawing.Point(245, 50);
-			this.COALTextBox.MaxLength = 5;
-			this.COALTextBox.MaxValue = 0D;
-			this.COALTextBox.MinValue = 0D;
-			this.COALTextBox.Name = "COALTextBox";
-			this.COALTextBox.NumDecimals = 3;
-			this.COALTextBox.Size = new System.Drawing.Size(44, 20);
-			this.COALTextBox.TabIndex = 4;
-			this.COALTextBox.Text = "0.000";
-			this.COALTextBox.ToolTip = "";
-			this.COALTextBox.Value = 0D;
-			this.COALTextBox.ZeroAllowed = true;
-			// 
-			// CaseTrimLengthTextBox
-			// 
-			this.CaseTrimLengthTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.CaseTrimLengthTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.CaseTrimLengthTextBox.Location = new System.Drawing.Point(97, 50);
-			this.CaseTrimLengthTextBox.MaxLength = 5;
-			this.CaseTrimLengthTextBox.MaxValue = 0D;
-			this.CaseTrimLengthTextBox.MinValue = 0D;
-			this.CaseTrimLengthTextBox.Name = "CaseTrimLengthTextBox";
-			this.CaseTrimLengthTextBox.NumDecimals = 3;
-			this.CaseTrimLengthTextBox.Size = new System.Drawing.Size(44, 20);
-			this.CaseTrimLengthTextBox.TabIndex = 3;
-			this.CaseTrimLengthTextBox.Text = "0.000";
-			this.CaseTrimLengthTextBox.ToolTip = "";
-			this.CaseTrimLengthTextBox.Value = 0D;
-			this.CaseTrimLengthTextBox.ZeroAllowed = true;
 			// 
 			// TestDataButton
 			// 
@@ -898,7 +821,7 @@
 			this.CBTOMeasurementLabel.AutoSize = true;
 			this.CBTOMeasurementLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.CBTOMeasurementLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.CBTOMeasurementLabel.Location = new System.Drawing.Point(438, 53);
+			this.CBTOMeasurementLabel.Location = new System.Drawing.Point(437, 53);
 			this.CBTOMeasurementLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.CBTOMeasurementLabel.Name = "CBTOMeasurementLabel";
 			this.CBTOMeasurementLabel.Size = new System.Drawing.Size(18, 13);
@@ -921,7 +844,7 @@
 			// 
 			this.BatchCostLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BatchCostLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.BatchCostLabel.Location = new System.Drawing.Point(88, 146);
+			this.BatchCostLabel.Location = new System.Drawing.Point(88, 153);
 			this.BatchCostLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.BatchCostLabel.Name = "BatchCostLabel";
 			this.BatchCostLabel.Size = new System.Drawing.Size(62, 14);
@@ -932,7 +855,7 @@
 			// 
 			this.CartridgeCostLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.CartridgeCostLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.CartridgeCostLabel.Location = new System.Drawing.Point(91, 123);
+			this.CartridgeCostLabel.Location = new System.Drawing.Point(91, 130);
 			this.CartridgeCostLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.CartridgeCostLabel.Name = "CartridgeCostLabel";
 			this.CartridgeCostLabel.Size = new System.Drawing.Size(62, 14);
@@ -963,10 +886,14 @@
 			// 
 			// groupBox4
 			// 
-			this.groupBox4.Controls.Add(this.FirearmNeckSizeMeasurementLabel);
+			this.groupBox4.Controls.Add(this.FirearmTransferButton);
+			this.groupBox4.Controls.Add(this.FirearmJumpMeasurementLabel);
+			this.groupBox4.Controls.Add(this.FirearmJumpLabel);
+			this.groupBox4.Controls.Add(label29);
+			this.groupBox4.Controls.Add(this.FirearmNeckMeasurementLabel);
 			this.groupBox4.Controls.Add(this.FirearmCOLMeasurementLabel);
 			this.groupBox4.Controls.Add(this.FirearmCBTOMeasurementLabel);
-			this.groupBox4.Controls.Add(this.FirearmHeadspaceMeasurementLabel);
+			this.groupBox4.Controls.Add(this.FirearmHeadSpaceMeasurementLabel);
 			this.groupBox4.Controls.Add(this.FirearmNeckLabel);
 			this.groupBox4.Controls.Add(label25);
 			this.groupBox4.Controls.Add(this.FirearmHeadSpaceLabel);
@@ -979,26 +906,60 @@
 			this.groupBox4.Controls.Add(label14);
 			this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.groupBox4.ForeColor = System.Drawing.SystemColors.HotTrack;
-			this.groupBox4.Location = new System.Drawing.Point(271, 284);
+			this.groupBox4.Location = new System.Drawing.Point(271, 283);
 			this.groupBox4.Margin = new System.Windows.Forms.Padding(2);
 			this.groupBox4.Name = "groupBox4";
 			this.groupBox4.Padding = new System.Windows.Forms.Padding(2);
-			this.groupBox4.Size = new System.Drawing.Size(364, 101);
+			this.groupBox4.Size = new System.Drawing.Size(364, 116);
 			this.groupBox4.TabIndex = 5;
 			this.groupBox4.TabStop = false;
 			this.groupBox4.Text = "Firearm Specific";
 			// 
-			// FirearmNeckSizeMeasurementLabel
+			// FirearmTransferButton
 			// 
-			this.FirearmNeckSizeMeasurementLabel.AutoSize = true;
-			this.FirearmNeckSizeMeasurementLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.FirearmNeckSizeMeasurementLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmNeckSizeMeasurementLabel.Location = new System.Drawing.Point(311, 70);
-			this.FirearmNeckSizeMeasurementLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.FirearmNeckSizeMeasurementLabel.Name = "FirearmNeckSizeMeasurementLabel";
-			this.FirearmNeckSizeMeasurementLabel.Size = new System.Drawing.Size(18, 13);
-			this.FirearmNeckSizeMeasurementLabel.TabIndex = 39;
-			this.FirearmNeckSizeMeasurementLabel.Text = "in.";
+			this.FirearmTransferButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmTransferButton.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmTransferButton.Location = new System.Drawing.Point(208, 85);
+			this.FirearmTransferButton.Name = "FirearmTransferButton";
+			this.FirearmTransferButton.Size = new System.Drawing.Size(75, 23);
+			this.FirearmTransferButton.TabIndex = 43;
+			this.FirearmTransferButton.Text = "Transfer";
+			this.FirearmTransferButton.UseVisualStyleBackColor = true;
+			// 
+			// FirearmJumpMeasurementLabel
+			// 
+			this.FirearmJumpMeasurementLabel.AutoSize = true;
+			this.FirearmJumpMeasurementLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmJumpMeasurementLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmJumpMeasurementLabel.Location = new System.Drawing.Point(161, 90);
+			this.FirearmJumpMeasurementLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.FirearmJumpMeasurementLabel.Name = "FirearmJumpMeasurementLabel";
+			this.FirearmJumpMeasurementLabel.Size = new System.Drawing.Size(18, 13);
+			this.FirearmJumpMeasurementLabel.TabIndex = 42;
+			this.FirearmJumpMeasurementLabel.Text = "in.";
+			// 
+			// FirearmJumpLabel
+			// 
+			this.FirearmJumpLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmJumpLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmJumpLabel.Location = new System.Drawing.Point(104, 88);
+			this.FirearmJumpLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.FirearmJumpLabel.Name = "FirearmJumpLabel";
+			this.FirearmJumpLabel.Size = new System.Drawing.Size(53, 14);
+			this.FirearmJumpLabel.TabIndex = 41;
+			this.FirearmJumpLabel.Text = "Firearm CBTO";
+			// 
+			// FirearmNeckMeasurementLabel
+			// 
+			this.FirearmNeckMeasurementLabel.AutoSize = true;
+			this.FirearmNeckMeasurementLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmNeckMeasurementLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmNeckMeasurementLabel.Location = new System.Drawing.Point(311, 70);
+			this.FirearmNeckMeasurementLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.FirearmNeckMeasurementLabel.Name = "FirearmNeckMeasurementLabel";
+			this.FirearmNeckMeasurementLabel.Size = new System.Drawing.Size(18, 13);
+			this.FirearmNeckMeasurementLabel.TabIndex = 39;
+			this.FirearmNeckMeasurementLabel.Text = "in.";
 			// 
 			// FirearmCOLMeasurementLabel
 			// 
@@ -1024,17 +985,17 @@
 			this.FirearmCBTOMeasurementLabel.TabIndex = 37;
 			this.FirearmCBTOMeasurementLabel.Text = "in.";
 			// 
-			// FirearmHeadspaceMeasurementLabel
+			// FirearmHeadSpaceMeasurementLabel
 			// 
-			this.FirearmHeadspaceMeasurementLabel.AutoSize = true;
-			this.FirearmHeadspaceMeasurementLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.FirearmHeadspaceMeasurementLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmHeadspaceMeasurementLabel.Location = new System.Drawing.Point(311, 50);
-			this.FirearmHeadspaceMeasurementLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.FirearmHeadspaceMeasurementLabel.Name = "FirearmHeadspaceMeasurementLabel";
-			this.FirearmHeadspaceMeasurementLabel.Size = new System.Drawing.Size(18, 13);
-			this.FirearmHeadspaceMeasurementLabel.TabIndex = 36;
-			this.FirearmHeadspaceMeasurementLabel.Text = "in.";
+			this.FirearmHeadSpaceMeasurementLabel.AutoSize = true;
+			this.FirearmHeadSpaceMeasurementLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmHeadSpaceMeasurementLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmHeadSpaceMeasurementLabel.Location = new System.Drawing.Point(311, 50);
+			this.FirearmHeadSpaceMeasurementLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.FirearmHeadSpaceMeasurementLabel.Name = "FirearmHeadSpaceMeasurementLabel";
+			this.FirearmHeadSpaceMeasurementLabel.Size = new System.Drawing.Size(18, 13);
+			this.FirearmHeadSpaceMeasurementLabel.TabIndex = 36;
+			this.FirearmHeadSpaceMeasurementLabel.Text = "in.";
 			// 
 			// FirearmNeckLabel
 			// 
@@ -1107,11 +1068,11 @@
 			this.LoadDetailsGroup.Controls.Add(this.PowderChargeMeasurementLabel);
 			this.LoadDetailsGroup.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.LoadDetailsGroup.ForeColor = System.Drawing.SystemColors.HotTrack;
-			this.LoadDetailsGroup.Location = new System.Drawing.Point(7, 284);
+			this.LoadDetailsGroup.Location = new System.Drawing.Point(7, 283);
 			this.LoadDetailsGroup.Margin = new System.Windows.Forms.Padding(2);
 			this.LoadDetailsGroup.Name = "LoadDetailsGroup";
 			this.LoadDetailsGroup.Padding = new System.Windows.Forms.Padding(2);
-			this.LoadDetailsGroup.Size = new System.Drawing.Size(260, 101);
+			this.LoadDetailsGroup.Size = new System.Drawing.Size(260, 116);
 			this.LoadDetailsGroup.TabIndex = 4;
 			this.LoadDetailsGroup.TabStop = false;
 			this.LoadDetailsGroup.Text = "Load Details";
@@ -1204,7 +1165,7 @@
 			this.LoadDataGroupBox.Margin = new System.Windows.Forms.Padding(2);
 			this.LoadDataGroupBox.Name = "LoadDataGroupBox";
 			this.LoadDataGroupBox.Padding = new System.Windows.Forms.Padding(2);
-			this.LoadDataGroupBox.Size = new System.Drawing.Size(650, 396);
+			this.LoadDataGroupBox.Size = new System.Drawing.Size(650, 410);
 			this.LoadDataGroupBox.TabIndex = 0;
 			this.LoadDataGroupBox.TabStop = false;
 			this.LoadDataGroupBox.Text = "Load Data";
@@ -1258,7 +1219,7 @@
 			// 
 			// PrintButton
 			// 
-			this.PrintButton.Location = new System.Drawing.Point(295, 602);
+			this.PrintButton.Location = new System.Drawing.Point(295, 616);
 			this.PrintButton.Margin = new System.Windows.Forms.Padding(2);
 			this.PrintButton.Name = "PrintButton";
 			this.PrintButton.Size = new System.Drawing.Size(56, 19);
@@ -1266,17 +1227,34 @@
 			this.PrintButton.Text = "Print";
 			this.PrintButton.UseVisualStyleBackColor = true;
 			// 
-			// label3
+			// JumpMeasurementLabel
 			// 
-			label3.AutoSize = true;
-			label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			label3.ForeColor = System.Drawing.SystemColors.ControlText;
-			label3.Location = new System.Drawing.Point(111, 30);
-			label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			label3.Name = "label3";
-			label3.Size = new System.Drawing.Size(46, 13);
-			label3.TabIndex = 48;
-			label3.Text = "User ID:";
+			this.JumpMeasurementLabel.AutoSize = true;
+			this.JumpMeasurementLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.JumpMeasurementLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.JumpMeasurementLabel.Location = new System.Drawing.Point(592, 121);
+			this.JumpMeasurementLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.JumpMeasurementLabel.Name = "JumpMeasurementLabel";
+			this.JumpMeasurementLabel.Size = new System.Drawing.Size(18, 13);
+			this.JumpMeasurementLabel.TabIndex = 52;
+			this.JumpMeasurementLabel.Text = "in.";
+			// 
+			// JumpTextBox
+			// 
+			this.JumpTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.JumpTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.JumpTextBox.Location = new System.Drawing.Point(541, 118);
+			this.JumpTextBox.MaxLength = 5;
+			this.JumpTextBox.MaxValue = 0D;
+			this.JumpTextBox.MinValue = 0D;
+			this.JumpTextBox.Name = "JumpTextBox";
+			this.JumpTextBox.NumDecimals = 3;
+			this.JumpTextBox.Size = new System.Drawing.Size(46, 20);
+			this.JumpTextBox.TabIndex = 50;
+			this.JumpTextBox.Text = "0.000";
+			this.JumpTextBox.ToolTip = "";
+			this.JumpTextBox.Value = 0D;
+			this.JumpTextBox.ZeroAllowed = true;
 			// 
 			// UserIDTextBox
 			// 
@@ -1291,18 +1269,156 @@
 			this.UserIDTextBox.ToolTip = "";
 			this.UserIDTextBox.Value = "";
 			// 
-			// ModifiedBulletCheckBox
+			// BulletDiameterTextBox
 			// 
-			this.ModifiedBulletCheckBox.AutoCheck = false;
-			this.ModifiedBulletCheckBox.AutoSize = true;
-			this.ModifiedBulletCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.ModifiedBulletCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.ModifiedBulletCheckBox.Location = new System.Drawing.Point(388, 120);
-			this.ModifiedBulletCheckBox.Name = "ModifiedBulletCheckBox";
-			this.ModifiedBulletCheckBox.Size = new System.Drawing.Size(95, 17);
-			this.ModifiedBulletCheckBox.TabIndex = 16;
-			this.ModifiedBulletCheckBox.Text = "Modified Bullet";
-			this.ModifiedBulletCheckBox.UseVisualStyleBackColor = true;
+			this.BulletDiameterTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.BulletDiameterTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BulletDiameterTextBox.Location = new System.Drawing.Point(97, 73);
+			this.BulletDiameterTextBox.MaxLength = 6;
+			this.BulletDiameterTextBox.MaxValue = 0D;
+			this.BulletDiameterTextBox.MinValue = 0D;
+			this.BulletDiameterTextBox.Name = "BulletDiameterTextBox";
+			this.BulletDiameterTextBox.NumDecimals = 4;
+			this.BulletDiameterTextBox.Size = new System.Drawing.Size(45, 20);
+			this.BulletDiameterTextBox.TabIndex = 7;
+			this.BulletDiameterTextBox.Text = "0.0000";
+			this.BulletDiameterTextBox.ToolTip = "";
+			this.BulletDiameterTextBox.Value = 0D;
+			this.BulletDiameterTextBox.ZeroAllowed = true;
+			// 
+			// NeckWallTextBox
+			// 
+			this.NeckWallTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.NeckWallTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.NeckWallTextBox.Location = new System.Drawing.Point(388, 73);
+			this.NeckWallTextBox.MaxLength = 6;
+			this.NeckWallTextBox.MaxValue = 0D;
+			this.NeckWallTextBox.MinValue = 0D;
+			this.NeckWallTextBox.Name = "NeckWallTextBox";
+			this.NeckWallTextBox.NumDecimals = 4;
+			this.NeckWallTextBox.Size = new System.Drawing.Size(45, 20);
+			this.NeckWallTextBox.TabIndex = 9;
+			this.NeckWallTextBox.Text = "0.0000";
+			this.NeckWallTextBox.ToolTip = "";
+			this.NeckWallTextBox.Value = 0D;
+			this.NeckWallTextBox.ZeroAllowed = true;
+			// 
+			// HeadSpaceTextBox
+			// 
+			this.HeadSpaceTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.HeadSpaceTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.HeadSpaceTextBox.Location = new System.Drawing.Point(541, 50);
+			this.HeadSpaceTextBox.MaxLength = 5;
+			this.HeadSpaceTextBox.MaxValue = 0D;
+			this.HeadSpaceTextBox.MinValue = 0D;
+			this.HeadSpaceTextBox.Name = "HeadSpaceTextBox";
+			this.HeadSpaceTextBox.NumDecimals = 3;
+			this.HeadSpaceTextBox.Size = new System.Drawing.Size(46, 20);
+			this.HeadSpaceTextBox.TabIndex = 6;
+			this.HeadSpaceTextBox.Text = "0.000";
+			this.HeadSpaceTextBox.ToolTip = "";
+			this.HeadSpaceTextBox.Value = 0D;
+			this.HeadSpaceTextBox.ZeroAllowed = true;
+			// 
+			// NumRoundsTextBox
+			// 
+			this.NumRoundsTextBox.BackColor = System.Drawing.Color.LightPink;
+			this.NumRoundsTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.NumRoundsTextBox.Location = new System.Drawing.Point(474, 27);
+			this.NumRoundsTextBox.MaxLength = 5;
+			this.NumRoundsTextBox.MaxValue = 0;
+			this.NumRoundsTextBox.MinValue = 1;
+			this.NumRoundsTextBox.Name = "NumRoundsTextBox";
+			this.NumRoundsTextBox.Required = false;
+			this.NumRoundsTextBox.Size = new System.Drawing.Size(45, 20);
+			this.NumRoundsTextBox.TabIndex = 2;
+			this.NumRoundsTextBox.Text = "0";
+			this.NumRoundsTextBox.ToolTip = "";
+			this.NumRoundsTextBox.Value = 0;
+			// 
+			// TimesFiredTextBox
+			// 
+			this.TimesFiredTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.TimesFiredTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TimesFiredTextBox.Location = new System.Drawing.Point(98, 96);
+			this.TimesFiredTextBox.MaxLength = 2;
+			this.TimesFiredTextBox.MaxValue = 50;
+			this.TimesFiredTextBox.MinValue = 0;
+			this.TimesFiredTextBox.Name = "TimesFiredTextBox";
+			this.TimesFiredTextBox.Required = false;
+			this.TimesFiredTextBox.Size = new System.Drawing.Size(43, 20);
+			this.TimesFiredTextBox.TabIndex = 10;
+			this.TimesFiredTextBox.Text = "0";
+			this.TimesFiredTextBox.ToolTip = "";
+			this.TimesFiredTextBox.Value = 0;
+			// 
+			// NeckSizeTextBox
+			// 
+			this.NeckSizeTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.NeckSizeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.NeckSizeTextBox.Location = new System.Drawing.Point(244, 73);
+			this.NeckSizeTextBox.MaxLength = 6;
+			this.NeckSizeTextBox.MaxValue = 0D;
+			this.NeckSizeTextBox.MinValue = 0D;
+			this.NeckSizeTextBox.Name = "NeckSizeTextBox";
+			this.NeckSizeTextBox.NumDecimals = 4;
+			this.NeckSizeTextBox.Size = new System.Drawing.Size(45, 20);
+			this.NeckSizeTextBox.TabIndex = 8;
+			this.NeckSizeTextBox.Text = "0.0000";
+			this.NeckSizeTextBox.ToolTip = "";
+			this.NeckSizeTextBox.Value = 0D;
+			this.NeckSizeTextBox.ZeroAllowed = true;
+			// 
+			// CBTOTextBox
+			// 
+			this.CBTOTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.CBTOTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.CBTOTextBox.Location = new System.Drawing.Point(388, 50);
+			this.CBTOTextBox.MaxLength = 5;
+			this.CBTOTextBox.MaxValue = 0D;
+			this.CBTOTextBox.MinValue = 0D;
+			this.CBTOTextBox.Name = "CBTOTextBox";
+			this.CBTOTextBox.NumDecimals = 3;
+			this.CBTOTextBox.Size = new System.Drawing.Size(44, 20);
+			this.CBTOTextBox.TabIndex = 5;
+			this.CBTOTextBox.Text = "0.000";
+			this.CBTOTextBox.ToolTip = "";
+			this.CBTOTextBox.Value = 0D;
+			this.CBTOTextBox.ZeroAllowed = true;
+			// 
+			// COALTextBox
+			// 
+			this.COALTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.COALTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.COALTextBox.Location = new System.Drawing.Point(245, 50);
+			this.COALTextBox.MaxLength = 5;
+			this.COALTextBox.MaxValue = 0D;
+			this.COALTextBox.MinValue = 0D;
+			this.COALTextBox.Name = "COALTextBox";
+			this.COALTextBox.NumDecimals = 3;
+			this.COALTextBox.Size = new System.Drawing.Size(44, 20);
+			this.COALTextBox.TabIndex = 4;
+			this.COALTextBox.Text = "0.000";
+			this.COALTextBox.ToolTip = "";
+			this.COALTextBox.Value = 0D;
+			this.COALTextBox.ZeroAllowed = true;
+			// 
+			// CaseTrimLengthTextBox
+			// 
+			this.CaseTrimLengthTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.CaseTrimLengthTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.CaseTrimLengthTextBox.Location = new System.Drawing.Point(97, 50);
+			this.CaseTrimLengthTextBox.MaxLength = 5;
+			this.CaseTrimLengthTextBox.MaxValue = 0D;
+			this.CaseTrimLengthTextBox.MinValue = 0D;
+			this.CaseTrimLengthTextBox.Name = "CaseTrimLengthTextBox";
+			this.CaseTrimLengthTextBox.NumDecimals = 3;
+			this.CaseTrimLengthTextBox.Size = new System.Drawing.Size(44, 20);
+			this.CaseTrimLengthTextBox.TabIndex = 3;
+			this.CaseTrimLengthTextBox.Text = "0.000";
+			this.CaseTrimLengthTextBox.ToolTip = "";
+			this.CaseTrimLengthTextBox.Value = 0D;
+			this.CaseTrimLengthTextBox.ZeroAllowed = true;
 			// 
 			// FirearmTypeCombo
 			// 
@@ -1312,6 +1428,12 @@
 			this.FirearmTypeCombo.FormattingEnabled = true;
 			this.FirearmTypeCombo.IncludeShotgun = false;
 			this.FirearmTypeCombo.Items.AddRange(new object[] {
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
             "Handgun",
             "Rifle",
             "Handgun",
@@ -1377,7 +1499,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.BatchCancelButton;
-			this.ClientSize = new System.Drawing.Size(682, 622);
+			this.ClientSize = new System.Drawing.Size(670, 641);
 			this.ControlBox = false;
 			this.Controls.Add(this.PrintButton);
 			this.Controls.Add(this.BatchCancelButton);
@@ -1431,10 +1553,10 @@
 		private System.Windows.Forms.Label NeckSizeMeasurementLabel;
 		private System.Windows.Forms.Label CBTOMeasurementLabel;
 		private System.Windows.Forms.Label COLMeasurementLabel;
-		private System.Windows.Forms.Label FirearmNeckSizeMeasurementLabel;
+		private System.Windows.Forms.Label FirearmNeckMeasurementLabel;
 		private System.Windows.Forms.Label FirearmCOLMeasurementLabel;
 		private System.Windows.Forms.Label FirearmCBTOMeasurementLabel;
-		private System.Windows.Forms.Label FirearmHeadspaceMeasurementLabel;
+		private System.Windows.Forms.Label FirearmHeadSpaceMeasurementLabel;
 		private System.Windows.Forms.Label label35;
 		private System.Windows.Forms.Button TestDataButton;
 		private System.Windows.Forms.Button PrintButton;
@@ -1466,5 +1588,12 @@
 		private System.Windows.Forms.CheckBox AnnealedCheckBox;
 		private System.Windows.Forms.CheckBox ModifiedBulletCheckBox;
 		private CommonLib.Controls.cTextBox UserIDTextBox;
+		private CommonLib.Controls.cDoubleValueTextBox JumpTextBox;
+		private System.Windows.Forms.CheckBox JumpSetCheckBox;
+		private System.Windows.Forms.Label JumpLabel;
+		private System.Windows.Forms.Label FirearmJumpMeasurementLabel;
+		private System.Windows.Forms.Label FirearmJumpLabel;
+		private System.Windows.Forms.Button FirearmTransferButton;
+		private System.Windows.Forms.Label JumpMeasurementLabel;
 		}
 	}

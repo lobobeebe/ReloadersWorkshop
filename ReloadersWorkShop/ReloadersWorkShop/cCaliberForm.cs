@@ -366,8 +366,8 @@ namespace ReloadersWorkShop
 					MinBulletWeightLabel.Text = strText;
 					MinBulletWeightLabel.Location = new Point(nX, MinBulletWeightLabel.Location.Y);
 
-					m_DataFiles.SetMetricLabel(MinBulletWeightMeasurementLabel, cDataFiles.eDataType.ShotWeight);
-					m_DataFiles.SetInputParameters(MinBulletWeightTextBox, cDataFiles.eDataType.ShotWeight);
+					cDataFiles.SetMetricLabel(MinBulletWeightMeasurementLabel, cDataFiles.eDataType.ShotWeight);
+					cDataFiles.SetInputParameters(MinBulletWeightTextBox, cDataFiles.eDataType.ShotWeight);
 
 					//----------------------------------------------------------------------------*
 					// MaxBulletWeight
@@ -382,8 +382,8 @@ namespace ReloadersWorkShop
 					MaxBulletWeightLabel.Text = strText;
 					MaxBulletWeightLabel.Location = new Point(nX, MaxBulletWeightLabel.Location.Y);
 
-					m_DataFiles.SetMetricLabel(MaxBulletWeightMeasurementLabel, cDataFiles.eDataType.ShotWeight);
-					m_DataFiles.SetInputParameters(MaxBulletWeightTextBox, cDataFiles.eDataType.ShotWeight);
+					cDataFiles.SetMetricLabel(MaxBulletWeightMeasurementLabel, cDataFiles.eDataType.ShotWeight);
+					cDataFiles.SetInputParameters(MaxBulletWeightTextBox, cDataFiles.eDataType.ShotWeight);
 
 					//----------------------------------------------------------------------------*
 					// Case Trim Length
@@ -467,13 +467,13 @@ namespace ReloadersWorkShop
 
             if (m_Caliber.FirearmType != cFirearm.eFireArmType.Shotgun)
 				{
-                if (MaxCaseLengthTextBox.Value < CaseTrimLengthTextBox.Value + m_DataFiles.StandardToMetric(0.005, cDataFiles.eDataType.Dimension))
-					MaxCaseLengthTextBox.Value = CaseTrimLengthTextBox.Value + m_DataFiles.StandardToMetric(0.005, cDataFiles.eDataType.Dimension);
+                if (MaxCaseLengthTextBox.Value < CaseTrimLengthTextBox.Value + cDataFiles.StandardToMetric(0.005, cDataFiles.eDataType.Dimension))
+					MaxCaseLengthTextBox.Value = CaseTrimLengthTextBox.Value + cDataFiles.StandardToMetric(0.005, cDataFiles.eDataType.Dimension);
 
 				MaxCOLTextBox.MinValue = CaseTrimLengthTextBox.Value;
-                MaxCOLTextBox.MaxValue = MaxCOLTextBox.MinValue + m_DataFiles.StandardToMetric(1.5, cDataFiles.eDataType.Dimension);
+                MaxCOLTextBox.MaxValue = MaxCOLTextBox.MinValue + cDataFiles.StandardToMetric(1.5, cDataFiles.eDataType.Dimension);
 
-                m_Caliber.MaxCOL = m_DataFiles.MetricToStandard(MaxCOLTextBox.Value, cDataFiles.eDataType.Dimension);
+                m_Caliber.MaxCOL = cDataFiles.MetricToStandard(MaxCOLTextBox.Value, cDataFiles.eDataType.Dimension);
 				}
 			else
 				{
@@ -486,10 +486,10 @@ namespace ReloadersWorkShop
 				}
 
 			MaxCaseLengthTextBox.MinValue = CaseTrimLengthTextBox.Value;
-            MaxCaseLengthTextBox.MaxValue = MaxCaseLengthTextBox.MinValue + m_DataFiles.StandardToMetric(0.020, cDataFiles.eDataType.Dimension);
+            MaxCaseLengthTextBox.MaxValue = MaxCaseLengthTextBox.MinValue + cDataFiles.StandardToMetric(0.020, cDataFiles.eDataType.Dimension);
 
-            m_Caliber.CaseTrimLength = m_DataFiles.MetricToStandard(CaseTrimLengthTextBox.Value, cDataFiles.eDataType.Dimension);
-			m_Caliber.MaxCaseLength = m_DataFiles.MetricToStandard(MaxCaseLengthTextBox.Value, cDataFiles.eDataType.Dimension);
+            m_Caliber.CaseTrimLength = cDataFiles.MetricToStandard(CaseTrimLengthTextBox.Value, cDataFiles.eDataType.Dimension);
+			m_Caliber.MaxCaseLength = cDataFiles.MetricToStandard(MaxCaseLengthTextBox.Value, cDataFiles.eDataType.Dimension);
 
 			m_fChanged = true;
 
@@ -597,7 +597,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_Caliber.MaxBulletDiameter = m_DataFiles.MetricToStandard(MaxBulletDiameterTextBox.Value, cDataFiles.eDataType.Dimension);
+			m_Caliber.MaxBulletDiameter = cDataFiles.MetricToStandard(MaxBulletDiameterTextBox.Value, cDataFiles.eDataType.Dimension);
 
 			m_fChanged = true;
 
@@ -613,7 +613,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_Caliber.MaxBulletWeight = m_DataFiles.MetricToStandard(MaxBulletWeightTextBox.Value, cDataFiles.eDataType.BulletWeight);
+			m_Caliber.MaxBulletWeight = cDataFiles.MetricToStandard(MaxBulletWeightTextBox.Value, cDataFiles.eDataType.BulletWeight);
 
 			m_fChanged = true;
 
@@ -631,7 +631,7 @@ namespace ReloadersWorkShop
 
 			MaxCOLTextBox.MinValue = MaxCaseLengthTextBox.Value;
 
-			m_Caliber.MaxCaseLength = m_DataFiles.MetricToStandard(MaxCaseLengthTextBox.Value, cDataFiles.eDataType.Dimension);
+			m_Caliber.MaxCaseLength = cDataFiles.MetricToStandard(MaxCaseLengthTextBox.Value, cDataFiles.eDataType.Dimension);
 
 			m_fChanged = true;
 
@@ -647,7 +647,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_Caliber.MaxCOL = m_DataFiles.MetricToStandard(MaxCOLTextBox.Value, cDataFiles.eDataType.Dimension);
+			m_Caliber.MaxCOL = cDataFiles.MetricToStandard(MaxCOLTextBox.Value, cDataFiles.eDataType.Dimension);
 
 			m_fChanged = true;
 
@@ -663,7 +663,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_Caliber.MaxNeckDiameter = m_DataFiles.MetricToStandard(MaxNeckDiameterTextBox.Value, cDataFiles.eDataType.Dimension);
+			m_Caliber.MaxNeckDiameter = cDataFiles.MetricToStandard(MaxNeckDiameterTextBox.Value, cDataFiles.eDataType.Dimension);
 
 			m_fChanged = true;
 
@@ -681,7 +681,7 @@ namespace ReloadersWorkShop
 
 			MaxBulletDiameterTextBox.MinValue = MinBulletDiameterTextBox.Value;
 
-			m_Caliber.MinBulletDiameter = m_DataFiles.MetricToStandard(MinBulletDiameterTextBox.Value, cDataFiles.eDataType.Dimension);
+			m_Caliber.MinBulletDiameter = cDataFiles.MetricToStandard(MinBulletDiameterTextBox.Value, cDataFiles.eDataType.Dimension);
 
 			m_fChanged = true;
 
@@ -699,7 +699,7 @@ namespace ReloadersWorkShop
 
 			MaxBulletWeightTextBox.MinValue = MinBulletWeightTextBox.Value;
 
-			m_Caliber.MinBulletWeight = m_DataFiles.MetricToStandard(MinBulletWeightTextBox.Value, cDataFiles.eDataType.BulletWeight);
+			m_Caliber.MinBulletWeight = cDataFiles.MetricToStandard(MinBulletWeightTextBox.Value, cDataFiles.eDataType.BulletWeight);
 
 			m_fChanged = true;
 
@@ -831,18 +831,18 @@ namespace ReloadersWorkShop
 			LargePrimerCheckBox.Checked = m_Caliber.LargePrimer;
 			MagnumPrimerCheckBox.Checked = m_Caliber.MagnumPrimer;
 
-			MinBulletDiameterTextBox.Value = m_DataFiles.StandardToMetric(m_Caliber.MinBulletDiameter, cDataFiles.eDataType.Dimension);
-			MaxBulletDiameterTextBox.Value = m_DataFiles.StandardToMetric(m_Caliber.MaxBulletDiameter, cDataFiles.eDataType.Dimension);
+			MinBulletDiameterTextBox.Value = cDataFiles.StandardToMetric(m_Caliber.MinBulletDiameter, cDataFiles.eDataType.Dimension);
+			MaxBulletDiameterTextBox.Value = cDataFiles.StandardToMetric(m_Caliber.MaxBulletDiameter, cDataFiles.eDataType.Dimension);
 
-			MinBulletWeightTextBox.Value = m_DataFiles.StandardToMetric(m_Caliber.MinBulletWeight, cDataFiles.eDataType.BulletWeight);
-			MaxBulletWeightTextBox.Value = m_DataFiles.StandardToMetric(m_Caliber.MaxBulletWeight, cDataFiles.eDataType.BulletWeight);
+			MinBulletWeightTextBox.Value = cDataFiles.StandardToMetric(m_Caliber.MinBulletWeight, cDataFiles.eDataType.BulletWeight);
+			MaxBulletWeightTextBox.Value = cDataFiles.StandardToMetric(m_Caliber.MaxBulletWeight, cDataFiles.eDataType.BulletWeight);
 
-			CaseTrimLengthTextBox.Value = m_DataFiles.StandardToMetric(m_Caliber.CaseTrimLength, cDataFiles.eDataType.Dimension);
-			MaxCaseLengthTextBox.Value = m_DataFiles.StandardToMetric(m_Caliber.MaxCaseLength, cDataFiles.eDataType.Dimension);
+			CaseTrimLengthTextBox.Value = cDataFiles.StandardToMetric(m_Caliber.CaseTrimLength, cDataFiles.eDataType.Dimension);
+			MaxCaseLengthTextBox.Value = cDataFiles.StandardToMetric(m_Caliber.MaxCaseLength, cDataFiles.eDataType.Dimension);
 
-			MaxNeckDiameterTextBox.Value = m_DataFiles.StandardToMetric(m_Caliber.MaxNeckDiameter, cDataFiles.eDataType.Dimension);
+			MaxNeckDiameterTextBox.Value = cDataFiles.StandardToMetric(m_Caliber.MaxNeckDiameter, cDataFiles.eDataType.Dimension);
 
-			MaxCOLTextBox.Value = m_DataFiles.StandardToMetric(m_Caliber.MaxCOL, cDataFiles.eDataType.Dimension);
+			MaxCOLTextBox.Value = cDataFiles.StandardToMetric(m_Caliber.MaxCOL, cDataFiles.eDataType.Dimension);
 			}
 
 		//============================================================================*
@@ -855,34 +855,34 @@ namespace ReloadersWorkShop
 			// Set metric/standard labels
 			//----------------------------------------------------------------------------*
 
-			m_DataFiles.SetMetricLabel(MinBulletDiameterMeasurementLabel, cDataFiles.eDataType.Dimension);
-			m_DataFiles.SetMetricLabel(MaxBulletDiameterMeasurementLabel, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetMetricLabel(MinBulletDiameterMeasurementLabel, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetMetricLabel(MaxBulletDiameterMeasurementLabel, cDataFiles.eDataType.Dimension);
 
-			m_DataFiles.SetMetricLabel(MinBulletWeightMeasurementLabel, m_Caliber.FirearmType == cFirearm.eFireArmType.Shotgun ? cDataFiles.eDataType.ShotWeight : cDataFiles.eDataType.BulletWeight);
-			m_DataFiles.SetMetricLabel(MaxBulletWeightMeasurementLabel, m_Caliber.FirearmType == cFirearm.eFireArmType.Shotgun ? cDataFiles.eDataType.ShotWeight : cDataFiles.eDataType.BulletWeight);
+			cDataFiles.SetMetricLabel(MinBulletWeightMeasurementLabel, m_Caliber.FirearmType == cFirearm.eFireArmType.Shotgun ? cDataFiles.eDataType.ShotWeight : cDataFiles.eDataType.BulletWeight);
+			cDataFiles.SetMetricLabel(MaxBulletWeightMeasurementLabel, m_Caliber.FirearmType == cFirearm.eFireArmType.Shotgun ? cDataFiles.eDataType.ShotWeight : cDataFiles.eDataType.BulletWeight);
 
-			m_DataFiles.SetMetricLabel(MinCaseLengthMeasurementLabel, cDataFiles.eDataType.Dimension);
-			m_DataFiles.SetMetricLabel(MaxCaseLengthMeasurementLabel, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetMetricLabel(MinCaseLengthMeasurementLabel, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetMetricLabel(MaxCaseLengthMeasurementLabel, cDataFiles.eDataType.Dimension);
 
-			m_DataFiles.SetMetricLabel(MaxCOLMeasurementLabel, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetMetricLabel(MaxCOLMeasurementLabel, cDataFiles.eDataType.Dimension);
 
-			m_DataFiles.SetMetricLabel(MaxNeckDiameterMeasurementLabel, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetMetricLabel(MaxNeckDiameterMeasurementLabel, cDataFiles.eDataType.Dimension);
 
 			//----------------------------------------------------------------------------*
 			// Set Text Box Parameters
 			//----------------------------------------------------------------------------*
 
-			m_DataFiles.SetInputParameters(MinBulletDiameterTextBox, cDataFiles.eDataType.Dimension);
-			m_DataFiles.SetInputParameters(MaxBulletDiameterTextBox, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetInputParameters(MinBulletDiameterTextBox, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetInputParameters(MaxBulletDiameterTextBox, cDataFiles.eDataType.Dimension);
 
-			m_DataFiles.SetInputParameters(MaxBulletWeightTextBox, m_Caliber.FirearmType == cFirearm.eFireArmType.Shotgun ? cDataFiles.eDataType.ShotWeight : cDataFiles.eDataType.BulletWeight);
-			m_DataFiles.SetInputParameters(MinBulletWeightTextBox, m_Caliber.FirearmType == cFirearm.eFireArmType.Shotgun ? cDataFiles.eDataType.ShotWeight : cDataFiles.eDataType.BulletWeight);
+			cDataFiles.SetInputParameters(MaxBulletWeightTextBox, m_Caliber.FirearmType == cFirearm.eFireArmType.Shotgun ? cDataFiles.eDataType.ShotWeight : cDataFiles.eDataType.BulletWeight);
+			cDataFiles.SetInputParameters(MinBulletWeightTextBox, m_Caliber.FirearmType == cFirearm.eFireArmType.Shotgun ? cDataFiles.eDataType.ShotWeight : cDataFiles.eDataType.BulletWeight);
 
-			m_DataFiles.SetInputParameters(CaseTrimLengthTextBox, cDataFiles.eDataType.Dimension);
-			m_DataFiles.SetInputParameters(MaxCOLTextBox, cDataFiles.eDataType.Dimension);
-			m_DataFiles.SetInputParameters(MaxCaseLengthTextBox, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetInputParameters(CaseTrimLengthTextBox, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetInputParameters(MaxCOLTextBox, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetInputParameters(MaxCaseLengthTextBox, cDataFiles.eDataType.Dimension);
 
-			m_DataFiles.SetInputParameters(MaxNeckDiameterTextBox, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetInputParameters(MaxNeckDiameterTextBox, cDataFiles.eDataType.Dimension);
 			}
 
 		//============================================================================*
@@ -891,33 +891,33 @@ namespace ReloadersWorkShop
 
 		private void SetMinMax()
 			{
-			MinBulletDiameterTextBox.MinValue = m_DataFiles.StandardToMetric(0.17, cDataFiles.eDataType.Dimension);
-			MinBulletDiameterTextBox.MaxValue = m_DataFiles.StandardToMetric(0.6, cDataFiles.eDataType.Dimension);
+			MinBulletDiameterTextBox.MinValue = cDataFiles.StandardToMetric(0.17, cDataFiles.eDataType.Dimension);
+			MinBulletDiameterTextBox.MaxValue = cDataFiles.StandardToMetric(0.6, cDataFiles.eDataType.Dimension);
 
 			MaxBulletDiameterTextBox.MinValue = MinBulletDiameterTextBox.Value;
-			MaxBulletDiameterTextBox.MaxValue = m_DataFiles.StandardToMetric(0.6, cDataFiles.eDataType.Dimension);
+			MaxBulletDiameterTextBox.MaxValue = cDataFiles.StandardToMetric(0.6, cDataFiles.eDataType.Dimension);
 
-			MinBulletWeightTextBox.MinValue = m_DataFiles.StandardToMetric(m_Caliber.FirearmType == cFirearm.eFireArmType.Shotgun ? 0.1 : cBullet.MinBulletWeight, m_Caliber.FirearmType == cFirearm.eFireArmType.Shotgun ? cDataFiles.eDataType.ShotWeight : cDataFiles.eDataType.BulletWeight);
-			MinBulletWeightTextBox.MaxValue = m_DataFiles.StandardToMetric(m_Caliber.FirearmType == cFirearm.eFireArmType.Shotgun ? 10.0 : cBullet.MaxBulletWeight, m_Caliber.FirearmType == cFirearm.eFireArmType.Shotgun ? cDataFiles.eDataType.ShotWeight : cDataFiles.eDataType.BulletWeight);
+			MinBulletWeightTextBox.MinValue = cDataFiles.StandardToMetric(m_Caliber.FirearmType == cFirearm.eFireArmType.Shotgun ? 0.1 : cBullet.MinBulletWeight, m_Caliber.FirearmType == cFirearm.eFireArmType.Shotgun ? cDataFiles.eDataType.ShotWeight : cDataFiles.eDataType.BulletWeight);
+			MinBulletWeightTextBox.MaxValue = cDataFiles.StandardToMetric(m_Caliber.FirearmType == cFirearm.eFireArmType.Shotgun ? 10.0 : cBullet.MaxBulletWeight, m_Caliber.FirearmType == cFirearm.eFireArmType.Shotgun ? cDataFiles.eDataType.ShotWeight : cDataFiles.eDataType.BulletWeight);
 
 			MaxBulletWeightTextBox.MinValue = MinBulletWeightTextBox.Value;
-			MaxBulletWeightTextBox.MaxValue = m_DataFiles.StandardToMetric(m_Caliber.FirearmType == cFirearm.eFireArmType.Shotgun ? 10.0 : cBullet.MaxBulletWeight, m_Caliber.FirearmType == cFirearm.eFireArmType.Shotgun ? cDataFiles.eDataType.ShotWeight : cDataFiles.eDataType.BulletWeight);
+			MaxBulletWeightTextBox.MaxValue = cDataFiles.StandardToMetric(m_Caliber.FirearmType == cFirearm.eFireArmType.Shotgun ? 10.0 : cBullet.MaxBulletWeight, m_Caliber.FirearmType == cFirearm.eFireArmType.Shotgun ? cDataFiles.eDataType.ShotWeight : cDataFiles.eDataType.BulletWeight);
 
-			CaseTrimLengthTextBox.MinValue = m_DataFiles.StandardToMetric(0.5, cDataFiles.eDataType.Dimension);
+			CaseTrimLengthTextBox.MinValue = cDataFiles.StandardToMetric(0.5, cDataFiles.eDataType.Dimension);
 			CaseTrimLengthTextBox.MaxValue = MaxCaseLengthTextBox.Value;
 
 			MaxCaseLengthTextBox.MinValue = CaseTrimLengthTextBox.Value;
-			MaxCaseLengthTextBox.MaxValue = m_DataFiles.StandardToMetric(4.0, cDataFiles.eDataType.Dimension);
+			MaxCaseLengthTextBox.MaxValue = cDataFiles.StandardToMetric(4.0, cDataFiles.eDataType.Dimension);
 
 			MaxCOLTextBox.MinValue = CaseTrimLengthTextBox.Value;
-			MaxCOLTextBox.MaxValue = m_DataFiles.StandardToMetric(6.0, cDataFiles.eDataType.Dimension);
+			MaxCOLTextBox.MaxValue = cDataFiles.StandardToMetric(6.0, cDataFiles.eDataType.Dimension);
 
 			if (MaxNeckDiameterTextBox.Value != 0.0)
 				MaxNeckDiameterTextBox.MinValue = MaxBulletDiameterTextBox.Value;
 			else
 				MaxNeckDiameterTextBox.MinValue = 0.0;
 
-			MaxNeckDiameterTextBox.MaxValue = MaxBulletDiameterTextBox.Value + m_DataFiles.StandardToMetric(0.050, cDataFiles.eDataType.Dimension);
+			MaxNeckDiameterTextBox.MaxValue = MaxBulletDiameterTextBox.Value + cDataFiles.StandardToMetric(0.050, cDataFiles.eDataType.Dimension);
 			}
 
 		//============================================================================*

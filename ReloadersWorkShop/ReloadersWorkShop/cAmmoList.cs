@@ -10,6 +10,7 @@
 //============================================================================*
 
 using System;
+using System.IO;
 using System.Collections.Generic;
 
 //============================================================================*
@@ -25,6 +26,48 @@ namespace ReloadersWorkShop
 	[Serializable]
 	public class cAmmoList : List<cAmmo>
 		{
+		//============================================================================*
+		// Export()
+		//============================================================================*
+
+		public void Export(StreamWriter Writer, cDataFiles.eExportType eType)
+			{
+			string strLine = "";
+
+			switch (eType)
+				{
+				case cDataFiles.eExportType.CSV:
+					Writer.WriteLine(cAmmo.CSVHeader);
+					Writer.WriteLine();
+
+					Writer.WriteLine(cAmmo.CSVLineHeader);
+					Writer.WriteLine();
+
+					foreach (cAmmo Ammo in this)
+						{
+						strLine = Ammo.CSVLine;
+
+						Writer.WriteLine(strLine);
+						}
+
+					Writer.WriteLine();
+
+					break;
+
+				case cDataFiles.eExportType.XML:
+					Writer.WriteLine(cAmmo.XMLHeader);
+					Writer.WriteLine(cAmmo.XMLLineHeader);
+
+					foreach (cAmmo Ammo in this)
+						{
+						strLine = Ammo.XMLLine;
+
+						Writer.WriteLine(strLine);
+						}
+
+					break;
+				}
+			}
 
 		//============================================================================*
 		// RecalulateInventory()

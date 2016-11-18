@@ -160,11 +160,11 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			m_strDimensionFormat = "{0:F";
-			m_strDimensionFormat += String.Format("{0:G0}", m_DataFiles.Preferences.DimensionDecimals);
+			m_strDimensionFormat += String.Format("{0:G0}", cPreferences.DimensionDecimals);
 			m_strDimensionFormat += "}";
 
 			m_strBulletWeightFormat = "{0:F";
-			m_strBulletWeightFormat += String.Format("{0:G0}", m_DataFiles.Preferences.BulletWeightDecimals);
+			m_strBulletWeightFormat += String.Format("{0:G0}", cPreferences.BulletWeightDecimals);
 			m_strBulletWeightFormat += "}";
 
 			//----------------------------------------------------------------------------*
@@ -220,10 +220,10 @@ namespace ReloadersWorkShop
 			{
 			base.PopulateColumns(arColumns);
 
-			Columns[6].Text += String.Format(" ({0})", m_DataFiles.MetricString(cDataFiles.eDataType.BulletWeight));
-			Columns[7].Text += String.Format(" ({0})", m_DataFiles.MetricString(cDataFiles.eDataType.Dimension));
+			Columns[6].Text += String.Format(" ({0})", cDataFiles.MetricString(cDataFiles.eDataType.BulletWeight));
+			Columns[7].Text += String.Format(" ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
 
-			if (m_DataFiles.Preferences.TrackInventory)
+			if (cPreferences.TrackInventory)
 				{
 				Columns[10].Text = "Qty on Hand";
 				Columns[11].Text = String.Format("Value ({0})", m_DataFiles.Preferences.Currency);
@@ -253,12 +253,12 @@ namespace ReloadersWorkShop
 			Item.SubItems.Add(Ammo.Reload ? "Y" : "");
 			Item.SubItems.Add(Ammo.TestList.Count > 0 ? "Y" : "");
 			Item.SubItems.Add(Ammo.Caliber.ToString());
-			Item.SubItems.Add(String.Format(m_strBulletWeightFormat, m_DataFiles.StandardToMetric(Ammo.BulletWeight, cDataFiles.eDataType.BulletWeight)));
-			Item.SubItems.Add(String.Format(m_strDimensionFormat, m_DataFiles.StandardToMetric(Ammo.BulletDiameter, cDataFiles.eDataType.Dimension)));
+			Item.SubItems.Add(String.Format(m_strBulletWeightFormat, cDataFiles.StandardToMetric(Ammo.BulletWeight, cDataFiles.eDataType.BulletWeight)));
+			Item.SubItems.Add(String.Format(m_strDimensionFormat, cDataFiles.StandardToMetric(Ammo.BulletDiameter, cDataFiles.eDataType.Dimension)));
 			Item.SubItems.Add(String.Format("{0:F3}", Ammo.BallisticCoefficient));
 			Item.SubItems.Add(String.Format("{0:F3}", cBullet.CalculateSectionalDensity(Ammo.BulletDiameter, Ammo.BulletWeight)));
 
-			if (m_DataFiles.Preferences.TrackInventory)
+			if (cPreferences.TrackInventory)
 				{
 				Item.SubItems.Add(String.Format("{0:G0}", Ammo.QuantityOnHand));
 				Item.SubItems.Add(String.Format("{0:F2}", Ammo.QuantityOnHand * m_DataFiles.SupplyCostEach(Ammo)));

@@ -133,6 +133,15 @@ namespace ReloadersWorkShop
 
 		public cFirearm(cFirearm Firearm)
 			{
+			Copy(Firearm);
+			}
+
+		//============================================================================*
+		// Copy()
+		//============================================================================*
+
+		public void Copy(cFirearm Firearm)
+			{
 			//----------------------------------------------------------------------------*
 			// General
 			//----------------------------------------------------------------------------*
@@ -425,6 +434,99 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// CSVHeader Property
+		//============================================================================*
+
+		public static string CSVHeader
+			{
+			get
+				{
+				return ("Firearms");
+				}
+			}
+
+		//============================================================================*
+		// CSVLine Property
+		//============================================================================*
+
+		public string CSVLine
+			{
+			get
+				{
+				string strLine = "";
+
+				//----------------------------------------------------------------------------*
+				// General
+				//----------------------------------------------------------------------------*
+
+				strLine += cFirearm.FirearmTypeString(m_eFirearmType);
+				strLine += ",";
+				strLine += m_Manufacturer.Name;
+				strLine += ",";
+				strLine += m_strModel;
+				strLine += ",";
+				strLine += m_strSerialNumber;
+				strLine += ",";
+
+				strLine += m_dBarrelLength;
+				strLine += ",";
+				strLine += m_dTwist;
+				strLine += ",";
+				strLine += m_dSightHeight;
+
+				strLine += m_fScoped ? ",Yes," : ",-,";
+				strLine += m_dScopeClick;
+				strLine += ",";
+				strLine += m_eTurretType == eTurretType.MOA ? "MOA," : "Mils,";
+
+				strLine += m_nZeroRange;
+				strLine += ",";
+				strLine += m_dHeadSpace;
+				strLine += ",";
+				strLine += m_dNeck;
+				strLine += ",";
+
+				strLine += m_strSource;
+				strLine += ",";
+				strLine += m_PurchaseDate;
+				strLine += ",";
+				strLine += m_dPrice;
+				strLine += ",";
+
+				strLine += m_strReceiverFinish;
+				strLine += ",";
+				strLine += m_strBarrelFinish;
+				strLine += ",";
+
+				strLine += m_strType;
+				strLine += ",";
+				strLine += m_strAction;
+				strLine += ",";
+				strLine += m_strHammer;
+				strLine += ",";
+				strLine += m_strMagazine;
+				strLine += ",";
+				strLine += m_nCapacity;
+
+				strLine += m_strNotes = "";
+
+				return (strLine);
+				}
+			}
+
+		//============================================================================*
+		// CSVLineHeader Property
+		//============================================================================*
+
+		public static string CSVLineHeader
+			{
+			get
+				{
+				return("Firearm Type,Manufacturer,Model,Serial Number,Barrel Length,Twist,Sight Height,Scoped,Scope Click, Turret Type,Zero Range,HeadSpace,Neck,Source,Purchase Date,Price,Receiver Finish,Barrel Finish,Type,Action,Hammer,Magazine,Capacity,Notes");
+				}
+			}
+
+		//============================================================================*
 		// FirearmBulletList Property
 		//============================================================================*
 
@@ -588,6 +690,7 @@ namespace ReloadersWorkShop
 				strFileName = strFileName.Replace('<', '-');
 				strFileName = strFileName.Replace('>', '-');
 				strFileName = strFileName.Replace('|', '-');
+				strFileName = strFileName.Replace('.', ' ');
 
 				return (strFileName);
 				}
@@ -1160,7 +1263,7 @@ namespace ReloadersWorkShop
 
 		public override string ToString()
 			{
-			return (String.Format("{0} {1}", (m_Manufacturer != null) ? m_Manufacturer.Name : "", m_strModel));
+			return (String.Format("{0} {1} ({2})", (m_Manufacturer != null) ? m_Manufacturer.Name : "", m_strModel, m_strSerialNumber));
 			}
 
 		//============================================================================*
@@ -1169,7 +1272,7 @@ namespace ReloadersWorkShop
 
 		public string ToLongString()
 			{
-			return (String.Format("{0} {1} - {2}", m_Manufacturer.Name, m_strModel, PrimaryCaliber.ToString()));
+			return (ToString() + String.Format(" - {0}", PrimaryCaliber.ToString()));
 			}
 
 		//============================================================================*
@@ -1313,6 +1416,46 @@ namespace ReloadersWorkShop
 			set
 				{
 				m_strType = value;
+				}
+			}
+
+		//============================================================================*
+		// XMLHeader Property
+		//============================================================================*
+
+		public static string XMLHeader
+			{
+			get
+				{
+				return ("Firearms");
+				}
+			}
+
+		//============================================================================*
+		// XMLLine Property
+		//============================================================================*
+
+		public string XMLLine
+			{
+			get
+				{
+				string strLine = "";
+
+				return (strLine);
+				}
+			}
+
+		//============================================================================*
+		// XMLLineHeader Property
+		//============================================================================*
+
+		public static string XMLLineHeader
+			{
+			get
+				{
+				string strLine = "";
+
+				return (strLine);
 				}
 			}
 

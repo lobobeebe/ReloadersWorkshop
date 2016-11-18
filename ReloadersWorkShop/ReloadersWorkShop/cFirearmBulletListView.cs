@@ -40,8 +40,9 @@ namespace ReloadersWorkShop
 		private cListViewColumn[] m_arColumns = new cListViewColumn[]
 			{
 			new cListViewColumn(0, "BulletHeader","Bullet", HorizontalAlignment.Left, 200),
-			new cListViewColumn(1, "COALHeader", "COAL", HorizontalAlignment.Center, 100),
-			new cListViewColumn(2, "CBTOHeader", "CBTO", HorizontalAlignment.Center, 120),
+			new cListViewColumn(1, "COALHeader", "COAL", HorizontalAlignment.Center, 80),
+			new cListViewColumn(2, "CBTOHeader", "CBTO", HorizontalAlignment.Center, 80),
+			new cListViewColumn(3, "JumpHeader", "Jump", HorizontalAlignment.Center, 80)
 			};
 
 		//============================================================================*
@@ -63,8 +64,9 @@ namespace ReloadersWorkShop
 			// Set column measurements
 			//----------------------------------------------------------------------------*
 
-			m_arColumns[1].Text += String.Format(" ({0})", m_DataFiles.MetricString(cDataFiles.eDataType.Dimension));
-			m_arColumns[2].Text += String.Format(" ({0})", m_DataFiles.MetricString(cDataFiles.eDataType.Dimension));
+			m_arColumns[1].Text += String.Format(" ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
+			m_arColumns[2].Text += String.Format(" ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
+			m_arColumns[3].Text += String.Format(" ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
 
 			//----------------------------------------------------------------------------*
 			// Populate Columns and Groups
@@ -156,7 +158,7 @@ namespace ReloadersWorkShop
 			Populating = true;
 
 			m_strDimensionFormat = "{0:F";
-			m_strDimensionFormat += String.Format("{0:G0}", m_DataFiles.Preferences.DimensionDecimals);
+			m_strDimensionFormat += String.Format("{0:G0}", cPreferences.DimensionDecimals);
 			m_strDimensionFormat += "}";
 
 			Items.Clear();
@@ -218,12 +220,17 @@ namespace ReloadersWorkShop
 
 			Item.Tag = FirearmBullet;
 
-			Item.SubItems.Add(String.Format(m_strDimensionFormat, m_DataFiles.StandardToMetric(FirearmBullet.COL, cDataFiles.eDataType.Dimension)));
+			Item.SubItems.Add(String.Format(m_strDimensionFormat, cDataFiles.StandardToMetric(FirearmBullet.COL, cDataFiles.eDataType.Dimension)));
 
 			if (FirearmBullet.Bullet.FirearmType != cFirearm.eFireArmType.Rifle)
 				Item.SubItems.Add("N/A");
 			else
-				Item.SubItems.Add(String.Format(m_strDimensionFormat, m_DataFiles.StandardToMetric(FirearmBullet.CBTO, cDataFiles.eDataType.Dimension)));
+				Item.SubItems.Add(String.Format(m_strDimensionFormat, cDataFiles.StandardToMetric(FirearmBullet.CBTO, cDataFiles.eDataType.Dimension)));
+
+			if (FirearmBullet.Bullet.FirearmType != cFirearm.eFireArmType.Rifle)
+				Item.SubItems.Add("N/A");
+			else
+				Item.SubItems.Add(String.Format(m_strDimensionFormat, cDataFiles.StandardToMetric(FirearmBullet.Jump, cDataFiles.eDataType.Dimension)));
 			}
 
 		//============================================================================*

@@ -167,6 +167,8 @@ namespace ReloadersWorkShop
                     BulletOKButton.Text = "Update";
                 }
 
+			cCaliber.CurrentFirearmType = m_Bullet.FirearmType;
+
             SetClientSizeCore(GeneralGroupBox.Location.X + GeneralGroupBox.Width + 10, BulletCancelButton.Location.Y + BulletCancelButton.Height + 20);
 
             //----------------------------------------------------------------------------*
@@ -184,7 +186,8 @@ namespace ReloadersWorkShop
             if (!fViewOnly)
                 {
                 FirearmTypeCombo.SelectedIndexChanged += OnFirearmTypeSelected;
-                ManufacturerCombo.SelectedIndexChanged += OnManufacturerSelected;
+				CrossUseCheckBox.Click += OnCrossUseClicked;
+				ManufacturerCombo.SelectedIndexChanged += OnManufacturerSelected;
 
                 SelfCastRadioButton.Click += OnSelfCastClicked;
 
@@ -232,7 +235,7 @@ namespace ReloadersWorkShop
             // Set Labels for inventory tracking if needed
             //----------------------------------------------------------------------------*
 
-            if (m_DataFiles.Preferences.TrackInventory)
+            if (cPreferences.TrackInventory)
                 {
                 QuantityLabel.Text = "Qty on Hand:";
 
@@ -378,8 +381,8 @@ namespace ReloadersWorkShop
 
             m_Bullet.FirearmType = (cFirearm.eFireArmType) FirearmTypeCombo.SelectedIndex;
 
-            m_Bullet.Weight = m_DataFiles.MetricToStandard(BulletWeightTextBox.Value, cDataFiles.eDataType.BulletWeight);
-            m_Bullet.Diameter = m_DataFiles.MetricToStandard(BulletDiameterTextBox.Value, cDataFiles.eDataType.Dimension);
+            m_Bullet.Weight = cDataFiles.MetricToStandard(BulletWeightTextBox.Value, cDataFiles.eDataType.BulletWeight);
+            m_Bullet.Diameter = cDataFiles.MetricToStandard(BulletDiameterTextBox.Value, cDataFiles.eDataType.Dimension);
 
             cBulletCaliberForm BulletCaliberForm = new cBulletCaliberForm(null, m_Bullet, m_DataFiles);
 
@@ -438,16 +441,29 @@ namespace ReloadersWorkShop
             UpdateButtons();
             }
 
-        //============================================================================*
-        // OnDiameterChanged()
-        //============================================================================*
+		//============================================================================*
+		// OnCrossUseClicked()
+		//============================================================================*
 
-        private void OnDiameterChanged(object sender, EventArgs e)
+		private void OnCrossUseClicked(object sender, EventArgs e)
+			{
+			m_Bullet.CrossUse = CrossUseCheckBox.Checked;
+
+			m_fChanged = true;
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
+		// OnDiameterChanged()
+		//============================================================================*
+
+		private void OnDiameterChanged(object sender, EventArgs e)
             {
             if (!m_fInitialized)
                 return;
 
-            m_Bullet.Diameter = m_DataFiles.MetricToStandard(BulletDiameterTextBox.Value, cDataFiles.eDataType.Dimension);
+            m_Bullet.Diameter = cDataFiles.MetricToStandard(BulletDiameterTextBox.Value, cDataFiles.eDataType.Dimension);
 
             m_fChanged = true;
 
@@ -505,6 +521,8 @@ namespace ReloadersWorkShop
                 {
                 m_Bullet.FirearmType = FirearmTypeCombo.Value;
 
+				cCaliber.CurrentFirearmType = m_Bullet.FirearmType;
+
                 m_Bullet.Diameter = 0.0;
                 m_Bullet.Weight = 0.0;
                 m_Bullet.BallisticCoefficient = 0.0;
@@ -549,7 +567,7 @@ namespace ReloadersWorkShop
             if (!m_fInitialized)
                 return;
 
-            m_Bullet.Length = m_DataFiles.MetricToStandard(LengthTextBox.Value, cDataFiles.eDataType.Dimension);
+            m_Bullet.Length = cDataFiles.MetricToStandard(LengthTextBox.Value, cDataFiles.eDataType.Dimension);
 
             m_fChanged = true;
 
@@ -752,7 +770,7 @@ namespace ReloadersWorkShop
             if (!m_fInitialized)
                 return;
 
-            m_Bullet.Weight = m_DataFiles.MetricToStandard(BulletWeightTextBox.Value, cDataFiles.eDataType.BulletWeight);
+            m_Bullet.Weight = cDataFiles.MetricToStandard(BulletWeightTextBox.Value, cDataFiles.eDataType.BulletWeight);
 
             SetSectionalDensity();
 
@@ -773,16 +791,18 @@ namespace ReloadersWorkShop
 
             PopulateComboBoxes();
 
-            //----------------------------------------------------------------------------*
-            // Data Text Boxes
-            //----------------------------------------------------------------------------*
+			//----------------------------------------------------------------------------*
+			// Data Text Boxes
+			//----------------------------------------------------------------------------*
 
-            PartNumberTextBox.Value = m_Bullet.PartNumber;
+			CrossUseCheckBox.Checked = m_Bullet.CrossUse;
+
+			PartNumberTextBox.Value = m_Bullet.PartNumber;
             TypeTextBox.Value = m_Bullet.Type;
-            BulletDiameterTextBox.Value = m_DataFiles.StandardToMetric(m_Bullet.Diameter, cDataFiles.eDataType.Dimension);
-            BulletWeightTextBox.Value = m_DataFiles.StandardToMetric(m_Bullet.Weight, cDataFiles.eDataType.BulletWeight);
+            BulletDiameterTextBox.Value = cDataFiles.StandardToMetric(m_Bullet.Diameter, cDataFiles.eDataType.Dimension);
+            BulletWeightTextBox.Value = cDataFiles.StandardToMetric(m_Bullet.Weight, cDataFiles.eDataType.BulletWeight);
             BallisticCoefficientTextBox.Value = m_Bullet.BallisticCoefficient;
-            LengthTextBox.Value = m_DataFiles.StandardToMetric(m_Bullet.Length, cDataFiles.eDataType.Dimension);
+            LengthTextBox.Value = cDataFiles.StandardToMetric(m_Bullet.Length, cDataFiles.eDataType.Dimension);
 
             if (m_Bullet.Manufacturer == null || !m_Bullet.Manufacturer.BulletMolds)
                 m_Bullet.SelfCast = false;
@@ -834,7 +854,7 @@ namespace ReloadersWorkShop
 
             CostTextBox.Value = m_DataFiles.SupplyCost(m_Bullet);
 
-            if (m_DataFiles.Preferences.TrackInventory)
+            if (cPreferences.TrackInventory)
                 CostTextBox.Text = String.Format("{0}{1:F2}", m_DataFiles.Preferences.Currency, m_DataFiles.SupplyCost(m_Bullet));
 
             SetCostEach();
@@ -943,15 +963,15 @@ namespace ReloadersWorkShop
             // Set Weight Values
             //----------------------------------------------------------------------------*
 
-            BulletWeightTextBox.MinValue = m_DataFiles.StandardToMetric(dMinWeight, cDataFiles.eDataType.BulletWeight);
-            BulletWeightTextBox.MaxValue = m_DataFiles.StandardToMetric(dMaxWeight, cDataFiles.eDataType.BulletWeight);
+            BulletWeightTextBox.MinValue = cDataFiles.StandardToMetric(dMinWeight, cDataFiles.eDataType.BulletWeight);
+            BulletWeightTextBox.MaxValue = cDataFiles.StandardToMetric(dMaxWeight, cDataFiles.eDataType.BulletWeight);
 
             if (!BulletWeightTextBox.ValueOK)
-                BulletWeightTextBox.Value = m_DataFiles.StandardToMetric(dMinWeight, cDataFiles.eDataType.BulletWeight);
+                BulletWeightTextBox.Value = cDataFiles.StandardToMetric(dMinWeight, cDataFiles.eDataType.BulletWeight);
 
             if (Bullet.Weight == 0.0)
                 {
-                Bullet.Weight = m_DataFiles.MetricToStandard(BulletWeightTextBox.Value, cDataFiles.eDataType.BulletWeight);
+                Bullet.Weight = cDataFiles.MetricToStandard(BulletWeightTextBox.Value, cDataFiles.eDataType.BulletWeight);
 
                 m_fChanged = true;
 
@@ -962,15 +982,15 @@ namespace ReloadersWorkShop
             // Set Diameter Values
             //----------------------------------------------------------------------------*
 
-            BulletDiameterTextBox.MinValue = m_DataFiles.StandardToMetric(dMinDiameter, cDataFiles.eDataType.Dimension);
-            BulletDiameterTextBox.MaxValue = m_DataFiles.StandardToMetric(dMaxDiameter, cDataFiles.eDataType.Dimension);
+            BulletDiameterTextBox.MinValue = cDataFiles.StandardToMetric(dMinDiameter, cDataFiles.eDataType.Dimension);
+            BulletDiameterTextBox.MaxValue = cDataFiles.StandardToMetric(dMaxDiameter, cDataFiles.eDataType.Dimension);
 
             if (!BulletDiameterTextBox.ValueOK)
-                BulletDiameterTextBox.Value = m_DataFiles.StandardToMetric(dMinDiameter, cDataFiles.eDataType.Dimension);
+                BulletDiameterTextBox.Value = cDataFiles.StandardToMetric(dMinDiameter, cDataFiles.eDataType.Dimension);
 
             if (Bullet.Diameter == 0.0)
                 {
-                Bullet.Diameter = m_DataFiles.MetricToStandard(BulletDiameterTextBox.Value, cDataFiles.eDataType.Dimension);
+                Bullet.Diameter = cDataFiles.MetricToStandard(BulletDiameterTextBox.Value, cDataFiles.eDataType.Dimension);
 
                 m_fChanged = true;
 
@@ -1053,21 +1073,21 @@ namespace ReloadersWorkShop
 
         private void SetInputParameters()
             {
-            //----------------------------------------------------------------------------*
-            // Set Labels for dimensions and weights
-            //----------------------------------------------------------------------------*
+			//----------------------------------------------------------------------------*
+			// Set Labels for dimensions and weights
+			//----------------------------------------------------------------------------*
 
-            DiameterMeasurementLabel.Text = m_DataFiles.MetricString(cDataFiles.eDataType.Dimension);
-            BulletWeightMeasurementLabel.Text = m_DataFiles.MetricString(cDataFiles.eDataType.BulletWeight);
-            LengthMeasurementLabel.Text = m_DataFiles.MetricString(cDataFiles.eDataType.Dimension);
+			cDataFiles.SetMetricLabel(DiameterMeasurementLabel, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetMetricLabel(BulletWeightMeasurementLabel, cDataFiles.eDataType.BulletWeight);
+			cDataFiles.SetMetricLabel(LengthMeasurementLabel, cDataFiles.eDataType.Dimension);
 
             //----------------------------------------------------------------------------*
             // Set Decimal Places
             //----------------------------------------------------------------------------*
 
-            m_DataFiles.SetInputParameters(BulletDiameterTextBox, cDataFiles.eDataType.Dimension);
-            m_DataFiles.SetInputParameters(BulletWeightTextBox, cDataFiles.eDataType.BulletWeight);
-            m_DataFiles.SetInputParameters(LengthTextBox, cDataFiles.eDataType.Dimension);
+            cDataFiles.SetInputParameters(BulletDiameterTextBox, cDataFiles.eDataType.Dimension);
+            cDataFiles.SetInputParameters(BulletWeightTextBox, cDataFiles.eDataType.BulletWeight);
+            cDataFiles.SetInputParameters(LengthTextBox, cDataFiles.eDataType.Dimension);
             }
 
         //============================================================================*
@@ -1076,9 +1096,9 @@ namespace ReloadersWorkShop
 
         private void SetSectionalDensity()
             {
-//            double dBulletDiameter = m_DataFiles.MetricToStandard(BulletDiameterTextBox.Value, cDataFiles.eDataType.Dimension);
+//            double dBulletDiameter = cDataFiles.MetricToStandard(BulletDiameterTextBox.Value, cDataFiles.eDataType.Dimension);
 
-//            double dBulletWeight = m_DataFiles.MetricToStandard(BulletWeightTextBox.Value, cDataFiles.eDataType.BulletWeight);
+//            double dBulletWeight = cDataFiles.MetricToStandard(BulletWeightTextBox.Value, cDataFiles.eDataType.BulletWeight);
 
             SectionalDensityLabel.Text = String.Format("{0:F3}", m_Bullet.SectionalDensity);
             }
@@ -1326,7 +1346,7 @@ namespace ReloadersWorkShop
             // Check Bullet Diameter
             //----------------------------------------------------------------------------*
 
-            double dBulletDiameter = Math.Round(m_DataFiles.MetricToStandard(BulletDiameterTextBox.Value, cDataFiles.eDataType.Dimension), 4);
+            double dBulletDiameter = Math.Round(cDataFiles.MetricToStandard(BulletDiameterTextBox.Value, cDataFiles.eDataType.Dimension), 4);
 
             double dMinAllowedDiameter = 1.0;
             double dMaxAllowedDiameter = 0.0;
@@ -1409,10 +1429,10 @@ namespace ReloadersWorkShop
                     }
                 }
 
-            BulletDiameterTextBox.MinValue = m_DataFiles.StandardToMetric(dMinAllowedDiameter, cDataFiles.eDataType.Dimension);
-            BulletDiameterTextBox.MaxValue = m_DataFiles.StandardToMetric(dMaxAllowedDiameter, cDataFiles.eDataType.Dimension);
-            BulletWeightTextBox.MinValue = m_DataFiles.StandardToMetric(dMinWeight, cDataFiles.eDataType.BulletWeight);
-            BulletWeightTextBox.MaxValue = m_DataFiles.StandardToMetric(dMaxWeight, cDataFiles.eDataType.BulletWeight);
+            BulletDiameterTextBox.MinValue = cDataFiles.StandardToMetric(dMinAllowedDiameter, cDataFiles.eDataType.Dimension);
+            BulletDiameterTextBox.MaxValue = cDataFiles.StandardToMetric(dMaxAllowedDiameter, cDataFiles.eDataType.Dimension);
+            BulletWeightTextBox.MinValue = cDataFiles.StandardToMetric(dMinWeight, cDataFiles.eDataType.BulletWeight);
+            BulletWeightTextBox.MaxValue = cDataFiles.StandardToMetric(dMaxWeight, cDataFiles.eDataType.BulletWeight);
 
             if (m_DataFiles.Preferences.ToolTips)
                 BulletDiameterTextBox.ToolTip = strToolTip;
@@ -1431,7 +1451,7 @@ namespace ReloadersWorkShop
             // Check Weight
             //----------------------------------------------------------------------------*
 
-            double dWeight = m_DataFiles.MetricToStandard(BulletWeightTextBox.Value, cDataFiles.eDataType.BulletWeight);
+            double dWeight = cDataFiles.MetricToStandard(BulletWeightTextBox.Value, cDataFiles.eDataType.BulletWeight);
 
             if (!BulletWeightTextBox.ValueOK)
                 fEnableOK = false;

@@ -18,6 +18,8 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 using WIA;
 
+using ReloadersWorkShop.Preferences;
+
 using RWCommonLib.Registry;
 
 //============================================================================*
@@ -266,12 +268,12 @@ namespace ReloadersWorkShop
 
 			int nY = CalibrationBar.Height;
 
-			string strMeasurement = m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize);
+			string strMeasurement = cDataFiles.MetricString(cDataFiles.eDataType.GroupSize);
 
 			SizeF StartSizeF = g.MeasureString("MMM", BarFont);
-			SizeF CharSizeF = g.MeasureString(m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize), BarFont);
+			SizeF CharSizeF = g.MeasureString(cDataFiles.MetricString(cDataFiles.eDataType.GroupSize), BarFont);
 
-			g.DrawString(m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize), BarFont, BarForeBrush, (int) (StartSizeF.Width / 2) - (int) (CharSizeF.Width / 2), CalibrationBar.Height / 2);
+			g.DrawString(cDataFiles.MetricString(cDataFiles.eDataType.GroupSize), BarFont, BarForeBrush, (int) (StartSizeF.Width / 2) - (int) (CharSizeF.Width / 2), CalibrationBar.Height / 2);
 			/*
 						CharSizeF = g.MeasureString(new string(strMeasurement[1], 1), BarFont);
 
@@ -281,7 +283,7 @@ namespace ReloadersWorkShop
 			// Metric Scale Bar
 			//----------------------------------------------------------------------------*
 
-			if (m_DataFiles.Preferences.MetricGroups)
+			if (cPreferences.MetricGroups)
 				{
 				int nIncrements = CalibrationBar.Width / (m_Target.PixelsPerCentimeter / 10);
 
@@ -1375,7 +1377,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_Target.Range = (int) m_DataFiles.MetricToStandard(RangeTextBox.Value, cDataFiles.eDataType.Range);
+			m_Target.Range = (int) cDataFiles.MetricToStandard(RangeTextBox.Value, cDataFiles.eDataType.Range);
 
 			SetOutputData();
 
@@ -2170,7 +2172,7 @@ namespace ReloadersWorkShop
 
 		private void SetInputData()
 			{
-			RangeTextBox.Value = (int) m_DataFiles.StandardToMetric(m_Target.Range, cDataFiles.eDataType.Range);
+			RangeTextBox.Value = (int) cDataFiles.StandardToMetric(m_Target.Range, cDataFiles.eDataType.Range);
 			RangeMeasurementLabel.Text = m_DataFiles.MetricLongString(cDataFiles.eDataType.Range);
 
 			double dBulletDiameter = 0.0;
@@ -2184,11 +2186,11 @@ namespace ReloadersWorkShop
 				dBulletDiameter = m_BatchTest.Batch.BulletDiameter;
 
 			string strDimensionFormat = "{0:F";
-			strDimensionFormat += String.Format("{0:G0}", m_DataFiles.Preferences.DimensionDecimals);
+			strDimensionFormat += String.Format("{0:G0}", cPreferences.DimensionDecimals);
 			strDimensionFormat += "} ";
-			strDimensionFormat += m_DataFiles.MetricString(cDataFiles.eDataType.Dimension);
+			strDimensionFormat += cDataFiles.MetricString(cDataFiles.eDataType.Dimension);
 
-			BulletDiameterLabel.Text = String.Format(strDimensionFormat, m_DataFiles.StandardToMetric(dBulletDiameter, cDataFiles.eDataType.Dimension));
+			BulletDiameterLabel.Text = String.Format(strDimensionFormat, cDataFiles.StandardToMetric(dBulletDiameter, cDataFiles.eDataType.Dimension));
 
 			SetNumShotsLabel();
 
@@ -2209,7 +2211,7 @@ namespace ReloadersWorkShop
 
 		private void SetInputParameters()
 			{
-			m_DataFiles.SetInputParameters(RangeTextBox, cDataFiles.eDataType.Range);
+			cDataFiles.SetInputParameters(RangeTextBox, cDataFiles.eDataType.Range);
 			}
 
 		//============================================================================*
@@ -2342,15 +2344,15 @@ namespace ReloadersWorkShop
 				}
 
 			string strGroupFormat = "{0:F";
-			strGroupFormat += String.Format("{0:G0}", m_DataFiles.Preferences.GroupDecimals);
+			strGroupFormat += String.Format("{0:G0}", cPreferences.GroupDecimals);
 			strGroupFormat += "} {1}";
 
-			GroupSizeLabel.Text = String.Format(strGroupFormat, m_DataFiles.StandardToMetric(dGroupSize, cDataFiles.eDataType.GroupSize), m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize));
+			GroupSizeLabel.Text = String.Format(strGroupFormat, cDataFiles.StandardToMetric(dGroupSize, cDataFiles.eDataType.GroupSize), cDataFiles.MetricString(cDataFiles.eDataType.GroupSize));
 			MOALabel.Text = String.Format("{0:F3}", dMOA);
 			MilsLabel.Text = String.Format("{0:F3}", dMils);
 
-			OffsetLabel.Text = m_Target.MeanOffsetString(m_DataFiles);
-			GroupBoxLabel.Text = m_Target.GroupBoxString(m_DataFiles);
+			OffsetLabel.Text = m_Target.MeanOffsetString();
+			GroupBoxLabel.Text = m_Target.GroupBoxString();
 			}
 
 		//============================================================================*

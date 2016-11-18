@@ -20,6 +20,8 @@ using System.Windows.Forms;
 // Application Specific Using Statements
 //============================================================================*
 
+using ReloadersWorkShop.Preferences;
+
 using RWCommonLib.Registry;
 using RWCommonLib.Updates;
 using RWCommonLib.Forms;
@@ -130,6 +132,7 @@ namespace ReloadersWorkShop
 
 			FileBackupMenuItem.Click += OnFileBackupClicked;
 			FileExitMenuItem.Click += OnFileExitClicked;
+			FileExportMenuItem.Click += OnFileExportClicked;
 			FilePreferencesMenuItem.Click += OnFilePreferencesClicked;
 			FilePrintAmmoListMenuItem.Click += OnPrintAmmoListClicked;
 			FilePrintCostAnalysisMenuItem.Click += OnPrintCostAnalysisClicked;
@@ -443,7 +446,7 @@ namespace ReloadersWorkShop
 					EditNewMenuItem.Enabled = AddSupplyButton.Enabled;
 					EditEditMenuItem.Enabled = EditSupplyButton.Enabled;
 					EditRemoveMenuItem.Enabled = RemoveSupplyButton.Enabled;
-					EditInventoryActivityMenuItem.Visible = m_DataFiles.Preferences.TrackInventory;
+					EditInventoryActivityMenuItem.Visible = cPreferences.TrackInventory;
 
 					switch ((cSupply.eSupplyTypes) SupplyTypeCombo.SelectedIndex)
 						{
@@ -508,7 +511,7 @@ namespace ReloadersWorkShop
 					EditEditMenuItem.Enabled = EditAmmoButton.Enabled;
 					EditRemoveMenuItem.Text = "&Remove Ammo";
 					EditRemoveMenuItem.Enabled = RemoveAmmoButton.Enabled;
-					EditInventoryActivityMenuItem.Visible = m_DataFiles.Preferences.TrackInventory;
+					EditInventoryActivityMenuItem.Visible = cPreferences.TrackInventory;
 					break;
 
 				case "PreferencesTab":
@@ -826,6 +829,17 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// OnFileExportClicked()
+		//============================================================================*
+
+		public void OnFileExportClicked(Object sender, EventArgs e)
+			{
+			cExportForm ExportForm = new cExportForm(m_DataFiles);
+
+			ExportForm.ShowDialog();
+			}
+
+		//============================================================================*
 		// OnFilePreferencesClicked()
 		//============================================================================*
 
@@ -841,10 +855,10 @@ namespace ReloadersWorkShop
 		private void OnFilePrintClicked(Object sender, EventArgs e)
 			{
 			FilePrintAmmoListMenuItem.Enabled = AmmoListPrintButton.Enabled;
-			FilePrintAmmoShoppingListMenuItem.Enabled = m_DataFiles.Preferences.TrackInventory && AmmoListPrintButton.Enabled && AmmoPrintBelowStockCheckBox.Checked;
+			FilePrintAmmoShoppingListMenuItem.Enabled = cPreferences.TrackInventory && AmmoListPrintButton.Enabled && AmmoPrintBelowStockCheckBox.Checked;
 
 			FilePrintSupplyListMenuItem.Enabled = SupplyListPrintButton.Enabled;
-			FilePrintSupplyShoppingListMenuItem.Enabled = m_DataFiles.Preferences.TrackInventory && SupplyListPrintButton.Enabled && SuppliesPrintBelowStockCheckBox.Checked;
+			FilePrintSupplyShoppingListMenuItem.Enabled = cPreferences.TrackInventory && SupplyListPrintButton.Enabled && SuppliesPrintBelowStockCheckBox.Checked;
 
 			FilePrintLoadShoppingListMenuItem.Enabled = LoadShoppingListButton.Enabled;
 
@@ -1127,7 +1141,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			if ((sender as TabControl).SelectedTab.Name == "InventoryTab" && !m_DataFiles.Preferences.TrackInventory)
+			if ((sender as TabControl).SelectedTab.Name == "InventoryTab" && !cPreferences.TrackInventory)
 				{
 				MessageBox.Show("You must activate Inventory Tracking on the Preferences Tab in order to use the Inventory Tab", "Inventory Tracking Not Activated", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 
@@ -1839,7 +1853,7 @@ namespace ReloadersWorkShop
 					ViewCheckedMenuItem.Text = "Checked Supplies &Only";
 					ViewCheckedMenuItem.Checked = m_DataFiles.Preferences.HideUncheckedSupplies;
 					ViewCheckedMenuItem.Visible = true;
-					ViewInventoryActivityMenuItem.Visible = m_DataFiles.Preferences.TrackInventory;
+					ViewInventoryActivityMenuItem.Visible = cPreferences.TrackInventory;
 
 					switch ((cSupply.eSupplyTypes) SupplyTypeCombo.SelectedIndex)
 						{
@@ -1894,7 +1908,7 @@ namespace ReloadersWorkShop
 					ViewCheckedMenuItem.Text = "Checked Only";
 					ViewCheckedMenuItem.Visible = false;
 					ViewCheckedMenuItem.Checked = false;
-					ViewInventoryActivityMenuItem.Visible = m_DataFiles.Preferences.TrackInventory;
+					ViewInventoryActivityMenuItem.Visible = cPreferences.TrackInventory;
 
 					break;
 				}

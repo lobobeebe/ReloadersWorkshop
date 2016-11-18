@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 
+using ReloadersWorkShop.Preferences;
 using CommonLib.Conversions;
 
 //============================================================================*
@@ -26,7 +27,7 @@ namespace ReloadersWorkShop
 	//============================================================================*
 
 	[Serializable]
-	public class cTarget
+	public class cTarget : IDisposable
 		{
 		//============================================================================*
 		// Private Constant Data Members
@@ -57,6 +58,8 @@ namespace ReloadersWorkShop
 		//============================================================================*
 		// Private Data Members
 		//============================================================================*
+
+		private bool m_fDisposed = false;
 
 		private int m_nBatchID = 0;
 		private int m_nRange = 100;
@@ -540,6 +543,35 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Dispose()
+		//============================================================================*
+
+		public void Dispose()
+			{
+			Dispose(true);
+
+			GC.SuppressFinalize(this);
+			}
+
+		//============================================================================*
+		// Dispose()
+		//============================================================================*
+
+		protected virtual void Dispose(bool fDisposing)
+			{
+			if (!m_fDisposed)
+				{
+				if (fDisposing)
+					{
+					if (m_TargetImage != null)
+						m_TargetImage.Dispose();
+					}
+				}
+
+			m_fDisposed = true;
+			}
+
+		//============================================================================*
 		// Event Property
 		//============================================================================*
 
@@ -647,10 +679,10 @@ namespace ReloadersWorkShop
 		// GroupBoxString Property
 		//============================================================================*
 
-		public string GroupBoxString(cDataFiles DataFiles)
+		public string GroupBoxString()
 			{
 			string strGroupFormat = "{0:F";
-			strGroupFormat += String.Format("{0:G0}", DataFiles.Preferences.GroupDecimals);
+			strGroupFormat += String.Format("{0:G0}", cPreferences.GroupDecimals);
 			strGroupFormat += "} {1}";
 
 			Rectangle GroupBoxRect = GroupBox;
@@ -658,7 +690,7 @@ namespace ReloadersWorkShop
 			double dWidth = 0.0;
 			double dHeight = 0.0;
 
-			if (DataFiles.Preferences.MetricGroups)
+			if (cPreferences.MetricGroups)
 				{
 				if (PixelsPerCentimeter > 0.0)
 					{
@@ -675,9 +707,9 @@ namespace ReloadersWorkShop
 					}
 				}
 
-			string strGroupBox = String.Format(strGroupFormat, dWidth, DataFiles.MetricString(cDataFiles.eDataType.GroupSize));
+			string strGroupBox = String.Format(strGroupFormat, dWidth, cDataFiles.MetricString(cDataFiles.eDataType.GroupSize));
 			strGroupBox += " x ";
-			strGroupBox += String.Format(strGroupFormat, dHeight, DataFiles.MetricString(cDataFiles.eDataType.GroupSize));
+			strGroupBox += String.Format(strGroupFormat, dHeight, cDataFiles.MetricString(cDataFiles.eDataType.GroupSize));
 
 			return (strGroupBox);
 			}
@@ -855,15 +887,15 @@ namespace ReloadersWorkShop
 		// MeanOffsetString()
 		//============================================================================*
 
-		public string MeanOffsetString(cDataFiles DataFiles)
+		public string MeanOffsetString()
 			{
 			string strGroupFormat = "{0:F";
-			strGroupFormat += String.Format("{0:G0}", DataFiles.Preferences.GroupDecimals);
+			strGroupFormat += String.Format("{0:G0}", cPreferences.GroupDecimals);
 			strGroupFormat += "} {1}";
 
-			string strOffset = String.Format(strGroupFormat, Math.Abs(DataFiles.StandardToMetric(MeanOffset.X, cDataFiles.eDataType.GroupSize)), DataFiles.MetricString(cDataFiles.eDataType.GroupSize));
+			string strOffset = String.Format(strGroupFormat, Math.Abs(cDataFiles.StandardToMetric(MeanOffset.X, cDataFiles.eDataType.GroupSize)), cDataFiles.MetricString(cDataFiles.eDataType.GroupSize));
 
-			if (Math.Round(MeanOffset.X, DataFiles.Preferences.DimensionDecimals) == 0.0)
+			if (Math.Round(MeanOffset.X, cPreferences.DimensionDecimals) == 0.0)
 				strOffset += " Horiz.";
 			else
 				{
@@ -875,9 +907,9 @@ namespace ReloadersWorkShop
 
 			strOffset += " x ";
 
-			strOffset += String.Format(strGroupFormat, Math.Abs(DataFiles.StandardToMetric(MeanOffset.Y, cDataFiles.eDataType.GroupSize)), DataFiles.MetricString(cDataFiles.eDataType.GroupSize));
+			strOffset += String.Format(strGroupFormat, Math.Abs(cDataFiles.StandardToMetric(MeanOffset.Y, cDataFiles.eDataType.GroupSize)), cDataFiles.MetricString(cDataFiles.eDataType.GroupSize));
 
-			if (Math.Round(MeanOffset.Y, DataFiles.Preferences.DimensionDecimals) == 0.0)
+			if (Math.Round(MeanOffset.Y, cPreferences.DimensionDecimals) == 0.0)
 				strOffset += " Vert.";
 			else
 				{
@@ -1024,7 +1056,7 @@ namespace ReloadersWorkShop
 		// OffsetString()
 		//============================================================================*
 
-		public string OffsetString(cDataFiles DataFiles, Point Shot)
+		public string OffsetString(Point Shot)
 			{
 			string strOffset = "";
 
@@ -1032,12 +1064,12 @@ namespace ReloadersWorkShop
 			double dYOffset = OffsetY(Shot);
 
 			string strGroupFormat = "{0:F";
-			strGroupFormat += String.Format("{0:G0}", DataFiles.Preferences.GroupDecimals);
+			strGroupFormat += String.Format("{0:G0}", cPreferences.GroupDecimals);
 			strGroupFormat += "}";
 
-			strOffset = String.Format(strGroupFormat, Math.Abs(DataFiles.StandardToMetric(dXOffset, cDataFiles.eDataType.GroupSize)));
+			strOffset = String.Format(strGroupFormat, Math.Abs(cDataFiles.StandardToMetric(dXOffset, cDataFiles.eDataType.GroupSize)));
 			strOffset += " ";
-			strOffset += DataFiles.MetricString(cDataFiles.eDataType.GroupSize);
+			strOffset += cDataFiles.MetricString(cDataFiles.eDataType.GroupSize);
 
 			if (dXOffset == 0.0)
 				strOffset += "Horiz.";
@@ -1050,9 +1082,9 @@ namespace ReloadersWorkShop
 				}
 
 			strOffset += " x ";
-			strOffset += String.Format(strGroupFormat, Math.Abs(DataFiles.StandardToMetric(dYOffset, cDataFiles.eDataType.GroupSize)));
+			strOffset += String.Format(strGroupFormat, Math.Abs(cDataFiles.StandardToMetric(dYOffset, cDataFiles.eDataType.GroupSize)));
 			strOffset += " ";
-			strOffset += DataFiles.MetricString(cDataFiles.eDataType.GroupSize);
+			strOffset += cDataFiles.MetricString(cDataFiles.eDataType.GroupSize);
 
 			if (dYOffset == 0.0)
 				strOffset += "Vert.";

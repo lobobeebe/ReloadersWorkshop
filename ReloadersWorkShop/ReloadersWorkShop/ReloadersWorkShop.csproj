@@ -422,6 +422,12 @@
     <Compile Include="cTransactionListView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="cExportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExportForm.Designer.cs">
+      <DependentUpon>cExportForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="NativeMethods.cs" />
     <Compile Include="Preferences\cColumnList.cs" />
     <Compile Include="cFirearm.cs" />
@@ -534,6 +540,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="cCostAnalysisForm.resx">
       <DependentUpon>cCostAnalysisForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="cExportForm.resx">
+      <DependentUpon>cExportForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="cFirearmBulletForm.resx">
       <DependentUpon>cFirearmBulletForm.cs</DependentUpon>

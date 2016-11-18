@@ -11,6 +11,8 @@
 
 using System;
 
+using ReloadersWorkShop.Preferences;
+
 //============================================================================*
 // CommonLib Using Statements
 //============================================================================*
@@ -33,12 +35,6 @@ namespace ReloadersWorkShop
 		//============================================================================*
 		// Private Static Data Members
 		//============================================================================*
-
-		private static bool sm_fMetricDimensions = false;
-		private static bool sm_fMetricWeights = false;
-
-		private static int sm_nDimensionDecimals = 3;
-		private static int sm_nWeightDecimals = 0;
 
         private static double sm_dMinBulletWeight = cBullet.MinBulletWeight;
         private static double sm_dMaxBulletWeight = cBullet.MaxBulletWeight;
@@ -255,6 +251,79 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// CSVHeader Property
+		//============================================================================*
+
+		public static string CSVHeader
+			{
+			get
+				{
+				return ("Bullets");
+				}
+			}
+
+		//============================================================================*
+		// CSVLine Property
+		//============================================================================*
+
+		public string CSVLine
+			{
+			get
+				{
+				string strLine = "";
+
+				switch (FirearmType)
+					{
+					case cFirearm.eFireArmType.Handgun:
+						strLine += "Handgun,";
+						break;
+					case cFirearm.eFireArmType.Rifle:
+						strLine += "Rifle,";
+						break;
+					case cFirearm.eFireArmType.Shotgun:
+						strLine += "Shotgun,";
+						break;
+					default:
+						strLine += ",";
+						break;
+					}
+
+				strLine += CrossUse ? "Yes," : "-,";
+
+				strLine += Manufacturer.Name;
+				strLine += ",";
+				strLine += m_strPartNumber;
+				strLine += ",";
+
+				strLine += m_strType;
+				strLine += ",";
+				strLine += m_dDiameter;
+				strLine += ",";
+				strLine += m_dLength;
+				strLine += ",";
+				strLine += m_dWeight;
+				strLine += ",";
+				strLine += m_dBallisticCoefficient;
+
+				return (strLine);
+				}
+			}
+
+		//============================================================================*
+		// CSVLineHeader Property
+		//============================================================================*
+
+		public static string CSVLineHeader
+			{
+			get
+				{
+				string strLine = "Firearm Type,Cross Use?,Manufacturer,Part Number,Type,Diameter,Length,Weight,Ballistic Coefficient";
+
+				return (strLine);
+				}
+			}
+
+		//============================================================================*
 		// Diameter Property
 		//============================================================================*
 
@@ -267,23 +336,6 @@ namespace ReloadersWorkShop
 			set
 				{
 				m_dDiameter = value;
-				}
-			}
-
-		//============================================================================*
-		// DimensionDecimals Property
-		//============================================================================*
-
-		public static int DimensionDecimals
-			{
-			get
-				{
-				return (sm_nDimensionDecimals);
-				}
-
-			set
-				{
-				sm_nDimensionDecimals = value;
 				}
 			}
 
@@ -344,40 +396,6 @@ namespace ReloadersWorkShop
                 return (sm_dMinBulletWeight);
                 }
             }
-
-        //============================================================================*
-        // MetricDimensions Property
-        //============================================================================*
-
-        public static bool MetricDimensions
-			{
-			get
-				{
-				return (sm_fMetricDimensions);
-				}
-
-			set
-				{
-				sm_fMetricDimensions = value;
-				}
-			}
-
-		//============================================================================*
-		// MetricWeights Property
-		//============================================================================*
-
-		public static bool MetricWeights
-			{
-			get
-				{
-				return (sm_fMetricWeights);
-				}
-
-			set
-				{
-				sm_fMetricWeights = value;
-				}
-			}
 
 		//============================================================================*
 		// PartNumber Property
@@ -487,12 +505,12 @@ namespace ReloadersWorkShop
 			if (Manufacturer != null)
 				strString = Manufacturer.Name;
 
-			string strDiameterFormat = ", {0:F";
-			strDiameterFormat += String.Format("{0:G0}", sm_nDimensionDecimals);
+			string strDiameterFormat = " {0:F";
+			strDiameterFormat += String.Format("{0:G0}", cPreferences.DimensionDecimals);
 			strDiameterFormat += "}";
 
-			string strWeightFormat = ", {0:F";
-			strWeightFormat += String.Format("{0:G0}", sm_nWeightDecimals);
+			string strWeightFormat = " {0:F";
+			strWeightFormat += String.Format("{0:G0}", cPreferences.BulletWeightDecimals);
 			strWeightFormat += "}";
 
 			bool fType = false;
@@ -501,21 +519,23 @@ namespace ReloadersWorkShop
 				strString += String.Format(" {0}", m_strPartNumber);
 			else
 				{
-				strString += String.Format(", {0}", m_strType);
+				strString += String.Format(" {0}", m_strType);
 
 				fType = true;
 				}
 
-			strString += String.Format(strDiameterFormat, sm_fMetricDimensions ?  cConversions.InchesToMillimeters(m_dDiameter) : m_dDiameter);
+			strString += String.Format(strDiameterFormat, cPreferences.MetricDimensions ?  cConversions.InchesToMillimeters(m_dDiameter) : m_dDiameter);
 
-			strString += sm_fMetricDimensions ? " mm" : " in";
+			strString += cDataFiles.MetricString(cDataFiles.eDataType.Dimension);
 
-			strString += String.Format(strWeightFormat, sm_fMetricWeights ? cConversions.GrainsToGrams(m_dWeight) : m_dWeight);
+			strString += String.Format(strWeightFormat, cPreferences.MetricBulletWeights ? cConversions.GrainsToGrams(m_dWeight) : m_dWeight);
 
-			strString += sm_fMetricWeights ? " g" : " gr";
+			strString += cPreferences.MetricBulletWeights ? "g" : "gr";
 
 			if (!fType)
-				strString += String.Format(", {0}", m_strType);
+				strString += String.Format(" {0}", m_strType);
+
+			strString = ToCrossUseString(strString);
 
 			return (strString);
 			}
@@ -532,7 +552,7 @@ namespace ReloadersWorkShop
 				strString = Manufacturer.Name;
 
 			string strWeightFormat = ", {0:F";
-			strWeightFormat += String.Format("{0:G0}", sm_nWeightDecimals);
+			strWeightFormat += String.Format("{0:G0}", cPreferences.BulletWeightDecimals);
 			strWeightFormat += "}";
 
 			bool fType = false;
@@ -546,9 +566,9 @@ namespace ReloadersWorkShop
 				fType = true;
 				}
 
-			strString += String.Format(strWeightFormat, sm_fMetricWeights ? cConversions.GrainsToGrams(m_dWeight) : m_dWeight);
+			strString += String.Format(strWeightFormat, cPreferences.MetricBulletWeights ? cConversions.GrainsToGrams(m_dWeight) : m_dWeight);
 
-			strString += sm_fMetricWeights ? " g" : " gr";
+			strString += cPreferences.MetricBulletWeights ? " g" : " gr";
 
 			if (!fType)
 				strString += String.Format(", {0}", m_strType);
@@ -589,19 +609,30 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// WeightDecimals Property
+		// XMLLine Property
 		//============================================================================*
 
-		public static int WeightDecimals
+		public string XMLLine
 			{
 			get
 				{
-				return (sm_nWeightDecimals);
-				}
+				string strLine = "";
 
-			set
+				return (strLine);
+				}
+			}
+
+		//============================================================================*
+		// XMLLineHeader Property
+		//============================================================================*
+
+		public static string XMLLineHeader
+			{
+			get
 				{
-				sm_nWeightDecimals = value;
+				string strLine = "Firearm Type,Name,Headstamp,Handgun Type,Small Primer,Large Primer,Magnum Primer,Min Bullet Dia.,Max Bullet Dia.,Min Bullet Weight,Max Bullet Weight,Case Trim Length,Max Case Length,Max COAL,Max Neck Dia";
+
+				return (strLine);
 				}
 			}
 		}

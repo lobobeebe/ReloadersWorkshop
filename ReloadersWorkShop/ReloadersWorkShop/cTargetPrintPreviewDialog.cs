@@ -14,6 +14,9 @@ using System.Drawing;
 using System.Drawing.Printing;
 using System.Windows.Forms;
 
+using ReloadersWorkShop.Preferences;
+
+
 //============================================================================*
 // Namespace
 //============================================================================*
@@ -264,12 +267,12 @@ namespace ReloadersWorkShop
 			strText = "Group Size: ";
 
 			string strGroupFormat = "{0:F";
-			strGroupFormat += String.Format("{0:G0}", m_DataFiles.Preferences.GroupDecimals);
+			strGroupFormat += String.Format("{0:G0}", cPreferences.GroupDecimals);
 			strGroupFormat += "}";
 
 			strText += String.Format(strGroupFormat, m_Target.GroupSize);
 
-			strText += String.Format(" {0}   MOA: {1:F3}   Mils: {2:F3}", m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize), m_Target.GroupMOA, m_Target.GroupMils);
+			strText += String.Format(" {0}   MOA: {1:F3}   Mils: {2:F3}", cDataFiles.MetricString(cDataFiles.eDataType.GroupSize), m_Target.GroupMOA, m_Target.GroupMils);
 
 			TextSize = e.Graphics.MeasureString(strText, DataFont);
 
@@ -281,7 +284,7 @@ namespace ReloadersWorkShop
 			// Group Box
 			//----------------------------------------------------------------------------*
 
-			strText = String.Format("Group Box: {0}", m_Target.GroupBoxString(m_DataFiles));
+			strText = String.Format("Group Box: {0}", m_Target.GroupBoxString());
 
 			TextSize = e.Graphics.MeasureString(strText, DataFont);
 
@@ -293,7 +296,7 @@ namespace ReloadersWorkShop
 			// Mean Offset Info
 			//----------------------------------------------------------------------------*
 
-			strText = String.Format("Mean Offset from Aim Point: {0}", m_Target.MeanOffsetString(m_DataFiles));
+			strText = String.Format("Mean Offset from Aim Point: {0}", m_Target.MeanOffsetString());
 
 			TextSize = e.Graphics.MeasureString(strText, DataFont);
 

@@ -15,6 +15,9 @@
 			{
 			if (disposing && (components != null))
 				{
+				m_MousePointer.Dispose();
+				m_Target.Dispose();
+
 				components.Dispose();
 				}
 			base.Dispose(disposing);

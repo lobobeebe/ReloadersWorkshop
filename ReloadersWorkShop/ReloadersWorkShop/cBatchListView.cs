@@ -193,7 +193,7 @@ namespace ReloadersWorkShop
 			if (Batch.Archived)
 				Item.Text += " - Archived";
 
-			if (m_DataFiles.Preferences.TrackInventory && !Batch.TrackInventory)
+			if (cPreferences.TrackInventory && !Batch.TrackInventory)
 				Item.Text += " *";
 
 			Item.Checked = Batch.Checked;
@@ -222,7 +222,7 @@ namespace ReloadersWorkShop
 				}
 
 			string strPowderWeightFormat = "{0:F";
-			strPowderWeightFormat += String.Format("{0:G0}", m_DataFiles.Preferences.PowderWeightDecimals);
+			strPowderWeightFormat += String.Format("{0:G0}", cPreferences.PowderWeightDecimals);
 			strPowderWeightFormat += "}";
 
 			if (fCompressed)
@@ -230,7 +230,7 @@ namespace ReloadersWorkShop
 			 
 			strPowderWeightFormat += " {1} of {2}";
 
-			Item.SubItems.Add(String.Format(strPowderWeightFormat, m_DataFiles.StandardToMetric(Batch.PowderWeight, cDataFiles.eDataType.PowderWeight), m_DataFiles.MetricString(cDataFiles.eDataType.PowderWeight), Batch.Load.Powder.ToString()));
+			Item.SubItems.Add(String.Format(strPowderWeightFormat, cDataFiles.StandardToMetric(Batch.PowderWeight, cDataFiles.eDataType.PowderWeight), cDataFiles.MetricString(cDataFiles.eDataType.PowderWeight), Batch.Load.Powder.ToString()));
 			Item.SubItems.Add(Batch.Load.Primer.ToString());
 			Item.SubItems.Add(Batch.Load.Case.ToShortString());
 

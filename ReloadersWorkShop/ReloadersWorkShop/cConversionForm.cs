@@ -118,19 +118,19 @@ namespace ReloadersWorkShop
 
 		public void OnCentimetersChanged(Object sender, EventArgs e)
 			{
-			double dCentimeters = Math.Round(CentimetersTextBox.Value, 6);
+			double dCentimeters = Math.Round(CentimetersTextBox.Value);
 
 			m_LastMeasurementTextBox = CentimetersTextBox;
 			m_dLastMeasurementValue = CentimetersTextBox.Value;
 
-			InchesTextBox.Value = Math.Round(cConversions.CentimetersToInches(dCentimeters), 6);
-			FeetTextBox.Value = cConversions.CentimetersToFeet(dCentimeters, 6);
-			YardsTextBox.Value = cConversions.CentimetersToYards(dCentimeters, 6);
+			InchesTextBox.Value = Math.Round(cConversions.CentimetersToInches(dCentimeters));
+			FeetTextBox.Value = cConversions.CentimetersToFeet(dCentimeters);
+			YardsTextBox.Value = cConversions.CentimetersToYards(dCentimeters);
 
-			MilesTextBox.Value = cConversions.CentimetersToMiles(dCentimeters, 6);
-			MillimetersTextBox.Value = cConversions.CentimetersToMillimeters(dCentimeters, 6);
-			MetersTextBox.Value = cConversions.CentimetersToMeters(dCentimeters, 6);
-			KilometersTextBox.Value = cConversions.CentimetersToKilometers(dCentimeters, 6);
+			MilesTextBox.Value = cConversions.CentimetersToMiles(dCentimeters);
+			MillimetersTextBox.Value = cConversions.CentimetersToMillimeters(dCentimeters);
+			MetersTextBox.Value = cConversions.CentimetersToMeters(dCentimeters);
+			KilometersTextBox.Value = cConversions.CentimetersToKilometers(dCentimeters);
 
 			SetMOALabels();
 			}
@@ -141,19 +141,19 @@ namespace ReloadersWorkShop
 
 		public void OnFeetChanged(Object sender, EventArgs e)
 			{
-			double dFeet = Math.Round(FeetTextBox.Value, 6);
+			double dFeet = Math.Round(FeetTextBox.Value);
 
 			m_LastMeasurementTextBox = FeetTextBox;
 			m_dLastMeasurementValue = FeetTextBox.Value;
 
-			MillimetersTextBox.Value = cConversions.FeetToMillimeters(dFeet, 6);
-			InchesTextBox.Value = cConversions.FeetToInches(dFeet, 6);
-			YardsTextBox.Value = cConversions.FeetToYards(dFeet, 6);
-			MilesTextBox.Value = cConversions.FeetToMiles(dFeet, 6);
+			MillimetersTextBox.Value = cConversions.FeetToMillimeters(dFeet);
+			InchesTextBox.Value = cConversions.FeetToInches(dFeet);
+			YardsTextBox.Value = cConversions.FeetToYards(dFeet);
+			MilesTextBox.Value = cConversions.FeetToMiles(dFeet);
 
-			CentimetersTextBox.Value = cConversions.FeetToCentimeters(dFeet, 6);
+			CentimetersTextBox.Value = cConversions.FeetToCentimeters(dFeet);
 			MetersTextBox.Value = cConversions.FeetToMeters(dFeet);
-			KilometersTextBox.Value = cConversions.FeetToKilometers(dFeet, 6);
+			KilometersTextBox.Value = cConversions.FeetToKilometers(dFeet);
 
 			SetMOALabels();
 			}
@@ -164,14 +164,14 @@ namespace ReloadersWorkShop
 
 		public void OnFPSChanged(Object sender, EventArgs e)
 			{
-			double dFPS = Math.Round(FPSTextBox.Value, 6);
+			double dFPS = Math.Round(FPSTextBox.Value);
 
 			m_LastVelocityTextBox = FPSTextBox;
 			m_dLastVelocityValue = FPSTextBox.Value;
 
-			MSTextBox.Value = cConversions.FPSToMS(dFPS, 6);
-			MPHTextBox.Value = cConversions.FPSToMPH(dFPS, 6);
-			KPHTextBox.Value = cConversions.FPSToKPH(dFPS, 6);
+			MSTextBox.Value = cConversions.FPSToMS(dFPS);
+			MPHTextBox.Value = cConversions.FPSToMPH(dFPS);
+			KPHTextBox.Value = cConversions.FPSToKPH(dFPS);
 			}
 
 		//============================================================================*
@@ -180,16 +180,16 @@ namespace ReloadersWorkShop
 
 		public void OnGrainsChanged(Object sender, EventArgs e)
 			{
-			double dGrains = Math.Round(GrainsTextBox.Value, 6);
+			double dGrains = Math.Round(GrainsTextBox.Value);
 
 			m_LastWeightTextBox = GrainsTextBox;
 			m_dLastWeightValue = GrainsTextBox.Value;
 
-			MilligramsTextBox.Value = cConversions.GrainsToMilligrams(dGrains, 6);
-			GramsTextBox.Value = cConversions.GrainsToGrams(dGrains, 6);
-			OuncesTextBox.Value = cConversions.GrainsToOunces(dGrains, 6);
-			PoundsTextBox.Value = Math.Round(cConversions.GrainsToPounds(dGrains), 6);
-			KilosTextBox.Value = cConversions.GrainsToKilos(dGrains, 6);
+			MilligramsTextBox.Value = cConversions.GrainsToMilligrams(dGrains);
+			GramsTextBox.Value = cConversions.GrainsToGrams(dGrains);
+			OuncesTextBox.Value = cConversions.GrainsToOunces(dGrains);
+			PoundsTextBox.Value = Math.Round(cConversions.GrainsToPounds(dGrains));
+			KilosTextBox.Value = cConversions.GrainsToKilos(dGrains);
 			}
 
 		//============================================================================*
@@ -198,16 +198,16 @@ namespace ReloadersWorkShop
 
 		public void OnGramsChanged(Object sender, EventArgs e)
 			{
-			double dGrams = Math.Round(GramsTextBox.Value, 6);
+			double dGrams = Math.Round(GramsTextBox.Value);
 
 			m_LastWeightTextBox = GramsTextBox;
 			m_dLastWeightValue = GramsTextBox.Value;
 
-			PoundsTextBox.Value = cConversions.GramsToPounds(dGrams, 6);
-			MilligramsTextBox.Value = cConversions.GramsToMilligrams(dGrams, 6);
-			GrainsTextBox.Value = cConversions.GramsToGrains(dGrams, 6);
-			OuncesTextBox.Value = cConversions.GramsToOunces(dGrams, 6);
-			KilosTextBox.Value = Math.Round(cConversions.GramsToKilos(dGrams), 6);
+			PoundsTextBox.Value = cConversions.GramsToPounds(dGrams);
+			MilligramsTextBox.Value = cConversions.GramsToMilligrams(dGrams);
+			GrainsTextBox.Value = cConversions.GramsToGrains(dGrams);
+			OuncesTextBox.Value = cConversions.GramsToOunces(dGrams);
+			KilosTextBox.Value = Math.Round(cConversions.GramsToKilos(dGrams));
 			}
 
 		//============================================================================*
@@ -216,19 +216,19 @@ namespace ReloadersWorkShop
 
 		public void OnInchesChanged(Object sender, EventArgs e)
 			{
-			double dInches = Math.Round(InchesTextBox.Value, 6);
+			double dInches = Math.Round(InchesTextBox.Value);
 
 			m_LastMeasurementTextBox = InchesTextBox;
 			m_dLastMeasurementValue = InchesTextBox.Value;
 
 			MillimetersTextBox.Value = cConversions.InchesToMillimeters(dInches);
-			FeetTextBox.Value = cConversions.InchesToFeet(dInches, 6);
+			FeetTextBox.Value = cConversions.InchesToFeet(dInches);
 			YardsTextBox.Value = cConversions.InchesToYards(dInches);
-			MilesTextBox.Value = cConversions.InchesToMiles(dInches, 6);
+			MilesTextBox.Value = cConversions.InchesToMiles(dInches);
 
-			CentimetersTextBox.Value = cConversions.InchesToCentimeters(dInches, 6);
-			MetersTextBox.Value = cConversions.InchesToMeters(dInches, 6);
-			KilometersTextBox.Value = cConversions.InchesToKilometers(dInches, 6);
+			CentimetersTextBox.Value = cConversions.InchesToCentimeters(dInches);
+			MetersTextBox.Value = cConversions.InchesToMeters(dInches);
+			KilometersTextBox.Value = cConversions.InchesToKilometers(dInches);
 
 			SetMOALabels();
 			}
@@ -239,19 +239,19 @@ namespace ReloadersWorkShop
 
 		public void OnKilometersChanged(Object sender, EventArgs e)
 			{
-			double dKilometers = Math.Round(KilometersTextBox.Value, 6);
+			double dKilometers = Math.Round(KilometersTextBox.Value);
 
 			m_LastMeasurementTextBox = KilometersTextBox;
 			m_dLastMeasurementValue = KilometersTextBox.Value;
 
-			InchesTextBox.Value = cConversions.KilometersToInches(dKilometers, 6);
-			FeetTextBox.Value = cConversions.KilometersToFeet(dKilometers, 6);
-			YardsTextBox.Value = cConversions.KilometersToYards(dKilometers, 6);
+			InchesTextBox.Value = cConversions.KilometersToInches(dKilometers);
+			FeetTextBox.Value = cConversions.KilometersToFeet(dKilometers);
+			YardsTextBox.Value = cConversions.KilometersToYards(dKilometers);
 
 			MilesTextBox.Value = cConversions.KilometersToMiles(dKilometers);
-			MillimetersTextBox.Value = cConversions.KilometersToMillimeters(dKilometers, 6);
-			CentimetersTextBox.Value = cConversions.KilometersToCentimeters(dKilometers, 6);
-			MetersTextBox.Value = Math.Round(cConversions.KilometersToMeters(dKilometers), 6);
+			MillimetersTextBox.Value = cConversions.KilometersToMillimeters(dKilometers);
+			CentimetersTextBox.Value = cConversions.KilometersToCentimeters(dKilometers);
+			MetersTextBox.Value = Math.Round(cConversions.KilometersToMeters(dKilometers));
 
 			SetMOALabels();
 			}
@@ -262,16 +262,16 @@ namespace ReloadersWorkShop
 
 		public void OnKilosChanged(Object sender, EventArgs e)
 			{
-			double dKilos = Math.Round(KilosTextBox.Value, 6);
+			double dKilos = Math.Round(KilosTextBox.Value);
 
 			m_LastWeightTextBox = KilosTextBox;
 			m_dLastWeightValue = KilosTextBox.Value;
 
-			PoundsTextBox.Value = Math.Round(cConversions.KilosToPounds(dKilos), 6);
-			MilligramsTextBox.Value = cConversions.KilosToMilligrams(dKilos, 6);
-			GrainsTextBox.Value = cConversions.KilosToGrains(dKilos, 6);
-			OuncesTextBox.Value = cConversions.KilosToOunces(dKilos, 6);
-			GramsTextBox.Value = Math.Round(cConversions.KilosToGrams(dKilos), 6);
+			PoundsTextBox.Value = Math.Round(cConversions.KilosToPounds(dKilos));
+			MilligramsTextBox.Value = cConversions.KilosToMilligrams(dKilos);
+			GrainsTextBox.Value = cConversions.KilosToGrains(dKilos);
+			OuncesTextBox.Value = cConversions.KilosToOunces(dKilos);
+			GramsTextBox.Value = Math.Round(cConversions.KilosToGrams(dKilos));
 			}
 
 		//============================================================================*
@@ -280,14 +280,14 @@ namespace ReloadersWorkShop
 
 		public void OnKPHChanged(Object sender, EventArgs e)
 			{
-			double dKPH = Math.Round(KPHTextBox.Value, 6);
+			double dKPH = Math.Round(KPHTextBox.Value);
 
 			m_LastVelocityTextBox = KPHTextBox;
 			m_dLastVelocityValue = KPHTextBox.Value;
 
-			FPSTextBox.Value = cConversions.MPHToFPS(dKPH, 6);
-			MSTextBox.Value = cConversions.MPHToMS(dKPH, 6);
-			MPHTextBox.Value = cConversions.KPHToMPH(dKPH, 6);
+			FPSTextBox.Value = cConversions.MPHToFPS(dKPH);
+			MSTextBox.Value = cConversions.MPHToMS(dKPH);
+			MPHTextBox.Value = cConversions.KPHToMPH(dKPH);
 			}
 
 		//============================================================================*
@@ -296,19 +296,19 @@ namespace ReloadersWorkShop
 
 		public void OnMetersChanged(Object sender, EventArgs e)
 			{
-			double dMeters = Math.Round(MetersTextBox.Value, 6);
+			double dMeters = Math.Round(MetersTextBox.Value);
 
 			m_LastMeasurementTextBox = MetersTextBox;
 			m_dLastMeasurementValue = MetersTextBox.Value;
 
-			InchesTextBox.Value = cConversions.MetersToInches(dMeters, 6);
+			InchesTextBox.Value = cConversions.MetersToInches(dMeters);
 			FeetTextBox.Value = cConversions.MetersToFeet(dMeters);
-			YardsTextBox.Value = cConversions.MetersToYards(dMeters, 6);
+			YardsTextBox.Value = cConversions.MetersToYards(dMeters);
 
-			MilesTextBox.Value = cConversions.MetersToMiles(dMeters, 6);
-			MillimetersTextBox.Value = cConversions.MetersToMillimeters(dMeters, 6);
-			CentimetersTextBox.Value = cConversions.MetersToCentimeters(dMeters, 6);
-			KilometersTextBox.Value = Math.Round(cConversions.MetersToKilometers(dMeters), 6);
+			MilesTextBox.Value = cConversions.MetersToMiles(dMeters);
+			MillimetersTextBox.Value = cConversions.MetersToMillimeters(dMeters);
+			CentimetersTextBox.Value = cConversions.MetersToCentimeters(dMeters);
+			KilometersTextBox.Value = Math.Round(cConversions.MetersToKilometers(dMeters));
 
 			SetMOALabels();
 			}
@@ -319,19 +319,19 @@ namespace ReloadersWorkShop
 
 		public void OnMilesChanged(Object sender, EventArgs e)
 			{
-			double dMiles = Math.Round(MilesTextBox.Value, 6);
+			double dMiles = Math.Round(MilesTextBox.Value);
 
 			m_LastMeasurementTextBox = MilesTextBox;
 			m_dLastMeasurementValue = MilesTextBox.Value;
 
-			InchesTextBox.Value = cConversions.MilesToInches(dMiles, 6);
-			FeetTextBox.Value = cConversions.MilesToFeet(dMiles, 6);
-			YardsTextBox.Value = cConversions.MilesToYards(dMiles, 6);
+			InchesTextBox.Value = cConversions.MilesToInches(dMiles);
+			FeetTextBox.Value = cConversions.MilesToFeet(dMiles);
+			YardsTextBox.Value = cConversions.MilesToYards(dMiles);
 
-			MillimetersTextBox.Value = cConversions.MilesToMillimeters(dMiles, 6);
-			CentimetersTextBox.Value = cConversions.MilesToCentimeters(dMiles, 6);
-			MetersTextBox.Value = cConversions.MilesToMeters(dMiles, 6);
-			KilometersTextBox.Value = cConversions.MilesToKilometers(dMiles, 6);
+			MillimetersTextBox.Value = cConversions.MilesToMillimeters(dMiles);
+			CentimetersTextBox.Value = cConversions.MilesToCentimeters(dMiles);
+			MetersTextBox.Value = cConversions.MilesToMeters(dMiles);
+			KilometersTextBox.Value = cConversions.MilesToKilometers(dMiles);
 
 			SetMOALabels();
 			}
@@ -347,11 +347,11 @@ namespace ReloadersWorkShop
 			m_LastWeightTextBox = MilligramsTextBox;
 			m_dLastWeightValue = MilligramsTextBox.Value;
 
-			PoundsTextBox.Value = cConversions.MilligramsToPounds(dMilligrams, 6);
-			GramsTextBox.Value = cConversions.MilligramsToGrams(dMilligrams, 6);
-			GrainsTextBox.Value = cConversions.MilligramsToGrains(dMilligrams, 6);
-			OuncesTextBox.Value = cConversions.MilligramsToOunces(dMilligrams, 6);
-			KilosTextBox.Value = cConversions.MilligramsToKilos(dMilligrams, 6);
+			PoundsTextBox.Value = cConversions.MilligramsToPounds(dMilligrams);
+			GramsTextBox.Value = cConversions.MilligramsToGrams(dMilligrams);
+			GrainsTextBox.Value = cConversions.MilligramsToGrains(dMilligrams);
+			OuncesTextBox.Value = cConversions.MilligramsToOunces(dMilligrams);
+			KilosTextBox.Value = cConversions.MilligramsToKilos(dMilligrams);
 			}
 
 		//============================================================================*
@@ -360,19 +360,19 @@ namespace ReloadersWorkShop
 
 		public void OnMillimetersChanged(Object sender, EventArgs e)
 			{
-			double dMillimeters = Math.Round(MillimetersTextBox.Value, 6);
+			double dMillimeters = Math.Round(MillimetersTextBox.Value);
 
 			m_LastMeasurementTextBox = MillimetersTextBox;
 			m_dLastMeasurementValue = MillimetersTextBox.Value;
 
 			InchesTextBox.Value = cConversions.MillimetersToInches(dMillimeters);
-			FeetTextBox.Value = cConversions.MillimetersToFeet(dMillimeters, 6);
-			YardsTextBox.Value = cConversions.MillimetersToYards(dMillimeters, 6);
+			FeetTextBox.Value = cConversions.MillimetersToFeet(dMillimeters);
+			YardsTextBox.Value = cConversions.MillimetersToYards(dMillimeters);
 
-			MilesTextBox.Value = cConversions.MillimetersToMiles(dMillimeters, 6);
-			CentimetersTextBox.Value = cConversions.MillimetersToCentimeters(dMillimeters, 6);
-			MetersTextBox.Value = Math.Round(cConversions.MillimetersToMeters(dMillimeters), 6);
-			KilometersTextBox.Value = cConversions.MillimetersToKilometers(dMillimeters, 6);
+			MilesTextBox.Value = cConversions.MillimetersToMiles(dMillimeters);
+			CentimetersTextBox.Value = cConversions.MillimetersToCentimeters(dMillimeters);
+			MetersTextBox.Value = Math.Round(cConversions.MillimetersToMeters(dMillimeters));
+			KilometersTextBox.Value = cConversions.MillimetersToKilometers(dMillimeters);
 
 			SetMOALabels();
 			}
@@ -383,12 +383,12 @@ namespace ReloadersWorkShop
 
 		public void OnMilsChanged(Object sender, EventArgs e)
 			{
-			double dMils = Math.Round(MilsTextBox.Value, 6);
+			double dMils = Math.Round(MilsTextBox.Value);
 
 			m_LastAngleTextBox = MilsTextBox;
 			m_dLastAngleValue = MilsTextBox.Value;
 
-			MOATextBox.Value = cConversions.MilsToMOA(dMils, 6);
+			MOATextBox.Value = cConversions.MilsToMOA(dMils);
 
 			SetMOALabels();
 			}
@@ -399,12 +399,12 @@ namespace ReloadersWorkShop
 
 		public void OnMOAChanged(Object sender, EventArgs e)
 			{
-			double dMOA = Math.Round(MOATextBox.Value, 6);
+			double dMOA = Math.Round(MOATextBox.Value);
 
 			m_LastAngleTextBox = MOATextBox;
 			m_dLastAngleValue = MOATextBox.Value;
 
-			MilsTextBox.Value = cConversions.MOAToMils(dMOA, 6);
+			MilsTextBox.Value = cConversions.MOAToMils(dMOA);
 
 			SetMOALabels();
 			}
@@ -415,14 +415,14 @@ namespace ReloadersWorkShop
 
 		public void OnMPHChanged(Object sender, EventArgs e)
 			{
-			double dMPH = Math.Round(MPHTextBox.Value, 6);
+			double dMPH = Math.Round(MPHTextBox.Value);
 
 			m_LastVelocityTextBox = MPHTextBox;
 			m_dLastVelocityValue = MPHTextBox.Value;
 
-			FPSTextBox.Value = cConversions.MPHToFPS(dMPH, 6);
-			MSTextBox.Value = cConversions.MPHToMS(dMPH, 6);
-			KPHTextBox.Value = cConversions.MPHToKPH(dMPH, 6);
+			FPSTextBox.Value = cConversions.MPHToFPS(dMPH);
+			MSTextBox.Value = cConversions.MPHToMS(dMPH);
+			KPHTextBox.Value = cConversions.MPHToKPH(dMPH);
 			}
 
 		//============================================================================*
@@ -431,14 +431,14 @@ namespace ReloadersWorkShop
 
 		public void OnMSChanged(Object sender, EventArgs e)
 			{
-			double dMS = Math.Round(MSTextBox.Value, 6);
+			double dMS = Math.Round(MSTextBox.Value);
 
 			m_LastVelocityTextBox = MSTextBox;
 			m_dLastVelocityValue = MSTextBox.Value;
 
-			FPSTextBox.Value = cConversions.MSToFPS(dMS, 6);
-			MPHTextBox.Value = cConversions.MSToMPH(dMS, 6);
-			KPHTextBox.Value = cConversions.MSToKPH(dMS, 6);
+			FPSTextBox.Value = cConversions.MSToFPS(dMS);
+			MPHTextBox.Value = cConversions.MSToMPH(dMS);
+			KPHTextBox.Value = cConversions.MSToKPH(dMS);
 			}
 
 		//============================================================================*
@@ -447,16 +447,16 @@ namespace ReloadersWorkShop
 
 		public void OnOuncesChanged(Object sender, EventArgs e)
 			{
-			double dOunces = Math.Round(OuncesTextBox.Value, 6);
+			double dOunces = Math.Round(OuncesTextBox.Value);
 
 			m_LastWeightTextBox = OuncesTextBox;
 			m_dLastWeightValue = OuncesTextBox.Value;
 
-			MilligramsTextBox.Value = cConversions.OuncesToMilligrams(dOunces, 6);
-			GramsTextBox.Value = cConversions.OuncesToGrams(dOunces, 6);
-			GrainsTextBox.Value = cConversions.OuncesToGrains(dOunces, 6);
-			PoundsTextBox.Value = cConversions.OuncesToPounds(dOunces, 6);
-			KilosTextBox.Value = cConversions.OuncesToKilos(dOunces, 6);
+			MilligramsTextBox.Value = cConversions.OuncesToMilligrams(dOunces);
+			GramsTextBox.Value = cConversions.OuncesToGrams(dOunces);
+			GrainsTextBox.Value = cConversions.OuncesToGrains(dOunces);
+			PoundsTextBox.Value = cConversions.OuncesToPounds(dOunces);
+			KilosTextBox.Value = cConversions.OuncesToKilos(dOunces);
 			}
 
 		//============================================================================*
@@ -465,16 +465,16 @@ namespace ReloadersWorkShop
 
 		public void OnPoundsChanged(Object sender, EventArgs e)
 			{
-			double dPounds = Math.Round(PoundsTextBox.Value, 6);
+			double dPounds = Math.Round(PoundsTextBox.Value);
 
 			m_LastWeightTextBox = PoundsTextBox;
 			m_dLastWeightValue = PoundsTextBox.Value;
 
-			MilligramsTextBox.Value = cConversions.PoundsToMilligrams(dPounds, 6);
-			GramsTextBox.Value = cConversions.PoundsToGrams(dPounds, 6);
-			GrainsTextBox.Value = Math.Round(cConversions.PoundsToGrains(dPounds), 6);
-			OuncesTextBox.Value = cConversions.PoundsToOunces(dPounds, 6);
-			KilosTextBox.Value = Math.Round(cConversions.PoundsToKilos(dPounds), 6);
+			MilligramsTextBox.Value = cConversions.PoundsToMilligrams(dPounds);
+			GramsTextBox.Value = cConversions.PoundsToGrams(dPounds);
+			GrainsTextBox.Value = Math.Round(cConversions.PoundsToGrains(dPounds));
+			OuncesTextBox.Value = cConversions.PoundsToOunces(dPounds);
+			KilosTextBox.Value = Math.Round(cConversions.PoundsToKilos(dPounds));
 			}
 
 		//============================================================================*
@@ -506,19 +506,19 @@ namespace ReloadersWorkShop
 
 		public void OnYardsChanged(Object sender, EventArgs e)
 			{
-			double dYards = Math.Round(YardsTextBox.Value, 6);
+			double dYards = Math.Round(YardsTextBox.Value);
 
 			m_LastMeasurementTextBox = YardsTextBox;
 			m_dLastMeasurementValue = YardsTextBox.Value;
 
-			InchesTextBox.Value = cConversions.YardsToInches(dYards, 6);
-			FeetTextBox.Value = cConversions.YardsToFeet(dYards, 6);
-			MilesTextBox.Value = cConversions.YardsToMiles(dYards, 6);
+			InchesTextBox.Value = cConversions.YardsToInches(dYards);
+			FeetTextBox.Value = cConversions.YardsToFeet(dYards);
+			MilesTextBox.Value = cConversions.YardsToMiles(dYards);
 
-			MillimetersTextBox.Value = cConversions.YardsToMillimeters(dYards, 6);
-			CentimetersTextBox.Value = cConversions.YardsToCentimeters(dYards, 6);
-			MetersTextBox.Value = cConversions.YardsToMeters(dYards, 6);
-			KilometersTextBox.Value = cConversions.YardsToKilometers(dYards, 6);
+			MillimetersTextBox.Value = cConversions.YardsToMillimeters(dYards);
+			CentimetersTextBox.Value = cConversions.YardsToCentimeters(dYards);
+			MetersTextBox.Value = cConversions.YardsToMeters(dYards);
+			KilometersTextBox.Value = cConversions.YardsToKilometers(dYards);
 
 			SetMOALabels();
 			}
@@ -609,8 +609,8 @@ namespace ReloadersWorkShop
 			strFormat += String.Format("{0:G0}", PrecisionTextBox.Value);
 			strFormat += "} {3}";
 
-			AtYardsLabel.Text = string.Format(strFormat, cConversions.MOAToInches(MOATextBox.Value, YardsTextBox.Value, m_DataFiles.Preferences.ConversionDecimals), "in", YardsTextBox.Value, "Yards");
-			AtMetersLabel.Text = string.Format(strFormat, cConversions.MOAToCentimeters(MOATextBox.Value, MetersTextBox.Value, m_DataFiles.Preferences.ConversionDecimals), "cm", MetersTextBox.Value, "Meters");
+			AtYardsLabel.Text = string.Format(strFormat, cConversions.MOAToInches(MOATextBox.Value, YardsTextBox.Value), "in", YardsTextBox.Value, "Yards");
+			AtMetersLabel.Text = string.Format(strFormat, cConversions.MOAToCentimeters(MOATextBox.Value, MetersTextBox.Value), "cm", MetersTextBox.Value, "Meters");
 
 			AtMetersLabel.Visible = true;
 			AtYardsLabel.Visible = true;

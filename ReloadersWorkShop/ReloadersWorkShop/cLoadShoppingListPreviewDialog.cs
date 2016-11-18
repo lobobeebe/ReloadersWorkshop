@@ -14,6 +14,8 @@ using System.Drawing;
 using System.Drawing.Printing;
 using System.Windows.Forms;
 
+using ReloadersWorkShop.Preferences;
+
 //============================================================================*
 // Namespace
 //============================================================================*
@@ -103,7 +105,7 @@ namespace ReloadersWorkShop
 			// Set can weight for powder list header
 			//----------------------------------------------------------------------------*
 
-			m_PowderColumns[3].Name += String.Format(" ({0}s)", m_DataFiles.MetricString(cDataFiles.eDataType.CanWeight));
+			m_PowderColumns[3].Name += String.Format(" ({0}s)", cDataFiles.MetricString(cDataFiles.eDataType.CanWeight));
 
 			//----------------------------------------------------------------------------*
 			// Gather the list of supplies needed for the checked loads
@@ -333,7 +335,7 @@ namespace ReloadersWorkShop
 
 						nY += TextSize.Height;
 */
-						if (m_DataFiles.Preferences.TrackInventory)
+						if (cPreferences.TrackInventory)
 							{
 							strText = m_DataFiles.CostText;
 
@@ -554,7 +556,7 @@ namespace ReloadersWorkShop
 
 							double dQuantity = m_DataFiles.SupplyQuantity(Supply);
 
-							if (m_DataFiles.Preferences.TrackInventory)
+							if (cPreferences.TrackInventory)
 								{
 								if (dQuantity != 0.0)
 									strText = String.Format("{0:G0}", dQuantity);
@@ -632,9 +634,9 @@ namespace ReloadersWorkShop
 							// Qty on Hand
 							//----------------------------------------------------------------------------*
 
-							dQuantity = m_DataFiles.StandardToMetric(m_DataFiles.SupplyQuantity(Powder) / 7000.0, cDataFiles.eDataType.CanWeight);
+							dQuantity = cDataFiles.StandardToMetric(m_DataFiles.SupplyQuantity(Powder) / 7000.0, cDataFiles.eDataType.CanWeight);
 
-							if (m_DataFiles.Preferences.TrackInventory)
+							if (cPreferences.TrackInventory)
 								{
 								if (dQuantity != 0.0)
 									strText = String.Format("{0:F3}", dQuantity);
@@ -655,7 +657,7 @@ namespace ReloadersWorkShop
 							//----------------------------------------------------------------------------*
 
 							if (dQuantity != 0.0)
-								strText = String.Format("{0}{1:F2}/{2}", m_DataFiles.Preferences.Currency, m_DataFiles.StandardToMetric(m_DataFiles.SupplyCostEach(Powder) * 7000.0, cDataFiles.eDataType.CanWeight), m_DataFiles.MetricString(cDataFiles.eDataType.CanWeight));
+								strText = String.Format("{0}{1:F2}/{2}", m_DataFiles.Preferences.Currency, cDataFiles.StandardToMetric(m_DataFiles.SupplyCostEach(Powder) * 7000.0, cDataFiles.eDataType.CanWeight), cDataFiles.MetricString(cDataFiles.eDataType.CanWeight));
 							else
 								strText = "-";
 
@@ -718,7 +720,7 @@ namespace ReloadersWorkShop
 
 							dQuantity = m_DataFiles.SupplyQuantity(Supply);
 
-							if (m_DataFiles.Preferences.TrackInventory)
+							if (cPreferences.TrackInventory)
 								{
 								if (dQuantity != 0.0)
 									strText = String.Format("{0:G0}", dQuantity);
@@ -803,7 +805,7 @@ namespace ReloadersWorkShop
 
 							dQuantity = m_DataFiles.SupplyQuantity(Supply);
 
-							if (m_DataFiles.Preferences.TrackInventory)
+							if (cPreferences.TrackInventory)
 								{
 								if (dQuantity != 0.0)
 									strText = String.Format("{0:G0}", dQuantity);

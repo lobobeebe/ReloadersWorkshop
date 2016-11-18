@@ -467,55 +467,7 @@ namespace ReloadersWorkShop
 					// Update the current Firearm record
 					//----------------------------------------------------------------------------*
 
-					CheckFirearm.FirearmType = NewFirearm.FirearmType;
-					CheckFirearm.Manufacturer = NewFirearm.Manufacturer;
-					CheckFirearm.Model = NewFirearm.Model;
-					CheckFirearm.SerialNumber = NewFirearm.SerialNumber;
-
-					CheckFirearm.BarrelLength = NewFirearm.BarrelLength;
-					CheckFirearm.Twist = NewFirearm.Twist;
-					CheckFirearm.SightHeight = NewFirearm.SightHeight;
-					CheckFirearm.Scoped = NewFirearm.Scoped;
-					CheckFirearm.ScopeClick = NewFirearm.ScopeClick;
-					CheckFirearm.TurretType = NewFirearm.TurretType;
-					CheckFirearm.ZeroRange = NewFirearm.ZeroRange;
-					CheckFirearm.HeadSpace = NewFirearm.HeadSpace;
-					CheckFirearm.Neck = NewFirearm.Neck;
-					CheckFirearm.CaliberList = NewFirearm.CaliberList;
-					CheckFirearm.FirearmBulletList = NewFirearm.FirearmBulletList;
-
-					// Details
-
-					CheckFirearm.ImageFile = NewFirearm.ImageFile;
-
-					CheckFirearm.Source = NewFirearm.Source;
-					CheckFirearm.PurchaseDate = NewFirearm.PurchaseDate;
-					CheckFirearm.Price = NewFirearm.Price;
-
-					CheckFirearm.ReceiverFinish = NewFirearm.ReceiverFinish;
-					CheckFirearm.BarrelFinish = NewFirearm.BarrelFinish;
-
-					CheckFirearm.Action = NewFirearm.Action;
-					CheckFirearm.Type = NewFirearm.Type;
-					CheckFirearm.Hammer = NewFirearm.Hammer;
-
-					CheckFirearm.ScopeManufacturer = NewFirearm.ScopeManufacturer;
-					CheckFirearm.ScopeModel = NewFirearm.ScopeModel;
-					CheckFirearm.ScopeObjective = NewFirearm.ScopeObjective;
-					CheckFirearm.ScopePower = NewFirearm.ScopePower;
-
-					CheckFirearm.StockManufacturer = NewFirearm.StockManufacturer;
-					CheckFirearm.StockModel = NewFirearm.StockModel;
-					CheckFirearm.StockFinish = NewFirearm.StockFinish;
-
-					CheckFirearm.TriggerManufacturer = NewFirearm.TriggerManufacturer;
-					CheckFirearm.TriggerModel = NewFirearm.TriggerModel;
-					CheckFirearm.TriggerPull = NewFirearm.TriggerPull;
-
-					CheckFirearm.Magazine = NewFirearm.Magazine;
-					CheckFirearm.MagazineCapacity = NewFirearm.MagazineCapacity;
-
-					CheckFirearm.Notes = NewFirearm.Notes;
+					CheckFirearm.Copy(NewFirearm);
 
 					//----------------------------------------------------------------------------*
 					// Update the Firearm on the Firearm tab

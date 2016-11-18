@@ -303,7 +303,7 @@ namespace ReloadersWorkShop
 			// Set Labels for inventory tracking if needed
 			//----------------------------------------------------------------------------*
 
-			if (m_DataFiles.Preferences.TrackInventory)
+			if (cPreferences.TrackInventory)
 				{
 				QuantityLabel.Text = "Qty on Hand:";
 
@@ -411,7 +411,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_Ammo.BulletDiameter = m_DataFiles.MetricToStandard(BulletDiameterTextBox.Value, cDataFiles.eDataType.Dimension);
+			m_Ammo.BulletDiameter = cDataFiles.MetricToStandard(BulletDiameterTextBox.Value, cDataFiles.eDataType.Dimension);
 
 			SetSectionalDensity();
 
@@ -712,7 +712,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_Ammo.BulletWeight = m_DataFiles.MetricToStandard(BulletWeightTextBox.Value, cDataFiles.eDataType.BulletWeight);
+			m_Ammo.BulletWeight = cDataFiles.MetricToStandard(BulletWeightTextBox.Value, cDataFiles.eDataType.BulletWeight);
 
 			SetSectionalDensity();
 
@@ -767,8 +767,8 @@ namespace ReloadersWorkShop
 			if (m_Ammo.BulletDiameter == 0.0 && m_Ammo.Caliber != null)
 				m_Ammo.BulletDiameter = m_Ammo.Caliber.MinBulletDiameter;
 
-			BulletDiameterTextBox.Value = m_DataFiles.StandardToMetric(m_Ammo.BulletDiameter, cDataFiles.eDataType.Dimension);
-			BulletWeightTextBox.Value = m_DataFiles.StandardToMetric(m_Ammo.BulletWeight, cDataFiles.eDataType.BulletWeight);
+			BulletDiameterTextBox.Value = cDataFiles.StandardToMetric(m_Ammo.BulletDiameter, cDataFiles.eDataType.Dimension);
+			BulletWeightTextBox.Value = cDataFiles.StandardToMetric(m_Ammo.BulletWeight, cDataFiles.eDataType.BulletWeight);
 			BallisticCoefficientTextBox.Value = m_Ammo.BallisticCoefficient;
 
 			SetSectionalDensity();
@@ -849,7 +849,7 @@ namespace ReloadersWorkShop
 
 			CostTextBox.Value = m_DataFiles.SupplyCost(m_Ammo);
 
-			if (m_DataFiles.Preferences.TrackInventory)
+			if (cPreferences.TrackInventory)
 				CostTextBox.Text = String.Format("{0}{1:F2}", m_DataFiles.Preferences.Currency, m_DataFiles.SupplyCost(m_Ammo));
 
 			SetCostEach();
@@ -944,17 +944,17 @@ namespace ReloadersWorkShop
 			// Set metric/standard labels
 			//----------------------------------------------------------------------------*
 
-			m_DataFiles.SetMetricLabel(BulletWeightMeasurementLabel, cDataFiles.eDataType.BulletWeight);
+			cDataFiles.SetMetricLabel(BulletWeightMeasurementLabel, cDataFiles.eDataType.BulletWeight);
 
-			m_DataFiles.SetMetricLabel(BulletDiameterMeasurementLabel, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetMetricLabel(BulletDiameterMeasurementLabel, cDataFiles.eDataType.Dimension);
 
 			//----------------------------------------------------------------------------*
 			// Set Text Box Parameters
 			//----------------------------------------------------------------------------*
 
-			m_DataFiles.SetInputParameters(BulletDiameterTextBox, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetInputParameters(BulletDiameterTextBox, cDataFiles.eDataType.Dimension);
 
-			m_DataFiles.SetInputParameters(BulletWeightTextBox, cDataFiles.eDataType.BulletWeight);
+			cDataFiles.SetInputParameters(BulletWeightTextBox, cDataFiles.eDataType.BulletWeight);
 			}
 
 		//============================================================================*
@@ -968,11 +968,11 @@ namespace ReloadersWorkShop
 
 			if (m_Ammo.Caliber != null)
 				{
-				BulletWeightTextBox.MinValue = m_DataFiles.StandardToMetric(m_Ammo.Caliber.MinBulletWeight, cDataFiles.eDataType.BulletWeight);
-				BulletWeightTextBox.MaxValue = m_DataFiles.StandardToMetric(m_Ammo.Caliber.MaxBulletWeight, cDataFiles.eDataType.BulletWeight);
+				BulletWeightTextBox.MinValue = cDataFiles.StandardToMetric(m_Ammo.Caliber.MinBulletWeight, cDataFiles.eDataType.BulletWeight);
+				BulletWeightTextBox.MaxValue = cDataFiles.StandardToMetric(m_Ammo.Caliber.MaxBulletWeight, cDataFiles.eDataType.BulletWeight);
 
-				BulletDiameterTextBox.MinValue = m_DataFiles.StandardToMetric(m_Ammo.Caliber.MinBulletDiameter, cDataFiles.eDataType.Dimension);
-				BulletDiameterTextBox.MaxValue = m_DataFiles.StandardToMetric(m_Ammo.Caliber.MaxBulletDiameter, cDataFiles.eDataType.Dimension);
+				BulletDiameterTextBox.MinValue = cDataFiles.StandardToMetric(m_Ammo.Caliber.MinBulletDiameter, cDataFiles.eDataType.Dimension);
+				BulletDiameterTextBox.MaxValue = cDataFiles.StandardToMetric(m_Ammo.Caliber.MaxBulletDiameter, cDataFiles.eDataType.Dimension);
 				}
 			}
 

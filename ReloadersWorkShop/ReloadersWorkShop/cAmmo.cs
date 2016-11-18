@@ -242,6 +242,64 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// CSVHeader Property
+		//============================================================================*
+
+		public static string CSVHeader
+			{
+			get
+				{
+				return ("Ammunition");
+				}
+			}
+
+		//============================================================================*
+		// CSVLine Property
+		//============================================================================*
+
+		public string CSVLine
+			{
+			get
+				{
+				string strLine = "";
+
+				strLine += Manufacturer.Name;
+				strLine += ",";
+				strLine += m_strPartNumber;
+				strLine += ",";
+				strLine += m_strType;
+				strLine += ",";
+
+				strLine += m_nBatchID;
+				strLine += ",";
+				strLine += m_fReload ? "Yes," : "-,";
+
+				strLine += m_Caliber.Name;
+				strLine += ",";
+
+				strLine += m_dBulletDiameter;
+				strLine += ",";
+				strLine += m_dBulletWeight;
+				strLine += ",";
+				strLine += m_dBallisticCoefficient;
+
+				return (strLine);
+				}
+			}
+
+		//============================================================================*
+		// CSVLineHeader Property
+		//============================================================================*
+
+		public static string CSVLineHeader
+			{
+			get
+				{
+				return ("Manufacturer,Part Number,Type,Batch ID,Reload?,Caliber,Bullet Diameter,Bullet Weight,Ballistic Coefficient");
+				}
+			}
+
+		//============================================================================*
 		// PartNumber Property
 		//============================================================================*
 
@@ -384,6 +442,46 @@ namespace ReloadersWorkShop
 				return (String.Format("{0} - {1}", m_strPartNumber, m_Caliber.ToString()));
 
 			return (String.Format("{0} #{1}, {2} - {3}", Manufacturer != null ? Manufacturer.Name : "Batch Editor", m_strPartNumber, m_strType, m_Caliber.ToString()));
+			}
+
+		//============================================================================*
+		// XMLHeader Property
+		//============================================================================*
+
+		public static string XMLHeader
+			{
+			get
+				{
+				return ("Ammunition");
+				}
+			}
+
+		//============================================================================*
+		// XMLLine Property
+		//============================================================================*
+
+		public string XMLLine
+			{
+			get
+				{
+				string strLine = "";
+
+				return (strLine);
+				}
+			}
+
+		//============================================================================*
+		// XMLLineHeader Property
+		//============================================================================*
+
+		public static string XMLLineHeader
+			{
+			get
+				{
+				string strLine = "";
+
+				return (strLine);
+				}
 			}
 		}
 	}

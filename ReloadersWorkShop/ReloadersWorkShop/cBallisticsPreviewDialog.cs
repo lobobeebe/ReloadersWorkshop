@@ -15,6 +15,7 @@ using System.Drawing.Printing;
 using System.Windows.Forms;
 
 using ReloadersWorkShop.Ballistics;
+using ReloadersWorkShop.Preferences;
 
 //============================================================================*
 // Namespace
@@ -174,19 +175,19 @@ namespace ReloadersWorkShop
 			float nX = PageRect.Left;
 
 			string strDimensionFormat = "{0:F";
-			strDimensionFormat += String.Format("{0:G0}", m_DataFiles.Preferences.DimensionDecimals);
+			strDimensionFormat += String.Format("{0:G0}", cPreferences.DimensionDecimals);
 			strDimensionFormat += "} ";
-			strDimensionFormat += m_DataFiles.MetricString(cDataFiles.eDataType.Dimension);
+			strDimensionFormat += cDataFiles.MetricString(cDataFiles.eDataType.Dimension);
 
 			string strFirearmFormat = "{0:F";
-			strFirearmFormat += String.Format("{0:G0}", m_DataFiles.Preferences.FirearmDecimals);
+			strFirearmFormat += String.Format("{0:G0}", cPreferences.FirearmDecimals);
 			strFirearmFormat += "} ";
-			strFirearmFormat += m_DataFiles.MetricString(cDataFiles.eDataType.Firearm);
+			strFirearmFormat += cDataFiles.MetricString(cDataFiles.eDataType.Firearm);
 
 			string strBulletWeightFormat = "{0:F";
-			strBulletWeightFormat += String.Format("{0:G0}", m_DataFiles.Preferences.BulletWeightDecimals);
+			strBulletWeightFormat += String.Format("{0:G0}", cPreferences.BulletWeightDecimals);
 			strBulletWeightFormat += "} ";
-			strBulletWeightFormat += m_DataFiles.MetricString(cDataFiles.eDataType.BulletWeight);
+			strBulletWeightFormat += cDataFiles.MetricString(cDataFiles.eDataType.BulletWeight);
 
 			//----------------------------------------------------------------------------*
 			// Draw the page header
@@ -282,7 +283,7 @@ namespace ReloadersWorkShop
 
 			e.Graphics.DrawString(strText, HeaderFont, Brushes.Black, nInputX - TextSize.Width, nInputY);
 
-			strText = String.Format("{0:F0} {1}", m_DataFiles.StandardToMetric(m_Ballistics.ZeroRange, cDataFiles.eDataType.Range), m_DataFiles.MetricString(cDataFiles.eDataType.Range));
+			strText = String.Format("{0:F0} {1}", cDataFiles.StandardToMetric(m_Ballistics.ZeroRange, cDataFiles.eDataType.Range), cDataFiles.MetricString(cDataFiles.eDataType.Range));
 
 			TextSize = e.Graphics.MeasureString(strText, DataFont);
 
@@ -301,7 +302,7 @@ namespace ReloadersWorkShop
 
 			e.Graphics.DrawString(strText, HeaderFont, Brushes.Black, nInputX - TextSize.Width, nInputY);
 
-			strText = String.Format("{0:G0} {1}", m_DataFiles.StandardToMetric(m_Ballistics.WindSpeed, cDataFiles.eDataType.Speed), m_DataFiles.MetricString(cDataFiles.eDataType.Speed));
+			strText = String.Format("{0:G0} {1}", cDataFiles.StandardToMetric(m_Ballistics.WindSpeed, cDataFiles.eDataType.Speed), cDataFiles.MetricString(cDataFiles.eDataType.Speed));
 
 			TextSize = e.Graphics.MeasureString(strText, DataFont);
 
@@ -320,7 +321,7 @@ namespace ReloadersWorkShop
 
 			e.Graphics.DrawString(strText, HeaderFont, Brushes.Black, nInputX - TextSize.Width, nInputY);
 
-			strText = String.Format("{0:G0} {1}", m_DataFiles.StandardToMetric(m_Ballistics.Temperature, cDataFiles.eDataType.Temperature), m_DataFiles.MetricString(cDataFiles.eDataType.Temperature));
+			strText = String.Format("{0:G0} {1}", cDataFiles.StandardToMetric(m_Ballistics.Temperature, cDataFiles.eDataType.Temperature), cDataFiles.MetricString(cDataFiles.eDataType.Temperature));
 
 			TextSize = e.Graphics.MeasureString(strText, DataFont);
 
@@ -339,7 +340,7 @@ namespace ReloadersWorkShop
 
 			e.Graphics.DrawString(strText, HeaderFont, Brushes.Black, nInputX - TextSize.Width, nInputY);
 
-			strText = String.Format("{0:G0} {1}", m_DataFiles.StandardToMetric(m_Ballistics.MinRange, cDataFiles.eDataType.Range), m_DataFiles.MetricString(cDataFiles.eDataType.Range));
+			strText = String.Format("{0:G0} {1}", cDataFiles.StandardToMetric(m_Ballistics.MinRange, cDataFiles.eDataType.Range), cDataFiles.MetricString(cDataFiles.eDataType.Range));
 
 			TextSize = e.Graphics.MeasureString(strText, DataFont);
 
@@ -359,7 +360,7 @@ namespace ReloadersWorkShop
 
 			e.Graphics.DrawString(strText, HeaderFont, Brushes.Black, nInputX - TextSize.Width, nInputY);
 
-			strText = String.Format(strDimensionFormat, m_DataFiles.StandardToMetric(m_Ballistics.BulletDiameter, cDataFiles.eDataType.Dimension));
+			strText = String.Format(strDimensionFormat, cDataFiles.StandardToMetric(m_Ballistics.BulletDiameter, cDataFiles.eDataType.Dimension));
 
 			TextSize = e.Graphics.MeasureString(strText, DataFont);
 
@@ -378,7 +379,7 @@ namespace ReloadersWorkShop
 
 			e.Graphics.DrawString(strText, HeaderFont, Brushes.Black, nInputX - TextSize.Width, nInputY);
 
-			strText = String.Format(strFirearmFormat, m_DataFiles.StandardToMetric(m_Ballistics.SightHeight, cDataFiles.eDataType.Firearm));
+			strText = String.Format(strFirearmFormat, cDataFiles.StandardToMetric(m_Ballistics.SightHeight, cDataFiles.eDataType.Firearm));
 
 			TextSize = e.Graphics.MeasureString(strText, DataFont);
 
@@ -416,7 +417,7 @@ namespace ReloadersWorkShop
 
 			e.Graphics.DrawString(strText, HeaderFont, Brushes.Black, nInputX - TextSize.Width, nInputY);
 
-			strText = String.Format("{0:G0} {1}", m_DataFiles.StandardToMetric((m_Ballistics.UseDensityAltitude ? m_Ballistics.DensityAltitude : m_Ballistics.Altitude), cDataFiles.eDataType.Altitude), m_DataFiles.MetricString(cDataFiles.eDataType.Altitude));
+			strText = String.Format("{0:G0} {1}", cDataFiles.StandardToMetric((m_Ballistics.UseDensityAltitude ? m_Ballistics.DensityAltitude : m_Ballistics.Altitude), cDataFiles.eDataType.Altitude), cDataFiles.MetricString(cDataFiles.eDataType.Altitude));
 
 			TextSize = e.Graphics.MeasureString(strText, DataFont);
 
@@ -435,7 +436,7 @@ namespace ReloadersWorkShop
 
 			e.Graphics.DrawString(strText, HeaderFont, Brushes.Black, nInputX - TextSize.Width, nInputY);
 
-			strText = String.Format("{0:G0} {1}", m_DataFiles.StandardToMetric(m_Ballistics.MaxRange, cDataFiles.eDataType.Range), m_DataFiles.MetricString(cDataFiles.eDataType.Range));
+			strText = String.Format("{0:G0} {1}", cDataFiles.StandardToMetric(m_Ballistics.MaxRange, cDataFiles.eDataType.Range), cDataFiles.MetricString(cDataFiles.eDataType.Range));
 
 			TextSize = e.Graphics.MeasureString(strText, DataFont);
 
@@ -455,7 +456,7 @@ namespace ReloadersWorkShop
 
 			e.Graphics.DrawString(strText, HeaderFont, Brushes.Black, nInputX - TextSize.Width, nInputY);
 
-			strText = String.Format(strBulletWeightFormat, m_DataFiles.StandardToMetric(m_Ballistics.BulletWeight, cDataFiles.eDataType.BulletWeight));
+			strText = String.Format(strBulletWeightFormat, cDataFiles.StandardToMetric(m_Ballistics.BulletWeight, cDataFiles.eDataType.BulletWeight));
 
 			TextSize = e.Graphics.MeasureString(strText, DataFont);
 
@@ -493,7 +494,7 @@ namespace ReloadersWorkShop
 
 			e.Graphics.DrawString(strText, HeaderFont, Brushes.Black, nInputX - TextSize.Width, nInputY);
 
-			strText = String.Format("{0:F0} {1}", m_DataFiles.StandardToMetric(m_Ballistics.HeadWind, cDataFiles.eDataType.Speed), m_DataFiles.MetricString(cDataFiles.eDataType.Speed));
+			strText = String.Format("{0:F0} {1}", cDataFiles.StandardToMetric(m_Ballistics.HeadWind, cDataFiles.eDataType.Speed), cDataFiles.MetricString(cDataFiles.eDataType.Speed));
 
 			TextSize = e.Graphics.MeasureString(strText, DataFont);
 
@@ -512,7 +513,7 @@ namespace ReloadersWorkShop
 
 			e.Graphics.DrawString(strText, HeaderFont, Brushes.Black, nInputX - TextSize.Width, nInputY);
 
-			strText = String.Format("{0:F2} {1}", m_DataFiles.StandardToMetric(m_Ballistics.Pressure, cDataFiles.eDataType.Pressure), m_DataFiles.MetricString(cDataFiles.eDataType.Pressure));
+			strText = String.Format("{0:F2} {1}", cDataFiles.StandardToMetric(m_Ballistics.Pressure, cDataFiles.eDataType.Pressure), cDataFiles.MetricString(cDataFiles.eDataType.Pressure));
 
 			TextSize = e.Graphics.MeasureString(strText, DataFont);
 
@@ -531,7 +532,7 @@ namespace ReloadersWorkShop
 
 			e.Graphics.DrawString(strText, HeaderFont, Brushes.Black, nInputX - TextSize.Width, nInputY);
 
-			strText = String.Format("{0:G0} {1}", m_DataFiles.StandardToMetric(m_Ballistics.Increment, cDataFiles.eDataType.Range), m_DataFiles.MetricString(cDataFiles.eDataType.Range));
+			strText = String.Format("{0:G0} {1}", cDataFiles.StandardToMetric(m_Ballistics.Increment, cDataFiles.eDataType.Range), cDataFiles.MetricString(cDataFiles.eDataType.Range));
 
 			TextSize = e.Graphics.MeasureString(strText, DataFont);
 
@@ -551,7 +552,7 @@ namespace ReloadersWorkShop
 
 			e.Graphics.DrawString(strText, HeaderFont, Brushes.Black, nInputX - TextSize.Width, nInputY);
 
-			strText = String.Format(strDimensionFormat, m_DataFiles.StandardToMetric(m_Ballistics.BulletLength, cDataFiles.eDataType.Dimension));
+			strText = String.Format(strDimensionFormat, cDataFiles.StandardToMetric(m_Ballistics.BulletLength, cDataFiles.eDataType.Dimension));
 
 			TextSize = e.Graphics.MeasureString(strText, DataFont);
 
@@ -570,7 +571,7 @@ namespace ReloadersWorkShop
 
 			e.Graphics.DrawString(strText, HeaderFont, Brushes.Black, nInputX - TextSize.Width, nInputY);
 
-			strText = String.Format(strFirearmFormat, m_DataFiles.StandardToMetric(m_Ballistics.Twist, cDataFiles.eDataType.Firearm));
+			strText = String.Format(strFirearmFormat, cDataFiles.StandardToMetric(m_Ballistics.Twist, cDataFiles.eDataType.Firearm));
 
 			TextSize = e.Graphics.MeasureString(strText, DataFont);
 
@@ -589,7 +590,7 @@ namespace ReloadersWorkShop
 
 			e.Graphics.DrawString(strText, HeaderFont, Brushes.Black, nInputX - TextSize.Width, nInputY);
 
-			strText = String.Format("{0:F0} {1}", m_DataFiles.StandardToMetric(m_Ballistics.CrossWind, cDataFiles.eDataType.Speed), m_DataFiles.MetricString(cDataFiles.eDataType.Speed));
+			strText = String.Format("{0:F0} {1}", cDataFiles.StandardToMetric(m_Ballistics.CrossWind, cDataFiles.eDataType.Speed), cDataFiles.MetricString(cDataFiles.eDataType.Speed));
 
 			TextSize = e.Graphics.MeasureString(strText, DataFont);
 
@@ -627,7 +628,7 @@ namespace ReloadersWorkShop
 
 			e.Graphics.DrawString(strText, HeaderFont, Brushes.Black, nInputX - TextSize.Width, nInputY);
 
-			strText = String.Format("{0:G0} {1}", m_DataFiles.StandardToMetric(m_Ballistics.TargetRange, cDataFiles.eDataType.Range), m_DataFiles.MetricString(cDataFiles.eDataType.Range));
+			strText = String.Format("{0:G0} {1}", cDataFiles.StandardToMetric(m_Ballistics.TargetRange, cDataFiles.eDataType.Range), cDataFiles.MetricString(cDataFiles.eDataType.Range));
 
 			TextSize = e.Graphics.MeasureString(strText, DataFont);
 
@@ -652,7 +653,7 @@ namespace ReloadersWorkShop
 
 			e.Graphics.DrawString(strText, SectionFont, Brushes.Black, nX, nY);
 
-			strText = String.Format("(Muzzle Velocity: {0:G0} {1})", m_Ballistics.MuzzleVelocity, m_DataFiles.MetricString(cDataFiles.eDataType.Velocity));
+			strText = String.Format("(Muzzle Velocity: {0:G0} {1})", m_Ballistics.MuzzleVelocity, cDataFiles.MetricString(cDataFiles.eDataType.Velocity));
 
 			SizeF TextSize1 = e.Graphics.MeasureString(strText, HeaderFont);
 

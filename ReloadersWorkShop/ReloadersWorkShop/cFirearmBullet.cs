@@ -37,6 +37,7 @@ namespace ReloadersWorkShop
 		private cBullet m_Bullet = null;
 		private double m_dCOL = 0.0;
 		private double m_dCBTO = 0.0;
+		private double m_dJump = 0.0;
 
 		//============================================================================*
 		// cFirearmBullet() - Constructor
@@ -52,11 +53,21 @@ namespace ReloadersWorkShop
 
 		public cFirearmBullet(cFirearmBullet FirearmBullet)
 			{
+			Copy(FirearmBullet);
+			}
+
+		//============================================================================*
+		// Copy()
+		//============================================================================*
+
+		public void Copy(cFirearmBullet FirearmBullet)
+			{
 			m_Caliber = FirearmBullet.m_Caliber;
 
 			m_Bullet = new cBullet(FirearmBullet.m_Bullet);
 			m_dCOL = FirearmBullet.m_dCOL;
 			m_dCBTO = FirearmBullet.m_dCBTO;
+			m_dJump = FirearmBullet.m_dJump;
 			}
 
 		//============================================================================*
@@ -139,6 +150,22 @@ namespace ReloadersWorkShop
 			{
 			get { return (m_dCBTO); }
 			set { m_dCBTO = value; }
+			}
+
+		//============================================================================*
+		// Jump Property
+		//============================================================================*
+
+		public double Jump
+			{
+			get
+				{
+				return (m_dJump);
+				}
+			set
+				{
+				m_dJump = value;
+				}
 			}
 
 		//============================================================================*

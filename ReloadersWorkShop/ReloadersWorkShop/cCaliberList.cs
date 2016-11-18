@@ -64,6 +64,49 @@ namespace ReloadersWorkShop
 
 			return(true);
 			}
+
+		//============================================================================*
+		// Export()
+		//============================================================================*
+
+		public void Export(StreamWriter Writer, cDataFiles.eExportType eType)
+			{
+			string strLine = "";
+
+			switch (eType)
+				{
+				case cDataFiles.eExportType.CSV:
+					Writer.WriteLine(cCaliber.CSVHeader);
+					Writer.WriteLine();
+
+					Writer.WriteLine(cCaliber.CSVLineHeader);
+					Writer.WriteLine();
+
+					foreach (cCaliber Caliber in this)
+						{
+						strLine = Caliber.CSVLine;
+
+						Writer.WriteLine(strLine);
+						}
+
+					Writer.WriteLine();
+
+					break;
+
+				case cDataFiles.eExportType.XML:
+					Writer.WriteLine(cCaliber.XMLHeader);
+					Writer.WriteLine(cCaliber.XMLLineHeader);
+
+					foreach (cCaliber Caliber in this)
+						{
+						strLine = Caliber.XMLLine;
+
+						Writer.WriteLine(strLine);
+						}
+
+					break;
+				}
+			}
 		}
 	}
 

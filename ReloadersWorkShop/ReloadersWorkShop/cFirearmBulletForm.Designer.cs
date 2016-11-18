@@ -37,6 +37,7 @@
 			System.Windows.Forms.Label label5;
 			System.Windows.Forms.Label label4;
 			System.Windows.Forms.Label label3;
+			System.Windows.Forms.Label label6;
 			this.COLMeasurementLabel = new System.Windows.Forms.Label();
 			this.CBTOMeasurementLabel = new System.Windows.Forms.Label();
 			this.FirearmLabel = new System.Windows.Forms.Label();
@@ -48,10 +49,13 @@
 			this.BulletCombo = new System.Windows.Forms.ComboBox();
 			this.FirearmBulletOKButton = new System.Windows.Forms.Button();
 			this.FirearmBulletCancelButton = new System.Windows.Forms.Button();
+			this.JumpMeasurementLabel = new System.Windows.Forms.Label();
+			this.JumpTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			label1 = new System.Windows.Forms.Label();
 			label5 = new System.Windows.Forms.Label();
 			label4 = new System.Windows.Forms.Label();
 			label3 = new System.Windows.Forms.Label();
+			label6 = new System.Windows.Forms.Label();
 			this.BulletDataGroupBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.BulletImage)).BeginInit();
 			this.SuspendLayout();
@@ -73,7 +77,7 @@
 			label5.AutoSize = true;
 			label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			label5.ForeColor = System.Drawing.SystemColors.ControlText;
-			label5.Location = new System.Drawing.Point(185, 75);
+			label5.Location = new System.Drawing.Point(163, 75);
 			label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			label5.Name = "label5";
 			label5.Size = new System.Drawing.Size(39, 13);
@@ -121,7 +125,7 @@
 			this.CBTOMeasurementLabel.AutoSize = true;
 			this.CBTOMeasurementLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.CBTOMeasurementLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.CBTOMeasurementLabel.Location = new System.Drawing.Point(272, 75);
+			this.CBTOMeasurementLabel.Location = new System.Drawing.Point(250, 75);
 			this.CBTOMeasurementLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.CBTOMeasurementLabel.Name = "CBTOMeasurementLabel";
 			this.CBTOMeasurementLabel.Size = new System.Drawing.Size(15, 13);
@@ -142,6 +146,9 @@
 			// BulletDataGroupBox
 			// 
 			this.BulletDataGroupBox.BackColor = System.Drawing.SystemColors.Control;
+			this.BulletDataGroupBox.Controls.Add(this.JumpMeasurementLabel);
+			this.BulletDataGroupBox.Controls.Add(this.JumpTextBox);
+			this.BulletDataGroupBox.Controls.Add(label6);
 			this.BulletDataGroupBox.Controls.Add(this.CBTOMeasurementLabel);
 			this.BulletDataGroupBox.Controls.Add(this.COLMeasurementLabel);
 			this.BulletDataGroupBox.Controls.Add(this.CBTOTextBox);
@@ -168,7 +175,7 @@
 			// 
 			this.CBTOTextBox.BackColor = System.Drawing.SystemColors.Window;
 			this.CBTOTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.CBTOTextBox.Location = new System.Drawing.Point(229, 72);
+			this.CBTOTextBox.Location = new System.Drawing.Point(207, 72);
 			this.CBTOTextBox.MaxLength = 5;
 			this.CBTOTextBox.MaxValue = 0D;
 			this.CBTOTextBox.MinValue = 0D;
@@ -254,6 +261,47 @@
 			this.FirearmBulletCancelButton.Text = "Cancel";
 			this.FirearmBulletCancelButton.UseVisualStyleBackColor = false;
 			// 
+			// JumpMeasurementLabel
+			// 
+			this.JumpMeasurementLabel.AutoSize = true;
+			this.JumpMeasurementLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.JumpMeasurementLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.JumpMeasurementLabel.Location = new System.Drawing.Point(368, 75);
+			this.JumpMeasurementLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.JumpMeasurementLabel.Name = "JumpMeasurementLabel";
+			this.JumpMeasurementLabel.Size = new System.Drawing.Size(15, 13);
+			this.JumpMeasurementLabel.TabIndex = 55;
+			this.JumpMeasurementLabel.Text = "in";
+			// 
+			// JumpTextBox
+			// 
+			this.JumpTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.JumpTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.JumpTextBox.Location = new System.Drawing.Point(325, 72);
+			this.JumpTextBox.MaxLength = 5;
+			this.JumpTextBox.MaxValue = 0D;
+			this.JumpTextBox.MinValue = 0D;
+			this.JumpTextBox.Name = "JumpTextBox";
+			this.JumpTextBox.NumDecimals = 3;
+			this.JumpTextBox.Size = new System.Drawing.Size(38, 20);
+			this.JumpTextBox.TabIndex = 53;
+			this.JumpTextBox.Text = "0.000";
+			this.JumpTextBox.ToolTip = "";
+			this.JumpTextBox.Value = 0D;
+			this.JumpTextBox.ZeroAllowed = true;
+			// 
+			// label6
+			// 
+			label6.AutoSize = true;
+			label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			label6.ForeColor = System.Drawing.SystemColors.ControlText;
+			label6.Location = new System.Drawing.Point(285, 75);
+			label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			label6.Name = "label6";
+			label6.Size = new System.Drawing.Size(35, 13);
+			label6.TabIndex = 54;
+			label6.Text = "Jump:";
+			// 
 			// cFirearmBulletForm
 			// 
 			this.AcceptButton = this.FirearmBulletOKButton;
@@ -261,7 +309,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.Control;
 			this.CancelButton = this.FirearmBulletCancelButton;
-			this.ClientSize = new System.Drawing.Size(522, 216);
+			this.ClientSize = new System.Drawing.Size(518, 212);
 			this.ControlBox = false;
 			this.Controls.Add(this.FirearmBulletCancelButton);
 			this.Controls.Add(this.FirearmBulletOKButton);
@@ -296,5 +344,7 @@
 		private CommonLib.Controls.cDoubleValueTextBox COALTextBox;
 		private System.Windows.Forms.Label COLMeasurementLabel;
 		private System.Windows.Forms.Label CBTOMeasurementLabel;
+		private System.Windows.Forms.Label JumpMeasurementLabel;
+		private CommonLib.Controls.cDoubleValueTextBox JumpTextBox;
 		}
 	}

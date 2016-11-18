@@ -177,6 +177,63 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// CSVHeader Property
+		//============================================================================*
+
+		public static string CSVHeader
+			{
+			get
+				{
+				return ("Cases");
+				}
+			}
+
+		//============================================================================*
+		// CSVLine Property
+		//============================================================================*
+
+		public string CSVLine
+			{
+			get
+				{
+				string strLine = "";
+
+				strLine += cFirearm.FirearmTypeString(FirearmType);
+				strLine += ",";
+				strLine += CrossUse ? "Yes," : "-,";
+
+				strLine += Manufacturer.Name;
+				strLine += ",";
+				strLine += m_strPartNumber;
+				strLine += ",";
+
+				strLine += m_Caliber.Name;
+				strLine += ",";
+				strLine += m_fMatch ? "Yes," : "-,";
+				strLine += ",";
+				strLine += m_fMilitary ? "Yes," : "-,";
+				strLine += ",";
+				strLine += m_fLargePrimer ? "Yes," : "-,";
+				strLine += ",";
+				strLine += m_fSmallPrimer ? "Yes," : "-,";
+
+				return (strLine);
+				}
+			}
+
+		//============================================================================*
+		// CSVLineHeader Property
+		//============================================================================*
+
+		public static string CSVLineHeader
+			{
+			get
+				{
+				return("Firearm Type,Cross Use?,Manufacturer,Part Number,Caliber,Match,Military,Large Primer,Small Primer");
+				}
+			}
+
+		//============================================================================*
 		// HeadStamp Property
 		//============================================================================*
 
@@ -332,13 +389,13 @@ namespace ReloadersWorkShop
 
 			string strHeadStamp = "";
 
-			if (Manufacturer.HeadStamp != null && Manufacturer.HeadStamp.Length > 0 && Manufacturer.HeadStamp != Manufacturer.Name)
-				strHeadStamp += String.Format(" ({0}", (Manufacturer != null) ? Manufacturer.HeadStamp : "");
+			if (!String.IsNullOrEmpty(Manufacturer.HeadStamp) && Manufacturer.HeadStamp != Manufacturer.Name)
+				strHeadStamp += String.Format("({0}", (Manufacturer != null) ? Manufacturer.HeadStamp : "");
 
 			if (m_fMatch)
 				strString += " Match";
 
-			if (m_Caliber != null && m_Caliber.HeadStamp != null && m_Caliber.HeadStamp.Length > 0)
+			if (m_Caliber != null && !String.IsNullOrEmpty(m_Caliber.HeadStamp))
 				{
 				if (strHeadStamp.Length == 0)
 					strHeadStamp = "(";
@@ -355,7 +412,49 @@ namespace ReloadersWorkShop
 
 			strString += (" " + strHeadStamp);
 
+			strString = ToCrossUseString(strString);
+
 			return (strString);
+			}
+
+		//============================================================================*
+		// XMLHeader Property
+		//============================================================================*
+
+		public static string XMLHeader
+			{
+			get
+				{
+				return ("Cases");
+				}
+			}
+
+		//============================================================================*
+		// XMLLine Property
+		//============================================================================*
+
+		public string XMLLine
+			{
+			get
+				{
+				string strLine = "";
+
+				return (strLine);
+				}
+			}
+
+		//============================================================================*
+		// XMLLineHeader Property
+		//============================================================================*
+
+		public static string XMLLineHeader
+			{
+			get
+				{
+				string strLine = "Firearm Type,Name,Headstamp,Handgun Type,Small Primer,Large Primer,Magnum Primer,Min Bullet Dia.,Max Bullet Dia.,Min Bullet Weight,Max Bullet Weight,Case Trim Length,Max Case Length,Max COAL,Max Neck Dia";
+
+				return (strLine);
+				}
 			}
 		}
 	}

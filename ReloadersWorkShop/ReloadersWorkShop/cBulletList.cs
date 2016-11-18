@@ -10,6 +10,7 @@
 //============================================================================*
 
 using System;
+using System.IO;
 using System.Collections.Generic;
 
 //============================================================================*
@@ -41,6 +42,49 @@ namespace ReloadersWorkShop
 			Sort();
 
 			return(true);
+			}
+
+		//============================================================================*
+		// Export()
+		//============================================================================*
+
+		public void Export(StreamWriter Writer,  cDataFiles.eExportType eType)
+			{
+			string strLine = "";
+
+			switch (eType)
+				{
+				case cDataFiles.eExportType.CSV:
+					Writer.WriteLine(cBullet.CSVHeader);
+					Writer.WriteLine();
+
+					Writer.WriteLine(cBullet.CSVLineHeader);
+					Writer.WriteLine();
+
+					foreach (cBullet Bullet in this)
+						{
+						strLine = Bullet.CSVLine;
+
+						Writer.WriteLine(strLine);
+						}
+
+					Writer.WriteLine();
+
+					break;
+
+				case cDataFiles.eExportType.XML:
+					Writer.WriteLine(cFirearm.XMLHeader);
+					Writer.WriteLine(cFirearm.XMLLineHeader);
+
+					foreach (cBullet Bullet in this)
+						{
+						strLine = Bullet.XMLLine;
+
+						Writer.WriteLine(strLine);
+						}
+
+					break;
+				}
 			}
 
 		//============================================================================*
