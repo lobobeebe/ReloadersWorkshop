@@ -133,11 +133,11 @@
 			// FileNameLabel
 			// 
 			this.FileNameLabel.AutoSize = true;
-			this.FileNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FileNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FileNameLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FileNameLabel.Location = new System.Drawing.Point(304, 24);
+			this.FileNameLabel.Location = new System.Drawing.Point(290, 22);
 			this.FileNameLabel.Name = "FileNameLabel";
-			this.FileNameLabel.Size = new System.Drawing.Size(60, 13);
+			this.FileNameLabel.Size = new System.Drawing.Size(82, 15);
 			this.FileNameLabel.TabIndex = 4;
 			this.FileNameLabel.Text = "filename.txt";
 			// 
@@ -241,7 +241,7 @@
 			this.PowdersCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.PowdersCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.PowdersCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.PowdersCheckBox.Location = new System.Drawing.Point(183, 90);
+			this.PowdersCheckBox.Location = new System.Drawing.Point(183, 44);
 			this.PowdersCheckBox.Name = "PowdersCheckBox";
 			this.PowdersCheckBox.Size = new System.Drawing.Size(67, 17);
 			this.PowdersCheckBox.TabIndex = 6;
@@ -269,7 +269,7 @@
 			this.CasesCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.CasesCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.CasesCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.CasesCheckBox.Location = new System.Drawing.Point(183, 44);
+			this.CasesCheckBox.Location = new System.Drawing.Point(183, 90);
 			this.CasesCheckBox.Name = "CasesCheckBox";
 			this.CasesCheckBox.Size = new System.Drawing.Size(55, 17);
 			this.CasesCheckBox.TabIndex = 4;
@@ -360,7 +360,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.CancelFormButton;
-			this.ClientSize = new System.Drawing.Size(470, 273);
+			this.ClientSize = new System.Drawing.Size(466, 269);
 			this.ControlBox = false;
 			this.Controls.Add(this.CancelFormButton);
 			this.Controls.Add(this.groupBox2);

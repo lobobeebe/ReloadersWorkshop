@@ -10,6 +10,7 @@
 //============================================================================*
 
 using System;
+using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -150,16 +151,16 @@ namespace ReloadersWorkShop
 				{
 				string strLine = "";
 
-				strLine += cFirearm.FirearmTypeString(FirearmType);
-				strLine += ",";
-				strLine += CrossUse ? "Yes," : "-,";
-
 				strLine += Manufacturer.Name;
 				strLine += ",";
-
 				strLine += m_strType;
 				strLine += ",";
 				strLine += TypeString;
+				strLine += ",";
+
+				strLine += cFirearm.FirearmTypeString(FirearmType);
+				strLine += ",";
+				strLine += CrossUse ? "Yes" : "-";
 
 				return (strLine);
 				}
@@ -175,6 +176,56 @@ namespace ReloadersWorkShop
 				{
 				return ("Firearm Type,Cross Use?,Manufacturer,Type,Shape");
 				}
+			}
+
+		//============================================================================*
+		// Export() - XML Document
+		//============================================================================*
+
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			XmlElement XMLThisElement = XMLDocument.CreateElement("Powder");
+			XMLParentElement.AppendChild(XMLThisElement);
+
+			// Manufacture Name
+
+			XmlElement XMLElement = XMLDocument.CreateElement("ManufactureName");
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(Manufacturer.Name);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Type
+
+			XMLElement = XMLDocument.CreateElement("Type");
+			XMLTextElement = XMLDocument.CreateTextNode(m_strType);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Firearm Type
+
+			XMLElement = XMLDocument.CreateElement("FirearmType");
+			XMLTextElement = XMLDocument.CreateTextNode(cFirearm.FirearmTypeString(FirearmType));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Shape
+
+			XMLElement = XMLDocument.CreateElement("Shape");
+			XMLTextElement = XMLDocument.CreateTextNode(TypeString);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Cross Use
+
+			XMLElement = XMLDocument.CreateElement("CrossUse");
+			XMLTextElement = XMLDocument.CreateTextNode(CrossUse ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
 			}
 
 		//============================================================================*

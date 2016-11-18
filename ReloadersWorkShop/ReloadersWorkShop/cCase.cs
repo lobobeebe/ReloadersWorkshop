@@ -10,6 +10,7 @@
 //============================================================================*
 
 using System;
+using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -198,14 +199,14 @@ namespace ReloadersWorkShop
 				{
 				string strLine = "";
 
-				strLine += cFirearm.FirearmTypeString(FirearmType);
-				strLine += ",";
-				strLine += CrossUse ? "Yes," : "-,";
-
 				strLine += Manufacturer.Name;
 				strLine += ",";
 				strLine += m_strPartNumber;
 				strLine += ",";
+
+				strLine += cFirearm.FirearmTypeString(FirearmType);
+				strLine += ",";
+				strLine += CrossUse ? "Yes," : "-,";
 
 				strLine += m_Caliber.Name;
 				strLine += ",";
@@ -229,8 +230,93 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				return("Firearm Type,Cross Use?,Manufacturer,Part Number,Caliber,Match,Military,Large Primer,Small Primer");
+				return ("Firearm Type,Cross Use?,Manufacturer,Part Number,Caliber,Match,Military,Large Primer,Small Primer");
 				}
+			}
+
+		//============================================================================*
+		// Export() - XML Document
+		//============================================================================*
+
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			XmlElement XMLThisElement = XMLDocument.CreateElement("Case");
+			XMLParentElement.AppendChild(XMLThisElement);
+
+			// Manufacturer
+
+			XmlElement XMLElement = XMLDocument.CreateElement("Manufacturer");
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(Manufacturer.Name);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Part Number
+
+			if (!String.IsNullOrEmpty(m_strPartNumber))
+				{
+				XMLElement = XMLDocument.CreateElement("PartNumber");
+				XMLTextElement = XMLDocument.CreateTextNode(m_strPartNumber);
+				XMLElement.AppendChild(XMLTextElement);
+
+				XMLThisElement.AppendChild(XMLElement);
+				}
+
+			// Firearm Type
+
+			XMLElement = XMLDocument.CreateElement("FirearmType");
+			XMLTextElement = XMLDocument.CreateTextNode(cFirearm.FirearmTypeString(FirearmType));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Cross Use
+
+			XMLElement = XMLDocument.CreateElement("CrossUse");
+			XMLTextElement = XMLDocument.CreateTextNode(CrossUse ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Caliber
+
+			XMLElement = XMLDocument.CreateElement("Caliber");
+			XMLTextElement = XMLDocument.CreateTextNode(m_Caliber.Name);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Match
+
+			XMLElement = XMLDocument.CreateElement("Match");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fMatch ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Military
+
+			XMLElement = XMLDocument.CreateElement("Military");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fMilitary ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Large Primer
+
+			XMLElement = XMLDocument.CreateElement("LargePrimer");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fLargePrimer ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Small Primer
+
+			XMLElement = XMLDocument.CreateElement("SmallPrimer");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fSmallPrimer ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
 			}
 
 		//============================================================================*

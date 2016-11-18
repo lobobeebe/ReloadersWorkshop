@@ -12,7 +12,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -105,6 +105,21 @@ namespace ReloadersWorkShop
 						}
 
 					break;
+				}
+			}
+
+		//============================================================================*
+		// Export()
+		//============================================================================*
+
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			XmlElement XMLElement = XMLDocument.CreateElement(string.Empty, "Calibers", string.Empty);
+			XMLParentElement.AppendChild(XMLElement);
+
+			foreach (cCaliber Caliber in this)
+				{
+				Caliber.Export(XMLDocument, XMLElement);
 				}
 			}
 		}

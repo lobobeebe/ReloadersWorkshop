@@ -10,6 +10,7 @@
 //============================================================================*
 
 using System;
+using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -260,6 +261,136 @@ namespace ReloadersWorkShop
 
 				return (strLine);
 				}
+			}
+
+		//============================================================================*
+		// Export() - XML Document
+		//============================================================================*
+
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			XmlElement XMLThisElement = XMLDocument.CreateElement("Manufacturer");
+			XMLParentElement.AppendChild(XMLThisElement);
+
+			// Name
+
+			XmlElement XMLElement = XMLDocument.CreateElement("Name");
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(m_strName);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Website
+
+			XMLElement = XMLDocument.CreateElement("Website");
+			XMLTextElement = XMLDocument.CreateTextNode(m_strWebsite);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Bullets
+
+			XMLElement = XMLDocument.CreateElement("Bullets");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fBullets ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Powder
+
+			XMLElement = XMLDocument.CreateElement("Powders");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fPowder ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Primers
+
+			XMLElement = XMLDocument.CreateElement("Primers");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fPrimers ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Case
+
+			XMLElement = XMLDocument.CreateElement("Cases");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fCases ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Bullet Molds
+
+			XMLElement = XMLDocument.CreateElement("BulletMolds");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fBulletMolds ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Head Stamp
+
+			XMLElement = XMLDocument.CreateElement("HeadStamp");
+			XMLTextElement = XMLDocument.CreateTextNode(m_strHeadStamp);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Ammo
+
+			XMLElement = XMLDocument.CreateElement("Ammo");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fAmmo ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Handguns
+
+			XMLElement = XMLDocument.CreateElement("Handguns");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fHandguns ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Rifles
+
+			XMLElement = XMLDocument.CreateElement("Rifles");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fRifles ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Shotguns
+
+			XMLElement = XMLDocument.CreateElement("Shotguns");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fShotguns ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Scopes
+
+			XMLElement = XMLDocument.CreateElement("Scopes");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fScopes ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Triggers
+
+			XMLElement = XMLDocument.CreateElement("Triggers");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fTriggers ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Stocks
+
+			XMLElement = XMLDocument.CreateElement("Stocks");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fStocks ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
 			}
 
 		//============================================================================*

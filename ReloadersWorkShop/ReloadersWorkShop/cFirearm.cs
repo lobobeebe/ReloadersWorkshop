@@ -10,6 +10,7 @@
 //============================================================================*
 
 using System;
+using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -459,13 +460,13 @@ namespace ReloadersWorkShop
 				// General
 				//----------------------------------------------------------------------------*
 
-				strLine += cFirearm.FirearmTypeString(m_eFirearmType);
-				strLine += ",";
 				strLine += m_Manufacturer.Name;
 				strLine += ",";
 				strLine += m_strModel;
 				strLine += ",";
 				strLine += m_strSerialNumber;
+				strLine += ",";
+				strLine += cFirearm.FirearmTypeString(m_eFirearmType);
 				strLine += ",";
 
 				strLine += m_dBarrelLength;
@@ -524,6 +525,208 @@ namespace ReloadersWorkShop
 				{
 				return("Firearm Type,Manufacturer,Model,Serial Number,Barrel Length,Twist,Sight Height,Scoped,Scope Click, Turret Type,Zero Range,HeadSpace,Neck,Source,Purchase Date,Price,Receiver Finish,Barrel Finish,Type,Action,Hammer,Magazine,Capacity,Notes");
 				}
+			}
+
+		//============================================================================*
+		// Export() - XML Document
+		//============================================================================*
+
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			XmlElement XMLThisElement = XMLDocument.CreateElement("Caliber");
+			XMLParentElement.AppendChild(XMLThisElement);
+
+			// Manufacturer
+
+			XmlElement XMLElement = XMLDocument.CreateElement("Manufacturer");
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(m_Manufacturer.Name);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Model
+
+			XMLElement = XMLDocument.CreateElement("Model");
+			XMLTextElement = XMLDocument.CreateTextNode(m_strModel);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Serial Number
+
+			XMLElement = XMLDocument.CreateElement("SerialNumber");
+			XMLTextElement = XMLDocument.CreateTextNode(m_strSerialNumber);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Firearm Type
+
+			XMLElement = XMLDocument.CreateElement("FirearmType");
+			XMLTextElement = XMLDocument.CreateTextNode(cFirearm.FirearmTypeString(m_eFirearmType));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Barrel Length
+
+			XMLElement = XMLDocument.CreateElement("BarrelLength");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dBarrelLength));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Twist
+
+			XMLElement = XMLDocument.CreateElement("Twist");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dTwist));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Sight Height
+
+			XMLElement = XMLDocument.CreateElement("SightHeight");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dSightHeight));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Scoped?
+
+			XMLElement = XMLDocument.CreateElement("Scoped?");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fScoped ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Scope Click
+
+			XMLElement = XMLDocument.CreateElement("ScopeClick");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dScopeClick));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Turret Type
+
+			XMLElement = XMLDocument.CreateElement("TurretType");
+			XMLTextElement = XMLDocument.CreateTextNode(m_eTurretType == eTurretType.MOA ? "MOA," : "Mils,");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Zero Range
+
+			XMLElement = XMLDocument.CreateElement("ZeroRange");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nZeroRange));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Headspace
+
+			XMLElement = XMLDocument.CreateElement("Headspace");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dHeadSpace));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Neck Diameter
+
+			XMLElement = XMLDocument.CreateElement("Neck Size");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dNeck));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Source
+
+			XMLElement = XMLDocument.CreateElement("Source");
+			XMLTextElement = XMLDocument.CreateTextNode(m_strSource);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Date Purchased
+
+			XMLElement = XMLDocument.CreateElement("DatePurchased");
+			XMLTextElement = XMLDocument.CreateTextNode(m_PurchaseDate.ToShortDateString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Price
+
+			XMLElement = XMLDocument.CreateElement("Price");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dPrice));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Receiver Finish
+
+			XMLElement = XMLDocument.CreateElement("ReceiverFinish");
+			XMLTextElement = XMLDocument.CreateTextNode(m_strReceiverFinish);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Barrel Finish
+
+			XMLElement = XMLDocument.CreateElement("BarrelFinish");
+			XMLTextElement = XMLDocument.CreateTextNode(m_strBarrelFinish);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Type
+
+			XMLElement = XMLDocument.CreateElement("Type");
+			XMLTextElement = XMLDocument.CreateTextNode(m_strType);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Action
+
+			XMLElement = XMLDocument.CreateElement("Action");
+			XMLTextElement = XMLDocument.CreateTextNode(m_strAction);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Hammer
+
+			XMLElement = XMLDocument.CreateElement("Hammer");
+			XMLTextElement = XMLDocument.CreateTextNode(m_strHammer);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Magazine
+
+			XMLElement = XMLDocument.CreateElement("Magazine");
+			XMLTextElement = XMLDocument.CreateTextNode(m_strMagazine);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Capacity
+
+			XMLElement = XMLDocument.CreateElement("Capacity");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nCapacity));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Notes
+
+			XMLElement = XMLDocument.CreateElement("Notes");
+			XMLTextElement = XMLDocument.CreateTextNode(m_strNotes);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
 			}
 
 		//============================================================================*

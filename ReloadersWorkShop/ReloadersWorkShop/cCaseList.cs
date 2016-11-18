@@ -12,6 +12,11 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Xml;
+
+//============================================================================*
+// Namespace
+//============================================================================*
 
 namespace ReloadersWorkShop
 	{
@@ -75,6 +80,22 @@ namespace ReloadersWorkShop
 						}
 
 					break;
+				}
+			}
+
+
+		//============================================================================*
+		// Export()
+		//============================================================================*
+
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			XmlElement XMLElement = XMLDocument.CreateElement(string.Empty, "Cases", string.Empty);
+			XMLParentElement.AppendChild(XMLElement);
+
+			foreach (cCase Case in this)
+				{
+				Case.Export(XMLDocument, XMLElement);
 				}
 			}
 

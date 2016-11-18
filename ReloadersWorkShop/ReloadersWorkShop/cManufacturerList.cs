@@ -12,7 +12,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -29,22 +29,22 @@ namespace ReloadersWorkShop
 
 		public bool AddManufacturer(cManufacturer Manufacturer)
 			{
-			foreach(cManufacturer CheckManufacturer in this)
+			foreach (cManufacturer CheckManufacturer in this)
 				{
 				if (CheckManufacturer.CompareTo(Manufacturer) == 0)
-					return(false);
+					return (false);
 				}
 
 			Add(Manufacturer);
 
-			return(true);
+			return (true);
 			}
 
 		//============================================================================*
 		// Export()
 		//============================================================================*
 
-		public void Export(StreamWriter Writer,cDataFiles.eExportType eType)
+		public void Export(StreamWriter Writer, cDataFiles.eExportType eType)
 			{
 			Writer.WriteLine(cManufacturer.CSVHeader);
 			Writer.WriteLine();
@@ -65,22 +65,24 @@ namespace ReloadersWorkShop
 						}
 
 					break;
-
-				case cDataFiles.eExportType.XML:
-					Writer.WriteLine(cManufacturer.XMLHeader);
-					Writer.WriteLine(cManufacturer.XMLLineHeader);
-
-					foreach (cManufacturer Manufacturer in this)
-						{
-						strLine = Manufacturer.XMLLine;
-
-						Writer.WriteLine(strLine);
-						}
-
-					break;
 				}
 
 			Writer.WriteLine();
+			}
+
+		//============================================================================*
+		// Export()
+		//============================================================================*
+
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			XmlElement XMLElement = XMLDocument.CreateElement(string.Empty, "Manufacturers", string.Empty);
+			XMLParentElement.AppendChild(XMLElement);
+
+			foreach (cManufacturer Manufacturer in this)
+				{
+				Manufacturer.Export(XMLDocument, XMLElement);
+				}
 			}
 		}
 	}

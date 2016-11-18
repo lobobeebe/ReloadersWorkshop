@@ -1,7 +1,7 @@
 ﻿//============================================================================*
-// cLoadForm.cs
+// cExportForm.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -12,6 +12,7 @@
 using System;
 using System.IO;
 using System.Windows.Forms;
+using System.Xml;
 
 //============================================================================*
 // Namespace
@@ -70,6 +71,8 @@ namespace ReloadersWorkShop
 			BatchTestsCheckBox.Click += OnFilterClicked;
 			ChargeDataCheckBox.Click += OnFilterClicked;
 
+			FileTypeCombo.SelectedIndexChanged += OnFileTypeSelected;
+
 			//----------------------------------------------------------------------------*
 			// Set Data Fields
 			//----------------------------------------------------------------------------*
@@ -87,39 +90,67 @@ namespace ReloadersWorkShop
 
 		public void Export()
 			{
-			StreamWriter Writer = null;
-
-			try
-				{
-				//----------------------------------------------------------------------------*
-				// Create the StreamWriter
-				//----------------------------------------------------------------------------*
-
-				Writer = new StreamWriter(m_strFilePath);
-				}
-			catch
-				{
-				MessageBox.Show("Unable to open export file!  Make sure  you have the appropriate permissions for the destination folder.", "Export Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-				return;
-				}
-
 			bool fExportOK = false;
 
-			if (Writer != null)
+			switch ((cDataFiles.eExportType) FileTypeCombo.SelectedIndex)
 				{
-				switch ((cDataFiles.eExportType) FileTypeCombo.SelectedIndex)
-					{
-					case cDataFiles.eExportType.CSV:
+				case cDataFiles.eExportType.CSV:
+					StreamWriter Writer = null;
+
+					try
+						{
+						//----------------------------------------------------------------------------*
+						// Create the StreamWriter
+						//----------------------------------------------------------------------------*
+
+						Writer = new StreamWriter(m_strFilePath);
+						}
+					catch
+						{
+						MessageBox.Show("Unable to open export file!  Make sure  you have the appropriate permissions for the destination folder.", "CSV Export Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+						return;
+						}
+
+					if (Writer != null)
+						{
 						fExportOK = ExportCSV(Writer);
-						break;
 
-					case cDataFiles.eExportType.XML:
-						fExportOK = ExportXML(Writer);
-						break;
-					}
+						Writer.Close();
+						}
 
-				Writer.Close();
+					break;
+
+				case cDataFiles.eExportType.XML:
+					XmlDocument XMLDocument = ExportXML();
+
+					if (XMLDocument != null)
+						{
+						try
+							{
+							XmlTextWriter XMLTextWriter = new XmlTextWriter(m_strFilePath, System.Text.Encoding.ASCII);
+							XMLTextWriter.Formatting = Formatting.Indented;
+							XMLTextWriter.Indentation = 4;
+							XMLTextWriter.IndentChar = '\t';
+
+							XMLDocument.PreserveWhitespace = true;
+
+							XMLDocument.Save(XMLTextWriter);
+
+							XMLTextWriter.Close();
+
+							fExportOK = true;
+							}
+						catch
+							{
+							MessageBox.Show("Unable to export XML file!  Make sure  you have the appropriate permissions for the destination folder.", "XML Export Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+							return;
+							}
+
+						}
+
+					break;
 				}
 
 			if (fExportOK)
@@ -169,7 +200,7 @@ namespace ReloadersWorkShop
 						m_DataFiles.BulletList.Export(Writer, cDataFiles.eExportType.CSV);
 
 					if (CasesCheckBox.Checked)
-						m_DataFiles.CaseList.Export(Writer,  cDataFiles.eExportType.CSV);
+						m_DataFiles.CaseList.Export(Writer, cDataFiles.eExportType.CSV);
 
 					if (PrimersCheckBox.Checked)
 						m_DataFiles.PrimerList.Export(Writer, cDataFiles.eExportType.CSV);
@@ -191,7 +222,7 @@ namespace ReloadersWorkShop
 				fSuccess = false;
 				}
 
-			return(fSuccess);
+			return (fSuccess);
 			}
 
 		//============================================================================*
@@ -218,11 +249,55 @@ namespace ReloadersWorkShop
 		// ExportXML()
 		//============================================================================*
 
-		public bool ExportXML(StreamWriter Writer)
+		public XmlDocument ExportXML()
 			{
-			bool fSuccess = true;
+			XmlDocument XMLDocument = new XmlDocument();
+			XMLDocument.PreserveWhitespace = true;
 
-			return (fSuccess);
+			//----------------------------------------------------------------------------*
+			// Create Declaration
+			//----------------------------------------------------------------------------*
+
+			XmlDeclaration xmlDeclaration = XMLDocument.CreateXmlDeclaration("1.0", "UTF-8", null);
+			XmlElement RootElement = XMLDocument.DocumentElement;
+
+			XMLDocument.InsertBefore(xmlDeclaration, RootElement);
+
+			//----------------------------------------------------------------------------*
+			// Create the Main Element
+			//----------------------------------------------------------------------------*
+
+			XmlElement MainElement = XMLDocument.CreateElement("Body");
+			XMLDocument.AppendChild(MainElement);
+
+			XmlText XMLTextElement = XMLDocument.CreateTextNode("Reloader's WorkShop Data File Export");
+			MainElement.AppendChild(XMLTextElement);
+
+			if (ManufacturersCheckBox.Checked && m_DataFiles.ManufacturerList.Count > 0)
+				m_DataFiles.ManufacturerList.Export(XMLDocument, MainElement);
+
+			if (CalibersCheckBox.Checked && m_DataFiles.CaliberList.Count > 0)
+				m_DataFiles.CaliberList.Export(XMLDocument, MainElement);
+
+			if (FirearmsCheckBox.Checked && m_DataFiles.FirearmList.Count > 0)
+				m_DataFiles.FirearmList.Export(XMLDocument, MainElement);
+
+			if (AmmoCheckBox.Checked && m_DataFiles.AmmoList.Count > 0)
+				m_DataFiles.AmmoList.Export(XMLDocument, MainElement);
+
+			if (BulletsCheckBox.Checked && m_DataFiles.BulletList.Count > 0)
+				m_DataFiles.BulletList.Export(XMLDocument, MainElement);
+
+			if (PowdersCheckBox.Checked && m_DataFiles.PowderList.Count > 0)
+				m_DataFiles.PowderList.Export(XMLDocument, MainElement);
+
+			if (PrimersCheckBox.Checked && m_DataFiles.PrimerList.Count > 0)
+				m_DataFiles.PrimerList.Export(XMLDocument, MainElement);
+
+			if (CasesCheckBox.Checked && m_DataFiles.CaseList.Count > 0)
+				m_DataFiles.CaseList.Export(XMLDocument, MainElement);
+
+			return (XMLDocument);
 			}
 
 		//============================================================================*
@@ -278,6 +353,26 @@ namespace ReloadersWorkShop
 			Export();
 
 			UpdateButtons();
+			}
+
+		//============================================================================*
+		// OnFileTypeSelected()
+		//============================================================================*
+
+		private void OnFileTypeSelected(Object sender, EventArgs e)
+			{
+			switch ((cDataFiles.eExportType) FileTypeCombo.SelectedIndex)
+				{
+				case cDataFiles.eExportType.CSV:
+					m_strFilePath = Path.ChangeExtension(m_strFilePath, "csv");
+					break;
+
+				case cDataFiles.eExportType.XML:
+					m_strFilePath = Path.ChangeExtension(m_strFilePath, "xml");
+					break;
+				}
+
+			SetFileName();
 			}
 
 		//============================================================================*

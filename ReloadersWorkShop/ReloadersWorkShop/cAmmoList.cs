@@ -12,6 +12,7 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -53,19 +54,22 @@ namespace ReloadersWorkShop
 					Writer.WriteLine();
 
 					break;
+				}
+			}
 
-				case cDataFiles.eExportType.XML:
-					Writer.WriteLine(cAmmo.XMLHeader);
-					Writer.WriteLine(cAmmo.XMLLineHeader);
 
-					foreach (cAmmo Ammo in this)
-						{
-						strLine = Ammo.XMLLine;
+		//============================================================================*
+		// Export()
+		//============================================================================*
 
-						Writer.WriteLine(strLine);
-						}
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			XmlElement XMLElement = XMLDocument.CreateElement(string.Empty, "Ammunition", string.Empty);
+			XMLParentElement.AppendChild(XMLElement);
 
-					break;
+			foreach (cAmmo Ammo in this)
+				{
+				Ammo.Export(XMLDocument, XMLElement);
 				}
 			}
 

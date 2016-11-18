@@ -12,6 +12,7 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Xml;
 
 namespace ReloadersWorkShop
 	{
@@ -75,6 +76,22 @@ namespace ReloadersWorkShop
 						}
 
 					break;
+				}
+			}
+
+
+		//============================================================================*
+		// Export()
+		//============================================================================*
+
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			XmlElement XMLElement = XMLDocument.CreateElement(string.Empty, "Powders", string.Empty);
+			XMLParentElement.AppendChild(XMLElement);
+
+			foreach (cPowder Powder in this)
+				{
+				Powder.Export(XMLDocument, XMLElement);
 				}
 			}
 

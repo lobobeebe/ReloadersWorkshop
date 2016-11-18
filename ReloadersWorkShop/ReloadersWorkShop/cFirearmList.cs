@@ -12,6 +12,7 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -66,6 +67,21 @@ namespace ReloadersWorkShop
 						}
 
 					break;
+				}
+			}
+
+		//============================================================================*
+		// Export()
+		//============================================================================*
+
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			XmlElement XMLElement = XMLDocument.CreateElement("Firearms");
+			XMLParentElement.AppendChild(XMLElement);
+
+			foreach (cFirearm Firearm in this)
+				{
+				Firearm.Export(XMLDocument, XMLElement);
 				}
 			}
 		}

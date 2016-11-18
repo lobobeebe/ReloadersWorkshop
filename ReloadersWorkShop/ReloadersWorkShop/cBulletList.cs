@@ -12,6 +12,7 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Xml;
 
 //============================================================================*
 // Namespace
@@ -87,6 +88,20 @@ namespace ReloadersWorkShop
 				}
 			}
 
+		//============================================================================*
+		// Export()
+		//============================================================================*
+
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			XmlElement XMLElement = XMLDocument.CreateElement(string.Empty, "Calibers", string.Empty);
+			XMLParentElement.AppendChild(XMLElement);
+
+			foreach (cBullet Bullet in this)
+				{
+				Bullet.Export(XMLDocument, XMLElement);
+				}
+			}
 		//============================================================================*
 		// HandgunCount Property
 		//============================================================================*

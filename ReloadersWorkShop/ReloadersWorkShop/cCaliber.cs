@@ -11,6 +11,7 @@
 
 using System;
 using System.IO;
+using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -195,24 +196,11 @@ namespace ReloadersWorkShop
 				{
 				string strLine = "";
 
-				switch (m_eFirearmType)
-					{
-					case cFirearm.eFireArmType.Handgun:
-						strLine += "Handgun,";
-						break;
-					case cFirearm.eFireArmType.Rifle:
-						strLine += "Rifle,";
-						break;
-					case cFirearm.eFireArmType.Shotgun:
-						strLine += "Shotgun,";
-						break;
-					default:
-						strLine += ",";
-						break;
-					}
-
 				strLine += m_strName;
 				strLine += ",";
+
+				cFirearm.FirearmTypeString(m_eFirearmType);
+
 				strLine += m_strHeadStamp;
 
 				if (m_eFirearmType == cFirearm.eFireArmType.Handgun)
@@ -281,6 +269,146 @@ namespace ReloadersWorkShop
 				{
 				sm_eCurrentFirearmType = value;
 				}
+			}
+
+		//============================================================================*
+		// Export() - XML Document
+		//============================================================================*
+
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			XmlElement XMLThisElement = XMLDocument.CreateElement("Caliber");
+			XMLParentElement.AppendChild(XMLThisElement);
+
+			// Name
+
+			XmlElement XMLElement = XMLDocument.CreateElement("Name");
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(m_strName);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Firearm Type
+
+			XMLElement = XMLDocument.CreateElement("FirearmType");
+			XMLTextElement = XMLDocument.CreateTextNode(cFirearm.FirearmTypeString(m_eFirearmType));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Head Stamp
+
+			XMLElement = XMLDocument.CreateElement("HeadStamp");
+			XMLTextElement = XMLDocument.CreateTextNode(m_strHeadStamp);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Handgun Type
+
+			XMLElement = XMLDocument.CreateElement("HandgunType");
+
+			string strHandgunType = "N/A";
+
+			if (m_eFirearmType == cFirearm.eFireArmType.Handgun)
+				strHandgunType = m_fPistol ? "Pistol" : "Revolver";
+
+			XMLTextElement = XMLDocument.CreateTextNode(strHandgunType);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Small Primer
+
+			XMLElement = XMLDocument.CreateElement("SmallPrimer");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fSmallPrimer ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Large Primer
+
+			XMLElement = XMLDocument.CreateElement("LargePrimer");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fLargePrimer ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Magnum Primer
+
+			XMLElement = XMLDocument.CreateElement("MagnumPrimer");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fMagnumPrimer ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			//----------------------------------------------------------------------------*
+			// Dimensions
+			//----------------------------------------------------------------------------*
+
+			// Min Bullet Diameter
+
+			XMLElement = XMLDocument.CreateElement("MinBulletDiameter");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dMinBulletDiameter));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Max Bullet Diameter
+
+			XMLElement = XMLDocument.CreateElement("MaxBulletDiameter");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dMaxBulletDiameter));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Min  Bullet Weight
+
+			XMLElement = XMLDocument.CreateElement("MinBulletWeight");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dMinBulletWeight));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Max  Bullet Weight
+
+			XMLElement = XMLDocument.CreateElement("MaxBulletWeight");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dMaxBulletWeight));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Case Trim Length
+
+			XMLElement = XMLDocument.CreateElement("CaseTrimLength");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dCaseTrimLength));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Max Case Length
+
+			XMLElement = XMLDocument.CreateElement("MaxCaseLength");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dMaxCaseLength));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Max COAL
+
+			XMLElement = XMLDocument.CreateElement("MaxCOAL");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dMaxCOL));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Max Neck Diameter
+
+			XMLElement = XMLDocument.CreateElement("MaxNeckDiameter");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dMaxNeckDiameter));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
 			}
 
 		//============================================================================*

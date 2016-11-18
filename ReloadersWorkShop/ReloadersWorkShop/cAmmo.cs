@@ -10,6 +10,7 @@
 //============================================================================*
 
 using System;
+using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -269,13 +270,12 @@ namespace ReloadersWorkShop
 				strLine += ",";
 				strLine += m_strType;
 				strLine += ",";
+				strLine += m_Caliber.Name;
+				strLine += ",";
 
 				strLine += m_nBatchID;
 				strLine += ",";
 				strLine += m_fReload ? "Yes," : "-,";
-
-				strLine += m_Caliber.Name;
-				strLine += ",";
 
 				strLine += m_dBulletDiameter;
 				strLine += ",";
@@ -297,6 +297,98 @@ namespace ReloadersWorkShop
 				{
 				return ("Manufacturer,Part Number,Type,Batch ID,Reload?,Caliber,Bullet Diameter,Bullet Weight,Ballistic Coefficient");
 				}
+			}
+
+		//============================================================================*
+		// Export() - XML Document
+		//============================================================================*
+
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			XmlElement XMLThisElement = XMLDocument.CreateElement("Ammo");
+			XMLParentElement.AppendChild(XMLThisElement);
+
+			// Manufacturer
+
+			XmlElement XMLElement = XMLDocument.CreateElement("Manufacturer");
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(Manufacturer.Name);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Part Number
+
+			XMLElement = XMLDocument.CreateElement("PartNumber");
+			XMLTextElement = XMLDocument.CreateTextNode(m_strPartNumber);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Type
+
+			XMLElement = XMLDocument.CreateElement("Type");
+			XMLTextElement = XMLDocument.CreateTextNode(m_strType);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Firearm Type
+
+			XMLElement = XMLDocument.CreateElement("FirearmType");
+			XMLTextElement = XMLDocument.CreateTextNode(cFirearm.FirearmTypeString(FirearmType));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Caliber
+
+			cCaliber.CurrentFirearmType = FirearmType;
+
+			XMLElement = XMLDocument.CreateElement("Caliber");
+			XMLTextElement = XMLDocument.CreateTextNode(Caliber.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Batch ID
+
+			XMLElement = XMLDocument.CreateElement("BatchID");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nBatchID));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Reload
+
+			XMLElement = XMLDocument.CreateElement("Reload?");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fReload ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Bullet Diameter
+
+			XMLElement = XMLDocument.CreateElement("BulletDiameter");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dBulletDiameter));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Bullet Weight
+
+			XMLElement = XMLDocument.CreateElement("BulletWeight");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dBulletWeight));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Ballistic Coefficient
+
+			XMLElement = XMLDocument.CreateElement("BallisticCoefficient");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dBallisticCoefficient));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
 			}
 
 		//============================================================================*
