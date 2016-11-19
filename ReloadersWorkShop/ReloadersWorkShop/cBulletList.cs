@@ -36,56 +36,40 @@ namespace ReloadersWorkShop
 			foreach (cBullet CheckBullet in this)
 				{
 				if (CheckBullet.CompareTo(Bullet) == 0)
-					return(false);
+					return (false);
 				}
 
 			Add(Bullet);
 			Sort();
 
-			return(true);
+			return (true);
 			}
 
 		//============================================================================*
 		// Export()
 		//============================================================================*
 
-		public void Export(StreamWriter Writer,  cDataFiles.eExportType eType)
+		public void Export(StreamWriter Writer)
 			{
+			if (Count <= 0)
+				return;
+
 			string strLine = "";
 
-			switch (eType)
+			Writer.WriteLine(cBullet.CSVHeader);
+			Writer.WriteLine();
+
+			Writer.WriteLine(cBullet.CSVLineHeader);
+			Writer.WriteLine();
+
+			foreach (cBullet Bullet in this)
 				{
-				case cDataFiles.eExportType.CSV:
-					Writer.WriteLine(cBullet.CSVHeader);
-					Writer.WriteLine();
+				strLine = Bullet.CSVLine;
 
-					Writer.WriteLine(cBullet.CSVLineHeader);
-					Writer.WriteLine();
-
-					foreach (cBullet Bullet in this)
-						{
-						strLine = Bullet.CSVLine;
-
-						Writer.WriteLine(strLine);
-						}
-
-					Writer.WriteLine();
-
-					break;
-
-				case cDataFiles.eExportType.XML:
-					Writer.WriteLine(cFirearm.XMLHeader);
-					Writer.WriteLine(cFirearm.XMLLineHeader);
-
-					foreach (cBullet Bullet in this)
-						{
-						strLine = Bullet.XMLLine;
-
-						Writer.WriteLine(strLine);
-						}
-
-					break;
+				Writer.WriteLine(strLine);
 				}
+
+			Writer.WriteLine();
 			}
 
 		//============================================================================*
@@ -94,14 +78,18 @@ namespace ReloadersWorkShop
 
 		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
 			{
-			XmlElement XMLElement = XMLDocument.CreateElement(string.Empty, "Calibers", string.Empty);
-			XMLParentElement.AppendChild(XMLElement);
-
-			foreach (cBullet Bullet in this)
+			if (Count > 0)
 				{
-				Bullet.Export(XMLDocument, XMLElement);
+				XmlElement XMLElement = XMLDocument.CreateElement(string.Empty, "Calibers", string.Empty);
+				XMLParentElement.AppendChild(XMLElement);
+
+				foreach (cBullet Bullet in this)
+					{
+					Bullet.Export(XMLDocument, XMLElement);
+					}
 				}
 			}
+
 		//============================================================================*
 		// HandgunCount Property
 		//============================================================================*

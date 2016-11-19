@@ -10,6 +10,11 @@
 //============================================================================*
 
 using System;
+using System.Xml;
+
+//============================================================================*
+// Application Specific Using Statements
+//============================================================================*
 
 using ReloadersWorkShop.Preferences;
 
@@ -129,6 +134,96 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			return (rc);
+			}
+
+		//============================================================================*
+		// CSVHeader Property
+		//============================================================================*
+
+		public static string CSVHeader
+			{
+			get
+				{
+				return ("Charges");
+				}
+			}
+
+		//============================================================================*
+		// CSVLine Property
+		//============================================================================*
+
+		public string CSVLine
+			{
+			get
+				{
+				string strLine = ",";
+
+				strLine += m_dPowderWeight;
+				strLine += ",";
+				strLine += m_dFillRatio;
+				strLine += ",";
+				strLine += m_fFavorite ? "Yes" : "-";
+				strLine += ",";
+				strLine += m_fReject ? "Yes" : "-";
+
+				return (strLine);
+				}
+			}
+
+		//============================================================================*
+		// CSVLineHeader Property
+		//============================================================================*
+
+		public static string CSVLineHeader
+			{
+			get
+				{
+				return ("Powder Weight,Fill Ratio,Favorite,Reject");
+				}
+			}
+
+		//============================================================================*
+		// Export() - XML Document
+		//============================================================================*
+
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			XmlElement XMLThisElement = XMLDocument.CreateElement("Charge");
+			XMLParentElement.AppendChild(XMLThisElement);
+
+			// PowderWeight
+
+			XmlElement XMLElement = XMLDocument.CreateElement("PowderWeight");
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dPowderWeight));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Fill Ratio
+
+			XMLElement = XMLDocument.CreateElement("FillRatio");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dFillRatio));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Favorite
+
+			XMLElement = XMLDocument.CreateElement("Favorite");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fFavorite ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Reject
+
+			XMLElement = XMLDocument.CreateElement("Reject");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fReject ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			TestList.Export(XMLDocument, XMLThisElement);
 			}
 
 		//============================================================================*

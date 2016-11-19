@@ -12,6 +12,7 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -30,51 +31,36 @@ namespace ReloadersWorkShop
 		// Export()
 		//============================================================================*
 
-		public void Export(StreamWriter Writer, cDataFiles.eExportType eType, bool fBatchTests)
+		public void Export(StreamWriter Writer, bool fBatchTests)
 			{
-			string strLine = "";
+			if (Count <= 0)
+				return;
 
-			switch (eType)
+			Writer.WriteLine("Batches");
+			Writer.WriteLine();
+
+			Writer.WriteLine(cBatch.CSVLineHeader);
+			Writer.WriteLine();
+
+			foreach (cBatch Batch in this)
+				Batch.Export(Writer, fBatchTests);
+
+			Writer.WriteLine();
+			}
+
+		//============================================================================*
+		// Export()
+		//============================================================================*
+
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement, bool fIncludeTests = true)
+			{
+			if (Count > 0)
 				{
-				case cDataFiles.eExportType.CSV:
-					Writer.WriteLine(cBatch.CSVHeader);
-					Writer.WriteLine();
+				XmlElement XMLElement = XMLDocument.CreateElement("Batches");
+				XMLParentElement.AppendChild(XMLElement);
 
-					Writer.WriteLine(cBatch.CSVLineHeader);
-					Writer.WriteLine();
-
-					foreach (cBatch Batch in this)
-						{
-						strLine = Batch.CSVLine;
-
-						Writer.WriteLine(strLine);
-
-						if (Batch.BatchTest != null && fBatchTests)
-							{
-							Writer.WriteLine();
-
-							Batch.BatchTest.Export(Writer, eType);
-
-							Writer.WriteLine();
-							}
-						}
-
-					Writer.WriteLine();
-
-					break;
-
-				case cDataFiles.eExportType.XML:
-					Writer.WriteLine(cBatch.XMLHeader);
-					Writer.WriteLine(cBatch.XMLLineHeader);
-
-					foreach (cBatch Batch in this)
-						{
-						strLine = Batch.XMLLine;
-
-						Writer.WriteLine(strLine);
-						}
-
-					break;
+				foreach (cBatch Batch in this)
+					Batch.Export(XMLDocument, XMLElement, fIncludeTests);
 				}
 			}
 		}

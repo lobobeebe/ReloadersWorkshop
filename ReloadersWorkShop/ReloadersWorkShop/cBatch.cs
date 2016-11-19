@@ -10,6 +10,12 @@
 //============================================================================*
 
 using System;
+using System.IO;
+using System.Xml;
+
+//============================================================================*
+// Application Specific Using Statements
+//============================================================================*
 
 using ReloadersWorkShop.Preferences;
 
@@ -400,7 +406,7 @@ namespace ReloadersWorkShop
 				strLine += m_strUserID;
 				strLine += ",";
 
-				strLine += m_DateLoaded;
+				strLine += m_DateLoaded.ToShortDateString();
 				strLine += ",";
 
 				strLine += m_Load.Bullet.ToString();
@@ -498,6 +504,257 @@ namespace ReloadersWorkShop
 				{
 				m_fExpandedNeck = value;
 				}
+			}
+
+		//============================================================================*
+		// Export() - CSV
+		//============================================================================*
+
+		public void Export(StreamWriter Writer, bool fIncludeTests = true)
+			{
+			Writer.WriteLine(CSVLine);
+
+			if (fIncludeTests && m_BatchTest != null)
+				{
+				Writer.WriteLine();
+
+				m_BatchTest.Export(Writer);
+				}
+			}
+
+		//============================================================================*
+		// Export() - XML Document
+		//============================================================================*
+
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement, bool fIncludeTests = true)
+			{
+			XmlElement XMLThisElement = XMLDocument.CreateElement("Batch");
+			XMLParentElement.AppendChild(XMLThisElement);
+
+			// Batch ID
+
+			XmlElement XMLElement = XMLDocument.CreateElement("BatchID");
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nBatchID));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// User Batch ID
+
+			if (!String.IsNullOrEmpty(m_strUserID))
+				{
+				XMLElement = XMLDocument.CreateElement("UserBatchID");
+				XMLTextElement = XMLDocument.CreateTextNode(m_strUserID);
+				XMLElement.AppendChild(XMLTextElement);
+
+				XMLThisElement.AppendChild(XMLElement);
+				}
+
+			// Date Loaded
+
+			XMLElement = XMLDocument.CreateElement("DateLoaded");
+			XMLTextElement = XMLDocument.CreateTextNode(m_DateLoaded.ToShortDateString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Bullet
+
+			XMLElement = XMLDocument.CreateElement("Bullet");
+			XMLTextElement = XMLDocument.CreateTextNode(m_Load.Bullet.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Powder
+
+			XMLElement = XMLDocument.CreateElement("Powder");
+			XMLTextElement = XMLDocument.CreateTextNode(m_Load.Powder.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Primer
+
+			XMLElement = XMLDocument.CreateElement("Primer");
+			XMLTextElement = XMLDocument.CreateTextNode(m_Load.Primer.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Case
+
+			XMLElement = XMLDocument.CreateElement("Case");
+			XMLTextElement = XMLDocument.CreateTextNode(m_Load.Case.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Firearm
+
+			if (m_Firearm != null)
+				{
+				XMLElement = XMLDocument.CreateElement("Firearm");
+				XMLTextElement = XMLDocument.CreateTextNode(m_Firearm.ToString());
+				XMLElement.AppendChild(XMLTextElement);
+
+				XMLThisElement.AppendChild(XMLElement);
+				}
+
+			// Powder Weight
+
+			XMLElement = XMLDocument.CreateElement("PowderWeight");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dPowderWeight));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Num Rounds
+
+			XMLElement = XMLDocument.CreateElement("NumRounds");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nNumRounds));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Cases Fired
+
+			XMLElement = XMLDocument.CreateElement("CasesFired");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nTimesFired));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// COAL
+
+			XMLElement = XMLDocument.CreateElement("COAL");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dCOL));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// CBTO
+
+			XMLElement = XMLDocument.CreateElement("CBTO");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dCBTO));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Headspace
+
+			XMLElement = XMLDocument.CreateElement("Headspace");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dHeadSpace));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Neck Size
+
+			XMLElement = XMLDocument.CreateElement("NeckSize");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dNeckSize));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Neck Wall
+
+			XMLElement = XMLDocument.CreateElement("NeckWall");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dNeckWall));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Case Trim Length
+
+			XMLElement = XMLDocument.CreateElement("CaseTrimLength");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dCaseTrimLength));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Bullet Diameter
+
+			XMLElement = XMLDocument.CreateElement("BulletDiameter");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dBulletDiameter));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Full Length Sized
+
+			XMLElement = XMLDocument.CreateElement("FullLengthSized");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fFullLengthSized ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Neck Sized
+
+			XMLElement = XMLDocument.CreateElement("NeckSized");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fNeckSized ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Expanded Neck
+
+			XMLElement = XMLDocument.CreateElement("ExpandedNeck");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fExpandedNeck ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Neck Turned
+
+			XMLElement = XMLDocument.CreateElement("NeckTurned");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fNeckTurned ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Annealed
+
+			XMLElement = XMLDocument.CreateElement("Annealed");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fAnnealed ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Modified Bullet
+
+			XMLElement = XMLDocument.CreateElement("ModifiedBullet");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fModifiedBullet ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Jump Set
+
+			XMLElement = XMLDocument.CreateElement("JumpSet");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fJumpSet ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Jump
+
+			XMLElement = XMLDocument.CreateElement("Jump");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dJump));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Archived
+
+			XMLElement = XMLDocument.CreateElement("Archived");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fArchive ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			if (m_BatchTest != null && fIncludeTests)
+				m_BatchTest.Export(XMLDocument, XMLThisElement);
 			}
 
 		//============================================================================*

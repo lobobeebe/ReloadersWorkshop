@@ -212,9 +212,12 @@ namespace ReloadersWorkShop
 			HelpVideoHeadspaceMenuItem.Click += OnHelpVideoClicked;
 			HelpVideoRWBallisticsCalculatorMenuItem.Click += OnHelpVideoClicked;
 			HelpVideoRWBatchEditorMenuItem.Click += OnHelpVideoClicked;
+			HelpVideoRWCrossUseMenuItem.Click += OnHelpVideoClicked;
+			HelpVideoRWExportingDataMenuItem.Click += OnHelpVideoClicked;
 			HelpVideoRWInventoryMenuItem.Click += OnHelpVideoClicked;
 			HelpVideoRWLoadDataMenuItem.Click += OnHelpVideoClicked;
-            HelpVideoRWTargetCalculatorMenuItem.Click += OnHelpVideoClicked;
+			HelpVideoRWSettingJumpMenuItem.Click += OnHelpVideoClicked;
+			HelpVideoRWTargetCalculatorMenuItem.Click += OnHelpVideoClicked;
             HelpVideoRWOperationMenuItem.Click += OnHelpVideoClicked;
 			HelpVideoSDBCMenuItem.Click += OnHelpVideoClicked;
 
@@ -1109,7 +1112,13 @@ namespace ReloadersWorkShop
                     case "HelpVideoRWBatchEditorMenuItem":
                         System.Diagnostics.Process.Start("https://www.youtube.com/v/FO5z6Qvo-Lg?autoplay=1&rel=0&showinfo=0");
                         break;
-                    case "HelpVideoRWInventoryMenuItem":
+					case "HelpVideoRWCrossUseMenuItem":
+						System.Diagnostics.Process.Start("https://www.youtube.com/v/xiSWuVINOf8?autoplay=1&rel=0&showinfo=0");
+						break;
+					case "HelpVideoRWExportingDataMenuItem":
+						System.Diagnostics.Process.Start("https://www.youtube.com/v/kO0X6nvIiCg?autoplay=1&rel=0&showinfo=0");
+						break;
+					case "HelpVideoRWInventoryMenuItem":
                         System.Diagnostics.Process.Start("https://www.youtube.com/v/xrkLTBP9jZs?autoplay=1&rel=0&showinfo=0");
                         break;
                     case "HelpVideoRWLoadDataMenuItem":
@@ -1118,7 +1127,10 @@ namespace ReloadersWorkShop
                     case "HelpVideoRWOperationMenuItem":
                         System.Diagnostics.Process.Start("https://www.youtube.com/v/MOWC-ljqo6s?autoplay=1&rel=0&showinfo=0");
                         break;
-                    case "HelpVideoRWTargetCalculatorMenuItem":
+					case "HelpVideoRWSettingJumpMenuItem":
+						System.Diagnostics.Process.Start("https://www.youtube.com/v/qxTpO5z-Vto?autoplay=1&rel=0&showinfo=0");
+						break;
+					case "HelpVideoRWTargetCalculatorMenuItem":
                         System.Diagnostics.Process.Start("https://www.youtube.com/v/WgaOR49oU-c?autoplay=1&rel=0&showinfo=0");
                         break;
                     case "HelpVideoSDBCMenuItem":

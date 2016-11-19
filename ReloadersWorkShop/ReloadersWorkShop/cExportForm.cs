@@ -185,34 +185,34 @@ namespace ReloadersWorkShop
 					//----------------------------------------------------------------------------*
 
 					if (ManufacturersCheckBox.Checked)
-						m_DataFiles.ManufacturerList.Export(Writer, cDataFiles.eExportType.CSV);
+						m_DataFiles.ManufacturerList.Export(Writer);
 
 					if (CalibersCheckBox.Checked)
-						m_DataFiles.CaliberList.Export(Writer, cDataFiles.eExportType.CSV);
+						m_DataFiles.CaliberList.Export(Writer);
 
 					if (FirearmsCheckBox.Checked)
-						m_DataFiles.FirearmList.Export(Writer, cDataFiles.eExportType.CSV);
+						m_DataFiles.FirearmList.Export(Writer);
 
 					if (AmmoCheckBox.Checked)
-						m_DataFiles.AmmoList.Export(Writer, cDataFiles.eExportType.CSV);
+						m_DataFiles.AmmoList.Export(Writer);
 
 					if (BulletsCheckBox.Checked)
-						m_DataFiles.BulletList.Export(Writer, cDataFiles.eExportType.CSV);
-
-					if (CasesCheckBox.Checked)
-						m_DataFiles.CaseList.Export(Writer, cDataFiles.eExportType.CSV);
-
-					if (PrimersCheckBox.Checked)
-						m_DataFiles.PrimerList.Export(Writer, cDataFiles.eExportType.CSV);
+						m_DataFiles.BulletList.Export(Writer);
 
 					if (PowdersCheckBox.Checked)
-						m_DataFiles.PowderList.Export(Writer, cDataFiles.eExportType.CSV);
+						m_DataFiles.PowderList.Export(Writer);
+
+					if (PrimersCheckBox.Checked)
+						m_DataFiles.PrimerList.Export(Writer);
+
+					if (CasesCheckBox.Checked)
+						m_DataFiles.CaseList.Export(Writer);
 
 					if (LoadsCheckBox.Checked)
-						m_DataFiles.LoadList.Export(Writer, cDataFiles.eExportType.CSV);
+						m_DataFiles.LoadList.Export(Writer);
 
 					if (BatchesCheckBox.Checked)
-						m_DataFiles.BatchList.Export(Writer, cDataFiles.eExportType.CSV, BatchTestsCheckBox.Checked);
+						m_DataFiles.BatchList.Export(Writer, BatchTestsCheckBox.Checked);
 					}
 				}
 			catch
@@ -273,29 +273,35 @@ namespace ReloadersWorkShop
 			XmlText XMLTextElement = XMLDocument.CreateTextNode("Reloader's WorkShop Data File Export");
 			MainElement.AppendChild(XMLTextElement);
 
-			if (ManufacturersCheckBox.Checked && m_DataFiles.ManufacturerList.Count > 0)
+			if (ManufacturersCheckBox.Checked)
 				m_DataFiles.ManufacturerList.Export(XMLDocument, MainElement);
 
-			if (CalibersCheckBox.Checked && m_DataFiles.CaliberList.Count > 0)
+			if (CalibersCheckBox.Checked)
 				m_DataFiles.CaliberList.Export(XMLDocument, MainElement);
 
-			if (FirearmsCheckBox.Checked && m_DataFiles.FirearmList.Count > 0)
+			if (FirearmsCheckBox.Checked)
 				m_DataFiles.FirearmList.Export(XMLDocument, MainElement);
 
-			if (AmmoCheckBox.Checked && m_DataFiles.AmmoList.Count > 0)
+			if (AmmoCheckBox.Checked)
 				m_DataFiles.AmmoList.Export(XMLDocument, MainElement);
 
-			if (BulletsCheckBox.Checked && m_DataFiles.BulletList.Count > 0)
+			if (BulletsCheckBox.Checked)
 				m_DataFiles.BulletList.Export(XMLDocument, MainElement);
 
-			if (PowdersCheckBox.Checked && m_DataFiles.PowderList.Count > 0)
+			if (PowdersCheckBox.Checked)
 				m_DataFiles.PowderList.Export(XMLDocument, MainElement);
 
-			if (PrimersCheckBox.Checked && m_DataFiles.PrimerList.Count > 0)
+			if (PrimersCheckBox.Checked)
 				m_DataFiles.PrimerList.Export(XMLDocument, MainElement);
 
-			if (CasesCheckBox.Checked && m_DataFiles.CaseList.Count > 0)
+			if (CasesCheckBox.Checked)
 				m_DataFiles.CaseList.Export(XMLDocument, MainElement);
+
+			if (LoadsCheckBox.Checked)
+				m_DataFiles.LoadList.Export(XMLDocument, MainElement, ChargeDataCheckBox.Checked);
+
+			if (BatchesCheckBox.Checked)
+				m_DataFiles.BatchList.Export(XMLDocument, MainElement, BatchTestsCheckBox.Checked);
 
 			return (XMLDocument);
 			}

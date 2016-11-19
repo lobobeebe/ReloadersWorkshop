@@ -12,6 +12,7 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Xml;
 
 namespace ReloadersWorkShop
 	{
@@ -39,44 +40,44 @@ namespace ReloadersWorkShop
 		// Export()
 		//============================================================================*
 
-		public void Export(StreamWriter Writer, cDataFiles.eExportType eType)
+		public void Export(StreamWriter Writer)
 			{
+			if (Count <= 0)
+				return;
+
 			string strLine = "";
 
-			switch (eType)
+			Writer.WriteLine(cLoad.CSVHeader);
+			Writer.WriteLine();
+
+			Writer.WriteLine(cLoad.CSVLineHeader);
+			Writer.WriteLine();
+
+			foreach (cLoad Load in this)
 				{
-				case cDataFiles.eExportType.CSV:
-					Writer.WriteLine(cLoad.CSVHeader);
-					Writer.WriteLine();
+				cCaliber.CurrentFirearmType = Load.FirearmType;
 
-					Writer.WriteLine(cLoad.CSVLineHeader);
-					Writer.WriteLine();
+				strLine = Load.CSVLine;
 
-					foreach (cLoad Load in this)
-						{
-						cCaliber.CurrentFirearmType = Load.FirearmType;
+				Writer.WriteLine(strLine);
+				}
 
-						strLine = Load.CSVLine;
+			Writer.WriteLine();
+			}
 
-						Writer.WriteLine(strLine);
-						}
+		//============================================================================*
+		// Export()
+		//============================================================================*
 
-					Writer.WriteLine();
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement, bool fIncludeCharges = true)
+			{
+			if (Count > 0)
+				{
+				XmlElement XMLElement = XMLDocument.CreateElement("Loads");
+				XMLParentElement.AppendChild(XMLElement);
 
-					break;
-
-				case cDataFiles.eExportType.XML:
-					Writer.WriteLine(cLoad.XMLHeader);
-					Writer.WriteLine(cLoad.XMLLineHeader);
-
-					foreach (cLoad Load in this)
-						{
-						strLine = Load.XMLLine;
-
-						Writer.WriteLine(strLine);
-						}
-
-					break;
+				foreach (cLoad Load in this)
+					Load.Export(XMLDocument, XMLElement, fIncludeCharges);
 				}
 			}
 		}

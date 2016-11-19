@@ -318,7 +318,7 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				string strLine = "Firearm Type,Cross Use?,Manufacturer,Part Number,Type,Diameter,Length,Weight,Ballistic Coefficient";
+				string strLine = "Manufacturer,Part Number,Type,Firearm Type,Cross Use,Diameter,Length,Weight,Ballistic Coefficient";
 
 				return (strLine);
 				}

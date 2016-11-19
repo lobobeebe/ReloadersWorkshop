@@ -32,57 +32,40 @@ namespace ReloadersWorkShop
 			foreach (cPrimer CheckPrimer in this)
 				{
 				if (CheckPrimer.CompareTo(Primer) == 0)
-					return(false);
+					return (false);
 				}
 
 			Add(Primer);
 
-			return(true);
+			return (true);
 			}
 
 		//============================================================================*
 		// Export()
 		//============================================================================*
 
-		public void Export(StreamWriter Writer, cDataFiles.eExportType eType)
+		public void Export(StreamWriter Writer)
 			{
+			if (Count <= 0)
+				return;
+
 			string strLine = "";
 
-			switch (eType)
+			Writer.WriteLine(cPrimer.CSVHeader);
+			Writer.WriteLine();
+
+			Writer.WriteLine(cPrimer.CSVLineHeader);
+			Writer.WriteLine();
+
+			foreach (cPrimer Primer in this)
 				{
-				case cDataFiles.eExportType.CSV:
-					Writer.WriteLine(cPrimer.CSVHeader);
-					Writer.WriteLine();
+				strLine = Primer.CSVLine;
 
-					Writer.WriteLine(cPrimer.CSVLineHeader);
-					Writer.WriteLine();
-
-					foreach (cPrimer Primer in this)
-						{
-						strLine = Primer.CSVLine;
-
-						Writer.WriteLine(strLine);
-						}
-
-					Writer.WriteLine();
-
-					break;
-
-				case cDataFiles.eExportType.XML:
-					Writer.WriteLine(cPrimer.XMLHeader);
-					Writer.WriteLine(cPrimer.XMLLineHeader);
-
-					foreach (cPrimer Primer in this)
-						{
-						strLine = Primer.XMLLine;
-
-						Writer.WriteLine(strLine);
-						}
-
-					break;
+				Writer.WriteLine(strLine);
 				}
-			}
 
+			Writer.WriteLine();
+			}
 
 		//============================================================================*
 		// Export()
@@ -90,12 +73,13 @@ namespace ReloadersWorkShop
 
 		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
 			{
-			XmlElement XMLElement = XMLDocument.CreateElement(string.Empty, "Primers", string.Empty);
-			XMLParentElement.AppendChild(XMLElement);
-
-			foreach (cPrimer Primer in this)
+			if (Count > 0)
 				{
-				Primer.Export(XMLDocument, XMLElement);
+				XmlElement XMLElement = XMLDocument.CreateElement(string.Empty, "Primers", string.Empty);
+				XMLParentElement.AppendChild(XMLElement);
+
+				foreach (cPrimer Primer in this)
+					Primer.Export(XMLDocument, XMLElement);
 				}
 			}
 

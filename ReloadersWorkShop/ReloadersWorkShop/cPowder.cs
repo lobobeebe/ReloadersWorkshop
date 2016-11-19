@@ -174,7 +174,7 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				return ("Firearm Type,Cross Use?,Manufacturer,Type,Shape");
+				return ("Manufacturer,Type,Shape,Firearm Type,Cross Use");
 				}
 			}
 

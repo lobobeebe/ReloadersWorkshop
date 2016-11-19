@@ -28,57 +28,40 @@ namespace ReloadersWorkShop
 			foreach (cPowder CheckPowder in this)
 				{
 				if (CheckPowder.CompareTo(Powder) == 0)
-					return(false);
+					return (false);
 				}
 
 			Add(Powder);
 
-			return(true);
+			return (true);
 			}
 
 		//============================================================================*
 		// Export()
 		//============================================================================*
 
-		public void Export(StreamWriter Writer, cDataFiles.eExportType eType)
+		public void Export(StreamWriter Writer)
 			{
+			if (Count <= 0)
+				return;
+
 			string strLine = "";
 
-			switch (eType)
+			Writer.WriteLine(cPowder.CSVHeader);
+			Writer.WriteLine();
+
+			Writer.WriteLine(cPowder.CSVLineHeader);
+			Writer.WriteLine();
+
+			foreach (cPowder Powder in this)
 				{
-				case cDataFiles.eExportType.CSV:
-					Writer.WriteLine(cPowder.CSVHeader);
-					Writer.WriteLine();
+				strLine = Powder.CSVLine;
 
-					Writer.WriteLine(cPowder.CSVLineHeader);
-					Writer.WriteLine();
-
-					foreach (cPowder Powder in this)
-						{
-						strLine = Powder.CSVLine;
-
-						Writer.WriteLine(strLine);
-						}
-
-					Writer.WriteLine();
-
-					break;
-
-				case cDataFiles.eExportType.XML:
-					Writer.WriteLine(cPowder.XMLHeader);
-					Writer.WriteLine(cPowder.XMLLineHeader);
-
-					foreach (cPowder Powder in this)
-						{
-						strLine = Powder.XMLLine;
-
-						Writer.WriteLine(strLine);
-						}
-
-					break;
+				Writer.WriteLine(strLine);
 				}
-			}
 
+			Writer.WriteLine();
+			}
 
 		//============================================================================*
 		// Export()
@@ -86,12 +69,15 @@ namespace ReloadersWorkShop
 
 		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
 			{
-			XmlElement XMLElement = XMLDocument.CreateElement(string.Empty, "Powders", string.Empty);
-			XMLParentElement.AppendChild(XMLElement);
-
-			foreach (cPowder Powder in this)
+			if (Count > 0)
 				{
-				Powder.Export(XMLDocument, XMLElement);
+				XmlElement XMLElement = XMLDocument.CreateElement(string.Empty, "Powders", string.Empty);
+				XMLParentElement.AppendChild(XMLElement);
+
+				foreach (cPowder Powder in this)
+					{
+					Powder.Export(XMLDocument, XMLElement);
+					}
 				}
 			}
 

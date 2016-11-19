@@ -119,6 +119,12 @@ namespace ReloadersWorkShop
 
 			Rectangle PageRect = e.PageBounds;
 
+			Rectangle PageAreaRect = e.PageBounds;
+			PageAreaRect.Width = e.MarginBounds.Width;
+			PageAreaRect.Height = e.MarginBounds.Height;
+
+			int nLeftMargin = e.MarginBounds.Left;
+
 			int nXDPI = (int)((double)PageRect.Width / 8.5);
 			int nYDPI = (int)((double)PageRect.Height / 11);
 
@@ -140,6 +146,8 @@ namespace ReloadersWorkShop
 				if (Firearm.Printed)
 					continue;
 
+				cCaliber.CurrentFirearmType = Firearm.FirearmType;
+
 				//----------------------------------------------------------------------------*
 				// Draw the page header
 				//----------------------------------------------------------------------------*
@@ -150,13 +158,13 @@ namespace ReloadersWorkShop
 				// Firearm Name
 				//----------------------------------------------------------------------------*
 
-				string strText = Firearm.ToString();
+				string strText = Firearm.ToShortString();
 
 				SizeF TextSize = e.Graphics.MeasureString(strText, FirearmNameFont);
 
 				nY += TextSize.Height;
 
-				e.Graphics.DrawString(strText, FirearmNameFont, Brushes.Black, (PageRect.Width / 2) - (TextSize.Width / 2), nY);
+				e.Graphics.DrawString(strText, FirearmNameFont, Brushes.Black, nLeftMargin + (PageAreaRect.Width / 2) - (TextSize.Width / 2), nY);
 
 				nY += TextSize.Height;
 
@@ -169,7 +177,7 @@ namespace ReloadersWorkShop
 
 				TextSize = e.Graphics.MeasureString(strText, SerialNumberFont);
 
-				e.Graphics.DrawString(strText, SerialNumberFont, Brushes.Black, (PageRect.Width / 2) - (TextSize.Width / 2), nY);
+				e.Graphics.DrawString(strText, SerialNumberFont, Brushes.Black, nLeftMargin + (PageAreaRect.Width / 2) - (TextSize.Width / 2), nY);
 
 				nY += (TextSize.Height * 2);
 
@@ -230,7 +238,7 @@ namespace ReloadersWorkShop
 
 					TextSize = e.Graphics.MeasureString(strText, DataFont);
 
-					e.Graphics.DrawString(strText, DataFont, Brushes.Black, (PageRect.Width / 2) - (TextSize.Width / 2), nY);
+					e.Graphics.DrawString(strText, DataFont, Brushes.Black, nLeftMargin + (PageAreaRect.Width / 2) - (TextSize.Width / 2), nY);
 
 					nY += (TextSize.Height * 2);
 					}
@@ -278,7 +286,7 @@ namespace ReloadersWorkShop
 					{
 					TextSize = e.Graphics.MeasureString(strText, DataFont);
 
-					e.Graphics.DrawString(strText, DataFont, Brushes.Black, (PageRect.Width / 2) - (TextSize.Width / 2), nY);
+					e.Graphics.DrawString(strText, DataFont, Brushes.Black, nLeftMargin + (PageAreaRect.Width / 2) - (TextSize.Width / 2), nY);
 
 					nY += TextSize.Height;
 					}
@@ -340,7 +348,7 @@ namespace ReloadersWorkShop
 
 				TextSize = e.Graphics.MeasureString(strText, DataFont);
 
-				e.Graphics.DrawString(strText, DataFont, Brushes.Black, (PageRect.Width / 2) - (TextSize.Width / 2), nY);
+				e.Graphics.DrawString(strText, DataFont, Brushes.Black, nLeftMargin + (PageAreaRect.Width / 2) - (TextSize.Width / 2), nY);
 
 				nY += (TextSize.Height * 2);
 
@@ -359,7 +367,7 @@ namespace ReloadersWorkShop
 
 					TextSize = e.Graphics.MeasureString(strText, DataFont);
 
-					e.Graphics.DrawString(strText, DataFont, Brushes.Black, (PageRect.Width / 2) - (TextSize.Width / 2), nY);
+					e.Graphics.DrawString(strText, DataFont, Brushes.Black, nLeftMargin + (PageAreaRect.Width / 2) - (TextSize.Width / 2), nY);
 
 					nY += (TextSize.Height * 2);
 					}
@@ -409,7 +417,7 @@ namespace ReloadersWorkShop
 
 					TextSize = e.Graphics.MeasureString(strText, DataFont);
 
-					e.Graphics.DrawString(strText, DataFont, Brushes.Black, (PageRect.Width / 2) - (TextSize.Width / 2), nY);
+					e.Graphics.DrawString(strText, DataFont, Brushes.Black, nLeftMargin + (PageAreaRect.Width / 2) - (TextSize.Width / 2), nY);
 
 					nY += TextSize.Height;
 					}
@@ -437,7 +445,7 @@ namespace ReloadersWorkShop
 
 					TextSize = e.Graphics.MeasureString(strText, DataFont);
 
-					e.Graphics.DrawString(strText, DataFont, Brushes.Black, (PageRect.Width / 2) - (TextSize.Width / 2), nY);
+					e.Graphics.DrawString(strText, DataFont, Brushes.Black, nLeftMargin + (PageAreaRect.Width / 2) - (TextSize.Width / 2), nY);
 
 					nY += (TextSize.Height * 2);
 					}
@@ -459,7 +467,7 @@ namespace ReloadersWorkShop
 
 					TextSize = e.Graphics.MeasureString(strText, DataFont);
 
-					e.Graphics.DrawString(strText, DataFont, Brushes.Black, (PageRect.Width / 2) - (TextSize.Width / 2), nY);
+					e.Graphics.DrawString(strText, DataFont, Brushes.Black, nLeftMargin + (PageAreaRect.Width / 2) - (TextSize.Width / 2), nY);
 
 					nY += (TextSize.Height * 2);
 					}

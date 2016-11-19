@@ -61,7 +61,7 @@
 			this.FileTypeCombo.FormattingEnabled = true;
 			this.FileTypeCombo.Items.AddRange(new object[] {
             "Comma Delimited Text File (*.csv)",
-            "XML File (*.xml"});
+            "XML File (*.xml)"});
 			this.FileTypeCombo.Location = new System.Drawing.Point(78, 19);
 			this.FileTypeCombo.Name = "FileTypeCombo";
 			this.FileTypeCombo.Size = new System.Drawing.Size(193, 21);

@@ -10,6 +10,7 @@
 //============================================================================*
 
 using System;
+using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -335,6 +336,115 @@ namespace ReloadersWorkShop
 			m_nBatchID = ChargeTest.m_nBatchID;
 
 			m_dPowderWeight = ChargeTest.m_dPowderWeight;
+			}
+
+		//============================================================================*
+		// Export() - XML Document
+		//============================================================================*
+
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			XmlElement XMLThisElement = XMLDocument.CreateElement("ChargeTest");
+			XMLParentElement.AppendChild(XMLThisElement);
+
+			// Test Date
+
+			XmlElement XMLElement = XMLDocument.CreateElement("TestDate");
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(m_TestDate.ToShortDateString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Source
+
+			XMLElement = XMLDocument.CreateElement("Source");
+			XMLTextElement = XMLDocument.CreateTextNode(m_strSource);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Firearm
+
+			if (m_Firearm != null)
+				{
+				XMLElement = XMLDocument.CreateElement("Firearm");
+				XMLTextElement = XMLDocument.CreateTextNode(m_Firearm.ToString());
+				XMLElement.AppendChild(XMLTextElement);
+
+				XMLThisElement.AppendChild(XMLElement);
+				}
+
+			// Barrel Length
+
+			XMLElement = XMLDocument.CreateElement("BarrelLength");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dBarrelLength));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Twist
+
+			XMLElement = XMLDocument.CreateElement("Twist");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dTwist));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Muzzle Velocity
+
+			XMLElement = XMLDocument.CreateElement("MuzzleVelocity");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nMuzzleVelocity));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Pressure
+
+			XMLElement = XMLDocument.CreateElement("Pressure");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nPressure));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Best Group
+
+			XMLElement = XMLDocument.CreateElement("BestGroup");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dBestGroup));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Best Group Range
+
+			XMLElement = XMLDocument.CreateElement("BestGroupRange");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nBestGroupRange));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Notes
+
+			XMLElement = XMLDocument.CreateElement("Notes");
+			XMLTextElement = XMLDocument.CreateTextNode(m_strNotes);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Batch Test
+
+			XMLElement = XMLDocument.CreateElement("BatchTest");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fBatchTest ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Batch ID
+
+			XMLElement = XMLDocument.CreateElement("BatchID");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nBatchID));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
 			}
 
 		//============================================================================*

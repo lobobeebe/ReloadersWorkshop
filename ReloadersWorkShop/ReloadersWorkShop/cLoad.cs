@@ -10,6 +10,7 @@
 //============================================================================*
 
 using System;
+using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -314,6 +315,69 @@ namespace ReloadersWorkShop
 				{
 				return ("Firearm Type,Caliber,Bullet,Powder,Case,Primer");
 				}
+			}
+
+		//============================================================================*
+		// Export() - XML Document
+		//============================================================================*
+
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement, bool fIncludeCharges = true)
+			{
+			XmlElement XMLThisElement = XMLDocument.CreateElement("Load");
+			XMLParentElement.AppendChild(XMLThisElement);
+
+			cCaliber.CurrentFirearmType = FirearmType;
+
+			// Caliber
+
+			XmlElement XMLElement = XMLDocument.CreateElement("Caliber");
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(m_Caliber.Name);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Firearm Type
+
+			XMLElement = XMLDocument.CreateElement("FirearmType");
+			XMLTextElement = XMLDocument.CreateTextNode(cFirearm.FirearmTypeString(FirearmType));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Bullet
+
+			XMLElement = XMLDocument.CreateElement("Bullet");
+			XMLTextElement = XMLDocument.CreateTextNode(m_Bullet.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Powder
+
+			XMLElement = XMLDocument.CreateElement("Powder");
+			XMLTextElement = XMLDocument.CreateTextNode(m_Powder.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Primer
+
+			XMLElement = XMLDocument.CreateElement("Primer");
+			XMLTextElement = XMLDocument.CreateTextNode(m_Primer.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Case
+
+			XMLElement = XMLDocument.CreateElement("Case");
+			XMLTextElement = XMLDocument.CreateTextNode(m_Case.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			if (m_ChargeList.Count > 0 && fIncludeCharges)
+				m_ChargeList.Export(XMLDocument, XMLThisElement);
 			}
 
 		//============================================================================*

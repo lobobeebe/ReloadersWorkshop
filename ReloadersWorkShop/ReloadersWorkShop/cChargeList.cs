@@ -11,6 +11,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Xml;
 
 //============================================================================*
 // Namespace
@@ -58,6 +59,21 @@ namespace ReloadersWorkShop
 			base.Add(Charge);
 
 			Sort(new cChargeComparer());
+			}
+
+		//============================================================================*
+		// Export()
+		//============================================================================*
+
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			XmlElement XMLElement = XMLDocument.CreateElement("Charges");
+			XMLParentElement.AppendChild(XMLElement);
+
+			foreach (cCharge Charge in this)
+				{
+				Charge.Export(XMLDocument, XMLElement);
+				}
 			}
 		}
 	}

@@ -44,27 +44,24 @@ namespace ReloadersWorkShop
 		// Export()
 		//============================================================================*
 
-		public void Export(StreamWriter Writer, cDataFiles.eExportType eType)
+		public void Export(StreamWriter Writer)
 			{
+			if (Count <= 0)
+				return;
+
 			Writer.WriteLine(cManufacturer.CSVHeader);
 			Writer.WriteLine();
 
 			string strLine = "";
 
-			switch (eType)
+			Writer.WriteLine(cManufacturer.CSVLineHeader);
+			Writer.WriteLine();
+
+			foreach (cManufacturer Manufacturer in this)
 				{
-				case cDataFiles.eExportType.CSV:
-					Writer.WriteLine(cManufacturer.CSVLineHeader);
-					Writer.WriteLine();
+				strLine = Manufacturer.CSVLine;
 
-					foreach (cManufacturer Manufacturer in this)
-						{
-						strLine = Manufacturer.CSVLine;
-
-						Writer.WriteLine(strLine);
-						}
-
-					break;
+				Writer.WriteLine(strLine);
 				}
 
 			Writer.WriteLine();
@@ -76,12 +73,15 @@ namespace ReloadersWorkShop
 
 		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
 			{
-			XmlElement XMLElement = XMLDocument.CreateElement(string.Empty, "Manufacturers", string.Empty);
-			XMLParentElement.AppendChild(XMLElement);
-
-			foreach (cManufacturer Manufacturer in this)
+			if (Count > 0)
 				{
-				Manufacturer.Export(XMLDocument, XMLElement);
+				XmlElement XMLElement = XMLDocument.CreateElement(string.Empty, "Manufacturers", string.Empty);
+				XMLParentElement.AppendChild(XMLElement);
+
+				foreach (cManufacturer Manufacturer in this)
+					{
+					Manufacturer.Export(XMLDocument, XMLElement);
+					}
 				}
 			}
 		}

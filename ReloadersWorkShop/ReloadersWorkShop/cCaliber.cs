@@ -199,7 +199,8 @@ namespace ReloadersWorkShop
 				strLine += m_strName;
 				strLine += ",";
 
-				cFirearm.FirearmTypeString(m_eFirearmType);
+				strLine += cFirearm.FirearmTypeString(m_eFirearmType);
+				strLine += ",";
 
 				strLine += m_strHeadStamp;
 
@@ -249,7 +250,7 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				string strLine = "Firearm Type,Name,Headstamp,Handgun Type,Small Primer,Large Primer,Magnum Primer,Min Bullet Dia.,Max Bullet Dia.,Min Bullet Weight,Max Bullet Weight,Case Trim Length,Max Case Length,Max COAL,Max Neck Dia";
+				string strLine = "Name,Firearm Type,Headstamp,Handgun Type,Small Primer,Large Primer,Magnum Primer,Min Bullet Dia.,Max Bullet Dia.,Min Bullet Weight,Max Bullet Weight,Case Trim Length,Max Case Length,Max COAL,Max Neck Dia";
 
 				return (strLine);
 				}

@@ -509,7 +509,7 @@ namespace ReloadersWorkShop
 				strLine += ",";
 				strLine += m_nCapacity;
 
-				strLine += m_strNotes = "";
+				strLine += m_strNotes;
 
 				return (strLine);
 				}
@@ -523,7 +523,7 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				return("Firearm Type,Manufacturer,Model,Serial Number,Barrel Length,Twist,Sight Height,Scoped,Scope Click, Turret Type,Zero Range,HeadSpace,Neck,Source,Purchase Date,Price,Receiver Finish,Barrel Finish,Type,Action,Hammer,Magazine,Capacity,Notes");
+				return("Manufacturer,Model,Serial Number,Firearm Type,Barrel Length,Twist,Sight Height,Scoped,Scope Click, Turret Type,Zero Range,HeadSpace,Neck,Source,Purchase Date,Price,Receiver Finish,Barrel Finish,Type,Action,Hammer,Magazine,Capacity,Notes");
 				}
 			}
 
@@ -1458,6 +1458,15 @@ namespace ReloadersWorkShop
 				}
 
 			return (fSynched);
+			}
+
+		//============================================================================*
+		// ToShortString()
+		//============================================================================*
+
+		public string ToShortString()
+			{
+			return (String.Format("{0} {1}", (m_Manufacturer != null) ? m_Manufacturer.Name : "", m_strModel));
 			}
 
 		//============================================================================*

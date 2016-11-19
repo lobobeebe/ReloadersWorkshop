@@ -230,7 +230,7 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				return ("Firearm Type,Cross Use?,Manufacturer,Part Number,Caliber,Match,Military,Large Primer,Small Primer");
+				return ("Manufacturer,Part Number,Firearm Type,Cross Use?,Caliber,Match,Military,Large Primer,Small Primer");
 				}
 			}
 

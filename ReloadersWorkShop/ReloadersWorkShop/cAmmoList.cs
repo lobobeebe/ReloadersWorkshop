@@ -31,32 +31,28 @@ namespace ReloadersWorkShop
 		// Export()
 		//============================================================================*
 
-		public void Export(StreamWriter Writer, cDataFiles.eExportType eType)
+		public void Export(StreamWriter Writer)
 			{
+			if (Count <= 0)
+				return;
+
 			string strLine = "";
 
-			switch (eType)
+			Writer.WriteLine(cAmmo.CSVHeader);
+			Writer.WriteLine();
+
+			Writer.WriteLine(cAmmo.CSVLineHeader);
+			Writer.WriteLine();
+
+			foreach (cAmmo Ammo in this)
 				{
-				case cDataFiles.eExportType.CSV:
-					Writer.WriteLine(cAmmo.CSVHeader);
-					Writer.WriteLine();
+				strLine = Ammo.CSVLine;
 
-					Writer.WriteLine(cAmmo.CSVLineHeader);
-					Writer.WriteLine();
-
-					foreach (cAmmo Ammo in this)
-						{
-						strLine = Ammo.CSVLine;
-
-						Writer.WriteLine(strLine);
-						}
-
-					Writer.WriteLine();
-
-					break;
+				Writer.WriteLine(strLine);
 				}
-			}
 
+			Writer.WriteLine();
+			}
 
 		//============================================================================*
 		// Export()
@@ -64,12 +60,13 @@ namespace ReloadersWorkShop
 
 		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
 			{
-			XmlElement XMLElement = XMLDocument.CreateElement(string.Empty, "Ammunition", string.Empty);
-			XMLParentElement.AppendChild(XMLElement);
-
-			foreach (cAmmo Ammo in this)
+			if (Count > 0)
 				{
-				Ammo.Export(XMLDocument, XMLElement);
+				XmlElement XMLElement = XMLDocument.CreateElement(string.Empty, "Ammunition", string.Empty);
+				XMLParentElement.AppendChild(XMLElement);
+
+				foreach (cAmmo Ammo in this)
+					Ammo.Export(XMLDocument, XMLElement);
 				}
 			}
 

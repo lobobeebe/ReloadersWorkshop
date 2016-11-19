@@ -208,7 +208,7 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				return ("Firearm Type,Cross Use?,Manufacturer,Model,Size,Standard,Magnum,Bench Rest,Military");
+				return ("Manufacturer,Model,Firearm Type,Cross Use?,Size,Standard,Magnum,Bench Rest,Military");
 				}
 			}
 
