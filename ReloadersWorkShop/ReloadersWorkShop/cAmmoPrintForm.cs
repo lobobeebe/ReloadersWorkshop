@@ -255,6 +255,8 @@ namespace ReloadersWorkShop
 
 		private void DrawLabel(Rectangle LabelRect, Graphics Graphics)
 			{
+			cCaliber.CurrentFirearmType = m_Ammo.FirearmType;
+
 			//----------------------------------------------------------------------------*
 			// Print the label header
 			//----------------------------------------------------------------------------*
@@ -308,7 +310,7 @@ namespace ReloadersWorkShop
 
 			dY -= (int)(BoldSize.Height - LabelSize.Height);
 
-			string strString = String.Format("{0:G0} {1}", m_DataFiles.StandardToMetric(m_Ammo.BulletWeight, cDataFiles.eDataType.BulletWeight), m_DataFiles.MetricString(cDataFiles.eDataType.BulletWeight));
+			string strString = String.Format("{0:G0} {1}", cDataFiles.StandardToMetric(m_Ammo.BulletWeight, cDataFiles.eDataType.BulletWeight), cDataFiles.MetricString(cDataFiles.eDataType.BulletWeight));
 
 			Graphics.DrawString(strString, LabelBoldFont, Brushes.Black, dDataX, dY);
 
@@ -328,7 +330,7 @@ namespace ReloadersWorkShop
 
 			dY -= (int)(BoldSize.Height - LabelSize.Height);
 
-			strString = String.Format("{0:F3} {1}", m_DataFiles.StandardToMetric(m_Ammo.BulletDiameter, cDataFiles.eDataType.Dimension), m_DataFiles.MetricString(cDataFiles.eDataType.Dimension));
+			strString = String.Format("{0:F3} {1}", cDataFiles.StandardToMetric(m_Ammo.BulletDiameter, cDataFiles.eDataType.Dimension), cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
 
 			Graphics.DrawString(strString, LabelBoldFont, Brushes.Black, dX, dY);
 
@@ -423,7 +425,7 @@ namespace ReloadersWorkShop
 
 				foreach (cAmmoTest AmmoTest in m_Ammo.TestList)
 					{
-					cTestStatistics Statistics = AmmoTest.TestShotList.GetStatistics();
+					cTestStatistics Statistics = AmmoTest.TestShotList.GetStatistics(AmmoTest.NumRounds);
 
 					dX = LabelRect.X;
 
@@ -496,7 +498,7 @@ namespace ReloadersWorkShop
 					dX += LabelSize.Width;
 					dY -= (BoldSize.Height - LabelSize.Height);
 
-					strString = String.Format("{0:F0} {1}", AmmoTest.Firearm != null ? m_DataFiles.StandardToMetric(Statistics.AverageVelocity, cDataFiles.eDataType.Velocity) : m_DataFiles.StandardToMetric(AmmoTest.MuzzleVelocity, cDataFiles.eDataType.Velocity), m_DataFiles.MetricString(cDataFiles.eDataType.Velocity));
+					strString = String.Format("{0:F0} {1}", AmmoTest.Firearm != null ? cDataFiles.StandardToMetric(Statistics.AverageVelocity, cDataFiles.eDataType.Velocity) : cDataFiles.StandardToMetric(AmmoTest.MuzzleVelocity, cDataFiles.eDataType.Velocity), cDataFiles.MetricString(cDataFiles.eDataType.Velocity));
 
 					Graphics.DrawString(strString, LabelBoldFont, Brushes.Black, dX, dY);
 

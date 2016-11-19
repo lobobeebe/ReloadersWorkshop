@@ -54,8 +54,8 @@ namespace ReloadersWorkShop
 			// Set Properties
 			//----------------------------------------------------------------------------*
 
-			m_arColumns[1].Text += String.Format(" ({0})", m_DataFiles.MetricString(cDataFiles.eDataType.Dimension));
-			m_arColumns[2].Text += String.Format(" ({0})", m_DataFiles.MetricString(cDataFiles.eDataType.Dimension));
+			m_arColumns[1].Text += String.Format(" ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
+			m_arColumns[2].Text += String.Format(" ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
 
 			//----------------------------------------------------------------------------*
 			// Event Handlers
@@ -144,7 +144,7 @@ namespace ReloadersWorkShop
 			Populating = true;
 
 			m_strDimensionFormat = "{0:F";
-			m_strDimensionFormat += String.Format("{0:G0}", m_DataFiles.Preferences.DimensionDecimals);
+			m_strDimensionFormat += String.Format("{0:G0}", cPreferences.DimensionDecimals);
 			m_strDimensionFormat += "}";
 
 			Items.Clear();
@@ -190,12 +190,12 @@ namespace ReloadersWorkShop
 			{
 			Item.SubItems.Clear();
 
-			Item.Text = BulletCaliber.Caliber.Name;
+			Item.Text = BulletCaliber.Caliber.ToString();
 
 			Item.Tag = BulletCaliber;
 
-			Item.SubItems.Add(String.Format(m_strDimensionFormat, m_DataFiles.StandardToMetric(BulletCaliber.COL, cDataFiles.eDataType.Dimension)));
-			Item.SubItems.Add(String.Format(m_strDimensionFormat, m_DataFiles.StandardToMetric(BulletCaliber.CBTO, cDataFiles.eDataType.Dimension)));
+			Item.SubItems.Add(String.Format(m_strDimensionFormat, cDataFiles.StandardToMetric(BulletCaliber.COL, cDataFiles.eDataType.Dimension)));
+			Item.SubItems.Add(String.Format(m_strDimensionFormat, cDataFiles.StandardToMetric(BulletCaliber.CBTO, cDataFiles.eDataType.Dimension)));
 			}
 
 		//============================================================================*

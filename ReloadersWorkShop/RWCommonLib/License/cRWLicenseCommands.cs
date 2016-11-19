@@ -250,7 +250,7 @@ namespace RWCommonLib.License
 
 			finally
 				{
-				if (KeyReader != null)
+/*				if (KeyReader != null)
 					KeyReader.Close();
 
 				if (KeyStream != null)
@@ -258,7 +258,7 @@ namespace RWCommonLib.License
 
 				if (Response != null)
 					Response.Close();
-				}
+*/				}
 
 			return (eErrorCode);
 			}
@@ -353,7 +353,7 @@ namespace RWCommonLib.License
 
 			finally
 				{
-				if (KeyReader != null)
+/*				if (KeyReader != null)
 					KeyReader.Close();
 
 				if (KeyStream != null)
@@ -361,7 +361,7 @@ namespace RWCommonLib.License
 
 				if (Response != null)
 					Response.Close();
-				}
+*/				}
 
 			return (eError);
 			}

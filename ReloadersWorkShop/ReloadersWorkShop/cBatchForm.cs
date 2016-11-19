@@ -13,8 +13,8 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-using ReloadersWorkShop.Controls;
 using ReloadersWorkShop.Preferences;
+using RWCommonLib.Registry;
 
 //============================================================================*
 // NameSpace
@@ -62,12 +62,13 @@ namespace ReloadersWorkShop
 		private cBatch m_Batch = null;
 
 		private cDataFiles m_DataFiles = null;
+		private cRWRegistry m_RWRegistry = null;
 
 		//============================================================================*
 		// cBatchForm() - Constructor
 		//============================================================================*
 
-		public cBatchForm(cBatch Batch, cDataFiles DataFiles, cFirearm.eFireArmType eFirearmType = cFirearm.eFireArmType.None, bool fViewOnly = false)
+		public cBatchForm(cBatch Batch, cDataFiles DataFiles, cRWRegistry RWRegistry, cFirearm.eFireArmType eFirearmType = cFirearm.eFireArmType.None, bool fViewOnly = false)
 			{
 			Cursor = Cursors.WaitCursor;
 
@@ -75,6 +76,8 @@ namespace ReloadersWorkShop
 
 			m_Batch = Batch;
 			m_DataFiles = DataFiles;
+			m_RWRegistry = RWRegistry;
+
 			m_eFirearmType = eFirearmType;
 
 			m_fViewOnly = fViewOnly;
@@ -101,16 +104,13 @@ namespace ReloadersWorkShop
 
 				m_Batch.BatchID = m_DataFiles.Preferences.NextBatchID;
 
-				m_Batch.TrackInventory = m_DataFiles.Preferences.TrackInventory;
+				m_Batch.TrackInventory = cPreferences.TrackInventory;
 				}
 			else
 				{
 				m_Batch = new cBatch(Batch);
 
 				m_nInitalRounds = Batch.NumRounds;
-
-//				if (m_Batch.BatchTest != null)
-//					m_fViewOnly = true;
 				}
 
 			SetClientSizeCore(LoadDataGroupBox.Location.X + LoadDataGroupBox.Width + 10, BatchCancelButton.Location.Y + BatchCancelButton.Height + 20);
@@ -170,7 +170,7 @@ namespace ReloadersWorkShop
 			if (Charge != null)
 				dPowderWeight = Charge.PowderWeight;
 
-			m_Batch.PowderWeight = m_DataFiles.MetricToStandard(dPowderWeight, cDataFiles.eDataType.PowderWeight);
+			m_Batch.PowderWeight = dPowderWeight;
 
 			//----------------------------------------------------------------------------*
 			// Firearm
@@ -209,43 +209,55 @@ namespace ReloadersWorkShop
 			// Trim Length
 			//----------------------------------------------------------------------------*
 
-			m_Batch.CaseTrimLength = m_DataFiles.MetricToStandard(CaseTrimLengthTextBox.Value, cDataFiles.eDataType.Dimension);
+			m_Batch.CaseTrimLength = cDataFiles.MetricToStandard(CaseTrimLengthTextBox.Value, cDataFiles.eDataType.Dimension);
 
 			//----------------------------------------------------------------------------*
 			// COL
 			//----------------------------------------------------------------------------*
 
-			m_Batch.COL = m_DataFiles.MetricToStandard(COALTextBox.Value, cDataFiles.eDataType.Dimension);
+			m_Batch.COL = cDataFiles.MetricToStandard(COALTextBox.Value, cDataFiles.eDataType.Dimension);
 
 			//----------------------------------------------------------------------------*
 			// CBTO
 			//----------------------------------------------------------------------------*
 
-			m_Batch.CBTO = m_DataFiles.MetricToStandard(CBTOTextBox.Value, cDataFiles.eDataType.Dimension);
+			m_Batch.CBTO = cDataFiles.MetricToStandard(CBTOTextBox.Value, cDataFiles.eDataType.Dimension);
+
+			//----------------------------------------------------------------------------*
+			// Jump Set
+			//----------------------------------------------------------------------------*
+
+			m_Batch.JumpSet = JumpSetCheckBox.Checked;
+
+			//----------------------------------------------------------------------------*
+			// Jump
+			//----------------------------------------------------------------------------*
+
+			m_Batch.Jump = cDataFiles.MetricToStandard(JumpTextBox.Value, cDataFiles.eDataType.Dimension);
 
 			//----------------------------------------------------------------------------*
 			// Head Space
 			//----------------------------------------------------------------------------*
 
-			m_Batch.HeadSpace = m_DataFiles.MetricToStandard(HeadSpaceTextBox.Value, cDataFiles.eDataType.Dimension);
+			m_Batch.HeadSpace = cDataFiles.MetricToStandard(HeadSpaceTextBox.Value, cDataFiles.eDataType.Dimension);
 
 			//----------------------------------------------------------------------------*
 			// Bullet Diameter
 			//----------------------------------------------------------------------------*
 
-			m_Batch.BulletDiameter = m_DataFiles.MetricToStandard(BulletDiameterTextBox.Value, cDataFiles.eDataType.Dimension);
+			m_Batch.BulletDiameter = cDataFiles.MetricToStandard(BulletDiameterTextBox.Value, cDataFiles.eDataType.Dimension);
 
 			//----------------------------------------------------------------------------*
 			// Neck Size
 			//----------------------------------------------------------------------------*
 
-			m_Batch.NeckSize = m_DataFiles.MetricToStandard(NeckSizeTextBox.Value, cDataFiles.eDataType.Dimension);
+			m_Batch.NeckSize = cDataFiles.MetricToStandard(NeckSizeTextBox.Value, cDataFiles.eDataType.Dimension);
 
 			//----------------------------------------------------------------------------*
 			// Neck wall
 			//----------------------------------------------------------------------------*
 
-			m_Batch.NeckWall = m_DataFiles.MetricToStandard(NeckWallTextBox.Value, cDataFiles.eDataType.Dimension);
+			m_Batch.NeckWall = cDataFiles.MetricToStandard(NeckWallTextBox.Value, cDataFiles.eDataType.Dimension);
 
 			//----------------------------------------------------------------------------*
 			// Times Fired
@@ -262,6 +274,7 @@ namespace ReloadersWorkShop
 			m_Batch.ExpandedNeck = ExpandedNeckRadioButton.Checked;
 			m_Batch.NeckTurned = NeckTurnedCheckBox.Checked;
 			m_Batch.ModifiedBullet = ModifiedBulletCheckBox.Checked;
+			m_Batch.Annealed = AnnealedCheckBox.Checked;
 			}
 
 		//============================================================================*
@@ -350,6 +363,7 @@ namespace ReloadersWorkShop
 
 					ChargeCombo.SelectedIndexChanged += OnChargeChanged;
 					FirearmCombo.SelectedIndexChanged += OnFirearmChanged;
+					FirearmTransferButton.Click += OnFirearmTransferClicked;
 
 					NumRoundsTextBox.TextChanged += OnNumRoundsTextChanged;
 
@@ -365,6 +379,9 @@ namespace ReloadersWorkShop
 				BulletDiameterTextBox.TextChanged += OnBulletDiameterChanged;
 				NeckSizeTextBox.TextChanged += OnNeckSizeTextChanged;
 				NeckWallTextBox.TextChanged += OnNeckWallTextChanged;
+
+				JumpSetCheckBox.Click += OnJumpSetClicked;
+				JumpTextBox.TextChanged += OnJumpChanged;
 
 				TimesFiredTextBox.TextChanged += OnTimesFiredTextChanged;
 				FullLengthSizedRadioButton.Click += OnFullLengthSizeClicked;
@@ -535,7 +552,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_Batch.BulletDiameter = m_DataFiles.MetricToStandard(BulletDiameterTextBox.Value, cDataFiles.eDataType.Dimension);
+			m_Batch.BulletDiameter = cDataFiles.MetricToStandard(BulletDiameterTextBox.Value, cDataFiles.eDataType.Dimension);
 
 			SetNeckTension();
 
@@ -587,7 +604,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_Batch.CaseTrimLength = m_DataFiles.MetricToStandard(CaseTrimLengthTextBox.Value, cDataFiles.eDataType.Dimension);
+			m_Batch.CaseTrimLength = cDataFiles.MetricToStandard(CaseTrimLengthTextBox.Value, cDataFiles.eDataType.Dimension);
 
 			UpdateButtons();
 			}
@@ -611,7 +628,8 @@ namespace ReloadersWorkShop
 			if (Charge != null)
 				dPowderCharge = Charge.PowderWeight;
 
-			m_Batch.PowderWeight = m_DataFiles.MetricToStandard(dPowderCharge, cDataFiles.eDataType.PowderWeight);
+			//			m_Batch.PowderWeight = cDataFiles.MetricToStandard(dPowderCharge, cDataFiles.eDataType.PowderWeight);
+			m_Batch.PowderWeight = dPowderCharge;
 
 			PopulateLoadDetails();
 
@@ -627,7 +645,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_Batch.COL = m_DataFiles.MetricToStandard(COALTextBox.Value, cDataFiles.eDataType.Dimension);
+			m_Batch.COL = cDataFiles.MetricToStandard(COALTextBox.Value, cDataFiles.eDataType.Dimension);
 
 			UpdateButtons();
 			}
@@ -666,37 +684,63 @@ namespace ReloadersWorkShop
 				return;
 
 			if (FirearmCombo.SelectedIndex > 0)
-				{
 				m_Batch.Firearm = (cFirearm) FirearmCombo.SelectedItem;
+			else
+				m_Batch.Firearm = null;
 
-				m_Batch.HeadSpace = m_Batch.Firearm.HeadSpace;
-				m_Batch.NeckSize = m_Batch.Firearm.Neck;
+			PopulateFirearmData();
 
-				//----------------------------------------------------------------------------*
-				// See if this firearm has custom bullet info
-				//----------------------------------------------------------------------------*
+			UpdateButtons();
+			}
 
-				foreach (cFirearmBullet FirearmBullet in m_Batch.Firearm.FirearmBulletList)
+		//============================================================================*
+		// OnFirearmTransferClicked()
+		//============================================================================*
+
+		private void OnFirearmTransferClicked(object sender, EventArgs e)
+			{
+			if (FirearmCombo.SelectedIndex > 0)
+				{
+				cFirearm Firearm = m_Batch.Firearm;
+
+				if (Firearm != null)
 					{
-					if (FirearmBullet.Bullet.CompareTo(m_Batch.Load.Bullet) == 0)
-						{
-						m_Batch.COL = FirearmBullet.COL;
-						m_Batch.CBTO = FirearmBullet.CBTO;
+					if (FirearmHeadSpaceLabel.Text != "N/A")
+						m_Batch.HeadSpace = Firearm.HeadSpace;
 
-						break;
+					if (FirearmNeckLabel.Text != "N/A")
+						m_Batch.NeckSize = Firearm.Neck;
+
+					//----------------------------------------------------------------------------*
+					// See if this firearm has custom bullet info
+					//----------------------------------------------------------------------------*
+
+					foreach (cFirearmBullet FirearmBullet in Firearm.FirearmBulletList)
+						{
+						if (FirearmBullet.Bullet.CompareTo(m_Batch.Load.Bullet) == 0)
+							{
+							if (FirearmCOLLabel.Text != "N/A")
+								{
+								double dCOL = 0.0;
+
+								Double.TryParse(FirearmCOLLabel.Text, out dCOL);
+
+								m_Batch.COL = cDataFiles.MetricToStandard(dCOL, cDataFiles.eDataType.Dimension);
+								}
+
+							if (FirearmCBTOLabel.Text != "N/A")
+								m_Batch.CBTO = FirearmBullet.CBTO;
+
+							if (FirearmJumpLabel.Text != "N/A")
+								m_Batch.Jump = FirearmBullet.Jump;
+
+							break;
+							}
 						}
 					}
 				}
-			else
-				{
-				m_Batch.Firearm = null;
 
-				m_Batch.HeadSpace = 0.0;
-				m_Batch.NeckSize = 0.0;
-				m_Batch.CBTO = 0.0;
-				}
-
-			PopulateFirearmData();
+			PopulateBatchData();
 
 			UpdateButtons();
 			}
@@ -770,7 +814,36 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_Batch.HeadSpace = m_DataFiles.MetricToStandard(HeadSpaceTextBox.Value, cDataFiles.eDataType.Dimension);
+			m_Batch.HeadSpace = cDataFiles.MetricToStandard(HeadSpaceTextBox.Value, cDataFiles.eDataType.Dimension);
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
+		// OnJumpChanged()
+		//============================================================================*
+
+		private void OnJumpChanged(object sender, EventArgs e)
+			{
+			if (!m_fInitialized || m_fViewOnly || m_fUserViewOnly || m_fPopulating)
+				return;
+
+			m_Batch.JumpSet = JumpSetCheckBox.Checked;
+			m_Batch.Jump = cDataFiles.MetricToStandard(JumpTextBox.Value, cDataFiles.eDataType.Dimension);
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
+		// OnJumpSetClicked()
+		//============================================================================*
+
+		private void OnJumpSetClicked(object sender, EventArgs e)
+			{
+			if (m_fViewOnly || m_fUserViewOnly || m_fPopulating)
+				return;
+
+			m_Batch.JumpSet = JumpSetCheckBox.Checked;
 
 			UpdateButtons();
 			}
@@ -844,7 +917,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_Batch.NeckSize = m_DataFiles.MetricToStandard(NeckSizeTextBox.Value, cDataFiles.eDataType.Dimension);
+			m_Batch.NeckSize = cDataFiles.MetricToStandard(NeckSizeTextBox.Value, cDataFiles.eDataType.Dimension);
 
 			SetNeckTension();
 
@@ -876,7 +949,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_Batch.NeckWall = m_DataFiles.MetricToStandard(NeckWallTextBox.Value, cDataFiles.eDataType.Dimension);
+			m_Batch.NeckWall = cDataFiles.MetricToStandard(NeckWallTextBox.Value, cDataFiles.eDataType.Dimension);
 
 			SetNeckTension();
 
@@ -908,7 +981,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_Batch.CBTO = m_DataFiles.MetricToStandard(CBTOTextBox.Value, cDataFiles.eDataType.Dimension);
+			m_Batch.CBTO = cDataFiles.MetricToStandard(CBTOTextBox.Value, cDataFiles.eDataType.Dimension);
 
 			UpdateButtons();
 			}
@@ -925,7 +998,7 @@ namespace ReloadersWorkShop
 				{
 				m_DataFiles.Preferences.NextBatchID++;
 
-				Batch.TrackInventory = m_DataFiles.Preferences.TrackInventory;
+				Batch.TrackInventory = cPreferences.TrackInventory;
 				}
 			}
 
@@ -975,7 +1048,7 @@ namespace ReloadersWorkShop
 
 		private void OnTestDataClicked(object sender, EventArgs e)
 			{
-			cBatchTestForm BatchTestForm = new cBatchTestForm(m_Batch, m_DataFiles, m_fUserViewOnly);
+			cBatchTestForm BatchTestForm = new cBatchTestForm(m_Batch, m_DataFiles, m_RWRegistry, m_fUserViewOnly);
 
 			DialogResult rc = BatchTestForm.ShowDialog();
 
@@ -1098,41 +1171,25 @@ namespace ReloadersWorkShop
 
 			if (m_Batch.Load != null && m_Batch.Load.Caliber != null)
 				{
-				CaseTrimLengthTextBox.MinValue = m_DataFiles.StandardToMetric(m_Batch.Load.Caliber.CaseTrimLength, cDataFiles.eDataType.Dimension);
-				CaseTrimLengthTextBox.MaxValue = m_DataFiles.StandardToMetric(m_Batch.Load.Caliber.MaxCaseLength, cDataFiles.eDataType.Dimension);
+				CaseTrimLengthTextBox.MinValue = cDataFiles.StandardToMetric(m_Batch.Load.Caliber.CaseTrimLength, cDataFiles.eDataType.Dimension);
+				CaseTrimLengthTextBox.MaxValue = cDataFiles.StandardToMetric(m_Batch.Load.Caliber.MaxCaseLength, cDataFiles.eDataType.Dimension);
 
-				COALTextBox.MinValue = m_DataFiles.StandardToMetric(m_Batch.Load.Caliber.CaseTrimLength, cDataFiles.eDataType.Dimension);
-				COALTextBox.MaxValue = m_DataFiles.StandardToMetric(m_Batch.Load.Caliber.MaxCOL, cDataFiles.eDataType.Dimension);
+				COALTextBox.MinValue = cDataFiles.StandardToMetric(m_Batch.Load.Caliber.CaseTrimLength, cDataFiles.eDataType.Dimension);
+				COALTextBox.MaxValue = cDataFiles.StandardToMetric(m_Batch.Load.Caliber.MaxCOL, cDataFiles.eDataType.Dimension);
 
-				CBTOTextBox.MinValue = 0.0;
-				CBTOTextBox.MaxValue = m_DataFiles.StandardToMetric(m_Batch.COL, cDataFiles.eDataType.Dimension);
-
-				if (m_Batch.Firearm != null && m_Batch.Load != null)
-					{
-					foreach (cFirearmBullet FirearmBullet in m_Batch.Firearm.FirearmBulletList)
-						{
-						if (FirearmBullet.Bullet.CompareTo(m_Batch.Load.Bullet) == 0)
-							{
-							COALTextBox.MaxValue = m_DataFiles.StandardToMetric(FirearmBullet.COL, cDataFiles.eDataType.Dimension);
-
-							if (FirearmBullet.CBTO != 0.0)
-								CBTOTextBox.MaxValue = m_DataFiles.StandardToMetric(FirearmBullet.CBTO, cDataFiles.eDataType.Dimension);
-
-							break;
-							}
-						}
-					}
+				CBTOTextBox.MinValue = COALTextBox.MinValue;
+				CBTOTextBox.MaxValue = COALTextBox.MaxValue;
 				}
 
-			CaseTrimLengthTextBox.Value = m_DataFiles.StandardToMetric(m_Batch.CaseTrimLength, cDataFiles.eDataType.Dimension);
+			CaseTrimLengthTextBox.Value = cDataFiles.StandardToMetric(m_Batch.CaseTrimLength, cDataFiles.eDataType.Dimension);
 
-			COALTextBox.Value = m_DataFiles.StandardToMetric(m_Batch.COL, cDataFiles.eDataType.Dimension);
+			COALTextBox.Value = cDataFiles.StandardToMetric(m_Batch.COL, cDataFiles.eDataType.Dimension);
 
-			CBTOTextBox.Value = m_DataFiles.StandardToMetric(m_Batch.CBTO, cDataFiles.eDataType.Dimension);
-			NeckSizeTextBox.Value = m_DataFiles.StandardToMetric(m_Batch.NeckSize, cDataFiles.eDataType.Dimension);
+			CBTOTextBox.Value = cDataFiles.StandardToMetric(m_Batch.CBTO, cDataFiles.eDataType.Dimension);
+			NeckSizeTextBox.Value = cDataFiles.StandardToMetric(m_Batch.NeckSize, cDataFiles.eDataType.Dimension);
 
 			TimesFiredTextBox.Value = m_Batch.TimesFired;
-			HeadSpaceTextBox.Value = m_DataFiles.StandardToMetric(m_Batch.HeadSpace, cDataFiles.eDataType.Dimension);
+			HeadSpaceTextBox.Value = cDataFiles.StandardToMetric(m_Batch.HeadSpace, cDataFiles.eDataType.Dimension);
 			FullLengthSizedRadioButton.Checked = m_Batch.FullLengthSized;
 			NeckSizedRadioButton.Checked = m_Batch.NeckSized;
 			ExpandedNeckRadioButton.Checked = m_Batch.ExpandedNeck;
@@ -1140,19 +1197,22 @@ namespace ReloadersWorkShop
 			AnnealedCheckBox.Checked = m_Batch.Annealed;
 			ModifiedBulletCheckBox.Checked = m_Batch.ModifiedBullet;
 
+			JumpSetCheckBox.Checked = m_Batch.JumpSet;
+			JumpTextBox.Value = m_Batch.Jump;
+
 			if (m_Batch.BulletDiameter != 0.0)
-				BulletDiameterTextBox.Value = m_DataFiles.StandardToMetric(m_Batch.BulletDiameter, cDataFiles.eDataType.Dimension);
+				BulletDiameterTextBox.Value = cDataFiles.StandardToMetric(m_Batch.BulletDiameter, cDataFiles.eDataType.Dimension);
 			else
 				{
 				if (m_Batch.Load != null && m_Batch.Load.Bullet != null)
-					BulletDiameterTextBox.Value = m_DataFiles.StandardToMetric(m_Batch.Load.Bullet.Diameter, cDataFiles.eDataType.Dimension);
+					BulletDiameterTextBox.Value = cDataFiles.StandardToMetric(m_Batch.Load.Bullet.Diameter, cDataFiles.eDataType.Dimension);
 				else
 					BulletDiameterTextBox.Value = 0.0;
 
-				m_Batch.BulletDiameter = m_DataFiles.MetricToStandard(BulletDiameterTextBox.Value, cDataFiles.eDataType.Dimension);
+				m_Batch.BulletDiameter = cDataFiles.MetricToStandard(BulletDiameterTextBox.Value, cDataFiles.eDataType.Dimension);
 				}
 
-			NeckWallTextBox.Value = m_DataFiles.StandardToMetric(m_Batch.NeckWall, cDataFiles.eDataType.Dimension);
+			NeckWallTextBox.Value = cDataFiles.StandardToMetric(m_Batch.NeckWall, cDataFiles.eDataType.Dimension);
 
 			SetNeckTension();
 
@@ -1390,6 +1450,9 @@ namespace ReloadersWorkShop
 
 				foreach (cFirearm CheckFirearm in m_DataFiles.FirearmList)
 					{
+					if (FirearmCombo.FindString(CheckFirearm.ToString()) != -1)
+						continue;
+
 					if (m_Batch.Load == null || CheckFirearm.FirearmType == m_Batch.Load.FirearmType)
 						{
 						if (m_Batch.Load == null || CheckFirearm.HasCaliber(m_Batch.Load.Caliber))
@@ -1447,14 +1510,21 @@ namespace ReloadersWorkShop
 			{
 			m_fPopulating = true;
 
+			if (m_Batch.Firearm != null)
+				FirearmCombo.SelectedItem = m_Batch.Firearm;
+			else
+				FirearmCombo.SelectedItem = 0;
+
+			cFirearm Firearm = null;
+
+			if (FirearmCombo.SelectedIndex > 0)
+				Firearm = (cFirearm) FirearmCombo.SelectedItem;
+
 			cFirearmBullet FirearmBullet = null;
 
-			if (m_Batch != null && m_Batch.Load != null && m_Batch.Firearm != null)
+			if (m_Batch != null && m_Batch.Load != null && Firearm != null)
 				{
-				FirearmHeadSpaceLabel.Text = m_Batch.Load.FirearmType == cFirearm.eFireArmType.Rifle ? String.Format("{0:F3}", m_Batch.Firearm.HeadSpace) : "N/A";
-				FirearmNeckLabel.Text = m_Batch.Load.FirearmType == cFirearm.eFireArmType.Rifle ? String.Format("{0:F3}", m_Batch.Firearm.Neck) : "N/A";
-
-				foreach (cFirearmBullet CheckFirearmBullet in m_Batch.Firearm.FirearmBulletList)
+				foreach (cFirearmBullet CheckFirearmBullet in Firearm.FirearmBulletList)
 					{
 					if (CheckFirearmBullet.Bullet.CompareTo(m_Batch.Load.Bullet) == 0)
 						{
@@ -1464,36 +1534,21 @@ namespace ReloadersWorkShop
 						}
 					}
 				}
-			else
-				{
-				if (FirearmCombo.SelectedIndex > 0)
-					{
-					cFirearm Firearm = (cFirearm) FirearmCombo.SelectedItem;
 
-					FirearmHeadSpaceLabel.Text = String.Format("{0:F3}", Firearm.HeadSpace);
+			FirearmHeadSpaceLabel.Text = Firearm != null && Firearm.FirearmType == cFirearm.eFireArmType.Rifle && Firearm.HeadSpace != 0.0 ? String.Format("{0:F3}", cDataFiles.StandardToMetric(Firearm.HeadSpace, cDataFiles.eDataType.Dimension)) : "N/A";
+			FirearmHeadSpaceMeasurementLabel.Visible = FirearmHeadSpaceLabel.Text != "N/A";
 
-					FirearmHeadSpaceLabel.Text += m_DataFiles.Preferences.MetricDimensions ? " mm" : " in";
+			FirearmNeckLabel.Text = Firearm != null && Firearm.FirearmType == cFirearm.eFireArmType.Rifle && Firearm.Neck != 0.0 ? String.Format("{0:F3}", cDataFiles.StandardToMetric(Firearm.Neck, cDataFiles.eDataType.Dimension)) : "N/A";
+			FirearmNeckMeasurementLabel.Visible = FirearmNeckLabel.Text != "N/A";
 
-					FirearmNeckLabel.Text = String.Format("{0:F3}", Firearm.Neck);
-					FirearmNeckLabel.Text += m_DataFiles.Preferences.MetricDimensions ? " mm" : " in";
-					}
-				else
-					{
-					FirearmHeadSpaceLabel.Text = "N/A";
-					FirearmNeckLabel.Text = "N/A";
-					}
-				}
+			FirearmCOLLabel.Text = Firearm != null && FirearmBullet != null && FirearmBullet.COL != m_Batch.COL ? String.Format("{0:F3}", cDataFiles.StandardToMetric(FirearmBullet.COL, cDataFiles.eDataType.Dimension)) : LoadCOLLabel.Text;
+			FirearmCOLMeasurementLabel.Visible = FirearmCOLLabel.Text != "N/A";
 
-			if (FirearmBullet != null)
-				{
-				FirearmCOLLabel.Text = String.Format("{0:F3}", FirearmBullet.COL);
-				FirearmCBTOLabel.Text = m_Batch.Load.FirearmType == cFirearm.eFireArmType.Rifle ? String.Format("{0:F3}", FirearmBullet.CBTO) : "N/A";
-				}
-			else
-				{
-				FirearmCOLLabel.Text = LoadCOLLabel.Text;
-				FirearmCBTOLabel.Text = "N/A";
-				}
+			FirearmCBTOLabel.Text = Firearm != null && FirearmBullet != null && FirearmBullet.CBTO != 0 && m_Batch.Load.FirearmType == cFirearm.eFireArmType.Rifle ? String.Format("{0:F3}", cDataFiles.StandardToMetric(FirearmBullet.CBTO, cDataFiles.eDataType.Dimension)) : "N/A";
+			FirearmCBTOMeasurementLabel.Visible = FirearmCBTOLabel.Text != "N/A";
+
+			FirearmJumpLabel.Text = Firearm != null && FirearmBullet != null && m_Batch.JumpSet && m_Batch.Load.FirearmType == cFirearm.eFireArmType.Rifle ? String.Format("{0:F3}", cDataFiles.StandardToMetric(FirearmBullet.Jump, cDataFiles.eDataType.Dimension)) : "N/A";
+			FirearmJumpMeasurementLabel.Visible = FirearmJumpLabel.Text != "N/A";
 
 			m_fPopulating = false;
 
@@ -1518,7 +1573,7 @@ namespace ReloadersWorkShop
 					{
 					if (BulletCaliber.Caliber.CompareTo(m_Batch.Load.Caliber) == 0)
 						{
-						LoadCOLLabel.Text = String.Format("{0:F3}", BulletCaliber.COL);
+						LoadCOLLabel.Text = String.Format("{0:F3}", cDataFiles.StandardToMetric(BulletCaliber.COL, cDataFiles.eDataType.Dimension));
 
 						break;
 						}
@@ -1620,11 +1675,11 @@ namespace ReloadersWorkShop
 				{
 				if (nMinVelocity == nMaxVelocity)
 					{
-					MuzzleVelocityLabel.Text = String.Format("{0:N0} {1}", m_DataFiles.StandardToMetric(nMinVelocity, cDataFiles.eDataType.Velocity), m_DataFiles.MetricString(cDataFiles.eDataType.Velocity));
+					MuzzleVelocityLabel.Text = String.Format("{0:N0} {1}", cDataFiles.StandardToMetric(nMinVelocity, cDataFiles.eDataType.Velocity), cDataFiles.MetricString(cDataFiles.eDataType.Velocity));
 					}
 				else
 					{
-					MuzzleVelocityLabel.Text = String.Format("{0:N0} to {1:N0} {2}", m_DataFiles.StandardToMetric(nMinVelocity, cDataFiles.eDataType.Velocity), m_DataFiles.StandardToMetric(nMaxVelocity, cDataFiles.eDataType.Velocity), m_DataFiles.MetricString(cDataFiles.eDataType.Velocity));
+					MuzzleVelocityLabel.Text = String.Format("{0:N0} to {1:N0} {2}", cDataFiles.StandardToMetric(nMinVelocity, cDataFiles.eDataType.Velocity), cDataFiles.StandardToMetric(nMaxVelocity, cDataFiles.eDataType.Velocity), cDataFiles.MetricString(cDataFiles.eDataType.Velocity));
 					}
 				}
 
@@ -1879,31 +1934,34 @@ namespace ReloadersWorkShop
 			// Set measurement labels
 			//----------------------------------------------------------------------------*
 
-			m_DataFiles.SetMetricLabel(PowderChargeMeasurementLabel, cDataFiles.eDataType.PowderWeight);
-			m_DataFiles.SetMetricLabel(LoadCOLMeasurementLabel, cDataFiles.eDataType.Dimension);
-			m_DataFiles.SetMetricLabel(FirearmCOLMeasurementLabel, cDataFiles.eDataType.Dimension);
-			m_DataFiles.SetMetricLabel(FirearmCBTOMeasurementLabel, cDataFiles.eDataType.Dimension);
-			m_DataFiles.SetMetricLabel(FirearmHeadspaceMeasurementLabel, cDataFiles.eDataType.Dimension);
-			m_DataFiles.SetMetricLabel(FirearmNeckSizeMeasurementLabel, cDataFiles.eDataType.Dimension);
-			m_DataFiles.SetMetricLabel(TrimLengthMeasurementLabel, cDataFiles.eDataType.Dimension);
-			m_DataFiles.SetMetricLabel(COLMeasurementLabel, cDataFiles.eDataType.Dimension);
-			m_DataFiles.SetMetricLabel(CBTOMeasurementLabel, cDataFiles.eDataType.Dimension);
-			m_DataFiles.SetMetricLabel(HeadspaceMeasurementLabel, cDataFiles.eDataType.Dimension);
-			m_DataFiles.SetMetricLabel(NeckSizeMeasurementLabel, cDataFiles.eDataType.Dimension);
-			m_DataFiles.SetMetricLabel(NeckWallMeasurementLabel, cDataFiles.eDataType.Dimension);
-			m_DataFiles.SetMetricLabel(BulletDiameterMeasurementLabel, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetMetricLabel(PowderChargeMeasurementLabel, cDataFiles.eDataType.PowderWeight);
+			cDataFiles.SetMetricLabel(LoadCOLMeasurementLabel, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetMetricLabel(FirearmCOLMeasurementLabel, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetMetricLabel(FirearmCBTOMeasurementLabel, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetMetricLabel(FirearmJumpMeasurementLabel, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetMetricLabel(FirearmHeadSpaceMeasurementLabel, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetMetricLabel(FirearmNeckMeasurementLabel, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetMetricLabel(TrimLengthMeasurementLabel, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetMetricLabel(COLMeasurementLabel, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetMetricLabel(CBTOMeasurementLabel, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetMetricLabel(HeadspaceMeasurementLabel, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetMetricLabel(NeckSizeMeasurementLabel, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetMetricLabel(NeckWallMeasurementLabel, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetMetricLabel(BulletDiameterMeasurementLabel, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetMetricLabel(JumpMeasurementLabel, cDataFiles.eDataType.Dimension);
 
 			//----------------------------------------------------------------------------*
 			// Set Text Box Parameters
 			//----------------------------------------------------------------------------*
 
-			m_DataFiles.SetInputParameters(CaseTrimLengthTextBox, cDataFiles.eDataType.Dimension);
-			m_DataFiles.SetInputParameters(COALTextBox, cDataFiles.eDataType.Dimension);
-			m_DataFiles.SetInputParameters(CBTOTextBox, cDataFiles.eDataType.Dimension);
-			m_DataFiles.SetInputParameters(HeadSpaceTextBox, cDataFiles.eDataType.Dimension);
-			m_DataFiles.SetInputParameters(BulletDiameterTextBox, cDataFiles.eDataType.Dimension);
-			m_DataFiles.SetInputParameters(NeckSizeTextBox, cDataFiles.eDataType.Dimension);
-			m_DataFiles.SetInputParameters(NeckWallTextBox, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetInputParameters(CaseTrimLengthTextBox, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetInputParameters(COALTextBox, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetInputParameters(CBTOTextBox, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetInputParameters(HeadSpaceTextBox, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetInputParameters(BulletDiameterTextBox, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetInputParameters(NeckSizeTextBox, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetInputParameters(NeckWallTextBox, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetInputParameters(JumpTextBox, cDataFiles.eDataType.Dimension);
 			}
 
 		//============================================================================*
@@ -1915,23 +1973,23 @@ namespace ReloadersWorkShop
 			double dNeckTension = 0.0;
 
 			string strFormat = "{0:F";
-			strFormat += String.Format("{0:G0}", m_DataFiles.Preferences.DimensionDecimals);
+			strFormat += String.Format("{0:G0}", cPreferences.DimensionDecimals);
 			strFormat += "} ";
-			strFormat += m_DataFiles.MetricString(cDataFiles.eDataType.Dimension);
+			strFormat += cDataFiles.MetricString(cDataFiles.eDataType.Dimension);
 
 			NeckSizeTextBox.MinValue = 0.0;
 			NeckSizeTextBox.MaxValue = 0.0;
 			NeckWallTextBox.MinValue = 0.0;
-			NeckWallTextBox.MaxValue = m_DataFiles.StandardToMetric(0.030, cDataFiles.eDataType.Dimension);
+			NeckWallTextBox.MaxValue = cDataFiles.StandardToMetric(0.030, cDataFiles.eDataType.Dimension);
 
-			double dNeckWall = m_DataFiles.MetricToStandard(NeckWallTextBox.Value, cDataFiles.eDataType.Dimension);
-			double dNeckSize = m_DataFiles.MetricToStandard(NeckSizeTextBox.Value, cDataFiles.eDataType.Dimension);
-			double dBulletDiameter = m_DataFiles.MetricToStandard(BulletDiameterTextBox.Value, cDataFiles.eDataType.Dimension);
+			double dNeckWall = cDataFiles.MetricToStandard(NeckWallTextBox.Value, cDataFiles.eDataType.Dimension);
+			double dNeckSize = cDataFiles.MetricToStandard(NeckSizeTextBox.Value, cDataFiles.eDataType.Dimension);
+			double dBulletDiameter = cDataFiles.MetricToStandard(BulletDiameterTextBox.Value, cDataFiles.eDataType.Dimension);
 
 			if (m_Batch.Load != null)
 				{
 				if (m_Batch.Load.Caliber != null && m_Batch.Load.Caliber.MaxNeckDiameter > 0.0)
-					NeckSizeTextBox.MaxValue = m_DataFiles.StandardToMetric(m_Batch.Load.Caliber.MaxNeckDiameter, cDataFiles.eDataType.Dimension);
+					NeckSizeTextBox.MaxValue = cDataFiles.StandardToMetric(m_Batch.Load.Caliber.MaxNeckDiameter, cDataFiles.eDataType.Dimension);
 
 				if (NeckSizeTextBox.ValueOK && dNeckSize > 0.0 && dNeckWall > 0.0)
 					{
@@ -1939,13 +1997,13 @@ namespace ReloadersWorkShop
 
 					if (dNeckTension < 0.0)
 						{
-						NeckSizeTextBox.MaxValue = m_DataFiles.StandardToMetric(dBulletDiameter + (dNeckWall * 2.0), cDataFiles.eDataType.Dimension);
-						NeckWallTextBox.MinValue = m_DataFiles.StandardToMetric((dNeckSize - dBulletDiameter) / 2.0, cDataFiles.eDataType.Dimension);
+						NeckSizeTextBox.MaxValue = cDataFiles.StandardToMetric(dBulletDiameter + (dNeckWall * 2.0), cDataFiles.eDataType.Dimension);
+						NeckWallTextBox.MinValue = cDataFiles.StandardToMetric((dNeckSize - dBulletDiameter) / 2.0, cDataFiles.eDataType.Dimension);
 						}
 					}
 				}
 
-			NeckTensionlabel.Text = String.Format(strFormat, m_DataFiles.StandardToMetric(dNeckTension, cDataFiles.eDataType.Dimension));
+			NeckTensionlabel.Text = String.Format(strFormat, cDataFiles.StandardToMetric(dNeckTension, cDataFiles.eDataType.Dimension));
 
 			UpdateButtons();
 			}
@@ -2023,6 +2081,25 @@ namespace ReloadersWorkShop
 				fEnableOK = false;
 
 			//----------------------------------------------------------------------------*
+			// Check Firearm
+			//----------------------------------------------------------------------------*
+
+			bool fEnableTransfer = true;
+
+			if (!(FirearmCombo.SelectedIndex > 0))
+				fEnableTransfer = false;
+
+			if (fEnableTransfer &&
+				FirearmCOLLabel.Text == "N/A" &&
+				FirearmCOLLabel.Text == "N/A" &&
+				FirearmCOLLabel.Text == "N/A" &&
+				FirearmCOLLabel.Text == "N/A" &&
+				FirearmCOLLabel.Text == "N/A")
+				fEnableTransfer = false;
+
+			FirearmTransferButton.Enabled = fEnableTransfer;
+
+			//----------------------------------------------------------------------------*
 			// Check NumRounds
 			//----------------------------------------------------------------------------*
 
@@ -2058,8 +2135,8 @@ namespace ReloadersWorkShop
 
 			if (m_Batch.Load != null && m_Batch.Load.Caliber != null)
 				{
-				CaseTrimLengthTextBox.MinValue = m_DataFiles.StandardToMetric(m_Batch.Load.Caliber.CaseTrimLength, cDataFiles.eDataType.Dimension);
-				CaseTrimLengthTextBox.MaxValue = m_DataFiles.StandardToMetric(m_Batch.Load.Caliber.MaxCaseLength, cDataFiles.eDataType.Dimension);
+				CaseTrimLengthTextBox.MinValue = cDataFiles.StandardToMetric(m_Batch.Load.Caliber.CaseTrimLength, cDataFiles.eDataType.Dimension);
+				CaseTrimLengthTextBox.MaxValue = cDataFiles.StandardToMetric(m_Batch.Load.Caliber.MaxCaseLength, cDataFiles.eDataType.Dimension);
 				}
 
 			if (!CaseTrimLengthTextBox.ValueOK)
@@ -2083,7 +2160,7 @@ namespace ReloadersWorkShop
 				{
 				CBTOTextBox.Enabled = true;
 
-				CBTOTextBox.MaxValue = m_Batch.Load.Caliber.MaxCOL;
+				CBTOTextBox.MaxValue = cDataFiles.StandardToMetric(m_Batch.Load.Caliber.MaxCOL, cDataFiles.eDataType.Dimension);
 
 				if (!CBTOTextBox.ValueOK)
 					fEnableOK = false;
@@ -2106,7 +2183,7 @@ namespace ReloadersWorkShop
 				{
 				HeadSpaceTextBox.Enabled = true;
 
-				HeadSpaceTextBox.MaxValue = m_Batch.Load.Caliber.MaxCaseLength;
+				HeadSpaceTextBox.MaxValue = cDataFiles.StandardToMetric(m_Batch.Load.Caliber.MaxCaseLength, cDataFiles.eDataType.Dimension);
 
 				if (!HeadSpaceTextBox.ValueOK)
 					fEnableOK = false;
@@ -2129,10 +2206,57 @@ namespace ReloadersWorkShop
 				{
 				NeckSizeTextBox.Enabled = true;
 
-				NeckSizeTextBox.MaxValue = m_DataFiles.StandardToMetric(m_Batch.Load.Caliber.MaxBulletDiameter + 0.60, cDataFiles.eDataType.Dimension);
+				NeckSizeTextBox.MaxValue = cDataFiles.StandardToMetric(m_Batch.Load.Caliber.MaxBulletDiameter + cDataFiles.StandardToMetric(0.60, cDataFiles.eDataType.Dimension), cDataFiles.eDataType.Dimension);
 
 				if (!NeckSizeTextBox.ValueOK)
 					fEnableOK = false;
+				}
+
+			//----------------------------------------------------------------------------*
+			// Check Jump
+			//----------------------------------------------------------------------------*
+
+			cFirearm Firearm = null;
+			cFirearmBullet FirearmBullet = null;
+
+			if (FirearmCombo.SelectedIndex > 0)
+				Firearm = (cFirearm) FirearmCombo.SelectedItem;
+
+			if (Firearm != null)
+				{
+				foreach (cFirearmBullet CheckFirearmBullet in Firearm.FirearmBulletList)
+					{
+					if (CheckFirearmBullet.Bullet.CompareTo(m_Batch.Load.Bullet) == 0)
+						{
+						FirearmBullet = CheckFirearmBullet;
+
+						break;
+						}
+					}
+				}
+
+			JumpLabel.Visible = JumpSetCheckBox.Checked;
+			JumpTextBox.Visible = JumpSetCheckBox.Checked;
+
+			if (JumpSetCheckBox.Checked &&
+				FirearmBullet != null &&
+				FirearmBullet.Jump != 0.0 &&
+				FirearmBullet.COL != 0.0 &&
+				COALTextBox.Value != 0.0)
+				{
+				double dAutoJump = FirearmBullet.Jump + (FirearmBullet.COL - cDataFiles.MetricToStandard(COALTextBox.Value, cDataFiles.eDataType.Dimension));
+
+				m_Batch.Jump = dAutoJump;
+
+				JumpTextBox.Value = cDataFiles.StandardToMetric(dAutoJump, cDataFiles.eDataType.Dimension);
+
+				JumpTextBox.ReadOnly = true;
+				JumpTextBox.BackColor = SystemColors.ButtonFace;
+				}
+			else
+				{
+				JumpTextBox.ReadOnly = false;
+				JumpTextBox.BackColor = SystemColors.Window;
 				}
 
 			//----------------------------------------------------------------------------*
@@ -2145,9 +2269,9 @@ namespace ReloadersWorkShop
 
 				if (m_Batch.Load != null && m_Batch.Load.Caliber != null)
 					{
-					foreach (cFirearm Firearm in m_DataFiles.FirearmList)
+					foreach (cFirearm CheckFirearm in m_DataFiles.FirearmList)
 						{
-						if (Firearm.HasCaliber(Batch.Load.Caliber))
+						if (CheckFirearm.HasCaliber(Batch.Load.Caliber))
 							{
 							fFirearmFound = true;
 

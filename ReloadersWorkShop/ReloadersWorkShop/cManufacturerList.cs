@@ -12,7 +12,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -29,122 +29,59 @@ namespace ReloadersWorkShop
 
 		public bool AddManufacturer(cManufacturer Manufacturer)
 			{
-			foreach(cManufacturer CheckManufacturer in this)
+			foreach (cManufacturer CheckManufacturer in this)
 				{
 				if (CheckManufacturer.CompareTo(Manufacturer) == 0)
-					return(false);
+					return (false);
 				}
 
 			Add(Manufacturer);
 
-			return(true);
+			return (true);
 			}
 
 		//============================================================================*
-		// Load()
+		// Export()
 		//============================================================================*
 
-		public void Load()
+		public void Export(StreamWriter Writer)
 			{
-			//----------------------------------------------------------------------------*
-			// Load the data
-			//----------------------------------------------------------------------------*
+			if (Count <= 0)
+				return;
 
-			Stream DataStream = null;
+			Writer.WriteLine(cManufacturer.CSVHeader);
+			Writer.WriteLine();
 
-			try
+			string strLine = "";
+
+			Writer.WriteLine(cManufacturer.CSVLineHeader);
+			Writer.WriteLine();
+
+			foreach (cManufacturer Manufacturer in this)
 				{
-				//----------------------------------------------------------------------------*
-				// Open the data file
-				//----------------------------------------------------------------------------*
+				strLine = Manufacturer.CSVLine;
 
-				DataStream = File.Open("Manufacturers.dat", FileMode.Open);
+				Writer.WriteLine(strLine);
+				}
 
-				if (DataStream != null)
+			Writer.WriteLine();
+			}
+
+		//============================================================================*
+		// Export()
+		//============================================================================*
+
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			if (Count > 0)
+				{
+				XmlElement XMLElement = XMLDocument.CreateElement(string.Empty, "Manufacturers", string.Empty);
+				XMLParentElement.AppendChild(XMLElement);
+
+				foreach (cManufacturer Manufacturer in this)
 					{
-					//----------------------------------------------------------------------------*
-					// Create the formatter
-					//----------------------------------------------------------------------------*
-
-					BinaryFormatter Formatter = new BinaryFormatter();
-
-					//----------------------------------------------------------------------------*
-					// Load the data members
-					//----------------------------------------------------------------------------*
-
-					cManufacturerList ManufacturerList = null;
-
-					ManufacturerList = (cManufacturerList)Formatter.Deserialize(DataStream);
-
-					//----------------------------------------------------------------------------*
-					// Copy the loaded data into this list
-					//----------------------------------------------------------------------------*
-
-					Clear();
-
-					foreach (cManufacturer Manufacturer in ManufacturerList)
-						Add(Manufacturer);
+					Manufacturer.Export(XMLDocument, XMLElement);
 					}
-				}
-
-			//----------------------------------------------------------------------------*
-			// If the data can't be loaded, oh well
-			//----------------------------------------------------------------------------*
-
-			catch
-				{
-				}
-
-			finally
-				{
-				if (DataStream != null)
-					DataStream.Close();
-				}
-			}
-
-		//============================================================================*
-		// Save()
-		//============================================================================*
-
-		public void Save()
-			{
-			Stream Stream = null;
-
-			//----------------------------------------------------------------------------*
-			// Save Data
-			//----------------------------------------------------------------------------*
-
-			try
-				{
-				//----------------------------------------------------------------------------*
-				// Open data file and create formatter
-				//----------------------------------------------------------------------------*
-
-				Stream = File.Open("Manufacturers.dat", FileMode.Create);
-
-				BinaryFormatter Formatter = new BinaryFormatter();
-
-				//----------------------------------------------------------------------------*
-				// Serialize the data members
-				//----------------------------------------------------------------------------*
-
-				Formatter.Serialize(Stream, this);
-
-				//----------------------------------------------------------------------------*
-				// Close the stream
-				//----------------------------------------------------------------------------*
-
-				Stream.Close();
-
-				Stream = null;
-				}
-			catch
-				{
-				}
-			finally
-				{
-				if (Stream != null)
-					Stream.Close();
 				}
 			}
 		}

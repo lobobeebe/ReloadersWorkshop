@@ -65,6 +65,8 @@ namespace ReloadersWorkShop
 
 		private double m_dMinimumStockLevel = 0.0;
 
+		private bool m_fCrossUse = false;
+
 		private bool m_fChecked = false;
 
 		private cTransactionList m_TransactionList = new cTransactionList();
@@ -203,6 +205,8 @@ namespace ReloadersWorkShop
 
 			m_dMinimumStockLevel = Supply.m_dMinimumStockLevel;
 
+			m_fCrossUse = Supply.m_fCrossUse;
+
 			m_fChecked = Supply.m_fChecked;
 
 			if (Supply.m_TransactionList != null)
@@ -239,6 +243,22 @@ namespace ReloadersWorkShop
 			get
 				{
 				return (m_dCostEach);
+				}
+			}
+
+		//============================================================================*
+		// CrossUse Property
+		//============================================================================*
+
+		public bool CrossUse
+			{
+			get
+				{
+				return (m_fCrossUse);
+				}
+			set
+				{
+				m_fCrossUse = value;
 				}
 			}
 
@@ -785,6 +805,24 @@ namespace ReloadersWorkShop
 				}
 
 			return (false);
+			}
+
+		//============================================================================*
+		// ToCrossUseString()
+		//============================================================================*
+
+		public string ToCrossUseString(string strString)
+			{
+			if (m_fCrossUse && cCaliber.CurrentFirearmType != FirearmType)
+				{
+				strString += " (";
+
+				strString += cFirearm.FirearmTypeString(FirearmType);
+
+				strString += ")";
+				}
+
+			return (strString);
 			}
 
 		//============================================================================*

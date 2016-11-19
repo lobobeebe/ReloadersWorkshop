@@ -127,7 +127,10 @@ namespace ReloadersWorkShop
 				{
 				m_AmmoTest = new cAmmoTest(AmmoTest);
 
-				if (Ammo.TestList.Count == 0)
+				if (m_AmmoTest.Ammo == null)
+					m_AmmoTest.Ammo = Ammo;
+
+				if (Ammo != null && Ammo.TestList.Count == 0)
 					m_AmmoTest.Firearm = null;
 
 				if (!m_fViewOnly)
@@ -201,8 +204,8 @@ namespace ReloadersWorkShop
 			CaliberLabel.Text = m_AmmoTest.Ammo.Caliber.ToString();
 			PartNumberLabel.Text = m_AmmoTest.Ammo.PartNumber;
 			TypeLabel.Text = m_AmmoTest.Ammo.Type;
-			BulletWeightLabel.Text = String.Format("{0:G0} {1}", m_DataFiles.StandardToMetric(m_AmmoTest.Ammo.BulletWeight, cDataFiles.eDataType.BulletWeight), m_DataFiles.MetricString(cDataFiles.eDataType.BulletWeight));
-			BulletDiameterLabel.Text = String.Format("{0:F3} {1}", m_DataFiles.StandardToMetric(m_AmmoTest.Ammo.BulletDiameter, cDataFiles.eDataType.Dimension), m_DataFiles.MetricString(cDataFiles.eDataType.Dimension));
+			BulletWeightLabel.Text = String.Format("{0:G0} {1}", cDataFiles.StandardToMetric(m_AmmoTest.Ammo.BulletWeight, cDataFiles.eDataType.BulletWeight), cDataFiles.MetricString(cDataFiles.eDataType.BulletWeight));
+			BulletDiameterLabel.Text = String.Format("{0:F3} {1}", cDataFiles.StandardToMetric(m_AmmoTest.Ammo.BulletDiameter, cDataFiles.eDataType.Dimension), cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
 			BallisticCoefficientLabel.Text = String.Format("{0:F3}", m_AmmoTest.Ammo.BallisticCoefficient);
 
 			switch (m_AmmoTest.Ammo.FirearmType)
@@ -222,7 +225,7 @@ namespace ReloadersWorkShop
 			// Populate Firearm Combo
 			//----------------------------------------------------------------------------*
 
-			if (m_AmmoTest.Firearm == null || m_AmmoTest.Ammo.TestList.Count == 0)
+			if (!m_AmmoTest.Ammo.Reload && (m_AmmoTest.Firearm == null || m_AmmoTest.Ammo.TestList.Count == 0))
 				{
 				FirearmCombo.Items.Add("Factory");
 				FirearmCombo.SelectedIndex = 0;
@@ -242,8 +245,10 @@ namespace ReloadersWorkShop
 				if (FirearmCombo.SelectedIndex < 0 && FirearmCombo.Items.Count > 0)
 					FirearmCombo.SelectedIndex = 0;
 
-				m_AmmoTest.Firearm = (cFirearm)FirearmCombo.SelectedItem;
-
+				if (FirearmCombo.SelectedIndex >= 0)
+					m_AmmoTest.Firearm = (cFirearm) FirearmCombo.SelectedItem;
+				else
+					m_AmmoTest.Firearm = null;
 				}
 
 			//----------------------------------------------------------------------------*
@@ -254,24 +259,27 @@ namespace ReloadersWorkShop
 
 			if (m_AmmoTest.Firearm != null)
 				{
-				BarrelLengthTextBox.Value = m_DataFiles.StandardToMetric(m_AmmoTest.Firearm.BarrelLength, cDataFiles.eDataType.Firearm);
-				TwistTextBox.Value = m_DataFiles.StandardToMetric(m_AmmoTest.Firearm.Twist, cDataFiles.eDataType.Firearm);
+				BarrelLengthTextBox.Value = cDataFiles.StandardToMetric(m_AmmoTest.Firearm.BarrelLength, cDataFiles.eDataType.Firearm);
+				TwistTextBox.Value = cDataFiles.StandardToMetric(m_AmmoTest.Firearm.Twist, cDataFiles.eDataType.Firearm);
 
 				BarrelLengthTextBox.Enabled = false;
 				TwistTextBox.Enabled = false;
 				}
 			else
 				{
-				BarrelLengthTextBox.Value = m_DataFiles.StandardToMetric(m_AmmoTest.BarrelLength, cDataFiles.eDataType.Firearm);
-				TwistTextBox.Value = m_DataFiles.StandardToMetric(m_AmmoTest.Twist, cDataFiles.eDataType.Firearm);
+				BarrelLengthTextBox.Value = cDataFiles.StandardToMetric(m_AmmoTest.BarrelLength, cDataFiles.eDataType.Firearm);
+				TwistTextBox.Value = cDataFiles.StandardToMetric(m_AmmoTest.Twist, cDataFiles.eDataType.Firearm);
+
+				BarrelLengthTextBox.Enabled = true;
+				TwistTextBox.Enabled = true;
 				}
 
 			PopulateShotList();
 
 			NumShotsTextBox.Value = m_AmmoTest.NumRounds;
-			BestGroupTextBox.Value = m_DataFiles.StandardToMetric(m_AmmoTest.BestGroup, cDataFiles.eDataType.GroupSize);
-            BestGroupRangeTextBox.Value = (int) m_DataFiles.StandardToMetric(m_AmmoTest.BestGroupRange, cDataFiles.eDataType.Range);
-			MuzzleVelocityTextBox.Value = (int) m_DataFiles.StandardToMetric(m_AmmoTest.MuzzleVelocity, cDataFiles.eDataType.Velocity);
+			BestGroupTextBox.Value = cDataFiles.StandardToMetric(m_AmmoTest.BestGroup, cDataFiles.eDataType.GroupSize);
+            BestGroupRangeTextBox.Value = (int) cDataFiles.StandardToMetric(m_AmmoTest.BestGroupRange, cDataFiles.eDataType.Range);
+			MuzzleVelocityTextBox.Value = (int) cDataFiles.StandardToMetric(m_AmmoTest.MuzzleVelocity, cDataFiles.eDataType.Velocity);
 
 			if (m_AmmoTest.Firearm == null)
 				{
@@ -281,7 +289,13 @@ namespace ReloadersWorkShop
 				MuzzleVelocityTextBox.Enabled = true;
 				}
 			else
-				MuzzleVelocityTextBox.Enabled = false;
+				{
+				MuzzleVelocityTextBox.Enabled = true;
+				NumShotsTextBox.Enabled = true;
+				BestGroupTextBox.Enabled = true;
+				BestGroupRangeTextBox.Enabled = true;
+				MuzzleVelocityTextBox.Enabled = true;
+				}
 
 			NotesTextBox.Text = m_AmmoTest.Notes;
 
@@ -319,7 +333,7 @@ namespace ReloadersWorkShop
 
 		public void OnEditShotsClicked(object sender, EventArgs args)
 			{
-			cTestShotForm TestShotform = new cTestShotForm(m_DataFiles, NumShotsTextBox.Value, m_AmmoTest.TestShotList, m_fViewOnly);
+			cTestShotForm TestShotform = new cTestShotForm(m_DataFiles, NumShotsTextBox.Value, m_AmmoTest.TestShotList, m_AmmoTest.NumRounds, m_fViewOnly);
 
 			TestShotform.Initialize();
 
@@ -384,12 +398,12 @@ namespace ReloadersWorkShop
 		public void OnOKClicked(object sender, EventArgs args)
 			{
 			m_AmmoTest.TestDate = TestDatePicker.Value;
-			m_AmmoTest.BarrelLength = m_DataFiles.MetricToStandard(BarrelLengthTextBox.Value, cDataFiles.eDataType.Firearm);
-			m_AmmoTest.Twist = m_DataFiles.MetricToStandard(TwistTextBox.Value, cDataFiles.eDataType.Firearm);
+			m_AmmoTest.BarrelLength = cDataFiles.MetricToStandard(BarrelLengthTextBox.Value, cDataFiles.eDataType.Firearm);
+			m_AmmoTest.Twist = cDataFiles.MetricToStandard(TwistTextBox.Value, cDataFiles.eDataType.Firearm);
 			m_AmmoTest.NumRounds = NumShotsTextBox.Value;
-			m_AmmoTest.MuzzleVelocity = (int) m_DataFiles.MetricToStandard(MuzzleVelocityTextBox.Value, cDataFiles.eDataType.Velocity);
-			m_AmmoTest.BestGroup = m_DataFiles.MetricToStandard(BestGroupTextBox.Value, cDataFiles.eDataType.GroupSize);
-			m_AmmoTest.BestGroupRange = (int) m_DataFiles.MetricToStandard(BestGroupRangeTextBox.Value, cDataFiles.eDataType.Range);
+			m_AmmoTest.MuzzleVelocity = (int) cDataFiles.MetricToStandard(MuzzleVelocityTextBox.Value, cDataFiles.eDataType.Velocity);
+			m_AmmoTest.BestGroup = cDataFiles.MetricToStandard(BestGroupTextBox.Value, cDataFiles.eDataType.GroupSize);
+			m_AmmoTest.BestGroupRange = (int) cDataFiles.MetricToStandard(BestGroupRangeTextBox.Value, cDataFiles.eDataType.Range);
 			m_AmmoTest.Notes = NotesTextBox.Text;
 
 			while (m_AmmoTest.TestShotList.Count > 0 && m_AmmoTest.NumRounds < m_AmmoTest.TestShotList.Count)
@@ -434,8 +448,8 @@ namespace ReloadersWorkShop
 				}
 
 			NumShotsTextBox.Value = m_AmmoTest.NumRounds;
-			BestGroupTextBox.Value = m_DataFiles.StandardToMetric(m_AmmoTest.BestGroup, cDataFiles.eDataType.GroupSize);
-			BestGroupRangeTextBox.Value = (int) m_DataFiles.StandardToMetric(m_AmmoTest.BestGroupRange, cDataFiles.eDataType.Range);
+			BestGroupTextBox.Value = cDataFiles.StandardToMetric(m_AmmoTest.BestGroup, cDataFiles.eDataType.GroupSize);
+			BestGroupRangeTextBox.Value = (int) cDataFiles.StandardToMetric(m_AmmoTest.BestGroupRange, cDataFiles.eDataType.Range);
 			}
 
 		//============================================================================*
@@ -473,11 +487,11 @@ namespace ReloadersWorkShop
 
 		private void PopulateStatistics()
 			{
-			cTestStatistics Statistics = m_AmmoTest.TestShotList.GetStatistics();
+			cTestStatistics Statistics = m_AmmoTest.TestShotList.GetStatistics(m_AmmoTest.NumRounds);
 
 			m_AmmoTest.MuzzleVelocity = (int) Statistics.AverageVelocity;
 
-			MuzzleVelocityTextBox.Value = (int) m_DataFiles.StandardToMetric(m_AmmoTest.MuzzleVelocity, cDataFiles.eDataType.Velocity);
+			MuzzleVelocityTextBox.Value = (int) cDataFiles.StandardToMetric(m_AmmoTest.MuzzleVelocity, cDataFiles.eDataType.Velocity);
 			}
 
 		//============================================================================*
@@ -490,24 +504,24 @@ namespace ReloadersWorkShop
 			// Set metric/standard labels
 			//----------------------------------------------------------------------------*
 
-			m_DataFiles.SetMetricLabel(BarrelLengthMeasurementLabel, cDataFiles.eDataType.Firearm);
-			m_DataFiles.SetMetricLabel(TwistMeasurementLabel, cDataFiles.eDataType.Firearm);
+			cDataFiles.SetMetricLabel(BarrelLengthMeasurementLabel, cDataFiles.eDataType.Firearm);
+			cDataFiles.SetMetricLabel(TwistMeasurementLabel, cDataFiles.eDataType.Firearm);
 
-			m_DataFiles.SetMetricLabel(MuzzleVelocityMeasurementLabel, cDataFiles.eDataType.Velocity);
+			cDataFiles.SetMetricLabel(MuzzleVelocityMeasurementLabel, cDataFiles.eDataType.Velocity);
 
-			m_DataFiles.SetMetricLabel(GroupMeasurementLabel, cDataFiles.eDataType.GroupSize);
-			m_DataFiles.SetMetricLabel(RangeMeasurementLabel, cDataFiles.eDataType.Range);
+			cDataFiles.SetMetricLabel(GroupMeasurementLabel, cDataFiles.eDataType.GroupSize);
+			cDataFiles.SetMetricLabel(RangeMeasurementLabel, cDataFiles.eDataType.Range);
 
 			//----------------------------------------------------------------------------*
 			// Set Text Box Parameters
 			//----------------------------------------------------------------------------*
 
-			m_DataFiles.SetInputParameters(BarrelLengthTextBox, cDataFiles.eDataType.Firearm);
-			m_DataFiles.SetInputParameters(TwistTextBox, cDataFiles.eDataType.Firearm);
-			m_DataFiles.SetInputParameters(MuzzleVelocityTextBox, cDataFiles.eDataType.Velocity);
+			cDataFiles.SetInputParameters(BarrelLengthTextBox, cDataFiles.eDataType.Firearm);
+			cDataFiles.SetInputParameters(TwistTextBox, cDataFiles.eDataType.Firearm);
+			cDataFiles.SetInputParameters(MuzzleVelocityTextBox, cDataFiles.eDataType.Velocity);
 
-			m_DataFiles.SetInputParameters(BestGroupTextBox, cDataFiles.eDataType.GroupSize);
-			m_DataFiles.SetInputParameters(BestGroupRangeTextBox, cDataFiles.eDataType.Range);
+			cDataFiles.SetInputParameters(BestGroupTextBox, cDataFiles.eDataType.GroupSize);
+			cDataFiles.SetInputParameters(BestGroupRangeTextBox, cDataFiles.eDataType.Range);
 			}
 
 		//============================================================================*

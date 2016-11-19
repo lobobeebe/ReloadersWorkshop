@@ -63,6 +63,7 @@
     </Compile>
     <Compile Include="Conversions\cConversions.cs" />
     <Compile Include="Data\cSQL.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Registry\cRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

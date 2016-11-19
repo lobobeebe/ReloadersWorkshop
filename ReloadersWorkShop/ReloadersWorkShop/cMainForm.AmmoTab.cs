@@ -16,6 +16,8 @@ using System.Windows.Forms;
 // Application Specific Using Statements
 //============================================================================*
 
+using ReloadersWorkShop.Preferences;
+
 //============================================================================*
 // NameSpace
 //============================================================================*
@@ -114,7 +116,7 @@ namespace ReloadersWorkShop
 			// Operations that are always performed
 			//----------------------------------------------------------------------------*
 
-			AmmoInventoryGroup.Visible = m_DataFiles.Preferences.TrackInventory;
+			AmmoInventoryGroup.Visible = cPreferences.TrackInventory;
 
 			PopulateAmmoListViewColumns();
 
@@ -146,7 +148,7 @@ namespace ReloadersWorkShop
 				cAmmo NewAmmo = AmmoForm.Ammo;
 				m_DataFiles.Preferences.LastAmmo = AmmoForm.Ammo;
 
-				m_FirearmsListView.Focus();
+				m_AmmoListView.Focus();
 
 				//----------------------------------------------------------------------------*
 				// See if the ammo already exists
@@ -535,7 +537,8 @@ namespace ReloadersWorkShop
 					CheckAmmo.BallisticCoefficient = NewAmmo.BallisticCoefficient;
 					CheckAmmo.BulletDiameter = NewAmmo.BulletDiameter;
 					CheckAmmo.BulletWeight = NewAmmo.BulletWeight;
-					CheckAmmo.TestList = NewAmmo.TestList;
+                    CheckAmmo.Reload = NewAmmo.Reload;
+                    CheckAmmo.TestList = NewAmmo.TestList;
 
 					CheckAmmo.TransactionList = new cTransactionList(NewAmmo.TransactionList);
 
@@ -545,7 +548,7 @@ namespace ReloadersWorkShop
 					// Set the quantities, costs, etc.
 					//----------------------------------------------------------------------------*
 
-					if (m_DataFiles.Preferences.TrackInventory)
+					if (cPreferences.TrackInventory)
 						{
 						CheckAmmo.QuantityOnHand = NewAmmo.QuantityOnHand;
 						CheckAmmo.Quantity = CheckAmmo.QuantityOnHand;

@@ -71,9 +71,9 @@ namespace ReloadersWorkShop
 
 			SortingColumn = m_DataFiles.Preferences.AmmoTestSortColumn;
 
-			m_arColumns[2].Text += String.Format(" ({0})",  m_DataFiles.MetricString(cDataFiles.eDataType.Velocity));
-			m_arColumns[3].Text += String.Format(" ({0})", m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize));
-			m_arColumns[5].Text += String.Format(" ({0})", m_DataFiles.MetricString(cDataFiles.eDataType.Range));
+			m_arColumns[2].Text += String.Format(" ({0})",  cDataFiles.MetricString(cDataFiles.eDataType.Velocity));
+			m_arColumns[3].Text += String.Format(" ({0})", cDataFiles.MetricString(cDataFiles.eDataType.GroupSize));
+			m_arColumns[5].Text += String.Format(" ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Range));
 
 			PopulateColumns(m_arColumns);
 
@@ -154,7 +154,7 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			m_strGroupFormat = "{0:F";
-			m_strGroupFormat += String.Format("{0:G0}", m_DataFiles.Preferences.GroupDecimals);
+			m_strGroupFormat += String.Format("{0:G0}", cPreferences.GroupDecimals);
 			m_strGroupFormat += "}";
 
 			//----------------------------------------------------------------------------*
@@ -193,8 +193,8 @@ namespace ReloadersWorkShop
 			Item.Tag = AmmoTest;
 
 			Item.SubItems.Add(AmmoTest.Firearm != null ? AmmoTest.Firearm.ToString() : "Factory");
-			Item.SubItems.Add(String.Format("{0:G0}", m_DataFiles.StandardToMetric(AmmoTest.MuzzleVelocity, cDataFiles.eDataType.Velocity)));
-			Item.SubItems.Add(String.Format(m_strGroupFormat, m_DataFiles.StandardToMetric(AmmoTest.BestGroup, cDataFiles.eDataType.GroupSize)));
+			Item.SubItems.Add(String.Format("{0:G0}", cDataFiles.StandardToMetric(AmmoTest.MuzzleVelocity, cDataFiles.eDataType.Velocity)));
+			Item.SubItems.Add(String.Format(m_strGroupFormat, cDataFiles.StandardToMetric(AmmoTest.BestGroup, cDataFiles.eDataType.GroupSize)));
 
 			double dBestGroup = AmmoTest.BestGroup;
 			int nBestGroupRange = AmmoTest.BestGroupRange;
@@ -203,7 +203,7 @@ namespace ReloadersWorkShop
 
 			Item.SubItems.Add(String.Format("{0:F3}", dMOA));
 
-			Item.SubItems.Add(String.Format("{0:N0}", m_DataFiles.StandardToMetric(AmmoTest.BestGroupRange, cDataFiles.eDataType.Range)));
+			Item.SubItems.Add(String.Format("{0:N0}", cDataFiles.StandardToMetric(AmmoTest.BestGroupRange, cDataFiles.eDataType.Range)));
  			}
 
 		//============================================================================*

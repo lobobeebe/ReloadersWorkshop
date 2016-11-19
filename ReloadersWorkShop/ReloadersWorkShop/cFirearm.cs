@@ -10,6 +10,7 @@
 //============================================================================*
 
 using System;
+using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -132,6 +133,15 @@ namespace ReloadersWorkShop
 		//============================================================================*
 
 		public cFirearm(cFirearm Firearm)
+			{
+			Copy(Firearm);
+			}
+
+		//============================================================================*
+		// Copy()
+		//============================================================================*
+
+		public void Copy(cFirearm Firearm)
 			{
 			//----------------------------------------------------------------------------*
 			// General
@@ -425,6 +435,301 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// CSVHeader Property
+		//============================================================================*
+
+		public static string CSVHeader
+			{
+			get
+				{
+				return ("Firearms");
+				}
+			}
+
+		//============================================================================*
+		// CSVLine Property
+		//============================================================================*
+
+		public string CSVLine
+			{
+			get
+				{
+				string strLine = "";
+
+				//----------------------------------------------------------------------------*
+				// General
+				//----------------------------------------------------------------------------*
+
+				strLine += m_Manufacturer.Name;
+				strLine += ",";
+				strLine += m_strModel;
+				strLine += ",";
+				strLine += m_strSerialNumber;
+				strLine += ",";
+				strLine += cFirearm.FirearmTypeString(m_eFirearmType);
+				strLine += ",";
+
+				strLine += m_dBarrelLength;
+				strLine += ",";
+				strLine += m_dTwist;
+				strLine += ",";
+				strLine += m_dSightHeight;
+
+				strLine += m_fScoped ? ",Yes," : ",-,";
+				strLine += m_dScopeClick;
+				strLine += ",";
+				strLine += m_eTurretType == eTurretType.MOA ? "MOA," : "Mils,";
+
+				strLine += m_nZeroRange;
+				strLine += ",";
+				strLine += m_dHeadSpace;
+				strLine += ",";
+				strLine += m_dNeck;
+				strLine += ",";
+
+				strLine += m_strSource;
+				strLine += ",";
+				strLine += m_PurchaseDate;
+				strLine += ",";
+				strLine += m_dPrice;
+				strLine += ",";
+
+				strLine += m_strReceiverFinish;
+				strLine += ",";
+				strLine += m_strBarrelFinish;
+				strLine += ",";
+
+				strLine += m_strType;
+				strLine += ",";
+				strLine += m_strAction;
+				strLine += ",";
+				strLine += m_strHammer;
+				strLine += ",";
+				strLine += m_strMagazine;
+				strLine += ",";
+				strLine += m_nCapacity;
+
+				strLine += m_strNotes;
+
+				return (strLine);
+				}
+			}
+
+		//============================================================================*
+		// CSVLineHeader Property
+		//============================================================================*
+
+		public static string CSVLineHeader
+			{
+			get
+				{
+				return("Manufacturer,Model,Serial Number,Firearm Type,Barrel Length,Twist,Sight Height,Scoped,Scope Click, Turret Type,Zero Range,HeadSpace,Neck,Source,Purchase Date,Price,Receiver Finish,Barrel Finish,Type,Action,Hammer,Magazine,Capacity,Notes");
+				}
+			}
+
+		//============================================================================*
+		// Export() - XML Document
+		//============================================================================*
+
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			XmlElement XMLThisElement = XMLDocument.CreateElement("Caliber");
+			XMLParentElement.AppendChild(XMLThisElement);
+
+			// Manufacturer
+
+			XmlElement XMLElement = XMLDocument.CreateElement("Manufacturer");
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(m_Manufacturer.Name);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Model
+
+			XMLElement = XMLDocument.CreateElement("Model");
+			XMLTextElement = XMLDocument.CreateTextNode(m_strModel);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Serial Number
+
+			XMLElement = XMLDocument.CreateElement("SerialNumber");
+			XMLTextElement = XMLDocument.CreateTextNode(m_strSerialNumber);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Firearm Type
+
+			XMLElement = XMLDocument.CreateElement("FirearmType");
+			XMLTextElement = XMLDocument.CreateTextNode(cFirearm.FirearmTypeString(m_eFirearmType));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Barrel Length
+
+			XMLElement = XMLDocument.CreateElement("BarrelLength");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dBarrelLength));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Twist
+
+			XMLElement = XMLDocument.CreateElement("Twist");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dTwist));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Sight Height
+
+			XMLElement = XMLDocument.CreateElement("SightHeight");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dSightHeight));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Scoped?
+
+			XMLElement = XMLDocument.CreateElement("Scoped?");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fScoped ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Scope Click
+
+			XMLElement = XMLDocument.CreateElement("ScopeClick");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dScopeClick));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Turret Type
+
+			XMLElement = XMLDocument.CreateElement("TurretType");
+			XMLTextElement = XMLDocument.CreateTextNode(m_eTurretType == eTurretType.MOA ? "MOA," : "Mils,");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Zero Range
+
+			XMLElement = XMLDocument.CreateElement("ZeroRange");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nZeroRange));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Headspace
+
+			XMLElement = XMLDocument.CreateElement("Headspace");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dHeadSpace));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Neck Diameter
+
+			XMLElement = XMLDocument.CreateElement("Neck Size");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dNeck));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Source
+
+			XMLElement = XMLDocument.CreateElement("Source");
+			XMLTextElement = XMLDocument.CreateTextNode(m_strSource);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Date Purchased
+
+			XMLElement = XMLDocument.CreateElement("DatePurchased");
+			XMLTextElement = XMLDocument.CreateTextNode(m_PurchaseDate.ToShortDateString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Price
+
+			XMLElement = XMLDocument.CreateElement("Price");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dPrice));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Receiver Finish
+
+			XMLElement = XMLDocument.CreateElement("ReceiverFinish");
+			XMLTextElement = XMLDocument.CreateTextNode(m_strReceiverFinish);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Barrel Finish
+
+			XMLElement = XMLDocument.CreateElement("BarrelFinish");
+			XMLTextElement = XMLDocument.CreateTextNode(m_strBarrelFinish);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Type
+
+			XMLElement = XMLDocument.CreateElement("Type");
+			XMLTextElement = XMLDocument.CreateTextNode(m_strType);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Action
+
+			XMLElement = XMLDocument.CreateElement("Action");
+			XMLTextElement = XMLDocument.CreateTextNode(m_strAction);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Hammer
+
+			XMLElement = XMLDocument.CreateElement("Hammer");
+			XMLTextElement = XMLDocument.CreateTextNode(m_strHammer);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Magazine
+
+			XMLElement = XMLDocument.CreateElement("Magazine");
+			XMLTextElement = XMLDocument.CreateTextNode(m_strMagazine);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Capacity
+
+			XMLElement = XMLDocument.CreateElement("Capacity");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nCapacity));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Notes
+
+			XMLElement = XMLDocument.CreateElement("Notes");
+			XMLTextElement = XMLDocument.CreateTextNode(m_strNotes);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+			}
+
+		//============================================================================*
 		// FirearmBulletList Property
 		//============================================================================*
 
@@ -563,6 +868,34 @@ namespace ReloadersWorkShop
 			set
 				{
 				m_strImageFile = value;
+				}
+			}
+
+		//============================================================================*
+		// ImageFilename Property
+		//============================================================================*
+
+		public string ImageFileName
+			{
+			get
+				{
+				if (Manufacturer == null || String.IsNullOrEmpty(m_strModel) || String.IsNullOrEmpty(m_strSerialNumber))
+					return ("");
+
+				string strFileName = String.Format("{0} {1} ({2})", Manufacturer.ToString(), m_strModel, m_strSerialNumber);
+
+				strFileName = strFileName.Replace('/', '-');
+				strFileName = strFileName.Replace('\\', '-');
+				strFileName = strFileName.Replace(':', '-');
+				strFileName = strFileName.Replace('*', '-');
+				strFileName = strFileName.Replace('?', '-');
+				strFileName = strFileName.Replace('\"', '-');
+				strFileName = strFileName.Replace('<', '-');
+				strFileName = strFileName.Replace('>', '-');
+				strFileName = strFileName.Replace('|', '-');
+				strFileName = strFileName.Replace('.', ' ');
+
+				return (strFileName);
 				}
 			}
 
@@ -1128,12 +1461,21 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// ToShortString()
+		//============================================================================*
+
+		public string ToShortString()
+			{
+			return (String.Format("{0} {1}", (m_Manufacturer != null) ? m_Manufacturer.Name : "", m_strModel));
+			}
+
+		//============================================================================*
 		// ToString()
 		//============================================================================*
 
 		public override string ToString()
 			{
-			return (String.Format("{0} {1}", (m_Manufacturer != null) ? m_Manufacturer.Name : "", m_strModel));
+			return (String.Format("{0} {1} ({2})", (m_Manufacturer != null) ? m_Manufacturer.Name : "", m_strModel, m_strSerialNumber));
 			}
 
 		//============================================================================*
@@ -1142,7 +1484,7 @@ namespace ReloadersWorkShop
 
 		public string ToLongString()
 			{
-			return (String.Format("{0} {1} - {2}", m_Manufacturer.Name, m_strModel, PrimaryCaliber.ToString()));
+			return (ToString() + String.Format(" - {0}", PrimaryCaliber.ToString()));
 			}
 
 		//============================================================================*
@@ -1286,6 +1628,46 @@ namespace ReloadersWorkShop
 			set
 				{
 				m_strType = value;
+				}
+			}
+
+		//============================================================================*
+		// XMLHeader Property
+		//============================================================================*
+
+		public static string XMLHeader
+			{
+			get
+				{
+				return ("Firearms");
+				}
+			}
+
+		//============================================================================*
+		// XMLLine Property
+		//============================================================================*
+
+		public string XMLLine
+			{
+			get
+				{
+				string strLine = "";
+
+				return (strLine);
+				}
+			}
+
+		//============================================================================*
+		// XMLLineHeader Property
+		//============================================================================*
+
+		public static string XMLLineHeader
+			{
+			get
+				{
+				string strLine = "";
+
+				return (strLine);
 				}
 			}
 

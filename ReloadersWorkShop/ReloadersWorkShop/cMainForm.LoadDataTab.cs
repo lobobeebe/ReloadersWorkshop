@@ -70,6 +70,8 @@ namespace ReloadersWorkShop
 			// Add the new Load to the LoadData tab
 			//----------------------------------------------------------------------------*
 
+			cCaliber.CurrentFirearmType = Load.FirearmType;
+
 			m_LoadDataListView.AddLoad(Load, LoadDataFirearmTypeCombo.Value, LoadDataCaliberCombo.SelectedIndex > 0 ? (cCaliber)LoadDataCaliberCombo.SelectedItem : null, LoadDataBulletCombo.SelectedIndex > 0 ? (cBullet)LoadDataBulletCombo.SelectedItem : null, LoadDataPowderCombo.SelectedIndex > 0 ? (cPowder)LoadDataPowderCombo.SelectedItem : null, true);
 
 			//----------------------------------------------------------------------------*
@@ -792,6 +794,8 @@ namespace ReloadersWorkShop
 
 					if (fOK)
 						{
+						cCaliber.CurrentFirearmType = CheckBullet.FirearmType;
+
 						LoadDataBulletCombo.Items.Add(CheckBullet);
 
 						if (CheckBullet.CompareTo(m_DataFiles.Preferences.LastLoadDataBulletSelected) == 0)
@@ -845,6 +849,8 @@ namespace ReloadersWorkShop
 
 					if (fCaliberUsed)
 						{
+						cCaliber.CurrentFirearmType = CheckCaliber.FirearmType;
+
 						LoadDataCaliberCombo.Items.Add(CheckCaliber);
 
 						if (CheckCaliber.CompareTo(m_DataFiles.Preferences.LastLoadDataCaliberSelected) == 0)
@@ -936,6 +942,8 @@ namespace ReloadersWorkShop
 
 					if (fPowderUsed)
 						{
+						cCaliber.CurrentFirearmType = CheckPowder.FirearmType;
+
 						LoadDataPowderCombo.Items.Add(CheckPowder);
 
 						if (CheckPowder.CompareTo(m_DataFiles.Preferences.LastLoadDataPowderSelected) == 0)

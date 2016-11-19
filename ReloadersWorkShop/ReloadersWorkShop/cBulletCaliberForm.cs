@@ -62,6 +62,8 @@ namespace ReloadersWorkShop
 			m_Bullet = Bullet;
 			m_DataFiles = DataFiles;
 
+			cCaliber.CurrentFirearmType = m_Bullet.FirearmType;
+
 			//----------------------------------------------------------------------------*
 			// Create the m_BulletCaliber object
 			//----------------------------------------------------------------------------*
@@ -176,8 +178,8 @@ namespace ReloadersWorkShop
 
 				m_BulletCaliber.CBTO = 0.0;
 
-				COALTextBox.Value = m_DataFiles.StandardToMetric(m_BulletCaliber.COL, cDataFiles.eDataType.Dimension);
-				CBTOTextBox.Value = m_DataFiles.StandardToMetric(m_BulletCaliber.CBTO, cDataFiles.eDataType.Dimension);
+				COALTextBox.Value = cDataFiles.StandardToMetric(m_BulletCaliber.COL, cDataFiles.eDataType.Dimension);
+				CBTOTextBox.Value = cDataFiles.StandardToMetric(m_BulletCaliber.CBTO, cDataFiles.eDataType.Dimension);
 
 				SetMaxCOALLabel(Caliber);
 				}
@@ -194,7 +196,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_BulletCaliber.COL = m_DataFiles.StandardToMetric(COALTextBox.Value, cDataFiles.eDataType.Dimension);
+			m_BulletCaliber.COL = cDataFiles.StandardToMetric(COALTextBox.Value, cDataFiles.eDataType.Dimension);
 
 			m_fChanged = true;
 
@@ -210,7 +212,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_BulletCaliber.CBTO = m_DataFiles.StandardToMetric(CBTOTextBox.Value, cDataFiles.eDataType.Dimension);
+			m_BulletCaliber.CBTO = cDataFiles.StandardToMetric(CBTOTextBox.Value, cDataFiles.eDataType.Dimension);
 
 			m_fChanged = true;
 
@@ -224,8 +226,8 @@ namespace ReloadersWorkShop
 		private void OnOKClicked(object sender, EventArgs e)
 			{
 			m_BulletCaliber.Caliber = (cCaliber) CaliberCombo.SelectedItem;
-			m_BulletCaliber.COL = m_DataFiles.MetricToStandard(COALTextBox.Value, cDataFiles.eDataType.Dimension);
-			m_BulletCaliber.CBTO = m_DataFiles.MetricToStandard(CBTOTextBox.Value, cDataFiles.eDataType.Dimension);
+			m_BulletCaliber.COL = cDataFiles.MetricToStandard(COALTextBox.Value, cDataFiles.eDataType.Dimension);
+			m_BulletCaliber.CBTO = cDataFiles.MetricToStandard(CBTOTextBox.Value, cDataFiles.eDataType.Dimension);
 
 			m_DataFiles.Preferences.LastBulletCaliber = m_BulletCaliber.Caliber;
 			m_DataFiles.Preferences.LastBulletCaliberCOL = m_BulletCaliber.COL;
@@ -254,8 +256,8 @@ namespace ReloadersWorkShop
 			if (m_BulletCaliber.COL == 0.0)
 				m_BulletCaliber.COL = dCOL;
 
-			COALTextBox.Value = m_DataFiles.StandardToMetric(m_BulletCaliber.COL, cDataFiles.eDataType.Dimension);
-			CBTOTextBox.Value = m_DataFiles.StandardToMetric(m_BulletCaliber.CBTO, cDataFiles.eDataType.Dimension);
+			COALTextBox.Value = cDataFiles.StandardToMetric(m_BulletCaliber.COL, cDataFiles.eDataType.Dimension);
+			CBTOTextBox.Value = cDataFiles.StandardToMetric(m_BulletCaliber.CBTO, cDataFiles.eDataType.Dimension);
 
 			SetMaxCOALLabel(Caliber);
 			}
@@ -266,6 +268,8 @@ namespace ReloadersWorkShop
 
 		private void PopulateCaliberCombo()
 			{
+			cCaliber.CurrentFirearmType = m_Bullet.FirearmType;
+
 			if (!m_fAdd)
 				{
 				CaliberCombo.Items.Add(m_BulletCaliber.Caliber);
@@ -279,9 +283,9 @@ namespace ReloadersWorkShop
 
 			foreach (cCaliber CheckCaliber in m_DataFiles.CaliberList)
 				{
-				if ((Math.Round(CheckCaliber.MinBulletDiameter, m_DataFiles.Preferences.DimensionDecimals) <= m_Bullet.Diameter && Math.Round(CheckCaliber.MaxBulletDiameter, m_DataFiles.Preferences.DimensionDecimals) >= m_Bullet.Diameter) &&
-					(Math.Round(CheckCaliber.MinBulletWeight, m_DataFiles.Preferences.BulletWeightDecimals) <= m_Bullet.Weight && Math.Round(CheckCaliber.MaxBulletWeight, m_DataFiles.Preferences.BulletWeightDecimals) >= m_Bullet.Weight) &&
-					(CheckCaliber.FirearmType == m_Bullet.FirearmType))
+				if ((Math.Round(CheckCaliber.MinBulletDiameter, 3) <= Math.Round(m_Bullet.Diameter,  3) && Math.Round(CheckCaliber.MaxBulletDiameter, 3) >= Math.Round(m_Bullet.Diameter, 3)) &&
+					(Math.Round(CheckCaliber.MinBulletWeight, 3) <= Math.Round(m_Bullet.Weight, 3) && Math.Round(CheckCaliber.MaxBulletWeight, 3) >= Math.Round(m_Bullet.Weight, 3)) &&
+					(m_Bullet.CrossUse || CheckCaliber.FirearmType == m_Bullet.FirearmType))
 					{
 					bool fAlreadyAdded = false;
 
@@ -297,7 +301,6 @@ namespace ReloadersWorkShop
 
 					if (!fAlreadyAdded)
 						CaliberCombo.Items.Add(CheckCaliber);
-
 					}
 				}
 
@@ -332,15 +335,15 @@ namespace ReloadersWorkShop
 			// Set metric/standard labels
 			//----------------------------------------------------------------------------*
 
-			m_DataFiles.SetMetricLabel(COALMeasurementLabel, cDataFiles.eDataType.Dimension);
-			m_DataFiles.SetMetricLabel(CBTOMeasurementLabel, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetMetricLabel(COALMeasurementLabel, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetMetricLabel(CBTOMeasurementLabel, cDataFiles.eDataType.Dimension);
 
 			//----------------------------------------------------------------------------*
 			// Set Text Box Parameters
 			//----------------------------------------------------------------------------*
 
-			m_DataFiles.SetInputParameters(COALTextBox, cDataFiles.eDataType.Dimension);
-			m_DataFiles.SetInputParameters(CBTOTextBox, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetInputParameters(COALTextBox, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetInputParameters(CBTOTextBox, cDataFiles.eDataType.Dimension);
 			}
 
 		//============================================================================*
@@ -350,10 +353,10 @@ namespace ReloadersWorkShop
 		private void SetMaxCOALLabel(cCaliber Caliber)
 			{
 			string strFormat = "{0:F";
-			strFormat += String.Format("{0:G0}", m_DataFiles.Preferences.DimensionDecimals);
+			strFormat += String.Format("{0:G0}", cPreferences.DimensionDecimals);
 			strFormat += "}";
 
-			MaxCOLLabel.Text = String.Format(strFormat, (Caliber != null) ? m_DataFiles.StandardToMetric(Caliber.MaxCOL, cDataFiles.eDataType.Dimension) : 0.0);
+			MaxCOLLabel.Text = String.Format(strFormat, (Caliber != null) ? cDataFiles.StandardToMetric(Caliber.MaxCOL, cDataFiles.eDataType.Dimension) : 0.0);
 			}
 
 		//============================================================================*
@@ -366,11 +369,11 @@ namespace ReloadersWorkShop
 
 			if (Caliber != null)
 				{
-				COALTextBox.MinValue = m_DataFiles.StandardToMetric(Caliber.CaseTrimLength, cDataFiles.eDataType.Dimension);
-				COALTextBox.MaxValue = m_DataFiles.StandardToMetric(Caliber.MaxCOL, cDataFiles.eDataType.Dimension);
+				COALTextBox.MinValue = cDataFiles.StandardToMetric(Caliber.CaseTrimLength, cDataFiles.eDataType.Dimension);
+				COALTextBox.MaxValue = cDataFiles.StandardToMetric(Caliber.MaxCOL, cDataFiles.eDataType.Dimension);
 
 				if (CBTOTextBox.Value > 0.0)
-					CBTOTextBox.MinValue = m_DataFiles.StandardToMetric(Caliber.CaseTrimLength, cDataFiles.eDataType.Dimension) + m_DataFiles.StandardToMetric(0.001, cDataFiles.eDataType.Dimension);
+					CBTOTextBox.MinValue = cDataFiles.StandardToMetric(Caliber.CaseTrimLength, cDataFiles.eDataType.Dimension) + cDataFiles.StandardToMetric(0.001, cDataFiles.eDataType.Dimension);
 				else
 					CBTOTextBox.MinValue = 0.0;
 

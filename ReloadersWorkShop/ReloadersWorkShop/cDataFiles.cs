@@ -16,6 +16,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
 using System.Windows.Forms;
+using System.Xml;
 
 //============================================================================*
 // CommonLib Using Statements
@@ -64,6 +65,12 @@ namespace ReloadersWorkShop
 			Velocity,
 			Quantity,
 			Cost
+			}
+
+		public enum eExportType
+			{
+			CSV = 0,
+			XML,
 			}
 
 		//============================================================================*
@@ -510,7 +517,7 @@ namespace ReloadersWorkShop
 
 			foreach (FileInfo Backupfile in Files)
 				{
-				if (Path.GetExtension(Backupfile.Name) != "rwb")
+				if (Path.GetExtension(Backupfile.Name) != ".rwb")
 					continue;
 
 				DateTime BackupDate = Backupfile.LastWriteTime;
@@ -1500,7 +1507,48 @@ namespace ReloadersWorkShop
 			if (!LoadDataFile(strBackupFilePath, fRestore))
 				return (false);
 
+			m_Preferences.ResetStatics();
+
 			m_Preferences.BallisticsData.MuzzleHeight = 60;
+
+			if (m_Preferences.TargetAimPointColor.A == 0)
+				m_Preferences.TargetAimPointColor = cTarget.DefaultAimPointColor;
+
+			if (m_Preferences.TargetOffsetColor.A == 0)
+				m_Preferences.TargetOffsetColor = cTarget.DefaultOffsetColor;
+
+			if (m_Preferences.TargetShotColor.A == 0)
+				m_Preferences.TargetShotColor = cTarget.DefaultShotColor;
+
+			if (m_Preferences.TargetShotForecolor.A == 0)
+				m_Preferences.TargetShotForecolor = cTarget.DefaultShotForecolor;
+
+			if (m_Preferences.TargetReticleColor.A == 0)
+				m_Preferences.TargetReticleColor = cTarget.DefaultReticleColor;
+
+			if (m_Preferences.TargetScaleForecolor.A == 0)
+				m_Preferences.TargetScaleForecolor = cTarget.DefaultScaleForecolor;
+
+			if (m_Preferences.TargetScaleBackcolor.A == 0)
+				m_Preferences.TargetScaleBackcolor = cTarget.DefaultScaleBackcolor;
+
+			if (m_Preferences.TargetExtremesColor.A == 0)
+				m_Preferences.TargetExtremesColor = cTarget.DefaultExtremesColor;
+
+			if (m_Preferences.TargetGroupBoxColor.A == 0)
+				m_Preferences.TargetGroupBoxColor = cTarget.DefaultGroupBoxColor;
+
+			if (!m_Preferences.TargetShowBoxesSet)
+				{
+				m_Preferences.TargetShowAimPoint = true;
+				m_Preferences.TargetShowExtremes = false;
+				m_Preferences.TargetShowGroupBox = false;
+				m_Preferences.TargetShowOffset = true;
+				m_Preferences.TargetShowScale = true;
+				m_Preferences.TargetShowShotNum = false;
+
+				m_Preferences.TargetShowBoxesSet = true;
+				}
 
 			//----------------------------------------------------------------------------*
 			// Add the Batch Editor Manufacturer if it's not already there
@@ -1527,6 +1575,16 @@ namespace ReloadersWorkShop
 
 			if (!fFound)
 				m_ManufacturerList.Add(m_BatchManufacturer);
+
+			//----------------------------------------------------------------------------*
+			// Make sure ChargeTest data is set
+			//----------------------------------------------------------------------------*
+
+			foreach (cLoad Load in m_LoadList)
+				{
+				foreach (cCharge Charge in Load.ChargeList)
+					Charge.SetTestData();
+				}
 
 			//----------------------------------------------------------------------------*
 			// Sort the Lists
@@ -1661,12 +1719,6 @@ namespace ReloadersWorkShop
 						//----------------------------------------------------------------------------*
 
 						m_Preferences = (cPreferences) Formatter.Deserialize(Stream);
-
-						//----------------------------------------------------------------------------*
-						// Set Metrics
-						//----------------------------------------------------------------------------*
-
-						SetComponentMetrics();
 						}
 					catch
 						{
@@ -1799,13 +1851,6 @@ namespace ReloadersWorkShop
 		public bool Merge(cDataFiles Datafiles, bool fCountOnly = false)
 			{
 			bool fDataMerged = false;
-
-			//----------------------------------------------------------------------------*
-			// Check for compatible Preferences
-			//----------------------------------------------------------------------------*
-
-			if (!MergePreferencesOK(Datafiles))
-				return (false);
 
 			//----------------------------------------------------------------------------*
 			// Start the merge operation
@@ -2711,34 +2756,6 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// MergePreferencesOK()
-		//============================================================================*
-
-		public bool MergePreferencesOK(cDataFiles DataFiles)
-			{
-			//----------------------------------------------------------------------------*
-			// Check Track Inventory Flag
-			//----------------------------------------------------------------------------*
-
-			if (DataFiles.Preferences.TrackInventory != m_Preferences.TrackInventory)
-				{
-				if (DataFiles.Preferences.TrackInventory && DataFiles.TransactionCount > 0)
-					{
-					string strMessage = "The data file you are about to merge was saved with Inventory Tracking turned on, but the current data set has Inventory Tracking turned off.\n\n";
-					strMessage += String.Format("The {0:N0} Inventory Activit{1} in the file to be merged file will not be transferred unless you first turn Inventory Tracking on in the Preferences dialog.\n\n", DataFiles.TransactionCount, DataFiles.TransactionCount != 1 ? "ies" : "y");
-					strMessage += "\n\nDo you wish to continue?";
-
-					DialogResult rc = MessageBox.Show(strMessage, "Incompatible Preference Setting", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
-
-					if (rc == DialogResult.No)
-						return (false);
-					}
-				}
-
-			return (true);
-			}
-
-		//============================================================================*
 		// MergePrimers()
 		//============================================================================*
 
@@ -2887,7 +2904,7 @@ namespace ReloadersWorkShop
 			// Make sure Inventory Tracking is turned on
 			//----------------------------------------------------------------------------*
 
-			if (!m_Preferences.TrackInventory)
+			if (!cPreferences.TrackInventory)
 				return (0);
 
 			//----------------------------------------------------------------------------*
@@ -2945,43 +2962,43 @@ namespace ReloadersWorkShop
 			switch (LabelType)
 				{
 				case eDataType.Altitude:
-					return (m_Preferences.MetricAltitudes ? "Meters" : "Feet");
+					return (cPreferences.MetricAltitudes ? "Meters" : "Feet");
 
 				case eDataType.BulletWeight:
-					return (m_Preferences.MetricBulletWeights ? "Grams" : "Grains");
+					return (cPreferences.MetricBulletWeights ? "Grams" : "Grains");
 
 				case eDataType.CanWeight:
-					return (m_Preferences.MetricCanWeights ? "Kilos" : "Pounds");
+					return (cPreferences.MetricCanWeights ? "Kilos" : "Pounds");
 
 				case eDataType.Dimension:
-					return (m_Preferences.MetricDimensions ? "Millimeters" : "Inches");
+					return (cPreferences.MetricDimensions ? "Millimeters" : "Inches");
 
 				case eDataType.Firearm:
-					return (m_Preferences.MetricFirearms ? "Centimeters" : "Inches");
+					return (cPreferences.MetricFirearms ? "Centimeters" : "Inches");
 
 				case eDataType.GroupSize:
-					return (m_Preferences.MetricGroups ? "Centimeters" : "Inches");
+					return (cPreferences.MetricGroups ? "Centimeters" : "Inches");
 
 				case eDataType.PowderWeight:
-					return (m_Preferences.MetricPowderWeights ? "Grams" : "Grains");
+					return (cPreferences.MetricPowderWeights ? "Grams" : "Grains");
 
 				case eDataType.Pressure:
-					return (m_Preferences.MetricAltitudes ? "Inches of Mercury" : "Millibars");
+					return (cPreferences.MetricAltitudes ? "Inches of Mercury" : "Millibars");
 
 				case eDataType.Range:
-					return (m_Preferences.MetricRanges ? "Meters" : "Yards");
+					return (cPreferences.MetricRanges ? "Meters" : "Yards");
 
 				case eDataType.ShotWeight:
-					return (m_Preferences.MetricShotWeights ? "Grams" : "Grains");
+					return (cPreferences.MetricShotWeights ? "Grams" : "Grains");
 
 				case eDataType.Speed:
-					return (m_Preferences.MetricVelocities ? "Kilometers per Hour" : "Mile per Hour");
+					return (cPreferences.MetricVelocities ? "Kilometers per Hour" : "Mile per Hour");
 
 				case eDataType.Temperature:
-					return (m_Preferences.MetricTemperatures ? "Celsius" : "Fahrenheit");
+					return (cPreferences.MetricTemperatures ? "Celsius" : "Fahrenheit");
 
 				case eDataType.Velocity:
-					return (m_Preferences.MetricVelocities ? "Meter per Second (m/s)" : "Feet per Second (fps)");
+					return (cPreferences.MetricVelocities ? "Meter per Second (m/s)" : "Feet per Second (fps)");
 				}
 
 			return ("");
@@ -2991,48 +3008,48 @@ namespace ReloadersWorkShop
 		// MetricString()
 		//============================================================================*
 
-		public string MetricString(eDataType LabelType)
+		public static string MetricString(eDataType LabelType)
 			{
 			switch (LabelType)
 				{
 				case eDataType.Altitude:
-					return (m_Preferences.MetricAltitudes ? "m" : "ft");
+					return (cPreferences.MetricAltitudes ? "m" : "ft");
 
 				case eDataType.BulletWeight:
-					return (m_Preferences.MetricBulletWeights ? "g" : "gr");
+					return (cPreferences.MetricBulletWeights ? "g" : "gr");
 
 				case eDataType.CanWeight:
-					return (m_Preferences.MetricCanWeights ? "kilo" : "lb");
+					return (cPreferences.MetricCanWeights ? "kilo" : "lb");
 
 				case eDataType.Dimension:
-					return (m_Preferences.MetricDimensions ? "mm" : "in.");
+					return (cPreferences.MetricDimensions ? "mm" : "in.");
 
 				case eDataType.Firearm:
-					return (m_Preferences.MetricFirearms ? "cm" : "in.");
+					return (cPreferences.MetricFirearms ? "cm" : "in.");
 
 				case eDataType.GroupSize:
-					return (m_Preferences.MetricGroups ? "cm" : "in.");
+					return (cPreferences.MetricGroups ? "cm" : "in.");
 
 				case eDataType.PowderWeight:
-					return (m_Preferences.MetricPowderWeights ? "g" : "gr");
+					return (cPreferences.MetricPowderWeights ? "g" : "gr");
 
 				case eDataType.Pressure:
-					return (m_Preferences.MetricPressures ? "mb" : "in Hg");
+					return (cPreferences.MetricPressures ? "mb" : "in Hg");
 
 				case eDataType.Range:
-					return (m_Preferences.MetricRanges ? "m" : "yds");
+					return (cPreferences.MetricRanges ? "m" : "yds");
 
 				case eDataType.ShotWeight:
-					return (m_Preferences.MetricShotWeights ? "g" : "gr");
+					return (cPreferences.MetricShotWeights ? "g" : "gr");
 
 				case eDataType.Speed:
-					return (m_Preferences.MetricVelocities ? "kph" : "mph");
+					return (cPreferences.MetricVelocities ? "kph" : "mph");
 
 				case eDataType.Temperature:
-					return (m_Preferences.MetricTemperatures ? "C" : "F");
+					return (cPreferences.MetricTemperatures ? "C" : "F");
 
 				case eDataType.Velocity:
-					return (m_Preferences.MetricVelocities ? "m/s" : "fps");
+					return (cPreferences.MetricVelocities ? "m/s" : "fps");
 				}
 
 			return ("");
@@ -3042,60 +3059,60 @@ namespace ReloadersWorkShop
 		// MetricToStandard()
 		//============================================================================*
 
-		public double MetricToStandard(double dValue, eDataType LabelType)
+		public static double MetricToStandard(double dValue, eDataType LabelType)
 			{
 			switch (LabelType)
 				{
 				case eDataType.Altitude:
-					dValue = Math.Round(m_Preferences.MetricAltitudes ? cConversions.MetersToFeet(dValue) : dValue, 0);
+					dValue = cPreferences.MetricAltitudes ? cConversions.MetersToFeet(dValue) : dValue;
 					break;
 
 				case eDataType.BulletWeight:
-					dValue = Math.Round(m_Preferences.MetricBulletWeights ? cConversions.GramsToGrains(dValue) : dValue, m_Preferences.BulletWeightDecimals);
+					dValue = cPreferences.MetricBulletWeights ? cConversions.GramsToGrains(dValue) : dValue;
 					break;
 
 				case eDataType.CanWeight:
-					dValue = Math.Round(m_Preferences.MetricCanWeights ? cConversions.KilosToPounds(dValue) : dValue, m_Preferences.TrackInventory ? 3 : m_Preferences.CanWeightDecimals);
+					dValue = cPreferences.MetricCanWeights ? cConversions.KilosToPounds(dValue) : dValue;
 					break;
 
 				case eDataType.Dimension:
-					dValue = Math.Round(m_Preferences.MetricDimensions ? cConversions.MillimetersToInches(dValue) : dValue, m_Preferences.DimensionDecimals);
+					dValue = cPreferences.MetricDimensions ? cConversions.MillimetersToInches(dValue) : dValue;
 					break;
 
 				case eDataType.Firearm:
-					dValue = Math.Round(m_Preferences.MetricFirearms ? cConversions.CentimetersToInches(dValue) : dValue, m_Preferences.FirearmDecimals);
+					dValue = cPreferences.MetricFirearms ? cConversions.CentimetersToInches(dValue) : dValue;
 					break;
 
 				case eDataType.GroupSize:
-					dValue = Math.Round(m_Preferences.MetricGroups ? cConversions.CentimetersToInches(dValue) : dValue, m_Preferences.GroupDecimals);
+					dValue = cPreferences.MetricGroups ? cConversions.CentimetersToInches(dValue) : dValue;
 					break;
 
 				case eDataType.PowderWeight:
-					dValue = Math.Round(m_Preferences.MetricPowderWeights ? cConversions.GramsToGrains(dValue) : dValue, m_Preferences.TrackInventory ? 3 : m_Preferences.PowderWeightDecimals);
+					dValue = cPreferences.MetricPowderWeights ? cConversions.GramsToGrains(dValue) : dValue;
 					break;
 
 				case eDataType.Pressure:
-					dValue = Math.Round(m_Preferences.MetricPressures ? cConversions.MillibarsToInHg(dValue) : dValue, 2);
+					dValue = cPreferences.MetricPressures ? cConversions.MillibarsToInHg(dValue) : dValue;
 					break;
 
 				case eDataType.Range:
-					dValue = Math.Round(m_Preferences.MetricRanges ? cConversions.MetersToYards(dValue, 0) : dValue, 0);
+					dValue = cPreferences.MetricRanges ? cConversions.MetersToYards(dValue) : dValue;
 					break;
 
 				case eDataType.ShotWeight:
-					dValue = Math.Round(m_Preferences.MetricShotWeights ? cConversions.GramsToOunces(dValue) : dValue, m_Preferences.ShotWeightDecimals);
+					dValue = cPreferences.MetricShotWeights ? cConversions.GramsToOunces(dValue) : dValue;
 					break;
 
 				case eDataType.Speed:
-					dValue = Math.Round(m_Preferences.MetricVelocities ? cConversions.KPHToMPH(dValue) : dValue, 0);
+					dValue = cPreferences.MetricVelocities ? cConversions.KPHToMPH(dValue) : dValue;
 					break;
 
 				case eDataType.Temperature:
-					dValue = Math.Round(m_Preferences.MetricTemperatures ? cConversions.CelsiusToFahrenheit(dValue) : dValue, 0);
+					dValue = cPreferences.MetricTemperatures ? cConversions.CelsiusToFahrenheit(dValue) : dValue;
 					break;
 
 				case eDataType.Velocity:
-					dValue = Math.Round(m_Preferences.MetricVelocities ? cConversions.MSToFPS(dValue) : dValue, 0);
+					dValue = cPreferences.MetricVelocities ? cConversions.MSToFPS(dValue) : dValue;
 					break;
 				}
 
@@ -3339,6 +3356,8 @@ namespace ReloadersWorkShop
 				// Serialize the data members
 				//----------------------------------------------------------------------------*
 
+				m_Preferences.RecordStatics();
+
 				Formatter.Serialize(Stream, m_ManufacturerList);
 				Formatter.Serialize(Stream, m_CaliberList);
 				Formatter.Serialize(Stream, m_FirearmList);
@@ -3348,7 +3367,6 @@ namespace ReloadersWorkShop
 				Formatter.Serialize(Stream, m_PrimerList);
 				Formatter.Serialize(Stream, m_LoadList);
 				Formatter.Serialize(Stream, m_BatchList);
-				//				Formatter.Serialize(Stream, m_TransactionList);
 				Formatter.Serialize(Stream, m_AmmoList);
 
 				//----------------------------------------------------------------------------*
@@ -3381,26 +3399,10 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// SetComponentMetrics()
-		//============================================================================*
-
-		public void SetComponentMetrics()
-			{
-			cBullet.MetricDimensions = Preferences.MetricDimensions;
-			cBullet.DimensionDecimals = Preferences.DimensionDecimals;
-
-			cBullet.MetricWeights = Preferences.MetricBulletWeights;
-			cBullet.WeightDecimals = Preferences.BulletWeightDecimals;
-
-			cCharge.MetricPowderWeights = Preferences.MetricPowderWeights;
-			cCharge.PowderWeightDecimals = Preferences.PowderWeightDecimals;
-			}
-
-		//============================================================================*
 		// SetInputParameters()
 		//============================================================================*
 
-		public void SetInputParameters(cDoubleValueTextBox TextBox, cDataFiles.eDataType eDataType, bool fPowder = false)
+		public static void SetInputParameters(cDoubleValueTextBox TextBox, cDataFiles.eDataType eDataType, bool fPowder = false)
 			{
 			switch (eDataType)
 				{
@@ -3410,15 +3412,15 @@ namespace ReloadersWorkShop
 					break;
 
 				case eDataType.BulletWeight:
-					TextBox.NumDecimals = m_Preferences.BulletWeightDecimals;
-					TextBox.MaxLength = (m_Preferences.MetricBulletWeights ? 3 : 4) + m_Preferences.BulletWeightDecimals;
+					TextBox.NumDecimals = cPreferences.BulletWeightDecimals;
+					TextBox.MaxLength = (cPreferences.MetricBulletWeights ? 3 : 4) + cPreferences.BulletWeightDecimals;
 					break;
 
 				case eDataType.CanWeight:
-					if (m_Preferences.TrackInventory)
+					if (cPreferences.TrackInventory)
 						TextBox.NumDecimals = 3;
 					else
-						TextBox.NumDecimals = m_Preferences.CanWeightDecimals;
+						TextBox.NumDecimals = cPreferences.CanWeightDecimals;
 
 					TextBox.MaxLength = TextBox.NumDecimals + 3;
 
@@ -3430,35 +3432,35 @@ namespace ReloadersWorkShop
 					break;
 
 				case eDataType.Dimension:
-					TextBox.NumDecimals = m_Preferences.DimensionDecimals;
-					TextBox.MaxLength = (m_Preferences.MetricDimensions ? 4 : 2) + m_Preferences.DimensionDecimals;
+					TextBox.NumDecimals = cPreferences.DimensionDecimals;
+					TextBox.MaxLength = (cPreferences.MetricDimensions ? 4 : 2) + cPreferences.DimensionDecimals;
 					break;
 
 				case eDataType.Firearm:
-					TextBox.NumDecimals = m_Preferences.FirearmDecimals;
-					TextBox.MaxLength = (m_Preferences.MetricFirearms ? 5 : 4) + m_Preferences.FirearmDecimals;
+					TextBox.NumDecimals = cPreferences.FirearmDecimals;
+					TextBox.MaxLength = (cPreferences.MetricFirearms ? 5 : 4) + cPreferences.FirearmDecimals;
 					break;
 
 				case eDataType.GroupSize:
-					TextBox.NumDecimals = m_Preferences.GroupDecimals;
-					TextBox.MaxLength = (m_Preferences.MetricGroups ? 5 : 4) + m_Preferences.GroupDecimals;
+					TextBox.NumDecimals = cPreferences.GroupDecimals;
+					TextBox.MaxLength = (cPreferences.MetricGroups ? 5 : 4) + cPreferences.GroupDecimals;
 					break;
 
 				case eDataType.PowderWeight:
-					TextBox.NumDecimals = m_Preferences.PowderWeightDecimals;
-					TextBox.MaxLength = (m_Preferences.MetricPowderWeights ? 3 : 4) + m_Preferences.PowderWeightDecimals;
+					TextBox.NumDecimals = cPreferences.PowderWeightDecimals;
+					TextBox.MaxLength = (cPreferences.MetricPowderWeights ? 3 : 4) + cPreferences.PowderWeightDecimals;
 					break;
 
 				case eDataType.Pressure:
 					TextBox.NumDecimals = 2;
-					TextBox.MaxLength = (m_Preferences.MetricPressures ? 7 : 5);
+					TextBox.MaxLength = (cPreferences.MetricPressures ? 7 : 5);
 					TextBox.MinValue = StandardToMetric(25.0, eDataType.Pressure);
 					TextBox.MaxValue = StandardToMetric(33.0, eDataType.Pressure);
 					break;
 
 				case eDataType.Quantity:
-					TextBox.NumDecimals = fPowder ? m_Preferences.CanWeightDecimals : 0;
-					TextBox.MaxLength = fPowder ? 3 + m_Preferences.CanWeightDecimals : 4;
+					TextBox.NumDecimals = fPowder ? cPreferences.CanWeightDecimals : 0;
+					TextBox.MaxLength = fPowder ? 3 + cPreferences.CanWeightDecimals : 4;
 					break;
 
 				case eDataType.Range:
@@ -3467,18 +3469,18 @@ namespace ReloadersWorkShop
 					break;
 
 				case eDataType.ShotWeight:
-					TextBox.NumDecimals = m_Preferences.ShotWeightDecimals;
-					TextBox.MaxLength = (m_Preferences.MetricShotWeights ? 4 : 3) + m_Preferences.ShotWeightDecimals;
+					TextBox.NumDecimals = cPreferences.ShotWeightDecimals;
+					TextBox.MaxLength = (cPreferences.MetricShotWeights ? 4 : 3) + cPreferences.ShotWeightDecimals;
 					break;
 
 				case eDataType.Speed:
 					TextBox.NumDecimals = 0;
-					TextBox.MaxLength = (m_Preferences.MetricVelocities ? 4 : 3);
+					TextBox.MaxLength = (cPreferences.MetricVelocities ? 4 : 3);
 					break;
 
 				case eDataType.Temperature:
 					TextBox.NumDecimals = 0;
-					TextBox.MaxLength = (m_Preferences.MetricTemperatures ? 2 : 3);
+					TextBox.MaxLength = (cPreferences.MetricTemperatures ? 2 : 3);
 					TextBox.MinValue = 0.0;
 					TextBox.MaxValue = StandardToMetric(150.0, eDataType.Temperature);
 					break;
@@ -3494,7 +3496,7 @@ namespace ReloadersWorkShop
 		// SetInputParameters()
 		//============================================================================*
 
-		public void SetInputParameters(cIntegerValueTextBox TextBox, cDataFiles.eDataType eDataType)
+		public static void SetInputParameters(cIntegerValueTextBox TextBox, cDataFiles.eDataType eDataType)
 			{
 			switch (eDataType)
 				{
@@ -3503,7 +3505,7 @@ namespace ReloadersWorkShop
 					break;
 
 				case eDataType.BulletWeight:
-					TextBox.MaxLength = (m_Preferences.MetricBulletWeights ? 2 : 3);
+					TextBox.MaxLength = (cPreferences.MetricBulletWeights ? 2 : 3);
 					break;
 
 				case eDataType.CanWeight:
@@ -3511,23 +3513,23 @@ namespace ReloadersWorkShop
 					break;
 
 				case eDataType.Dimension:
-					TextBox.MaxLength = (m_Preferences.MetricDimensions ? 3 : 2);
+					TextBox.MaxLength = (cPreferences.MetricDimensions ? 3 : 2);
 					break;
 
 				case eDataType.Firearm:
-					TextBox.MaxLength = (m_Preferences.MetricFirearms ? 4 : 3);
+					TextBox.MaxLength = (cPreferences.MetricFirearms ? 4 : 3);
 					break;
 
 				case eDataType.GroupSize:
-					TextBox.MaxLength = (m_Preferences.MetricGroups ? 3 : 2);
+					TextBox.MaxLength = (cPreferences.MetricGroups ? 3 : 2);
 					break;
 
 				case eDataType.PowderWeight:
-					TextBox.MaxLength = (m_Preferences.MetricPowderWeights ? 1 : 2);
+					TextBox.MaxLength = (cPreferences.MetricPowderWeights ? 1 : 2);
 					break;
 
 				case eDataType.Pressure:
-					TextBox.MaxLength = (m_Preferences.MetricPressures ? 4 : 2);
+					TextBox.MaxLength = (cPreferences.MetricPressures ? 4 : 2);
 					break;
 
 				case eDataType.Range:
@@ -3535,15 +3537,15 @@ namespace ReloadersWorkShop
 					break;
 
 				case eDataType.ShotWeight:
-					TextBox.MaxLength = (m_Preferences.MetricShotWeights ? 4 : 2);
+					TextBox.MaxLength = (cPreferences.MetricShotWeights ? 4 : 2);
 					break;
 
 				case eDataType.Speed:
-					TextBox.MaxLength = (m_Preferences.MetricVelocities ? 4 : 3);
+					TextBox.MaxLength = (cPreferences.MetricVelocities ? 4 : 3);
 					break;
 
 				case eDataType.Temperature:
-					TextBox.MaxLength = (m_Preferences.MetricTemperatures ? 2 : 3);
+					TextBox.MaxLength = (cPreferences.MetricTemperatures ? 2 : 3);
 					break;
 
 				case eDataType.Velocity:
@@ -3556,7 +3558,7 @@ namespace ReloadersWorkShop
 		// SetMetricLabel()
 		//============================================================================*
 
-		public void SetMetricLabel(Label Label, eDataType LabelType)
+		public static void SetMetricLabel(Label Label, eDataType LabelType)
 			{
 			Label.Text = MetricString(LabelType);
 			}
@@ -3653,60 +3655,60 @@ namespace ReloadersWorkShop
 		// StandardToMetric()
 		//============================================================================*
 
-		public double StandardToMetric(double dValue, eDataType LabelType)
+		public static double StandardToMetric(double dValue, eDataType LabelType)
 			{
 			switch (LabelType)
 				{
 				case eDataType.Altitude:
-					dValue = Math.Round(m_Preferences.MetricAltitudes ? cConversions.FeetToMeters(dValue) : dValue, 0);
+					dValue = cPreferences.MetricAltitudes ? cConversions.FeetToMeters(dValue) : dValue;
 					break;
 
 				case eDataType.BulletWeight:
-					dValue = Math.Round(m_Preferences.MetricBulletWeights ? cConversions.GrainsToGrams(dValue) : dValue, m_Preferences.BulletWeightDecimals);
+					dValue = cPreferences.MetricBulletWeights ? cConversions.GrainsToGrams(dValue) : dValue;
 					break;
 
 				case eDataType.CanWeight:
-					dValue = Math.Round(m_Preferences.MetricCanWeights ? cConversions.PoundsToKilos(dValue) : dValue, m_Preferences.TrackInventory ? 3 : m_Preferences.CanWeightDecimals);
+					dValue = cPreferences.MetricCanWeights ? cConversions.PoundsToKilos(dValue) : dValue;
 					break;
 
 				case eDataType.Dimension:
-					dValue = Math.Round(m_Preferences.MetricDimensions ? cConversions.InchesToMillimeters(dValue) : dValue, m_Preferences.DimensionDecimals);
+					dValue = cPreferences.MetricDimensions ? cConversions.InchesToMillimeters(dValue) : dValue;
 					break;
 
 				case eDataType.Firearm:
-					dValue = Math.Round(m_Preferences.MetricFirearms ? cConversions.InchesToCentimeters(dValue) : dValue, m_Preferences.FirearmDecimals);
+					dValue = cPreferences.MetricFirearms ? cConversions.InchesToCentimeters(dValue) : dValue;
 					break;
 
 				case eDataType.GroupSize:
-					dValue = Math.Round(m_Preferences.MetricGroups ? cConversions.InchesToCentimeters(dValue) : dValue, m_Preferences.GroupDecimals);
+					dValue = cPreferences.MetricGroups ? cConversions.InchesToCentimeters(dValue) : dValue;
 					break;
 
 				case eDataType.PowderWeight:
-					dValue = Math.Round(m_Preferences.MetricPowderWeights ? cConversions.GrainsToGrams(dValue) : dValue, m_Preferences.TrackInventory ? 3 : m_Preferences.PowderWeightDecimals);
+					dValue = cPreferences.MetricPowderWeights ? cConversions.GrainsToGrams(dValue) : dValue;
 					break;
 
 				case eDataType.Pressure:
-					dValue = Math.Round(m_Preferences.MetricPressures ? cConversions.InHgToMillibars(dValue) : dValue, 2);
+					dValue = cPreferences.MetricPressures ? cConversions.InHgToMillibars(dValue) : dValue;
 					break;
 
 				case eDataType.Range:
-					dValue = Math.Round(m_Preferences.MetricRanges ? cConversions.YardsToMeters(dValue) : dValue, 0);
+					dValue = cPreferences.MetricRanges ? cConversions.YardsToMeters(dValue) : dValue;
 					break;
 
 				case eDataType.ShotWeight:
-					dValue = Math.Round(m_Preferences.MetricShotWeights ? cConversions.OuncesToGrams(dValue) : dValue, m_Preferences.ShotWeightDecimals);
+					dValue = cPreferences.MetricShotWeights ? cConversions.OuncesToGrams(dValue) : dValue;
 					break;
 
 				case eDataType.Speed:
-					dValue = Math.Round(m_Preferences.MetricVelocities ? cConversions.MPHToKPH(dValue) : dValue, 0);
+					dValue = cPreferences.MetricVelocities ? cConversions.MPHToKPH(dValue) : dValue;
 					break;
 
 				case eDataType.Temperature:
-					dValue = Math.Round(m_Preferences.MetricTemperatures ? cConversions.FahrenheitToCelsius(dValue) : dValue, 0);
+					dValue = cPreferences.MetricTemperatures ? cConversions.FahrenheitToCelsius(dValue) : dValue;
 					break;
 
 				case eDataType.Velocity:
-					dValue = Math.Round(m_Preferences.MetricVelocities ? cConversions.FPSToMS(dValue) : dValue, 0);
+					dValue = cPreferences.MetricVelocities ? cConversions.FPSToMS(dValue) : dValue;
 					break;
 				}
 
@@ -3746,7 +3748,7 @@ namespace ReloadersWorkShop
 
 			if (Supply != null)
 				{
-				if (Preferences.TrackInventory)
+				if (cPreferences.TrackInventory)
 					{
 					if (Supply.SupplyType == cSupply.eSupplyTypes.Bullets)
 						{
@@ -3828,7 +3830,7 @@ namespace ReloadersWorkShop
 			if (Supply == null)
 				return (0.0);
 
-			if (Preferences.TrackInventory)
+			if (cPreferences.TrackInventory)
 				{
 				if (Supply.SupplyType != cSupply.eSupplyTypes.Bullets)
 					{
@@ -4389,7 +4391,7 @@ namespace ReloadersWorkShop
 			if (Load == null)
 				return (false);
 
-			if (!m_Preferences.TrackInventory)
+			if (!cPreferences.TrackInventory)
 				return (true);
 
 			if (Load.Bullet == null || SupplyQuantity(Load.Bullet) <= 0.0)
@@ -4416,7 +4418,7 @@ namespace ReloadersWorkShop
 			if (Load == null || Batch == null)
 				return (false);
 
-			if (!m_Preferences.TrackInventory || !Batch.TrackInventory)
+			if (!cPreferences.TrackInventory || !Batch.TrackInventory)
 				return (true);
 
 			if (Load.Bullet == null || SupplyQuantity(Load.Bullet) <= 0.0)

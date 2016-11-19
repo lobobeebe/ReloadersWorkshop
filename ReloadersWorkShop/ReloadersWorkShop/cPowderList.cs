@@ -10,7 +10,9 @@
 //============================================================================*
 
 using System;
+using System.IO;
 using System.Collections.Generic;
+using System.Xml;
 
 namespace ReloadersWorkShop
 	{
@@ -26,12 +28,57 @@ namespace ReloadersWorkShop
 			foreach (cPowder CheckPowder in this)
 				{
 				if (CheckPowder.CompareTo(Powder) == 0)
-					return(false);
+					return (false);
 				}
 
 			Add(Powder);
 
-			return(true);
+			return (true);
+			}
+
+		//============================================================================*
+		// Export()
+		//============================================================================*
+
+		public void Export(StreamWriter Writer)
+			{
+			if (Count <= 0)
+				return;
+
+			string strLine = "";
+
+			Writer.WriteLine(cPowder.CSVHeader);
+			Writer.WriteLine();
+
+			Writer.WriteLine(cPowder.CSVLineHeader);
+			Writer.WriteLine();
+
+			foreach (cPowder Powder in this)
+				{
+				strLine = Powder.CSVLine;
+
+				Writer.WriteLine(strLine);
+				}
+
+			Writer.WriteLine();
+			}
+
+		//============================================================================*
+		// Export()
+		//============================================================================*
+
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			if (Count > 0)
+				{
+				XmlElement XMLElement = XMLDocument.CreateElement(string.Empty, "Powders", string.Empty);
+				XMLParentElement.AppendChild(XMLElement);
+
+				foreach (cPowder Powder in this)
+					{
+					Powder.Export(XMLDocument, XMLElement);
+					}
+				}
 			}
 
 		//============================================================================*

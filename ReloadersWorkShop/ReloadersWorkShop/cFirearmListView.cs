@@ -195,11 +195,11 @@ namespace ReloadersWorkShop
 
 		public void SetColumns()
 			{
-			m_arColumns[4].Text = String.Format("Barrel Length ({0})", m_DataFiles.MetricString(cDataFiles.eDataType.Firearm));
-			m_arColumns[8].Text = String.Format("Zero Range ({0})", m_DataFiles.MetricString(cDataFiles.eDataType.Range));
-			m_arColumns[9].Text = String.Format("Sight Height ({0})", m_DataFiles.MetricString(cDataFiles.eDataType.Firearm));
-			m_arColumns[10].Text = String.Format("Headspace ({0})", m_DataFiles.MetricString(cDataFiles.eDataType.Dimension));
-			m_arColumns[11].Text = String.Format("Neck Size ({0})", m_DataFiles.MetricString(cDataFiles.eDataType.Dimension));
+			m_arColumns[4].Text = String.Format("Barrel Length ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Firearm));
+			m_arColumns[8].Text = String.Format("Zero Range ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Range));
+			m_arColumns[9].Text = String.Format("Sight Height ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Firearm));
+			m_arColumns[10].Text = String.Format("Headspace ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
+			m_arColumns[11].Text = String.Format("Neck Size ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
 
 			PopulateColumns(m_arColumns);
 			}
@@ -212,6 +212,8 @@ namespace ReloadersWorkShop
 			{
 			Item.SubItems.Clear();
 
+			cCaliber.CurrentFirearmType = Firearm.FirearmType;
+
 			Item.Text = Firearm.Manufacturer.ToString();
 
 			Item.Group = Groups[(int)Firearm.FirearmType];
@@ -220,28 +222,28 @@ namespace ReloadersWorkShop
 			Item.Checked = Firearm.Checked;
 
 			string strLengthFormat = "{0:F";
-			strLengthFormat += String.Format("{0:G0}", m_DataFiles.Preferences.FirearmDecimals);
+			strLengthFormat += String.Format("{0:G0}", cPreferences.FirearmDecimals);
 			strLengthFormat += "}";
 
 			string strDimensionFormat = "{0:F";
-			strDimensionFormat += String.Format("{0:G0}", m_DataFiles.Preferences.DimensionDecimals);
+			strDimensionFormat += String.Format("{0:G0}", cPreferences.DimensionDecimals);
 			strDimensionFormat += "}";
 
 			string strTwistFormat = "1 in {0:F";
-			strTwistFormat += String.Format("{0:G0}", m_DataFiles.Preferences.FirearmDecimals);
+			strTwistFormat += String.Format("{0:G0}", cPreferences.FirearmDecimals);
 			strTwistFormat += "} {1}";
 
 			Item.SubItems.Add(String.Format("{0}", Firearm.Model));
 			Item.SubItems.Add(String.Format("{0}", Firearm.SerialNumber));
 			Item.SubItems.Add(String.Format("{0}", Firearm.PrimaryCaliber));
-			Item.SubItems.Add(String.Format(strLengthFormat, m_DataFiles.StandardToMetric(Firearm.BarrelLength, cDataFiles.eDataType.Firearm)));
-			Item.SubItems.Add(Firearm.Twist == 0.0 ? "N/A" : String.Format(strTwistFormat, m_DataFiles.StandardToMetric(Firearm.Twist, cDataFiles.eDataType.Firearm), m_DataFiles.MetricString(cDataFiles.eDataType.Firearm)));
+			Item.SubItems.Add(String.Format(strLengthFormat, cDataFiles.StandardToMetric(Firearm.BarrelLength, cDataFiles.eDataType.Firearm)));
+			Item.SubItems.Add(Firearm.Twist == 0.0 ? "N/A" : String.Format(strTwistFormat, cDataFiles.StandardToMetric(Firearm.Twist, cDataFiles.eDataType.Firearm), cDataFiles.MetricString(cDataFiles.eDataType.Firearm)));
 			Item.SubItems.Add(Firearm.Scoped ? "Y" : "");
 			Item.SubItems.Add(Firearm.TurretClickString);
-			Item.SubItems.Add(String.Format("{0:N0}", m_DataFiles.StandardToMetric(Firearm.ZeroRange, cDataFiles.eDataType.Range)));
-			Item.SubItems.Add(String.Format(strLengthFormat, m_DataFiles.StandardToMetric(Firearm.SightHeight, cDataFiles.eDataType.Firearm)));
-			Item.SubItems.Add(Firearm.FirearmType == cFirearm.eFireArmType.Rifle ? String.Format(strDimensionFormat, m_DataFiles.StandardToMetric(Firearm.HeadSpace, cDataFiles.eDataType.Dimension)) : "-");
-			Item.SubItems.Add(Firearm.FirearmType == cFirearm.eFireArmType.Rifle ? String.Format(strDimensionFormat, m_DataFiles.StandardToMetric(Firearm.Neck, cDataFiles.eDataType.Dimension)) : "-");
+			Item.SubItems.Add(String.Format("{0:N0}", cDataFiles.StandardToMetric(Firearm.ZeroRange, cDataFiles.eDataType.Range)));
+			Item.SubItems.Add(String.Format(strLengthFormat, cDataFiles.StandardToMetric(Firearm.SightHeight, cDataFiles.eDataType.Firearm)));
+			Item.SubItems.Add(Firearm.FirearmType == cFirearm.eFireArmType.Rifle ? String.Format(strDimensionFormat, cDataFiles.StandardToMetric(Firearm.HeadSpace, cDataFiles.eDataType.Dimension)) : "-");
+			Item.SubItems.Add(Firearm.FirearmType == cFirearm.eFireArmType.Rifle ? String.Format(strDimensionFormat, cDataFiles.StandardToMetric(Firearm.Neck, cDataFiles.eDataType.Dimension)) : "-");
 			}
 
 		//============================================================================*

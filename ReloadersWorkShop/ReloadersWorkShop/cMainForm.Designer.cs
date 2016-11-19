@@ -66,6 +66,7 @@ namespace ReloadersWorkShop
 			this.MainMenu = new System.Windows.Forms.MenuStrip();
 			this.FileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.FileSaveMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.FileExportMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.FileBackupMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.FileRestoreBackupMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -129,6 +130,7 @@ namespace ReloadersWorkShop
 			this.ToolsSAAMISmokelessPowderMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.ToolsSAAMISportingFirearmsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.ToolsSAAMIUnsafeArmsAmmoMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.ToolsTargetCalculatorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.HelpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.HelpSupportForumMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.HelpVideoMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -143,6 +145,7 @@ namespace ReloadersWorkShop
 			this.HelpVideoRWBatchEditorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.HelpVideoRWInventoryMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.HelpVideoRWBallisticsCalculatorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.HelpVideoRWTargetCalculatorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.HelpNotesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
 			this.HelpPurchaseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -379,6 +382,9 @@ namespace ReloadersWorkShop
 			this.EditManufacturerButton = new System.Windows.Forms.Button();
 			this.AddManufacturerButton = new System.Windows.Forms.Button();
 			this.MainTabControl = new System.Windows.Forms.TabControl();
+			this.HelpVideoRWCrossUseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.HelpVideoRWExportingDataMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.HelpVideoRWSettingJumpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			label54 = new System.Windows.Forms.Label();
 			label56 = new System.Windows.Forms.Label();
 			LoadDataFiltersFirearmTypeLabel = new System.Windows.Forms.Label();
@@ -570,6 +576,7 @@ namespace ReloadersWorkShop
 			// 
 			this.FileMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.FileSaveMenuItem,
+            this.FileExportMenuItem,
             this.toolStripSeparator1,
             this.FileBackupMenuItem,
             this.FileRestoreBackupMenuItem,
@@ -591,6 +598,12 @@ namespace ReloadersWorkShop
 			this.FileSaveMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
 			this.FileSaveMenuItem.Size = new System.Drawing.Size(208, 22);
 			this.FileSaveMenuItem.Text = "&Save";
+			// 
+			// FileExportMenuItem
+			// 
+			this.FileExportMenuItem.Name = "FileExportMenuItem";
+			this.FileExportMenuItem.Size = new System.Drawing.Size(208, 22);
+			this.FileExportMenuItem.Text = "&Export";
 			// 
 			// toolStripSeparator1
 			// 
@@ -883,7 +896,8 @@ namespace ReloadersWorkShop
 			this.ToolsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolsStabilityCalculatorMenuItem,
             this.ToolsConversionCalculatorMenuItem,
-            this.SAAMIDocumentsToolStripMenuItem});
+            this.SAAMIDocumentsToolStripMenuItem,
+            this.ToolsTargetCalculatorMenuItem});
 			this.ToolsMenuItem.Name = "ToolsMenuItem";
 			this.ToolsMenuItem.Size = new System.Drawing.Size(48, 20);
 			this.ToolsMenuItem.Text = "&Tools";
@@ -892,14 +906,14 @@ namespace ReloadersWorkShop
 			// 
 			this.ToolsStabilityCalculatorMenuItem.Name = "ToolsStabilityCalculatorMenuItem";
 			this.ToolsStabilityCalculatorMenuItem.Size = new System.Drawing.Size(216, 22);
-			this.ToolsStabilityCalculatorMenuItem.Text = "Bullet Stability Calculator";
+			this.ToolsStabilityCalculatorMenuItem.Text = "Bullet &Stability Calculator";
 			// 
 			// ToolsConversionCalculatorMenuItem
 			// 
 			this.ToolsConversionCalculatorMenuItem.Name = "ToolsConversionCalculatorMenuItem";
 			this.ToolsConversionCalculatorMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F12;
 			this.ToolsConversionCalculatorMenuItem.Size = new System.Drawing.Size(216, 22);
-			this.ToolsConversionCalculatorMenuItem.Text = "Conversion Calculator";
+			this.ToolsConversionCalculatorMenuItem.Text = "Conversion &Calculator";
 			// 
 			// SAAMIDocumentsToolStripMenuItem
 			// 
@@ -1045,6 +1059,13 @@ namespace ReloadersWorkShop
 			this.ToolsSAAMIUnsafeArmsAmmoMenuItem.Size = new System.Drawing.Size(281, 22);
 			this.ToolsSAAMIUnsafeArmsAmmoMenuItem.Text = "Unsafe Arms/Ammo Combinations";
 			// 
+			// ToolsTargetCalculatorMenuItem
+			// 
+			this.ToolsTargetCalculatorMenuItem.Name = "ToolsTargetCalculatorMenuItem";
+			this.ToolsTargetCalculatorMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F11;
+			this.ToolsTargetCalculatorMenuItem.Size = new System.Drawing.Size(216, 22);
+			this.ToolsTargetCalculatorMenuItem.Text = "&Target Calculator";
+			// 
 			// HelpMenuItem
 			// 
 			this.HelpMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1117,7 +1138,11 @@ namespace ReloadersWorkShop
             this.HelpVideoRWLoadDataMenuItem,
             this.HelpVideoRWBatchEditorMenuItem,
             this.HelpVideoRWInventoryMenuItem,
-            this.HelpVideoRWBallisticsCalculatorMenuItem});
+            this.HelpVideoRWBallisticsCalculatorMenuItem,
+            this.HelpVideoRWTargetCalculatorMenuItem,
+            this.HelpVideoRWCrossUseMenuItem,
+            this.HelpVideoRWExportingDataMenuItem,
+            this.HelpVideoRWSettingJumpMenuItem});
 			this.HelpVideoRWMenuItem.Name = "HelpVideoRWMenuItem";
 			this.HelpVideoRWMenuItem.Size = new System.Drawing.Size(283, 22);
 			this.HelpVideoRWMenuItem.Text = "Reloader\'s WorkShop";
@@ -1125,32 +1150,38 @@ namespace ReloadersWorkShop
 			// HelpVideoRWOperationMenuItem
 			// 
 			this.HelpVideoRWOperationMenuItem.Name = "HelpVideoRWOperationMenuItem";
-			this.HelpVideoRWOperationMenuItem.Size = new System.Drawing.Size(217, 22);
+			this.HelpVideoRWOperationMenuItem.Size = new System.Drawing.Size(282, 22);
 			this.HelpVideoRWOperationMenuItem.Text = "Part 1 - General Operation";
 			// 
 			// HelpVideoRWLoadDataMenuItem
 			// 
 			this.HelpVideoRWLoadDataMenuItem.Name = "HelpVideoRWLoadDataMenuItem";
-			this.HelpVideoRWLoadDataMenuItem.Size = new System.Drawing.Size(217, 22);
+			this.HelpVideoRWLoadDataMenuItem.Size = new System.Drawing.Size(282, 22);
 			this.HelpVideoRWLoadDataMenuItem.Text = "Part 2 - Load Data";
 			// 
 			// HelpVideoRWBatchEditorMenuItem
 			// 
 			this.HelpVideoRWBatchEditorMenuItem.Name = "HelpVideoRWBatchEditorMenuItem";
-			this.HelpVideoRWBatchEditorMenuItem.Size = new System.Drawing.Size(217, 22);
+			this.HelpVideoRWBatchEditorMenuItem.Size = new System.Drawing.Size(282, 22);
 			this.HelpVideoRWBatchEditorMenuItem.Text = "Part 2a - Batch Editor";
 			// 
 			// HelpVideoRWInventoryMenuItem
 			// 
 			this.HelpVideoRWInventoryMenuItem.Name = "HelpVideoRWInventoryMenuItem";
-			this.HelpVideoRWInventoryMenuItem.Size = new System.Drawing.Size(217, 22);
+			this.HelpVideoRWInventoryMenuItem.Size = new System.Drawing.Size(282, 22);
 			this.HelpVideoRWInventoryMenuItem.Text = "Part 3 - Inventory Control";
 			// 
 			// HelpVideoRWBallisticsCalculatorMenuItem
 			// 
 			this.HelpVideoRWBallisticsCalculatorMenuItem.Name = "HelpVideoRWBallisticsCalculatorMenuItem";
-			this.HelpVideoRWBallisticsCalculatorMenuItem.Size = new System.Drawing.Size(217, 22);
+			this.HelpVideoRWBallisticsCalculatorMenuItem.Size = new System.Drawing.Size(282, 22);
 			this.HelpVideoRWBallisticsCalculatorMenuItem.Text = "Part 4 - Ballistics Calculator";
+			// 
+			// HelpVideoRWTargetCalculatorMenuItem
+			// 
+			this.HelpVideoRWTargetCalculatorMenuItem.Name = "HelpVideoRWTargetCalculatorMenuItem";
+			this.HelpVideoRWTargetCalculatorMenuItem.Size = new System.Drawing.Size(282, 22);
+			this.HelpVideoRWTargetCalculatorMenuItem.Text = "Part 5 - Target Calculator";
 			// 
 			// HelpNotesMenuItem
 			// 
@@ -1778,6 +1809,14 @@ namespace ReloadersWorkShop
 			this.BallisticsFirearmTypeCombo.FormattingEnabled = true;
 			this.BallisticsFirearmTypeCombo.IncludeShotgun = false;
 			this.BallisticsFirearmTypeCombo.Items.AddRange(new object[] {
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
             "Handgun",
             "Rifle",
             "Handgun",
@@ -3879,6 +3918,14 @@ namespace ReloadersWorkShop
             "Handgun",
             "Rifle",
             "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
             "Rifle"});
 			this.BatchFirearmTypeCombo.Location = new System.Drawing.Point(83, 22);
 			this.BatchFirearmTypeCombo.Name = "BatchFirearmTypeCombo";
@@ -4054,6 +4101,14 @@ namespace ReloadersWorkShop
 			this.LoadDataFirearmTypeCombo.FormattingEnabled = true;
 			this.LoadDataFirearmTypeCombo.IncludeShotgun = false;
 			this.LoadDataFirearmTypeCombo.Items.AddRange(new object[] {
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
             "Handgun",
             "Rifle",
             "Handgun",
@@ -5006,6 +5061,24 @@ namespace ReloadersWorkShop
 			this.MainTabControl.Size = new System.Drawing.Size(1473, 1051);
 			this.MainTabControl.TabIndex = 0;
 			// 
+			// HelpVideoRWCrossUseMenuItem
+			// 
+			this.HelpVideoRWCrossUseMenuItem.Name = "HelpVideoRWCrossUseMenuItem";
+			this.HelpVideoRWCrossUseMenuItem.Size = new System.Drawing.Size(282, 22);
+			this.HelpVideoRWCrossUseMenuItem.Text = "Part 6 - How to Cross-Use Components";
+			// 
+			// HelpVideoRWExportingDataMenuItem
+			// 
+			this.HelpVideoRWExportingDataMenuItem.Name = "HelpVideoRWExportingDataMenuItem";
+			this.HelpVideoRWExportingDataMenuItem.Size = new System.Drawing.Size(282, 22);
+			this.HelpVideoRWExportingDataMenuItem.Text = "Part 6a - Exporting Data";
+			// 
+			// HelpVideoRWSettingJumpMenuItem
+			// 
+			this.HelpVideoRWSettingJumpMenuItem.Name = "HelpVideoRWSettingJumpMenuItem";
+			this.HelpVideoRWSettingJumpMenuItem.Size = new System.Drawing.Size(282, 22);
+			this.HelpVideoRWSettingJumpMenuItem.Text = "Part 6b - Setting \"Jump\" in Batches";
+			// 
 			// cMainForm
 			// 
 			this.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
@@ -5391,6 +5464,12 @@ namespace ReloadersWorkShop
 		private System.Windows.Forms.CheckBox AmmoPrintBelowStockCheckBox;
 		private System.Windows.Forms.ToolStripMenuItem FilePrintAmmoShoppingListMenuItem;
 		private System.Windows.Forms.Button BallisticsKestrelButton;
+		private System.Windows.Forms.ToolStripMenuItem ToolsTargetCalculatorMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem HelpVideoRWTargetCalculatorMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem FileExportMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem HelpVideoRWCrossUseMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem HelpVideoRWExportingDataMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem HelpVideoRWSettingJumpMenuItem;
 		}
 	}
 

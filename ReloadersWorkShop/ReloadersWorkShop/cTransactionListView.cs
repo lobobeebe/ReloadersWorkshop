@@ -209,9 +209,9 @@ namespace ReloadersWorkShop
 					break;
 
 				case cSupply.eSupplyTypes.Powder:
-					dQuantity = m_DataFiles.StandardToMetric(dQuantity / 7000.0, cDataFiles.eDataType.CanWeight);
+					dQuantity = cDataFiles.StandardToMetric(dQuantity / 7000.0, cDataFiles.eDataType.CanWeight);
 
-					Item.SubItems.Add(String.Format("{0:F3} {1}{2}", dQuantity, m_DataFiles.MetricString(cDataFiles.eDataType.CanWeight), Math.Round(dQuantity, 3) != 1.0 ? "s" : ""));
+					Item.SubItems.Add(String.Format("{0:F3} {1}{2}", dQuantity, cDataFiles.MetricString(cDataFiles.eDataType.CanWeight), Math.Round(dQuantity, 3) != 1.0 ? "s" : ""));
 
 					break;
 

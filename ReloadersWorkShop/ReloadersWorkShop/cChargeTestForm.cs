@@ -183,7 +183,7 @@ namespace ReloadersWorkShop
 
 		private void OnBarrelLengthChanged(object sender, EventArgs e)
 			{
-			m_ChargeTest.BarrelLength = m_DataFiles.MetricToStandard(BarrelLengthTextBox.Value, cDataFiles.eDataType.Firearm);
+			m_ChargeTest.BarrelLength = cDataFiles.MetricToStandard(BarrelLengthTextBox.Value, cDataFiles.eDataType.Firearm);
 
 			UpdateButtons();
 			}
@@ -194,7 +194,7 @@ namespace ReloadersWorkShop
 
 		private void OnBestGroupChanged(object sender, EventArgs e)
 			{
-			m_ChargeTest.BestGroup = m_DataFiles.MetricToStandard(BestGroupTextBox.Value, cDataFiles.eDataType.GroupSize);
+			m_ChargeTest.BestGroup = cDataFiles.MetricToStandard(BestGroupTextBox.Value, cDataFiles.eDataType.GroupSize);
 
 			UpdateButtons();
 			}
@@ -205,7 +205,7 @@ namespace ReloadersWorkShop
 
 		private void OnBestGroupRangeChanged(object sender, EventArgs e)
 			{
-			m_ChargeTest.BestGroupRange = (int) m_DataFiles.MetricToStandard(BestGroupRangeTextBox.Value, cDataFiles.eDataType.Range);
+			m_ChargeTest.BestGroupRange = (int) cDataFiles.MetricToStandard(BestGroupRangeTextBox.Value, cDataFiles.eDataType.Range);
 
 			UpdateButtons();
 			}
@@ -232,8 +232,8 @@ namespace ReloadersWorkShop
 				m_ChargeTest.BarrelLength = Firearm.BarrelLength;
 				m_ChargeTest.Twist = Firearm.Twist;
 
-				BarrelLengthTextBox.Value = m_DataFiles.StandardToMetric(m_ChargeTest.BarrelLength, cDataFiles.eDataType.Firearm);
-				TwistTextBox.Value = m_DataFiles.StandardToMetric(m_ChargeTest.Twist, cDataFiles.eDataType.Firearm);
+				BarrelLengthTextBox.Value = cDataFiles.StandardToMetric(m_ChargeTest.BarrelLength, cDataFiles.eDataType.Firearm);
+				TwistTextBox.Value = cDataFiles.StandardToMetric(m_ChargeTest.Twist, cDataFiles.eDataType.Firearm);
 
 				BarrelLengthTextBox.Enabled = false;
 				TwistTextBox.Enabled = false;
@@ -248,7 +248,7 @@ namespace ReloadersWorkShop
 
 		private void OnMuzzleVelocityChanged(object sender, EventArgs e)
 			{
-			m_ChargeTest.MuzzleVelocity = (int) m_DataFiles.MetricToStandard(MuzzleVelocityTextBox.Value, cDataFiles.eDataType.Velocity);
+			m_ChargeTest.MuzzleVelocity = (int) cDataFiles.MetricToStandard(MuzzleVelocityTextBox.Value, cDataFiles.eDataType.Velocity);
 
 			UpdateButtons();
 			}
@@ -300,7 +300,7 @@ namespace ReloadersWorkShop
 
 		private void OnTwistChanged(object sender, EventArgs e)
 			{
-			m_ChargeTest.Twist = m_DataFiles.MetricToStandard(TwistTextBox.Value, cDataFiles.eDataType.Firearm);
+			m_ChargeTest.Twist = cDataFiles.MetricToStandard(TwistTextBox.Value, cDataFiles.eDataType.Firearm);
 
 			UpdateButtons();
 			}
@@ -313,13 +313,13 @@ namespace ReloadersWorkShop
 			{
 			TestDatePicker.Value = m_ChargeTest.TestDate;
 			SourceComboBox.Text = m_ChargeTest.Source;
-			BarrelLengthTextBox.Value = m_DataFiles.StandardToMetric(m_ChargeTest.BarrelLength, cDataFiles.eDataType.Firearm);
-			TwistTextBox.Value = m_DataFiles.StandardToMetric(m_ChargeTest.Twist, cDataFiles.eDataType.Firearm);
+			BarrelLengthTextBox.Value = cDataFiles.StandardToMetric(m_ChargeTest.BarrelLength, cDataFiles.eDataType.Firearm);
+			TwistTextBox.Value = cDataFiles.StandardToMetric(m_ChargeTest.Twist, cDataFiles.eDataType.Firearm);
 
-			MuzzleVelocityTextBox.Value = (int) m_DataFiles.StandardToMetric(m_ChargeTest.MuzzleVelocity, cDataFiles.eDataType.Velocity);
+			MuzzleVelocityTextBox.Value = (int) cDataFiles.StandardToMetric(m_ChargeTest.MuzzleVelocity, cDataFiles.eDataType.Velocity);
 			PressureTextBox.Value = m_ChargeTest.Pressure;
-			BestGroupTextBox.Value = m_DataFiles.StandardToMetric(m_ChargeTest.BestGroup, cDataFiles.eDataType.GroupSize);
-			BestGroupRangeTextBox.Value = (int) m_DataFiles.StandardToMetric(m_ChargeTest.BestGroupRange, cDataFiles.eDataType.Range);
+			BestGroupTextBox.Value = cDataFiles.StandardToMetric(m_ChargeTest.BestGroup, cDataFiles.eDataType.GroupSize);
+			BestGroupRangeTextBox.Value = (int) cDataFiles.StandardToMetric(m_ChargeTest.BestGroupRange, cDataFiles.eDataType.Range);
 			NotesTextBox.Text = m_ChargeTest.Notes;
 			}
 
@@ -417,25 +417,25 @@ namespace ReloadersWorkShop
 			// Set metric/standard labels
 			//----------------------------------------------------------------------------*
 
-			m_DataFiles.SetMetricLabel(BarrelLengthMeasurementLabel, cDataFiles.eDataType.Firearm);
-			m_DataFiles.SetMetricLabel(TwistMeasurementLabel, cDataFiles.eDataType.Firearm);
+			cDataFiles.SetMetricLabel(BarrelLengthMeasurementLabel, cDataFiles.eDataType.Firearm);
+			cDataFiles.SetMetricLabel(TwistMeasurementLabel, cDataFiles.eDataType.Firearm);
 
-			m_DataFiles.SetMetricLabel(MuzzleVelocityMeasurementLabel, cDataFiles.eDataType.Velocity);
-			m_DataFiles.SetMetricLabel(GroupMeasurementLabel, cDataFiles.eDataType.GroupSize);
+			cDataFiles.SetMetricLabel(MuzzleVelocityMeasurementLabel, cDataFiles.eDataType.Velocity);
+			cDataFiles.SetMetricLabel(GroupMeasurementLabel, cDataFiles.eDataType.GroupSize);
 
-			m_DataFiles.SetMetricLabel(RangeMeasurementLabel, cDataFiles.eDataType.Range);
+			cDataFiles.SetMetricLabel(RangeMeasurementLabel, cDataFiles.eDataType.Range);
 
 			//----------------------------------------------------------------------------*
 			// Set Text Box Parameters
 			//----------------------------------------------------------------------------*
 
-			m_DataFiles.SetInputParameters(BarrelLengthTextBox, cDataFiles.eDataType.Firearm);
-			m_DataFiles.SetInputParameters(TwistTextBox, cDataFiles.eDataType.Firearm);
+			cDataFiles.SetInputParameters(BarrelLengthTextBox, cDataFiles.eDataType.Firearm);
+			cDataFiles.SetInputParameters(TwistTextBox, cDataFiles.eDataType.Firearm);
 
-			m_DataFiles.SetInputParameters(MuzzleVelocityTextBox, cDataFiles.eDataType.Velocity);
-			m_DataFiles.SetInputParameters(BestGroupTextBox, cDataFiles.eDataType.GroupSize);
+			cDataFiles.SetInputParameters(MuzzleVelocityTextBox, cDataFiles.eDataType.Velocity);
+			cDataFiles.SetInputParameters(BestGroupTextBox, cDataFiles.eDataType.GroupSize);
 
-			m_DataFiles.SetInputParameters(BestGroupRangeTextBox, cDataFiles.eDataType.Range);
+			cDataFiles.SetInputParameters(BestGroupRangeTextBox, cDataFiles.eDataType.Range);
 			}
 
 		//============================================================================*

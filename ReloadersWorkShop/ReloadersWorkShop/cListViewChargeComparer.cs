@@ -70,49 +70,6 @@ namespace ReloadersWorkShop
 				}
 
 			//----------------------------------------------------------------------------*
-			// Get the ChargeTest Data
-			//----------------------------------------------------------------------------*
-
-			cChargeTest ChargeTest1 = null;
-			cChargeTest ChargeTest2 = null;
-
-			if (SortColumn != 1)
-				{
-				foreach(cChargeTest CheckTest in Charge1.TestList)
-					{
-					if (CheckTest.Source == (Object1 as ListViewItem).SubItems[0].Text)
-						{
-						ChargeTest1 = CheckTest;
-
-						break;
-						}
-					}
-
-				foreach (cChargeTest CheckTest in Charge2.TestList)
-					{
-					if (CheckTest.Source == (Object2 as ListViewItem).SubItems[0].Text)
-						{
-						ChargeTest2 = CheckTest;
-
-						break;
-						}
-					}
-
-				if (ChargeTest1 == null)
-					{
-					if (ChargeTest2 == null)
-						return (0);
-					else
-						return (-1);
-					}
-				else
-					{
-					if (ChargeTest2 == null)
-						return (1);
-					}
-				}
-
-			//----------------------------------------------------------------------------*
 			// Compare the SortColumns
 			//----------------------------------------------------------------------------*
 
@@ -125,7 +82,7 @@ namespace ReloadersWorkShop
 				// Powder Weight
 				//----------------------------------------------------------------------------*
 
-				case 1:
+				case 0:
 					rc = Charge1.PowderWeight.CompareTo(Charge2.PowderWeight);
 
 					fSpecial = true;
@@ -133,55 +90,44 @@ namespace ReloadersWorkShop
 					break;
 
 				//----------------------------------------------------------------------------*
-				// Barrel Length
+				// # Tests
+				//----------------------------------------------------------------------------*
+
+				case 1:
+					rc = Charge1.TestList.Count.CompareTo(Charge2.TestList.Count);
+
+					fSpecial = true;
+
+					break;
+
+				//----------------------------------------------------------------------------*
+				// Fill Ratio
+				//----------------------------------------------------------------------------*
+
+				case 2:
+					rc = Charge1.FillRatio.CompareTo(Charge2.FillRatio);
+
+					fSpecial = true;
+
+					break;
+
+				//----------------------------------------------------------------------------*
+				// Favorite
 				//----------------------------------------------------------------------------*
 
 				case 3:
-					rc = ChargeTest1.BarrelLength.CompareTo(ChargeTest2.BarrelLength);
+					rc = Charge1.Favorite.CompareTo(Charge2.Favorite);
 
 					fSpecial = true;
 
 					break;
 
 				//----------------------------------------------------------------------------*
-				// Twist
+				// Reject
 				//----------------------------------------------------------------------------*
 
 				case 4:
-					rc = ChargeTest1.Twist.CompareTo(ChargeTest2.Twist);
-
-					fSpecial = true;
-
-					break;
-
-				//----------------------------------------------------------------------------*
-				// Velocity
-				//----------------------------------------------------------------------------*
-
-				case 5:
-					rc = ChargeTest1.MuzzleVelocity.CompareTo(ChargeTest2.MuzzleVelocity);
-
-					fSpecial = true;
-
-					break;
-
-				//----------------------------------------------------------------------------*
-				// Pressure
-				//----------------------------------------------------------------------------*
-
-				case 6:
-					rc = ChargeTest1.Pressure.CompareTo(ChargeTest2.Pressure);
-
-					fSpecial = true;
-
-					break;
-
-				//----------------------------------------------------------------------------*
-				// Best Group
-				//----------------------------------------------------------------------------*
-
-				case 7:
-					rc = ChargeTest1.BestGroup.CompareTo(ChargeTest2.BestGroup);
+					rc = Charge1.Reject.CompareTo(Charge2.Reject);
 
 					fSpecial = true;
 

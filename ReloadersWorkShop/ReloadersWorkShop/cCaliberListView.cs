@@ -200,11 +200,11 @@ namespace ReloadersWorkShop
 			Cursor = Cursors.WaitCursor;
 
 			m_strDimensionFormat = "{0:F";
-			m_strDimensionFormat += String.Format("{0:G0}", m_DataFiles.Preferences.DimensionDecimals);
+			m_strDimensionFormat += String.Format("{0:G0}", cPreferences.DimensionDecimals);
 			m_strDimensionFormat += "}";
 
 			m_strBulletWeightFormat = "{0:F";
-			m_strBulletWeightFormat += String.Format("{0:G0}", m_DataFiles.Preferences.BulletWeightDecimals);
+			m_strBulletWeightFormat += String.Format("{0:G0}", cPreferences.BulletWeightDecimals);
 			m_strBulletWeightFormat += "}";
 
 			Items.Clear();
@@ -303,25 +303,25 @@ namespace ReloadersWorkShop
 			Item.SubItems.Add(strPrimerSize);
 			Item.SubItems.Add(Caliber.MagnumPrimer ? "Y" : "");
 
-			Item.SubItems.Add(String.Format(m_strDimensionFormat, m_DataFiles.StandardToMetric(Caliber.MinBulletDiameter, cDataFiles.eDataType.Dimension)));
-			Item.SubItems.Add(String.Format(m_strDimensionFormat, m_DataFiles.StandardToMetric(Caliber.MaxBulletDiameter, cDataFiles.eDataType.Dimension)));
+			Item.SubItems.Add(String.Format(m_strDimensionFormat, cDataFiles.StandardToMetric(Caliber.MinBulletDiameter, cDataFiles.eDataType.Dimension)));
+			Item.SubItems.Add(String.Format(m_strDimensionFormat, cDataFiles.StandardToMetric(Caliber.MaxBulletDiameter, cDataFiles.eDataType.Dimension)));
 
 			if (Caliber.FirearmType != cFirearm.eFireArmType.Shotgun)
 				{
-				Item.SubItems.Add(String.Format(m_strBulletWeightFormat, m_DataFiles.StandardToMetric(Caliber.MinBulletWeight, cDataFiles.eDataType.BulletWeight)));
-				Item.SubItems.Add(String.Format(m_strBulletWeightFormat, m_DataFiles.StandardToMetric(Caliber.MaxBulletWeight, cDataFiles.eDataType.BulletWeight)));
+				Item.SubItems.Add(String.Format(m_strBulletWeightFormat, cDataFiles.StandardToMetric(Caliber.MinBulletWeight, cDataFiles.eDataType.BulletWeight)));
+				Item.SubItems.Add(String.Format(m_strBulletWeightFormat, cDataFiles.StandardToMetric(Caliber.MaxBulletWeight, cDataFiles.eDataType.BulletWeight)));
 				}
 			else
 				{
-				Item.SubItems.Add(String.Format("{0:F3}", m_DataFiles.StandardToMetric(Caliber.MinBulletWeight, cDataFiles.eDataType.BulletWeight)));
-				Item.SubItems.Add(String.Format("{0:F3}", m_DataFiles.StandardToMetric(Caliber.MaxBulletWeight, cDataFiles.eDataType.BulletWeight)));
+				Item.SubItems.Add(String.Format("{0:F3}", cDataFiles.StandardToMetric(Caliber.MinBulletWeight, cDataFiles.eDataType.BulletWeight)));
+				Item.SubItems.Add(String.Format("{0:F3}", cDataFiles.StandardToMetric(Caliber.MaxBulletWeight, cDataFiles.eDataType.BulletWeight)));
 				}
 
-			Item.SubItems.Add(String.Format(m_strDimensionFormat, m_DataFiles.StandardToMetric(Caliber.CaseTrimLength, cDataFiles.eDataType.Dimension)));
-			Item.SubItems.Add(String.Format(m_strDimensionFormat, m_DataFiles.StandardToMetric(Caliber.MaxCaseLength, cDataFiles.eDataType.Dimension)));
-			Item.SubItems.Add(String.Format(m_strDimensionFormat, m_DataFiles.StandardToMetric(Caliber.MaxCOL, cDataFiles.eDataType.Dimension)));
+			Item.SubItems.Add(String.Format(m_strDimensionFormat, cDataFiles.StandardToMetric(Caliber.CaseTrimLength, cDataFiles.eDataType.Dimension)));
+			Item.SubItems.Add(String.Format(m_strDimensionFormat, cDataFiles.StandardToMetric(Caliber.MaxCaseLength, cDataFiles.eDataType.Dimension)));
+			Item.SubItems.Add(String.Format(m_strDimensionFormat, cDataFiles.StandardToMetric(Caliber.MaxCOL, cDataFiles.eDataType.Dimension)));
 
-			Item.SubItems.Add(Caliber.MaxNeckDiameter > 0.0 ? String.Format(m_strDimensionFormat, m_DataFiles.StandardToMetric(Caliber.MaxNeckDiameter, cDataFiles.eDataType.Dimension)) : "-");
+			Item.SubItems.Add(Caliber.MaxNeckDiameter > 0.0 ? String.Format(m_strDimensionFormat, cDataFiles.StandardToMetric(Caliber.MaxNeckDiameter, cDataFiles.eDataType.Dimension)) : "-");
 			}
 
 		//============================================================================*
@@ -330,14 +330,14 @@ namespace ReloadersWorkShop
 
 		public void SetColumns()
 			{
-			m_arColumns[5].Text = String.Format("Min Bullet Diameter ({0})", m_DataFiles.MetricString(cDataFiles.eDataType.Dimension));
-			m_arColumns[6].Text = String.Format("Max Bullet Diameter ({0})", m_DataFiles.MetricString(cDataFiles.eDataType.Dimension));
-			m_arColumns[7].Text = String.Format("Min Bullet Weight ({0})", m_DataFiles.MetricString(cDataFiles.eDataType.BulletWeight));
-			m_arColumns[8].Text = String.Format("Max Bullet Weight ({0})", m_DataFiles.MetricString(cDataFiles.eDataType.BulletWeight));
-			m_arColumns[9].Text = String.Format("Min Case Length ({0})", m_DataFiles.MetricString(cDataFiles.eDataType.Dimension));
-			m_arColumns[10].Text = String.Format("Max Case Length ({0})", m_DataFiles.MetricString(cDataFiles.eDataType.Dimension));
-			m_arColumns[11].Text = String.Format("Max COAL ({0})", m_DataFiles.MetricString(cDataFiles.eDataType.Dimension));
-			m_arColumns[12].Text = String.Format("Max Neck Diameter ({0})", m_DataFiles.MetricString(cDataFiles.eDataType.Dimension));
+			m_arColumns[5].Text = String.Format("Min Bullet Diameter ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
+			m_arColumns[6].Text = String.Format("Max Bullet Diameter ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
+			m_arColumns[7].Text = String.Format("Min Bullet Weight ({0})", cDataFiles.MetricString(cDataFiles.eDataType.BulletWeight));
+			m_arColumns[8].Text = String.Format("Max Bullet Weight ({0})", cDataFiles.MetricString(cDataFiles.eDataType.BulletWeight));
+			m_arColumns[9].Text = String.Format("Min Case Length ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
+			m_arColumns[10].Text = String.Format("Max Case Length ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
+			m_arColumns[11].Text = String.Format("Max COAL ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
+			m_arColumns[12].Text = String.Format("Max Neck Diameter ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
 
 			PopulateColumns(m_arColumns);
 			}

@@ -10,6 +10,7 @@
 //============================================================================*
 
 using System;
+using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -129,6 +130,105 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// CSVHeader Property
+		//============================================================================*
+
+		public static string CSVHeader
+			{
+			get
+				{
+				return ("Powders");
+				}
+			}
+
+		//============================================================================*
+		// CSVLine Property
+		//============================================================================*
+
+		public string CSVLine
+			{
+			get
+				{
+				string strLine = "";
+
+				strLine += Manufacturer.Name;
+				strLine += ",";
+				strLine += m_strType;
+				strLine += ",";
+				strLine += TypeString;
+				strLine += ",";
+
+				strLine += cFirearm.FirearmTypeString(FirearmType);
+				strLine += ",";
+				strLine += CrossUse ? "Yes" : "-";
+
+				return (strLine);
+				}
+			}
+
+		//============================================================================*
+		// CSVLineHeader Property
+		//============================================================================*
+
+		public static string CSVLineHeader
+			{
+			get
+				{
+				return ("Manufacturer,Type,Shape,Firearm Type,Cross Use");
+				}
+			}
+
+		//============================================================================*
+		// Export() - XML Document
+		//============================================================================*
+
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			XmlElement XMLThisElement = XMLDocument.CreateElement("Powder");
+			XMLParentElement.AppendChild(XMLThisElement);
+
+			// Manufacture Name
+
+			XmlElement XMLElement = XMLDocument.CreateElement("ManufactureName");
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(Manufacturer.Name);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Type
+
+			XMLElement = XMLDocument.CreateElement("Type");
+			XMLTextElement = XMLDocument.CreateTextNode(m_strType);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Firearm Type
+
+			XMLElement = XMLDocument.CreateElement("FirearmType");
+			XMLTextElement = XMLDocument.CreateTextNode(cFirearm.FirearmTypeString(FirearmType));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Shape
+
+			XMLElement = XMLDocument.CreateElement("Shape");
+			XMLTextElement = XMLDocument.CreateTextNode(TypeString);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Cross Use
+
+			XMLElement = XMLDocument.CreateElement("CrossUse");
+			XMLTextElement = XMLDocument.CreateTextNode(CrossUse ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+			}
+
+		//============================================================================*
 		// Model Property
 		//============================================================================*
 
@@ -158,6 +258,8 @@ namespace ReloadersWorkShop
 			
 			if (Manufacturer != null && m_strType != null)
 				strString = String.Format("{0} {1}", Manufacturer.Name, m_strType);
+
+			strString = ToCrossUseString(strString);
 
 			return (strString);
 			}
@@ -194,6 +296,46 @@ namespace ReloadersWorkShop
 
 				return ("Other");
 				}	
+			}
+
+		//============================================================================*
+		// XMLHeader Property
+		//============================================================================*
+
+		public static string XMLHeader
+			{
+			get
+				{
+				return ("Powders");
+				}
+			}
+
+		//============================================================================*
+		// XMLLine Property
+		//============================================================================*
+
+		public string XMLLine
+			{
+			get
+				{
+				string strLine = "";
+
+				return (strLine);
+				}
+			}
+
+		//============================================================================*
+		// XMLLineHeader Property
+		//============================================================================*
+
+		public static string XMLLineHeader
+			{
+			get
+				{
+				string strLine = "Firearm Type,Name,Headstamp,Handgun Type,Small Primer,Large Primer,Magnum Primer,Min Bullet Dia.,Max Bullet Dia.,Min Bullet Weight,Max Bullet Weight,Case Trim Length,Max Case Length,Max COAL,Max Neck Dia";
+
+				return (strLine);
+				}
 			}
 		}
 	}

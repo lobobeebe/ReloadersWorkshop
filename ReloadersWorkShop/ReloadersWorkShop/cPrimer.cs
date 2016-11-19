@@ -10,6 +10,7 @@
 //============================================================================*
 
 using System;
+using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -154,6 +155,143 @@ namespace ReloadersWorkShop
 			m_fMagnum = Primer.m_fMagnum;
 			m_fMilitary = Primer.m_fMilitary;
 			m_fBenchRest = Primer.m_fBenchRest;
+			}
+
+		//============================================================================*
+		// CSVHeader Property
+		//============================================================================*
+
+		public static string CSVHeader
+			{
+			get
+				{
+				return ("Primers");
+				}
+			}
+
+		//============================================================================*
+		// CSVLine Property
+		//============================================================================*
+
+		public string CSVLine
+			{
+			get
+				{
+				string strLine = "";
+
+				strLine += Manufacturer.Name;
+				strLine += ",";
+
+				strLine += m_strModel;
+				strLine += ",";
+				strLine += cFirearm.FirearmTypeString(FirearmType);
+				strLine += ",";
+				strLine += CrossUse ? "Yes," : "-,";
+
+				strLine += m_eSize == ePrimerSize.Small ? "Small" : "Large";
+				strLine += ",";
+
+				strLine += m_fStandard ? "Yes," : "-,";
+				strLine += m_fMagnum ? "Yes," : "-,";
+				strLine += m_fBenchRest ? "Yes," : "-,";
+				strLine += m_fMilitary ? "Yes," : "-";
+
+				return (strLine);
+				}
+			}
+
+		//============================================================================*
+		// CSVLineHeader Property
+		//============================================================================*
+
+		public static string CSVLineHeader
+			{
+			get
+				{
+				return ("Manufacturer,Model,Firearm Type,Cross Use?,Size,Standard,Magnum,Bench Rest,Military");
+				}
+			}
+
+		//============================================================================*
+		// Export() - XML Document
+		//============================================================================*
+
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			XmlElement XMLThisElement = XMLDocument.CreateElement("Primer");
+			XMLParentElement.AppendChild(XMLThisElement);
+
+			// Manufacturer
+
+			XmlElement XMLElement = XMLDocument.CreateElement("Manufacturer");
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(Manufacturer.Name);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Model
+
+			XMLElement = XMLDocument.CreateElement("Model");
+			XMLTextElement = XMLDocument.CreateTextNode(m_strModel);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Firearm Type
+
+			XMLElement = XMLDocument.CreateElement("FirearmType");
+			XMLTextElement = XMLDocument.CreateTextNode(cFirearm.FirearmTypeString(FirearmType));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Cross  Use
+
+			XMLElement = XMLDocument.CreateElement("CrossUse");
+			XMLTextElement = XMLDocument.CreateTextNode(CrossUse ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Size
+
+			XMLElement = XMLDocument.CreateElement("Size");
+			XMLTextElement = XMLDocument.CreateTextNode(m_eSize == ePrimerSize.Small ? "Small" : "Large");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Standard
+
+			XMLElement = XMLDocument.CreateElement("Standard");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fStandard ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Magnum
+
+			XMLElement = XMLDocument.CreateElement("Magnum");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fMagnum ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Bench Rest
+
+			XMLElement = XMLDocument.CreateElement("BenchRest");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fBenchRest ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Military
+
+			XMLElement = XMLDocument.CreateElement("Military");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fMilitary ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
 			}
 
 		//============================================================================*
@@ -312,7 +450,49 @@ namespace ReloadersWorkShop
 			if (!m_fStandard && m_fMagnum)
 				strString += " Magnum";
 
+			strString = ToCrossUseString(strString);
+
 			return (strString);
+			}
+
+		//============================================================================*
+		// XMLHeader Property
+		//============================================================================*
+
+		public static string XMLHeader
+			{
+			get
+				{
+				return ("Primers");
+				}
+			}
+
+		//============================================================================*
+		// XMLLine Property
+		//============================================================================*
+
+		public string XMLLine
+			{
+			get
+				{
+				string strLine = "";
+
+				return (strLine);
+				}
+			}
+
+		//============================================================================*
+		// XMLLineHeader Property
+		//============================================================================*
+
+		public static string XMLLineHeader
+			{
+			get
+				{
+				string strLine = "Firearm Type,Name,Headstamp,Handgun Type,Small Primer,Large Primer,Magnum Primer,Min Bullet Dia.,Max Bullet Dia.,Min Bullet Weight,Max Bullet Weight,Case Trim Length,Max Case Length,Max COAL,Max Neck Dia";
+
+				return (strLine);
+				}
 			}
 		}
 	}

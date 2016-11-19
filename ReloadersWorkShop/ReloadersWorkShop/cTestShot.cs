@@ -10,6 +10,8 @@
 //============================================================================*
 
 using System;
+using System.IO;
+using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -102,6 +104,103 @@ namespace ReloadersWorkShop
 				}
 
 			return (rc);
+			}
+
+		//============================================================================*
+		// CSVHeader Property
+		//============================================================================*
+
+		public static string CSVHeader
+			{
+			get
+				{
+				return ("TestShot");
+				}
+			}
+
+		//============================================================================*
+		// CSVLine Property
+		//============================================================================*
+
+		public string CSVLine
+			{
+			get
+				{
+				string strLine = ",,";
+
+				strLine += m_nMuzzleVelocity;
+				strLine += ",";
+				strLine += m_nPressure;
+				strLine += ",";
+				strLine += m_fMisfire ? "Yes" : "-";
+				strLine += ",";
+				strLine += m_fSquib ? "Yes" : "-";
+
+				return (strLine);
+				}
+			}
+
+		//============================================================================*
+		// CSVLineHeader Property
+		//============================================================================*
+
+		public static string CSVLineHeader
+			{
+			get
+				{
+				return ("Muzzle Velocity,Pressure,Misfire,Squib");
+				}
+			}
+
+		//============================================================================*
+		// Export() - CSV
+		//============================================================================*
+
+		public void Export(StreamWriter Writer)
+			{
+			Writer.WriteLine(CSVLine);
+			}
+
+		//============================================================================*
+		// Export() - XML Document
+		//============================================================================*
+
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			XmlElement XMLThisElement = XMLDocument.CreateElement("TestShot");
+			XMLParentElement.AppendChild(XMLThisElement);
+
+			// Muzzle Velocity
+
+			XmlElement XMLElement = XMLDocument.CreateElement("MuzzleVelocity");
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nMuzzleVelocity));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Pressure
+
+			XMLElement = XMLDocument.CreateElement("Pressure");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nPressure));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Misfire
+
+			XMLElement = XMLDocument.CreateElement("Misfire");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fMisfire ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Squib
+
+			XMLElement = XMLDocument.CreateElement("Squib");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fSquib ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
 			}
 
 		//============================================================================*

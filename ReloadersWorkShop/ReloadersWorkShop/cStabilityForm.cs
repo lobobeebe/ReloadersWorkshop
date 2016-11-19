@@ -14,6 +14,7 @@ using System.Drawing;
 using System.Windows.Forms;
 
 using ReloadersWorkShop.Ballistics;
+using ReloadersWorkShop.Preferences;
 
 //============================================================================*
 // NameSpace
@@ -133,7 +134,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_StabilityData.Altitude = (int) m_DataFiles.MetricToStandard(AltitudeTextBox.Value, cDataFiles.eDataType.Altitude);
+			m_StabilityData.Altitude = (int) cDataFiles.MetricToStandard(AltitudeTextBox.Value, cDataFiles.eDataType.Altitude);
 
 			UpdateButtons();
 
@@ -194,7 +195,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_StabilityData.BulletDiameter = m_DataFiles.MetricToStandard(CaliberTextBox.Value, cDataFiles.eDataType.Dimension);
+			m_StabilityData.BulletDiameter = cDataFiles.MetricToStandard(CaliberTextBox.Value, cDataFiles.eDataType.Dimension);
 
 			UpdateButtons();
 
@@ -239,7 +240,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_StabilityData.BulletLength = m_DataFiles.MetricToStandard(LengthTextBox.Value, cDataFiles.eDataType.Dimension);
+			m_StabilityData.BulletLength = cDataFiles.MetricToStandard(LengthTextBox.Value, cDataFiles.eDataType.Dimension);
 
 			UpdateButtons();
 
@@ -276,7 +277,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_StabilityData.Pressure = m_DataFiles.MetricToStandard(PressureTextBox.Value, cDataFiles.eDataType.Pressure);
+			m_StabilityData.Pressure = cDataFiles.MetricToStandard(PressureTextBox.Value, cDataFiles.eDataType.Pressure);
 
 			UpdateButtons();
 
@@ -309,7 +310,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_StabilityData.Temperature = (int) m_DataFiles.MetricToStandard(TemperatureTextBox.Value, cDataFiles.eDataType.Temperature);
+			m_StabilityData.Temperature = (int) cDataFiles.MetricToStandard(TemperatureTextBox.Value, cDataFiles.eDataType.Temperature);
 
 			UpdateButtons();
 
@@ -325,7 +326,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_StabilityData.Twist = m_DataFiles.MetricToStandard(TwistTextBox.Value, cDataFiles.eDataType.Firearm);
+			m_StabilityData.Twist = cDataFiles.MetricToStandard(TwistTextBox.Value, cDataFiles.eDataType.Firearm);
 
 			UpdateButtons();
 
@@ -341,7 +342,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_StabilityData.MuzzleVelocity = (int) m_DataFiles.MetricToStandard(VelocityTextBox.Value, cDataFiles.eDataType.Velocity);
+			m_StabilityData.MuzzleVelocity = (int) cDataFiles.MetricToStandard(VelocityTextBox.Value, cDataFiles.eDataType.Velocity);
 
 			UpdateButtons();
 
@@ -357,7 +358,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_StabilityData.BulletWeight = m_DataFiles.MetricToStandard(WeightTextBox.Value, cDataFiles.eDataType.BulletWeight);
+			m_StabilityData.BulletWeight = cDataFiles.MetricToStandard(WeightTextBox.Value, cDataFiles.eDataType.BulletWeight);
 
 			UpdateButtons();
 
@@ -459,17 +460,17 @@ namespace ReloadersWorkShop
 			{
 			m_fPopulating = true;
 
-			CaliberTextBox.Value = m_DataFiles.StandardToMetric(m_StabilityData.BulletDiameter, cDataFiles.eDataType.Dimension);
+			CaliberTextBox.Value = cDataFiles.StandardToMetric(m_StabilityData.BulletDiameter, cDataFiles.eDataType.Dimension);
 			BallisticCoefficientTextBox.Value = m_StabilityData.BallisticCoefficient;
-			LengthTextBox.Value = m_DataFiles.StandardToMetric(m_StabilityData.BulletLength, cDataFiles.eDataType.Dimension);
-			WeightTextBox.Value = m_DataFiles.StandardToMetric(m_StabilityData.BulletWeight, cDataFiles.eDataType.BulletWeight);
+			LengthTextBox.Value = cDataFiles.StandardToMetric(m_StabilityData.BulletLength, cDataFiles.eDataType.Dimension);
+			WeightTextBox.Value = cDataFiles.StandardToMetric(m_StabilityData.BulletWeight, cDataFiles.eDataType.BulletWeight);
 
-			TwistTextBox.Value = m_DataFiles.StandardToMetric(m_StabilityData.Twist, cDataFiles.eDataType.Firearm);
-			VelocityTextBox.Value = (int) m_DataFiles.StandardToMetric(m_StabilityData.MuzzleVelocity, cDataFiles.eDataType.Velocity);
+			TwistTextBox.Value = cDataFiles.StandardToMetric(m_StabilityData.Twist, cDataFiles.eDataType.Firearm);
+			VelocityTextBox.Value = (int) cDataFiles.StandardToMetric(m_StabilityData.MuzzleVelocity, cDataFiles.eDataType.Velocity);
 
-			TemperatureTextBox.Value = (int) m_DataFiles.StandardToMetric(m_StabilityData.Temperature, cDataFiles.eDataType.Temperature);
-			PressureTextBox.Value = m_DataFiles.StandardToMetric(m_StabilityData.Pressure, cDataFiles.eDataType.Pressure);
-			AltitudeTextBox.Value = (int) m_DataFiles.StandardToMetric(m_StabilityData.Altitude, cDataFiles.eDataType.Altitude);
+			TemperatureTextBox.Value = (int) cDataFiles.StandardToMetric(m_StabilityData.Temperature, cDataFiles.eDataType.Temperature);
+			PressureTextBox.Value = cDataFiles.StandardToMetric(m_StabilityData.Pressure, cDataFiles.eDataType.Pressure);
+			AltitudeTextBox.Value = (int) cDataFiles.StandardToMetric(m_StabilityData.Altitude, cDataFiles.eDataType.Altitude);
 
 			AltitudeRadioButton.Checked = m_StabilityData.UseAltitude;
 			PressureRadioButton.Checked = !m_StabilityData.UseAltitude;
@@ -616,30 +617,30 @@ namespace ReloadersWorkShop
 			// Set number of decimal places
 			//----------------------------------------------------------------------------*
 
-			LengthTextBox.NumDecimals = m_DataFiles.Preferences.DimensionDecimals;
-			LengthTextBox.MaxLength = 2 + m_DataFiles.Preferences.DimensionDecimals;
+			LengthTextBox.NumDecimals = cPreferences.DimensionDecimals;
+			LengthTextBox.MaxLength = 2 + cPreferences.DimensionDecimals;
 
-			CaliberTextBox.NumDecimals = m_DataFiles.Preferences.DimensionDecimals;
-			CaliberTextBox.MaxLength = 2 + m_DataFiles.Preferences.DimensionDecimals;
+			CaliberTextBox.NumDecimals = cPreferences.DimensionDecimals;
+			CaliberTextBox.MaxLength = 2 + cPreferences.DimensionDecimals;
 
-			WeightTextBox.NumDecimals = m_DataFiles.Preferences.BulletWeightDecimals;
-			WeightTextBox.MaxLength = 4 + m_DataFiles.Preferences.DimensionDecimals;
+			WeightTextBox.NumDecimals = cPreferences.BulletWeightDecimals;
+			WeightTextBox.MaxLength = 4 + cPreferences.DimensionDecimals;
 
-			TwistTextBox.NumDecimals = m_DataFiles.Preferences.FirearmDecimals;
-			TwistTextBox.MaxLength = 3 + m_DataFiles.Preferences.DimensionDecimals;
+			TwistTextBox.NumDecimals = cPreferences.FirearmDecimals;
+			TwistTextBox.MaxLength = 3 + cPreferences.DimensionDecimals;
 
 			//----------------------------------------------------------------------------*
 			// Set measurement labels
 			//----------------------------------------------------------------------------*
 
-			CaliberMeasurementLabel.Text = m_DataFiles.MetricString(cDataFiles.eDataType.Dimension);
-			LengthMeasurementLabel.Text = m_DataFiles.MetricString(cDataFiles.eDataType.Dimension);
-			WeightMeasurementLabel.Text = m_DataFiles.MetricString(cDataFiles.eDataType.BulletWeight);
+			cDataFiles.SetMetricLabel(CaliberMeasurementLabel, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetMetricLabel(LengthMeasurementLabel, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetMetricLabel(WeightMeasurementLabel, cDataFiles.eDataType.BulletWeight);
 
-			TwistMeasurementLabel.Text = m_DataFiles.MetricString(cDataFiles.eDataType.Firearm);
-			VelocityMeasurementLabel.Text = m_DataFiles.MetricString(cDataFiles.eDataType.Velocity);
+			cDataFiles.SetMetricLabel(TwistMeasurementLabel, cDataFiles.eDataType.Firearm);
+			cDataFiles.SetMetricLabel(VelocityMeasurementLabel,  cDataFiles.eDataType.Velocity);
 
-			TemperatureMeasurementLabel.Text = m_DataFiles.MetricString(cDataFiles.eDataType.Temperature);
+			cDataFiles.SetMetricLabel(TemperatureMeasurementLabel, cDataFiles.eDataType.Temperature);
 
 			//----------------------------------------------------------------------------*
 			// Set stability chart image
@@ -714,11 +715,11 @@ namespace ReloadersWorkShop
 			// Set Caliber Min/Max
 			//----------------------------------------------------------------------------*
 
-			double dMinDiameter = m_DataFiles.StandardToMetric(1000.0, cDataFiles.eDataType.Dimension);
-			double dMaxDiameter = m_DataFiles.StandardToMetric(0.0, cDataFiles.eDataType.Dimension);
+			double dMinDiameter = cDataFiles.StandardToMetric(1000.0, cDataFiles.eDataType.Dimension);
+			double dMaxDiameter = cDataFiles.StandardToMetric(0.0, cDataFiles.eDataType.Dimension);
 
-			double dMinWeight = m_DataFiles.StandardToMetric(750.0, cDataFiles.eDataType.BulletWeight);
-			double dMaxWeight = m_DataFiles.StandardToMetric(0.0, cDataFiles.eDataType.BulletWeight);
+			double dMinWeight = cDataFiles.StandardToMetric(cBullet.MaxBulletWeight, cDataFiles.eDataType.BulletWeight);
+			double dMaxWeight = cDataFiles.StandardToMetric(0.0, cDataFiles.eDataType.BulletWeight);
 
 			foreach (cCaliber Caliber in CaliberList)
 				{
@@ -747,14 +748,14 @@ namespace ReloadersWorkShop
 				{
 				CaliberTextBox.Value = CaliberTextBox.MinValue;
 
-				m_StabilityData.BulletDiameter = m_DataFiles.MetricToStandard(CaliberTextBox.MinValue, cDataFiles.eDataType.Dimension);
+				m_StabilityData.BulletDiameter = cDataFiles.MetricToStandard(CaliberTextBox.MinValue, cDataFiles.eDataType.Dimension);
 				}
 
 			if (CaliberTextBox.MinValue == CaliberTextBox.MaxValue)
 				{
 				CaliberTextBox.Enabled = false;
 
-				m_StabilityData.BulletDiameter = m_DataFiles.MetricToStandard(CaliberTextBox.MinValue, cDataFiles.eDataType.Dimension);
+				m_StabilityData.BulletDiameter = cDataFiles.MetricToStandard(CaliberTextBox.MinValue, cDataFiles.eDataType.Dimension);
 				}
 			else
 				CaliberTextBox.Enabled = true;
@@ -782,15 +783,15 @@ namespace ReloadersWorkShop
 				{
 				WeightTextBox.Value = WeightTextBox.MinValue;
 
-				m_StabilityData.BulletWeight = m_DataFiles.MetricToStandard(WeightTextBox.Value, cDataFiles.eDataType.BulletWeight);
+				m_StabilityData.BulletWeight = cDataFiles.MetricToStandard(WeightTextBox.Value, cDataFiles.eDataType.BulletWeight);
 				}
 
 			//----------------------------------------------------------------------------*
 			// Set Length Min/Max
 			//----------------------------------------------------------------------------*
 
-			LengthTextBox.MinValue = m_DataFiles.StandardToMetric(0.050, cDataFiles.eDataType.Dimension);
-			LengthTextBox.MaxValue = m_DataFiles.StandardToMetric(3.0, cDataFiles.eDataType.Dimension);
+			LengthTextBox.MinValue = cDataFiles.StandardToMetric(0.050, cDataFiles.eDataType.Dimension);
+			LengthTextBox.MaxValue = cDataFiles.StandardToMetric(3.0, cDataFiles.eDataType.Dimension);
 
 			LengthTextBox.Enabled = Bullet == null || Bullet.Length == 0.0;
 
@@ -806,8 +807,8 @@ namespace ReloadersWorkShop
 
 			if (Load != null)
 				{
-				int nMinValue = (int) m_DataFiles.StandardToMetric(5000, cDataFiles.eDataType.Velocity);
-				int nMaxValue = (int) m_DataFiles.StandardToMetric(500, cDataFiles.eDataType.Velocity);
+				int nMinValue = (int) cDataFiles.StandardToMetric(5000, cDataFiles.eDataType.Velocity);
+				int nMaxValue = (int) cDataFiles.StandardToMetric(500, cDataFiles.eDataType.Velocity);
 
 				bool fTestFound = false;
 
@@ -833,20 +834,20 @@ namespace ReloadersWorkShop
 				else
 					{
 					VelocityTextBox.MinValue = cm_nMinVelocity;
-					VelocityTextBox.MaxValue = (int) m_DataFiles.StandardToMetric(5000, cDataFiles.eDataType.Velocity);
+					VelocityTextBox.MaxValue = (int) cDataFiles.StandardToMetric(5000, cDataFiles.eDataType.Velocity);
 					}
 				}
 			else
 				{
-				VelocityTextBox.MinValue = (int) m_DataFiles.StandardToMetric(cm_nMinVelocity, cDataFiles.eDataType.Velocity);
-				VelocityTextBox.MaxValue = (int) m_DataFiles.StandardToMetric(5000, cDataFiles.eDataType.Velocity);
+				VelocityTextBox.MinValue = (int) cDataFiles.StandardToMetric(cm_nMinVelocity, cDataFiles.eDataType.Velocity);
+				VelocityTextBox.MaxValue = (int) cDataFiles.StandardToMetric(5000, cDataFiles.eDataType.Velocity);
 				}
 
 			if (!VelocityTextBox.ValueOK)
 				{
 				VelocityTextBox.Value = VelocityTextBox.MinValue;
 
-				m_StabilityData.MuzzleVelocity = (int) m_DataFiles.MetricToStandard(VelocityTextBox.Value, cDataFiles.eDataType.Velocity);
+				m_StabilityData.MuzzleVelocity = (int) cDataFiles.MetricToStandard(VelocityTextBox.Value, cDataFiles.eDataType.Velocity);
 				}
 
 			//----------------------------------------------------------------------------*
@@ -859,8 +860,8 @@ namespace ReloadersWorkShop
 				}
 			else
 				{
-				TwistTextBox.MinValue = m_DataFiles.StandardToMetric(5, cDataFiles.eDataType.Firearm);
-				TwistTextBox.MaxValue = m_DataFiles.StandardToMetric(78, cDataFiles.eDataType.Firearm);
+				TwistTextBox.MinValue = cDataFiles.StandardToMetric(5, cDataFiles.eDataType.Firearm);
+				TwistTextBox.MaxValue = cDataFiles.StandardToMetric(78, cDataFiles.eDataType.Firearm);
 
 				TwistTextBox.Enabled = true;
 				}
@@ -903,9 +904,9 @@ namespace ReloadersWorkShop
 				RecommendedTwistLabel.Visible = true;
 
 				string strFormat = "Recommended Twist: 1:{0:F";
-				strFormat += String.Format("{0:G0}", m_DataFiles.Preferences.FirearmDecimals);
+				strFormat += String.Format("{0:G0}", cPreferences.FirearmDecimals);
 				strFormat += "} ";
-				strFormat += m_DataFiles.MetricString(cDataFiles.eDataType.Firearm);
+				strFormat += cDataFiles.MetricString(cDataFiles.eDataType.Firearm);
 
 				RecommendedTwistLabel.Text = String.Format(strFormat, m_StabilityData.RecommendedTwist);
 				}

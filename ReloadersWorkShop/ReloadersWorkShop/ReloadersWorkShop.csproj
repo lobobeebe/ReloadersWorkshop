@@ -75,6 +75,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="cAbout.cs">
@@ -235,6 +236,31 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="cEvaluationItem.cs" />
+    <Compile Include="cTarget.cs" />
+    <Compile Include="cTargetCalibrationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="cTargetCalibrationForm.Designer.cs">
+      <DependentUpon>cTargetCalibrationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="cTargetDetailsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="cTargetDetailsForm.Designer.cs">
+      <DependentUpon>cTargetDetailsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="cTargetPreferencesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="cTargetPreferencesForm.Designer.cs">
+      <DependentUpon>cTargetPreferencesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="cTargetPrintPreviewDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="cTargetShotListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="cTestStatistics.cs" />
     <Compile Include="cEvaluationListView.cs">
       <SubType>Component</SubType>
@@ -396,6 +422,12 @@
     <Compile Include="cTransactionListView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="cExportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExportForm.Designer.cs">
+      <DependentUpon>cExportForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="NativeMethods.cs" />
     <Compile Include="Preferences\cColumnList.cs" />
     <Compile Include="cFirearm.cs" />
@@ -455,6 +487,12 @@
       <DependentUpon>cTransactionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="cTargetCalculatorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="cTargetCalculatorForm.Designer.cs">
+      <DependentUpon>cTargetCalculatorForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="cAbout.resx">
       <DependentUpon>cAbout.cs</DependentUpon>
     </EmbeddedResource>
@@ -503,6 +541,9 @@
     <EmbeddedResource Include="cCostAnalysisForm.resx">
       <DependentUpon>cCostAnalysisForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="cExportForm.resx">
+      <DependentUpon>cExportForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="cFirearmBulletForm.resx">
       <DependentUpon>cFirearmBulletForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -545,6 +586,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="cStabilityForm.resx">
       <DependentUpon>cStabilityForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="cTargetCalculatorForm.resx">
+      <DependentUpon>cTargetCalculatorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="cTargetCalibrationForm.resx">
+      <DependentUpon>cTargetCalibrationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="cTargetDetailsForm.resx">
+      <DependentUpon>cTargetDetailsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="cTargetPreferencesForm.resx">
+      <DependentUpon>cTargetPreferencesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="cTestShotForm.resx">
       <DependentUpon>cTestShotForm.cs</DependentUpon>
@@ -591,6 +644,7 @@
     <None Include="Resources\Images\GroundStrike.png" />
     <None Include="Resources\Images\DriftChartShooter.png" />
     <None Include="Resources\BuyNowButton.gif" />
+    <None Include="Resources\OpenTarget.bmp" />
     <Content Include="SAAMI_README.txt" />
     <Content Include="Share_README.TXT.txt" />
     <None Include="Resources\Images\SortDescending.bmp" />
@@ -628,7 +682,17 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <COMReference Include="WIA">
+      <Guid>{94A0E92D-43C0-494E-AC29-FD45948A5221}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\CommonLib\CommonLib\CommonLib.csproj">
       <Project>{a325e128-8691-4414-b5b7-7174d69a4a07}</Project>

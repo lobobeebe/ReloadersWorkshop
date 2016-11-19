@@ -115,7 +115,7 @@ namespace ReloadersWorkShop
 		private int m_nDropChartHeight = 210;
 		private int m_nDropChartWidth = 1426;
 
-//		private cRWKestrel m_RWKestrel = new cRWKestrel();
+		//		private cRWKestrel m_RWKestrel = new cRWKestrel();
 		private Timer m_KestrelTimer = new Timer();
 
 		private ToolTip m_BallisticsBatchToolTip = new ToolTip();
@@ -211,7 +211,7 @@ namespace ReloadersWorkShop
 				BallisticsBatchTestVelocityRadioButton.Click += OnBallisticsBatchTestVelocityClicked;
 				BallisticsLoadDataVelocityRadioButton.Click += OnBallisticsLoadDataVelocityClicked;
 
-//				BallisticsKestrelButton.Click += OnBallisticsKestrelButtonClicked;
+				//				BallisticsKestrelButton.Click += OnBallisticsKestrelButtonClicked;
 
 				BallisticsResetButton.Click += OnBallisticsResetClicked;
 
@@ -276,7 +276,7 @@ namespace ReloadersWorkShop
 
 				m_KestrelTimer.Interval = 1000;
 
-//				m_KestrelTimer.Tick += OnKestrelTimer;
+				//				m_KestrelTimer.Tick += OnKestrelTimer;
 
 				//----------------------------------------------------------------------------*
 				// Set tooltips and Initialized Flag
@@ -403,7 +403,7 @@ namespace ReloadersWorkShop
 			if (!m_fBallisticsTabInitialized || m_fPopulating)
 				return;
 
-			m_BallisticsData.BulletDiameter = m_DataFiles.MetricToStandard(BallisticsBulletDiameterTextBox.Value, cDataFiles.eDataType.Dimension);
+			m_BallisticsData.BulletDiameter = cDataFiles.MetricToStandard(BallisticsBulletDiameterTextBox.Value, cDataFiles.eDataType.Dimension);
 
 			UpdateBallisticsTabButtons();
 
@@ -420,7 +420,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_BallisticsData.BulletLength = m_DataFiles.MetricToStandard(BallisticsBulletLengthTextBox.Value, cDataFiles.eDataType.Dimension);
+			m_BallisticsData.BulletLength = cDataFiles.MetricToStandard(BallisticsBulletLengthTextBox.Value, cDataFiles.eDataType.Dimension);
 
 			UpdateBallisticsTabButtons();
 
@@ -437,7 +437,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_BallisticsData.BulletWeight = m_DataFiles.MetricToStandard(BallisticsBulletWeightTextBox.Value, cDataFiles.eDataType.BulletWeight);
+			m_BallisticsData.BulletWeight = cDataFiles.MetricToStandard(BallisticsBulletWeightTextBox.Value, cDataFiles.eDataType.BulletWeight);
 
 			UpdateBallisticsTabButtons();
 
@@ -510,8 +510,8 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_BallisticsData.Increment = m_DataFiles.MetricToStandard(BallisticsIncrementTextBox.Value, cDataFiles.eDataType.Range);
-			m_DataFiles.Preferences.BallisticsData.Increment = m_DataFiles.MetricToStandard(BallisticsIncrementTextBox.Value, cDataFiles.eDataType.Range);
+			m_BallisticsData.Increment = cDataFiles.MetricToStandard(BallisticsIncrementTextBox.Value, cDataFiles.eDataType.Range);
+			m_DataFiles.Preferences.BallisticsData.Increment = cDataFiles.MetricToStandard(BallisticsIncrementTextBox.Value, cDataFiles.eDataType.Range);
 
 			SetBallisticsMinMax();
 
@@ -524,28 +524,28 @@ namespace ReloadersWorkShop
 		//============================================================================*
 		// OnBallisticsKestrelButtonClicked()
 		//============================================================================*
-/*
-		protected void OnBallisticsKestrelButtonClicked(Object sender, EventArgs args)
-			{
-			if (m_RWKestrel.Connected)
-				{
-				m_KestrelTimer.Stop();
-
-				m_RWKestrel.Disconnect();
-				}
-			else
-				{
-				if (m_RWKestrel.Connect())
+		/*
+				protected void OnBallisticsKestrelButtonClicked(Object sender, EventArgs args)
 					{
-					PopulateBallisticsAtmosphericData();
+					if (m_RWKestrel.Connected)
+						{
+						m_KestrelTimer.Stop();
 
-					m_KestrelTimer.Start();
+						m_RWKestrel.Disconnect();
+						}
+					else
+						{
+						if (m_RWKestrel.Connect())
+							{
+							PopulateBallisticsAtmosphericData();
+
+							m_KestrelTimer.Start();
+							}
+						}
+
+					UpdateBallisticsTabButtons();
 					}
-				}
-
-			UpdateBallisticsTabButtons();
-			}
-*/
+		*/
 		//============================================================================*
 		// OnBallisticsLoadSelected()
 		//============================================================================*
@@ -581,8 +581,8 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_BallisticsData.MaxRange = (int) m_DataFiles.MetricToStandard(BallisticsMaxRangeTextBox.Value, cDataFiles.eDataType.Range);
-			m_DataFiles.Preferences.BallisticsData.MaxRange = (int) m_DataFiles.MetricToStandard(BallisticsMaxRangeTextBox.Value, cDataFiles.eDataType.Range);
+			m_BallisticsData.MaxRange = (int) cDataFiles.MetricToStandard(BallisticsMaxRangeTextBox.Value, cDataFiles.eDataType.Range);
+			m_DataFiles.Preferences.BallisticsData.MaxRange = (int) cDataFiles.MetricToStandard(BallisticsMaxRangeTextBox.Value, cDataFiles.eDataType.Range);
 
 			SetBallisticsMinMax();
 
@@ -601,8 +601,8 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_BallisticsData.MinRange = (int) m_DataFiles.MetricToStandard(BallisticsMinRangeTextBox.Value, cDataFiles.eDataType.Range);
-			m_DataFiles.Preferences.BallisticsData.MinRange = (int) m_DataFiles.MetricToStandard(BallisticsMinRangeTextBox.Value, cDataFiles.eDataType.Range);
+			m_BallisticsData.MinRange = (int) cDataFiles.MetricToStandard(BallisticsMinRangeTextBox.Value, cDataFiles.eDataType.Range);
+			m_DataFiles.Preferences.BallisticsData.MinRange = (int) cDataFiles.MetricToStandard(BallisticsMinRangeTextBox.Value, cDataFiles.eDataType.Range);
 
 			SetBallisticsMinMax();
 
@@ -621,7 +621,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_BallisticsData.MuzzleVelocity = (int) m_DataFiles.MetricToStandard(BallisticsMuzzleVelocityTextBox.Value, cDataFiles.eDataType.Velocity);
+			m_BallisticsData.MuzzleVelocity = (int) cDataFiles.MetricToStandard(BallisticsMuzzleVelocityTextBox.Value, cDataFiles.eDataType.Velocity);
 
 			UpdateBallisticsTabButtons();
 
@@ -730,8 +730,8 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_BallisticsData.SightHeight = m_DataFiles.MetricToStandard(BallisticsSightHeightTextBox.Value, cDataFiles.eDataType.Firearm);
-			m_DataFiles.Preferences.BallisticsData.SightHeight = m_DataFiles.MetricToStandard(BallisticsSightHeightTextBox.Value, cDataFiles.eDataType.Firearm);
+			m_BallisticsData.SightHeight = cDataFiles.MetricToStandard(BallisticsSightHeightTextBox.Value, cDataFiles.eDataType.Firearm);
+			m_DataFiles.Preferences.BallisticsData.SightHeight = cDataFiles.MetricToStandard(BallisticsSightHeightTextBox.Value, cDataFiles.eDataType.Firearm);
 
 			UpdateBallisticsTabButtons();
 
@@ -748,8 +748,8 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_BallisticsData.TargetRange = (int) m_DataFiles.MetricToStandard(BallisticsTargetRangeTextBox.Value, cDataFiles.eDataType.Range);
-			m_DataFiles.Preferences.BallisticsData.TargetRange = (int) m_DataFiles.MetricToStandard(BallisticsTargetRangeTextBox.Value, cDataFiles.eDataType.Range);
+			m_BallisticsData.TargetRange = (int) cDataFiles.MetricToStandard(BallisticsTargetRangeTextBox.Value, cDataFiles.eDataType.Range);
+			m_DataFiles.Preferences.BallisticsData.TargetRange = (int) cDataFiles.MetricToStandard(BallisticsTargetRangeTextBox.Value, cDataFiles.eDataType.Range);
 
 			SetBallisticsMinMax();
 
@@ -808,8 +808,8 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_BallisticsData.Twist = m_DataFiles.MetricToStandard(BallisticsTwistTextBox.Value, cDataFiles.eDataType.Firearm);
-			m_DataFiles.Preferences.BallisticsData.Twist = m_DataFiles.MetricToStandard(BallisticsTwistTextBox.Value, cDataFiles.eDataType.Firearm);
+			m_BallisticsData.Twist = cDataFiles.MetricToStandard(BallisticsTwistTextBox.Value, cDataFiles.eDataType.Firearm);
+			m_DataFiles.Preferences.BallisticsData.Twist = cDataFiles.MetricToStandard(BallisticsTwistTextBox.Value, cDataFiles.eDataType.Firearm);
 
 			UpdateBallisticsTabButtons();
 
@@ -915,8 +915,8 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_BallisticsData.ZeroRange = (int) m_DataFiles.MetricToStandard(BallisticsZeroRangeTextBox.Value, cDataFiles.eDataType.Range);
-			m_DataFiles.Preferences.BallisticsData.ZeroRange = (int) m_DataFiles.MetricToStandard(BallisticsZeroRangeTextBox.Value, cDataFiles.eDataType.Range);
+			m_BallisticsData.ZeroRange = (int) cDataFiles.MetricToStandard(BallisticsZeroRangeTextBox.Value, cDataFiles.eDataType.Range);
+			m_DataFiles.Preferences.BallisticsData.ZeroRange = (int) cDataFiles.MetricToStandard(BallisticsZeroRangeTextBox.Value, cDataFiles.eDataType.Range);
 
 			UpdateBallisticsTabButtons();
 
@@ -938,25 +938,25 @@ namespace ReloadersWorkShop
 		//============================================================================*
 		// OnKestrelTimer()
 		//============================================================================*
-/*
-		protected void OnKestrelTimer(Object sender, EventArgs args)
-			{
-			if (!m_RWKestrel.Connected)
-				{
-				m_KestrelTimer.Stop();
+		/*
+				protected void OnKestrelTimer(Object sender, EventArgs args)
+					{
+					if (!m_RWKestrel.Connected)
+						{
+						m_KestrelTimer.Stop();
 
-				m_RWKestrel.Disconnect();
+						m_RWKestrel.Disconnect();
 
-				UpdateBallisticsTabButtons();
-				}
-			else
-				{
-				m_RWKestrel.SnapShot();
+						UpdateBallisticsTabButtons();
+						}
+					else
+						{
+						m_RWKestrel.SnapShot();
 
-				PopulateBallisticsAtmosphericData();
-				}
-			}
-*/
+						PopulateBallisticsAtmosphericData();
+						}
+					}
+		*/
 		//============================================================================*
 		// OnRestoreReferenceBulletClicked()
 		//============================================================================*
@@ -1097,41 +1097,41 @@ namespace ReloadersWorkShop
 
 		private void PopulateBallisticsAtmosphericData()
 			{
-			BallisticsAltitudeTextBox.Value = (int) m_DataFiles.StandardToMetric(m_BallisticsData.Altitude, cDataFiles.eDataType.Altitude);
+			BallisticsAltitudeTextBox.Value = (int) cDataFiles.StandardToMetric(m_BallisticsData.Altitude, cDataFiles.eDataType.Altitude);
 			SetBallisticsAltitude();
 
 			BallisticsHumidityTextBox.Value = (int) (m_BallisticsData.Humidity * 100.0);
 			SetBallisticsHumidity();
 
-			BallisticsPressureTextBox.Value = m_DataFiles.StandardToMetric(m_BallisticsData.Pressure, cDataFiles.eDataType.Pressure);
+			BallisticsPressureTextBox.Value = cDataFiles.StandardToMetric(m_BallisticsData.Pressure, cDataFiles.eDataType.Pressure);
 			SetBallisticsPressure();
 
-			BallisticsTemperatureTextBox.Value = (int) (m_DataFiles.StandardToMetric(m_BallisticsData.Temperature, cDataFiles.eDataType.Temperature));
+			BallisticsTemperatureTextBox.Value = (int) (cDataFiles.StandardToMetric(m_BallisticsData.Temperature, cDataFiles.eDataType.Temperature));
 			SetBallisticsTemperature();
 
 			BallisticsWindDirectionTextBox.Value = m_BallisticsData.WindDirection;
 			SetBallisticsWindDirection();
 
-			BallisticsWindSpeedTextBox.Value = (int) (m_DataFiles.StandardToMetric(m_BallisticsData.WindSpeed, cDataFiles.eDataType.Speed));
+			BallisticsWindSpeedTextBox.Value = (int) (cDataFiles.StandardToMetric(m_BallisticsData.WindSpeed, cDataFiles.eDataType.Speed));
 			SetBallisticsWindSpeed();
 
 			/*
-						BallisticsAltitudeTextBox.Value = (int) (m_RWKestrel.UseAltitude ? m_RWKestrel.Altitude : m_DataFiles.StandardToMetric(m_BallisticsData.Altitude, cDataFiles.eDataType.Altitude));
+						BallisticsAltitudeTextBox.Value = (int) (m_RWKestrel.UseAltitude ? m_RWKestrel.Altitude : cDataFiles.StandardToMetric(m_BallisticsData.Altitude, cDataFiles.eDataType.Altitude));
 						SetBallisticsAltitude();
 
 						BallisticsHumidityTextBox.Value = (int) (m_RWKestrel.UseHumidity ? m_RWKestrel.RelativeHumidity : m_BallisticsData.Humidity * 100.0);
 						SetBallisticsHumidity();
 
-						BallisticsPressureTextBox.Value = m_RWKestrel.UseBarometricPressure ? m_RWKestrel.BarometricPressure : m_DataFiles.StandardToMetric(m_BallisticsData.Pressure, cDataFiles.eDataType.Pressure);
+						BallisticsPressureTextBox.Value = m_RWKestrel.UseBarometricPressure ? m_RWKestrel.BarometricPressure : cDataFiles.StandardToMetric(m_BallisticsData.Pressure, cDataFiles.eDataType.Pressure);
 						SetBallisticsPressure();
 
-						BallisticsTemperatureTextBox.Value = (int) (m_RWKestrel.UseTemperature ? m_RWKestrel.Temperature : m_DataFiles.StandardToMetric(m_BallisticsData.Temperature, cDataFiles.eDataType.Temperature));
+						BallisticsTemperatureTextBox.Value = (int) (m_RWKestrel.UseTemperature ? m_RWKestrel.Temperature : cDataFiles.StandardToMetric(m_BallisticsData.Temperature, cDataFiles.eDataType.Temperature));
 						SetBallisticsTemperature();
 
 						BallisticsWindDirectionTextBox.Value = m_RWKestrel.UseWindDirection ? m_RWKestrel.TrueCompass : m_BallisticsData.WindDirection;
 						SetBallisticsWindDirection();
 
-						BallisticsWindSpeedTextBox.Value = (int) (m_RWKestrel.UseWindSpeed ? m_RWKestrel.WindSpeed : m_DataFiles.StandardToMetric(m_BallisticsData.WindSpeed, cDataFiles.eDataType.Speed));
+						BallisticsWindSpeedTextBox.Value = (int) (m_RWKestrel.UseWindSpeed ? m_RWKestrel.WindSpeed : cDataFiles.StandardToMetric(m_BallisticsData.WindSpeed, cDataFiles.eDataType.Speed));
 						SetBallisticsWindSpeed();
 			*/
 			SetDensityAltitude();
@@ -1460,7 +1460,7 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			string strPowderWeightFormat = "{0:F";
-			strPowderWeightFormat += String.Format("{0:G0}", m_DataFiles.Preferences.PowderWeightDecimals);
+			strPowderWeightFormat += String.Format("{0:G0}", cPreferences.PowderWeightDecimals);
 			strPowderWeightFormat += "}";
 
 			//----------------------------------------------------------------------------*
@@ -1544,12 +1544,12 @@ namespace ReloadersWorkShop
 				ColumnHeader Header = BallisticsListView.Columns[0];
 
 				if (Header != null)
-					Header.Text = String.Format("Range ({0})", m_DataFiles.MetricString(cDataFiles.eDataType.Range));
+					Header.Text = String.Format("Range ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Range));
 
 				Header = BallisticsListView.Columns[1];
 
 				if (Header != null)
-					Header.Text = String.Format("Drop ( {0})", m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize));
+					Header.Text = String.Format("Drop ( {0})", cDataFiles.MetricString(cDataFiles.eDataType.GroupSize));
 
 				Header = BallisticsListView.Columns[2];
 
@@ -1559,7 +1559,7 @@ namespace ReloadersWorkShop
 				Header = BallisticsListView.Columns[3];
 
 				if (Header != null)
-					Header.Text = String.Format("Wind Drift ( {0})", m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize));
+					Header.Text = String.Format("Wind Drift ( {0})", cDataFiles.MetricString(cDataFiles.eDataType.GroupSize));
 
 				Header = BallisticsListView.Columns[4];
 
@@ -1569,7 +1569,7 @@ namespace ReloadersWorkShop
 				Header = BallisticsListView.Columns[5];
 
 				if (Header != null)
-					Header.Text = "Velocity " + String.Format("({0})", m_DataFiles.MetricString(cDataFiles.eDataType.Velocity));
+					Header.Text = "Velocity " + String.Format("({0})", cDataFiles.MetricString(cDataFiles.eDataType.Velocity));
 				}
 			else
 				SetChartBackgrounds();
@@ -1640,16 +1640,16 @@ namespace ReloadersWorkShop
 			int nNextX = 0;
 			int nNextY = 0;
 
-			int nNextRange = (int) m_DataFiles.StandardToMetric(m_BallisticsData.MinRange, cDataFiles.eDataType.Range);
+			int nNextRange = (int) cDataFiles.StandardToMetric(m_BallisticsData.MinRange, cDataFiles.eDataType.Range);
 
 			//----------------------------------------------------------------------------*
 			// Initialize Chart Data
 			//----------------------------------------------------------------------------*
 
 			string strBullseyeFormat = " - {0:F";
-			strBullseyeFormat += String.Format("{0:G0}", m_DataFiles.Preferences.GroupDecimals);
+			strBullseyeFormat += String.Format("{0:G0}", cPreferences.GroupDecimals);
 			strBullseyeFormat += "} ";
-			strBullseyeFormat += m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize);
+			strBullseyeFormat += cDataFiles.MetricString(cDataFiles.eDataType.GroupSize);
 
 			bool fGroundStrike = false;
 			int nGroundStrikeRange = 0;
@@ -1679,9 +1679,9 @@ namespace ReloadersWorkShop
 			// Show Speed of Sound Label
 			//----------------------------------------------------------------------------*
 
-			double dSpeedOfSound = m_DataFiles.Preferences.MetricVelocities ? m_BallisticsData.SpeedOfSoundInMS : m_BallisticsData.SpeedOfSoundInFPS;
+			double dSpeedOfSound = cPreferences.MetricVelocities ? m_BallisticsData.SpeedOfSoundInMS : m_BallisticsData.SpeedOfSoundInFPS;
 
-			BallisticsSoundSpeedLabel.Text = String.Format("{0:F1} {1}", dSpeedOfSound, m_DataFiles.MetricString(cDataFiles.eDataType.Velocity));
+			BallisticsSoundSpeedLabel.Text = String.Format("{0:F1} {1}", dSpeedOfSound, cDataFiles.MetricString(cDataFiles.eDataType.Velocity));
 
 			//----------------------------------------------------------------------------*
 			// Initialize Chart Legend Data
@@ -1710,7 +1710,7 @@ namespace ReloadersWorkShop
 
 			for (int nRange = 0; nRange <= m_BallisticsData.MaxRange; nRange++)
 				{
-				double dRange = m_DataFiles.MetricToStandard(nRange, cDataFiles.eDataType.Range);
+				double dRange = cDataFiles.MetricToStandard(nRange, cDataFiles.eDataType.Range);
 
 				nNextX = m_nChartStartX + (int) (dRange * m_dPixelsPerXUnit);
 
@@ -1785,9 +1785,9 @@ namespace ReloadersWorkShop
 						// Bullet at Target?
 						//----------------------------------------------------------------------------*
 
-						if (nRange == (int) m_DataFiles.StandardToMetric(m_DataFiles.Preferences.BallisticsData.TargetRange, cDataFiles.eDataType.Range))
+						if (nRange == (int) cDataFiles.StandardToMetric(m_DataFiles.Preferences.BallisticsData.TargetRange, cDataFiles.eDataType.Range))
 							{
-							string strPath = (dPath == 0.0) ? " - Bullseye!" : String.Format(strBullseyeFormat, Math.Abs(m_DataFiles.StandardToMetric(dPath, cDataFiles.eDataType.GroupSize)));
+							string strPath = (dPath == 0.0) ? " - Bullseye!" : String.Format(strBullseyeFormat, Math.Abs(cDataFiles.StandardToMetric(dPath, cDataFiles.eDataType.GroupSize)));
 
 							if (dPath != 0.0)
 								strPath += (dPath < 0.0 ? " low" : " high");
@@ -1896,9 +1896,9 @@ namespace ReloadersWorkShop
 						// Bullet at Target?
 						//----------------------------------------------------------------------------*
 
-						if (nRange == (int) m_DataFiles.StandardToMetric(m_BallisticsData.TargetRange, cDataFiles.eDataType.Range))
+						if (nRange == (int) cDataFiles.StandardToMetric(m_BallisticsData.TargetRange, cDataFiles.eDataType.Range))
 							{
-							double dTargetPath = m_DataFiles.StandardToMetric(dPath, cDataFiles.eDataType.GroupSize);
+							double dTargetPath = cDataFiles.StandardToMetric(dPath, cDataFiles.eDataType.GroupSize);
 
 							string strPath = (dTargetPath == 0.0) ? " - Bullseye!" : String.Format(strBullseyeFormat, Math.Abs(dTargetPath));
 
@@ -1998,9 +1998,9 @@ namespace ReloadersWorkShop
 							// Bullet at Target?
 							//----------------------------------------------------------------------------*
 
-							if (nRange == (int) m_DataFiles.StandardToMetric(m_DataFiles.Preferences.BallisticsData.TargetRange, cDataFiles.eDataType.Range))
+							if (nRange == (int) cDataFiles.StandardToMetric(m_DataFiles.Preferences.BallisticsData.TargetRange, cDataFiles.eDataType.Range))
 								{
-								double dDriftPath = m_DataFiles.StandardToMetric(dPath, cDataFiles.eDataType.GroupSize);
+								double dDriftPath = cDataFiles.StandardToMetric(dPath, cDataFiles.eDataType.GroupSize);
 
 								string strPath = (dDriftPath == 0.0) ? " - Bullseye!" : String.Format(strBullseyeFormat, Math.Abs(dDriftPath));
 
@@ -2063,9 +2063,9 @@ namespace ReloadersWorkShop
 							// Bullet at Target?
 							//----------------------------------------------------------------------------*
 
-							if (nRange == (int) m_DataFiles.StandardToMetric(m_BallisticsData.TargetRange, cDataFiles.eDataType.Range))
+							if (nRange == (int) cDataFiles.StandardToMetric(m_BallisticsData.TargetRange, cDataFiles.eDataType.Range))
 								{
-								double dTargetPath = m_DataFiles.StandardToMetric(dPath, cDataFiles.eDataType.GroupSize);
+								double dTargetPath = cDataFiles.StandardToMetric(dPath, cDataFiles.eDataType.GroupSize);
 
 								string strPath = (dTargetPath == 0.0) ? " - Bullseye!" : String.Format(strBullseyeFormat, Math.Abs(dTargetPath));
 
@@ -2092,7 +2092,7 @@ namespace ReloadersWorkShop
 
 				if (nRange == nNextRange)
 					{
-					nNextX = m_nChartStartX + (int) (m_dPixelsPerXUnit * m_DataFiles.MetricToStandard(nRange, cDataFiles.eDataType.Range));
+					nNextX = m_nChartStartX + (int) (m_dPixelsPerXUnit * cDataFiles.MetricToStandard(nRange, cDataFiles.eDataType.Range));
 
 					//----------------------------------------------------------------------------*
 					// Draw Bullet Drop Range Marker if needed
@@ -2136,14 +2136,14 @@ namespace ReloadersWorkShop
 						ListViewItem Item = new ListViewItem(String.Format("{0:N0}", nRange));
 
 						string strGroupFormat = "{0:F";
-						strGroupFormat += String.Format("{0:G0}", m_DataFiles.Preferences.GroupDecimals);
+						strGroupFormat += String.Format("{0:G0}", cPreferences.GroupDecimals);
 						strGroupFormat += "}";
 
-						Item.SubItems.Add(String.Format(strGroupFormat, m_DataFiles.StandardToMetric(m_BallisticsData.BulletPath, cDataFiles.eDataType.GroupSize)));
+						Item.SubItems.Add(String.Format(strGroupFormat, cDataFiles.StandardToMetric(m_BallisticsData.BulletPath, cDataFiles.eDataType.GroupSize)));
 						Item.SubItems.Add(nRange > 0 && !Double.IsInfinity(m_BallisticsData.BulletPathMOA) ? String.Format(strGroupFormat, m_BallisticsData.BulletPathMOA) : "---");
-						Item.SubItems.Add(String.Format(strGroupFormat, m_DataFiles.StandardToMetric(m_BallisticsData.WindDrift, cDataFiles.eDataType.GroupSize)));
+						Item.SubItems.Add(String.Format(strGroupFormat, cDataFiles.StandardToMetric(m_BallisticsData.WindDrift, cDataFiles.eDataType.GroupSize)));
 						Item.SubItems.Add(nRange > 0 && !Double.IsInfinity(m_BallisticsData.WindDriftMOA) ? String.Format(strGroupFormat, m_BallisticsData.WindDriftMOA) : "---");
-						Item.SubItems.Add(String.Format("{0:F1}", m_DataFiles.StandardToMetric(m_BallisticsData.RemainingVelocity, cDataFiles.eDataType.Velocity)));
+						Item.SubItems.Add(String.Format("{0:F1}", cDataFiles.StandardToMetric(m_BallisticsData.RemainingVelocity, cDataFiles.eDataType.Velocity)));
 						Item.SubItems.Add(String.Format("{0:F1}", m_BallisticsData.Energy));
 						Item.SubItems.Add(String.Format("{0:F3}", m_BallisticsData.TimeOfFlight));
 						Item.SubItems.Add(m_BallisticsData.ScopeClicks);
@@ -2166,7 +2166,7 @@ namespace ReloadersWorkShop
 						BallisticsListView.Items.Add(Item);
 						}
 
-					nNextRange += (int) m_DataFiles.StandardToMetric(m_BallisticsData.Increment, cDataFiles.eDataType.Range);
+					nNextRange += (int) cDataFiles.StandardToMetric(m_BallisticsData.Increment, cDataFiles.eDataType.Range);
 					}
 				}
 
@@ -2180,7 +2180,7 @@ namespace ReloadersWorkShop
 
 			if (fReferenceGroundStrike)
 				{
-				int nGroundStrikeX = m_nChartStartX + (int) (m_DataFiles.MetricToStandard(nReferenceGroundStrikeRange, cDataFiles.eDataType.Range) * m_dPixelsPerXUnit);
+				int nGroundStrikeX = m_nChartStartX + (int) (cDataFiles.MetricToStandard(nReferenceGroundStrikeRange, cDataFiles.eDataType.Range) * m_dPixelsPerXUnit);
 
 				Brush SkyBrush = new SolidBrush(Color.FromArgb(127, 255, 254));
 
@@ -2188,8 +2188,8 @@ namespace ReloadersWorkShop
 
 				g1.DrawImage(m_GroundStrike, new Point(nGroundStrikeX - (m_GroundStrike.Width / 2), nReferenceDriftGroundStrikeY - (m_GroundStrike.Height / 2)));
 
-				if (nReferenceGroundStrikeRange < m_DataFiles.StandardToMetric(m_BallisticsData.TargetRange, cDataFiles.eDataType.Range))
-					ReferenceDataLegendLabel.Text += String.Format(" - {0:G0} {1} short!", m_DataFiles.StandardToMetric(m_BallisticsData.TargetRange, cDataFiles.eDataType.Range) - nReferenceGroundStrikeRange, m_DataFiles.MetricString(cDataFiles.eDataType.Range));
+				if (nReferenceGroundStrikeRange < cDataFiles.StandardToMetric(m_BallisticsData.TargetRange, cDataFiles.eDataType.Range))
+					ReferenceDataLegendLabel.Text += String.Format(" - {0:G0} {1} short!", cDataFiles.StandardToMetric(m_BallisticsData.TargetRange, cDataFiles.eDataType.Range) - nReferenceGroundStrikeRange, cDataFiles.MetricString(cDataFiles.eDataType.Range));
 
 				if (fShowGroundStrikeMarker)
 					{
@@ -2204,7 +2204,7 @@ namespace ReloadersWorkShop
 					g.FillRectangle(SkyBrush, nX, 10, TextSize1.Width, TextSize1.Height);
 					g.DrawString(strGroundStrike, RangeFont, ReferenceBrush, nX, 10);
 
-					strGroundStrike = String.Format("{0:G0} {1}", nReferenceGroundStrikeRange, m_DataFiles.MetricString(cDataFiles.eDataType.Range));
+					strGroundStrike = String.Format("{0:G0} {1}", nReferenceGroundStrikeRange, cDataFiles.MetricString(cDataFiles.eDataType.Range));
 
 					SizeF TextSize2 = g.MeasureString(strGroundStrike, RangeFont);
 
@@ -2223,7 +2223,7 @@ namespace ReloadersWorkShop
 
 			if (fGroundStrike)
 				{
-				int nGroundStrikeX = m_nChartStartX + (int) (m_DataFiles.MetricToStandard(nGroundStrikeRange, cDataFiles.eDataType.Range) * m_dPixelsPerXUnit);
+				int nGroundStrikeX = m_nChartStartX + (int) (cDataFiles.MetricToStandard(nGroundStrikeRange, cDataFiles.eDataType.Range) * m_dPixelsPerXUnit);
 
 				Brush SkyBrush = new SolidBrush(Color.FromArgb(127, 255, 254));
 
@@ -2231,8 +2231,8 @@ namespace ReloadersWorkShop
 
 				g1.DrawImage(m_GroundStrike, new Point(nGroundStrikeX - (m_GroundStrike.Width / 2), nDriftGroundStrikeY - (m_GroundStrike.Height / 2)));
 
-				if (nGroundStrikeRange < m_DataFiles.StandardToMetric(m_BallisticsData.TargetRange, cDataFiles.eDataType.Range))
-					CurrentDataLegendLabel.Text += String.Format(" - {0:G0} {1} short!", m_DataFiles.StandardToMetric(m_BallisticsData.TargetRange, cDataFiles.eDataType.Range) - nGroundStrikeRange, m_DataFiles.MetricString(cDataFiles.eDataType.Range));
+				if (nGroundStrikeRange < cDataFiles.StandardToMetric(m_BallisticsData.TargetRange, cDataFiles.eDataType.Range))
+					CurrentDataLegendLabel.Text += String.Format(" - {0:G0} {1} short!", cDataFiles.StandardToMetric(m_BallisticsData.TargetRange, cDataFiles.eDataType.Range) - nGroundStrikeRange, cDataFiles.MetricString(cDataFiles.eDataType.Range));
 
 				if (fShowGroundStrikeMarker)
 					{
@@ -2247,7 +2247,7 @@ namespace ReloadersWorkShop
 					g.FillRectangle(SkyBrush, nX, 10, TextSize1.Width, TextSize1.Height);
 					g.DrawString(strGroundStrike, RangeFont, DataBrush, nX, 10);
 
-					strGroundStrike = String.Format("{0:G0} {1}", nGroundStrikeRange, m_DataFiles.MetricString(cDataFiles.eDataType.Range));
+					strGroundStrike = String.Format("{0:G0} {1}", nGroundStrikeRange, cDataFiles.MetricString(cDataFiles.eDataType.Range));
 
 					SizeF TextSize2 = g.MeasureString(strGroundStrike, RangeFont);
 
@@ -2274,11 +2274,11 @@ namespace ReloadersWorkShop
 
 				if (fShowReferenceData)
 					{
-					int nX = m_nChartStartX + (int) (m_DataFiles.MetricToStandard(nReferenceApexRange, cDataFiles.eDataType.Range) * m_dPixelsPerXUnit);
+					int nX = m_nChartStartX + (int) (cDataFiles.MetricToStandard(nReferenceApexRange, cDataFiles.eDataType.Range) * m_dPixelsPerXUnit);
 
 					string strApogee1 = "Apogee";
 
-					string strApogee2 = String.Format("{0:F2} {1} ({2:G0} {3})", m_DataFiles.StandardToMetric(dReferenceApex, cDataFiles.eDataType.GroupSize), m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize), nReferenceApexRange, m_DataFiles.MetricString(cDataFiles.eDataType.Range));
+					string strApogee2 = String.Format("{0:F2} {1} ({2:G0} {3})", cDataFiles.StandardToMetric(dReferenceApex, cDataFiles.eDataType.GroupSize), cDataFiles.MetricString(cDataFiles.eDataType.GroupSize), nReferenceApexRange, cDataFiles.MetricString(cDataFiles.eDataType.Range));
 
 					SizeF TextSize1 = g.MeasureString(strApogee1, RangeFont);
 					SizeF TextSize2 = g.MeasureString(strApogee2, RangeFont);
@@ -2312,11 +2312,11 @@ namespace ReloadersWorkShop
 
 				if (fShowCurrentData)
 					{
-					int nX = m_nChartStartX + (int) (m_DataFiles.MetricToStandard(nApexRange, cDataFiles.eDataType.Range) * m_dPixelsPerXUnit);
+					int nX = m_nChartStartX + (int) (cDataFiles.MetricToStandard(nApexRange, cDataFiles.eDataType.Range) * m_dPixelsPerXUnit);
 
 					string strApogee1 = "Apogee";
 
-					string strApogee2 = String.Format("{0:F2} {1} ({2:G0} {3})", dApex, m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize), nApexRange, m_DataFiles.MetricString(cDataFiles.eDataType.Range));
+					string strApogee2 = String.Format("{0:F2} {1} ({2:G0} {3})", dApex, cDataFiles.MetricString(cDataFiles.eDataType.GroupSize), nApexRange, cDataFiles.MetricString(cDataFiles.eDataType.Range));
 
 					SizeF TextSize1 = g.MeasureString(strApogee1, RangeFont);
 					SizeF TextSize2 = g.MeasureString(strApogee2, RangeFont);
@@ -2357,7 +2357,7 @@ namespace ReloadersWorkShop
 
 			if (fShowTransonicMarker && fShowReferenceData && nReferenceTransonicRange >= 0 && nReferenceTransonicRange < nReferenceGroundStrikeRange)
 				{
-				int nTransonicX = m_nChartStartX + (int) (m_DataFiles.MetricToStandard(nReferenceTransonicRange, cDataFiles.eDataType.Range) * m_dPixelsPerXUnit);
+				int nTransonicX = m_nChartStartX + (int) (cDataFiles.MetricToStandard(nReferenceTransonicRange, cDataFiles.eDataType.Range) * m_dPixelsPerXUnit);
 				int nTransonicY = m_nChartStartY - (int) (dReferenceTransonicPath * m_dPixelsPerYUnit);
 
 				Brush SkyBrush = new SolidBrush(Color.FromArgb(127, 255, 254));
@@ -2373,7 +2373,7 @@ namespace ReloadersWorkShop
 
 				if (nReferenceTransonicRange > 0)
 					{
-					strTransonic = String.Format("{0:G0} {1}", nReferenceTransonicRange, m_DataFiles.MetricString(cDataFiles.eDataType.Range));
+					strTransonic = String.Format("{0:G0} {1}", nReferenceTransonicRange, cDataFiles.MetricString(cDataFiles.eDataType.Range));
 
 					SizeF TextSize2 = g.MeasureString(strTransonic, RangeFont);
 
@@ -2394,7 +2394,7 @@ namespace ReloadersWorkShop
 
 			if (fShowTransonicMarker && fShowCurrentData && nTransonicRange >= 0 && nTransonicRange < nGroundStrikeRange)
 				{
-				int nTransonicX = m_nChartStartX + (int) (m_DataFiles.MetricToStandard(nTransonicRange, cDataFiles.eDataType.Range) * m_dPixelsPerXUnit);
+				int nTransonicX = m_nChartStartX + (int) (cDataFiles.MetricToStandard(nTransonicRange, cDataFiles.eDataType.Range) * m_dPixelsPerXUnit);
 				int nTransonicY = m_nChartStartY - (int) (dTransonicPath * m_dPixelsPerYUnit);
 
 				Brush SkyBrush = new SolidBrush(Color.FromArgb(127, 255, 254));
@@ -2410,7 +2410,7 @@ namespace ReloadersWorkShop
 
 				if (nTransonicRange > 0)
 					{
-					strTransonic = String.Format("{0:G0} {1}", nTransonicRange, m_DataFiles.MetricString(cDataFiles.eDataType.Range));
+					strTransonic = String.Format("{0:G0} {1}", nTransonicRange, cDataFiles.MetricString(cDataFiles.eDataType.Range));
 
 					SizeF TextSize2 = g.MeasureString(strTransonic, RangeFont);
 
@@ -2425,11 +2425,11 @@ namespace ReloadersWorkShop
 				SkyBrush.Dispose();
 				}
 
-			string strText = String.Format("Apogee: {0:F2} {1} at {2:G0} {3}", dReferenceApex, m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize), nReferenceApexRange, m_DataFiles.MetricString(cDataFiles.eDataType.Range));
+			string strText = String.Format("Apogee: {0:F2} {1} at {2:G0} {3}", dReferenceApex, cDataFiles.MetricString(cDataFiles.eDataType.GroupSize), nReferenceApexRange, cDataFiles.MetricString(cDataFiles.eDataType.Range));
 
 			ReferenceDataLegendLabel.Text += " - " + strText;
 
-			strText = String.Format("Apogee: {0:F2} {1} at {2:G0} {3}", dApex, m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize), nApexRange, m_DataFiles.MetricString(cDataFiles.eDataType.Range));
+			strText = String.Format("Apogee: {0:F2} {1} at {2:G0} {3}", dApex, cDataFiles.MetricString(cDataFiles.eDataType.GroupSize), nApexRange, cDataFiles.MetricString(cDataFiles.eDataType.Range));
 
 			CurrentDataLegendLabel.Text += " - " + strText;
 
@@ -2501,35 +2501,35 @@ namespace ReloadersWorkShop
 			//------------------------------------------------------------------------*
 
 			BallisticsBCTextBox.Value = BallisticsData.BallisticCoefficient;
-			BallisticsBulletDiameterTextBox.Value = m_DataFiles.StandardToMetric(BallisticsData.BulletDiameter, cDataFiles.eDataType.Dimension);
-			BallisticsBulletWeightTextBox.Value = m_DataFiles.StandardToMetric(BallisticsData.BulletWeight, cDataFiles.eDataType.BulletWeight);
-			BallisticsBulletLengthTextBox.Value = m_DataFiles.StandardToMetric(BallisticsData.BulletLength, cDataFiles.eDataType.Dimension);
+			BallisticsBulletDiameterTextBox.Value = cDataFiles.StandardToMetric(BallisticsData.BulletDiameter, cDataFiles.eDataType.Dimension);
+			BallisticsBulletWeightTextBox.Value = cDataFiles.StandardToMetric(BallisticsData.BulletWeight, cDataFiles.eDataType.BulletWeight);
+			BallisticsBulletLengthTextBox.Value = cDataFiles.StandardToMetric(BallisticsData.BulletLength, cDataFiles.eDataType.Dimension);
 
 			//------------------------------------------------------------------------*
 			// Muzzle Data
 			//------------------------------------------------------------------------*
 
-			BallisticsMuzzleVelocityTextBox.Value = (int) m_DataFiles.StandardToMetric(BallisticsData.MuzzleVelocity, cDataFiles.eDataType.Velocity);
-			BallisticsMuzzleHeightLabel.Text = String.Format("{0:G0} {1}", m_DataFiles.StandardToMetric(BallisticsData.MuzzleHeight, cDataFiles.eDataType.GroupSize), m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize));
+			BallisticsMuzzleVelocityTextBox.Value = (int) cDataFiles.StandardToMetric(BallisticsData.MuzzleVelocity, cDataFiles.eDataType.Velocity);
+			BallisticsMuzzleHeightLabel.Text = String.Format("{0:G0} {1}", cDataFiles.StandardToMetric(BallisticsData.MuzzleHeight, cDataFiles.eDataType.GroupSize), cDataFiles.MetricString(cDataFiles.eDataType.GroupSize));
 
 			//------------------------------------------------------------------------*
 			// Firearm Data
 			//------------------------------------------------------------------------*
 
-			BallisticsZeroRangeTextBox.Value = (int) m_DataFiles.StandardToMetric(BallisticsData.ZeroRange, cDataFiles.eDataType.Range);
-			BallisticsSightHeightTextBox.Value = m_DataFiles.StandardToMetric(BallisticsData.SightHeight, cDataFiles.eDataType.Firearm);
+			BallisticsZeroRangeTextBox.Value = (int) cDataFiles.StandardToMetric(BallisticsData.ZeroRange, cDataFiles.eDataType.Range);
+			BallisticsSightHeightTextBox.Value = cDataFiles.StandardToMetric(BallisticsData.SightHeight, cDataFiles.eDataType.Firearm);
 			BallisticsScopeClickTextBox.Value = BallisticsData.ScopeClick;
 			BallisticsTurretTypeComboBox.SelectedIndex = (int) BallisticsData.TurretType;
-			BallisticsTwistTextBox.Value = m_DataFiles.StandardToMetric(BallisticsData.Twist, cDataFiles.eDataType.Firearm);
+			BallisticsTwistTextBox.Value = cDataFiles.StandardToMetric(BallisticsData.Twist, cDataFiles.eDataType.Firearm);
 
 			//------------------------------------------------------------------------*
 			// Range Data
 			//------------------------------------------------------------------------*
 
-			BallisticsMaxRangeTextBox.Value = (int) m_DataFiles.StandardToMetric(BallisticsData.MaxRange, cDataFiles.eDataType.Range);
-			BallisticsMinRangeTextBox.Value = (int) m_DataFiles.StandardToMetric(BallisticsData.MinRange, cDataFiles.eDataType.Range);
-			BallisticsIncrementTextBox.Value = (int) m_DataFiles.StandardToMetric(BallisticsData.Increment, cDataFiles.eDataType.Range);
-			BallisticsTargetRangeTextBox.Value = (int) m_DataFiles.StandardToMetric(BallisticsData.TargetRange, cDataFiles.eDataType.Range);
+			BallisticsMaxRangeTextBox.Value = (int) cDataFiles.StandardToMetric(BallisticsData.MaxRange, cDataFiles.eDataType.Range);
+			BallisticsMinRangeTextBox.Value = (int) cDataFiles.StandardToMetric(BallisticsData.MinRange, cDataFiles.eDataType.Range);
+			BallisticsIncrementTextBox.Value = (int) cDataFiles.StandardToMetric(BallisticsData.Increment, cDataFiles.eDataType.Range);
+			BallisticsTargetRangeTextBox.Value = (int) cDataFiles.StandardToMetric(BallisticsData.TargetRange, cDataFiles.eDataType.Range);
 
 			//------------------------------------------------------------------------*
 			// Environmental Data
@@ -2662,8 +2662,8 @@ namespace ReloadersWorkShop
 
 		private void SetBallisticsAltitude()
 			{
-			m_BallisticsData.Altitude = (int) m_DataFiles.MetricToStandard(BallisticsAltitudeTextBox.Value, cDataFiles.eDataType.Altitude);
-			m_DataFiles.Preferences.BallisticsData.Altitude = (int) m_DataFiles.MetricToStandard(BallisticsAltitudeTextBox.Value, cDataFiles.eDataType.Altitude);
+			m_BallisticsData.Altitude = (int) cDataFiles.MetricToStandard(BallisticsAltitudeTextBox.Value, cDataFiles.eDataType.Altitude);
+			m_DataFiles.Preferences.BallisticsData.Altitude = (int) cDataFiles.MetricToStandard(BallisticsAltitudeTextBox.Value, cDataFiles.eDataType.Altitude);
 			}
 
 		//============================================================================*
@@ -2937,12 +2937,24 @@ namespace ReloadersWorkShop
 			// Set Bullet Data Min/Max
 			//----------------------------------------------------------------------------*
 
+			double dBCMin = 0.001;
+			double dBCMax = 1.2;
+			double dDiameterMin = 1000.0;
+			double dDiameterMax = 0.0;
+			double dWeightMin = 0.0;
+			double dWeightMax = 1000.0;
+
 			if (Bullet != null)
 				{
-				BallisticsBCTextBox.Enabled = false;
-				BallisticsBulletDiameterTextBox.Enabled = false;
-				BallisticsBulletWeightTextBox.Enabled = false;
+				BallisticsBCTextBox.Enabled = Bullet.BallisticCoefficient == 0.0;
+				BallisticsBulletDiameterTextBox.Enabled = Bullet.Diameter == 0.0;
+				BallisticsBulletWeightTextBox.Enabled = Bullet.Weight == 0.0;
 				BallisticsBulletLengthTextBox.Enabled = Bullet.Length == 0.0;
+
+				dDiameterMin = 0.170;
+				dDiameterMax = 0.650;
+				dWeightMin = cBullet.MinBulletWeight;
+				dWeightMax = cBullet.MaxBulletWeight;
 				}
 			else
 				{
@@ -2950,13 +2962,6 @@ namespace ReloadersWorkShop
 				BallisticsBulletDiameterTextBox.Enabled = true;
 				BallisticsBulletWeightTextBox.Enabled = true;
 				BallisticsBulletLengthTextBox.Enabled = true;
-
-				double dBCMin = 0.001;
-				double dBCMax = 1.2;
-				double dDiameterMin = 1000.0;
-				double dDiameterMax = 0.0;
-				double dWeightMin = 0.0;
-				double dWeightMax = 1000.0;
 
 				if (Caliber != null)
 					{
@@ -2998,16 +3003,16 @@ namespace ReloadersWorkShop
 							dDiameterMax = CheckBullet.Diameter;
 						}
 					}
-
-				BallisticsBCTextBox.MinValue = dBCMin;
-				BallisticsBCTextBox.MaxValue = dBCMax;
-				BallisticsBulletDiameterTextBox.MinValue = dDiameterMin;
-				BallisticsBulletDiameterTextBox.MaxValue = dDiameterMax;
-				BallisticsBulletWeightTextBox.MinValue = dWeightMin;
-				BallisticsBulletWeightTextBox.MaxValue = dWeightMax;
-				BallisticsBulletLengthTextBox.MinValue = 0.0;
-				BallisticsBulletLengthTextBox.MaxValue = m_DataFiles.Preferences.MetricDimensions ? cConversions.InchesToMillimeters(3.0) : 3.0;
 				}
+
+			BallisticsBCTextBox.MinValue = dBCMin;
+			BallisticsBCTextBox.MaxValue = dBCMax;
+			BallisticsBulletDiameterTextBox.MinValue = cDataFiles.StandardToMetric(dDiameterMin, cDataFiles.eDataType.Dimension);
+			BallisticsBulletDiameterTextBox.MaxValue = cDataFiles.StandardToMetric(dDiameterMax, cDataFiles.eDataType.Dimension);
+			BallisticsBulletWeightTextBox.MinValue = cDataFiles.StandardToMetric(dWeightMin,  cDataFiles.eDataType.BulletWeight);
+			BallisticsBulletWeightTextBox.MaxValue = cDataFiles.StandardToMetric(dWeightMax,  cDataFiles.eDataType.BulletWeight);
+            BallisticsBulletLengthTextBox.MinValue = 0.0;
+			BallisticsBulletLengthTextBox.MaxValue = cPreferences.MetricDimensions ? cConversions.InchesToMillimeters(3.0) : 3.0;
 
 			//----------------------------------------------------------------------------*
 			// Set Muzzle Velocity Min/Max
@@ -3045,14 +3050,14 @@ namespace ReloadersWorkShop
 
 				if (nMin > nMax)
 					{
-					nMin = m_DataFiles.Preferences.MetricVelocities ? (int) cConversions.FPSToMS(500.0) : 500;
-					nMax = m_DataFiles.Preferences.MetricVelocities ? (int) cConversions.FPSToMS(5000.0) : 5000;
+					nMin = 500;
+					nMax = 5000;
 					}
 				}
 
 			BallisticsMuzzleVelocityTextBox.Enabled = fEnableVelocity || (!BallisticsBatchTestVelocityRadioButton.Checked && !BallisticsLoadDataVelocityRadioButton.Checked);
-			BallisticsMuzzleVelocityTextBox.MinValue = nMin;
-			BallisticsMuzzleVelocityTextBox.MaxValue = nMax;
+			BallisticsMuzzleVelocityTextBox.MinValue = (int) Math.Round(cDataFiles.StandardToMetric(nMin, cDataFiles.eDataType.Velocity), 0);
+			BallisticsMuzzleVelocityTextBox.MaxValue = (int) Math.Round(cDataFiles.StandardToMetric(nMax, cDataFiles.eDataType.Velocity), 0);
 
 			//----------------------------------------------------------------------------*
 			// Set Firearm Data Min/Max
@@ -3078,7 +3083,7 @@ namespace ReloadersWorkShop
 				BallisticsZeroRangeTextBox.Enabled = true;
 
 				BallisticsSightHeightTextBox.MinValue = 0.0;
-				BallisticsSightHeightTextBox.MaxValue = m_DataFiles.Preferences.MetricFirearms ? cConversions.InchesToCentimeters(5.0) : 5.0;
+				BallisticsSightHeightTextBox.MaxValue = cPreferences.MetricFirearms ? cConversions.InchesToCentimeters(5.0) : 5.0;
 
 				BallisticsSightHeightTextBox.Enabled = true;
 
@@ -3088,8 +3093,8 @@ namespace ReloadersWorkShop
 				BallisticsScopeClickTextBox.MaxValue = 1.0;
 				BallisticsScopeClickTextBox.Enabled = true;
 
-				BallisticsTwistTextBox.MinValue = m_DataFiles.Preferences.MetricFirearms ? cConversions.InchesToCentimeters(5.0) : 5.0;
-				BallisticsTwistTextBox.MaxValue = m_DataFiles.Preferences.MetricFirearms ? cConversions.InchesToCentimeters(78.0) : 78.0;
+				BallisticsTwistTextBox.MinValue = cPreferences.MetricFirearms ? cConversions.InchesToCentimeters(5.0) : 5.0;
+				BallisticsTwistTextBox.MaxValue = cPreferences.MetricFirearms ? cConversions.InchesToCentimeters(78.0) : 78.0;
 				BallisticsTwistTextBox.Enabled = true;
 				}
 
@@ -3103,23 +3108,23 @@ namespace ReloadersWorkShop
 			// Set Environmental Data Min/Max
 			//----------------------------------------------------------------------------*
 
-			BallisticsTemperatureTextBox.MinValue = m_DataFiles.Preferences.MetricTemperatures ? cConversions.FahrenheitToCelsius(0) : 0;
-			BallisticsTemperatureTextBox.MaxValue = m_DataFiles.Preferences.MetricTemperatures ? cConversions.FahrenheitToCelsius(120) : 120;
+			BallisticsTemperatureTextBox.MinValue = cPreferences.MetricTemperatures ? cConversions.FahrenheitToCelsius(0) : 0;
+			BallisticsTemperatureTextBox.MaxValue = cPreferences.MetricTemperatures ? cConversions.FahrenheitToCelsius(120) : 120;
 
 			BallisticsAltitudeTextBox.MinValue = 0;
-			BallisticsAltitudeTextBox.MaxValue = m_DataFiles.Preferences.MetricAltitudes ? (int) cConversions.FeetToMeters(15000) : 15000;
+			BallisticsAltitudeTextBox.MaxValue = cPreferences.MetricAltitudes ? (int) cConversions.FeetToMeters(15000) : 15000;
 
 			BallisticsHumidityTextBox.MinValue = 0;
 			BallisticsHumidityTextBox.MaxValue = 100;
 
 			BallisticsWindSpeedTextBox.MinValue = 0;
-			BallisticsWindSpeedTextBox.MaxValue = m_DataFiles.Preferences.MetricVelocities ? (int) cConversions.MPHToKPH(30) : 30;
+			BallisticsWindSpeedTextBox.MaxValue = cPreferences.MetricVelocities ? (int) cConversions.MPHToKPH(30) : 30;
 
 			BallisticsWindDirectionTextBox.MinValue = 0;
 			BallisticsWindDirectionTextBox.MaxValue = 359;
 
-			BallisticsPressureTextBox.MinValue = m_DataFiles.Preferences.MetricPressures ? cConversions.InHgToMillibars(25) : 25;
-			BallisticsPressureTextBox.MaxValue = m_DataFiles.Preferences.MetricPressures ? cConversions.InHgToMillibars(33) : 33;
+			BallisticsPressureTextBox.MinValue = cPreferences.MetricPressures ? cConversions.InHgToMillibars(25) : 25;
+			BallisticsPressureTextBox.MaxValue = cPreferences.MetricPressures ? cConversions.InHgToMillibars(33) : 33;
 
 			//----------------------------------------------------------------------------*
 			// Set Range Data Min/Max
@@ -3144,8 +3149,8 @@ namespace ReloadersWorkShop
 
 		private void SetBallisticsPressure()
 			{
-			m_BallisticsData.Pressure = m_DataFiles.MetricToStandard(BallisticsPressureTextBox.Value, cDataFiles.eDataType.Pressure);
-			m_DataFiles.Preferences.BallisticsData.Pressure = m_DataFiles.MetricToStandard(BallisticsPressureTextBox.Value, cDataFiles.eDataType.Pressure);
+			m_BallisticsData.Pressure = cDataFiles.MetricToStandard(BallisticsPressureTextBox.Value, cDataFiles.eDataType.Pressure);
+			m_DataFiles.Preferences.BallisticsData.Pressure = cDataFiles.MetricToStandard(BallisticsPressureTextBox.Value, cDataFiles.eDataType.Pressure);
 			}
 
 		//============================================================================*
@@ -3154,8 +3159,8 @@ namespace ReloadersWorkShop
 
 		private void SetBallisticsTemperature()
 			{
-			m_BallisticsData.Temperature = (int) m_DataFiles.MetricToStandard(BallisticsTemperatureTextBox.Value, cDataFiles.eDataType.Temperature);
-			m_DataFiles.Preferences.BallisticsData.Temperature = (int) m_DataFiles.MetricToStandard(BallisticsTemperatureTextBox.Value, cDataFiles.eDataType.Temperature);
+			m_BallisticsData.Temperature = (int) cDataFiles.MetricToStandard(BallisticsTemperatureTextBox.Value, cDataFiles.eDataType.Temperature);
+			m_DataFiles.Preferences.BallisticsData.Temperature = (int) cDataFiles.MetricToStandard(BallisticsTemperatureTextBox.Value, cDataFiles.eDataType.Temperature);
 			}
 
 		//============================================================================*
@@ -3174,8 +3179,8 @@ namespace ReloadersWorkShop
 
 		private void SetBallisticsWindSpeed()
 			{
-			m_BallisticsData.WindSpeed = (int) m_DataFiles.MetricToStandard(BallisticsWindSpeedTextBox.Value, cDataFiles.eDataType.Speed);
-			m_DataFiles.Preferences.BallisticsData.WindSpeed = (int) m_DataFiles.MetricToStandard(BallisticsWindSpeedTextBox.Value, cDataFiles.eDataType.Speed);
+			m_BallisticsData.WindSpeed = (int) cDataFiles.MetricToStandard(BallisticsWindSpeedTextBox.Value, cDataFiles.eDataType.Speed);
+			m_DataFiles.Preferences.BallisticsData.WindSpeed = (int) cDataFiles.MetricToStandard(BallisticsWindSpeedTextBox.Value, cDataFiles.eDataType.Speed);
 			}
 
 		//============================================================================*
@@ -3195,12 +3200,12 @@ namespace ReloadersWorkShop
 
 		private void SetDensityAltitude()
 			{
-			double dDensityAltitude = m_DataFiles.StandardToMetric(m_BallisticsData.DensityAltitude, cDataFiles.eDataType.Altitude);
-/*
-			if (m_RWKestrel.Connected)
-				dDensityAltitude = m_RWKestrel.DensityAltitude;
-*/
-			BallisticsDensityAltitudeLabel.Text = String.Format("{0:F0} {1}", dDensityAltitude, m_DataFiles.MetricString(cDataFiles.eDataType.Altitude));
+			double dDensityAltitude = cDataFiles.StandardToMetric(m_BallisticsData.DensityAltitude, cDataFiles.eDataType.Altitude);
+			/*
+						if (m_RWKestrel.Connected)
+							dDensityAltitude = m_RWKestrel.DensityAltitude;
+			*/
+			BallisticsDensityAltitudeLabel.Text = String.Format("{0:F0} {1}", dDensityAltitude, cDataFiles.MetricString(cDataFiles.eDataType.Altitude));
 
 			SetStationPressure();
 			}
@@ -3346,50 +3351,50 @@ namespace ReloadersWorkShop
 			BallisticsBCTextBox.NumDecimals = 3;
 			BallisticsBCTextBox.MaxLength = 5;
 
-			m_DataFiles.SetInputParameters(BallisticsBulletDiameterTextBox, cDataFiles.eDataType.Dimension);
-			BulletDiameterMeasurementLabel.Text = m_DataFiles.MetricString(cDataFiles.eDataType.Dimension);
+			cDataFiles.SetInputParameters(BallisticsBulletDiameterTextBox, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetMetricLabel(BulletDiameterMeasurementLabel, cDataFiles.eDataType.Dimension);
 
-			m_DataFiles.SetInputParameters(BallisticsBulletWeightTextBox, cDataFiles.eDataType.BulletWeight);
-			BulletWeightMeasurementLabel.Text = m_DataFiles.MetricString(cDataFiles.eDataType.BulletWeight);
+			cDataFiles.SetInputParameters(BallisticsBulletWeightTextBox, cDataFiles.eDataType.BulletWeight);
+			cDataFiles.SetMetricLabel(BulletWeightMeasurementLabel, cDataFiles.eDataType.Dimension);
 
-			m_DataFiles.SetInputParameters(BallisticsBulletLengthTextBox, cDataFiles.eDataType.Dimension);
-			BulletLengthMeasurementLabel.Text = m_DataFiles.MetricString(cDataFiles.eDataType.Dimension);
+			cDataFiles.SetInputParameters(BallisticsBulletLengthTextBox, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetMetricLabel(BulletLengthMeasurementLabel, cDataFiles.eDataType.Dimension);
 
 			//----------------------------------------------------------------------------*
 			// Firearm Data
 			//----------------------------------------------------------------------------*
 
-			m_DataFiles.SetInputParameters(BallisticsZeroRangeTextBox, cDataFiles.eDataType.Range);
-			ZeroRangeMeasurementLabel.Text = m_DataFiles.MetricString(cDataFiles.eDataType.Range);
+			cDataFiles.SetInputParameters(BallisticsZeroRangeTextBox, cDataFiles.eDataType.Range);
+			cDataFiles.SetMetricLabel(ZeroRangeMeasurementLabel,cDataFiles.eDataType.Range);
 
-			m_DataFiles.SetInputParameters(BallisticsSightHeightTextBox, cDataFiles.eDataType.Firearm);
-			SightHeightMeasurementLabel.Text = m_DataFiles.MetricString(cDataFiles.eDataType.Firearm);
+			cDataFiles.SetInputParameters(BallisticsSightHeightTextBox, cDataFiles.eDataType.Firearm);
+			cDataFiles.SetMetricLabel(SightHeightMeasurementLabel,cDataFiles.eDataType.Firearm);
 
-			BallisticsScopeClickTextBox.NumDecimals = m_DataFiles.Preferences.FirearmDecimals;
-			BallisticsScopeClickTextBox.MaxLength = 2 + m_DataFiles.Preferences.FirearmDecimals;
+			BallisticsScopeClickTextBox.NumDecimals = cPreferences.FirearmDecimals;
+			BallisticsScopeClickTextBox.MaxLength = 2 + cPreferences.FirearmDecimals;
 
-			BallisticsTwistTextBox.NumDecimals = m_DataFiles.Preferences.FirearmDecimals;
-			BallisticsTwistTextBox.MaxLength = 3 + m_DataFiles.Preferences.FirearmDecimals;
-			TwistMeasurementLabel.Text = m_DataFiles.MetricString(cDataFiles.eDataType.Firearm);
+			BallisticsTwistTextBox.NumDecimals = cPreferences.FirearmDecimals;
+			BallisticsTwistTextBox.MaxLength = 3 + cPreferences.FirearmDecimals;
+			cDataFiles.SetMetricLabel(TwistMeasurementLabel,cDataFiles.eDataType.Firearm);
 
 			//----------------------------------------------------------------------------*
 			// Atmospheric Data
 			//----------------------------------------------------------------------------*
 
-			m_DataFiles.SetInputParameters(BallisticsWindSpeedTextBox, cDataFiles.eDataType.Speed);
-			WindSpeedMeasurementLabel.Text = m_DataFiles.MetricString(cDataFiles.eDataType.Speed);
+			cDataFiles.SetInputParameters(BallisticsWindSpeedTextBox, cDataFiles.eDataType.Speed);
+			cDataFiles.SetMetricLabel(WindSpeedMeasurementLabel,cDataFiles.eDataType.Speed);
 
 			BallisticsWindDirectionTextBox.MaxLength = 3;
 			BallisticsWindDirectionTextBox.MaxValue = 359;
 
-			m_DataFiles.SetInputParameters(BallisticsTemperatureTextBox, cDataFiles.eDataType.Temperature);
-			TemperatureMeasurementLabel.Text = m_DataFiles.MetricString(cDataFiles.eDataType.Temperature);
+			cDataFiles.SetInputParameters(BallisticsTemperatureTextBox, cDataFiles.eDataType.Temperature);
+			cDataFiles.SetMetricLabel(TemperatureMeasurementLabel, cDataFiles.eDataType.Temperature);
 
-			m_DataFiles.SetInputParameters(BallisticsAltitudeTextBox, cDataFiles.eDataType.Altitude);
-			AltitudeMeasurementLabel.Text = m_DataFiles.MetricString(cDataFiles.eDataType.Altitude);
+			cDataFiles.SetInputParameters(BallisticsAltitudeTextBox, cDataFiles.eDataType.Altitude);
+			cDataFiles.SetMetricLabel(AltitudeMeasurementLabel, cDataFiles.eDataType.Altitude);
 
-			m_DataFiles.SetInputParameters(BallisticsPressureTextBox, cDataFiles.eDataType.Pressure);
-			BallisticsPressureMeasurementLabel.Text = m_DataFiles.MetricString(cDataFiles.eDataType.Pressure);
+			cDataFiles.SetInputParameters(BallisticsPressureTextBox, cDataFiles.eDataType.Pressure);
+			cDataFiles.SetMetricLabel(BallisticsPressureMeasurementLabel, cDataFiles.eDataType.Pressure);
 
 			BallisticsHumidityTextBox.MaxLength = 3;
 			BallisticsHumidityTextBox.MaxValue = 100;
@@ -3398,24 +3403,24 @@ namespace ReloadersWorkShop
 			// Range Data
 			//----------------------------------------------------------------------------*
 
-			m_DataFiles.SetInputParameters(BallisticsMinRangeTextBox, cDataFiles.eDataType.Range);
-			MinRangeMeasurementLabel.Text = m_DataFiles.MetricString(cDataFiles.eDataType.Range);
+			cDataFiles.SetInputParameters(BallisticsMinRangeTextBox, cDataFiles.eDataType.Range);
+			cDataFiles.SetMetricLabel(MinRangeMeasurementLabel, cDataFiles.eDataType.Range);
 
-			m_DataFiles.SetInputParameters(BallisticsMaxRangeTextBox, cDataFiles.eDataType.Range);
-			MaxRangeMeasurementLabel.Text = m_DataFiles.MetricString(cDataFiles.eDataType.Range);
+			cDataFiles.SetInputParameters(BallisticsMaxRangeTextBox, cDataFiles.eDataType.Range);
+			cDataFiles.SetMetricLabel(MaxRangeMeasurementLabel, cDataFiles.eDataType.Range);
 
-			m_DataFiles.SetInputParameters(BallisticsIncrementTextBox, cDataFiles.eDataType.Range);
-			IncrementMeasurementLabel.Text = m_DataFiles.MetricString(cDataFiles.eDataType.Range);
+			cDataFiles.SetInputParameters(BallisticsIncrementTextBox, cDataFiles.eDataType.Range);
+			cDataFiles.SetMetricLabel(IncrementMeasurementLabel,cDataFiles.eDataType.Range);
 
-			m_DataFiles.SetInputParameters(BallisticsTargetRangeTextBox, cDataFiles.eDataType.Range);
-			TargetRangeMeasurementLabel.Text = m_DataFiles.MetricString(cDataFiles.eDataType.Range);
+			cDataFiles.SetInputParameters(BallisticsTargetRangeTextBox, cDataFiles.eDataType.Range);
+			cDataFiles.SetMetricLabel(TargetRangeMeasurementLabel, cDataFiles.eDataType.Range);
 
 			//----------------------------------------------------------------------------*
 			// Muzzle Velocity
 			//----------------------------------------------------------------------------*
 
-			m_DataFiles.SetInputParameters(BallisticsMuzzleVelocityTextBox, cDataFiles.eDataType.Velocity);
-			MuzzleVelocityMeasurementLabel.Text = m_DataFiles.MetricString(cDataFiles.eDataType.Velocity);
+			cDataFiles.SetInputParameters(BallisticsMuzzleVelocityTextBox, cDataFiles.eDataType.Velocity);
+			cDataFiles.SetMetricLabel(MuzzleVelocityMeasurementLabel, cDataFiles.eDataType.Velocity);
 			}
 
 		//============================================================================*
@@ -3497,7 +3502,7 @@ namespace ReloadersWorkShop
 
 		private void SetStationPressure()
 			{
-			BallisticsStationPressureLabel.Text = String.Format("{0:F2} {1}", m_DataFiles.StandardToMetric(m_BallisticsData.StationPressure, cDataFiles.eDataType.Pressure), m_DataFiles.MetricString(cDataFiles.eDataType.Pressure));
+			BallisticsStationPressureLabel.Text = String.Format("{0:F2} {1}", cDataFiles.StandardToMetric(m_BallisticsData.StationPressure, cDataFiles.eDataType.Pressure), cDataFiles.MetricString(cDataFiles.eDataType.Pressure));
 			}
 
 		//============================================================================*
@@ -3610,27 +3615,27 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 			// Kestrel Button
 			//----------------------------------------------------------------------------*
-/*
-			if (m_RWKestrel.Connected)
-				{
-				BallisticsKestrelButton.Text = "Kestrel Stop";
+			/*
+						if (m_RWKestrel.Connected)
+							{
+							BallisticsKestrelButton.Text = "Kestrel Stop";
 
-				BallisticsKestrelButton.BackColor = Color.Red;
-				}
-			else
-				{
-				BallisticsKestrelButton.Text = "Kestrel Start";
+							BallisticsKestrelButton.BackColor = Color.Red;
+							}
+						else
+							{
+							BallisticsKestrelButton.Text = "Kestrel Start";
 
-				BallisticsKestrelButton.BackColor = Color.Green;
-				}
+							BallisticsKestrelButton.BackColor = Color.Green;
+							}
 
-			BallisticsAltitudeTextBox.Enabled = !m_RWKestrel.UseAltitude;
-			BallisticsHumidityTextBox.Enabled = !m_RWKestrel.UseHumidity;
-			BallisticsPressureTextBox.Enabled = !m_RWKestrel.UseBarometricPressure;
-			BallisticsTemperatureTextBox.Enabled = !m_RWKestrel.UseTemperature;
-			BallisticsWindSpeedTextBox.Enabled = !m_RWKestrel.UseWindSpeed;
-			BallisticsWindDirectionTextBox.Enabled = !m_RWKestrel.UseWindDirection;
-*/
+						BallisticsAltitudeTextBox.Enabled = !m_RWKestrel.UseAltitude;
+						BallisticsHumidityTextBox.Enabled = !m_RWKestrel.UseHumidity;
+						BallisticsPressureTextBox.Enabled = !m_RWKestrel.UseBarometricPressure;
+						BallisticsTemperatureTextBox.Enabled = !m_RWKestrel.UseTemperature;
+						BallisticsWindSpeedTextBox.Enabled = !m_RWKestrel.UseWindSpeed;
+						BallisticsWindDirectionTextBox.Enabled = !m_RWKestrel.UseWindDirection;
+			*/
 			//----------------------------------------------------------------------------*
 			// Enable Buttons
 			//----------------------------------------------------------------------------*

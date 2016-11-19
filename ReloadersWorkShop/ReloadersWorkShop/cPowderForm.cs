@@ -133,6 +133,7 @@ namespace ReloadersWorkShop
 			if (!m_fViewOnly)
 				{
 				FirearmTypeCombo.SelectedIndexChanged += OnFirearmTypeChanged;
+				CrossUseCheckBox.Click += OnCrossUseClicked;
 				ManufacturerCombo.SelectedIndexChanged += OnManufacturerSelected;
 
 				ModelTextBox.TextChanged += OnModelChanged;
@@ -160,6 +161,8 @@ namespace ReloadersWorkShop
 
 			FirearmTypeCombo.Value = m_Powder.FirearmType;
 
+			CrossUseCheckBox.Checked = m_Powder.CrossUse;
+
 			PopulateManufacturerCombo();
 
 			ModelTextBox.Text = m_Powder.Model;
@@ -178,7 +181,7 @@ namespace ReloadersWorkShop
 			// Set Labels for inventory tracking if needed
 			//----------------------------------------------------------------------------*
 
-			if (m_DataFiles.Preferences.TrackInventory)
+			if (cPreferences.TrackInventory)
 				{
 				QuantityLabel.Text = "Qty on Hand:";
 
@@ -234,6 +237,19 @@ namespace ReloadersWorkShop
 				FirearmTypeCombo.Focus();
 			else
 				PowderCancelButton.Focus();
+			}
+
+		//============================================================================*
+		// OnCrossUseClicked()
+		//============================================================================*
+
+		private void OnCrossUseClicked(object sender, EventArgs e)
+			{
+			m_Powder.CrossUse = CrossUseCheckBox.Checked;
+
+			m_fChanged = true;
+
+			UpdateButtons();
 			}
 
 		//============================================================================*
@@ -329,9 +345,9 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			double dQuantity = QuantityTextBox.Value * (m_DataFiles.Preferences.MetricCanWeights ? 1000.0 : 7000.0);
+			double dQuantity = cDataFiles.MetricToStandard(QuantityTextBox.Value, cDataFiles.eDataType.CanWeight) * 7000.0;
 
-            m_Powder.Quantity = m_DataFiles.MetricToStandard(dQuantity, cDataFiles.eDataType.CanWeight);
+            m_Powder.Quantity = dQuantity;
 
 			m_fChanged = true;
 
@@ -362,13 +378,13 @@ namespace ReloadersWorkShop
 
 		private void PopulateInventoryData()
 			{
-			double dQuantity = m_DataFiles.StandardToMetric(m_DataFiles.SupplyQuantity(m_Powder) / 7000.0, cDataFiles.eDataType.CanWeight);
+			double dQuantity = cDataFiles.StandardToMetric(m_DataFiles.SupplyQuantity(m_Powder) / 7000.0, cDataFiles.eDataType.CanWeight);
 
 			QuantityTextBox.Value = dQuantity;
 
 			CostTextBox.Value = m_DataFiles.SupplyCost(m_Powder);
 
-			if (m_DataFiles.Preferences.TrackInventory)
+			if (cPreferences.TrackInventory)
 				CostTextBox.Text = String.Format("{0}{1:F2}", m_DataFiles.Preferences.Currency, CostTextBox.Value);
 
 			SetCostEach();
@@ -440,14 +456,14 @@ namespace ReloadersWorkShop
 			{
 			double dCostEach = (QuantityTextBox.Value > 0.0 ? CostTextBox.Value / QuantityTextBox.Value : 0.0);
 
-			if (m_DataFiles.Preferences.TrackInventory)
-				dCostEach = m_DataFiles.SupplyCostEach(m_Powder) * m_DataFiles.StandardToMetric(7000.0, cDataFiles.eDataType.CanWeight);
+			if (cPreferences.TrackInventory)
+				dCostEach = m_DataFiles.SupplyCostEach(m_Powder) * cDataFiles.StandardToMetric(7000.0, cDataFiles.eDataType.CanWeight);
 
-			CostLbLabel.Text = String.Format("Cost/{0}:", m_DataFiles.MetricString(cDataFiles.eDataType.CanWeight));
+			CostLbLabel.Text = String.Format("Cost/{0}:", cDataFiles.MetricString(cDataFiles.eDataType.CanWeight));
 
 			CostEachLabel.Text = String.Format("{0}{1:F2}", m_DataFiles.Preferences.Currency, dCostEach);
 
-			CanWeightLabel.Text = String.Format("{0}{1}", m_DataFiles.MetricString(cDataFiles.eDataType.CanWeight), QuantityTextBox.Value != 1.0 ? "s" : "");
+			CanWeightLabel.Text = String.Format("{0}{1}", cDataFiles.MetricString(cDataFiles.eDataType.CanWeight), QuantityTextBox.Value != 1.0 ? "s" : "");
 			}
 
 		//============================================================================*
@@ -465,9 +481,9 @@ namespace ReloadersWorkShop
 			// Set Text Box Parameters
 			//----------------------------------------------------------------------------*
 
-			m_DataFiles.SetInputParameters(QuantityTextBox, cDataFiles.eDataType.Quantity, true);
+			cDataFiles.SetInputParameters(QuantityTextBox, cDataFiles.eDataType.Quantity, true);
 
-			m_DataFiles.SetInputParameters(CostTextBox, cDataFiles.eDataType.Cost);
+			cDataFiles.SetInputParameters(CostTextBox, cDataFiles.eDataType.Cost);
 		}
 
 	//============================================================================*

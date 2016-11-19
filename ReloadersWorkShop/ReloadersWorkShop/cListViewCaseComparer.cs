@@ -13,6 +13,8 @@ using System;
 using System.Collections;
 using System.Windows.Forms;
 
+using ReloadersWorkShop.Preferences;
+
 //============================================================================*
 // Namespace
 //============================================================================*
@@ -213,7 +215,7 @@ namespace ReloadersWorkShop
 					double dQuantity1 = Case1.Quantity;
 					double dQuantity2 = Case2.Quantity;
 
-					if (m_DataFiles.Preferences.TrackInventory)
+					if (cPreferences.TrackInventory)
 						{
 						dQuantity1 = Case1.QuantityOnHand;
 						dQuantity2 = Case2.QuantityOnHand;

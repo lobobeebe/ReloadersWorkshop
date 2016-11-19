@@ -73,6 +73,7 @@
 			this.RemoveCaliberButton = new System.Windows.Forms.Button();
 			this.EditCaliberButton = new System.Windows.Forms.Button();
 			this.AddCaliberButton = new System.Windows.Forms.Button();
+			this.CrossUseCheckBox = new System.Windows.Forms.CheckBox();
 			label1 = new System.Windows.Forms.Label();
 			label2 = new System.Windows.Forms.Label();
 			label4 = new System.Windows.Forms.Label();
@@ -304,6 +305,7 @@
 			// 
 			// GeneralGroupBox
 			// 
+			this.GeneralGroupBox.Controls.Add(this.CrossUseCheckBox);
 			this.GeneralGroupBox.Controls.Add(this.PartNumberTextBox);
 			this.GeneralGroupBox.Controls.Add(this.TopPunchTextBox);
 			this.GeneralGroupBox.Controls.Add(this.FirearmTypeCombo);
@@ -363,6 +365,10 @@
 			this.FirearmTypeCombo.FormattingEnabled = true;
 			this.FirearmTypeCombo.IncludeShotgun = false;
 			this.FirearmTypeCombo.Items.AddRange(new object[] {
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
             "Handgun",
             "Rifle",
             "Handgun",
@@ -495,12 +501,12 @@
 			// 
 			// BulletWeightTextBox
 			// 
-			this.BulletWeightTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.BulletWeightTextBox.BackColor = System.Drawing.Color.LightPink;
 			this.BulletWeightTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BulletWeightTextBox.Location = new System.Drawing.Point(190, 47);
 			this.BulletWeightTextBox.MaxLength = 5;
-			this.BulletWeightTextBox.MaxValue = 0D;
-			this.BulletWeightTextBox.MinValue = 0D;
+			this.BulletWeightTextBox.MaxValue = 750D;
+			this.BulletWeightTextBox.MinValue = 5D;
 			this.BulletWeightTextBox.Name = "BulletWeightTextBox";
 			this.BulletWeightTextBox.NumDecimals = 1;
 			this.BulletWeightTextBox.Size = new System.Drawing.Size(38, 20);
@@ -727,13 +733,25 @@
 			this.AddCaliberButton.Text = "Add";
 			this.AddCaliberButton.UseVisualStyleBackColor = true;
 			// 
+			// CrossUseCheckBox
+			// 
+			this.CrossUseCheckBox.AutoSize = true;
+			this.CrossUseCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.CrossUseCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.CrossUseCheckBox.Location = new System.Drawing.Point(191, 26);
+			this.CrossUseCheckBox.Name = "CrossUseCheckBox";
+			this.CrossUseCheckBox.Size = new System.Drawing.Size(80, 17);
+			this.CrossUseCheckBox.TabIndex = 40;
+			this.CrossUseCheckBox.Text = "Cross Use?";
+			this.CrossUseCheckBox.UseVisualStyleBackColor = true;
+			// 
 			// cBulletForm
 			// 
 			this.AcceptButton = this.BulletOKButton;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.BulletCancelButton;
-			this.ClientSize = new System.Drawing.Size(537, 545);
+			this.ClientSize = new System.Drawing.Size(529, 555);
 			this.ControlBox = false;
 			this.Controls.Add(this.CaliberDataGroupBox);
 			this.Controls.Add(this.InventoryGroupBox);
@@ -800,5 +818,6 @@
 		private System.Windows.Forms.Label DiameterMeasurementLabel;
 		private System.Windows.Forms.Label LengthMeasurementLabel;
 		private System.Windows.Forms.Button InventoryButton;
+		private System.Windows.Forms.CheckBox CrossUseCheckBox;
 		}
 	}

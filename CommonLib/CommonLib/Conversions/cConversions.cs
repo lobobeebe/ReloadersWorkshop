@@ -45,72 +45,72 @@ namespace CommonLib.Conversions
 		// CentimetersToFeet()
 		//============================================================================*
 
-		static public double CentimetersToFeet(double dCentimeters, int nNumDecimals = 3)
+		static public double CentimetersToFeet(double dCentimeters)
 			{
-			return (Math.Round(dCentimeters * Math.Round(0.032808, 6), nNumDecimals));
+			return (dCentimeters * Math.Round(0.032808, 6));
 			}
 
 		//============================================================================*
 		// CentimetersToKilometers()
 		//============================================================================*
 
-		static public double CentimetersToKilometers(double dCentimeters, int nNumDecimals = 3)
+		static public double CentimetersToKilometers(double dCentimeters)
 			{
-			return (Math.Round(dCentimeters / Math.Round(100000.0, 1), nNumDecimals));
+			return (dCentimeters / Math.Round(100000.0, 1));
 			}
 
 		//============================================================================*
 		// CentimetersToMeters()
 		//============================================================================*
 
-		static public double CentimetersToMeters(double dCentimeters, int nNumDecimals = 3)
+		static public double CentimetersToMeters(double dCentimeters)
 			{
-			return (Math.Round(dCentimeters / Math.Round(100.0, 1), nNumDecimals));
+			return (dCentimeters / Math.Round(100.0, 1));
 			}
 
 		//============================================================================*
 		// CentimetersToMiles()
 		//============================================================================*
 
-		static public double CentimetersToMiles(double dCentimeters, int nNumDecimals = 3)
+		static public double CentimetersToMiles(double dCentimeters)
 			{
-			return (Math.Round(FeetToMiles(CentimetersToFeet(dCentimeters, nNumDecimals), nNumDecimals), nNumDecimals));
+			return (Math.Round(FeetToMiles(CentimetersToFeet(dCentimeters))));
 			}
 
 		//============================================================================*
 		// CentimetersToMillimeters()
 		//============================================================================*
 
-		static public double CentimetersToMillimeters(double dCentimeters, int nNumDecimals = 3)
+		static public double CentimetersToMillimeters(double dCentimeters)
 			{
-			return (Math.Round(dCentimeters / Math.Round(0.1, 1), nNumDecimals));
+			return (dCentimeters / Math.Round(0.1, 1));
 			}
 
 		//============================================================================*
 		// CentimetersToYards()
 		//============================================================================*
 
-		static public double CentimetersToYards(double dCentimeters, int nNumDecimals = 3)
+		static public double CentimetersToYards(double dCentimeters)
 			{
-			return (Math.Round(dCentimeters * Math.Round(0.010936, 6), nNumDecimals));
+			return (dCentimeters * Math.Round(0.010936, 6));
 			}
 
 		//============================================================================*
 		// DegreesToMOA()
 		//============================================================================*
 
-		static public double DegreesToMOA(double dDegrees, int nNumDecimals = 3)
+		static public double DegreesToMOA(double dDegrees)
 			{
-			return (Math.Round(dDegrees * 60.0, nNumDecimals));
+			return (dDegrees * 60.0);
 			}
 
 		//============================================================================*
 		// DegreesToRadians()
 		//============================================================================*
 
-		static public double DegreesToRadians(double dDegrees, int nNumDecimals = 3)
+		static public double DegreesToRadians(double dDegrees)
 			{
-			return (Math.Round(dDegrees * (Math.PI / 180.0), nNumDecimals));
+			return (dDegrees * (Math.PI / 180.0));
 			}
 
 		//============================================================================*
@@ -135,27 +135,27 @@ namespace CommonLib.Conversions
 		// FeetToCentimeters()
 		//============================================================================*
 
-		static public double FeetToCentimeters(double dFeet, int nNumDecimals = 3)
+		static public double FeetToCentimeters(double dFeet)
 			{
-			return (Math.Round(dFeet / Math.Round(0.032808, 6), nNumDecimals));
+			return (dFeet / Math.Round(0.032808, 6));
 			}
 
 		//============================================================================*
 		// FeetToInches()
 		//============================================================================*
 
-		static public double FeetToInches(double dFeet, int nNumDecimals = 3)
+		static public double FeetToInches(double dFeet)
 			{
-			return (Math.Round(dFeet * Math.Round(12.0, 1), nNumDecimals));
+			return (dFeet * Math.Round(12.0, 1));
 			}
 
 		//============================================================================*
 		// FeetToKilometers()
 		//============================================================================*
 
-		static public double FeetToKilometers(double dFeet, int nNumDecimals = 3)
+		static public double FeetToKilometers(double dFeet)
 			{
-			return (Math.Round(dFeet / Math.Round(3280.8, 1), nNumDecimals));
+			return (dFeet / Math.Round(3280.8, 1));
 			}
 
 		//============================================================================*
@@ -171,99 +171,99 @@ namespace CommonLib.Conversions
 		// FeetToMiles()
 		//============================================================================*
 
-		static public double FeetToMiles(double dFeet, int nNumDecimals = 3)
+		static public double FeetToMiles(double dFeet)
 			{
-			return (Math.Round(dFeet / 5280, nNumDecimals));
+			return (dFeet / 5280.0);
 			}
 
 		//============================================================================*
 		// FeetToMillimeters()
 		//============================================================================*
 
-		static public double FeetToMillimeters(double dFeet, int nNumDecimals = 3)
+		static public double FeetToMillimeters(double dFeet)
 			{
-			return (Math.Round(dFeet / Math.Round(0.0032808, 7), nNumDecimals));
+			return (dFeet / Math.Round(0.0032808, 7));
 			}
 
 		//============================================================================*
 		// FeetToYards()
 		//============================================================================*
 
-		static public double FeetToYards(double dFeet, int nNumDecimals = 3)
+		static public double FeetToYards(double dFeet)
 			{
-			return (Math.Round(dFeet / Math.Round(3.0, 1), nNumDecimals));
+			return (dFeet / Math.Round(3.0, 1));
 			}
 
 		//============================================================================*
 		// FPSToKPH() - Double
 		//============================================================================*
 
-		static public double FPSToKPH(double nFPS, int nNumDecimals = 3)
+		static public double FPSToKPH(double nFPS)
 			{
-			return (Math.Round(nFPS * Math.Round(1.09728, 5), nNumDecimals));
+			return (nFPS * Math.Round(1.09728, 5));
 			}
 
 		//============================================================================*
 		// FPSToMPH() - Double
 		//============================================================================*
 
-		static public double FPSToMPH(double nFPS, int nNumDecimals = 3)
+		static public double FPSToMPH(double nFPS)
 			{
-			return (Math.Round(nFPS * Math.Round(0.681818182, 9), nNumDecimals));
+			return (nFPS * Math.Round(0.681818182, 9));
 			}
 
 		//============================================================================*
 		// FPSToMS() - Double
 		//============================================================================*
 
-		static public double FPSToMS(double nFPS, int nNumDecimals = 3)
+		static public double FPSToMS(double dFPS)
 			{
-			return (Math.Round(nFPS * Math.Round(0.30480, 5), nNumDecimals));
+			return (dFPS * Math.Round(0.30480, 5));
 			}
 
 		//============================================================================*
 		// FPSToMS() - Int
 		//============================================================================*
 
-		static public int FPSToMS(int nFPS, int nNumDecimals = 3)
+		static public int FPSToMS(int nFPS)
 			{
-			return ((int)Math.Round(((double)nFPS * Math.Round(0.30480, 5)), nNumDecimals));
+			return ((int)((double)nFPS * Math.Round(0.30480, 5)));
 			}
 
 		//============================================================================*
 		// GrainsToGrams()
 		//============================================================================*
 
-		static public double GrainsToGrams(double dGrains, int nNumDecimals = 3)
+		static public double GrainsToGrams(double dGrains)
 			{
-			return (Math.Round(dGrains * Math.Round(0.06479891, 8), nNumDecimals));
+			return (dGrains * Math.Round(0.06479891, 8));
 			}
 
 		//============================================================================*
 		// GrainsToMilligrams()
 		//============================================================================*
 
-		static public double GrainsToMilligrams(double dGrains, int nNumDecimals = 3)
+		static public double GrainsToMilligrams(double dGrains)
 			{
-			return (Math.Round(dGrains / Math.Round(0.015432, 6), nNumDecimals));
+			return (dGrains / Math.Round(0.015432, 6));
 			}
 
 		//============================================================================*
 		// GrainsToKilos()
 		//============================================================================*
 
-		static public double GrainsToKilos(double dGrains, int nNumDecimals = 3)
+		static public double GrainsToKilos(double dGrains)
 			{
-			return (Math.Round(PoundsToKilos(GrainsToPounds(dGrains)), nNumDecimals));
+			return (PoundsToKilos(GrainsToPounds(dGrains)));
 			}
 
 		//============================================================================*
 		// GrainsToOunces()
 		//============================================================================*
 
-		static public double GrainsToOunces(double dGrains, int nNumDecimals = 3)
+		static public double GrainsToOunces(double dGrains)
 			{
-			return (Math.Round(dGrains * Math.Round(0.0022857, 7), nNumDecimals));
+			return (dGrains * Math.Round(0.0022857, 7));
 			}
 
 		//============================================================================*
@@ -279,9 +279,9 @@ namespace CommonLib.Conversions
 		// GramsToGrains()
 		//============================================================================*
 
-		static public double GramsToGrains(double dGrams, int nNumDecimals = 3)
+		static public double GramsToGrains(double dGrams)
 			{
-			return (Math.Round(dGrams * Math.Round(15.432, 3), nNumDecimals));
+			return (dGrams * Math.Round(15.432, 3));
 			}
 
 		//============================================================================*
@@ -297,72 +297,72 @@ namespace CommonLib.Conversions
 		// GramsToMilligrams()
 		//============================================================================*
 
-		static public double GramsToMilligrams(double dGrams, int nNumDecimals = 3)
+		static public double GramsToMilligrams(double dGrams)
 			{
-			return (Math.Round(dGrams / Math.Round(0.001, 3), nNumDecimals));
+			return (dGrams / Math.Round(0.001, 3));
 			}
 
 		//============================================================================*
 		// GramsToOunces()
 		//============================================================================*
 
-		static public double GramsToOunces(double dGrams, int nNumDecimals = 3)
+		static public double GramsToOunces(double dGrams)
 			{
-			return (Math.Round(dGrams * Math.Round(0.035274, 6), nNumDecimals));
+			return (dGrams * Math.Round(0.035274, 6));
 			}
 
 		//============================================================================*
 		// GramsToPounds()
 		//============================================================================*
 
-		static public double GramsToPounds(double dGrams, int nNumDecimals = 3)
+		static public double GramsToPounds(double dGrams)
 			{
-			return (Math.Round(KilosToPounds(GramsToKilos(dGrams)), nNumDecimals));
+			return (KilosToPounds(GramsToKilos(dGrams)));
 			}
 
 		//============================================================================*
 		// InchesToCentimeters()
 		//============================================================================*
 
-		static public double InchesToCentimeters(double dInches, int nNumDecimals = 3)
+		static public double InchesToCentimeters(double dInches)
 			{
-			return (Math.Round(dInches / Math.Round(0.39370, 5), nNumDecimals));
+			return (dInches / Math.Round(0.39370, 5));
 			}
 
 		//============================================================================*
 		// InchesToFeet()
 		//============================================================================*
 
-		static public double InchesToFeet(double dInches, int nNumDecimals = 3)
+		static public double InchesToFeet(double dInches)
 			{
-			return (Math.Round(dInches / Math.Round(12.0, 1), nNumDecimals));
+			return (dInches / Math.Round(12.0, 1));
 			}
 
 		//============================================================================*
 		// InchesToKilometers()
 		//============================================================================*
 
-		static public double InchesToKilometers(double dInches, int nNumDecimals = 3)
+		static public double InchesToKilometers(double dInches)
 			{
-			return (Math.Round(dInches / Math.Round(39370.0, 1), nNumDecimals));
+			return (dInches / Math.Round(39370.0, 1));
 			}
 
 		//============================================================================*
 		// InchesToMeters()
 		//============================================================================*
 
-		static public double InchesToMeters(double dInches, int nNumDecimals = 3)
+		static public double InchesToMeters(double dInches)
 			{
-			return (Math.Round(dInches / Math.Round(39.370, 3), nNumDecimals));
+			return (dInches / Math.Round(39.370, 3));
 			}
 
 		//============================================================================*
 		// InchesToMiles()
 		//============================================================================*
 
-		static public double InchesToMiles(double dInches, int nNumDecimals = 3)
+		static public double InchesToMiles(double dInches)
 			{
-			return (Math.Round(FeetToMiles(InchesToFeet(dInches)), nNumDecimals));
+			return (FeetToMiles(InchesToFeet(dInches)));
 			}
 
 		//============================================================================*
@@ -396,27 +396,27 @@ namespace CommonLib.Conversions
 		// KilometersToCentimeters()
 		//============================================================================*
 
-		static public double KilometersToCentimeters(double dKilometers, int nNumDecimals = 3)
+		static public double KilometersToCentimeters(double dKilometers)
 			{
-			return (Math.Round(dKilometers * Math.Round(100000.0, 1), nNumDecimals));
+			return (dKilometers * Math.Round(100000.0, 1));
 			}
 
 		//============================================================================*
 		// KilometersToFeet()
 		//============================================================================*
 
-		static public double KilometersToFeet(double dKilometers, int nNumDecimals = 3)
+		static public double KilometersToFeet(double dKilometers)
 			{
-			return (Math.Round(dKilometers * Math.Round(3280.8, 1), nNumDecimals));
+			return (dKilometers * Math.Round(3280.8, 1));
 			}
 
 		//============================================================================*
 		// KilometersToInches()
 		//============================================================================*
 
-		static public double KilometersToInches(double dKilometers, int nNumDecimals = 3)
+		static public double KilometersToInches(double dKilometers)
 			{
-			return (Math.Round(dKilometers * Math.Round(39370.0, 1), nNumDecimals));
+			return (dKilometers * Math.Round(39370.0, 1));
 			}
 
 		//============================================================================*
@@ -441,27 +441,27 @@ namespace CommonLib.Conversions
 		// KilometersToMillimeters()
 		//============================================================================*
 
-		static public double KilometersToMillimeters(double dKilometers, int nNumDecimals = 3)
+		static public double KilometersToMillimeters(double dKilometers)
 			{
-			return (Math.Round(dKilometers * Math.Round(1000000.0, 1), nNumDecimals));
+			return (dKilometers * Math.Round(1000000.0, 1));
 			}
 
 		//============================================================================*
 		// KilometersToYards()
 		//============================================================================*
 
-		static public double KilometersToYards(double dKilometers, int nNumDecimals = 3)
+		static public double KilometersToYards(double dKilometers)
 			{
-			return (Math.Round(dKilometers * Math.Round(1093.6, 1), nNumDecimals));
+			return (dKilometers * Math.Round(1093.6, 1));
 			}
 
 		//============================================================================*
 		// KilosToGrains()
 		//============================================================================*
 
-		static public double KilosToGrains(double dKilos, int nNumDecimals = 3)
+		static public double KilosToGrains(double dKilos)
 			{
-			return (Math.Round(PoundsToGrains(KilosToPounds(dKilos)), nNumDecimals));
+			return (PoundsToGrains(KilosToPounds(dKilos)));
 			}
 
 		//============================================================================*
@@ -477,18 +477,18 @@ namespace CommonLib.Conversions
 		// KilosToMilligrams()
 		//============================================================================*
 
-		static public double KilosToMilligrams(double dKilos, int nNumDecimals = 3)
+		static public double KilosToMilligrams(double dKilos)
 			{
-			return (Math.Round(dKilos * Math.Round(1000000.0, 1), nNumDecimals));
+			return (dKilos * Math.Round(1000000.0, 1));
 			}
 
 		//============================================================================*
 		// KilosToOunces()
 		//============================================================================*
 
-		static public double KilosToOunces(double dKilos, int nNumDecimals = 3)
+		static public double KilosToOunces(double dKilos)
 			{
-			return (Math.Round(dKilos * Math.Round(35.274, 3), nNumDecimals));
+			return (dKilos * Math.Round(35.274, 3));
 			}
 
 		//============================================================================*
@@ -504,9 +504,9 @@ namespace CommonLib.Conversions
 		// KPHToMPH() - Double
 		//============================================================================*
 
-		static public double KPHToMPH(double dKPH, int nNumDecimals = 3)
+		static public double KPHToMPH(double dKPH)
 			{
-			return (Math.Round((dKPH * Math.Round(0.62137119, 8)), nNumDecimals));
+			return ((dKPH * Math.Round(0.62137119, 8)));
 			}
 
 		//============================================================================*
@@ -531,9 +531,9 @@ namespace CommonLib.Conversions
 		// MetersToInches()
 		//============================================================================*
 
-		static public double MetersToInches(double dMeters, int nNumDecimals = 3)
+		static public double MetersToInches(double dMeters)
 			{
-			return (Math.Round(dMeters * Math.Round(39.370, 3), nNumDecimals));
+			return (dMeters * Math.Round(39.370, 3));
 			}
 
 		//============================================================================*
@@ -567,72 +567,72 @@ namespace CommonLib.Conversions
 		// MetersToYards() - Double
 		//============================================================================*
 
-		static public double MetersToYards(double dMeters, int nDecimals = 3)
+		static public double MetersToYards(double dMeters)
 			{
-			return (Math.Round((dMeters * Math.Round(1.0936, 4)), nDecimals));
+			return ((dMeters * Math.Round(1.0936, 4)));
 			}
 
 		//============================================================================*
 		// MilesToCentimeters()
 		//============================================================================*
 
-		static public double MilesToCentimeters(double dMiles, int nNumDecimals = 3)
+		static public double MilesToCentimeters(double dMiles)
 			{
-			return (Math.Round(dMiles * YardsToCentimeters(MilesToYards(dMiles, nNumDecimals), nNumDecimals), nNumDecimals));
+			return (dMiles * YardsToCentimeters(MilesToYards(dMiles)));
 			}
 
 		//============================================================================*
 		// MilesToFeet()
 		//============================================================================*
 
-		static public double MilesToFeet(double dMiles, int nNumDecimals = 3)
+		static public double MilesToFeet(double dMiles)
 			{
-			return (Math.Round(dMiles * Math.Round(5280.0, 1), nNumDecimals));
+			return (dMiles * Math.Round(5280.0, 1));
 			}
 
 		//============================================================================*
 		// MilesToInches()
 		//============================================================================*
 
-		static public double MilesToInches(double dMiles, int nNumDecimals = 3)
+		static public double MilesToInches(double dMiles)
 			{
-			return (Math.Round(dMiles * Math.Round(63360.0, 1), nNumDecimals));
+			return (dMiles * Math.Round(63360.0, 1));
 			}
 
 		//============================================================================*
 		// MilesToKilometers()
 		//============================================================================*
 
-		static public double MilesToKilometers(double dMiles, int nNumDecimals = 3)
+		static public double MilesToKilometers(double dMiles)
 			{
-			return (Math.Round(dMiles / Math.Round(0.62137, 5), nNumDecimals));
+			return (dMiles / Math.Round(0.62137, 5));
 			}
 
 		//============================================================================*
 		// MilesToMeters()
 		//============================================================================*
 
-		static public double MilesToMeters(double dMiles, int nNumDecimals = 3)
+		static public double MilesToMeters(double dMiles)
 			{
-			return (Math.Round(dMiles / Math.Round(0.00062137, 8), nNumDecimals));
+			return (dMiles / Math.Round(0.00062137, 8));
 			}
 
 		//============================================================================*
 		// MilesToMillimeters()
 		//============================================================================*
 
-		static public double MilesToMillimeters(double dMiles, int nNumDecimals = 3)
+		static public double MilesToMillimeters(double dMiles)
 			{
-			return (Math.Round(dMiles * YardsToMillimeters(MilesToYards(dMiles, nNumDecimals), nNumDecimals), nNumDecimals));
+			return (dMiles * YardsToMillimeters(MilesToYards(dMiles)));
 			}
 
 		//============================================================================*
 		// MilesToYards()
 		//============================================================================*
 
-		static public double MilesToYards(double dMiles, int nNumDecimals = 3)
+		static public double MilesToYards(double dMiles)
 			{
-			return (Math.Round(dMiles * Math.Round(1760.0, 1), nNumDecimals));
+			return (dMiles * Math.Round(1760.0, 1));
 			}
 
 		//============================================================================*
@@ -648,63 +648,63 @@ namespace CommonLib.Conversions
 		// MilligramsToGrains()
 		//============================================================================*
 
-		static public double MilligramsToGrains(double dMilligrams, int nNumDecimals = 3)
+		static public double MilligramsToGrains(double dMilligrams)
 			{
-			return (Math.Round(dMilligrams * Math.Round(0.0154323584, 10), nNumDecimals));
+			return (dMilligrams * Math.Round(0.0154323584, 10));
 			}
 
 		//============================================================================*
 		// MilligramsToGrams()
 		//============================================================================*
 
-		static public double MilligramsToGrams(double dMilligrams, int nNumDecimals = 3)
+		static public double MilligramsToGrams(double dMilligrams)
 			{
-			return (Math.Round(dMilligrams * Math.Round(0.001, 3), nNumDecimals));
+			return (dMilligrams * Math.Round(0.001, 3));
 			}
 
 		//============================================================================*
 		// MilligramsToKilos()
 		//============================================================================*
 
-		static public double MilligramsToKilos(double dMilligrams, int nNumDecimals = 3)
+		static public double MilligramsToKilos(double dMilligrams)
 			{
-			return (Math.Round(dMilligrams * Math.Round(0.000001, 6), nNumDecimals));
+			return (dMilligrams * Math.Round(0.000001, 6));
 			}
 
 		//============================================================================*
 		// MilligramsToOunces()
 		//============================================================================*
 
-		static public double MilligramsToOunces(double dMilligrams, int nNumDecimals = 3)
+		static public double MilligramsToOunces(double dMilligrams)
 			{
-			return (Math.Round(dMilligrams * Math.Round(0.000035274, 9), nNumDecimals));
+			return (dMilligrams * Math.Round(0.000035274, 9));
 			}
 
 		//============================================================================*
 		// MilligramsToPounds()
 		//============================================================================*
 
-		static public double MilligramsToPounds(double dMilligrams, int nNumDecimals = 3)
+		static public double MilligramsToPounds(double dMilligrams)
 			{
-			return (Math.Round(MilligramsToOunces(dMilligrams, nNumDecimals) * Math.Round(16.0, 1), nNumDecimals));
+			return (MilligramsToOunces(dMilligrams) * Math.Round(16.0, 1));
 			}
 
 		//============================================================================*
 		// MillimetersToCentimeters()
 		//============================================================================*
 
-		static public double MillimetersToCentimeters(double dMillimeters, int nNumDecimals = 3)
+		static public double MillimetersToCentimeters(double dMillimeters)
 			{
-			return (Math.Round(dMillimeters / Math.Round(10.0, 1), nNumDecimals));
+			return (dMillimeters / Math.Round(10.0, 1));
 			}
 
 		//============================================================================*
 		// MillimetersToFeet()
 		//============================================================================*
 
-		static public double MillimetersToFeet(double dMillimeters, int nNumDecimals = 3)
+		static public double MillimetersToFeet(double dMillimeters)
 			{
-			return (Math.Round(dMillimeters * Math.Round(0.0032808, 7), nNumDecimals));
+			return (dMillimeters * Math.Round(0.0032808, 7));
 			}
 
 		//============================================================================*
@@ -720,9 +720,9 @@ namespace CommonLib.Conversions
 		// MillimetersToKilometers()
 		//============================================================================*
 
-		static public double MillimetersToKilometers(double dMillimeters, int nNumDecimals = 3)
+		static public double MillimetersToKilometers(double dMillimeters)
 			{
-			return (Math.Round(dMillimeters / Math.Round(1000000.0, 1), nNumDecimals));
+			return (dMillimeters / Math.Round(1000000.0, 1));
 			}
 
 		//============================================================================*
@@ -738,178 +738,178 @@ namespace CommonLib.Conversions
 		// MillimetersToMiles()
 		//============================================================================*
 
-		static public double MillimetersToMiles(double dMillimeters, int nNumDecimals = 3)
+		static public double MillimetersToMiles(double dMillimeters)
 			{
-			return (Math.Round(FeetToMiles(MillimetersToFeet(dMillimeters, nNumDecimals), nNumDecimals), nNumDecimals));
+			return (FeetToMiles(MillimetersToFeet(dMillimeters)));
 			}
 
 		//============================================================================*
 		// MillimetersToYards()
 		//============================================================================*
 
-		static public double MillimetersToYards(double dMillimeters, int nNumDecimals = 3)
+		static public double MillimetersToYards(double dMillimeters)
 			{
-			return (Math.Round(dMillimeters * Math.Round(0.0010936, 7), nNumDecimals));
+			return (dMillimeters * Math.Round(0.0010936, 7));
 			}
 
 		//============================================================================*
 		// MilsToMOA()
 		//============================================================================*
 
-		static public double MilsToMOA(double dMils, int nNumDecimals = 3)
+		static public double MilsToMOA(double dMils)
 			{
-			return (Math.Round(dMils * Math.Round(3.438395, 6), nNumDecimals));
+			return (dMils * Math.Round(3.438395, 6));
 			}
 
 		//============================================================================*
 		// MOAToCentimeters()
 		//============================================================================*
 
-		static public double MOAToCentimeters(double dMOA, double dMeters, int nNumDecimals = 3)
+		static public double MOAToCentimeters(double dMOA, double dMeters)
 			{
-			return (InchesToCentimeters(MOAToInches(dMOA, MetersToYards(dMeters, nNumDecimals), nNumDecimals)));
+			return (InchesToCentimeters(MOAToInches(dMOA, MetersToYards(dMeters))));
 			}
 
 		//============================================================================*
 		// MOAToDegrees()
 		//============================================================================*
 
-		static public double MOAToDegrees(double dMOA, int nNumDecimals = 3)
+		static public double MOAToDegrees(double dMOA)
 			{
-			return (Math.Round(dMOA / 60.0, nNumDecimals));
+			return (dMOA / 60.0);
 			}
 
 		//============================================================================*
 		// MOAToInches()
 		//============================================================================*
 
-		static public double MOAToInches(double dMOA, double dYards, int nNumDecimals = 3)
+		static public double MOAToInches(double dMOA, double dYards)
 			{
-			return (Math.Round((Math.Round(dMOA, nNumDecimals) * Math.Round(1.047, 3)) * (dYards / 100.0), nNumDecimals));
+			return ((dMOA * Math.Round(1.047, 3)) * (dYards / 100.0));
 			}
 
 		//============================================================================*
 		// MOAToMils()
 		//============================================================================*
 
-		static public double MOAToMils(double dMOA, int nNumDecimals = 3)
+		static public double MOAToMils(double dMOA)
 			{
-			return (Math.Round(dMOA / Math.Round(3.438395, 6), nNumDecimals));
+			return (dMOA / Math.Round(3.438395, 6));
 			}
 
 		//============================================================================*
 		// MOAToRadians()
 		//============================================================================*
 
-		static public double MOAToRadians(double dMOA, int nNumDecimals = 3)
+		static public double MOAToRadians(double dMOA)
 			{
-			return (Math.Round((dMOA / 60.0) * (180 / Math.PI), nNumDecimals));
+			return ((dMOA / 60.0) * (180 / Math.PI));
 			}
 
 		//============================================================================*
 		// MPHToFPS() - Double
 		//============================================================================*
 
-		static public double MPHToFPS(double dMPH, int nNumDecimals = 3)
+		static public double MPHToFPS(double dMPH)
 			{
-			return (Math.Round((dMPH * Math.Round(1.4666667, 7)), nNumDecimals));
+			return ((dMPH * Math.Round(1.4666667, 7)));
 			}
 
 		//============================================================================*
 		// MPHToKPH() - Double
 		//============================================================================*
 
-		static public double MPHToKPH(double dMPH, int nNumDecimals = 3)
+		static public double MPHToKPH(double dMPH)
 			{
-			return (Math.Round((dMPH * Math.Round(1.609344, 6)), nNumDecimals));
+			return ((dMPH * Math.Round(1.609344, 6)));
 			}
 
 		//============================================================================*
 		// MPHToMS() - Double
 		//============================================================================*
 
-		static public double MPHToMS(double dMPH, int nNumDecimals = 3)
+		static public double MPHToMS(double dMPH)
 			{
-			return (Math.Round((dMPH * Math.Round(0.44704, 5)), nNumDecimals));
+			return ((dMPH * Math.Round(0.44704, 5)));
 			}
 
 		//============================================================================*
 		// MSToFPS() - Double
 		//============================================================================*
 
-		static public double MSToFPS(double dMS, int nNumDecimals = 3)
+		static public double MSToFPS(double dMS)
 			{
-			return (Math.Round((dMS * Math.Round(3.28083989501, 11)), nNumDecimals));
+			return ((dMS * Math.Round(3.28083989501, 11)));
 			}
 
 		//============================================================================*
 		// MSToFPS() - Int
 		//============================================================================*
 
-		static public int MSToFPS(int dMS, int nNumDecimals = 3)
+		static public int MSToFPS(int dMS)
 			{
-			return ((int)Math.Round(((double)dMS * Math.Round(0.30480, 5)), nNumDecimals));
+			return ((int)((double)dMS * Math.Round(0.30480, 5)));
 			}
 
 		//============================================================================*
 		// MSToKPH() - Double
 		//============================================================================*
 
-		static public double MSToKPH(double dMS, int nNumDecimals = 3)
+		static public double MSToKPH(double dMS)
 			{
-			return (Math.Round((dMS * Math.Round(3.6, 1)), nNumDecimals));
+			return ((dMS * Math.Round(3.6, 1)));
 			}
 
 		//============================================================================*
 		// MSToMPH() - Double
 		//============================================================================*
 
-		static public double MSToMPH(double dMS, int nNumDecimals = 3)
+		static public double MSToMPH(double dMS)
 			{
-			return (Math.Round((dMS * Math.Round(2.2369363, 7)), nNumDecimals));
+			return ((dMS * Math.Round(2.2369363, 7)));
 			}
 
 		//============================================================================*
 		// OuncesToGrains()
 		//============================================================================*
 
-		static public double OuncesToGrains(double dOunces, int nNumDecimals = 3)
+		static public double OuncesToGrains(double dOunces)
 			{
-			return (Math.Round(dOunces * Math.Round(437.5, 1), nNumDecimals));
+			return (dOunces * Math.Round(437.5, 1));
 			}
 
 		//============================================================================*
 		// OuncesToGrams()
 		//============================================================================*
 
-		static public double OuncesToGrams(double dOunces, int nNumDecimals = 3)
+		static public double OuncesToGrams(double dOunces)
 			{
-			return (Math.Round(dOunces / Math.Round(0.035274, 6), nNumDecimals));
+			return (dOunces / Math.Round(0.035274, 6));
 			}
 
 		//============================================================================*
 		// OuncesToKilos()
 		//============================================================================*
 
-		static public double OuncesToKilos(double dOunces, int nNumDecimals = 3)
+		static public double OuncesToKilos(double dOunces)
 			{
-			return (Math.Round(dOunces / Math.Round(35.274, 3), nNumDecimals));
+			return (dOunces / Math.Round(35.274, 3));
 			}
 
 		//============================================================================*
 		// OuncesToMilligrams()
 		//============================================================================*
 
-		static public double OuncesToMilligrams(double dOunces, int nNumDecimals = 3)
+		static public double OuncesToMilligrams(double dOunces)
 			{
-			return (GramsToMilligrams(OuncesToGrams(dOunces, nNumDecimals), nNumDecimals));
+			return (GramsToMilligrams(OuncesToGrams(dOunces)));
 			}
 
 		//============================================================================*
 		// OuncesToPounds()
 		//============================================================================*
 
-		static public double OuncesToPounds(double dOunces, int nNumDecimals = 3)
+		static public double OuncesToPounds(double dOunces)
 			{
 			return (dOunces * Math.Round(0.0625, 4));
 			}
@@ -918,9 +918,9 @@ namespace CommonLib.Conversions
 		// PoundsToGrams()
 		//============================================================================*
 
-		static public double PoundsToGrams(double dPounds, int nNumDecimals = 3)
+		static public double PoundsToGrams(double dPounds)
 			{
-			return (Math.Round(dPounds * Math.Round(453.59237, 5), nNumDecimals));
+			return (dPounds * Math.Round(453.59237, 5));
 			}
 
 		//============================================================================*
@@ -945,99 +945,99 @@ namespace CommonLib.Conversions
 		// PoundsToMilligrams()
 		//============================================================================*
 
-		static public double PoundsToMilligrams(double dPounds, int nNumDecimals = 3)
+		static public double PoundsToMilligrams(double dPounds)
 			{
-			return (Math.Round(dPounds * Math.Round(453592.37, 2), nNumDecimals));
+			return (dPounds * Math.Round(453592.37, 2));
 			}
 
 		//============================================================================*
 		// PoundsToOunces()
 		//============================================================================*
 
-		static public double PoundsToOunces(double dPounds, int nNumDecimals = 3)
+		static public double PoundsToOunces(double dPounds)
 			{
-			return (Math.Round(dPounds * Math.Round(16.0, 1), nNumDecimals));
+			return (dPounds * Math.Round(16.0, 1));
 			}
 
 		//============================================================================*
 		// RadiansToDegress()
 		//============================================================================*
 
-		static public double RadiansToDegrees(double dRadians, int nNumDecimals = 3)
+		static public double RadiansToDegrees(double dRadians)
 			{
-			return (Math.Round(dRadians * (180.0 / Math.PI), nNumDecimals));
+			return (dRadians * (180.0 / Math.PI));
 			}
 
 		//============================================================================*
 		// RadiansToMOA()
 		//============================================================================*
 
-		static public double RadiansToMOA(double dRadians, int nNumDecimals = 3)
+		static public double RadiansToMOA(double dRadians)
 			{
-			return (Math.Round(dRadians * 60.0 * (180.0 / Math.PI), nNumDecimals));
+			return (dRadians * 60.0 * (180.0 / Math.PI));
 			}
 
 		//============================================================================*
 		// YardsToCentimeters()
 		//============================================================================*
 
-		static public double YardsToCentimeters(double dYards, int nNumDecimals = 3)
+		static public double YardsToCentimeters(double dYards)
 			{
-			return (Math.Round(dYards / Math.Round(0.010936, 6), nNumDecimals));
+			return (dYards / Math.Round(0.010936, 6));
 			}
 
 		//============================================================================*
 		// YardsToFeet()
 		//============================================================================*
 
-		static public double YardsToFeet(double dYards, int nNumDecimals = 3)
+		static public double YardsToFeet(double dYards)
 			{
-			return (Math.Round(dYards * Math.Round(3.0, 1), nNumDecimals));
+			return (dYards * Math.Round(3.0, 1));
 			}
 
 		//============================================================================*
 		// YardsToInches()
 		//============================================================================*
 
-		static public double YardsToInches(double dYards, int nNumDecimals = 3)
+		static public double YardsToInches(double dYards)
 			{
-			return (Math.Round(dYards * Math.Round(36.0, 1), nNumDecimals));
+			return (dYards * Math.Round(36.0, 1));
 			}
 
 		//============================================================================*
 		// YardsToKilometers()
 		//============================================================================*
 
-		static public double YardsToKilometers(double dYards, int nNumDecimals = 3)
+		static public double YardsToKilometers(double dYards)
 			{
-			return (Math.Round(dYards / Math.Round(1093.6, 1), nNumDecimals));
+			return (dYards / Math.Round(1093.6, 1));
 			}
 
 		//============================================================================*
 		// YardsToMeters() - Double
 		//============================================================================*
 
-		static public double YardsToMeters(double dYards, int nDecimals = 3)
+		static public double YardsToMeters(double dYards)
 			{
-			return (Math.Round(dYards / Math.Round(1.0936, 4), nDecimals));
+			return (dYards / Math.Round(1.0936, 4));
 			}
 
 		//============================================================================*
 		// YardsToMiles()
 		//============================================================================*
 
-		static public double YardsToMiles(double dYards, int nDecimals = 3)
+		static public double YardsToMiles(double dYards)
 			{
-			return (Math.Round(dYards * Math.Round(0.00056818, 8), nDecimals));
+			return (dYards * Math.Round(0.00056818, 8));
 			}
 
 		//============================================================================*
 		// YardsToMillimeters()
 		//============================================================================*
 
-		static public double YardsToMillimeters(double dYards, int nNumDecimals = 3)
+		static public double YardsToMillimeters(double dYards)
 			{
-			return (Math.Round(dYards / Math.Round(0.0010936, 7), nNumDecimals));
+			return (dYards / Math.Round(0.0010936, 7));
 			}
 		}
 	}

@@ -10,7 +10,13 @@
 //============================================================================*
 
 using System;
+using System.IO;
 using System.Collections.Generic;
+using System.Xml;
+
+//============================================================================*
+// Namespace
+//============================================================================*
 
 namespace ReloadersWorkShop
 	{
@@ -26,12 +32,57 @@ namespace ReloadersWorkShop
 			foreach (cCase CheckCase in this)
 				{
 				if (CheckCase.CompareTo(Case) == 0)
-					return(false);
+					return (false);
 				}
 
 			Add(Case);
 
 			return (true);
+			}
+
+		//============================================================================*
+		// Export()
+		//============================================================================*
+
+		public void Export(StreamWriter Writer)
+			{
+			if (Count <= 0)
+				return;
+
+			string strLine = "";
+
+			Writer.WriteLine(cCase.CSVHeader);
+			Writer.WriteLine();
+
+			Writer.WriteLine(cCase.CSVLineHeader);
+			Writer.WriteLine();
+
+			foreach (cCase Case in this)
+				{
+				strLine = Case.CSVLine;
+
+				Writer.WriteLine(strLine);
+				}
+
+			Writer.WriteLine();
+			}
+
+		//============================================================================*
+		// Export()
+		//============================================================================*
+
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			if (Count > 0)
+				{
+				XmlElement XMLElement = XMLDocument.CreateElement(string.Empty, "Cases", string.Empty);
+				XMLParentElement.AppendChild(XMLElement);
+
+				foreach (cCase Case in this)
+					{
+					Case.Export(XMLDocument, XMLElement);
+					}
+				}
 			}
 
 		//============================================================================*

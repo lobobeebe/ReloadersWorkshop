@@ -74,7 +74,7 @@ namespace ReloadersWorkShop
 
 			TextSize = g.MeasureString(strText, TitleFont);
 
-			g.DrawString(strText, TitleFont, Brushes.Black, (PageRect.Width / 2) - (TextSize.Width / 2), nY);
+			g.DrawString(strText, TitleFont, Brushes.Black, PageRect.Left + (PageRect.Width / 2) - (TextSize.Width / 2), nY);
 
 			nY += TextSize.Height;
 
@@ -82,9 +82,9 @@ namespace ReloadersWorkShop
 
 			TextSize = g.MeasureString(strText, TitleFont);
 
-			g.DrawString(strText, TitleFont, Brushes.Black, (PageRect.Width / 2) - (TextSize.Width / 2), nY);
+			g.DrawString(strText, TitleFont, Brushes.Black, PageRect.Left + (PageRect.Width / 2) - (TextSize.Width / 2), nY);
 
-			nY += TextSize.Height;
+			nY += (int) (TextSize.Height * 1.5);
 
 			return (nY);
 			}

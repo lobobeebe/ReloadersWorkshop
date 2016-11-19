@@ -341,7 +341,7 @@
 		<col def="S0">ISDotNetInstallerArgsCommit</col>
 		<col def="S0">ISDotNetInstallerArgsUninstall</col>
 		<col def="S0">ISDotNetInstallerArgsRollback</col>
-		<row><td>CommonLib.dll</td><td>{498A5DB2-1B54-4773-AA1A-C3740DEB5AE1}</td><td>INSTALLDIR</td><td>2</td><td/><td>commonlib.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>CommonLib.dll</td><td>{1EC1241F-8D46-4138-A246-481734C35793}</td><td>INSTALLDIR</td><td>2</td><td/><td>commonlib.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT</td><td>{FD035010-3838-467C-BF77-46BCDBA16EB9}</td><td>IMAGES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT1</td><td>{3CC66853-9935-4A2F-A6C8-DF84C8942AB9}</td><td>IMAGES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT10</td><td>{98E8F156-A89E-438C-B5A8-1A1294180CED}</td><td>INSTALLDIR</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
@@ -353,10 +353,11 @@
 		<row><td>ISX_DEFAULTCOMPONENT7</td><td>{4321176D-E8BE-462F-9A8F-ABA2DEEE489A}</td><td>BACKUP</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT8</td><td>{75705C1D-F260-42E3-87CB-AA6B1FE07007}</td><td>SHARE</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT9</td><td>{B65A85EE-E87F-4514-BC85-1102E41F8861}</td><td>SAAMI</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>RWCommonLib.dll</td><td>{3552DFA0-6F36-45C8-9150-6F405F7350B2}</td><td>INSTALLDIR</td><td>2</td><td/><td>rwcommonlib.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ReloadersWorkShop.exe</td><td>{0C690C95-A9EA-47D5-8E2B-B329716B1FC9}</td><td>INSTALLDIR</td><td>2</td><td/><td>reloadersworkshop.exe</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ReloadersWorkShopLauncher.exe</td><td>{12B7BDDE-E5E0-449E-A507-7FC838599DCC}</td><td>INSTALLDIR</td><td>2</td><td/><td>reloadersworkshoplauncher.ex</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ReloadersWorkShopUpdater.exe</td><td>{A8BB1BDB-647E-429E-8CDF-2B70A8AA502D}</td><td>INSTALLDIR</td><td>2</td><td/><td>reloadersworkshopupdater.exe</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>Interop.WIA.dll</td><td>{597BAFD9-9B4B-49A1-A424-EB72FC4A8AC7}</td><td>INSTALLDIR</td><td>2</td><td/><td>interop.wia.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>RWCommonLib.dll</td><td>{7648B9F6-23A2-4695-9BCE-3737AC99B9AC}</td><td>INSTALLDIR</td><td>2</td><td/><td>rwcommonlib.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ReloadersWorkShop.exe</td><td>{E3422667-7D95-4C25-9BE9-11CFF78BDDA5}</td><td>INSTALLDIR</td><td>2</td><td/><td>reloadersworkshop.exe</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ReloadersWorkShopLauncher.exe</td><td>{0E2C5B56-CF71-4EC0-A03F-B754D36E6BD7}</td><td>INSTALLDIR</td><td>2</td><td/><td>reloadersworkshoplauncher.ex</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ReloadersWorkShopUpdater.exe</td><td>{FD65ECE5-DEDB-4BB8-B72A-27BD1812587D}</td><td>INSTALLDIR</td><td>2</td><td/><td>reloadersworkshopupdater.exe</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 	</table>
 
 	<table name="Condition">
@@ -1081,6 +1082,7 @@
 		<row><td>INSTALLDIR</td><td>ISX_DEFAULTCOMPONENT7</td></row>
 		<row><td>INSTALLDIR</td><td>ISX_DEFAULTCOMPONENT8</td></row>
 		<row><td>INSTALLDIR</td><td>ISX_DEFAULTCOMPONENT9</td></row>
+		<row><td>INSTALLDIR</td><td>Interop.WIA.dll</td></row>
 		<row><td>INSTALLDIR</td><td>RWCommonLib.dll</td></row>
 		<row><td>INSTALLDIR</td><td>ReloadersWorkShop.exe</td></row>
 		<row><td>INSTALLDIR</td><td>ReloadersWorkShopLauncher.exe</td></row>
@@ -1221,6 +1223,7 @@
 		<row><td>WindowsFolder</td><td>TARGETDIR</td><td>.:Windows</td><td/><td>0</td><td/></row>
 		<row><td>WindowsVolume</td><td>TARGETDIR</td><td>.:WinRoot</td><td/><td>0</td><td/></row>
 		<row><td>hornad_1_hornady_loader</td><td>ProgramMenuFolder</td><td>HORNAD~1|Hornady Loader</td><td/><td>1</td><td/></row>
+		<row><td>reload_1_reloader_s_workshop</td><td>hornad_1_hornady_loader</td><td>RELOAD~1|Reloader's WorkShop</td><td/><td>1</td><td/></row>
 		<row><td>reload_1_reloadersworkshopsetup</td><td>hornad_1_hornady_loader</td><td>RELOAD~1|ReloadersWorkShopSetup</td><td/><td>1</td><td/></row>
 	</table>
 
@@ -1925,6 +1928,7 @@
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT7</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT8</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT9</td></row>
+		<row><td>AlwaysInstall</td><td>Interop.WIA.dll</td></row>
 		<row><td>AlwaysInstall</td><td>RWCommonLib.dll</td></row>
 		<row><td>AlwaysInstall</td><td>ReloadersWorkShop.exe</td></row>
 		<row><td>AlwaysInstall</td><td>ReloadersWorkShopLauncher.exe</td></row>
@@ -1943,17 +1947,16 @@
 		<col def="S255">ISBuildSourcePath</col>
 		<col def="I4">ISAttributes</col>
 		<col def="S72">ISComponentSubFolder_</col>
-		<row><td>backup_readme.txt</td><td>ISX_DEFAULTCOMPONENT7</td><td>BACKUP~1.TXT|Backup_README.txt</td><td>0</td><td/><td/><td>1</td><td>1</td><td>D:\Software Projects\ReloadersWorkShop\ReloadersWorkShop\Backup_README.txt</td><td>5</td><td/></row>
-		<row><td>commonlib.dll</td><td>CommonLib.dll</td><td>COMMON~1.DLL|CommonLib.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Software Projects\CommonLib\CommonLib\bin\Release\CommonLib.dll</td><td>1</td><td/></row>
-		<row><td>pistol_cartridge.jpg</td><td>ISX_DEFAULTCOMPONENT1</td><td>PISTOL~1.JPG|Pistol Cartridge.jpg</td><td>0</td><td/><td/><td>1</td><td>1</td><td>D:\Software Projects\ReloadersWorkShop\ReloadersWorkShop\bin\Release\Images\Pistol Cartridge.jpg</td><td>5</td><td/></row>
-		<row><td>releasenotes.rtf</td><td>ISX_DEFAULTCOMPONENT10</td><td>RELEAS~1.RTF|ReleaseNotes.rtf</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Software Projects\ReloadersWorkShop\ReleaseNotes.rtf</td><td>1</td><td/></row>
-		<row><td>reloadersworkshop.exe</td><td>ReloadersWorkShop.exe</td><td>RELOAD~1.EXE|ReloadersWorkShop.exe</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Software Projects\ReloadersWorkShop\ReloadersWorkShop\bin\Release\ReloadersWorkShop.exe</td><td>1</td><td/></row>
-		<row><td>reloadersworkshop.rwd</td><td>ISX_DEFAULTCOMPONENT6</td><td>RELOAD~1.RWD|ReloadersWorkShop.rwd</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Software Projects\ReloadersWorkShop\ReloadersWorkShop\bin\Release\ReloadersWorkShop.rwd</td><td>1</td><td/></row>
-		<row><td>reloadersworkshoplauncher.ex</td><td>ReloadersWorkShopLauncher.exe</td><td>RELOAD~1.EXE|ReloadersWorkShopLauncher.exe</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Software Projects\ReloadersWorkShop\ReloadersWorkShopLauncher\bin\Release\ReloadersWorkShopLauncher.exe</td><td>1</td><td/></row>
-		<row><td>reloadersworkshopupdater.exe</td><td>ReloadersWorkShopUpdater.exe</td><td>RELOAD~1.EXE|ReloadersWorkShopUpdater.exe</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Software Projects\ReloadersWorkShop\ReloadersWorkShopUpdater\bin\Release\ReloadersWorkShopUpdater.exe</td><td>1</td><td/></row>
-		<row><td>rifle_cartridge.jpg</td><td>ISX_DEFAULTCOMPONENT1</td><td>RIFLEC~1.JPG|Rifle Cartridge.jpg</td><td>0</td><td/><td/><td>1</td><td>1</td><td>D:\Software Projects\ReloadersWorkShop\ReloadersWorkShop\bin\Release\Images\Rifle Cartridge.jpg</td><td>5</td><td/></row>
-		<row><td>rwcommonlib.dll</td><td>RWCommonLib.dll</td><td>RWCOMM~1.DLL|RWCommonLib.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Software Projects\ReloadersWorkShop\RWCommonLib\bin\Release\RWCommonLib.dll</td><td>1</td><td/></row>
-		<row><td>saami_readme.txt</td><td>ISX_DEFAULTCOMPONENT9</td><td>SAAMI_~1.TXT|SAAMI_README.txt</td><td>0</td><td/><td/><td>1</td><td>1</td><td>D:\Software Projects\ReloadersWorkShop\ReloadersWorkShop\SAAMI_README.txt</td><td>5</td><td/></row>
+		<row><td>commonlib.dll</td><td>CommonLib.dll</td><td>COMMON~1.DLL|CommonLib.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Software Projects\GitHub Projects\ReloadersWorkshop\CommonLib\CommonLib\bin\Release\CommonLib.dll</td><td>1</td><td/></row>
+		<row><td>interop.wia.dll</td><td>Interop.WIA.dll</td><td>INTERO~1.DLL|Interop.WIA.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Software Projects\GitHub Projects\ReloadersWorkshop\ReloadersWorkShop\ReloadersWorkShop\bin\Release\Interop.WIA.dll</td><td>1</td><td/></row>
+		<row><td>pistol_cartridge.jpg</td><td>ISX_DEFAULTCOMPONENT</td><td>PISTOL~1.JPG|Pistol Cartridge.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Software Projects\GitHub Projects\ReloadersWorkshop\ReloadersWorkShop\ReloadersWorkShop\bin\Release\Images\Pistol Cartridge.jpg</td><td>1</td><td/></row>
+		<row><td>releasenotes.rtf</td><td>ISX_DEFAULTCOMPONENT10</td><td>RELEAS~1.RTF|ReleaseNotes.rtf</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Software Projects\GitHub Projects\ReloadersWorkshop\ReleaseNotes.rtf</td><td>1</td><td/></row>
+		<row><td>reloadersworkshop.exe</td><td>ReloadersWorkShop.exe</td><td>RELOAD~1.EXE|ReloadersWorkShop.exe</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Software Projects\GitHub Projects\ReloadersWorkshop\ReloadersWorkShop\ReloadersWorkShop\bin\Release\ReloadersWorkShop.exe</td><td>1</td><td/></row>
+		<row><td>reloadersworkshop.rwd</td><td>ISX_DEFAULTCOMPONENT5</td><td>RELOAD~1.RWD|ReloadersWorkShop.rwd</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Software Projects\GitHub Projects\ReloadersWorkshop\ReloadersWorkShop\ReloadersWorkShop\bin\Release\ReloadersWorkShop.rwd</td><td>1</td><td/></row>
+		<row><td>reloadersworkshoplauncher.ex</td><td>ReloadersWorkShopLauncher.exe</td><td>RELOAD~1.EXE|ReloadersWorkShopLauncher.exe</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Software Projects\GitHub Projects\ReloadersWorkshop\ReloadersWorkShop\ReloadersWorkShopLauncher\bin\Release\ReloadersWorkShopLauncher.exe</td><td>1</td><td/></row>
+		<row><td>reloadersworkshopupdater.exe</td><td>ReloadersWorkShopUpdater.exe</td><td>RELOAD~1.EXE|ReloadersWorkShopUpdater.exe</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Software Projects\GitHub Projects\ReloadersWorkshop\ReloadersWorkShop\ReloadersWorkShopUpdater\bin\Release\ReloadersWorkShopUpdater.exe</td><td>1</td><td/></row>
+		<row><td>rifle_cartridge.jpg</td><td>ISX_DEFAULTCOMPONENT</td><td>RIFLEC~1.JPG|Rifle Cartridge.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Software Projects\GitHub Projects\ReloadersWorkshop\ReloadersWorkShop\ReloadersWorkShop\bin\Release\Images\Rifle Cartridge.jpg</td><td>1</td><td/></row>
+		<row><td>rwcommonlib.dll</td><td>RWCommonLib.dll</td><td>RWCOMM~1.DLL|RWCommonLib.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Software Projects\GitHub Projects\ReloadersWorkshop\ReloadersWorkShop\RWCommonLib\bin\Release\RWCommonLib.dll</td><td>1</td><td/></row>
 		<row><td>share_readme.txt.txt</td><td>ISX_DEFAULTCOMPONENT8</td><td>SHARE_~1.TXT|Share_README.TXT.txt</td><td>0</td><td/><td/><td>1</td><td>1</td><td>D:\Software Projects\ReloadersWorkShop\ReloadersWorkShop\Share_README.TXT.txt</td><td>5</td><td/></row>
 	</table>
 
@@ -2096,7 +2099,7 @@
 		<col def="S0">FTPLocation</col>
 		<col def="S0">HTTPLocation</col>
 		<col def="S0">Miscellaneous</col>
-		<row><td>CommonLib.dll</td><td/><td/><td>_591F174A_FB8A_4835_89ED_EF46832422D1_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>CommonLib.dll</td><td/><td/><td>_EC2A9D92_6B35_48A3_A6E7_7E38DDDA2C50_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT</td><td/><td/><td>_62FB6AA2_3CEB_46D8_9592_F201AE6CC868_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT1</td><td/><td/><td>_5667BF8C_AD6C_42D5_9270_8C977146FD08_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT10</td><td/><td/><td>_41E2F376_9336_4A7E_A489_F4BF668E4F5D_FILTER</td><td/><td/><td/><td/></row>
@@ -2108,10 +2111,11 @@
 		<row><td>ISX_DEFAULTCOMPONENT7</td><td/><td/><td>_B0C1DDC0_0E8D_496E_A807_2E3F6C307935_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT8</td><td/><td/><td>_A346A268_D7D9_4263_A07B_5C0886FFE932_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT9</td><td/><td/><td>_8ABE26CC_AD8E_4D8E_AC5F_582E52737C8A_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>RWCommonLib.dll</td><td/><td/><td>_69D1F685_3BC6_4849_A72E_C61AC46094DA_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ReloadersWorkShop.exe</td><td/><td/><td>_1CBBB00C_B55A_4C38_AC74_863C56B1ED36_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ReloadersWorkShopLauncher.exe</td><td/><td/><td>_D43717D8_7E6F_48DC_888A_92ABC1BB3891_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ReloadersWorkShopUpdater.exe</td><td/><td/><td>_7610C136_92E3_4544_85D4_6E1D5CCBF51B_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>Interop.WIA.dll</td><td/><td/><td>_D5A01C7C_7AC8_452C_BAE6_73451394F3BB_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>RWCommonLib.dll</td><td/><td/><td>_4E258AC5_38EA_4C74_B8FE_5CD94BF4EFB7_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ReloadersWorkShop.exe</td><td/><td/><td>_87140D1F_3828_480D_B116_8731380778D1_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ReloadersWorkShopLauncher.exe</td><td/><td/><td>_A758EF8B_8D0E_4F3B_8EBB_12A5A0DFA5D4_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ReloadersWorkShopUpdater.exe</td><td/><td/><td>_EAFE75A5_353F_44F3_B2AE_EA79914A0381_FILTER</td><td/><td/><td/><td/></row>
 	</table>
 
 	<table name="ISCustomActionReference">
@@ -3517,6 +3521,9 @@
 		<row><td>IDS_SHORTCUT_DISPLAY_NAME1</td><td>1033</td><td>LAUNCH~1.EXE|Launch ReloadersWorkShop.exe</td><td>0</td><td/><td>1294171813</td></row>
 		<row><td>IDS_SHORTCUT_DISPLAY_NAME2</td><td>1033</td><td>Reloader's WorkShop</td><td>0</td><td/><td>1294188582</td></row>
 		<row><td>IDS_SHORTCUT_DISPLAY_NAME3</td><td>1033</td><td>LAUNCH~1.EXE|Launch ReloadersWorkShopUpdater.exe</td><td>0</td><td/><td>1294178021</td></row>
+		<row><td>IDS_SHORTCUT_DISPLAY_NAME4</td><td>1033</td><td>LAUNCH~1.EXE|Launch ReloadersWorkShop.exe</td><td>0</td><td/><td>858008397</td></row>
+		<row><td>IDS_SHORTCUT_DISPLAY_NAME5</td><td>1033</td><td>Reloader's WorkShop</td><td>0</td><td/><td>858045357</td></row>
+		<row><td>IDS_SHORTCUT_DISPLAY_NAME6</td><td>1033</td><td>LAUNCH~1.EXE|Launch ReloadersWorkShopUpdater.exe</td><td>0</td><td/><td>858004333</td></row>
 		<row><td>IDS_SQLBROWSE_INTRO</td><td>1033</td><td>From the list of servers below, select the database server you would like to target.</td><td>0</td><td/><td>1294171717</td></row>
 		<row><td>IDS_SQLBROWSE_INTRO_DB</td><td>1033</td><td>From the list of catalog names below, select the database catalog you would like to target.</td><td>0</td><td/><td>1294171717</td></row>
 		<row><td>IDS_SQLBROWSE_INTRO_TEMPLATE</td><td>1033</td><td>[IS_SQLBROWSE_INTRO]</td><td>0</td><td/><td>1294171717</td></row>
@@ -3923,6 +3930,7 @@
 		<col def="S255">ISBuildSourcePath</col>
 		<col def="I2">ISIconIndex</col>
 		<row><td>ARPPRODUCTICON.exe</td><td/><td>&lt;ISProductFolder&gt;\redist\Language Independent\OS Independent\setupicon.ico</td><td>0</td></row>
+		<row><td>ReloadersWorkShopL_1F666EFF688E49D7BCEF36BAF628A713.exe</td><td/><td>D:\Software Projects\GitHub Projects\ReloadersWorkshop\ReloadersWorkShop\ReloadersWorkShopLauncher\bin\Release\ReloadersWorkShopLauncher.exe</td><td>0</td></row>
 		<row><td>ReloadersWorkShopL_3236CA1187674494811649D4B5984015.exe</td><td/><td>D:\Software Projects\ReloadersWorkShop\ReloadersWorkShopLauncher\bin\Release\ReloadersWorkShopLauncher.exe</td><td>0</td></row>
 		<row><td>ReloadersWorkShopL_E77C0C5AE24B4BC58CD31B5DB8909912.exe</td><td/><td>D:\Software Projects\ReloadersWorkShop\ReloadersWorkShopLauncher\bin\Release\ReloadersWorkShopLauncher.exe</td><td>0</td></row>
 	</table>
@@ -4436,7 +4444,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>PROGRAMFILETOLAUNCHATEND</td><td>[INSTALLDIR]ReloadersWorkShopLauncher.exe</td><td/></row>
 		<row><td>ProductCode</td><td>{7E5F4E4A-D16E-421E-8ED5-56F40EA040C5}</td><td/></row>
 		<row><td>ProductName</td><td>Reloader's WorkShop</td><td/></row>
-		<row><td>ProductVersion</td><td>1.00.0000</td><td/></row>
+		<row><td>ProductVersion</td><td>1.1.002</td><td/></row>
 		<row><td>ProgressType0</td><td>install</td><td/></row>
 		<row><td>ProgressType1</td><td>Installing</td><td/></row>
 		<row><td>ProgressType2</td><td>installed</td><td/></row>
@@ -4513,9 +4521,8 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="L255">FileName</col>
 		<col def="s72">DirProperty</col>
 		<col def="i2">InstallMode</col>
-		<row><td>FileKey1</td><td>ReloadersWorkShop.exe</td><td/><td>hornad_1_hornady_loader</td><td>2</td></row>
-		<row><td>FileKey2</td><td>ReloadersWorkShop.exe</td><td/><td>reload_1_reloadersworkshopsetup</td><td>2</td></row>
-		<row><td>ReloadersWorkShopLauncher.exe</td><td>ReloadersWorkShopLauncher.exe</td><td/><td>reload_1_reloadersworkshopsetup</td><td>2</td></row>
+		<row><td>FileKey1</td><td>ReloadersWorkShop.exe</td><td/><td>reload_1_reloader_s_workshop</td><td>2</td></row>
+		<row><td>ReloadersWorkShopLauncher.exe</td><td>ReloadersWorkShopLauncher.exe</td><td/><td>reload_1_reloader_s_workshop</td><td>2</td></row>
 	</table>
 
 	<table name="RemoveIniFile">
@@ -4601,8 +4608,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="S255">ISComments</col>
 		<col def="S255">ISShortcutName</col>
 		<col def="I4">ISAttributes</col>
-		<row><td>ReloadersWorkShopLauncher.exe</td><td>reload_1_reloadersworkshopsetup</td><td>##IDS_SHORTCUT_DISPLAY_NAME2##</td><td>ReloadersWorkShopLauncher.exe</td><td>AlwaysInstall</td><td/><td/><td/><td>ReloadersWorkShopL_3236CA1187674494811649D4B5984015.exe</td><td>1</td><td>1</td><td>INSTALLDIR</td><td/><td/><td/><td/><td/><td/><td/></row>
-		<row><td>ReloadersWorkShopLauncher.exe1</td><td>DesktopFolder</td><td>##IDS_SHORTCUT_DISPLAY_NAME2##</td><td>ReloadersWorkShopLauncher.exe</td><td>AlwaysInstall</td><td/><td/><td/><td>ReloadersWorkShopL_E77C0C5AE24B4BC58CD31B5DB8909912.exe</td><td>1</td><td>1</td><td>INSTALLDIR</td><td/><td/><td/><td/><td/><td/><td/></row>
+		<row><td>ReloadersWorkShopLauncher.exe</td><td>reload_1_reloader_s_workshop</td><td>##IDS_SHORTCUT_DISPLAY_NAME5##</td><td>ReloadersWorkShopLauncher.exe</td><td>AlwaysInstall</td><td/><td/><td/><td>ReloadersWorkShopL_1F666EFF688E49D7BCEF36BAF628A713.exe</td><td>1</td><td>1</td><td>INSTALLDIR</td><td/><td/><td/><td/><td/><td/><td/></row>
 	</table>
 
 	<table name="Signature">

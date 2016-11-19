@@ -29,7 +29,8 @@ namespace ReloadersWorkShop
 		//----------------------------------------------------------------------------*
 
 		private int m_nNumShots;
-		private double m_dAvg = 0.0;
+        private int m_nNumRounds;
+        private double m_dAvg = 0.0;
 		private int m_nMin = 0;
 		private int m_nMax = 0;
 		private double m_dVariance = 0.0;
@@ -50,7 +51,8 @@ namespace ReloadersWorkShop
 		public cTestStatistics(cTestStatistics TestStatistics)
 			{
 			m_nNumShots = TestStatistics.m_nNumShots;
-			m_dAvg = TestStatistics.m_dAvg;
+            m_nNumRounds = TestStatistics.m_nNumRounds;
+            m_dAvg = TestStatistics.m_dAvg;
 			m_nMin = TestStatistics.m_nMin;
 			m_nMax = TestStatistics.m_nMax;
 			m_dVariance = TestStatistics.m_dVariance;
@@ -130,31 +132,77 @@ namespace ReloadersWorkShop
 			set { m_nMin = value; }
 			}
 
-		//============================================================================*
-		// NumShots Property
-		//============================================================================*
+        //============================================================================*
+        // NumRounds Property
+        //============================================================================*
 
-		public int NumShots
+        public int NumRounds
+            {
+            get
+                {
+                return (m_nNumRounds);
+                }
+            set
+                {
+                m_nNumRounds = value;
+                }
+            }
+
+        //============================================================================*
+        // NumShots Property
+        //============================================================================*
+
+        public int NumShots
 			{
 			get { return (m_nNumShots); }
 			set { m_nNumShots = value; }
 			}
 
-		//============================================================================*
-		// StdDev Property
-		//============================================================================*
+        //============================================================================*
+        // Population Property
+        //============================================================================*
 
-		public double StdDev
+        public bool  Population
+            {
+            get
+                {
+                if (m_nNumShots == m_nNumRounds)
+                    return (true);
+
+                return (false);
+                }
+            }
+
+        //============================================================================*
+        // StdDev Property
+        //============================================================================*
+
+        public double StdDev
 			{
 			get { return (m_dStdDev); }
 			set { m_dStdDev = value; }
 			}
 
-		//============================================================================*
-		// Variance Property
-		//============================================================================*
+        //============================================================================*
+        // Summary Property
+        //============================================================================*
 
-		public double Variance
+        public bool Summary
+            {
+            get
+                {
+                if (m_nNumShots == m_nNumRounds)
+                    return (false);
+
+                return (true);
+                }
+            }
+
+        //============================================================================*
+        // Variance Property
+        //============================================================================*
+
+        public double Variance
 			{
 			get { return (m_dVariance); }
 			set { m_dVariance = value; }

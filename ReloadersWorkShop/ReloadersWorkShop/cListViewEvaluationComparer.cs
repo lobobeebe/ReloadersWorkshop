@@ -13,6 +13,8 @@ using System;
 using System.Collections;
 using System.Windows.Forms;
 
+using ReloadersWorkShop.Preferences;
+
 //============================================================================*
 // CommonLib Using Statements
 //============================================================================*
@@ -316,16 +318,16 @@ namespace ReloadersWorkShop
 					double Group1 = Item1.ChargeTest.BestGroup;
 					double Group2 = Item2.ChargeTest.BestGroup;
 
-					Group1 = m_DataFiles.MetricToStandard(Group1, cDataFiles.eDataType.GroupSize);
-					Group2 = m_DataFiles.MetricToStandard(Group2, cDataFiles.eDataType.GroupSize);
+					Group1 = cDataFiles.MetricToStandard(Group1, cDataFiles.eDataType.GroupSize);
+					Group2 = cDataFiles.MetricToStandard(Group2, cDataFiles.eDataType.GroupSize);
 
 					int Range1 = Item1.ChargeTest.BestGroupRange;
 					int Range2 = Item2.ChargeTest.BestGroupRange;
 
-					if (m_DataFiles.Preferences.MetricRanges)
+					if (cPreferences.MetricRanges)
 						{
-						Range1 = (int) cConversions.MetersToYards(Range1, 0);
-						Range2 = (int) cConversions.MetersToYards(Range2, 0);
+						Range1 = (int) cConversions.MetersToYards(Range1);
+						Range2 = (int) cConversions.MetersToYards(Range2);
 						}
 
 					double dMOA1 = (Range1 > 0) ? Group1 / ((double) ((double) Range1 / 100.0) * 1.047) : 0;
@@ -370,7 +372,7 @@ namespace ReloadersWorkShop
 					if (Batch1 == null || Batch1.BatchTest == null || Batch1.BatchTest.TestShotList == null || Batch2 == null || Batch2.BatchTest == null || Batch2.BatchTest.TestShotList == null)
 						rc = 0;
 					else
-						rc = Batch1.BatchTest.TestShotList.GetStatistics().MaxDeviation.CompareTo(Batch2.BatchTest.TestShotList.GetStatistics().MaxDeviation);
+						rc = Batch1.BatchTest.TestShotList.GetStatistics(Batch1.NumRounds).MaxDeviation.CompareTo(Batch2.BatchTest.TestShotList.GetStatistics(Batch2.NumRounds).MaxDeviation);
 
 					fSpecial = true;
 
@@ -387,7 +389,7 @@ namespace ReloadersWorkShop
 					if (Batch1 == null || Batch1.BatchTest == null || Batch1.BatchTest.TestShotList == null || Batch2 == null || Batch2.BatchTest == null || Batch2.BatchTest.TestShotList == null)
 						rc = 0;
 					else
-						rc = Batch1.BatchTest.TestShotList.GetStatistics().StdDev.CompareTo(Batch2.BatchTest.TestShotList.GetStatistics().StdDev);
+						rc = Batch1.BatchTest.TestShotList.GetStatistics(Batch1.NumRounds).StdDev.CompareTo(Batch2.BatchTest.TestShotList.GetStatistics(Batch2.NumRounds).StdDev);
 
 					fSpecial = true;
 

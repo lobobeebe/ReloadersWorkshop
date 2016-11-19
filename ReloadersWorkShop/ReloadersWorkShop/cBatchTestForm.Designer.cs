@@ -106,6 +106,7 @@
 			this.label25 = new System.Windows.Forms.Label();
 			this.label19 = new System.Windows.Forms.Label();
 			this.PressureTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.TargetCalculatorButton = new System.Windows.Forms.Button();
 			label1 = new System.Windows.Forms.Label();
 			label2 = new System.Windows.Forms.Label();
 			label16 = new System.Windows.Forms.Label();
@@ -479,6 +480,7 @@
 			// 
 			// groupBox2
 			// 
+			this.groupBox2.Controls.Add(this.TargetCalculatorButton);
 			this.groupBox2.Controls.Add(this.label28);
 			this.groupBox2.Controls.Add(this.BestGroupTextBox);
 			this.groupBox2.Controls.Add(this.BestGroupRangeTextBox);
@@ -576,7 +578,7 @@
 			this.RejectLoadRadioButton.Margin = new System.Windows.Forms.Padding(2);
 			this.RejectLoadRadioButton.Name = "RejectLoadRadioButton";
 			this.RejectLoadRadioButton.Size = new System.Drawing.Size(59, 17);
-			this.RejectLoadRadioButton.TabIndex = 5;
+			this.RejectLoadRadioButton.TabIndex = 4;
 			this.RejectLoadRadioButton.TabStop = true;
 			this.RejectLoadRadioButton.Text = "Reject:";
 			this.RejectLoadRadioButton.UseVisualStyleBackColor = true;
@@ -603,7 +605,7 @@
 			this.FavoriteLoadRadioButton.Margin = new System.Windows.Forms.Padding(2);
 			this.FavoriteLoadRadioButton.Name = "FavoriteLoadRadioButton";
 			this.FavoriteLoadRadioButton.Size = new System.Drawing.Size(93, 17);
-			this.FavoriteLoadRadioButton.TabIndex = 4;
+			this.FavoriteLoadRadioButton.TabIndex = 3;
 			this.FavoriteLoadRadioButton.TabStop = true;
 			this.FavoriteLoadRadioButton.Text = "Favorite Load:";
 			this.FavoriteLoadRadioButton.UseVisualStyleBackColor = true;
@@ -616,7 +618,7 @@
 			this.EditShotsButton.Margin = new System.Windows.Forms.Padding(2);
 			this.EditShotsButton.Name = "EditShotsButton";
 			this.EditShotsButton.Size = new System.Drawing.Size(89, 19);
-			this.EditShotsButton.TabIndex = 7;
+			this.EditShotsButton.TabIndex = 8;
 			this.EditShotsButton.Text = "&Shot Data";
 			this.EditShotsButton.UseVisualStyleBackColor = true;
 			// 
@@ -633,7 +635,7 @@
 			this.ShotListView.Margin = new System.Windows.Forms.Padding(2);
 			this.ShotListView.Name = "ShotListView";
 			this.ShotListView.Size = new System.Drawing.Size(361, 184);
-			this.ShotListView.TabIndex = 6;
+			this.ShotListView.TabIndex = 7;
 			this.ShotListView.UseCompatibleStateImageBehavior = false;
 			this.ShotListView.View = System.Windows.Forms.View.Details;
 			// 
@@ -1143,13 +1145,24 @@
 			this.PressureTextBox.Value = 0D;
 			this.PressureTextBox.ZeroAllowed = true;
 			// 
+			// TargetCalculatorButton
+			// 
+			this.TargetCalculatorButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TargetCalculatorButton.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.TargetCalculatorButton.Location = new System.Drawing.Point(175, 50);
+			this.TargetCalculatorButton.Name = "TargetCalculatorButton";
+			this.TargetCalculatorButton.Size = new System.Drawing.Size(75, 42);
+			this.TargetCalculatorButton.TabIndex = 5;
+			this.TargetCalculatorButton.Text = "Target Calculator";
+			this.TargetCalculatorButton.UseVisualStyleBackColor = true;
+			// 
 			// cBatchTestForm
 			// 
 			this.AcceptButton = this.BatchTestOKButton;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.BatchTestCancelButton;
-			this.ClientSize = new System.Drawing.Size(662, 595);
+			this.ClientSize = new System.Drawing.Size(658, 591);
 			this.ControlBox = false;
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.BatchTestDeleteButton);
@@ -1240,5 +1253,6 @@
 		private CommonLib.Controls.cIntegerValueTextBox WindDirectionTextBox;
 		private System.Windows.Forms.Label label26;
 		private System.Windows.Forms.Label label28;
+		private System.Windows.Forms.Button TargetCalculatorButton;
 		}
 	}

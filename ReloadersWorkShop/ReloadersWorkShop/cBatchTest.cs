@@ -10,6 +10,8 @@
 //============================================================================*
 
 using System;
+using System.IO;
+using System.Xml;
 
 //============================================================================*
 // Application Specific Using Statements
@@ -275,6 +277,77 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// CSVHeader Property
+		//============================================================================*
+
+		public static string CSVHeader
+			{
+			get
+				{
+				return (",Batch Tests");
+				}
+			}
+
+		//============================================================================*
+		// CSVLine Property
+		//============================================================================*
+
+		public string CSVLine
+			{
+			get
+				{
+				string strLine = ",";
+
+				strLine += m_TestDate.ToShortDateString();
+				strLine += ",";
+
+				strLine += m_Firearm;
+				strLine += ",";
+				strLine += m_fSuppressed;
+				strLine += ",";
+
+				strLine += m_strLocation;
+				strLine += ",";
+
+				strLine += m_nAltitude;
+				strLine += ",";
+				strLine += m_dPressure;
+				strLine += ",";
+				strLine += m_nTemperature;
+				strLine += ",";
+				strLine += m_dHumidity;
+				strLine += ",";
+
+				strLine += m_nWindSpeed;
+				strLine += ",";
+				strLine += m_nWindDirection;
+				strLine += ",";
+
+				strLine += m_nNumRounds;
+				strLine += ",";
+				strLine += m_dBestGroup;
+				strLine += ",";
+				strLine += m_nBestGroupRange;
+				strLine += ",";
+				strLine += m_strNotes;
+
+				return (strLine);
+				}
+			}
+
+		//============================================================================*
+		// CSVLineHeader Property
+		//============================================================================*
+
+		public static string CSVLineHeader
+			{
+			get
+				{
+				return (",Test Date,Firearm,Suppressed,Location,Altitude,Pressure,Temperature,Humidity,Wind Speed,Wind Direction,Number of Rounds,Best Group,Best Group Range,Notes");
+				}
+			}
+
+		//============================================================================*
 		// DensityAltitude Property
 		//============================================================================*
 
@@ -291,6 +364,162 @@ namespace ReloadersWorkShop
 
 				return (Atmosperics.DensityAltitude);
 				}
+			}
+
+		//============================================================================*
+		// Export()
+		//============================================================================*
+
+		public void Export(StreamWriter Writer)
+			{
+			string strLine = ",";
+
+			Writer.WriteLine(cBatchTest.CSVHeader);
+			Writer.WriteLine();
+
+			Writer.WriteLine(cBatchTest.CSVLineHeader);
+			Writer.WriteLine();
+
+			strLine = Batch.BatchTest.CSVLine;
+
+			Writer.WriteLine(strLine);
+
+			if (m_TestShotList.Count > 0)
+				{
+				Writer.WriteLine();
+
+				m_TestShotList.Export(Writer);
+				}
+			}
+
+		//============================================================================*
+		// Export() - XML Document
+		//============================================================================*
+
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			XmlElement XMLThisElement = XMLDocument.CreateElement("BatchTest");
+			XMLParentElement.AppendChild(XMLThisElement);
+
+			// Test Date
+
+			XmlElement XMLElement = XMLDocument.CreateElement("TestDate");
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(m_TestDate.ToShortDateString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Firearm
+
+			if (m_Firearm != null)
+				{
+				XMLElement = XMLDocument.CreateElement("Firearm");
+				XMLTextElement = XMLDocument.CreateTextNode(m_Firearm.ToString());
+				XMLElement.AppendChild(XMLTextElement);
+
+				XMLThisElement.AppendChild(XMLElement);
+				}
+
+			// Suppressed
+
+			XMLElement = XMLDocument.CreateElement("Suppressed");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fSuppressed ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Location
+
+			XMLElement = XMLDocument.CreateElement("Location");
+			XMLTextElement = XMLDocument.CreateTextNode(m_strLocation);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Altitude
+
+			XMLElement = XMLDocument.CreateElement("Altitude");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nAltitude));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Pressure
+
+			XMLElement = XMLDocument.CreateElement("Pressure");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dPressure));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Temperature
+
+			XMLElement = XMLDocument.CreateElement("Temperature");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nTemperature));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Humidity
+
+			XMLElement = XMLDocument.CreateElement("Humidity");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dHumidity));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Wind Speed
+
+			XMLElement = XMLDocument.CreateElement("WindSpeed");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nWindSpeed));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Wind Direction
+
+			XMLElement = XMLDocument.CreateElement("WindDirection");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nWindDirection));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Num Rounds
+
+			XMLElement = XMLDocument.CreateElement("NumRounds");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nNumRounds));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Best Group
+
+			XMLElement = XMLDocument.CreateElement("BestGroup");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dBestGroup));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Best Group Range
+
+			XMLElement = XMLDocument.CreateElement("BestGroupRange");
+			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nBestGroupRange));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Notes
+
+			if (!String.IsNullOrEmpty(m_strNotes))
+				{
+				XMLElement = XMLDocument.CreateElement("Notes");
+				XMLTextElement = XMLDocument.CreateTextNode(m_strNotes);
+				XMLElement.AppendChild(XMLTextElement);
+
+				XMLThisElement.AppendChild(XMLElement);
+				}
+
+			m_TestShotList.Export(XMLDocument, XMLThisElement);
 			}
 
 		//============================================================================*

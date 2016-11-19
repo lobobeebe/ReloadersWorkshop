@@ -950,12 +950,12 @@ namespace ReloadersWorkShop
 				SupplyTotals.PurchaseQty /= 7000.0;
 				SupplyTotals.UsedQty /= 7000.0;
 
-				SupplyTotals.AdjustmentsQty = m_DataFiles.StandardToMetric(SupplyTotals.AdjustmentsQty, cDataFiles.eDataType.CanWeight);
-				SupplyTotals.FiredQty = m_DataFiles.StandardToMetric(SupplyTotals.FiredQty, cDataFiles.eDataType.CanWeight);
-				SupplyTotals.InitialStockQty = m_DataFiles.StandardToMetric(SupplyTotals.InitialStockQty, cDataFiles.eDataType.CanWeight);
-				SupplyTotals.InStockQty = m_DataFiles.StandardToMetric(SupplyTotals.InStockQty, cDataFiles.eDataType.CanWeight);
-				SupplyTotals.PurchaseQty = m_DataFiles.StandardToMetric(SupplyTotals.PurchaseQty, cDataFiles.eDataType.CanWeight);
-				SupplyTotals.UsedQty = m_DataFiles.StandardToMetric(SupplyTotals.UsedQty, cDataFiles.eDataType.CanWeight);
+				SupplyTotals.AdjustmentsQty = cDataFiles.StandardToMetric(SupplyTotals.AdjustmentsQty, cDataFiles.eDataType.CanWeight);
+				SupplyTotals.FiredQty = cDataFiles.StandardToMetric(SupplyTotals.FiredQty, cDataFiles.eDataType.CanWeight);
+				SupplyTotals.InitialStockQty = cDataFiles.StandardToMetric(SupplyTotals.InitialStockQty, cDataFiles.eDataType.CanWeight);
+				SupplyTotals.InStockQty = cDataFiles.StandardToMetric(SupplyTotals.InStockQty, cDataFiles.eDataType.CanWeight);
+				SupplyTotals.PurchaseQty = cDataFiles.StandardToMetric(SupplyTotals.PurchaseQty, cDataFiles.eDataType.CanWeight);
+				SupplyTotals.UsedQty = cDataFiles.StandardToMetric(SupplyTotals.UsedQty, cDataFiles.eDataType.CanWeight);
 				}
 
 			return (SupplyTotals);

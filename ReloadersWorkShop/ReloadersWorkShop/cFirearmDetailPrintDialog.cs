@@ -119,6 +119,12 @@ namespace ReloadersWorkShop
 
 			Rectangle PageRect = e.PageBounds;
 
+			Rectangle PageAreaRect = e.PageBounds;
+			PageAreaRect.Width = e.MarginBounds.Width;
+			PageAreaRect.Height = e.MarginBounds.Height;
+
+			int nLeftMargin = e.MarginBounds.Left;
+
 			int nXDPI = (int)((double)PageRect.Width / 8.5);
 			int nYDPI = (int)((double)PageRect.Height / 11);
 
@@ -140,37 +146,25 @@ namespace ReloadersWorkShop
 				if (Firearm.Printed)
 					continue;
 
+				cCaliber.CurrentFirearmType = Firearm.FirearmType;
+
 				//----------------------------------------------------------------------------*
 				// Draw the page header
 				//----------------------------------------------------------------------------*
 
 				nY = cPrintObject.PrintReportTitle("Firearm Detail Report", PageRect, e.Graphics);
-/*
-				string strText = "Reloader's WorkShop";
-				SizeF TextSize = e.Graphics.MeasureString(strText, TitleFont);
 
-				e.Graphics.DrawString(strText, TitleFont, Brushes.Black, nX + (PageRect.Width / 2) - (TextSize.Width / 2), nY);
-
-				nY += TextSize.Height;
-
-				strText = "Firearm Detail Report";
-				TextSize = e.Graphics.MeasureString(strText, TitleFont);
-
-				e.Graphics.DrawString(strText, TitleFont, Brushes.Black, nX + (PageRect.Width / 2) - (TextSize.Width / 2), nY);
-
-				nY += (TextSize.Height * 2);
-*/
 				//----------------------------------------------------------------------------*
 				// Firearm Name
 				//----------------------------------------------------------------------------*
 
-				string strText = Firearm.ToString();
+				string strText = Firearm.ToShortString();
 
 				SizeF TextSize = e.Graphics.MeasureString(strText, FirearmNameFont);
 
 				nY += TextSize.Height;
 
-				e.Graphics.DrawString(strText, FirearmNameFont, Brushes.Black, (PageRect.Width / 2) - (TextSize.Width / 2), nY);
+				e.Graphics.DrawString(strText, FirearmNameFont, Brushes.Black, nLeftMargin + (PageAreaRect.Width / 2) - (TextSize.Width / 2), nY);
 
 				nY += TextSize.Height;
 
@@ -183,7 +177,7 @@ namespace ReloadersWorkShop
 
 				TextSize = e.Graphics.MeasureString(strText, SerialNumberFont);
 
-				e.Graphics.DrawString(strText, SerialNumberFont, Brushes.Black, (PageRect.Width / 2) - (TextSize.Width / 2), nY);
+				e.Graphics.DrawString(strText, SerialNumberFont, Brushes.Black, nLeftMargin + (PageAreaRect.Width / 2) - (TextSize.Width / 2), nY);
 
 				nY += (TextSize.Height * 2);
 
@@ -244,7 +238,7 @@ namespace ReloadersWorkShop
 
 					TextSize = e.Graphics.MeasureString(strText, DataFont);
 
-					e.Graphics.DrawString(strText, DataFont, Brushes.Black, (PageRect.Width / 2) - (TextSize.Width / 2), nY);
+					e.Graphics.DrawString(strText, DataFont, Brushes.Black, nLeftMargin + (PageAreaRect.Width / 2) - (TextSize.Width / 2), nY);
 
 					nY += (TextSize.Height * 2);
 					}
@@ -292,7 +286,7 @@ namespace ReloadersWorkShop
 					{
 					TextSize = e.Graphics.MeasureString(strText, DataFont);
 
-					e.Graphics.DrawString(strText, DataFont, Brushes.Black, (PageRect.Width / 2) - (TextSize.Width / 2), nY);
+					e.Graphics.DrawString(strText, DataFont, Brushes.Black, nLeftMargin + (PageAreaRect.Width / 2) - (TextSize.Width / 2), nY);
 
 					nY += TextSize.Height;
 					}
@@ -354,7 +348,7 @@ namespace ReloadersWorkShop
 
 				TextSize = e.Graphics.MeasureString(strText, DataFont);
 
-				e.Graphics.DrawString(strText, DataFont, Brushes.Black, (PageRect.Width / 2) - (TextSize.Width / 2), nY);
+				e.Graphics.DrawString(strText, DataFont, Brushes.Black, nLeftMargin + (PageAreaRect.Width / 2) - (TextSize.Width / 2), nY);
 
 				nY += (TextSize.Height * 2);
 
@@ -373,7 +367,7 @@ namespace ReloadersWorkShop
 
 					TextSize = e.Graphics.MeasureString(strText, DataFont);
 
-					e.Graphics.DrawString(strText, DataFont, Brushes.Black, (PageRect.Width / 2) - (TextSize.Width / 2), nY);
+					e.Graphics.DrawString(strText, DataFont, Brushes.Black, nLeftMargin + (PageAreaRect.Width / 2) - (TextSize.Width / 2), nY);
 
 					nY += (TextSize.Height * 2);
 					}
@@ -423,7 +417,7 @@ namespace ReloadersWorkShop
 
 					TextSize = e.Graphics.MeasureString(strText, DataFont);
 
-					e.Graphics.DrawString(strText, DataFont, Brushes.Black, (PageRect.Width / 2) - (TextSize.Width / 2), nY);
+					e.Graphics.DrawString(strText, DataFont, Brushes.Black, nLeftMargin + (PageAreaRect.Width / 2) - (TextSize.Width / 2), nY);
 
 					nY += TextSize.Height;
 					}
@@ -451,7 +445,7 @@ namespace ReloadersWorkShop
 
 					TextSize = e.Graphics.MeasureString(strText, DataFont);
 
-					e.Graphics.DrawString(strText, DataFont, Brushes.Black, (PageRect.Width / 2) - (TextSize.Width / 2), nY);
+					e.Graphics.DrawString(strText, DataFont, Brushes.Black, nLeftMargin + (PageAreaRect.Width / 2) - (TextSize.Width / 2), nY);
 
 					nY += (TextSize.Height * 2);
 					}
@@ -473,7 +467,7 @@ namespace ReloadersWorkShop
 
 					TextSize = e.Graphics.MeasureString(strText, DataFont);
 
-					e.Graphics.DrawString(strText, DataFont, Brushes.Black, (PageRect.Width / 2) - (TextSize.Width / 2), nY);
+					e.Graphics.DrawString(strText, DataFont, Brushes.Black, nLeftMargin + (PageAreaRect.Width / 2) - (TextSize.Width / 2), nY);
 
 					nY += (TextSize.Height * 2);
 					}
@@ -677,7 +671,7 @@ namespace ReloadersWorkShop
 
 						nX += e.Graphics.MeasureString(strText, SpecsFont).Width;
 
-						strText = String.Format("{0:F3} MOA", Firearm.ScopeClick);
+						strText = String.Format("{0:F3} {1}", Firearm.ScopeClick, Firearm.TurretTypeString);
 
 						e.Graphics.DrawString(strText, SpecsFont, Brushes.Black, nX, nY);
 						}

@@ -132,6 +132,7 @@ namespace ReloadersWorkShop
 			if (!m_fViewOnly)
 				{
 				FirearmTypeCombo.SelectedIndexChanged += OnFirearmTypeSelected;
+				CrossUseCheckBox.Click += OnCrossUseClicked;
 				ManufacturerCombo.SelectedIndexChanged += OnManufacturerChanged;
 				SizeCombo.SelectedIndexChanged += OnSizeChanged;
 
@@ -161,6 +162,7 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			FirearmTypeCombo.Value = m_Primer.FirearmType;
+			CrossUseCheckBox.Checked = m_Primer.CrossUse;
 
 			//----------------------------------------------------------------------------*
 			// Populate Primer Size Combo
@@ -181,7 +183,7 @@ namespace ReloadersWorkShop
 			// Set Labels for inventory tracking if needed
 			//----------------------------------------------------------------------------*
 
-			if (m_DataFiles.Preferences.TrackInventory)
+			if (cPreferences.TrackInventory)
 				{
 				QuantityLabel.Text = "Qty on Hand:";
 
@@ -243,6 +245,19 @@ namespace ReloadersWorkShop
 			UpdateButtons();
 
 			m_fInitialized = true;
+			}
+
+		//============================================================================*
+		// OnCrossUseClicked()
+		//============================================================================*
+
+		private void OnCrossUseClicked(object sender, EventArgs e)
+			{
+			m_Primer.CrossUse = CrossUseCheckBox.Checked;
+
+			m_fChanged = true;
+
+			UpdateButtons();
 			}
 
 		//============================================================================*
@@ -406,7 +421,7 @@ namespace ReloadersWorkShop
 
 			CostTextBox.Value = m_DataFiles.SupplyCost(m_Primer);
 
-			if (m_DataFiles.Preferences.TrackInventory)
+			if (cPreferences.TrackInventory)
 				CostTextBox.Text = String.Format("{0}{1:F2}", m_DataFiles.Preferences.Currency, m_DataFiles.SupplyCost(m_Primer));
 
 			m_fPopulating = false;

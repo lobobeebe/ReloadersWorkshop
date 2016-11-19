@@ -45,6 +45,7 @@ namespace RWCommonLib.Updates
 			"ReloadersWorkShopLauncher.exe",
 			"RWCommonLib.dll",
 			"CommonLib.dll",
+            "interop.WIA.dll",
 			"ReleaseNotes.rtf"
 			};
 

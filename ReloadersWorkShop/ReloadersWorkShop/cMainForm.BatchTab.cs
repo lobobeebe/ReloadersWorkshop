@@ -16,6 +16,8 @@ using System.Windows.Forms;
 // Application Specific Using Statements
 //============================================================================*
 
+using ReloadersWorkShop.Preferences;
+
 //============================================================================*
 // NameSpace
 //============================================================================*
@@ -70,6 +72,8 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			BatchFirearmTypeCombo.SelectedIndex = (int)Batch.Load.FirearmType;
+
+			cCaliber.CurrentFirearmType = Batch.Load.FirearmType;
 
 			if (!Batch.Archived)
 				m_BatchListView.AddBatch(Batch,
@@ -245,7 +249,7 @@ namespace ReloadersWorkShop
 			// Start the dialog
 			//----------------------------------------------------------------------------*
 
-			cBatchForm BatchForm = new cBatchForm(null, m_DataFiles, BatchFirearmTypeCombo.Value);
+			cBatchForm BatchForm = new cBatchForm(null, m_DataFiles, m_RWRegistry, BatchFirearmTypeCombo.Value);
 
 			if (BatchForm.ShowDialog() == DialogResult.OK)
 				{
@@ -425,7 +429,7 @@ namespace ReloadersWorkShop
 			// Start the dialog
 			//----------------------------------------------------------------------------*
 
-			cBatchForm BatchForm = new cBatchForm(Batch, m_DataFiles);
+			cBatchForm BatchForm = new cBatchForm(Batch, m_DataFiles, m_RWRegistry);
 
 			if (BatchForm.ShowDialog() == DialogResult.OK)
 				{
@@ -576,7 +580,7 @@ namespace ReloadersWorkShop
 			// Start the dialog
 			//----------------------------------------------------------------------------*
 
-			cBatchForm BatchForm = new cBatchForm(Batch, m_DataFiles, cFirearm.eFireArmType.None, true);
+			cBatchForm BatchForm = new cBatchForm(Batch, m_DataFiles, m_RWRegistry, cFirearm.eFireArmType.None, true);
 
 			BatchForm.ShowDialog();
 
@@ -604,6 +608,8 @@ namespace ReloadersWorkShop
 
 			foreach (cBullet CheckBullet in m_DataFiles.BulletList)
 				{
+				cCaliber.CurrentFirearmType = CheckBullet.FirearmType;
+
 				if (CheckBullet.FirearmType == BatchFirearmTypeCombo.Value)
 					{
 					bool fBulletUsed = false;
@@ -676,6 +682,8 @@ namespace ReloadersWorkShop
 
 					if (fCaliberUsed)
 						{
+						cCaliber.CurrentFirearmType = CheckCaliber.FirearmType;
+
 						BatchCaliberCombo.Items.Add(CheckCaliber);
 
 						if (CheckCaliber.CompareTo(m_DataFiles.Preferences.LastBatchCaliberSelected) == 0)
@@ -750,6 +758,8 @@ namespace ReloadersWorkShop
 
 					if (fPowderUsed)
 						{
+						cCaliber.CurrentFirearmType = CheckPowder.FirearmType;
+
 						BatchPowderCombo.Items.Add(CheckPowder);
 
 						if (CheckPowder.CompareTo(m_DataFiles.Preferences.LastBatchPowderSelected) == 0)
@@ -927,30 +937,7 @@ namespace ReloadersWorkShop
 						RemoveBatchTransactions(CheckBatch);
 						}
 
-					CheckBatch.BatchID = NewBatch.BatchID;
-					CheckBatch.UserID = NewBatch.UserID;
-					CheckBatch.DateLoaded = NewBatch.DateLoaded;
-					CheckBatch.Load = NewBatch.Load;
-					CheckBatch.PowderWeight = NewBatch.PowderWeight;
-					CheckBatch.NumRounds = NewBatch.NumRounds;
-					CheckBatch.TimesFired = NewBatch.TimesFired;
-					CheckBatch.COL = NewBatch.COL;
-					CheckBatch.CBTO = NewBatch.CBTO;
-					CheckBatch.CaseTrimLength = NewBatch.CaseTrimLength;
-					CheckBatch.HeadSpace = NewBatch.HeadSpace;
-					CheckBatch.NeckSize = NewBatch.NeckSize;
-					CheckBatch.NeckWall = NewBatch.NeckWall;
-					CheckBatch.BulletDiameter = NewBatch.BulletDiameter;
-					CheckBatch.FullLengthSized = NewBatch.FullLengthSized;
-					CheckBatch.NeckSized = NewBatch.NeckSized;
-					CheckBatch.ExpandedNeck = NewBatch.ExpandedNeck;
-					CheckBatch.NeckTurned = NewBatch.NeckTurned;
-					CheckBatch.Annealed = NewBatch.Annealed;
-					CheckBatch.ModifiedBullet = NewBatch.ModifiedBullet;
-					CheckBatch.Firearm = NewBatch.Firearm;
-					CheckBatch.BatchTest = NewBatch.BatchTest;
-					CheckBatch.Archived = NewBatch.Archived;
-					CheckBatch.TrackInventory = NewBatch.TrackInventory;
+					CheckBatch.Copy(NewBatch);
 
 					//----------------------------------------------------------------------------*
 					// Update or Create the new Batch Transactions
@@ -1061,7 +1048,7 @@ namespace ReloadersWorkShop
 
 			NoInventoryWarningLabel.Text = "";
 
-			if (m_DataFiles.Preferences.TrackInventory)
+			if (cPreferences.TrackInventory)
 				{
 				bool fEnableAddBatch = false;
 
@@ -1098,7 +1085,7 @@ namespace ReloadersWorkShop
 			// Inventory Tracking Label
 			//----------------------------------------------------------------------------*
 
-			BatchNotTrackedLabel.Visible = m_DataFiles.Preferences.TrackInventory && fUntrackedBatches;
+			BatchNotTrackedLabel.Visible = cPreferences.TrackInventory && fUntrackedBatches;
 			}
 
 		//============================================================================*

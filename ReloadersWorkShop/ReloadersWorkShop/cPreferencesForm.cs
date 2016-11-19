@@ -308,7 +308,7 @@ namespace ReloadersWorkShop
 			if (BulletWeightOneDecimalRadioButton.Checked)
 				return;
 
-			m_DataFiles.Preferences.BulletWeightDecimals = 1;
+			cPreferences.BulletWeightDecimals = 1;
 
 			SetDecimalData();
 			}
@@ -322,7 +322,7 @@ namespace ReloadersWorkShop
 			if (BulletWeightTwoDecimalsRadioButton.Checked)
 				return;
 
-			m_DataFiles.Preferences.BulletWeightDecimals = 2;
+			cPreferences.BulletWeightDecimals = 2;
 
 			SetDecimalData();
 			}
@@ -336,7 +336,7 @@ namespace ReloadersWorkShop
 			if (CanWeightOneDecimalRadioButton.Checked)
 				return;
 
-			m_DataFiles.Preferences.CanWeightDecimals = 1;
+			cPreferences.CanWeightDecimals = 1;
 
 			SetDecimalData();
 			}
@@ -350,7 +350,7 @@ namespace ReloadersWorkShop
 			if (CanWeightThreeDecimalsRadioButton.Checked)
 				return;
 
-			m_DataFiles.Preferences.CanWeightDecimals = 3;
+			cPreferences.CanWeightDecimals = 3;
 
 			SetDecimalData();
 			}
@@ -364,7 +364,7 @@ namespace ReloadersWorkShop
 			if (CanWeightTwoDecimalsRadioButton.Checked)
 				return;
 
-			m_DataFiles.Preferences.CanWeightDecimals = 2;
+			cPreferences.CanWeightDecimals = 2;
 
 			SetDecimalData();
 			}
@@ -378,7 +378,7 @@ namespace ReloadersWorkShop
 			if (CanWeightZeroDecimalsRadioButton.Checked)
 				return;
 
-			m_DataFiles.Preferences.CanWeightDecimals = 0;
+			cPreferences.CanWeightDecimals = 0;
 
 			SetDecimalData();
 			}
@@ -412,7 +412,7 @@ namespace ReloadersWorkShop
 			if (DimensionFourDecimalsRadioButton.Checked)
 				return;
 
-			m_DataFiles.Preferences.DimensionDecimals = 4;
+			cPreferences.DimensionDecimals = 4;
 
 			SetDecimalData();
 			}
@@ -426,7 +426,7 @@ namespace ReloadersWorkShop
 			if (DimensionOneDecimalRadioButton.Checked)
 				return;
 
-			m_DataFiles.Preferences.DimensionDecimals = 1;
+			cPreferences.DimensionDecimals = 1;
 
 			SetDecimalData();
 			}
@@ -440,7 +440,7 @@ namespace ReloadersWorkShop
 			if (DimensionThreeDecimalsRadioButton.Checked)
 				return;
 
-			m_DataFiles.Preferences.DimensionDecimals = 3;
+			cPreferences.DimensionDecimals = 3;
 
 			SetDecimalData();
 			}
@@ -454,7 +454,7 @@ namespace ReloadersWorkShop
 			if (DimensionTwoDecimalsRadioButton.Checked)
 				return;
 
-			m_DataFiles.Preferences.DimensionDecimals = 2;
+			cPreferences.DimensionDecimals = 2;
 
 			SetDecimalData();
 			}
@@ -466,7 +466,7 @@ namespace ReloadersWorkShop
 		protected void OnFirearmOneDecimalClicked(object sender, EventArgs args)
 			{
 			if (!FirearmOneDecimalRadioButton.Checked)
-				m_DataFiles.Preferences.FirearmDecimals = 1;
+				cPreferences.FirearmDecimals = 1;
 
 			SetDecimalData();
 			}
@@ -478,7 +478,7 @@ namespace ReloadersWorkShop
 		protected void OnFirearmTwoDecimalsClicked(object sender, EventArgs args)
 			{
 			if (!FirearmTwoDecimalsRadioButton.Checked)
-				m_DataFiles.Preferences.FirearmDecimals = 2;
+				cPreferences.FirearmDecimals = 2;
 
 			SetDecimalData();
 			}
@@ -490,7 +490,7 @@ namespace ReloadersWorkShop
 		protected void OnFirearmZeroDecimalsClicked(object sender, EventArgs args)
 			{
 			if (!FirearmZeroDecimalsRadioButton.Checked)
-				m_DataFiles.Preferences.FirearmDecimals = 0;
+				cPreferences.FirearmDecimals = 0;
 
 			SetDecimalData();
 			}
@@ -504,7 +504,7 @@ namespace ReloadersWorkShop
 			if (GroupOneDecimalRadioButton.Checked)
 				return;
 
-			m_DataFiles.Preferences.GroupDecimals = 1;
+			cPreferences.GroupDecimals = 1;
 
 			SetDecimalData();
 			}
@@ -518,7 +518,7 @@ namespace ReloadersWorkShop
 			if (GroupThreeDecimalsRadioButton.Checked)
 				return;
 
-			m_DataFiles.Preferences.GroupDecimals = 3;
+			cPreferences.GroupDecimals = 3;
 
 			SetDecimalData();
 			}
@@ -532,7 +532,7 @@ namespace ReloadersWorkShop
 			if (GroupTwoDecimalsRadioButton.Checked)
 				return;
 
-			m_DataFiles.Preferences.GroupDecimals = 2;
+			cPreferences.GroupDecimals = 2;
 
 			SetDecimalData();
 			}
@@ -567,7 +567,7 @@ namespace ReloadersWorkShop
 			StandardAltitudesRadioButton.Checked = false;
 			MetricAltitudesRadioButton.Checked = true;
 
-			m_DataFiles.Preferences.MetricAltitudes = true;
+			cPreferences.MetricAltitudes = true;
 
 			m_MainForm.InitializeBallisticsTab();
 			}
@@ -584,7 +584,7 @@ namespace ReloadersWorkShop
 			StandardBulletWeightsRadioButton.Checked = false;
 			MetricBulletWeightsRadioButton.Checked = true;
 
-			m_DataFiles.Preferences.MetricBulletWeights = MetricBulletWeightsRadioButton.Checked;
+			cPreferences.MetricBulletWeights = MetricBulletWeightsRadioButton.Checked;
 
 			SetDecimalData();
 
@@ -603,7 +603,7 @@ namespace ReloadersWorkShop
 			StandardCanWeightsRadioButton.Checked = false;
 			MetricCanWeightsRadioButton.Checked = true;
 
-			m_DataFiles.Preferences.MetricCanWeights = true;
+			cPreferences.MetricCanWeights = true;
 
 			SetDecimalData();
 			}
@@ -620,7 +620,7 @@ namespace ReloadersWorkShop
 			StandardDimensionsRadioButton.Checked = false;
 			MetricDimensionsRadioButton.Checked = true;
 
-			m_DataFiles.Preferences.MetricDimensions = true;
+			cPreferences.MetricDimensions = true;
 
 			SetDecimalData();
 			}
@@ -637,7 +637,7 @@ namespace ReloadersWorkShop
 			StandardFirearmsRadioButton.Checked = false;
 			MetricFirearmsRadioButton.Checked = true;
 
-			m_DataFiles.Preferences.MetricFirearms = true;
+			cPreferences.MetricFirearms = true;
 
 			SetDecimalData();
 			}
@@ -654,7 +654,7 @@ namespace ReloadersWorkShop
 			StandardGroupsRadioButton.Checked = false;
 			MetricGroupsRadioButton.Checked = true;
 
-			m_DataFiles.Preferences.MetricGroups = true;
+			cPreferences.MetricGroups = true;
 
 			SetDecimalData();
 			}
@@ -671,7 +671,7 @@ namespace ReloadersWorkShop
 			StandardPowderWeightsRadioButton.Checked = false;
 			MetricPowderWeightsRadioButton.Checked = true;
 
-			m_DataFiles.Preferences.MetricPowderWeights = true;
+			cPreferences.MetricPowderWeights = true;
 
 			SetDecimalData();
 			}
@@ -688,7 +688,7 @@ namespace ReloadersWorkShop
 			StandardPressuresRadioButton.Checked = false;
 			MetricPressuresRadioButton.Checked = true;
 
-			m_DataFiles.Preferences.MetricPressures = true;
+			cPreferences.MetricPressures = true;
 
 			m_MainForm.InitializeBallisticsTab();
 			}
@@ -705,7 +705,7 @@ namespace ReloadersWorkShop
 			StandardRangesRadioButton.Checked = false;
 			MetricRangesRadioButton.Checked = true;
 
-			m_DataFiles.Preferences.MetricRanges = true;
+			cPreferences.MetricRanges = true;
 
 			SetDecimalData();
 			}
@@ -722,7 +722,7 @@ namespace ReloadersWorkShop
 			StandardShotWeightsRadioButton.Checked = false;
 			MetricShotWeightsRadioButton.Checked = true;
 
-			m_DataFiles.Preferences.MetricShotWeights = true;
+			cPreferences.MetricShotWeights = true;
 
 			SetDecimalData();
 			}
@@ -739,7 +739,7 @@ namespace ReloadersWorkShop
 			StandardTemperaturesRadioButton.Checked = false;
 			MetricTemperaturesRadioButton.Checked = true;
 
-			m_DataFiles.Preferences.MetricTemperatures = true;
+			cPreferences.MetricTemperatures = true;
 
 			m_MainForm.InitializeBallisticsTab();
 			}
@@ -756,7 +756,7 @@ namespace ReloadersWorkShop
 			StandardVelocitiesRadioButton.Checked = false;
 			MetricVelocitiesRadioButton.Checked = true;
 
-			m_DataFiles.Preferences.MetricVelocities = true;
+			cPreferences.MetricVelocities = true;
 
 			SetDecimalData();
 			}
@@ -773,7 +773,7 @@ namespace ReloadersWorkShop
 			StandardPowderWeightsRadioButton.Checked = false;
 			MetricPowderWeightsRadioButton.Checked = true;
 
-			m_DataFiles.Preferences.MetricBulletWeights = true;
+			cPreferences.MetricBulletWeights = true;
 
 			SetDecimalData();
 			}
@@ -785,7 +785,7 @@ namespace ReloadersWorkShop
 		protected void OnPowderWeightOneDecimalRadioButtonClicked(object sender, EventArgs args)
 			{
 			if (!PowderWeightOneDecimalRadioButton.Checked)
-				m_DataFiles.Preferences.PowderWeightDecimals = 1;
+				cPreferences.PowderWeightDecimals = 1;
 
 			SetDecimalData();
 			}
@@ -797,7 +797,7 @@ namespace ReloadersWorkShop
 		protected void OnPowderWeightThreeDecimalsRadioButtonClicked(object sender, EventArgs args)
 			{
 			if (!PowderWeightThreeDecimalsRadioButton.Checked)
-				m_DataFiles.Preferences.PowderWeightDecimals = 3;
+				cPreferences.PowderWeightDecimals = 3;
 
 			SetDecimalData();
 			}
@@ -809,7 +809,7 @@ namespace ReloadersWorkShop
 		protected void OnPowderWeightTwoDecimalsRadioButtonClicked(object sender, EventArgs args)
 			{
 			if (!PowderWeightTwoDecimalsRadioButton.Checked)
-				m_DataFiles.Preferences.PowderWeightDecimals = 2;
+				cPreferences.PowderWeightDecimals = 2;
 
 			SetDecimalData();
 			}
@@ -830,7 +830,7 @@ namespace ReloadersWorkShop
 		protected void OnShotWeightOneDecimalRadioButtonClicked(object sender, EventArgs args)
 			{
 			if (!ShotWeightOneDecimalRadioButton.Checked)
-				m_DataFiles.Preferences.ShotWeightDecimals = 1;
+				cPreferences.ShotWeightDecimals = 1;
 
 			SetDecimalData();
 			}
@@ -842,7 +842,7 @@ namespace ReloadersWorkShop
 		protected void OnShotWeightThreeDecimalsRadioButtonClicked(object sender, EventArgs args)
 			{
 			if (!ShotWeightThreeDecimalsRadioButton.Checked)
-				m_DataFiles.Preferences.ShotWeightDecimals = 3;
+				cPreferences.ShotWeightDecimals = 3;
 
 			SetDecimalData();
 			}
@@ -854,7 +854,7 @@ namespace ReloadersWorkShop
 		protected void OnShotWeightTwoDecimalsRadioButtonClicked(object sender, EventArgs args)
 			{
 			if (!ShotWeightTwoDecimalsRadioButton.Checked)
-				m_DataFiles.Preferences.ShotWeightDecimals = 2;
+				cPreferences.ShotWeightDecimals = 2;
 
 			SetDecimalData();
 			}
@@ -871,7 +871,7 @@ namespace ReloadersWorkShop
 			StandardAltitudesRadioButton.Checked = true;
 			MetricAltitudesRadioButton.Checked = false;
 
-			m_DataFiles.Preferences.MetricAltitudes = false;
+			cPreferences.MetricAltitudes = false;
 
 			m_MainForm.InitializeBallisticsTab();
 			}
@@ -888,7 +888,7 @@ namespace ReloadersWorkShop
 			StandardBulletWeightsRadioButton.Checked = true;
 			MetricBulletWeightsRadioButton.Checked = false;
 
-			m_DataFiles.Preferences.MetricBulletWeights = MetricBulletWeightsRadioButton.Checked;
+			cPreferences.MetricBulletWeights = MetricBulletWeightsRadioButton.Checked;
 
 			SetDecimalData();
 
@@ -907,7 +907,7 @@ namespace ReloadersWorkShop
 			StandardCanWeightsRadioButton.Checked = true;
 			MetricCanWeightsRadioButton.Checked = false;
 
-			m_DataFiles.Preferences.MetricCanWeights = false;
+			cPreferences.MetricCanWeights = false;
 
 			SetDecimalData();
 			}
@@ -924,7 +924,7 @@ namespace ReloadersWorkShop
 			StandardDimensionsRadioButton.Checked = true;
 			MetricDimensionsRadioButton.Checked = false;
 
-			m_DataFiles.Preferences.MetricDimensions = false;
+			cPreferences.MetricDimensions = false;
 
 			SetDecimalData();
 			}
@@ -941,7 +941,7 @@ namespace ReloadersWorkShop
 			StandardFirearmsRadioButton.Checked = true;
 			MetricFirearmsRadioButton.Checked = false;
 
-			m_DataFiles.Preferences.MetricFirearms = false;
+			cPreferences.MetricFirearms = false;
 
 			SetDecimalData();
 			}
@@ -958,7 +958,7 @@ namespace ReloadersWorkShop
 			StandardGroupsRadioButton.Checked = true;
 			MetricGroupsRadioButton.Checked = false;
 
-			m_DataFiles.Preferences.MetricGroups = false;
+			cPreferences.MetricGroups = false;
 
 			SetDecimalData();
 			}
@@ -975,7 +975,7 @@ namespace ReloadersWorkShop
 			StandardPowderWeightsRadioButton.Checked = true;
 			MetricPowderWeightsRadioButton.Checked = false;
 
-			m_DataFiles.Preferences.MetricPowderWeights = false;
+			cPreferences.MetricPowderWeights = false;
 
 			SetDecimalData();
 			}
@@ -992,7 +992,7 @@ namespace ReloadersWorkShop
 			StandardPressuresRadioButton.Checked = true;
 			MetricPressuresRadioButton.Checked = false;
 
-			m_DataFiles.Preferences.MetricPressures = false;
+			cPreferences.MetricPressures = false;
 
 			m_MainForm.InitializeBallisticsTab();
 			}
@@ -1009,7 +1009,7 @@ namespace ReloadersWorkShop
 			StandardRangesRadioButton.Checked = true;
 			MetricRangesRadioButton.Checked = false;
 
-			m_DataFiles.Preferences.MetricRanges = false;
+			cPreferences.MetricRanges = false;
 
 			SetDecimalData();
 			}
@@ -1026,7 +1026,7 @@ namespace ReloadersWorkShop
 			StandardShotWeightsRadioButton.Checked = true;
 			MetricShotWeightsRadioButton.Checked = false;
 
-			m_DataFiles.Preferences.MetricShotWeights = false;
+			cPreferences.MetricShotWeights = false;
 
 			SetDecimalData();
 			}
@@ -1043,7 +1043,7 @@ namespace ReloadersWorkShop
 			StandardTemperaturesRadioButton.Checked = true;
 			MetricTemperaturesRadioButton.Checked = false;
 
-			m_DataFiles.Preferences.MetricTemperatures = false;
+			cPreferences.MetricTemperatures = false;
 
 			m_MainForm.InitializeBallisticsTab();
 			}
@@ -1060,7 +1060,7 @@ namespace ReloadersWorkShop
 			StandardVelocitiesRadioButton.Checked = true;
 			MetricVelocitiesRadioButton.Checked = false;
 
-			m_DataFiles.Preferences.MetricVelocities = false;
+			cPreferences.MetricVelocities = false;
 
 			SetDecimalData();
 			}
@@ -1181,7 +1181,7 @@ namespace ReloadersWorkShop
 
 			TrackInventoryCheckBox.Checked = TrackInventoryCheckBox.Checked ? false : true;
 
-			m_DataFiles.Preferences.TrackInventory = TrackInventoryCheckBox.Checked;
+			cPreferences.TrackInventory = TrackInventoryCheckBox.Checked;
 
 			m_MainForm.InitializeAllTabs();
 
@@ -1254,40 +1254,40 @@ namespace ReloadersWorkShop
 
 			ToolTipsCheckBox.Checked = m_DataFiles.Preferences.ToolTips;
 
-			StandardAltitudesRadioButton.Checked = !m_DataFiles.Preferences.MetricAltitudes;
+			StandardAltitudesRadioButton.Checked = !cPreferences.MetricAltitudes;
 			MetricAltitudesRadioButton.Checked = !StandardAltitudesRadioButton.Checked;
 
-			StandardBulletWeightsRadioButton.Checked = !m_DataFiles.Preferences.MetricBulletWeights;
+			StandardBulletWeightsRadioButton.Checked = !cPreferences.MetricBulletWeights;
 			MetricBulletWeightsRadioButton.Checked = !StandardBulletWeightsRadioButton.Checked;
 
-			StandardCanWeightsRadioButton.Checked = !m_DataFiles.Preferences.MetricCanWeights;
+			StandardCanWeightsRadioButton.Checked = !cPreferences.MetricCanWeights;
 			MetricCanWeightsRadioButton.Checked = !StandardCanWeightsRadioButton.Checked;
 
-			StandardDimensionsRadioButton.Checked = !m_DataFiles.Preferences.MetricDimensions;
+			StandardDimensionsRadioButton.Checked = !cPreferences.MetricDimensions;
 			MetricDimensionsRadioButton.Checked = !StandardDimensionsRadioButton.Checked;
 
-			StandardFirearmsRadioButton.Checked = !m_DataFiles.Preferences.MetricFirearms;
+			StandardFirearmsRadioButton.Checked = !cPreferences.MetricFirearms;
 			MetricFirearmsRadioButton.Checked = !StandardFirearmsRadioButton.Checked;
 
-			StandardGroupsRadioButton.Checked = !m_DataFiles.Preferences.MetricGroups;
+			StandardGroupsRadioButton.Checked = !cPreferences.MetricGroups;
 			MetricGroupsRadioButton.Checked = !StandardGroupsRadioButton.Checked;
 
-			StandardPowderWeightsRadioButton.Checked = !m_DataFiles.Preferences.MetricPowderWeights;
+			StandardPowderWeightsRadioButton.Checked = !cPreferences.MetricPowderWeights;
 			MetricPowderWeightsRadioButton.Checked = !StandardPowderWeightsRadioButton.Checked;
 
-			StandardPressuresRadioButton.Checked = !m_DataFiles.Preferences.MetricPressures;
+			StandardPressuresRadioButton.Checked = !cPreferences.MetricPressures;
 			MetricPressuresRadioButton.Checked = !StandardPressuresRadioButton.Checked;
 
-			StandardRangesRadioButton.Checked = !m_DataFiles.Preferences.MetricRanges;
+			StandardRangesRadioButton.Checked = !cPreferences.MetricRanges;
 			MetricRangesRadioButton.Checked = !StandardRangesRadioButton.Checked;
 
-			StandardShotWeightsRadioButton.Checked = !m_DataFiles.Preferences.MetricShotWeights;
+			StandardShotWeightsRadioButton.Checked = !cPreferences.MetricShotWeights;
 			MetricShotWeightsRadioButton.Checked = !StandardShotWeightsRadioButton.Checked;
 
-			StandardTemperaturesRadioButton.Checked = !m_DataFiles.Preferences.MetricTemperatures;
+			StandardTemperaturesRadioButton.Checked = !cPreferences.MetricTemperatures;
 			MetricTemperaturesRadioButton.Checked = !StandardTemperaturesRadioButton.Checked;
 
-			StandardVelocitiesRadioButton.Checked = !m_DataFiles.Preferences.MetricVelocities;
+			StandardVelocitiesRadioButton.Checked = !cPreferences.MetricVelocities;
 			MetricVelocitiesRadioButton.Checked = !StandardVelocitiesRadioButton.Checked;
 			}
 
@@ -1301,15 +1301,15 @@ namespace ReloadersWorkShop
 			// Limit Metric and Standard Diameter Selections
 			//----------------------------------------------------------------------------*
 
-			if (m_DataFiles.Preferences.MetricDimensions)
+			if (cPreferences.MetricDimensions)
 				{
 				DimensionOneDecimalRadioButton.Enabled = true;
 				DimensionTwoDecimalsRadioButton.Enabled = true;
 				DimensionThreeDecimalsRadioButton.Enabled = false;
 				DimensionFourDecimalsRadioButton.Enabled = false;
 
-				if (m_DataFiles.Preferences.DimensionDecimals > 2)
-					m_DataFiles.Preferences.DimensionDecimals = 2;
+				if (cPreferences.DimensionDecimals > 2)
+					cPreferences.DimensionDecimals = 2;
 				}
 			else
 				{
@@ -1318,15 +1318,15 @@ namespace ReloadersWorkShop
 				DimensionThreeDecimalsRadioButton.Enabled = true;
 				DimensionFourDecimalsRadioButton.Enabled = true;
 
-				if (m_DataFiles.Preferences.DimensionDecimals < 3)
-					m_DataFiles.Preferences.DimensionDecimals = 3;
+				if (cPreferences.DimensionDecimals < 3)
+					cPreferences.DimensionDecimals = 3;
 				}
 
 			//----------------------------------------------------------------------------*
 			// Diameter Decimals
 			//----------------------------------------------------------------------------*
 
-			switch (m_DataFiles.Preferences.DimensionDecimals)
+			switch (cPreferences.DimensionDecimals)
 				{
 				case 1:
 					DimensionOneDecimalRadioButton.Checked = true;
@@ -1361,9 +1361,9 @@ namespace ReloadersWorkShop
 					break;
 
 				default:
-					if (m_DataFiles.Preferences.MetricDimensions)
+					if (cPreferences.MetricDimensions)
 						{
-						m_DataFiles.Preferences.DimensionDecimals = 2;
+						cPreferences.DimensionDecimals = 2;
 
 						DimensionOneDecimalRadioButton.Checked = false;
 						DimensionTwoDecimalsRadioButton.Checked = true;
@@ -1372,7 +1372,7 @@ namespace ReloadersWorkShop
 						}
 					else
 						{
-						m_DataFiles.Preferences.DimensionDecimals = 3;
+						cPreferences.DimensionDecimals = 3;
 
 						DimensionOneDecimalRadioButton.Checked = false;
 						DimensionTwoDecimalsRadioButton.Checked = false;
@@ -1387,7 +1387,7 @@ namespace ReloadersWorkShop
 			// Bullet Weight Decimals
 			//----------------------------------------------------------------------------*
 
-			switch (m_DataFiles.Preferences.BulletWeightDecimals)
+			switch (cPreferences.BulletWeightDecimals)
 				{
 				case 2:
 					BulletWeightOneDecimalRadioButton.Checked = false;
@@ -1396,7 +1396,7 @@ namespace ReloadersWorkShop
 					break;
 
 				default:
-					m_DataFiles.Preferences.BulletWeightDecimals = 1;
+					cPreferences.BulletWeightDecimals = 1;
 
 					BulletWeightOneDecimalRadioButton.Checked = true;
 					BulletWeightTwoDecimalsRadioButton.Checked = false;
@@ -1408,7 +1408,7 @@ namespace ReloadersWorkShop
 			// Powder Weight Decimals
 			//----------------------------------------------------------------------------*
 
-			switch (m_DataFiles.Preferences.PowderWeightDecimals)
+			switch (cPreferences.PowderWeightDecimals)
 				{
 				case 2:
 					PowderWeightOneDecimalRadioButton.Checked = false;
@@ -1425,7 +1425,7 @@ namespace ReloadersWorkShop
 					break;
 
 				default:
-					m_DataFiles.Preferences.PowderWeightDecimals = 1;
+					cPreferences.PowderWeightDecimals = 1;
 
 					PowderWeightOneDecimalRadioButton.Checked = true;
 					PowderWeightTwoDecimalsRadioButton.Checked = false;
@@ -1438,7 +1438,7 @@ namespace ReloadersWorkShop
 			// Can Weight Decimals
 			//----------------------------------------------------------------------------*
 
-			switch (m_DataFiles.Preferences.CanWeightDecimals)
+			switch (cPreferences.CanWeightDecimals)
 				{
 				case 1:
 					CanWeightZeroDecimalsRadioButton.Checked = false;
@@ -1465,7 +1465,7 @@ namespace ReloadersWorkShop
 					break;
 
 				default:
-					m_DataFiles.Preferences.CanWeightDecimals = 0;
+					cPreferences.CanWeightDecimals = 0;
 
 					CanWeightZeroDecimalsRadioButton.Checked = true;
 					CanWeightOneDecimalRadioButton.Checked = false;
@@ -1479,7 +1479,7 @@ namespace ReloadersWorkShop
 			// Shot Weight Decimals
 			//----------------------------------------------------------------------------*
 
-			switch (m_DataFiles.Preferences.ShotWeightDecimals)
+			switch (cPreferences.ShotWeightDecimals)
 				{
 				case 2:
 					ShotWeightOneDecimalRadioButton.Checked = false;
@@ -1496,7 +1496,7 @@ namespace ReloadersWorkShop
 					break;
 
 				default:
-					m_DataFiles.Preferences.ShotWeightDecimals = 1;
+					cPreferences.ShotWeightDecimals = 1;
 
 					ShotWeightOneDecimalRadioButton.Checked = true;
 					ShotWeightTwoDecimalsRadioButton.Checked = false;
@@ -1509,7 +1509,7 @@ namespace ReloadersWorkShop
 			// Firearm Decimals
 			//----------------------------------------------------------------------------*
 
-			switch (m_DataFiles.Preferences.FirearmDecimals)
+			switch (cPreferences.FirearmDecimals)
 				{
 				case 1:
 					FirearmZeroDecimalsRadioButton.Checked = false;
@@ -1526,7 +1526,7 @@ namespace ReloadersWorkShop
 					break;
 
 				default:
-					m_DataFiles.Preferences.FirearmDecimals = 0;
+					cPreferences.FirearmDecimals = 0;
 
 					FirearmZeroDecimalsRadioButton.Checked = true;
 					FirearmOneDecimalRadioButton.Checked = false;
@@ -1539,7 +1539,7 @@ namespace ReloadersWorkShop
 			// Group Decimals
 			//----------------------------------------------------------------------------*
 
-			switch (m_DataFiles.Preferences.GroupDecimals)
+			switch (cPreferences.GroupDecimals)
 				{
 				case 2:
 					GroupOneDecimalRadioButton.Checked = false;
@@ -1556,7 +1556,7 @@ namespace ReloadersWorkShop
 					break;
 
 				default:
-					m_DataFiles.Preferences.GroupDecimals = 1;
+					cPreferences.GroupDecimals = 1;
 
 					GroupOneDecimalRadioButton.Checked = true;
 					GroupTwoDecimalsRadioButton.Checked = false;
@@ -1572,7 +1572,7 @@ namespace ReloadersWorkShop
 
 		private void PopulateInventoryGroup()
 			{
-			TrackInventoryCheckBox.Checked = m_DataFiles.Preferences.TrackInventory;
+			TrackInventoryCheckBox.Checked = cPreferences.TrackInventory;
 
 			UseLastPurchaseRadioButton.Checked = m_DataFiles.Preferences.UseLastPurchase;
 			AverageCostsRadioButton.Checked = !m_DataFiles.Preferences.UseLastPurchase;
@@ -1605,8 +1605,6 @@ namespace ReloadersWorkShop
 		private void SetDecimalData()
 			{
 			PopulateDataEntryDecimals();
-
-			m_DataFiles.SetComponentMetrics();
 
 			m_MainForm.InitializeAllTabs();
 			}

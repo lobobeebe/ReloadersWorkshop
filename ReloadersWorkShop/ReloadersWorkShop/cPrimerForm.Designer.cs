@@ -52,6 +52,7 @@
 			this.CostEachLabel = new System.Windows.Forms.Label();
 			this.CostLabel = new System.Windows.Forms.Label();
 			this.QuantityLabel = new System.Windows.Forms.Label();
+			this.CrossUseCheckBox = new System.Windows.Forms.CheckBox();
 			label8 = new System.Windows.Forms.Label();
 			label3 = new System.Windows.Forms.Label();
 			label1 = new System.Windows.Forms.Label();
@@ -173,6 +174,7 @@
 			// 
 			// GeneralGroupBox
 			// 
+			this.GeneralGroupBox.Controls.Add(this.CrossUseCheckBox);
 			this.GeneralGroupBox.Controls.Add(this.ModelTextBox);
 			this.GeneralGroupBox.Controls.Add(this.FirearmTypeCombo);
 			this.GeneralGroupBox.Controls.Add(label4);
@@ -211,6 +213,8 @@
 			this.FirearmTypeCombo.FormattingEnabled = true;
 			this.FirearmTypeCombo.IncludeShotgun = false;
 			this.FirearmTypeCombo.Items.AddRange(new object[] {
+            "Handgun",
+            "Rifle",
             "Handgun",
             "Rifle",
             "Handgun",
@@ -414,13 +418,25 @@
 			this.QuantityLabel.Text = "Box of:";
 			this.QuantityLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
 			// 
+			// CrossUseCheckBox
+			// 
+			this.CrossUseCheckBox.AutoSize = true;
+			this.CrossUseCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.CrossUseCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.CrossUseCheckBox.Location = new System.Drawing.Point(197, 24);
+			this.CrossUseCheckBox.Name = "CrossUseCheckBox";
+			this.CrossUseCheckBox.Size = new System.Drawing.Size(80, 17);
+			this.CrossUseCheckBox.TabIndex = 43;
+			this.CrossUseCheckBox.Text = "Cross Use?";
+			this.CrossUseCheckBox.UseVisualStyleBackColor = true;
+			// 
 			// cPrimerForm
 			// 
 			this.AcceptButton = this.PrimerOKButton;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.PrimerCancelButton;
-			this.ClientSize = new System.Drawing.Size(540, 365);
+			this.ClientSize = new System.Drawing.Size(536, 361);
 			this.ControlBox = false;
 			this.Controls.Add(this.InventoryGroupBox);
 			this.Controls.Add(this.groupBox2);
@@ -467,5 +483,6 @@
 		private System.Windows.Forms.Label CostLabel;
 		private System.Windows.Forms.Label QuantityLabel;
 		private CommonLib.Controls.cTextBox ModelTextBox;
+		private System.Windows.Forms.CheckBox CrossUseCheckBox;
 		}
 	}

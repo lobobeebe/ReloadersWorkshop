@@ -20,6 +20,8 @@ using System.Windows.Forms;
 // Application Specific Using Statements
 //============================================================================*
 
+using ReloadersWorkShop.Preferences;
+
 using RWCommonLib.Registry;
 using RWCommonLib.Updates;
 using RWCommonLib.Forms;
@@ -87,10 +89,6 @@ namespace ReloadersWorkShop
 			MainTabControl.GotFocus += OnMainTabGotFocus;
 
 			//----------------------------------------------------------------------------*
-			// Check the registry to see if this is a trial version
-			//----------------------------------------------------------------------------*
-
-			//----------------------------------------------------------------------------*
 			// Initialize Tabs
 			//----------------------------------------------------------------------------*
 
@@ -134,6 +132,7 @@ namespace ReloadersWorkShop
 
 			FileBackupMenuItem.Click += OnFileBackupClicked;
 			FileExitMenuItem.Click += OnFileExitClicked;
+			FileExportMenuItem.Click += OnFileExportClicked;
 			FilePreferencesMenuItem.Click += OnFilePreferencesClicked;
 			FilePrintAmmoListMenuItem.Click += OnPrintAmmoListClicked;
 			FilePrintCostAnalysisMenuItem.Click += OnPrintCostAnalysisClicked;
@@ -195,7 +194,8 @@ namespace ReloadersWorkShop
 			ToolsSAAMIUnsafeArmsAmmoMenuItem.Click += OnToolsSAAMIUnsafeArmsAmmoClicked;
 
 			ToolsStabilityCalculatorMenuItem.Click += OnToolsStabilityCalculatorClicked;
-			//			ToolsStabilityCalculatorMenuItem.Visible = false;
+			ToolsTargetCalculatorMenuItem.Click += OnToolsTargetCalculatorClicked;
+
 
 			// Help Menu
 
@@ -207,15 +207,19 @@ namespace ReloadersWorkShop
 			HelpProgramUpdateMenuItem.Click += OnHelpProgramUpdateClicked;
 			HelpDataUpdateMenuItem.Click += OnHelpDataUpdateClicked;
 
-			HelpVideoBulletSelectionMenuItem.Click += OnHelpVideoBulletSelectionClicked;
-			HelpVideoCrimpingMenuItem.Click += OnHelpVideoCrimpingClicked;
-			HelpVideoHeadspaceMenuItem.Click += OnHelpVideoHeadspaceClicked;
-			HelpVideoRWBallisticsCalculatorMenuItem.Click += OnHelpVideoRWBallisticsCalculatorClicked;
-			HelpVideoRWBatchEditorMenuItem.Click += OnHelpVideoRWBatchEditorClicked;
-			HelpVideoRWInventoryMenuItem.Click += OnHelpVideoRWInventoryClicked;
-			HelpVideoRWLoadDataMenuItem.Click += OnHelpVideoRWLoadDataClicked;
-			HelpVideoRWOperationMenuItem.Click += OnHelpVideoRWOperationClicked;
-			HelpVideoSDBCMenuItem.Click += OnHelpVideoSDBCClicked;
+			HelpVideoBulletSelectionMenuItem.Click += OnHelpVideoClicked;
+			HelpVideoCrimpingMenuItem.Click += OnHelpVideoClicked;
+			HelpVideoHeadspaceMenuItem.Click += OnHelpVideoClicked;
+			HelpVideoRWBallisticsCalculatorMenuItem.Click += OnHelpVideoClicked;
+			HelpVideoRWBatchEditorMenuItem.Click += OnHelpVideoClicked;
+			HelpVideoRWCrossUseMenuItem.Click += OnHelpVideoClicked;
+			HelpVideoRWExportingDataMenuItem.Click += OnHelpVideoClicked;
+			HelpVideoRWInventoryMenuItem.Click += OnHelpVideoClicked;
+			HelpVideoRWLoadDataMenuItem.Click += OnHelpVideoClicked;
+			HelpVideoRWSettingJumpMenuItem.Click += OnHelpVideoClicked;
+			HelpVideoRWTargetCalculatorMenuItem.Click += OnHelpVideoClicked;
+            HelpVideoRWOperationMenuItem.Click += OnHelpVideoClicked;
+			HelpVideoSDBCMenuItem.Click += OnHelpVideoClicked;
 
 			//----------------------------------------------------------------------------*
 			// Make sure we're not minimized
@@ -225,16 +229,12 @@ namespace ReloadersWorkShop
 
 			if (m_DataFiles.Preferences.Maximized)
 				{
-				//				WindowState = FormWindowState.Maximized;
-
 				NativeMethods.ShowWindowAsync(this.Handle, 3);
 
 				OnResize(new EventArgs());
 				}
 			else
 				{
-				//				WindowState = FormWindowState.Normal;
-
 				Size = m_DataFiles.Preferences.MainFormSize;
 				Location = m_DataFiles.Preferences.MainFormLocation;
 
@@ -242,12 +242,6 @@ namespace ReloadersWorkShop
 
 				OnResize(new EventArgs());
 				}
-
-			//----------------------------------------------------------------------------*
-			// Update Buttons and Exit
-			//----------------------------------------------------------------------------*
-
-			//			UpdateButtons();
 			}
 
 		//============================================================================*
@@ -393,6 +387,8 @@ namespace ReloadersWorkShop
 
 		public void InitializeAllTabs()
 			{
+			m_DataFiles.CleanBackups();
+
 			InitializeManufacturerTab();
 			InitializeCaliberTab();
 			InitializeFirearmTab();
@@ -453,7 +449,7 @@ namespace ReloadersWorkShop
 					EditNewMenuItem.Enabled = AddSupplyButton.Enabled;
 					EditEditMenuItem.Enabled = EditSupplyButton.Enabled;
 					EditRemoveMenuItem.Enabled = RemoveSupplyButton.Enabled;
-					EditInventoryActivityMenuItem.Visible = m_DataFiles.Preferences.TrackInventory;
+					EditInventoryActivityMenuItem.Visible = cPreferences.TrackInventory;
 
 					switch ((cSupply.eSupplyTypes) SupplyTypeCombo.SelectedIndex)
 						{
@@ -518,7 +514,7 @@ namespace ReloadersWorkShop
 					EditEditMenuItem.Enabled = EditAmmoButton.Enabled;
 					EditRemoveMenuItem.Text = "&Remove Ammo";
 					EditRemoveMenuItem.Enabled = RemoveAmmoButton.Enabled;
-					EditInventoryActivityMenuItem.Visible = m_DataFiles.Preferences.TrackInventory;
+					EditInventoryActivityMenuItem.Visible = cPreferences.TrackInventory;
 					break;
 
 				case "PreferencesTab":
@@ -836,6 +832,17 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// OnFileExportClicked()
+		//============================================================================*
+
+		public void OnFileExportClicked(Object sender, EventArgs e)
+			{
+			cExportForm ExportForm = new cExportForm(m_DataFiles);
+
+			ExportForm.ShowDialog();
+			}
+
+		//============================================================================*
 		// OnFilePreferencesClicked()
 		//============================================================================*
 
@@ -851,10 +858,10 @@ namespace ReloadersWorkShop
 		private void OnFilePrintClicked(Object sender, EventArgs e)
 			{
 			FilePrintAmmoListMenuItem.Enabled = AmmoListPrintButton.Enabled;
-			FilePrintAmmoShoppingListMenuItem.Enabled = m_DataFiles.Preferences.TrackInventory && AmmoListPrintButton.Enabled && AmmoPrintBelowStockCheckBox.Checked;
+			FilePrintAmmoShoppingListMenuItem.Enabled = cPreferences.TrackInventory && AmmoListPrintButton.Enabled && AmmoPrintBelowStockCheckBox.Checked;
 
 			FilePrintSupplyListMenuItem.Enabled = SupplyListPrintButton.Enabled;
-			FilePrintSupplyShoppingListMenuItem.Enabled = m_DataFiles.Preferences.TrackInventory && SupplyListPrintButton.Enabled && SuppliesPrintBelowStockCheckBox.Checked;
+			FilePrintSupplyShoppingListMenuItem.Enabled = cPreferences.TrackInventory && SupplyListPrintButton.Enabled && SuppliesPrintBelowStockCheckBox.Checked;
 
 			FilePrintLoadShoppingListMenuItem.Enabled = LoadShoppingListButton.Enabled;
 
@@ -1081,192 +1088,60 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// OnHelpVideoBulletSelectionClicked()
+		// OnHelpVideoClicked()
 		//============================================================================*
 
-		protected void OnHelpVideoBulletSelectionClicked(object sender, EventArgs args)
+		protected void OnHelpVideoClicked(object sender, EventArgs args)
 			{
 			try
 				{
-				System.Diagnostics.Process.Start("https://www.youtube.com/v/bBy36tpgfTI?autoplay=1&rel=0");
-				}
+                switch ((sender as ToolStripDropDownItem).Name)
+                    {
+                    case "HelpVideoBulletSelectionMenuItem":
+                        System.Diagnostics.Process.Start("https://www.youtube.com/v/bBy36tpgfTI?autoplay=1&rel=0&showinfo=0");
+                        break;
+                    case "HelpVideoCrimpingMenuItem":
+                        System.Diagnostics.Process.Start("https://www.youtube.com/v/MXWEfLE-tJg?autoplay=1&rel=0&showinfo=0");
+                        break;
+                    case "HelpVideoHeadspaceMenuItem":
+                        System.Diagnostics.Process.Start("https://www.youtube.com/v/OS5bfJ_2HNQ?autoplay=1&rel=0&showinfo=0");
+                        break;
+                    case "HelpVideoRWBallisticsCalculatorMenuItem":
+                        System.Diagnostics.Process.Start("https://www.youtube.com/v/6syoP-_TvZI?autoplay=1&rel=0&showinfo=0");
+                        break;
+                    case "HelpVideoRWBatchEditorMenuItem":
+                        System.Diagnostics.Process.Start("https://www.youtube.com/v/FO5z6Qvo-Lg?autoplay=1&rel=0&showinfo=0");
+                        break;
+					case "HelpVideoRWCrossUseMenuItem":
+						System.Diagnostics.Process.Start("https://www.youtube.com/v/xiSWuVINOf8?autoplay=1&rel=0&showinfo=0");
+						break;
+					case "HelpVideoRWExportingDataMenuItem":
+						System.Diagnostics.Process.Start("https://www.youtube.com/v/kO0X6nvIiCg?autoplay=1&rel=0&showinfo=0");
+						break;
+					case "HelpVideoRWInventoryMenuItem":
+                        System.Diagnostics.Process.Start("https://www.youtube.com/v/xrkLTBP9jZs?autoplay=1&rel=0&showinfo=0");
+                        break;
+                    case "HelpVideoRWLoadDataMenuItem":
+                        System.Diagnostics.Process.Start("https://www.youtube.com/v/w2v_E3GaTbE?autoplay=1&rel=0&showinfo=0");
+                        break;
+                    case "HelpVideoRWOperationMenuItem":
+                        System.Diagnostics.Process.Start("https://www.youtube.com/v/MOWC-ljqo6s?autoplay=1&rel=0&showinfo=0");
+                        break;
+					case "HelpVideoRWSettingJumpMenuItem":
+						System.Diagnostics.Process.Start("https://www.youtube.com/v/qxTpO5z-Vto?autoplay=1&rel=0&showinfo=0");
+						break;
+					case "HelpVideoRWTargetCalculatorMenuItem":
+                        System.Diagnostics.Process.Start("https://www.youtube.com/v/WgaOR49oU-c?autoplay=1&rel=0&showinfo=0");
+                        break;
+                    case "HelpVideoSDBCMenuItem":
+                        System.Diagnostics.Process.Start("https://www.youtube.com/v/r5JdL_7saWg?autoplay=1&rel=0&showinfo=0");
+                        break;
+                    }
+                }
 			catch
 				{
 				MessageBox.Show("Unable to navigate to YouTube at this time, try again later.  Please make sure you are connected to the Internet.", "YouTube Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
-			/*
-						cVideoForm VideoForm = new cVideoForm("Bullet Selection", "https://www.youtube.com/v/bBy36tpgfTI?autoplay=1&rel=0&showinfo=0");
-
-						VideoForm.Show();
-			*/
-			}
-
-		//============================================================================*
-		// OnHelpVideoCrimpingClicked()
-		//============================================================================*
-
-		protected void OnHelpVideoCrimpingClicked(object sender, EventArgs args)
-			{
-			try
-				{
-				System.Diagnostics.Process.Start("https://www.youtube.com/v/MXWEfLE-tJg?autoplay=1&rel=0");
-				}
-			catch
-				{
-				MessageBox.Show("Unable to navigate to YouTube at this time, try again later.  Please make sure you are connected to the Internet.", "YouTube Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
-			/*
-						cVideoForm VideoForm = new cVideoForm("Crimping Handgun and Rifle Cartridges", "https://www.youtube.com/v/MXWEfLE-tJg?autoplay=1&rel=0&showinfo=0");
-
-						VideoForm.Show();
-			*/
-			}
-
-		//============================================================================*
-		// OnHelpVideoHeadspaceClicked()
-		//============================================================================*
-
-		protected void OnHelpVideoHeadspaceClicked(object sender, EventArgs args)
-			{
-			try
-				{
-				System.Diagnostics.Process.Start("https://www.youtube.com/v/OS5bfJ_2HNQ?autoplay=1&rel=0");
-				}
-			catch
-				{
-				MessageBox.Show("Unable to navigate to YouTube at this time, try again later.  Please make sure you are connected to the Internet.", "YouTube Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
-			/*
-						cVideoForm VideoForm = new cVideoForm("Understanding Headspace", "https://www.youtube.com/v/OS5bfJ_2HNQ?autoplay=1&rel=0&showinfo=0");
-
-						VideoForm.Show();
-			*/
-			}
-
-		//============================================================================*
-		// OnHelpVideoRWBaBallisticsCalculatorClicked()
-		//============================================================================*
-
-		protected void OnHelpVideoRWBallisticsCalculatorClicked(object sender, EventArgs args)
-			{
-			try
-				{
-				System.Diagnostics.Process.Start("https://www.youtube.com/v/6syoP-_TvZI?autoplay=1&rel=0");
-				}
-			catch
-				{
-				MessageBox.Show("Unable to navigate to YouTube at this time, try again later.  Please make sure you are connected to the Internet.", "YouTube Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
-			/*
-						cVideoForm VideoForm = new cVideoForm("Batch Editor Tutorial", "https://www.youtube.com/v/6syoP-_TvZI?autoplay=1&rel=0&showinfo=0");
-
-						VideoForm.Show();
-*/
-			}
-
-		//============================================================================*
-		// OnHelpVideoRWBatchEditorClicked()
-		//============================================================================*
-
-		protected void OnHelpVideoRWBatchEditorClicked(object sender, EventArgs args)
-			{
-			try
-				{
-				System.Diagnostics.Process.Start("https://www.youtube.com/v/FO5z6Qvo-Lg?autoplay=1&rel=0");
-				}
-			catch
-				{
-				MessageBox.Show("Unable to navigate to YouTube at this time, try again later.  Please make sure you are connected to the Internet.", "YouTube Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
-			/*
-			cVideoForm VideoForm = new cVideoForm("Batch Editor Tutorial", "https://www.youtube.com/v/FO5z6Qvo-Lg?autoplay=1&rel=0&showinfo=0");
-
-			VideoForm.Show();
-*/
-			}
-
-		//============================================================================*
-		// OnHelpVideoRWInventoryClicked()
-		//============================================================================*
-
-		protected void OnHelpVideoRWInventoryClicked(object sender, EventArgs args)
-			{
-			try
-				{
-				System.Diagnostics.Process.Start("https://www.youtube.com/v/xrkLTBP9jZs?autoplay=1&rel=0");
-				}
-			catch
-				{
-				MessageBox.Show("Unable to navigate to YouTube at this time, try again later.  Please make sure you are connected to the Internet.", "YouTube Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
-			/*
-			cVideoForm VideoForm = new cVideoForm("Inventory Control Tutorial", "https://www.youtube.com/v/xrkLTBP9jZs?autoplay=1&rel=0&showinfo=0");
-
-			VideoForm.Show();
-*/
-			}
-
-		//============================================================================*
-		// OnHelpVideoRWLoadDataClicked()
-		//============================================================================*
-
-		protected void OnHelpVideoRWLoadDataClicked(object sender, EventArgs args)
-			{
-			try
-				{
-				System.Diagnostics.Process.Start("https://www.youtube.com/v/w2v_E3GaTbE?autoplay=1&rel=0");
-				}
-			catch
-				{
-				MessageBox.Show("Unable to navigate to YouTube at this time, try again later.  Please make sure you are connected to the Internet.", "YouTube Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
-			/*
-			cVideoForm VideoForm = new cVideoForm("Load Data Tutorial", "https://www.youtube.com/v/w2v_E3GaTbE?autoplay=1&rel=0&showinfo=0");
-
-			VideoForm.Show();
-*/
-			}
-
-		//============================================================================*
-		// OnHelpVideoRWOperationClicked()
-		//============================================================================*
-
-		protected void OnHelpVideoRWOperationClicked(object sender, EventArgs args)
-			{
-			try
-				{
-				System.Diagnostics.Process.Start("https://www.youtube.com/v/MOWC-ljqo6s?autoplay=1&rel=0");
-				}
-			catch
-				{
-				MessageBox.Show("Unable to navigate to YouTube at this time, try again later.  Please make sure you are connected to the Internet.", "YouTube Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
-			/*
-			cVideoForm VideoForm = new cVideoForm("General Operation Tutorial", "https://www.youtube.com/v/MOWC-ljqo6s?autoplay=1&rel=0&showinfo=0");
-
-			VideoForm.Show();
-*/
-			}
-
-		//============================================================================*
-		// OnHelpVideoSDBCClicked()
-		//============================================================================*
-
-		protected void OnHelpVideoSDBCClicked(object sender, EventArgs args)
-			{
-			try
-				{
-				System.Diagnostics.Process.Start("https://www.youtube.com/v/r5JdL_7saWg?autoplay=1&rel=0&showinfo=0");
-				}
-			catch
-				{
-				MessageBox.Show("Unable to navigate to YouTube at this time, try again later.  Please make sure you are connected to the Internet.", "YouTube Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
-			/*
-			cVideoForm VideoForm = new cVideoForm("Sectional Density & Ballistic Coefficient", "https://www.youtube.com/v/r5JdL_7saWg?autoplay=1&rel=0&showinfo=0");
-
-			VideoForm.Show();
-*/
 			}
 
 		//============================================================================*
@@ -1278,7 +1153,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			if ((sender as TabControl).SelectedTab.Name == "InventoryTab" && !m_DataFiles.Preferences.TrackInventory)
+			if ((sender as TabControl).SelectedTab.Name == "InventoryTab" && !cPreferences.TrackInventory)
 				{
 				MessageBox.Show("You must activate Inventory Tracking on the Preferences Tab in order to use the Inventory Tab", "Inventory Tracking Not Activated", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 
@@ -1633,22 +1508,6 @@ namespace ReloadersWorkShop
 			m_BatchListView.Size = new Size(MainTabControl.Width, nButtonY - m_BatchListView.Location.Y - 20);
 
 			//----------------------------------------------------------------------------*
-			// Ballistics Tab
-			//----------------------------------------------------------------------------*
-			/*
-						int nX = (this.Width / 2) - (BallisticsDatabaseGroupBox.Width / 2);
-
-						BallisticsDatabaseGroupBox.Location = new Point(nX, BallisticsDatabaseGroupBox.Location.Y);
-
-						nX = (this.Width / 2) - (BallisticsInputDataGroupBox.Width / 2);
-
-						BallisticsInputDataGroupBox.Location = new Point(nX, BallisticsInputDataGroupBox.Location.Y);
-
-						nX = (BallisticsInputDataGroupBox.Width / 2) - (BallisticsCalculateButton.Width / 2);
-
-						BallisticsCalculateButton.Location = new Point(nX, BallisticsCalculateButton.Location.Y);
-			*/
-			//----------------------------------------------------------------------------*
 			// Ammo Tab
 			//----------------------------------------------------------------------------*
 
@@ -1877,6 +1736,17 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// OnToolsTargetCalculatorClicked()
+		//============================================================================*
+
+		private void OnToolsTargetCalculatorClicked(Object sender, EventArgs e)
+			{
+			cTargetCalculatorForm TargetCalculatorForm = new cTargetCalculatorForm(m_DataFiles, m_RWRegistry);
+
+			TargetCalculatorForm.ShowDialog();
+			}
+
+		//============================================================================*
 		// OnViewAmmoClicked()
 		//============================================================================*
 
@@ -1995,7 +1865,7 @@ namespace ReloadersWorkShop
 					ViewCheckedMenuItem.Text = "Checked Supplies &Only";
 					ViewCheckedMenuItem.Checked = m_DataFiles.Preferences.HideUncheckedSupplies;
 					ViewCheckedMenuItem.Visible = true;
-					ViewInventoryActivityMenuItem.Visible = m_DataFiles.Preferences.TrackInventory;
+					ViewInventoryActivityMenuItem.Visible = cPreferences.TrackInventory;
 
 					switch ((cSupply.eSupplyTypes) SupplyTypeCombo.SelectedIndex)
 						{
@@ -2050,7 +1920,7 @@ namespace ReloadersWorkShop
 					ViewCheckedMenuItem.Text = "Checked Only";
 					ViewCheckedMenuItem.Visible = false;
 					ViewCheckedMenuItem.Checked = false;
-					ViewInventoryActivityMenuItem.Visible = m_DataFiles.Preferences.TrackInventory;
+					ViewInventoryActivityMenuItem.Visible = cPreferences.TrackInventory;
 
 					break;
 				}
@@ -2156,7 +2026,7 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// OnViewsuppliesClicked()
+		// OnViewSuppliesClicked()
 		//============================================================================*
 
 		private void OnViewSuppliesClicked(Object sender, EventArgs e)

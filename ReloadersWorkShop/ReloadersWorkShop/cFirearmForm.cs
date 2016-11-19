@@ -390,7 +390,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_Firearm.BarrelLength = m_DataFiles.MetricToStandard(BarrelLengthTextBox.Value, cDataFiles.eDataType.Firearm);
+			m_Firearm.BarrelLength = cDataFiles.MetricToStandard(BarrelLengthTextBox.Value, cDataFiles.eDataType.Firearm);
 
 			m_fChanged = true;
 
@@ -548,7 +548,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_Firearm.HeadSpace = m_DataFiles.MetricToStandard(HeadSpaceTextBox.Value, cDataFiles.eDataType.Dimension);
+			m_Firearm.HeadSpace = cDataFiles.MetricToStandard(HeadSpaceTextBox.Value, cDataFiles.eDataType.Dimension);
 
 			m_fChanged = true;
 
@@ -619,7 +619,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_Firearm.Neck = m_DataFiles.MetricToStandard(NeckTextBox.Value, cDataFiles.eDataType.Dimension);
+			m_Firearm.Neck = cDataFiles.MetricToStandard(NeckTextBox.Value, cDataFiles.eDataType.Dimension);
 
 			m_fChanged = true;
 
@@ -753,7 +753,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_Firearm.SightHeight = m_DataFiles.MetricToStandard(SightHeightTextBox.Value, cDataFiles.eDataType.Firearm);
+			m_Firearm.SightHeight = cDataFiles.MetricToStandard(SightHeightTextBox.Value, cDataFiles.eDataType.Firearm);
 
 			m_fChanged = true;
 
@@ -785,7 +785,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_Firearm.Twist = m_DataFiles.MetricToStandard(TwistTextBox.Value, cDataFiles.eDataType.Firearm);
+			m_Firearm.Twist = cDataFiles.MetricToStandard(TwistTextBox.Value, cDataFiles.eDataType.Firearm);
 
 			m_fChanged = true;
 
@@ -801,7 +801,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_Firearm.ZeroRange = (int) m_DataFiles.MetricToStandard(ZeroRangeTextBox.Value, cDataFiles.eDataType.Range);
+			m_Firearm.ZeroRange = (int) cDataFiles.MetricToStandard(ZeroRangeTextBox.Value, cDataFiles.eDataType.Range);
 
 			m_fChanged = true;
 
@@ -888,9 +888,9 @@ namespace ReloadersWorkShop
 			ModelTextBox.Value = m_Firearm.Model;
 			SerialNumberTextBox.Value = m_Firearm.SerialNumber;
 
-			BarrelLengthTextBox.Value = m_DataFiles.StandardToMetric(m_Firearm.BarrelLength, cDataFiles.eDataType.Firearm);
-			TwistTextBox.Value = m_DataFiles.StandardToMetric(m_Firearm.Twist, cDataFiles.eDataType.Firearm);
-			SightHeightTextBox.Value = m_DataFiles.StandardToMetric(m_Firearm.SightHeight, cDataFiles.eDataType.Firearm);
+			BarrelLengthTextBox.Value = cDataFiles.StandardToMetric(m_Firearm.BarrelLength, cDataFiles.eDataType.Firearm);
+			TwistTextBox.Value = cDataFiles.StandardToMetric(m_Firearm.Twist, cDataFiles.eDataType.Firearm);
+			SightHeightTextBox.Value = cDataFiles.StandardToMetric(m_Firearm.SightHeight, cDataFiles.eDataType.Firearm);
 
 			ScopedCheckBox.Checked = m_Firearm.Scoped;
 			ScopeClickTextBox.Value = m_Firearm.ScopeClick;
@@ -899,13 +899,13 @@ namespace ReloadersWorkShop
 			TurretTypeComboBox.SelectedIndex = (int) m_Firearm.TurretType;
 			TurretTypeComboBox.Enabled = m_Firearm.Scoped;
 
-			HeadSpaceTextBox.Value = m_DataFiles.StandardToMetric(m_Firearm.HeadSpace, cDataFiles.eDataType.Dimension);
+			HeadSpaceTextBox.Value = cDataFiles.StandardToMetric(m_Firearm.HeadSpace, cDataFiles.eDataType.Dimension);
 			HeadSpaceTextBox.Enabled = FirearmTypeCombo.Value == cFirearm.eFireArmType.Rifle;
 
-			NeckTextBox.Value = m_DataFiles.StandardToMetric(m_Firearm.Neck, cDataFiles.eDataType.Dimension);
+			NeckTextBox.Value = cDataFiles.StandardToMetric(m_Firearm.Neck, cDataFiles.eDataType.Dimension);
 			NeckTextBox.Enabled = FirearmTypeCombo.Value == cFirearm.eFireArmType.Rifle;
 
-			ZeroRangeTextBox.Value = (int) m_DataFiles.StandardToMetric(m_Firearm.ZeroRange, cDataFiles.eDataType.Range);
+			ZeroRangeTextBox.Value = (int) cDataFiles.StandardToMetric(m_Firearm.ZeroRange, cDataFiles.eDataType.Range);
 
 			m_BulletListView.Populate();
 
@@ -942,27 +942,27 @@ namespace ReloadersWorkShop
 			// Set Measurement Labels
 			//----------------------------------------------------------------------------*
 
-			m_DataFiles.SetMetricLabel(BarrelMeasurementLabel, cDataFiles.eDataType.Firearm);
-			m_DataFiles.SetMetricLabel(TwistMeasurementLabel, cDataFiles.eDataType.Firearm);
-			m_DataFiles.SetMetricLabel(SightHeightMeasurementLabel, cDataFiles.eDataType.Firearm);
+			cDataFiles.SetMetricLabel(BarrelMeasurementLabel, cDataFiles.eDataType.Firearm);
+			cDataFiles.SetMetricLabel(TwistMeasurementLabel, cDataFiles.eDataType.Firearm);
+			cDataFiles.SetMetricLabel(SightHeightMeasurementLabel, cDataFiles.eDataType.Firearm);
 
-			m_DataFiles.SetMetricLabel(HeadspaceMeasurementLabel, cDataFiles.eDataType.Dimension);
-			m_DataFiles.SetMetricLabel(NeckSizeMeasurementLabel, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetMetricLabel(HeadspaceMeasurementLabel, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetMetricLabel(NeckSizeMeasurementLabel, cDataFiles.eDataType.Dimension);
 
-			m_DataFiles.SetMetricLabel(ZeroRangeDistancelabel, cDataFiles.eDataType.Range);
+			cDataFiles.SetMetricLabel(ZeroRangeDistancelabel, cDataFiles.eDataType.Range);
 
 			//----------------------------------------------------------------------------*
 			// Set Text Box Input Parameters
 			//----------------------------------------------------------------------------*
 
-			m_DataFiles.SetInputParameters(BarrelLengthTextBox, cDataFiles.eDataType.Firearm);
-			m_DataFiles.SetInputParameters(TwistTextBox, cDataFiles.eDataType.Firearm);
-			m_DataFiles.SetInputParameters(SightHeightTextBox, cDataFiles.eDataType.Firearm);
+			cDataFiles.SetInputParameters(BarrelLengthTextBox, cDataFiles.eDataType.Firearm);
+			cDataFiles.SetInputParameters(TwistTextBox, cDataFiles.eDataType.Firearm);
+			cDataFiles.SetInputParameters(SightHeightTextBox, cDataFiles.eDataType.Firearm);
 
-			m_DataFiles.SetInputParameters(HeadSpaceTextBox, cDataFiles.eDataType.Dimension);
-			m_DataFiles.SetInputParameters(NeckTextBox, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetInputParameters(HeadSpaceTextBox, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetInputParameters(NeckTextBox, cDataFiles.eDataType.Dimension);
 
-			m_DataFiles.SetInputParameters(ZeroRangeTextBox, cDataFiles.eDataType.Range);
+			cDataFiles.SetInputParameters(ZeroRangeTextBox, cDataFiles.eDataType.Range);
             }
 
 		//============================================================================*
@@ -975,14 +975,14 @@ namespace ReloadersWorkShop
 			// Set firearm specific Min/Max values
 			//----------------------------------------------------------------------------*
 
-			BarrelLengthTextBox.MinValue = m_DataFiles.StandardToMetric(1.0, cDataFiles.eDataType.Firearm);
-			BarrelLengthTextBox.MaxValue = m_DataFiles.StandardToMetric(99.0, cDataFiles.eDataType.Firearm);
+			BarrelLengthTextBox.MinValue = cDataFiles.StandardToMetric(1.0, cDataFiles.eDataType.Firearm);
+			BarrelLengthTextBox.MaxValue = cDataFiles.StandardToMetric(99.0, cDataFiles.eDataType.Firearm);
 
-			TwistTextBox.MinValue = m_DataFiles.StandardToMetric(5.0, cDataFiles.eDataType.Firearm);
-			TwistTextBox.MaxValue = m_DataFiles.StandardToMetric(78.0, cDataFiles.eDataType.Firearm);
+			TwistTextBox.MinValue = cDataFiles.StandardToMetric(5.0, cDataFiles.eDataType.Firearm);
+			TwistTextBox.MaxValue = cDataFiles.StandardToMetric(78.0, cDataFiles.eDataType.Firearm);
 
 			SightHeightTextBox.MinValue = 0.0;
-			SightHeightTextBox.MaxValue = m_DataFiles.StandardToMetric(10.0, cDataFiles.eDataType.Firearm);
+			SightHeightTextBox.MaxValue = cDataFiles.StandardToMetric(10.0, cDataFiles.eDataType.Firearm);
 
 			//----------------------------------------------------------------------------*
 			// Set Range Min/Max values
@@ -1003,12 +1003,12 @@ namespace ReloadersWorkShop
 			if (m_Firearm.PrimaryCaliber != null)
 				{
 				HeadSpaceTextBox.MinValue = 0.0;
-				HeadSpaceTextBox.MaxValue = m_DataFiles.StandardToMetric(m_Firearm.PrimaryCaliber.MaxCaseLength, cDataFiles.eDataType.Dimension);
+				HeadSpaceTextBox.MaxValue = cDataFiles.StandardToMetric(m_Firearm.PrimaryCaliber.MaxCaseLength, cDataFiles.eDataType.Dimension);
 
 				NeckTextBox.MinValue = 0.0;
 
 				if (m_Firearm.PrimaryCaliber.MaxNeckDiameter != 0.0)
-					NeckTextBox.MaxValue = m_DataFiles.StandardToMetric(m_Firearm.PrimaryCaliber.MaxNeckDiameter, cDataFiles.eDataType.Dimension);
+					NeckTextBox.MaxValue = cDataFiles.StandardToMetric(m_Firearm.PrimaryCaliber.MaxNeckDiameter, cDataFiles.eDataType.Dimension);
 				else
 					NeckTextBox.MaxValue = 0.0;
 				}
@@ -1356,6 +1356,15 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			OKButton.Enabled = fEnableOK;
+
+			//----------------------------------------------------------------------------*
+			// FirearmDetailButton
+			//----------------------------------------------------------------------------*
+
+			if (m_Firearm.Manufacturer != null && !String.IsNullOrEmpty(m_Firearm.Model) && !String.IsNullOrEmpty(m_Firearm.SerialNumber))
+				FirearmDetailsButton.Enabled = true;
+			else
+				FirearmDetailsButton.Enabled = false;
 
 			//----------------------------------------------------------------------------*
 			// Add, Edit, Remove Bullet Buttons

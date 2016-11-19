@@ -254,7 +254,7 @@ namespace ReloadersWorkShop
 			m_Transaction.ApplyTax = m_Transaction.Tax == 0.0 ? false : true;
 
 			if (m_Transaction.Supply.SupplyType == cSupply.eSupplyTypes.Powder)
-				m_Transaction.Quantity = m_DataFiles.MetricToStandard(m_Transaction.Quantity, cDataFiles.eDataType.CanWeight) * 7000.0;
+				m_Transaction.Quantity = cDataFiles.MetricToStandard(m_Transaction.Quantity, cDataFiles.eDataType.CanWeight) * 7000.0;
 
 			m_DataFiles.Preferences.LastActivity = m_Transaction.TransactionType;
 
@@ -302,7 +302,7 @@ namespace ReloadersWorkShop
 				double dCost = m_DataFiles.SupplyCostEach(m_Transaction.Supply);
 
 				if (m_Transaction.Supply.SupplyType == cSupply.eSupplyTypes.Powder)
-					dCost = m_DataFiles.StandardToMetric(dCost * 7000.0, cDataFiles.eDataType.CanWeight);
+					dCost = cDataFiles.StandardToMetric(dCost * 7000.0, cDataFiles.eDataType.CanWeight);
 
 				m_Transaction.Cost = dCost * m_Transaction.Quantity;
 
@@ -463,9 +463,10 @@ namespace ReloadersWorkShop
 
 			ComponentLabel.Text = String.Format("{0} {1}", m_Transaction.Supply.ToString(), cSupply.SupplyTypeString(m_Transaction.Supply));
 
-			TransactionTypeCombo.SelectedItem = cTransaction.TransactionTypeString(m_Transaction.TransactionType);
+            if (TransactionTypeCombo.FindString(cTransaction.TransactionTypeString(m_Transaction.TransactionType)) != -1)
+    			TransactionTypeCombo.SelectedItem = cTransaction.TransactionTypeString(m_Transaction.TransactionType);
 
-			if (TransactionTypeCombo.SelectedIndex == -1)
+			if (TransactionTypeCombo.SelectedIndex == -1 && TransactionTypeCombo.Items.Count > 0)
 				TransactionTypeCombo.SelectedIndex = 0;
 
 			SourceCombo.Text = m_Transaction.Source;
@@ -585,7 +586,7 @@ namespace ReloadersWorkShop
 				{
 				PowderWeightLabel.Visible = true;
 
-				PowderWeightLabel.Text = m_DataFiles.MetricString(cDataFiles.eDataType.CanWeight);
+				PowderWeightLabel.Text = cDataFiles.MetricString(cDataFiles.eDataType.CanWeight);
 				}
 
 			CostsGroup.Text = String.Format("Costs ({0})", m_DataFiles.Preferences.Currency);
@@ -594,12 +595,12 @@ namespace ReloadersWorkShop
 			// Set Text Box Parameters
 			//----------------------------------------------------------------------------*
 
-			m_DataFiles.SetInputParameters(QuantityTextBox, cDataFiles.eDataType.Quantity, m_Transaction.Supply.SupplyType == cSupply.eSupplyTypes.Powder);
+			cDataFiles.SetInputParameters(QuantityTextBox, cDataFiles.eDataType.Quantity, m_Transaction.Supply.SupplyType == cSupply.eSupplyTypes.Powder);
 
-			m_DataFiles.SetInputParameters(CostTextBox, cDataFiles.eDataType.Cost);
-			m_DataFiles.SetInputParameters(TaxTextBox, cDataFiles.eDataType.Cost);
-			m_DataFiles.SetInputParameters(ShippingTextBox, cDataFiles.eDataType.Cost);
-			m_DataFiles.SetInputParameters(TotalTextBox, cDataFiles.eDataType.Cost);
+			cDataFiles.SetInputParameters(CostTextBox, cDataFiles.eDataType.Cost);
+			cDataFiles.SetInputParameters(TaxTextBox, cDataFiles.eDataType.Cost);
+			cDataFiles.SetInputParameters(ShippingTextBox, cDataFiles.eDataType.Cost);
+			cDataFiles.SetInputParameters(TotalTextBox, cDataFiles.eDataType.Cost);
 			}
 
 		//============================================================================*
@@ -641,7 +642,7 @@ namespace ReloadersWorkShop
 			double dSupplyQty = m_Transaction.Supply.QuantityOnHand + m_dRefQuantity;
 
 			if (m_Transaction.Supply.SupplyType == cSupply.eSupplyTypes.Powder)
-				dSupplyQty = m_DataFiles.StandardToMetric(dSupplyQty / 7000.0, cDataFiles.eDataType.CanWeight);
+				dSupplyQty = cDataFiles.StandardToMetric(dSupplyQty / 7000.0, cDataFiles.eDataType.CanWeight);
 
 			QuantityTextBox.MinValue = m_Transaction.Supply.SupplyType == cSupply.eSupplyTypes.Powder ? 0.01 : 1.0;
 

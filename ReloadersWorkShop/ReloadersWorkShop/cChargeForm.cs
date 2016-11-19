@@ -184,10 +184,10 @@ namespace ReloadersWorkShop
 			// Set Column Headers
 			//----------------------------------------------------------------------------*
 
-			ChargeTestListView.Columns[1].Text += String.Format(" ({0})", m_DataFiles.MetricString(cDataFiles.eDataType.Firearm));
-			ChargeTestListView.Columns[3].Text += String.Format(" ({0})", m_DataFiles.MetricString(cDataFiles.eDataType.Velocity));
-			ChargeTestListView.Columns[5].Text += String.Format(" ({0})", m_DataFiles.MetricString(cDataFiles.eDataType.GroupSize));
-			ChargeTestListView.Columns[6].Text += String.Format(" ({0})", m_DataFiles.MetricString(cDataFiles.eDataType.Range));
+			ChargeTestListView.Columns[1].Text += String.Format(" ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Firearm));
+			ChargeTestListView.Columns[3].Text += String.Format(" ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Velocity));
+			ChargeTestListView.Columns[5].Text += String.Format(" ({0})", cDataFiles.MetricString(cDataFiles.eDataType.GroupSize));
+			ChargeTestListView.Columns[6].Text += String.Format(" ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Range));
 
 			//----------------------------------------------------------------------------*
 			// Fill in load data
@@ -428,7 +428,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_Charge.PowderWeight = m_DataFiles.MetricToStandard(PowderWeightTextBox.Value, cDataFiles.eDataType.PowderWeight);
+			m_Charge.PowderWeight = cDataFiles.MetricToStandard(PowderWeightTextBox.Value, cDataFiles.eDataType.PowderWeight);
 
 			UpdateButtons();
 			}
@@ -494,7 +494,7 @@ namespace ReloadersWorkShop
 
 		private void PopulateChargeData()
 			{
-			PowderWeightTextBox.Value = m_DataFiles.StandardToMetric(m_Charge.PowderWeight, cDataFiles.eDataType.PowderWeight);
+			PowderWeightTextBox.Value = cDataFiles.StandardToMetric(m_Charge.PowderWeight, cDataFiles.eDataType.PowderWeight);
 			FillRatioTextBox.Value = m_Charge.FillRatio;
 
 			FavoriteRadioButton.Checked = m_Charge.Favorite;
@@ -514,11 +514,11 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			string strFirearmFormat = "{0:F";
-			strFirearmFormat += String.Format("{0:G0}", m_DataFiles.Preferences.FirearmDecimals);
+			strFirearmFormat += String.Format("{0:G0}", cPreferences.FirearmDecimals);
 			strFirearmFormat += "}";
 
 			string strGroupFormat = "{0:F";
-			strGroupFormat += String.Format("{0:G0}", m_DataFiles.Preferences.GroupDecimals);
+			strGroupFormat += String.Format("{0:G0}", cPreferences.GroupDecimals);
 			strGroupFormat += "}";
 
 			//----------------------------------------------------------------------------*
@@ -549,11 +549,11 @@ namespace ReloadersWorkShop
 
 				string strFormat = "1 in " + strFirearmFormat + " {1}";
 
-				Item.SubItems.Add(String.Format(strFormat, m_DataFiles.StandardToMetric(ChargeTest.Twist, cDataFiles.eDataType.Firearm), m_DataFiles.MetricString(cDataFiles.eDataType.Firearm)));
-				Item.SubItems.Add(String.Format("{0:N0}", m_DataFiles.StandardToMetric(ChargeTest.MuzzleVelocity, cDataFiles.eDataType.Velocity)));
+				Item.SubItems.Add(String.Format(strFormat, cDataFiles.StandardToMetric(ChargeTest.Twist, cDataFiles.eDataType.Firearm), cDataFiles.MetricString(cDataFiles.eDataType.Firearm)));
+				Item.SubItems.Add(String.Format("{0:N0}", cDataFiles.StandardToMetric(ChargeTest.MuzzleVelocity, cDataFiles.eDataType.Velocity)));
 				Item.SubItems.Add(String.Format("{0:N0}", ChargeTest.Pressure));
-				Item.SubItems.Add(String.Format(strGroupFormat, m_DataFiles.StandardToMetric(ChargeTest.BestGroup, cDataFiles.eDataType.GroupSize)));
-				Item.SubItems.Add(String.Format("{0:N0}", m_DataFiles.StandardToMetric(ChargeTest.BestGroupRange, cDataFiles.eDataType.Range)));
+				Item.SubItems.Add(String.Format(strGroupFormat, cDataFiles.StandardToMetric(ChargeTest.BestGroup, cDataFiles.eDataType.GroupSize)));
+				Item.SubItems.Add(String.Format("{0:N0}", cDataFiles.StandardToMetric(ChargeTest.BestGroupRange, cDataFiles.eDataType.Range)));
 
 				try
 					{
@@ -578,13 +578,13 @@ namespace ReloadersWorkShop
 			// Set metric/standard labels
 			//----------------------------------------------------------------------------*
 
-			m_DataFiles.SetMetricLabel(ChargeMeasurementLabel, cDataFiles.eDataType.PowderWeight);
+			cDataFiles.SetMetricLabel(ChargeMeasurementLabel, cDataFiles.eDataType.PowderWeight);
 
 			//----------------------------------------------------------------------------*
 			// Set Text Box Parameters
 			//----------------------------------------------------------------------------*
 
-			m_DataFiles.SetInputParameters(PowderWeightTextBox, cDataFiles.eDataType.PowderWeight);
+			cDataFiles.SetInputParameters(PowderWeightTextBox, cDataFiles.eDataType.PowderWeight);
 			}
 
 		//============================================================================*
@@ -651,11 +651,11 @@ namespace ReloadersWorkShop
 
 				fDuplicate = false;
 
-				if (PowderWeightTextBox.Value != m_DataFiles.StandardToMetric(m_dOriginalCharge, cDataFiles.eDataType.PowderWeight))
+				if (PowderWeightTextBox.Value != cDataFiles.StandardToMetric(m_dOriginalCharge, cDataFiles.eDataType.PowderWeight))
 					{
 					foreach (cCharge CheckCharge in m_Load.ChargeList)
 						{
-						if (m_DataFiles.StandardToMetric(CheckCharge.PowderWeight, cDataFiles.eDataType.PowderWeight) == PowderWeightTextBox.Value)
+						if (cDataFiles.StandardToMetric(CheckCharge.PowderWeight, cDataFiles.eDataType.PowderWeight) == PowderWeightTextBox.Value)
 							{
 							fDuplicate = true;
 
@@ -663,7 +663,7 @@ namespace ReloadersWorkShop
 
 							PowderWeightTextBox.BackColor = Color.LightPink;
 
-							string strErrorMessage = String.Format("This powder weight, \"{0:F1} {1}\", already exists for this load.  Duplicate charges are not allowed.", PowderWeightTextBox.Value, m_DataFiles.MetricString(cDataFiles.eDataType.PowderWeight));
+							string strErrorMessage = String.Format("This powder weight, \"{0:F1} {1}\", already exists for this load.  Duplicate charges are not allowed.", PowderWeightTextBox.Value, cDataFiles.MetricString(cDataFiles.eDataType.PowderWeight));
 
 							strToolTip += strErrorMessage;
 

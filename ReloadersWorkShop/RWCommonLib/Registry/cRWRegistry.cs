@@ -184,7 +184,7 @@ namespace RWCommonLib.Registry
 				{
 				foreach (char chChar in strUserName)
 					{
-					if (!Char.IsLetter(chChar) && chChar != ' ' && chChar !='\'' && chChar != '&' && chChar != '-')
+					if (!Char.IsLetter(chChar) && chChar != ' ' && chChar !='\'' && chChar != '&' && chChar != '-' && chChar != ',')
 						{
 						fOK = false;
 

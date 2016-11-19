@@ -10,6 +10,7 @@
 //============================================================================*
 
 using System;
+using System.Media;
 using System.Net.Mail;
 using System.Windows.Forms;
 
@@ -33,6 +34,11 @@ namespace CreateActivationKey
 		//============================================================================*
 
 		private cRWRegistry m_RWRegistry = null;
+
+		private  cRWLicenseList m_RWLicenseList = null;
+
+		private bool m_fGetKey = false;
+		private bool m_fAddKey = false;
 
 		//============================================================================*
 		// MainForm() - Constructor
@@ -73,9 +79,31 @@ namespace CreateActivationKey
 			cKeyCommand.eErrorCodes eErrorCode = RWLicenseCommands.AddLicense(NameTextBox.Value, EmailTextBox.Value, strKey);
 
 			if (eErrorCode == cKeyCommand.eErrorCodes.None)
+				{
 				LicenseCountLabel.Text = "License Added Successfully!";
+
+				m_fAddKey = true;
+
+				m_RWLicenseList = null;
+
+				eErrorCode = RWLicenseCommands.GetLicenseList(NameTextBox.Value, EmailTextBox.Value, strKey, out m_RWLicenseList);
+
+				if (eErrorCode == cKeyCommand.eErrorCodes.None)
+					{
+					LicenseCountLabel.Text = String.Format("{0:G0} current licenses", m_RWLicenseList.Count);
+
+					AdditionalLicenseCheckBox.Checked = m_RWLicenseList.Count > 1;
+					}
+				else
+					{
+					LicenseCountLabel.Text = String.Format("Error {0} encountered during GetLicenseList() operation.", cKeyCommand.ErrorString(eErrorCode));
+					}
+				}
 			else
 				LicenseCountLabel.Text = String.Format("Error {0} Adding License!", eErrorCode);
+
+			if (m_RWLicenseList.Count > 1)
+				AdditionalLicenseCheckBox.Checked = true;
 
 			UpdateButtons();
 			}
@@ -97,6 +125,11 @@ namespace CreateActivationKey
 			{
 			KeyLabel.Text = "";
 			ValidatedLabel.Text = "";
+
+			LicenseCountLabel.Text = "";
+
+			m_fGetKey = false;
+			m_fAddKey = false;
 
 			UpdateButtons();
 			}
@@ -131,13 +164,18 @@ namespace CreateActivationKey
 				{
 				cRWLicenseCommands RWLicenseCommands = new cRWLicenseCommands();
 
-				cRWLicenseList RWLicenseList = null;
+				m_RWLicenseList = null;
 
-				cKeyCommand.eErrorCodes eErrorCode = RWLicenseCommands.GetLicenseList(NameTextBox.Value, EmailTextBox.Value, strKey, out RWLicenseList);
+				cKeyCommand.eErrorCodes eErrorCode = RWLicenseCommands.GetLicenseList(NameTextBox.Value, EmailTextBox.Value, strKey, out m_RWLicenseList);
 
 				if (eErrorCode == cKeyCommand.eErrorCodes.None)
 					{
-					LicenseCountLabel.Text = String.Format("{0:G0} current licenses", RWLicenseList.Count);
+					LicenseCountLabel.Text = String.Format("{0:G0} current licenses", m_RWLicenseList.Count);
+
+					if (m_RWLicenseList.Count > 0)
+						AdditionalLicenseCheckBox.Checked = true;
+
+					m_fGetKey = true;
 					}
 				else
 					{
@@ -156,6 +194,11 @@ namespace CreateActivationKey
 			{
 			KeyLabel.Text = "";
 			ValidatedLabel.Text = "";
+
+			LicenseCountLabel.Text = "";
+
+			m_fGetKey = false;
+			m_fAddKey = false;
 
 			UpdateButtons();
 			}
@@ -178,7 +221,18 @@ namespace CreateActivationKey
 
 				Email.Body = String.Format("Hello {0},\n\n", NameTextBox.Value);
 
-				Email.Body += "Thank you for purchasing a license to use Reloader's WorkShop!  We appreciate your business.  Your Activation Key and other needed information is listed below.\n\n";
+				Email.Body += "Thank you for purchasing ";
+
+				if (AdditionalLicenseCheckBox.Checked)
+					Email.Body += "an additional license to use Reloader's WorkShop! ";
+				else
+					Email.Body += "a license to use Reloader's WorkShop! ";
+
+				Email.Body += "We appreciate your business. ";
+
+				Email.Body += String.Format("You now have a license to run Reloader's WorkShop on {0:G0} computer{1}.\n\n", m_RWLicenseList.Count, m_RWLicenseList.Count > 1 ? "s" : "");
+
+				Email.Body += "Your Activation Key and other needed information is listed below.\n\n";
 
 				Email.Body += String.Format("Name: {0}\n", NameTextBox.Value);
 				Email.Body += String.Format("Email: {0}\n", EmailTextBox.Value);
@@ -234,7 +288,7 @@ namespace CreateActivationKey
 			bool fEnableOK = true;
 
 			if (!VersionTextBox.ValueOK)
-				fEnableOK = false;
+				fEnableOK = true;
 
 			if (fEnableOK)
 				{
@@ -253,19 +307,24 @@ namespace CreateActivationKey
 				fEnableOK = cRWRegistry.CheckParms(NameTextBox.Value, EmailTextBox.Value, VersionTextBox.Value);
 				}
 
-			GetKeyButton.Enabled = fEnableOK;
+			if (!fEnableOK)
+				{
+				m_fGetKey = false;
+				m_fAddKey = false;
+				}
 
-			bool fEnableSend = true;
-			bool fEnableAdd = true;
+			bool fEnableSend = m_fGetKey && fEnableOK;
+			bool fEnableAdd = m_fGetKey && fEnableOK;
 
-			if (!cRWRegistry.ValidateKey(KeyLabel.Text, NameTextBox.Value, EmailTextBox.Value, VersionTextBox.Value))
+			if (!m_fGetKey || !cRWRegistry.ValidateKey(KeyLabel.Text, NameTextBox.Value, EmailTextBox.Value, VersionTextBox.Value))
 				{
 				fEnableSend = false;
 				fEnableAdd = false;
 				}
 
-			SendButton.Enabled = fEnableOK && fEnableSend;
-			AddLicenseButton.Enabled = fEnableOK && fEnableAdd;
+			GetKeyButton.Enabled = !m_fGetKey;
+			SendButton.Enabled = m_fGetKey && fEnableSend && m_fAddKey;
+			AddLicenseButton.Enabled = !m_fAddKey && fEnableAdd;
 			}
 		}
 	}

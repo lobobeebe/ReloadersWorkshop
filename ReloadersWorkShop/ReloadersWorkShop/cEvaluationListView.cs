@@ -301,11 +301,11 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			string strChargeFormat = "{0:F";
-			strChargeFormat += String.Format("{0:G0}", m_DataFiles.Preferences.PowderWeightDecimals);
+			strChargeFormat += String.Format("{0:G0}", cPreferences.PowderWeightDecimals);
 			strChargeFormat += "}";
 
 			string strGroupFormat = "{0:F";
-			strGroupFormat += String.Format("{0:G0}", m_DataFiles.Preferences.GroupDecimals);
+			strGroupFormat += String.Format("{0:G0}", cPreferences.GroupDecimals);
 			strGroupFormat += "}";
 
 			//----------------------------------------------------------------------------*
@@ -342,12 +342,12 @@ namespace ReloadersWorkShop
 					Item.SubItems.Add(Load.Powder.ToString());
 					Item.SubItems.Add(Load.Primer.ToShortString());
 					Item.SubItems.Add(Load.Case.ToShortString());
-					Item.SubItems.Add(String.Format(strChargeFormat, m_DataFiles.StandardToMetric(Charge.PowderWeight, cDataFiles.eDataType.PowderWeight)));
+					Item.SubItems.Add(String.Format(strChargeFormat, cDataFiles.StandardToMetric(Charge.PowderWeight, cDataFiles.eDataType.PowderWeight)));
 
 					if (ChargeTest.BestGroup == 0.0)
 						Item.SubItems.Add("-");
 					else
-						Item.SubItems.Add(String.Format(strGroupFormat, m_DataFiles.StandardToMetric( ChargeTest.BestGroup, cDataFiles.eDataType.GroupSize)));
+						Item.SubItems.Add(String.Format(strGroupFormat, cDataFiles.StandardToMetric( ChargeTest.BestGroup, cDataFiles.eDataType.GroupSize)));
 
 					if (ChargeTest.BestGroupRange == 0.0)
 						{
@@ -357,13 +357,13 @@ namespace ReloadersWorkShop
 					else
 						{
 						Item.SubItems.Add(String.Format("{0:F3}", ChargeTest.BestGroup / ((double) ((double) ChargeTest.BestGroupRange / 100.0) * 1.047)));
-						Item.SubItems.Add(String.Format("{0:N0}", m_DataFiles.StandardToMetric(ChargeTest.BestGroupRange, cDataFiles.eDataType.Range)));
+						Item.SubItems.Add(String.Format("{0:N0}", cDataFiles.StandardToMetric(ChargeTest.BestGroupRange, cDataFiles.eDataType.Range)));
 						}
 
 					if (ChargeTest.MuzzleVelocity == 0)
 						Item.SubItems.Add("-");
 					else
-						Item.SubItems.Add(String.Format("{0:N0}", m_DataFiles.StandardToMetric(ChargeTest.MuzzleVelocity, cDataFiles.eDataType.Velocity)));
+						Item.SubItems.Add(String.Format("{0:N0}", cDataFiles.StandardToMetric(ChargeTest.MuzzleVelocity, cDataFiles.eDataType.Velocity)));
 
 					cBatch Batch = m_DataFiles.GetBatchByID(ChargeTest.BatchID);
 
@@ -374,17 +374,17 @@ namespace ReloadersWorkShop
 						}
 					else
 						{
-						cTestStatistics Statistics = Batch.BatchTest.TestShotList.GetStatistics();
+						cTestStatistics Statistics = Batch.BatchTest.TestShotList.GetStatistics(Batch.NumRounds);
 
 						if (Statistics.MaxDeviation == 0)
 							Item.SubItems.Add("-");
 						else
-							Item.SubItems.Add(String.Format("{0:N0}", m_DataFiles.StandardToMetric(Statistics.MaxDeviation, cDataFiles.eDataType.Velocity)));
+							Item.SubItems.Add(String.Format("{0:N0}", cDataFiles.StandardToMetric(Statistics.MaxDeviation, cDataFiles.eDataType.Velocity)));
 
 						if (Statistics.StdDev == 0.0)
 							Item.SubItems.Add("-");
 						else
-							Item.SubItems.Add(String.Format("{0:F2}", m_DataFiles.StandardToMetric(Statistics.StdDev, cDataFiles.eDataType.Velocity)));
+							Item.SubItems.Add(String.Format("{0:F2}", cDataFiles.StandardToMetric(Statistics.StdDev, cDataFiles.eDataType.Velocity)));
 						}
 
 					//----------------------------------------------------------------------------*

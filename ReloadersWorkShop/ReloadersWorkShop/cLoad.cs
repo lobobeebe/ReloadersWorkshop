@@ -10,6 +10,7 @@
 //============================================================================*
 
 using System;
+using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -262,6 +263,124 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// CSVHeader Property
+		//============================================================================*
+
+		public static string CSVHeader
+			{
+			get
+				{
+				return ("Loads");
+				}
+			}
+
+		//============================================================================*
+		// CSVLine Property
+		//============================================================================*
+
+		public string CSVLine
+			{
+			get
+				{
+				string strLine = "";
+
+				strLine += cFirearm.FirearmTypeString(FirearmType);
+				strLine += ",";
+				strLine += m_Caliber;
+				strLine += ",";
+
+				strLine += m_Bullet.ToString();
+				strLine += ",";
+
+				strLine += m_Powder.ToString();
+				strLine += ",";
+
+				strLine += m_Case.ToString();
+				strLine += ",";
+
+				strLine += m_Primer.ToString();
+				strLine += ",";
+
+				return (strLine);
+				}
+			}
+
+		//============================================================================*
+		// CSVLineHeader Property
+		//============================================================================*
+
+		public static string CSVLineHeader
+			{
+			get
+				{
+				return ("Firearm Type,Caliber,Bullet,Powder,Case,Primer");
+				}
+			}
+
+		//============================================================================*
+		// Export() - XML Document
+		//============================================================================*
+
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement, bool fIncludeCharges = true)
+			{
+			XmlElement XMLThisElement = XMLDocument.CreateElement("Load");
+			XMLParentElement.AppendChild(XMLThisElement);
+
+			cCaliber.CurrentFirearmType = FirearmType;
+
+			// Caliber
+
+			XmlElement XMLElement = XMLDocument.CreateElement("Caliber");
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(m_Caliber.Name);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Firearm Type
+
+			XMLElement = XMLDocument.CreateElement("FirearmType");
+			XMLTextElement = XMLDocument.CreateTextNode(cFirearm.FirearmTypeString(FirearmType));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Bullet
+
+			XMLElement = XMLDocument.CreateElement("Bullet");
+			XMLTextElement = XMLDocument.CreateTextNode(m_Bullet.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Powder
+
+			XMLElement = XMLDocument.CreateElement("Powder");
+			XMLTextElement = XMLDocument.CreateTextNode(m_Powder.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Primer
+
+			XMLElement = XMLDocument.CreateElement("Primer");
+			XMLTextElement = XMLDocument.CreateTextNode(m_Primer.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Case
+
+			XMLElement = XMLDocument.CreateElement("Case");
+			XMLTextElement = XMLDocument.CreateTextNode(m_Case.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			if (m_ChargeList.Count > 0 && fIncludeCharges)
+				m_ChargeList.Export(XMLDocument, XMLThisElement);
+			}
+
+		//============================================================================*
 		// FirearmType Property
 		//============================================================================*
 
@@ -415,6 +534,46 @@ namespace ReloadersWorkShop
 			strLoadString += " Primer";
 
 			return (strLoadString);
+			}
+
+		//============================================================================*
+		// XMLHeader Property
+		//============================================================================*
+
+		public static string XMLHeader
+			{
+			get
+				{
+				return ("Cases");
+				}
+			}
+
+		//============================================================================*
+		// XMLLine Property
+		//============================================================================*
+
+		public string XMLLine
+			{
+			get
+				{
+				string strLine = "";
+
+				return (strLine);
+				}
+			}
+
+		//============================================================================*
+		// XMLLineHeader Property
+		//============================================================================*
+
+		public static string XMLLineHeader
+			{
+			get
+				{
+				string strLine = "Firearm Type,Name,Headstamp,Handgun Type,Small Primer,Large Primer,Magnum Primer,Min Bullet Dia.,Max Bullet Dia.,Min Bullet Weight,Max Bullet Weight,Case Trim Length,Max Case Length,Max COAL,Max Neck Dia";
+
+				return (strLine);
+				}
 			}
 		}
 	}
