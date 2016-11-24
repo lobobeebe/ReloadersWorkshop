@@ -264,7 +264,7 @@ namespace ReloadersWorkShop
 			// Operations that are always performed
 			//----------------------------------------------------------------------------*
 
-			SuppliesInventoryGroup.Visible = cPreferences.TrackInventory;
+			SuppliesInventoryGroup.Visible = m_DataFiles.Preferences.TrackInventory;
 
 			PopulateSupplyTab();
 
@@ -1292,7 +1292,7 @@ namespace ReloadersWorkShop
 					CheckBullet.MinimumStockLevel = Bullet.MinimumStockLevel;
 					CheckBullet.Checked = Bullet.Checked;
 
-					if (!cPreferences.TrackInventory)
+					if (!m_DataFiles.Preferences.TrackInventory)
 						{
 						CheckBullet.Quantity = Bullet.Quantity;
 						CheckBullet.Cost = Bullet.Cost;
@@ -1518,7 +1518,7 @@ namespace ReloadersWorkShop
 					// Set the quantities, costs, etc.
 					//----------------------------------------------------------------------------*
 
-					if (!cPreferences.TrackInventory)
+					if (!m_DataFiles.Preferences.TrackInventory)
 						{
 						CheckPowder.Quantity = NewPowder.Quantity;
 						CheckPowder.Cost = NewPowder.Cost;

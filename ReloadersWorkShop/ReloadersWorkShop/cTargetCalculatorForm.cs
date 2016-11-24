@@ -283,7 +283,7 @@ namespace ReloadersWorkShop
 			// Metric Scale Bar
 			//----------------------------------------------------------------------------*
 
-			if (cPreferences.MetricGroups)
+			if (m_DataFiles.Preferences.MetricGroups)
 				{
 				int nIncrements = CalibrationBar.Width / (m_Target.PixelsPerCentimeter / 10);
 
@@ -2186,7 +2186,7 @@ namespace ReloadersWorkShop
 				dBulletDiameter = m_BatchTest.Batch.BulletDiameter;
 
 			string strDimensionFormat = "{0:F";
-			strDimensionFormat += String.Format("{0:G0}", cPreferences.DimensionDecimals);
+			strDimensionFormat += String.Format("{0:G0}", m_DataFiles.Preferences.DimensionDecimals);
 			strDimensionFormat += "} ";
 			strDimensionFormat += cDataFiles.MetricString(cDataFiles.eDataType.Dimension);
 
@@ -2344,7 +2344,7 @@ namespace ReloadersWorkShop
 				}
 
 			string strGroupFormat = "{0:F";
-			strGroupFormat += String.Format("{0:G0}", cPreferences.GroupDecimals);
+			strGroupFormat += String.Format("{0:G0}", m_DataFiles.Preferences.GroupDecimals);
 			strGroupFormat += "} {1}";
 
 			GroupSizeLabel.Text = String.Format(strGroupFormat, cDataFiles.StandardToMetric(dGroupSize, cDataFiles.eDataType.GroupSize), cDataFiles.MetricString(cDataFiles.eDataType.GroupSize));

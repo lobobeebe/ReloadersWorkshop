@@ -200,11 +200,11 @@ namespace ReloadersWorkShop
 			Cursor = Cursors.WaitCursor;
 
 			m_strDimensionFormat = "{0:F";
-			m_strDimensionFormat += String.Format("{0:G0}", cPreferences.DimensionDecimals);
+			m_strDimensionFormat += String.Format("{0:G0}", m_DataFiles.Preferences.DimensionDecimals);
 			m_strDimensionFormat += "}";
 
 			m_strBulletWeightFormat = "{0:F";
-			m_strBulletWeightFormat += String.Format("{0:G0}", cPreferences.BulletWeightDecimals);
+			m_strBulletWeightFormat += String.Format("{0:G0}", m_DataFiles.Preferences.BulletWeightDecimals);
 			m_strBulletWeightFormat += "}";
 
 			Items.Clear();

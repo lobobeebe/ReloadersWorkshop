@@ -172,7 +172,7 @@ namespace ReloadersWorkShop
 
 				// Purchase Price
 
-				TextSize = e.Graphics.MeasureString(String.Format("{0:F2}", Firearm.Price), DataFont);
+				TextSize = e.Graphics.MeasureString(String.Format("{0:F2}", Firearm.PurchasePrice), DataFont);
 
 				if (TextSize.Width > m_Columns[4].Width)
 					m_Columns[4].Width = TextSize.Width;
@@ -368,7 +368,7 @@ namespace ReloadersWorkShop
 
 					// Purchase Price
 
-					strText = String.Format("{0}{1:F2}", m_DataFiles.Preferences.Currency, Firearm.Price);
+					strText = String.Format("{0}{1:F2}", m_DataFiles.Preferences.Currency, Firearm.PurchasePrice);
 
 					TextSize = e.Graphics.MeasureString(strText, DataFont);
 

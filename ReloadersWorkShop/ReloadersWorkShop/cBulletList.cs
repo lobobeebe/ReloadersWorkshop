@@ -80,7 +80,7 @@ namespace ReloadersWorkShop
 			{
 			if (Count > 0)
 				{
-				XmlElement XMLElement = XMLDocument.CreateElement(string.Empty, "Calibers", string.Empty);
+				XmlElement XMLElement = XMLDocument.CreateElement(string.Empty, "Bullets", string.Empty);
 				XMLParentElement.AppendChild(XMLElement);
 
 				foreach (cBullet Bullet in this)

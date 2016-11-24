@@ -228,7 +228,7 @@ namespace ReloadersWorkShop
 					if (m_nTimesFired > 0)
 						dCaseCost = dCaseCost / (double) ((double) m_nTimesFired + 1.0);
 
-					dPowderCost = Load.Powder.CostEach * (m_dPowderWeight / (cPreferences.MetricCanWeights ? 1000.0 : 7000.0));
+					dPowderCost = Load.Powder.CostEach * (m_dPowderWeight / (cPreferences.StaticPreferences.MetricCanWeights ? 1000.0 : 7000.0));
 
 					dPrimerCost = Load.Primer.CostEach;
 					}

@@ -228,10 +228,10 @@ namespace ReloadersWorkShop
 					strText += " on ";
 					strText += Firearm.PurchaseDate.ToLongDateString();
 
-					if (Firearm.Price > 0.0)
+					if (Firearm.PurchasePrice > 0.0)
 						{
 						strText += " for ";
-						strText += String.Format("{0}{1:F2}.", m_DataFiles.Preferences.Currency, Firearm.Price);
+						strText += String.Format("{0}{1:F2}.", m_DataFiles.Preferences.Currency, Firearm.PurchasePrice);
 						}
 					else
 						strText += " at no cost.";
@@ -370,111 +370,6 @@ namespace ReloadersWorkShop
 					e.Graphics.DrawString(strText, DataFont, Brushes.Black, nLeftMargin + (PageAreaRect.Width / 2) - (TextSize.Width / 2), nY);
 
 					nY += (TextSize.Height * 2);
-					}
-
-				//----------------------------------------------------------------------------*
-				// Stock/Grip
-				//----------------------------------------------------------------------------*
-
-				strText = "";
-				bool fNoStock = true;
-
-				if ((Firearm.StockManufacturer != null && Firearm.StockManufacturer.CompareTo(Firearm.Manufacturer) != 0) || ((Firearm.StockModel != null && Firearm.StockModel.Length > 0) || (Firearm.StockFinish != null && Firearm.StockFinish.Length != 0)))
-					{
-					fNoStock = false;
-
-					switch (Firearm.Type)
-						{
-						case "Rifle":
-						case "Shotgun":
-							strText = String.Format("{0}", Firearm.StockManufacturer.ToString());
-
-							if (Firearm.StockModel != null && Firearm.StockModel.Length > 0)
-								strText += String.Format(" {0}", Firearm.StockModel);
-
-							strText += " Stock";
-
-							if (Firearm.StockFinish != null && Firearm.StockFinish.Length > 0)
-								strText += String.Format(" in {0}", Firearm.StockFinish);
-
-							break;
-
-						case "Revolver":
-						case "Derringer":
-						case "Pistol":
-							strText = String.Format("{0}", Firearm.StockManufacturer.ToString());
-
-							if (Firearm.StockModel != null && Firearm.StockModel.Length > 0)
-								strText += String.Format(" {0}", Firearm.StockModel);
-
-							strText += " Grip";
-
-							if (Firearm.StockFinish != null && Firearm.StockFinish.Length > 0)
-								strText += String.Format(" in {0}", Firearm.StockFinish);
-
-							break;
-						}
-
-					TextSize = e.Graphics.MeasureString(strText, DataFont);
-
-					e.Graphics.DrawString(strText, DataFont, Brushes.Black, nLeftMargin + (PageAreaRect.Width / 2) - (TextSize.Width / 2), nY);
-
-					nY += TextSize.Height;
-					}
-
-				//----------------------------------------------------------------------------*
-				// Trigger
-				//----------------------------------------------------------------------------*
-
-				strText = "";
-				bool fNoTrigger = true;
-
-				if ((Firearm.TriggerManufacturer != null && Firearm.TriggerManufacturer.CompareTo(Firearm.Manufacturer) != 0) || ((Firearm.TriggerModel != null && Firearm.TriggerModel.Length > 0) || Firearm.TriggerPull != 0.0))
-					{
-					fNoTrigger = false;
-
-					strText = String.Format("{0}", Firearm.TriggerManufacturer.ToString());
-
-					if (Firearm.TriggerModel != null && Firearm.TriggerModel.Length > 0)
-						strText += String.Format(" {0}", Firearm.TriggerModel);
-
-					strText += " Trigger";
-
-					if (Firearm.TriggerPull != 0.0)
-						strText += String.Format(" with a {0:F2}lb Pull", Firearm.TriggerPull);
-
-					TextSize = e.Graphics.MeasureString(strText, DataFont);
-
-					e.Graphics.DrawString(strText, DataFont, Brushes.Black, nLeftMargin + (PageAreaRect.Width / 2) - (TextSize.Width / 2), nY);
-
-					nY += (TextSize.Height * 2);
-					}
-				else
-					{
-					if (!fNoStock)
-						nY += TextSize.Height;
-					}
-
-				//----------------------------------------------------------------------------*
-				// Scope
-				//----------------------------------------------------------------------------*
-
-				strText = "";
-
-				if (Firearm.ScopeManufacturer != null && Firearm.ScopeModel != null && Firearm.ScopeModel.Length > 0 && Firearm.ScopePower != null && Firearm.ScopePower.Length > 0 && Firearm.ScopeObjective > 0)
-					{
-					strText = String.Format("{0} {1} {2}-{3:G0}mm Scope", Firearm.ScopeManufacturer.ToString(), Firearm.ScopeModel, Firearm.ScopePower, Firearm.ScopeObjective);
-
-					TextSize = e.Graphics.MeasureString(strText, DataFont);
-
-					e.Graphics.DrawString(strText, DataFont, Brushes.Black, nLeftMargin + (PageAreaRect.Width / 2) - (TextSize.Width / 2), nY);
-
-					nY += (TextSize.Height * 2);
-					}
-				else
-					{
-					if (!fNoTrigger)
-						nY += TextSize.Height;
 					}
 
 				//----------------------------------------------------------------------------*

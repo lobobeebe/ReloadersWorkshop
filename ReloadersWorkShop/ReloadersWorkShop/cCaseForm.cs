@@ -164,7 +164,7 @@ namespace ReloadersWorkShop
             // Set Labels for inventory tracking if needed
             //----------------------------------------------------------------------------*
 
-            if (cPreferences.TrackInventory)
+            if (m_DataFiles.Preferences.TrackInventory)
                 {
                 QuantityLabel.Text = "Qty on Hand:";
 
@@ -588,7 +588,7 @@ namespace ReloadersWorkShop
 
             CostTextBox.Value = m_DataFiles.SupplyCost(m_Case);
 
-            if (cPreferences.TrackInventory)
+            if (m_DataFiles.Preferences.TrackInventory)
                 CostTextBox.Text = String.Format("{0}{1:F2}", m_DataFiles.Preferences.Currency, m_DataFiles.SupplyCost(m_Case));
 
             SetCostEach();

@@ -164,7 +164,7 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			m_strPowderWeightFormat = "{0:F";
-			m_strPowderWeightFormat += String.Format("{0:G0}", cPreferences.PowderWeightDecimals);
+			m_strPowderWeightFormat += String.Format("{0:G0}", cPreferences.StaticPreferences.PowderWeightDecimals);
 			m_strPowderWeightFormat += "}";
 
 			//----------------------------------------------------------------------------*

@@ -303,15 +303,15 @@ namespace ReloadersWorkShop
 		public override void Populate()
 			{
 			m_strCanWeightFormat = "{0:F";
-			m_strCanWeightFormat += String.Format("{0:G0}", cPreferences.CanWeightDecimals);
+			m_strCanWeightFormat += String.Format("{0:G0}", m_DataFiles.Preferences.CanWeightDecimals);
 			m_strCanWeightFormat += "}";
 
 			m_strDimensionFormat = "{0:F";
-			m_strDimensionFormat += String.Format("{0:G0}", cPreferences.DimensionDecimals);
+			m_strDimensionFormat += String.Format("{0:G0}", m_DataFiles.Preferences.DimensionDecimals);
 			m_strDimensionFormat += "}";
 
 			m_strBulletWeightFormat = "{0:F";
-			m_strBulletWeightFormat += String.Format("{0:G0}", cPreferences.BulletWeightDecimals);
+			m_strBulletWeightFormat += String.Format("{0:G0}", m_DataFiles.Preferences.BulletWeightDecimals);
 			m_strBulletWeightFormat += "}";
 
 			Populating = true;
@@ -457,8 +457,8 @@ namespace ReloadersWorkShop
 						new cListViewColumn(8, "NumCalibersHeader", "# Calibers", HorizontalAlignment.Center, 100),
 						new cListViewColumn(9, "SelfCastHeader", "Self Cast", HorizontalAlignment.Center, 100),
 						new cListViewColumn(10, "TopPunchHeader", "Top Punch", HorizontalAlignment.Center, 80),
-						new cListViewColumn(11, "QtyHeader", (cPreferences.TrackInventory) ? "Qty on Hand" : "Box of", HorizontalAlignment.Center, 80),
-						new cListViewColumn(12, "CostHeader", (cPreferences.TrackInventory) ? String.Format("Value ({0})", m_DataFiles.Preferences.Currency) : String.Format("Cost ({0})", m_DataFiles.Preferences.Currency), HorizontalAlignment.Right, 80)
+						new cListViewColumn(11, "QtyHeader", (m_DataFiles.Preferences.TrackInventory) ? "Qty on Hand" : "Box of", HorizontalAlignment.Center, 80),
+						new cListViewColumn(12, "CostHeader", (m_DataFiles.Preferences.TrackInventory) ? String.Format("Value ({0})", m_DataFiles.Preferences.Currency) : String.Format("Cost ({0})", m_DataFiles.Preferences.Currency), HorizontalAlignment.Right, 80)
 						};
 
 					base.PopulateColumns(arColumns);
@@ -479,8 +479,8 @@ namespace ReloadersWorkShop
 						new cListViewColumn(4, "HeadStampHeader","HeadStamp", HorizontalAlignment.Left, 140),
 						new cListViewColumn(5, "MatchHeader","Match", HorizontalAlignment.Left, 70),
 						new cListViewColumn(6, "MilitaryHeader","Military", HorizontalAlignment.Left, 70),
-						new cListViewColumn(7, "QtyHeader", (cPreferences.TrackInventory) ? "Qty on Hand" : "Box of", HorizontalAlignment.Center, 80),
-						new cListViewColumn(8, "CostHeader", (cPreferences.TrackInventory) ? String.Format("Value ({0})", m_DataFiles.Preferences.Currency) : String.Format("Cost ({0})", m_DataFiles.Preferences.Currency), HorizontalAlignment.Right, 80)
+						new cListViewColumn(7, "QtyHeader", (m_DataFiles.Preferences.TrackInventory) ? "Qty on Hand" : "Box of", HorizontalAlignment.Center, 80),
+						new cListViewColumn(8, "CostHeader", (m_DataFiles.Preferences.TrackInventory) ? String.Format("Value ({0})", m_DataFiles.Preferences.Currency) : String.Format("Cost ({0})", m_DataFiles.Preferences.Currency), HorizontalAlignment.Right, 80)
 						};
 
 					base.PopulateColumns(arColumns);
@@ -492,7 +492,7 @@ namespace ReloadersWorkShop
 				//----------------------------------------------------------------------------*
 
 				case cSupply.eSupplyTypes.Powder:
-					string strQuantity = (cPreferences.TrackInventory) ? "Qty on Hand" : "Can of";
+					string strQuantity = (m_DataFiles.Preferences.TrackInventory) ? "Qty on Hand" : "Can of";
 					strQuantity += String.Format(" ({0}s)", cDataFiles.MetricString(cDataFiles.eDataType.CanWeight));
 
 					arColumns = new cListViewColumn[]
@@ -501,7 +501,7 @@ namespace ReloadersWorkShop
 						new cListViewColumn(1, "TypeHeader","Type", HorizontalAlignment.Left, 120),
 						new cListViewColumn(2, "ShapeHeader","Shape", HorizontalAlignment.Center, 100),
 						new cListViewColumn(3, "QtyHeader", strQuantity, HorizontalAlignment.Center, 80),
-						new cListViewColumn(4, "CostHeader", (cPreferences.TrackInventory) ? String.Format("Value ({0})", m_DataFiles.Preferences.Currency) : String.Format("Cost ({0})", m_DataFiles.Preferences.Currency), HorizontalAlignment.Right, 80)
+						new cListViewColumn(4, "CostHeader", (m_DataFiles.Preferences.TrackInventory) ? String.Format("Value ({0})", m_DataFiles.Preferences.Currency) : String.Format("Cost ({0})", m_DataFiles.Preferences.Currency), HorizontalAlignment.Right, 80)
 						};
 
 					base.PopulateColumns(arColumns);
@@ -522,8 +522,8 @@ namespace ReloadersWorkShop
 						new cListViewColumn(4, "MagnumHeader", "Magnum", HorizontalAlignment.Center, 120),
 						new cListViewColumn(5, "BenchRestHeader", "Bench Rest", HorizontalAlignment.Center, 120),
 						new cListViewColumn(6, "MilitaryHeader", "Military", HorizontalAlignment.Center, 120),
-						new cListViewColumn(7, "QtyHeader", (cPreferences.TrackInventory) ? "Qty on Hand" : "Box of", HorizontalAlignment.Center, 80),
-						new cListViewColumn(8, "CostHeader", (cPreferences.TrackInventory) ? String.Format("Value ({0})", m_DataFiles.Preferences.Currency) : String.Format("Cost ({0})", m_DataFiles.Preferences.Currency), HorizontalAlignment.Right, 80)
+						new cListViewColumn(7, "QtyHeader", (m_DataFiles.Preferences.TrackInventory) ? "Qty on Hand" : "Box of", HorizontalAlignment.Center, 80),
+						new cListViewColumn(8, "CostHeader", (m_DataFiles.Preferences.TrackInventory) ? String.Format("Value ({0})", m_DataFiles.Preferences.Currency) : String.Format("Cost ({0})", m_DataFiles.Preferences.Currency), HorizontalAlignment.Right, 80)
 						};
 
 					base.PopulateColumns(arColumns);

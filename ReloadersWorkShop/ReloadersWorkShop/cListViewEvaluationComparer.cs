@@ -324,7 +324,7 @@ namespace ReloadersWorkShop
 					int Range1 = Item1.ChargeTest.BestGroupRange;
 					int Range2 = Item2.ChargeTest.BestGroupRange;
 
-					if (cPreferences.MetricRanges)
+					if (cPreferences.StaticPreferences.MetricRanges)
 						{
 						Range1 = (int) cConversions.MetersToYards(Range1);
 						Range2 = (int) cConversions.MetersToYards(Range2);

@@ -353,7 +353,7 @@ namespace ReloadersWorkShop
 		private void SetMaxCOALLabel(cCaliber Caliber)
 			{
 			string strFormat = "{0:F";
-			strFormat += String.Format("{0:G0}", cPreferences.DimensionDecimals);
+			strFormat += String.Format("{0:G0}", m_DataFiles.Preferences.DimensionDecimals);
 			strFormat += "}";
 
 			MaxCOLLabel.Text = String.Format(strFormat, (Caliber != null) ? cDataFiles.StandardToMetric(Caliber.MaxCOL, cDataFiles.eDataType.Dimension) : 0.0);

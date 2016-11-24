@@ -145,7 +145,7 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			m_strGroupFormat = "{0:F";
-			m_strGroupFormat += String.Format("{0:G0}", cPreferences.GroupDecimals);
+			m_strGroupFormat += String.Format("{0:G0}", m_DataFiles.Preferences.GroupDecimals);
 			m_strGroupFormat += "}";
 
 			//----------------------------------------------------------------------------*

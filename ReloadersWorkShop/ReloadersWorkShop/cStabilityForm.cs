@@ -617,17 +617,17 @@ namespace ReloadersWorkShop
 			// Set number of decimal places
 			//----------------------------------------------------------------------------*
 
-			LengthTextBox.NumDecimals = cPreferences.DimensionDecimals;
-			LengthTextBox.MaxLength = 2 + cPreferences.DimensionDecimals;
+			LengthTextBox.NumDecimals = m_DataFiles.Preferences.DimensionDecimals;
+			LengthTextBox.MaxLength = 2 + m_DataFiles.Preferences.DimensionDecimals;
 
-			CaliberTextBox.NumDecimals = cPreferences.DimensionDecimals;
-			CaliberTextBox.MaxLength = 2 + cPreferences.DimensionDecimals;
+			CaliberTextBox.NumDecimals = m_DataFiles.Preferences.DimensionDecimals;
+			CaliberTextBox.MaxLength = 2 + m_DataFiles.Preferences.DimensionDecimals;
 
-			WeightTextBox.NumDecimals = cPreferences.BulletWeightDecimals;
-			WeightTextBox.MaxLength = 4 + cPreferences.DimensionDecimals;
+			WeightTextBox.NumDecimals = m_DataFiles.Preferences.BulletWeightDecimals;
+			WeightTextBox.MaxLength = 4 + m_DataFiles.Preferences.DimensionDecimals;
 
-			TwistTextBox.NumDecimals = cPreferences.FirearmDecimals;
-			TwistTextBox.MaxLength = 3 + cPreferences.DimensionDecimals;
+			TwistTextBox.NumDecimals = m_DataFiles.Preferences.FirearmDecimals;
+			TwistTextBox.MaxLength = 3 + m_DataFiles.Preferences.DimensionDecimals;
 
 			//----------------------------------------------------------------------------*
 			// Set measurement labels
@@ -904,7 +904,7 @@ namespace ReloadersWorkShop
 				RecommendedTwistLabel.Visible = true;
 
 				string strFormat = "Recommended Twist: 1:{0:F";
-				strFormat += String.Format("{0:G0}", cPreferences.FirearmDecimals);
+				strFormat += String.Format("{0:G0}", m_DataFiles.Preferences.FirearmDecimals);
 				strFormat += "} ";
 				strFormat += cDataFiles.MetricString(cDataFiles.eDataType.Firearm);
 

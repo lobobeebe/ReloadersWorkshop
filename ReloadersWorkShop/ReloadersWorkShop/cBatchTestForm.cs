@@ -689,13 +689,13 @@ namespace ReloadersWorkShop
 			if (m_BatchTest.Firearm != null)
 				{
 				string strFormat = "{0:F";
-				strFormat += String.Format("{0:G0}", cPreferences.FirearmDecimals);
+				strFormat += String.Format("{0:G0}", m_DataFiles.Preferences.FirearmDecimals);
 				strFormat += "} {1}";
 
 				BarrelLengthLabel.Text = String.Format(strFormat, m_BatchTest.Firearm.BarrelLength, cDataFiles.MetricString(cDataFiles.eDataType.Firearm));
 
 				strFormat = "1 in {0:F";
-				strFormat += String.Format("{0:G0}", cPreferences.FirearmDecimals);
+				strFormat += String.Format("{0:G0}", m_DataFiles.Preferences.FirearmDecimals);
 				strFormat += "} {1}";
 
 				TwistLabel.Text = String.Format(strFormat, m_BatchTest.Firearm.Twist, cDataFiles.MetricString(cDataFiles.eDataType.Firearm));
@@ -731,8 +731,8 @@ namespace ReloadersWorkShop
 			BestGroupDistanceLabel.Text = cDataFiles.MetricString(cDataFiles.eDataType.GroupSize);
 			BestGroupRangeDistanceLabel.Text = cDataFiles.MetricString(cDataFiles.eDataType.Range);
 
-			BestGroupDistanceLabel.Text = cPreferences.MetricGroups ? "cm" : "in";
-			BestGroupRangeDistanceLabel.Text = cPreferences.MetricRanges ? "m" : "yds";
+			BestGroupDistanceLabel.Text = m_DataFiles.Preferences.MetricGroups ? "cm" : "in";
+			BestGroupRangeDistanceLabel.Text = m_DataFiles.Preferences.MetricRanges ? "m" : "yds";
 
 			FavoriteLoadRadioButton.Checked = false;
 

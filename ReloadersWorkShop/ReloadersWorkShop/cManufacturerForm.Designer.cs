@@ -69,7 +69,12 @@ namespace ReloadersWorkShop
 			this.NameTextBox = new CommonLib.Controls.cTextBox();
 			this.ProductUseLabel = new System.Windows.Forms.Label();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
-			this.StocksCheckBox = new System.Windows.Forms.CheckBox();
+			this.LightsCheckBox = new System.Windows.Forms.CheckBox();
+			this.OtherCheckBox = new System.Windows.Forms.CheckBox();
+			this.PartsCheckBox = new System.Windows.Forms.CheckBox();
+			this.BipodsCheckBox = new System.Windows.Forms.CheckBox();
+			this.RedDotsCheckBox = new System.Windows.Forms.CheckBox();
+			this.FurnitureCheckBox = new System.Windows.Forms.CheckBox();
 			this.TriggersCheckBox = new System.Windows.Forms.CheckBox();
 			this.ScopesCheckBox = new System.Windows.Forms.CheckBox();
 			label1 = new System.Windows.Forms.Label();
@@ -107,7 +112,7 @@ namespace ReloadersWorkShop
 			// ManufacturerCancelButton
 			// 
 			this.ManufacturerCancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.ManufacturerCancelButton.Location = new System.Drawing.Point(170, 387);
+			this.ManufacturerCancelButton.Location = new System.Drawing.Point(170, 433);
 			this.ManufacturerCancelButton.Margin = new System.Windows.Forms.Padding(2);
 			this.ManufacturerCancelButton.Name = "ManufacturerCancelButton";
 			this.ManufacturerCancelButton.Size = new System.Drawing.Size(56, 19);
@@ -118,7 +123,7 @@ namespace ReloadersWorkShop
 			// ManufacturerOKButton
 			// 
 			this.ManufacturerOKButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.ManufacturerOKButton.Location = new System.Drawing.Point(96, 387);
+			this.ManufacturerOKButton.Location = new System.Drawing.Point(96, 433);
 			this.ManufacturerOKButton.Margin = new System.Windows.Forms.Padding(2);
 			this.ManufacturerOKButton.Name = "ManufacturerOKButton";
 			this.ManufacturerOKButton.Size = new System.Drawing.Size(56, 19);
@@ -142,14 +147,13 @@ namespace ReloadersWorkShop
 			this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-			this.groupBox1.Size = new System.Drawing.Size(302, 105);
+			this.groupBox1.Size = new System.Drawing.Size(302, 96);
 			this.groupBox1.TabIndex = 1;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Supply Products";
 			// 
 			// BulletMoldsCheckBox
 			// 
-			this.BulletMoldsCheckBox.AutoCheck = false;
 			this.BulletMoldsCheckBox.AutoSize = true;
 			this.BulletMoldsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BulletMoldsCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -162,7 +166,6 @@ namespace ReloadersWorkShop
 			// 
 			// PrimersCheckBox
 			// 
-			this.PrimersCheckBox.AutoCheck = false;
 			this.PrimersCheckBox.AutoSize = true;
 			this.PrimersCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.PrimersCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -175,7 +178,6 @@ namespace ReloadersWorkShop
 			// 
 			// PowderCheckBox
 			// 
-			this.PowderCheckBox.AutoCheck = false;
 			this.PowderCheckBox.AutoSize = true;
 			this.PowderCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.PowderCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -188,7 +190,6 @@ namespace ReloadersWorkShop
 			// 
 			// CasesCheckBox
 			// 
-			this.CasesCheckBox.AutoCheck = false;
 			this.CasesCheckBox.AutoSize = true;
 			this.CasesCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.CasesCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -201,7 +202,6 @@ namespace ReloadersWorkShop
 			// 
 			// BulletsCheckBox
 			// 
-			this.BulletsCheckBox.AutoCheck = false;
 			this.BulletsCheckBox.AutoSize = true;
 			this.BulletsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BulletsCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -214,7 +214,6 @@ namespace ReloadersWorkShop
 			// 
 			// AmmoCheckBox
 			// 
-			this.AmmoCheckBox.AutoCheck = false;
 			this.AmmoCheckBox.AutoSize = true;
 			this.AmmoCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.AmmoCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -257,7 +256,7 @@ namespace ReloadersWorkShop
 			this.FirearmsGroup.Controls.Add(this.HandgunsCheckBox);
 			this.FirearmsGroup.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmsGroup.ForeColor = System.Drawing.SystemColors.HotTrack;
-			this.FirearmsGroup.Location = new System.Drawing.Point(11, 200);
+			this.FirearmsGroup.Location = new System.Drawing.Point(11, 191);
 			this.FirearmsGroup.Margin = new System.Windows.Forms.Padding(2);
 			this.FirearmsGroup.Name = "FirearmsGroup";
 			this.FirearmsGroup.Padding = new System.Windows.Forms.Padding(2);
@@ -268,7 +267,6 @@ namespace ReloadersWorkShop
 			// 
 			// ShotgunsCheckBox
 			// 
-			this.ShotgunsCheckBox.AutoCheck = false;
 			this.ShotgunsCheckBox.AutoSize = true;
 			this.ShotgunsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.ShotgunsCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -281,7 +279,6 @@ namespace ReloadersWorkShop
 			// 
 			// RiflesCheckBox
 			// 
-			this.RiflesCheckBox.AutoCheck = false;
 			this.RiflesCheckBox.AutoSize = true;
 			this.RiflesCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.RiflesCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -294,7 +291,6 @@ namespace ReloadersWorkShop
 			// 
 			// HandgunsCheckBox
 			// 
-			this.HandgunsCheckBox.AutoCheck = false;
 			this.HandgunsCheckBox.AutoSize = true;
 			this.HandgunsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.HandgunsCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -353,7 +349,7 @@ namespace ReloadersWorkShop
 			this.ProductUseLabel.BackColor = System.Drawing.SystemColors.Control;
 			this.ProductUseLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.ProductUseLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.ProductUseLabel.Location = new System.Drawing.Point(8, 321);
+			this.ProductUseLabel.Location = new System.Drawing.Point(8, 361);
 			this.ProductUseLabel.Name = "ProductUseLabel";
 			this.ProductUseLabel.Size = new System.Drawing.Size(305, 50);
 			this.ProductUseLabel.TabIndex = 4;
@@ -361,40 +357,103 @@ namespace ReloadersWorkShop
 			// 
 			// groupBox3
 			// 
-			this.groupBox3.Controls.Add(this.StocksCheckBox);
+			this.groupBox3.Controls.Add(this.LightsCheckBox);
+			this.groupBox3.Controls.Add(this.OtherCheckBox);
+			this.groupBox3.Controls.Add(this.PartsCheckBox);
+			this.groupBox3.Controls.Add(this.BipodsCheckBox);
+			this.groupBox3.Controls.Add(this.RedDotsCheckBox);
+			this.groupBox3.Controls.Add(this.FurnitureCheckBox);
 			this.groupBox3.Controls.Add(this.TriggersCheckBox);
 			this.groupBox3.Controls.Add(this.ScopesCheckBox);
 			this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.groupBox3.ForeColor = System.Drawing.SystemColors.HotTrack;
-			this.groupBox3.Location = new System.Drawing.Point(11, 259);
+			this.groupBox3.Location = new System.Drawing.Point(11, 250);
 			this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
 			this.groupBox3.Name = "groupBox3";
 			this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
-			this.groupBox3.Size = new System.Drawing.Size(302, 55);
+			this.groupBox3.Size = new System.Drawing.Size(302, 97);
 			this.groupBox3.TabIndex = 3;
 			this.groupBox3.TabStop = false;
-			this.groupBox3.Text = "Firearm Parts";
+			this.groupBox3.Text = "Parts && Accessories";
 			// 
-			// StocksCheckBox
+			// LightsCheckBox
 			// 
-			this.StocksCheckBox.AutoCheck = false;
-			this.StocksCheckBox.AutoSize = true;
-			this.StocksCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.StocksCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.StocksCheckBox.Location = new System.Drawing.Point(204, 25);
-			this.StocksCheckBox.Name = "StocksCheckBox";
-			this.StocksCheckBox.Size = new System.Drawing.Size(88, 17);
-			this.StocksCheckBox.TabIndex = 2;
-			this.StocksCheckBox.Text = "Grips/Stocks";
-			this.StocksCheckBox.UseVisualStyleBackColor = true;
+			this.LightsCheckBox.AutoSize = true;
+			this.LightsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.LightsCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.LightsCheckBox.Location = new System.Drawing.Point(184, 25);
+			this.LightsCheckBox.Name = "LightsCheckBox";
+			this.LightsCheckBox.Size = new System.Drawing.Size(85, 17);
+			this.LightsCheckBox.TabIndex = 7;
+			this.LightsCheckBox.Text = "Laser/Lights";
+			this.LightsCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// OtherCheckBox
+			// 
+			this.OtherCheckBox.AutoSize = true;
+			this.OtherCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.OtherCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.OtherCheckBox.Location = new System.Drawing.Point(111, 71);
+			this.OtherCheckBox.Name = "OtherCheckBox";
+			this.OtherCheckBox.Size = new System.Drawing.Size(78, 17);
+			this.OtherCheckBox.TabIndex = 6;
+			this.OtherCheckBox.Text = "Other Gear";
+			this.OtherCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// PartsCheckBox
+			// 
+			this.PartsCheckBox.AutoSize = true;
+			this.PartsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.PartsCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.PartsCheckBox.Location = new System.Drawing.Point(18, 71);
+			this.PartsCheckBox.Name = "PartsCheckBox";
+			this.PartsCheckBox.Size = new System.Drawing.Size(87, 17);
+			this.PartsCheckBox.TabIndex = 5;
+			this.PartsCheckBox.Text = "Firearm Parts";
+			this.PartsCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// BipodsCheckBox
+			// 
+			this.BipodsCheckBox.AutoSize = true;
+			this.BipodsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BipodsCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.BipodsCheckBox.Location = new System.Drawing.Point(184, 48);
+			this.BipodsCheckBox.Name = "BipodsCheckBox";
+			this.BipodsCheckBox.Size = new System.Drawing.Size(113, 17);
+			this.BipodsCheckBox.TabIndex = 4;
+			this.BipodsCheckBox.Text = "Bipods/Monopods";
+			this.BipodsCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// RedDotsCheckBox
+			// 
+			this.RedDotsCheckBox.AutoSize = true;
+			this.RedDotsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.RedDotsCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.RedDotsCheckBox.Location = new System.Drawing.Point(111, 25);
+			this.RedDotsCheckBox.Name = "RedDotsCheckBox";
+			this.RedDotsCheckBox.Size = new System.Drawing.Size(71, 17);
+			this.RedDotsCheckBox.TabIndex = 3;
+			this.RedDotsCheckBox.Text = "Red Dots";
+			this.RedDotsCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// FurnitureCheckBox
+			// 
+			this.FurnitureCheckBox.AutoSize = true;
+			this.FurnitureCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FurnitureCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FurnitureCheckBox.Location = new System.Drawing.Point(111, 48);
+			this.FurnitureCheckBox.Name = "FurnitureCheckBox";
+			this.FurnitureCheckBox.Size = new System.Drawing.Size(67, 17);
+			this.FurnitureCheckBox.TabIndex = 2;
+			this.FurnitureCheckBox.Text = "Furniture";
+			this.FurnitureCheckBox.UseVisualStyleBackColor = true;
 			// 
 			// TriggersCheckBox
 			// 
-			this.TriggersCheckBox.AutoCheck = false;
 			this.TriggersCheckBox.AutoSize = true;
 			this.TriggersCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.TriggersCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.TriggersCheckBox.Location = new System.Drawing.Point(128, 25);
+			this.TriggersCheckBox.Location = new System.Drawing.Point(18, 48);
 			this.TriggersCheckBox.Name = "TriggersCheckBox";
 			this.TriggersCheckBox.Size = new System.Drawing.Size(64, 17);
 			this.TriggersCheckBox.TabIndex = 1;
@@ -403,11 +462,10 @@ namespace ReloadersWorkShop
 			// 
 			// ScopesCheckBox
 			// 
-			this.ScopesCheckBox.AutoCheck = false;
 			this.ScopesCheckBox.AutoSize = true;
 			this.ScopesCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.ScopesCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.ScopesCheckBox.Location = new System.Drawing.Point(31, 25);
+			this.ScopesCheckBox.Location = new System.Drawing.Point(18, 25);
 			this.ScopesCheckBox.Name = "ScopesCheckBox";
 			this.ScopesCheckBox.Size = new System.Drawing.Size(62, 17);
 			this.ScopesCheckBox.TabIndex = 0;
@@ -420,7 +478,7 @@ namespace ReloadersWorkShop
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.ManufacturerCancelButton;
-			this.ClientSize = new System.Drawing.Size(325, 417);
+			this.ClientSize = new System.Drawing.Size(326, 492);
 			this.ControlBox = false;
 			this.Controls.Add(this.groupBox3);
 			this.Controls.Add(this.ProductUseLabel);
@@ -472,8 +530,13 @@ namespace ReloadersWorkShop
 		private System.Windows.Forms.CheckBox RiflesCheckBox;
 		private System.Windows.Forms.CheckBox HandgunsCheckBox;
 		private System.Windows.Forms.GroupBox groupBox3;
-		private System.Windows.Forms.CheckBox StocksCheckBox;
+		private System.Windows.Forms.CheckBox FurnitureCheckBox;
 		private System.Windows.Forms.CheckBox TriggersCheckBox;
 		private System.Windows.Forms.CheckBox ScopesCheckBox;
+		private System.Windows.Forms.CheckBox RedDotsCheckBox;
+		private System.Windows.Forms.CheckBox BipodsCheckBox;
+		private System.Windows.Forms.CheckBox PartsCheckBox;
+		private System.Windows.Forms.CheckBox OtherCheckBox;
+		private System.Windows.Forms.CheckBox LightsCheckBox;
 		}
 	}

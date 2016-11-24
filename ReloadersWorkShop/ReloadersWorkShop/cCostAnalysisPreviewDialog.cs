@@ -553,7 +553,7 @@ namespace ReloadersWorkShop
 				if (PowderTotals.NumPurchases > 0)
 					{
 					string strFormat = "{0:G0} purchase{1} totaling {2:F";
-					strFormat += String.Format("{0:G0}", cPreferences.CanWeightDecimals);
+					strFormat += String.Format("{0:G0}", m_DataFiles.Preferences.CanWeightDecimals);
 					strFormat += "} {3}{4} at a cost of {5}{6:F2}.";
 
 					strText = String.Format(strFormat, PowderTotals.NumPurchases, PowderTotals.NumPurchases != 1 ? "s" : "", PowderTotals.PurchaseQty, cDataFiles.MetricString(cDataFiles.eDataType.CanWeight), PowderTotals.PurchaseQty != 1.0 ? "s" : "", m_DataFiles.Preferences.Currency, PowderTotals.PurchaseTotal);
@@ -1660,7 +1660,7 @@ namespace ReloadersWorkShop
 							dQuantity = SupplyTotals.PurchaseQty + SupplyTotals.InitialStockQty;
 
 							string strFormat = "{0:F";
-							strFormat += String.Format("{0:G0}", cPreferences.CanWeightDecimals);
+							strFormat += String.Format("{0:G0}", m_DataFiles.Preferences.CanWeightDecimals);
 							strFormat += "} {1}{2}";
 
 							if (dQuantity == 0.0)

@@ -277,6 +277,18 @@ namespace ReloadersWorkShop
 		private void OnAddCharge(object sender, EventArgs args)
 			{
 			//----------------------------------------------------------------------------*
+			// Issue a warning if this is the first charge
+			//----------------------------------------------------------------------------*
+
+			if (m_Load.ChargeList.Count == 0)
+				{
+				DialogResult rc = MessageBox.Show("Warning: Adding charge data to this load will lock the firearm type, caliber, and components for this load.  Make sure these are correct before adding charges.\n\nDo you wish to continue?", "Load Data Lock Verification", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+
+				if (rc != DialogResult.Yes)
+					return;
+				}
+
+			//----------------------------------------------------------------------------*
 			// Get the current load info
 			//----------------------------------------------------------------------------*
 
@@ -1143,7 +1155,7 @@ namespace ReloadersWorkShop
 		private void SetCaseDimensions()
 			{
 			string strDimensionFormat = "{0:F";
-			strDimensionFormat += String.Format("{0:G0}", cPreferences.DimensionDecimals);
+			strDimensionFormat += String.Format("{0:G0}", m_DataFiles.Preferences.DimensionDecimals);
 			strDimensionFormat += "} {1}";
 
 			cCaliber Caliber = (cCaliber) CaliberCombo.SelectedItem;
@@ -1456,7 +1468,16 @@ namespace ReloadersWorkShop
 						CaseCombo.Enabled = false;
 						}
 					else
+						{
+						FirearmTypeCombo.Enabled = m_Load.ChargeList.Count == 0;
+						CaliberCombo.Enabled = m_Load.ChargeList.Count == 0;
+						BulletCombo.Enabled = m_Load.ChargeList.Count == 0;
+						PowderCombo.Enabled = m_Load.ChargeList.Count == 0;
+						PrimerCombo.Enabled = m_Load.ChargeList.Count == 0;
+						CaseCombo.Enabled = m_Load.ChargeList.Count == 0;
+
 						ErrorMessageLabel.Text = "";
+						}
 					}
 				}
 

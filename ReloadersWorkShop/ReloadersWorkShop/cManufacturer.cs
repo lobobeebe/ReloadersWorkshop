@@ -52,11 +52,16 @@ namespace ReloadersWorkShop
 		private bool m_fRifles = false;
 		private bool m_fShotguns = false;
 
-		// Firearms Parts
+		// Firearm Accessories
 
 		private bool m_fScopes = false;
+		private bool m_fRedDots = false;
+		private bool m_fLights = false;
 		private bool m_fTriggers = false;
-		private bool m_fStocks = false;
+		private bool m_fFurniture = false;
+		private bool m_fBipods = false;
+		private bool m_fParts = false;
+		private bool m_fMisc = false;
 
 		//============================================================================*
 		// cManufacturer() - Constructor
@@ -88,6 +93,38 @@ namespace ReloadersWorkShop
 			set
 				{
 				m_fAmmo = value;
+				}
+			}
+
+		//============================================================================*
+		// Parts Property
+		//============================================================================*
+
+		public bool Parts
+			{
+			get
+				{
+				return (m_fParts);
+				}
+			set
+				{
+				m_fParts = value;
+				}
+			}
+
+		//============================================================================*
+		// Bipods Property
+		//============================================================================*
+
+		public bool Bipods
+			{
+			get
+				{
+				return (m_fBipods);
+				}
+			set
+				{
+				m_fBipods = value;
 				}
 			}
 
@@ -198,8 +235,13 @@ namespace ReloadersWorkShop
 			m_fShotguns = Manufacturer.m_fShotguns;
 
 			m_fScopes = Manufacturer.m_fScopes;
+			m_fRedDots = Manufacturer.m_fRedDots;
+			m_fLights = Manufacturer.m_fLights;
 			m_fTriggers = Manufacturer.m_fTriggers;
-			m_fStocks = Manufacturer.m_fStocks;
+			m_fFurniture = Manufacturer.m_fFurniture;
+			m_fBipods = Manufacturer.m_fBipods;
+			m_fParts = Manufacturer.m_fParts;
+			m_fMisc = Manufacturer.m_fMisc;
 			}
 
 		//============================================================================*
@@ -243,8 +285,13 @@ namespace ReloadersWorkShop
 				// Firearms Parts
 
 				strLine += m_fScopes ? ",Yes" : ",-";
+				strLine += m_fRedDots ? ",Yes" : ",-";
+				strLine += m_fLights ? ",Yes" : ",-";
 				strLine += m_fTriggers ? ",Yes" : ",-";
-				strLine += m_fStocks ? ",Yes" : ",-";
+				strLine += m_fFurniture ? ",Yes" : ",-";
+				strLine += m_fBipods ? ",Yes" : ",-";
+				strLine += m_fParts ? ",Yes" : ",-";
+				strLine += m_fMisc ? ",Yes" : ",-";
 
 				return (strLine);
 				}
@@ -257,7 +304,7 @@ namespace ReloadersWorkShop
 		public static string CSVLineHeader			{
 			get
 				{
-				string strLine = "Name,Website,Bullets,Powder,Primers,Cases,Ammo,Bullet Molds,Head Stamp,Handguns,Rifles,Shotguns, Scopes,Triggers,Stocks";
+				string strLine = "Name,Website,Bullets,Powder,Primers,Cases,Ammo,Bullet Molds,Head Stamp,Handguns,Rifles,Shotguns, Scopes,Red Dots,Lights,Triggers,Furniture,Bipods,Firearm Parts,Other";
 
 				return (strLine);
 				}
@@ -376,6 +423,22 @@ namespace ReloadersWorkShop
 
 			XMLThisElement.AppendChild(XMLElement);
 
+			// Red Dots
+
+			XMLElement = XMLDocument.CreateElement("RedDots");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fRedDots ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Lights
+
+			XMLElement = XMLDocument.CreateElement("Lights");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fLights ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
 			// Triggers
 
 			XMLElement = XMLDocument.CreateElement("Triggers");
@@ -384,10 +447,34 @@ namespace ReloadersWorkShop
 
 			XMLThisElement.AppendChild(XMLElement);
 
-			// Stocks
+			// Furniture
 
-			XMLElement = XMLDocument.CreateElement("Stocks");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fStocks ? "Yes" : "-");
+			XMLElement = XMLDocument.CreateElement("Furniture");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fFurniture ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Bipods
+
+			XMLElement = XMLDocument.CreateElement("Bipods");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fBipods ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Firearm  Parts
+
+			XMLElement = XMLDocument.CreateElement("FirearmParts");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fParts ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Other
+
+			XMLElement = XMLDocument.CreateElement("Other");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fMisc ? "Yes" : "-");
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
@@ -410,6 +497,34 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// HasGear()
+		//============================================================================*
+
+		public bool HasGear(cGear.eGearTypes eType)
+			{
+			switch (eType)
+				{
+				case cGear.eGearTypes.Scope:
+					return (m_fScopes);
+				case cGear.eGearTypes.RedDot:
+					return (m_fRedDots);
+				case cGear.eGearTypes.Light:
+					return (m_fLights);
+				case cGear.eGearTypes.Trigger:
+					return (m_fTriggers);
+				case cGear.eGearTypes.Furniture:
+					return (m_fFurniture);
+				case cGear.eGearTypes.Bipod:
+					return (m_fBipods);
+				case cGear.eGearTypes.Parts:
+					return (m_fParts);
+				}
+
+			return (m_fMisc);
+			}
+
+
+		//============================================================================*
 		// HeadStamp Property
 		//============================================================================*
 
@@ -422,6 +537,38 @@ namespace ReloadersWorkShop
 			set
 				{
 				m_strHeadStamp = value;
+				}
+			}
+
+		//============================================================================*
+		// Lights Property
+		//============================================================================*
+
+		public bool Lights
+			{
+			get
+				{
+				return (m_fLights);
+				}
+			set
+				{
+				m_fLights = value;
+				}
+			}
+
+		//============================================================================*
+		// Misc Property
+		//============================================================================*
+
+		public bool Misc
+			{
+			get
+				{
+				return (m_fMisc);
+				}
+			set
+				{
+				m_fMisc = value;
 				}
 			}
 
@@ -474,6 +621,22 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// RedDots Property
+		//============================================================================*
+
+		public bool RedDots
+			{
+			get
+				{
+				return (m_fRedDots);
+				}
+			set
+				{
+				m_fRedDots = value;
+				}
+			}
+
+		//============================================================================*
 		// Rifles Property
 		//============================================================================*
 
@@ -522,18 +685,18 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// Stocks Property
+		// Furniture Property
 		//============================================================================*
 
-		public bool Stocks
+		public bool Furniture
 			{
 			get
 				{
-				return (m_fStocks);
+				return (m_fFurniture);
 				}
 			set
 				{
-				m_fStocks = value;
+				m_fFurniture = value;
 				}
 			}
 
@@ -593,68 +756,6 @@ namespace ReloadersWorkShop
 			set
 				{
 				m_fWebsiteVisited = value;
-				}
-			}
-
-		//============================================================================*
-		// XMLHeader Property
-		//============================================================================*
-
-		public static string XMLHeader
-			{
-			get
-				{
-				return ("Manufacturers");
-				}
-			}
-
-		//============================================================================*
-		// XMLLine Property
-		//============================================================================*
-
-		public string XMLLine
-			{
-			get
-				{
-				string strLine = String.Format("{0},{1}", m_strName, m_strWebsite);
-
-				strLine += m_fBullets ? ",Yes" : ",-";
-				strLine += m_fPrimers ? ",Yes" : ",-";
-				strLine += m_fCases ? ",Yes" : ",-";
-				strLine += m_fPowder ? ",Yes" : ",-";
-				strLine += m_fAmmo ? ",Yes" : ",-";
-				strLine += m_fBulletMolds ? ",Yes" : ",-";
-
-				strLine += ",";
-				strLine += m_strHeadStamp;
-
-				// Firearms
-
-				strLine += m_fHandguns ? ",Yes" : ",-";
-				strLine += m_fRifles ? ",Yes" : ",-";
-				strLine += m_fShotguns ? ",Yes" : ",-";
-
-				// Firearms Parts
-
-				strLine += m_fScopes ? ",Yes" : ",-";
-				strLine += m_fTriggers ? ",Yes" : ",-";
-				strLine += m_fStocks ? ",Yes" : ",-";
-
-				return (strLine);
-				}
-			}
-
-		//============================================================================*
-		// XMLLineHeader Property
-		//============================================================================*
-
-		public static string XMLLineHeader
-			{
-			get
-				{
-				string strLine = "Name,Website,Bullets,Primers,Cases,Powder,Ammo,Bullet Molds,Head Stamp,Handguns,Rifles,Shotguns, Scopes,Triggers,Stocks";
-
-				return (strLine);
 				}
 			}
 		}

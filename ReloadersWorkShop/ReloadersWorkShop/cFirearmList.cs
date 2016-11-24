@@ -38,7 +38,7 @@ namespace ReloadersWorkShop
 
 			string strLine = "";
 
-			Writer.WriteLine(cFirearm.CSVHeader);
+			Writer.WriteLine("Firearms");
 			Writer.WriteLine();
 
 			Writer.WriteLine(cFirearm.CSVLineHeader);
@@ -70,6 +70,39 @@ namespace ReloadersWorkShop
 					Firearm.Export(XMLDocument, XMLElement);
 					}
 				}
+			}
+
+		//============================================================================*
+		// Validate()
+		//============================================================================*
+
+		public bool Validate()
+			{
+			bool fOK = true;
+
+			while (true)
+				{
+				bool fDeleted = false;
+
+				foreach (cFirearm Firearm in this)
+					{
+					if (!Firearm.Validate())
+						{
+						fOK = false;
+
+						Remove(Firearm);
+
+						fDeleted = true;
+
+						break;
+						}
+					}
+
+				if (!fDeleted)
+					break;
+				}
+
+			return (fOK);
 			}
 		}
 	}

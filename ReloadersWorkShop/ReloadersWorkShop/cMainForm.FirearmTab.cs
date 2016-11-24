@@ -33,6 +33,7 @@ namespace ReloadersWorkShop
 		//============================================================================*
 
 		private cFirearmListView m_FirearmsListView = null;
+		private cFirearmAccessoryListView m_FirearmAccessoriesListView = null;
 
 		private bool m_fFirearmTabInitialized = false;
 
@@ -68,6 +69,37 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// AddFirearmAccessory()
+		//============================================================================*
+
+		private void AddFirearmAccessory(cGear Gear)
+			{
+			//----------------------------------------------------------------------------*
+			// If the Gear already exists, our job is done, just exit
+			//----------------------------------------------------------------------------*
+
+			foreach (cGear CheckGear in m_DataFiles.GearList)
+				{
+				if (CheckGear.CompareTo(Gear) == 0)
+					return;
+				}
+
+			//----------------------------------------------------------------------------*
+			// Otherwise, add the new firearm to the list
+			//----------------------------------------------------------------------------*
+
+			m_DataFiles.GearList.Add(Gear);
+
+			//----------------------------------------------------------------------------*
+			// And add the new Firearm to the Firearm ListView
+			//----------------------------------------------------------------------------*
+
+			m_FirearmAccessoriesListView.AddFirearmAccessory(Gear, true);
+
+			AddFirearmButton.Focus();
+			}
+
+		//============================================================================*
 		// InitializeFirearmTab()
 		//============================================================================*
 
@@ -77,12 +109,21 @@ namespace ReloadersWorkShop
 				{
 				m_FirearmsListView = new cFirearmListView(m_DataFiles);
 
-				FirearmsTab.Controls.Add(m_FirearmsListView);
+				FirearmsGroupBox.Controls.Add(m_FirearmsListView);
+
+				m_FirearmAccessoriesListView = new cFirearmAccessoryListView(m_DataFiles);
+
+				FirearmAccessoriesGroupBox.Controls.Add(m_FirearmAccessoriesListView);
 
 				AddFirearmButton.Click += OnAddFirearm;
 				EditFirearmButton.Click += OnEditFirearm;
 				ViewFirearmButton.Click += OnViewFirearm;
 				RemoveFirearmButton.Click += OnRemoveFirearm;
+
+				AddFirearmAccessoryButton.Click += OnAddFirearmAccessory;
+				EditFirearmAccessoryButton.Click += OnEditFirearmAccessory;
+				ViewFirearmAccessoryButton.Click += OnViewFirearmAccessory;
+				RemoveFirearmAccessoryButton.Click += OnRemoveFirearmAccessory;
 
 				FirearmPrintButton.Click += OnFirearmPrintClicked;
 
@@ -96,7 +137,15 @@ namespace ReloadersWorkShop
 
 				m_FirearmsListView.ItemChecked += OnFirearmChecked;
 
+				m_FirearmAccessoriesListView.SelectedIndexChanged += OnFirearmAccessorySelected;
+				m_FirearmAccessoriesListView.DoubleClick += OnFirearmAccessoryDoubleClicked;
+
 				m_fFirearmTabInitialized = true;
+
+				FirearmAccessoriesShowAllCheckBox.Checked = true;
+				FirearmAccessoriesShowAllCheckBox.Click += OnFirearmAccessoriesShowAllClicked;
+
+				FirearmAccessoryAttachButton.Click += OnFirearmAccessoryAttachClicked;
 				}
 
 			//----------------------------------------------------------------------------*
@@ -108,7 +157,9 @@ namespace ReloadersWorkShop
 			FirearmPrintDetailCheckBox.Checked = m_DataFiles.Preferences.FirearmPrintDetail;
 			FirearmPrintSpecsCheckBox.Checked = m_DataFiles.Preferences.FirearmPrintSpecs;
 
-			PopulateFirearmsListViewColumns();
+			FirearmCostDetailsGroupBox.Text = String.Format("Cost Details ({0})", m_DataFiles.Preferences.Currency);
+
+			SetFirearmCostDetails();
 
 			UpdateFirearmTabButtons();
 			}
@@ -157,6 +208,46 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// OnAddFirearmAccessory()
+		//============================================================================*
+
+		protected void OnAddFirearmAccessory(object sender, EventArgs args)
+			{
+			//----------------------------------------------------------------------------*
+			// Start the dialog
+			//----------------------------------------------------------------------------*
+
+			cFirearmAccessoryForm FirearmAccessoryForm = new cFirearmAccessoryForm(null, m_DataFiles);
+
+			if (FirearmAccessoryForm.ShowDialog() == DialogResult.OK)
+				{
+				//----------------------------------------------------------------------------*
+				// Get the new Firearm Data
+				//----------------------------------------------------------------------------*
+
+				cGear NewGear = FirearmAccessoryForm.Gear;
+
+				m_FirearmAccessoriesListView.Focus();
+
+				//----------------------------------------------------------------------------*
+				// See if the Firearm Accessory already exists
+				//----------------------------------------------------------------------------*
+
+				foreach (cGear CheckGear in m_DataFiles.GearList)
+					{
+					if (CheckGear.CompareTo(NewGear) == 0)
+						return;
+					}
+
+				AddFirearmAccessory(NewGear);
+				}
+
+			UpdateFirearmTabButtons();
+
+			m_FirearmAccessoriesListView.Focus();
+			}
+
+		//============================================================================*
 		// OnEditFirearm()
 		//============================================================================*
 
@@ -171,7 +262,7 @@ namespace ReloadersWorkShop
 			if (Item == null)
 				return;
 
-			cFirearm Firearm = (cFirearm)Item.Tag;
+			cFirearm Firearm = (cFirearm) Item.Tag;
 
 			if (Firearm == null)
 				return;
@@ -204,6 +295,111 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// OnEditFirearmAccessory()
+		//============================================================================*
+
+		protected void OnEditFirearmAccessory(object sender, EventArgs args)
+			{
+			if (m_FirearmAccessoriesListView.SelectedItems.Count == 0)
+				return;
+
+			//----------------------------------------------------------------------------*
+			// Get the selected Firearm
+			//----------------------------------------------------------------------------*
+
+			ListViewItem Item = m_FirearmAccessoriesListView.SelectedItems[0];
+
+			if (Item == null)
+				return;
+
+			cGear Gear = (cGear) Item.Tag;
+
+			if (Gear == null)
+				return;
+
+			//----------------------------------------------------------------------------*
+			// Start the dialog
+			//----------------------------------------------------------------------------*
+
+			cFirearmAccessoryForm FirearmAccessoryForm = new cFirearmAccessoryForm(Gear, m_DataFiles);
+
+			if (FirearmAccessoryForm.ShowDialog() == DialogResult.OK)
+				{
+				//----------------------------------------------------------------------------*
+				// Get the new Firearm Data
+				//----------------------------------------------------------------------------*
+
+				cGear NewGear = FirearmAccessoryForm.Gear;
+
+				UpdateFirearmAccessory(Gear, NewGear);
+				}
+
+			UpdateFirearmTabButtons();
+
+			m_FirearmAccessoriesListView.Focus();
+			}
+
+		//============================================================================*
+		// OnFirearmAccessoriesShowAllClicked()
+		//============================================================================*
+
+		protected void OnFirearmAccessoriesShowAllClicked(object sender, EventArgs args)
+			{
+			cFirearm Firearm = null;
+
+			if (!FirearmAccessoriesShowAllCheckBox.Checked)
+				{
+				if (m_FirearmsListView.SelectedItems.Count > 0)
+					Firearm = (cFirearm) m_FirearmsListView.SelectedItems[0].Tag;
+				}
+
+			m_FirearmAccessoriesListView.Firearm = Firearm;
+
+			UpdateFirearmTabButtons();
+			}
+
+		//============================================================================*
+		// OnFirearmAccessoryAttachClicked()
+		//============================================================================*
+
+		protected void OnFirearmAccessoryAttachClicked(object sender, EventArgs args)
+			{
+			cFirearm Firearm = null;
+
+			if (m_FirearmsListView.SelectedItems.Count > 0)
+				Firearm = (cFirearm) m_FirearmsListView.SelectedItems[0].Tag;
+
+			if (m_FirearmAccessoriesListView.SelectedItems.Count > 0)
+				{
+				cGear Gear = (cGear) m_FirearmAccessoriesListView.SelectedItems[0].Tag;
+
+				if (Gear.Parent != null)
+					Gear.Parent = null;
+				else
+					Gear.Parent = Firearm;
+
+				if (FirearmAccessoriesShowAllCheckBox.Checked)
+					m_FirearmAccessoriesListView.UpdateFirearmAccessory(Gear, true);
+				else
+					m_FirearmAccessoriesListView.Populate();
+
+				UpdateFirearmTabButtons();
+				}
+			}
+
+		//============================================================================*
+		// OnFirearmAccessorySelected()
+		//============================================================================*
+
+		protected void OnFirearmAccessorySelected(object sender, EventArgs args)
+			{
+			if (!m_fInitialized || m_FirearmAccessoriesListView.Populating)
+				return;
+
+			UpdateFirearmTabButtons();
+			}
+
+		//============================================================================*
 		// OnFirearmChecked()
 		//============================================================================*
 
@@ -225,9 +421,23 @@ namespace ReloadersWorkShop
 			{
 			if (m_FirearmsListView.SelectedItems.Count > 0)
 				{
-				m_DataFiles.Preferences.LastFirearmSelected = (cFirearm)(sender as ListView).SelectedItems[0].Tag;
+				m_DataFiles.Preferences.LastFirearmSelected = (cFirearm) (sender as ListView).SelectedItems[0].Tag;
 
 				OnEditFirearm(sender, args);
+				}
+
+			UpdateFirearmTabButtons();
+			}
+
+		//============================================================================*
+		// OnFirearmAccessoryDoubleClicked()
+		//============================================================================*
+
+		protected void OnFirearmAccessoryDoubleClicked(object sender, EventArgs args)
+			{
+			if (m_FirearmAccessoriesListView.SelectedItems.Count > 0)
+				{
+				OnEditFirearmAccessory(sender, args);
 				}
 
 			UpdateFirearmTabButtons();
@@ -327,8 +537,16 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_FirearmsListView.Populating)
 				return;
 
+			cFirearm Firearm = null;
+
 			if (m_FirearmsListView.SelectedItems.Count > 0)
-				m_DataFiles.Preferences.LastFirearmSelected = (cFirearm)m_FirearmsListView.SelectedItems[0].Tag;
+				{
+				Firearm = (cFirearm) m_FirearmsListView.SelectedItems[0].Tag;
+
+				m_DataFiles.Preferences.LastFirearmSelected = Firearm;
+				}
+
+			m_FirearmAccessoriesListView.Firearm = !FirearmAccessoriesShowAllCheckBox.Checked ?  Firearm : null;
 
 			UpdateFirearmTabButtons();
 			}
@@ -344,7 +562,7 @@ namespace ReloadersWorkShop
 			ListViewItem Item = m_FirearmsListView.SelectedItems[0];
 
 			if (Item != null)
-				Firearm = (cFirearm)Item.Tag;
+				Firearm = (cFirearm) Item.Tag;
 
 			if (Firearm == null)
 				{
@@ -389,6 +607,47 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// OnRemoveFirearmAccessory()
+		//============================================================================*
+
+		protected void OnRemoveFirearmAccessory(object sender, EventArgs args)
+			{
+			if (m_FirearmAccessoriesListView.SelectedItems.Count == 0)
+				return;
+
+			cGear Gear = null;
+
+			ListViewItem Item = m_FirearmAccessoriesListView.SelectedItems[0];
+
+			if (Item != null)
+				Gear = (cGear) Item.Tag;
+
+			if (Gear == null || Gear.Parent != null)
+				{
+				m_FirearmAccessoriesListView.Focus();
+
+				return;
+				}
+
+			//----------------------------------------------------------------------------*
+			// Make sure the user is sure
+			//----------------------------------------------------------------------------*
+
+			string strText = String.Format("Are you sure you wish to remove this {0}?", cGear.GearTypeString(Gear.GearType));
+
+			if (MessageBox.Show(this, strText, "Data Deletion Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+				{
+				m_DataFiles.DeleteFirearmAccessory(Gear);
+
+				m_FirearmAccessoriesListView.Items.Remove(Item);
+				}
+
+			UpdateFirearmTabButtons();
+
+			m_FirearmsListView.Focus();
+			}
+
+		//============================================================================*
 		// OnViewFirearm()
 		//============================================================================*
 
@@ -403,7 +662,7 @@ namespace ReloadersWorkShop
 			if (Item == null)
 				return;
 
-			cFirearm Firearm = (cFirearm)Item.Tag;
+			cFirearm Firearm = (cFirearm) Item.Tag;
 
 			if (Firearm == null)
 				return;
@@ -424,6 +683,40 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// OnViewFirearmAccessory()
+		//============================================================================*
+
+		protected void OnViewFirearmAccessory(object sender, EventArgs args)
+			{
+			//----------------------------------------------------------------------------*
+			// Get the selected object
+			//----------------------------------------------------------------------------*
+
+			if (m_FirearmAccessoriesListView.SelectedItems.Count == 0)
+				return;
+
+			ListViewItem Item = m_FirearmAccessoriesListView.SelectedItems[0];
+
+			if (Item == null)
+				return;
+
+			cGear Gear = (cGear) Item.Tag;
+
+			if (Gear == null)
+				return;
+
+			//----------------------------------------------------------------------------*
+			// Start the dialog
+			//----------------------------------------------------------------------------*
+
+			cFirearmAccessoryForm FirearmAccessoryForm = new cFirearmAccessoryForm(Gear, m_DataFiles, true);
+
+			FirearmAccessoryForm.ShowDialog();
+
+			m_FirearmAccessoriesListView.Focus();
+			}
+
+		//============================================================================*
 		// PopulateFirearmsListView()
 		//============================================================================*
 
@@ -435,14 +728,44 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// PopulateFirearmsListViewColumns()
+		// SetFirearmCostDetails()
 		//============================================================================*
 
-		public void PopulateFirearmsListViewColumns()
+		public void SetFirearmCostDetails()
 			{
-			m_FirearmsListView.SetColumns();
+			cFirearm Firearm = null;
 
-			PopulateFirearmsListView();
+			if (m_FirearmsListView.SelectedItems.Count > 0)
+				Firearm = (cFirearm) m_FirearmsListView.SelectedItems[0].Tag;
+
+			double dFirearmCost = 0.0;
+			double dTotalCost = 0.0;
+			double dTotalTaxes = 0.0;
+			double dTotalShipping = 0.0;
+			double dAccessoryTotalCost = 0.0;
+
+			if (Firearm != null)
+				{
+				dFirearmCost = Firearm.PurchasePrice;
+
+				dTotalCost += dFirearmCost;
+
+				foreach (cGear Gear in m_DataFiles.GearList)
+					{
+					if (Gear.Parent != null && Gear.Parent.CompareTo(Firearm) == 0)
+						{
+						dAccessoryTotalCost += Gear.PurchasePrice;
+						}
+					}
+
+				dTotalCost += dAccessoryTotalCost;
+				}
+
+			FirearmCostLabel.Text = String.Format("{0:F2}", dFirearmCost);
+			FirearmAccessoryCostLabel.Text = String.Format("{0:F2}", dAccessoryTotalCost);
+
+			FirearmTotalCostsLabel.Text = string.Format("{0:F2}", dTotalCost);
+			FirearmGrandTotalLabel.Text = string.Format("{0}{1:F2}", m_DataFiles.Preferences.Currency, dTotalCost + dTotalTaxes + dTotalShipping);
 			}
 
 		//============================================================================*
@@ -511,6 +834,71 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// UpdateFirearmAccessory()
+		//============================================================================*
+
+		private void UpdateFirearmAccessory(cGear OldGear, cGear NewGear)
+			{
+			//----------------------------------------------------------------------------*
+			// Find the NewGear
+			//----------------------------------------------------------------------------*
+
+			foreach (cGear CheckGear in m_DataFiles.GearList)
+				{
+				//----------------------------------------------------------------------------*
+				// See if this is the same Gear
+				//----------------------------------------------------------------------------*
+
+				if (CheckGear.CompareTo(OldGear) == 0)
+					{
+					//----------------------------------------------------------------------------*
+					// Update the current Firearm record
+					//----------------------------------------------------------------------------*
+
+					CheckGear.Copy(NewGear);
+
+					//----------------------------------------------------------------------------*
+					// Update the Gear on the Gear tab
+					//----------------------------------------------------------------------------*
+
+					ListViewItem Item = null;
+
+					foreach (ListViewItem CheckItem in m_FirearmAccessoriesListView.Items)
+						{
+						if ((CheckItem.Tag as cGear).CompareTo(CheckGear) == 0)
+							{
+							Item = CheckItem;
+
+							break;
+							}
+						}
+
+					if (Item != null)
+						{
+						try
+							{
+							m_FirearmAccessoriesListView.Items.Remove(Item);
+							}
+						catch
+							{
+							// No need to do anything here
+							}
+
+						m_FirearmAccessoriesListView.AddFirearmAccessory(CheckGear, true);
+						}
+
+					return;
+					}
+				}
+
+			//----------------------------------------------------------------------------*
+			// If the NewFirearm was not found, add it
+			//----------------------------------------------------------------------------*
+
+			AddFirearmAccessory(NewGear);
+			}
+
+		//============================================================================*
 		// UpdateFirearmTabButtons()
 		//============================================================================*
 
@@ -518,6 +906,8 @@ namespace ReloadersWorkShop
 			{
 			if (!m_fInitialized)
 				return;
+
+			SetFirearmCostDetails();
 
 			//----------------------------------------------------------------------------*
 			// Print  Options
@@ -540,6 +930,26 @@ namespace ReloadersWorkShop
 			EditFirearmButton.Enabled = m_FirearmsListView.SelectedItems.Count > 0;
 			ViewFirearmButton.Enabled = m_FirearmsListView.SelectedItems.Count > 0;
 			RemoveFirearmButton.Enabled = m_FirearmsListView.SelectedItems.Count > 0;
+
+			EditFirearmAccessoryButton.Enabled = m_FirearmAccessoriesListView.SelectedItems.Count > 0;
+			ViewFirearmAccessoryButton.Enabled = m_FirearmAccessoriesListView.SelectedItems.Count > 0;
+			RemoveFirearmAccessoryButton.Enabled = m_FirearmAccessoriesListView.SelectedItems.Count > 0;
+
+			cGear Gear = null;
+
+			if (m_FirearmAccessoriesListView.SelectedItems.Count > 0 && RemoveFirearmAccessoryButton.Enabled)
+				{
+				Gear = (cGear) m_FirearmAccessoriesListView.SelectedItems[0].Tag;
+
+				if (Gear != null)
+					{
+					FirearmAccessoryAttachButton.Text = Gear.Parent != null ? "Detach" : "Attach";
+
+					RemoveFirearmAccessoryButton.Enabled = Gear.Parent == null ? true : false;
+					}
+				}
+
+			FirearmAccessoryAttachButton.Enabled = Gear != null && m_FirearmsListView.SelectedItems.Count > 0;
 			}
 		}
 	}

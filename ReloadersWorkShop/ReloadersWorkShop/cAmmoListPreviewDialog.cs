@@ -83,7 +83,7 @@ namespace ReloadersWorkShop
 
 			m_AmmoColumns[4].Name += String.Format(" ({0})", cDataFiles.MetricString(cDataFiles.eDataType.BulletWeight));
 
-			if (!cPreferences.TrackInventory)
+			if (!m_DataFiles.Preferences.TrackInventory)
 				m_AmmoColumns[6].Name = "Box of";
 
 			//----------------------------------------------------------------------------*
@@ -240,7 +240,7 @@ namespace ReloadersWorkShop
 
 					nY = cPrintObject.PrintReportTitle(m_DataFiles.Preferences.AmmoPrintBelowStock ? "Ammunition Shopping List" : "Ammunition List", PageRect, e.Graphics);
 
-					if (cPreferences.TrackInventory)
+					if (m_DataFiles.Preferences.TrackInventory)
 						{
 						strText = m_DataFiles.CostText;
 
@@ -348,7 +348,7 @@ namespace ReloadersWorkShop
 
 				double dQuantity = Ammo.MinimumStockLevel;
 
-				if (cPreferences.TrackInventory)
+				if (m_DataFiles.Preferences.TrackInventory)
 					{
 					if (dQuantity != 0.0)
 						strText = String.Format("{0:G0}", dQuantity);
@@ -368,7 +368,7 @@ namespace ReloadersWorkShop
 				// Qty on Hand
 				//----------------------------------------------------------------------------*
 
-				if (cPreferences.TrackInventory)
+				if (m_DataFiles.Preferences.TrackInventory)
 					{
 					dQuantity = m_DataFiles.SupplyQuantity(Ammo);
 

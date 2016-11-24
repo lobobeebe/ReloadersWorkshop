@@ -682,7 +682,7 @@ namespace ReloadersWorkShop
 		public string GroupBoxString()
 			{
 			string strGroupFormat = "{0:F";
-			strGroupFormat += String.Format("{0:G0}", cPreferences.GroupDecimals);
+			strGroupFormat += String.Format("{0:G0}", cPreferences.StaticPreferences.GroupDecimals);
 			strGroupFormat += "} {1}";
 
 			Rectangle GroupBoxRect = GroupBox;
@@ -690,7 +690,7 @@ namespace ReloadersWorkShop
 			double dWidth = 0.0;
 			double dHeight = 0.0;
 
-			if (cPreferences.MetricGroups)
+			if (cPreferences.StaticPreferences.MetricGroups)
 				{
 				if (PixelsPerCentimeter > 0.0)
 					{
@@ -890,12 +890,12 @@ namespace ReloadersWorkShop
 		public string MeanOffsetString()
 			{
 			string strGroupFormat = "{0:F";
-			strGroupFormat += String.Format("{0:G0}", cPreferences.GroupDecimals);
+			strGroupFormat += String.Format("{0:G0}", cPreferences.StaticPreferences.GroupDecimals);
 			strGroupFormat += "} {1}";
 
 			string strOffset = String.Format(strGroupFormat, Math.Abs(cDataFiles.StandardToMetric(MeanOffset.X, cDataFiles.eDataType.GroupSize)), cDataFiles.MetricString(cDataFiles.eDataType.GroupSize));
 
-			if (Math.Round(MeanOffset.X, cPreferences.DimensionDecimals) == 0.0)
+			if (Math.Round(MeanOffset.X, cPreferences.StaticPreferences.DimensionDecimals) == 0.0)
 				strOffset += " Horiz.";
 			else
 				{
@@ -909,7 +909,7 @@ namespace ReloadersWorkShop
 
 			strOffset += String.Format(strGroupFormat, Math.Abs(cDataFiles.StandardToMetric(MeanOffset.Y, cDataFiles.eDataType.GroupSize)), cDataFiles.MetricString(cDataFiles.eDataType.GroupSize));
 
-			if (Math.Round(MeanOffset.Y, cPreferences.DimensionDecimals) == 0.0)
+			if (Math.Round(MeanOffset.Y, cPreferences.StaticPreferences.DimensionDecimals) == 0.0)
 				strOffset += " Vert.";
 			else
 				{
@@ -1064,7 +1064,7 @@ namespace ReloadersWorkShop
 			double dYOffset = OffsetY(Shot);
 
 			string strGroupFormat = "{0:F";
-			strGroupFormat += String.Format("{0:G0}", cPreferences.GroupDecimals);
+			strGroupFormat += String.Format("{0:G0}", cPreferences.StaticPreferences.GroupDecimals);
 			strGroupFormat += "}";
 
 			strOffset = String.Format(strGroupFormat, Math.Abs(cDataFiles.StandardToMetric(dXOffset, cDataFiles.eDataType.GroupSize)));

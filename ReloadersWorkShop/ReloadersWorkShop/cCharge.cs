@@ -327,10 +327,10 @@ namespace ReloadersWorkShop
 		public override string ToString()
 			{
 			string strFormat = "{0:F";
-			strFormat += String.Format("{0:G0}", cPreferences.PowderWeightDecimals);
+			strFormat += String.Format("{0:G0}", cPreferences.StaticPreferences.PowderWeightDecimals);
 			strFormat += "}{1}";
 
-			string strString = String.Format(strFormat, Math.Round(cPreferences.MetricPowderWeights ? cConversions.GrainsToGrams(m_dPowderWeight) :  m_dPowderWeight, cPreferences.PowderWeightDecimals), (m_dFillRatio > 100.0 ? "C" : ""));
+			string strString = String.Format(strFormat, Math.Round(cPreferences.StaticPreferences.MetricPowderWeights ? cConversions.GrainsToGrams(m_dPowderWeight) :  m_dPowderWeight, cPreferences.StaticPreferences.PowderWeightDecimals), (m_dFillRatio > 100.0 ? "C" : ""));
 
 			return (strString);
 			}

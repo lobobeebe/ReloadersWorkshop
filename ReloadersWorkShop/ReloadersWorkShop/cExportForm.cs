@@ -191,7 +191,11 @@ namespace ReloadersWorkShop
 						m_DataFiles.CaliberList.Export(Writer);
 
 					if (FirearmsCheckBox.Checked)
+						{
 						m_DataFiles.FirearmList.Export(Writer);
+
+						m_DataFiles.GearList.Export(Writer);
+						}
 
 					if (AmmoCheckBox.Checked)
 						m_DataFiles.AmmoList.Export(Writer);
@@ -280,7 +284,11 @@ namespace ReloadersWorkShop
 				m_DataFiles.CaliberList.Export(XMLDocument, MainElement);
 
 			if (FirearmsCheckBox.Checked)
+				{
 				m_DataFiles.FirearmList.Export(XMLDocument, MainElement);
+
+				m_DataFiles.GearList.Export(XMLDocument, MainElement);
+				}
 
 			if (AmmoCheckBox.Checked)
 				m_DataFiles.AmmoList.Export(XMLDocument, MainElement);

@@ -11,12 +11,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Windows;
 using System.Windows.Forms;
-using System.Xml;
 
 //============================================================================*
 // CommonLib Using Statements
@@ -89,10 +86,9 @@ namespace ReloadersWorkShop
 		private cPowderList m_PowderList = null;
 		private cPrimerList m_PrimerList = null;
 		private cAmmoList m_AmmoList = null;
+		private cGearList m_GearList = null;
 
 		private cManufacturer m_BatchManufacturer = null;
-
-		private cPreferences m_Preferences = null;
 
 		//============================================================================*
 		// cDataFiles() - Default Constructor
@@ -100,7 +96,6 @@ namespace ReloadersWorkShop
 
 		public cDataFiles()
 			{
-			m_Preferences = new cPreferences();
 			}
 
 		//============================================================================*
@@ -478,7 +473,7 @@ namespace ReloadersWorkShop
 
 		public void CheckNonZero()
 			{
-			if (!m_Preferences.AutoCheckNonZero)
+			if (!cPreferences.StaticPreferences.AutoCheckNonZero)
 				return;
 
 			foreach (cSupply Supply in m_BulletList)
@@ -595,12 +590,12 @@ namespace ReloadersWorkShop
 				{
 				string strText = "(Costs and values based on ";
 
-				if (m_Preferences.AverageCosts)
+				if (cPreferences.StaticPreferences.AverageCosts)
 					strText += "average of all purchases,";
 				else
 					strText += "last purchase only,";
 
-				if (!m_Preferences.IncludeTaxShipping)
+				if (!cPreferences.StaticPreferences.IncludeTaxShipping)
 					strText += " not";
 
 				strText += " including tax & shipping)";
@@ -883,6 +878,18 @@ namespace ReloadersWorkShop
 				m_FirearmList.Remove(Firearm);
 
 			return (strCount);
+			}
+
+		//============================================================================*
+		// DeleteFirearmAccessory()
+		//============================================================================*
+
+		public void DeleteFirearmAccessory(cGear Gear)
+			{
+			if (Gear == null)
+				return;
+
+			m_GearList.Remove(Gear);
 			}
 
 		//============================================================================*
@@ -1183,6 +1190,18 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// GearList Property
+		//============================================================================*
+
+		public cGearList GearList
+			{
+			get
+				{
+				return (m_GearList);
+				}
+			}
+
+		//============================================================================*
 		// GetAmmoList()
 		//============================================================================*
 
@@ -1196,11 +1215,11 @@ namespace ReloadersWorkShop
 
 			foreach (cAmmo Ammo in m_AmmoList)
 				{
-				if ((m_Preferences.AmmoPrintAll ||
-					(m_Preferences.AmmoPrintChecked && Ammo.Checked)) &&
-					(!m_Preferences.AmmoPrintNonZero || SupplyQuantity(Ammo) != 0.0) &&
-					(!m_Preferences.AmmoPrintFactoryOnly || Ammo.BatchID == 0) &&
-					(!m_Preferences.AmmoPrintBelowStock || SupplyQuantity(Ammo) < Ammo.MinimumStockLevel))
+				if ((cPreferences.StaticPreferences.AmmoPrintAll ||
+					(cPreferences.StaticPreferences.AmmoPrintChecked && Ammo.Checked)) &&
+					(!cPreferences.StaticPreferences.AmmoPrintNonZero || SupplyQuantity(Ammo) != 0.0) &&
+					(!cPreferences.StaticPreferences.AmmoPrintFactoryOnly || Ammo.BatchID == 0) &&
+					(!cPreferences.StaticPreferences.AmmoPrintBelowStock || SupplyQuantity(Ammo) < Ammo.MinimumStockLevel))
 
 					if (!AmmoList.Contains(Ammo))
 						AmmoList.Add(Ammo);
@@ -1255,10 +1274,10 @@ namespace ReloadersWorkShop
 
 			foreach (cSupply Supply in m_BulletList)
 				{
-				if ((m_Preferences.SupplyPrintAll ||
-					(m_Preferences.SupplyPrintChecked && Supply.Checked)) &&
-					(!m_Preferences.SupplyPrintNonZero || SupplyQuantity(Supply) > 0.0) &&
-					(!m_Preferences.SupplyPrintBelowStock || SupplyQuantity(Supply) < Supply.MinimumStockLevel))
+				if ((cPreferences.StaticPreferences.SupplyPrintAll ||
+					(cPreferences.StaticPreferences.SupplyPrintChecked && Supply.Checked)) &&
+					(!cPreferences.StaticPreferences.SupplyPrintNonZero || SupplyQuantity(Supply) > 0.0) &&
+					(!cPreferences.StaticPreferences.SupplyPrintBelowStock || SupplyQuantity(Supply) < Supply.MinimumStockLevel))
 					{
 					if (!SupplyList.Contains(Supply))
 						SupplyList.AddSupply(Supply);
@@ -1269,10 +1288,10 @@ namespace ReloadersWorkShop
 
 			foreach (cSupply Supply in m_CaseList)
 				{
-				if ((m_Preferences.SupplyPrintAll ||
-					(m_Preferences.SupplyPrintChecked && Supply.Checked)) &&
-					(!m_Preferences.SupplyPrintNonZero || SupplyQuantity(Supply) > 0.0) &&
-					(!m_Preferences.SupplyPrintBelowStock || SupplyQuantity(Supply) < Supply.MinimumStockLevel))
+				if ((cPreferences.StaticPreferences.SupplyPrintAll ||
+					(cPreferences.StaticPreferences.SupplyPrintChecked && Supply.Checked)) &&
+					(!cPreferences.StaticPreferences.SupplyPrintNonZero || SupplyQuantity(Supply) > 0.0) &&
+					(!cPreferences.StaticPreferences.SupplyPrintBelowStock || SupplyQuantity(Supply) < Supply.MinimumStockLevel))
 					{
 					if (!SupplyList.Contains(Supply))
 						SupplyList.AddSupply(Supply);
@@ -1283,10 +1302,10 @@ namespace ReloadersWorkShop
 
 			foreach (cSupply Supply in m_PowderList)
 				{
-				if ((m_Preferences.SupplyPrintAll ||
-					(m_Preferences.SupplyPrintChecked && Supply.Checked)) &&
-					(!m_Preferences.SupplyPrintNonZero || SupplyQuantity(Supply) > 0.0) &&
-					(!m_Preferences.SupplyPrintBelowStock || SupplyQuantity(Supply) < Supply.MinimumStockLevel))
+				if ((cPreferences.StaticPreferences.SupplyPrintAll ||
+					(cPreferences.StaticPreferences.SupplyPrintChecked && Supply.Checked)) &&
+					(!cPreferences.StaticPreferences.SupplyPrintNonZero || SupplyQuantity(Supply) > 0.0) &&
+					(!cPreferences.StaticPreferences.SupplyPrintBelowStock || SupplyQuantity(Supply) < Supply.MinimumStockLevel))
 					{
 					if (!SupplyList.Contains(Supply))
 						SupplyList.AddSupply(Supply);
@@ -1297,10 +1316,10 @@ namespace ReloadersWorkShop
 
 			foreach (cSupply Supply in m_PrimerList)
 				{
-				if ((m_Preferences.SupplyPrintAll ||
-					(m_Preferences.SupplyPrintChecked && Supply.Checked)) &&
-					(!m_Preferences.SupplyPrintNonZero || SupplyQuantity(Supply) > 0.0) &&
-					(!m_Preferences.SupplyPrintBelowStock || SupplyQuantity(Supply) < Supply.MinimumStockLevel))
+				if ((cPreferences.StaticPreferences.SupplyPrintAll ||
+					(cPreferences.StaticPreferences.SupplyPrintChecked && Supply.Checked)) &&
+					(!cPreferences.StaticPreferences.SupplyPrintNonZero || SupplyQuantity(Supply) > 0.0) &&
+					(!cPreferences.StaticPreferences.SupplyPrintBelowStock || SupplyQuantity(Supply) < Supply.MinimumStockLevel))
 					{
 					if (!SupplyList.Contains(Supply))
 						SupplyList.AddSupply(Supply);
@@ -1399,16 +1418,16 @@ namespace ReloadersWorkShop
 			switch (eTransactionType)
 				{
 				case cTransaction.eTransactionType.AddStock:
-					return (m_Preferences.LastAddStockReason);
+					return (cPreferences.StaticPreferences.LastAddStockReason);
 
 				case cTransaction.eTransactionType.Fired:
-					return (m_Preferences.LastFiredLocation);
+					return (cPreferences.StaticPreferences.LastFiredLocation);
 
 				case cTransaction.eTransactionType.Purchase:
-					return (m_Preferences.LastPurchaseSource);
+					return (cPreferences.StaticPreferences.LastPurchaseSource);
 
 				case cTransaction.eTransactionType.ReduceStock:
-					return (m_Preferences.LastReduceStockReason);
+					return (cPreferences.StaticPreferences.LastReduceStockReason);
 				}
 
 			return ("");
@@ -1507,47 +1526,45 @@ namespace ReloadersWorkShop
 			if (!LoadDataFile(strBackupFilePath, fRestore))
 				return (false);
 
-			m_Preferences.ResetStatics();
+			cPreferences.StaticPreferences.BallisticsData.MuzzleHeight = 60;
 
-			m_Preferences.BallisticsData.MuzzleHeight = 60;
+			if (cPreferences.StaticPreferences.TargetAimPointColor.A == 0)
+				cPreferences.StaticPreferences.TargetAimPointColor = cTarget.DefaultAimPointColor;
 
-			if (m_Preferences.TargetAimPointColor.A == 0)
-				m_Preferences.TargetAimPointColor = cTarget.DefaultAimPointColor;
+			if (cPreferences.StaticPreferences.TargetOffsetColor.A == 0)
+				cPreferences.StaticPreferences.TargetOffsetColor = cTarget.DefaultOffsetColor;
 
-			if (m_Preferences.TargetOffsetColor.A == 0)
-				m_Preferences.TargetOffsetColor = cTarget.DefaultOffsetColor;
+			if (cPreferences.StaticPreferences.TargetShotColor.A == 0)
+				cPreferences.StaticPreferences.TargetShotColor = cTarget.DefaultShotColor;
 
-			if (m_Preferences.TargetShotColor.A == 0)
-				m_Preferences.TargetShotColor = cTarget.DefaultShotColor;
+			if (cPreferences.StaticPreferences.TargetShotForecolor.A == 0)
+				cPreferences.StaticPreferences.TargetShotForecolor = cTarget.DefaultShotForecolor;
 
-			if (m_Preferences.TargetShotForecolor.A == 0)
-				m_Preferences.TargetShotForecolor = cTarget.DefaultShotForecolor;
+			if (cPreferences.StaticPreferences.TargetReticleColor.A == 0)
+				cPreferences.StaticPreferences.TargetReticleColor = cTarget.DefaultReticleColor;
 
-			if (m_Preferences.TargetReticleColor.A == 0)
-				m_Preferences.TargetReticleColor = cTarget.DefaultReticleColor;
+			if (cPreferences.StaticPreferences.TargetScaleForecolor.A == 0)
+				cPreferences.StaticPreferences.TargetScaleForecolor = cTarget.DefaultScaleForecolor;
 
-			if (m_Preferences.TargetScaleForecolor.A == 0)
-				m_Preferences.TargetScaleForecolor = cTarget.DefaultScaleForecolor;
+			if (cPreferences.StaticPreferences.TargetScaleBackcolor.A == 0)
+				cPreferences.StaticPreferences.TargetScaleBackcolor = cTarget.DefaultScaleBackcolor;
 
-			if (m_Preferences.TargetScaleBackcolor.A == 0)
-				m_Preferences.TargetScaleBackcolor = cTarget.DefaultScaleBackcolor;
+			if (cPreferences.StaticPreferences.TargetExtremesColor.A == 0)
+				cPreferences.StaticPreferences.TargetExtremesColor = cTarget.DefaultExtremesColor;
 
-			if (m_Preferences.TargetExtremesColor.A == 0)
-				m_Preferences.TargetExtremesColor = cTarget.DefaultExtremesColor;
+			if (cPreferences.StaticPreferences.TargetGroupBoxColor.A == 0)
+				cPreferences.StaticPreferences.TargetGroupBoxColor = cTarget.DefaultGroupBoxColor;
 
-			if (m_Preferences.TargetGroupBoxColor.A == 0)
-				m_Preferences.TargetGroupBoxColor = cTarget.DefaultGroupBoxColor;
-
-			if (!m_Preferences.TargetShowBoxesSet)
+			if (!cPreferences.StaticPreferences.TargetShowBoxesSet)
 				{
-				m_Preferences.TargetShowAimPoint = true;
-				m_Preferences.TargetShowExtremes = false;
-				m_Preferences.TargetShowGroupBox = false;
-				m_Preferences.TargetShowOffset = true;
-				m_Preferences.TargetShowScale = true;
-				m_Preferences.TargetShowShotNum = false;
+				cPreferences.StaticPreferences.TargetShowAimPoint = true;
+				cPreferences.StaticPreferences.TargetShowExtremes = false;
+				cPreferences.StaticPreferences.TargetShowGroupBox = false;
+				cPreferences.StaticPreferences.TargetShowOffset = true;
+				cPreferences.StaticPreferences.TargetShowScale = true;
+				cPreferences.StaticPreferences.TargetShowShotNum = false;
 
-				m_Preferences.TargetShowBoxesSet = true;
+				cPreferences.StaticPreferences.TargetShowBoxesSet = true;
 				}
 
 			//----------------------------------------------------------------------------*
@@ -1641,6 +1658,7 @@ namespace ReloadersWorkShop
 			m_LoadList = new cLoadList();
 			m_BatchList = new cBatchList();
 			m_AmmoList = new cAmmoList();
+			m_GearList = new cGearList();
 
 			//----------------------------------------------------------------------------*
 			// Restore Backup?
@@ -1718,7 +1736,13 @@ namespace ReloadersWorkShop
 						// Load the Preferences
 						//----------------------------------------------------------------------------*
 
-						m_Preferences = (cPreferences) Formatter.Deserialize(Stream);
+						cPreferences.StaticPreferences.Deserialize(Formatter, Stream);
+
+						try
+							{
+							m_GearList = (cGearList) Formatter.Deserialize(Stream);
+							}
+						catch { }
 						}
 					catch
 						{
@@ -1770,6 +1794,8 @@ namespace ReloadersWorkShop
 
 				if (m_FirearmList == null)
 					m_FirearmList = new cFirearmList();
+				else
+					m_FirearmList.Validate();
 
 				if (m_BulletList == null)
 					m_BulletList = new cBulletList();
@@ -1792,23 +1818,12 @@ namespace ReloadersWorkShop
 				if (m_AmmoList == null)
 					m_AmmoList = new cAmmoList();
 
+				if (m_GearList == null)
+					m_GearList = new cGearList();
+
 				//----------------------------------------------------------------------------*
 				// Set up default preferences
 				//----------------------------------------------------------------------------*
-
-				if (m_Preferences == null)
-					{
-					m_Preferences = new cPreferences();
-
-					m_Preferences.Maximized = false;
-					m_Preferences.MainFormLocation = new Point(0, 0);
-					m_Preferences.MainFormSize = new Size(1024, 768);
-
-					m_Preferences.BallisticsData = new cBallistics();
-					}
-
-				if (m_Preferences.BallisticsData == null)
-					m_Preferences.BallisticsData = new cBallistics();
 
 				//----------------------------------------------------------------------------*
 				// Set up the next batch ID
@@ -2716,10 +2731,10 @@ namespace ReloadersWorkShop
 							nUpdateCount++;
 							}
 
-						if (!CheckManufacturer.Stocks && Manufacturer.Stocks)
+						if (!CheckManufacturer.Furniture && Manufacturer.Furniture)
 							{
 							if (!fCountOnly)
-								CheckManufacturer.Stocks = true;
+								CheckManufacturer.Furniture = true;
 
 							nUpdateCount++;
 							}
@@ -2904,7 +2919,7 @@ namespace ReloadersWorkShop
 			// Make sure Inventory Tracking is turned on
 			//----------------------------------------------------------------------------*
 
-			if (!cPreferences.TrackInventory)
+			if (!cPreferences.StaticPreferences.TrackInventory)
 				return (0);
 
 			//----------------------------------------------------------------------------*
@@ -2962,43 +2977,43 @@ namespace ReloadersWorkShop
 			switch (LabelType)
 				{
 				case eDataType.Altitude:
-					return (cPreferences.MetricAltitudes ? "Meters" : "Feet");
+					return (cPreferences.StaticPreferences.MetricAltitudes ? "Meters" : "Feet");
 
 				case eDataType.BulletWeight:
-					return (cPreferences.MetricBulletWeights ? "Grams" : "Grains");
+					return (cPreferences.StaticPreferences.MetricBulletWeights ? "Grams" : "Grains");
 
 				case eDataType.CanWeight:
-					return (cPreferences.MetricCanWeights ? "Kilos" : "Pounds");
+					return (cPreferences.StaticPreferences.MetricCanWeights ? "Kilos" : "Pounds");
 
 				case eDataType.Dimension:
-					return (cPreferences.MetricDimensions ? "Millimeters" : "Inches");
+					return (cPreferences.StaticPreferences.MetricDimensions ? "Millimeters" : "Inches");
 
 				case eDataType.Firearm:
-					return (cPreferences.MetricFirearms ? "Centimeters" : "Inches");
+					return (cPreferences.StaticPreferences.MetricFirearms ? "Centimeters" : "Inches");
 
 				case eDataType.GroupSize:
-					return (cPreferences.MetricGroups ? "Centimeters" : "Inches");
+					return (cPreferences.StaticPreferences.MetricGroups ? "Centimeters" : "Inches");
 
 				case eDataType.PowderWeight:
-					return (cPreferences.MetricPowderWeights ? "Grams" : "Grains");
+					return (cPreferences.StaticPreferences.MetricPowderWeights ? "Grams" : "Grains");
 
 				case eDataType.Pressure:
-					return (cPreferences.MetricAltitudes ? "Inches of Mercury" : "Millibars");
+					return (cPreferences.StaticPreferences.MetricAltitudes ? "Inches of Mercury" : "Millibars");
 
 				case eDataType.Range:
-					return (cPreferences.MetricRanges ? "Meters" : "Yards");
+					return (cPreferences.StaticPreferences.MetricRanges ? "Meters" : "Yards");
 
 				case eDataType.ShotWeight:
-					return (cPreferences.MetricShotWeights ? "Grams" : "Grains");
+					return (cPreferences.StaticPreferences.MetricShotWeights ? "Grams" : "Grains");
 
 				case eDataType.Speed:
-					return (cPreferences.MetricVelocities ? "Kilometers per Hour" : "Mile per Hour");
+					return (cPreferences.StaticPreferences.MetricVelocities ? "Kilometers per Hour" : "Mile per Hour");
 
 				case eDataType.Temperature:
-					return (cPreferences.MetricTemperatures ? "Celsius" : "Fahrenheit");
+					return (cPreferences.StaticPreferences.MetricTemperatures ? "Celsius" : "Fahrenheit");
 
 				case eDataType.Velocity:
-					return (cPreferences.MetricVelocities ? "Meter per Second (m/s)" : "Feet per Second (fps)");
+					return (cPreferences.StaticPreferences.MetricVelocities ? "Meter per Second (m/s)" : "Feet per Second (fps)");
 				}
 
 			return ("");
@@ -3013,43 +3028,43 @@ namespace ReloadersWorkShop
 			switch (LabelType)
 				{
 				case eDataType.Altitude:
-					return (cPreferences.MetricAltitudes ? "m" : "ft");
+					return (cPreferences.StaticPreferences.MetricAltitudes ? "m" : "ft");
 
 				case eDataType.BulletWeight:
-					return (cPreferences.MetricBulletWeights ? "g" : "gr");
+					return (cPreferences.StaticPreferences.MetricBulletWeights ? "g" : "gr");
 
 				case eDataType.CanWeight:
-					return (cPreferences.MetricCanWeights ? "kilo" : "lb");
+					return (cPreferences.StaticPreferences.MetricCanWeights ? "kilo" : "lb");
 
 				case eDataType.Dimension:
-					return (cPreferences.MetricDimensions ? "mm" : "in.");
+					return (cPreferences.StaticPreferences.MetricDimensions ? "mm" : "in.");
 
 				case eDataType.Firearm:
-					return (cPreferences.MetricFirearms ? "cm" : "in.");
+					return (cPreferences.StaticPreferences.MetricFirearms ? "cm" : "in.");
 
 				case eDataType.GroupSize:
-					return (cPreferences.MetricGroups ? "cm" : "in.");
+					return (cPreferences.StaticPreferences.MetricGroups ? "cm" : "in.");
 
 				case eDataType.PowderWeight:
-					return (cPreferences.MetricPowderWeights ? "g" : "gr");
+					return (cPreferences.StaticPreferences.MetricPowderWeights ? "g" : "gr");
 
 				case eDataType.Pressure:
-					return (cPreferences.MetricPressures ? "mb" : "in Hg");
+					return (cPreferences.StaticPreferences.MetricPressures ? "mb" : "in Hg");
 
 				case eDataType.Range:
-					return (cPreferences.MetricRanges ? "m" : "yds");
+					return (cPreferences.StaticPreferences.MetricRanges ? "m" : "yds");
 
 				case eDataType.ShotWeight:
-					return (cPreferences.MetricShotWeights ? "g" : "gr");
+					return (cPreferences.StaticPreferences.MetricShotWeights ? "g" : "gr");
 
 				case eDataType.Speed:
-					return (cPreferences.MetricVelocities ? "kph" : "mph");
+					return (cPreferences.StaticPreferences.MetricVelocities ? "kph" : "mph");
 
 				case eDataType.Temperature:
-					return (cPreferences.MetricTemperatures ? "C" : "F");
+					return (cPreferences.StaticPreferences.MetricTemperatures ? "C" : "F");
 
 				case eDataType.Velocity:
-					return (cPreferences.MetricVelocities ? "m/s" : "fps");
+					return (cPreferences.StaticPreferences.MetricVelocities ? "m/s" : "fps");
 				}
 
 			return ("");
@@ -3064,55 +3079,55 @@ namespace ReloadersWorkShop
 			switch (LabelType)
 				{
 				case eDataType.Altitude:
-					dValue = cPreferences.MetricAltitudes ? cConversions.MetersToFeet(dValue) : dValue;
+					dValue = cPreferences.StaticPreferences.MetricAltitudes ? cConversions.MetersToFeet(dValue) : dValue;
 					break;
 
 				case eDataType.BulletWeight:
-					dValue = cPreferences.MetricBulletWeights ? cConversions.GramsToGrains(dValue) : dValue;
+					dValue = cPreferences.StaticPreferences.MetricBulletWeights ? cConversions.GramsToGrains(dValue) : dValue;
 					break;
 
 				case eDataType.CanWeight:
-					dValue = cPreferences.MetricCanWeights ? cConversions.KilosToPounds(dValue) : dValue;
+					dValue = cPreferences.StaticPreferences.MetricCanWeights ? cConversions.KilosToPounds(dValue) : dValue;
 					break;
 
 				case eDataType.Dimension:
-					dValue = cPreferences.MetricDimensions ? cConversions.MillimetersToInches(dValue) : dValue;
+					dValue = cPreferences.StaticPreferences.MetricDimensions ? cConversions.MillimetersToInches(dValue) : dValue;
 					break;
 
 				case eDataType.Firearm:
-					dValue = cPreferences.MetricFirearms ? cConversions.CentimetersToInches(dValue) : dValue;
+					dValue = cPreferences.StaticPreferences.MetricFirearms ? cConversions.CentimetersToInches(dValue) : dValue;
 					break;
 
 				case eDataType.GroupSize:
-					dValue = cPreferences.MetricGroups ? cConversions.CentimetersToInches(dValue) : dValue;
+					dValue = cPreferences.StaticPreferences.MetricGroups ? cConversions.CentimetersToInches(dValue) : dValue;
 					break;
 
 				case eDataType.PowderWeight:
-					dValue = cPreferences.MetricPowderWeights ? cConversions.GramsToGrains(dValue) : dValue;
+					dValue = cPreferences.StaticPreferences.MetricPowderWeights ? cConversions.GramsToGrains(dValue) : dValue;
 					break;
 
 				case eDataType.Pressure:
-					dValue = cPreferences.MetricPressures ? cConversions.MillibarsToInHg(dValue) : dValue;
+					dValue = cPreferences.StaticPreferences.MetricPressures ? cConversions.MillibarsToInHg(dValue) : dValue;
 					break;
 
 				case eDataType.Range:
-					dValue = cPreferences.MetricRanges ? cConversions.MetersToYards(dValue) : dValue;
+					dValue = cPreferences.StaticPreferences.MetricRanges ? cConversions.MetersToYards(dValue) : dValue;
 					break;
 
 				case eDataType.ShotWeight:
-					dValue = cPreferences.MetricShotWeights ? cConversions.GramsToOunces(dValue) : dValue;
+					dValue = cPreferences.StaticPreferences.MetricShotWeights ? cConversions.GramsToOunces(dValue) : dValue;
 					break;
 
 				case eDataType.Speed:
-					dValue = cPreferences.MetricVelocities ? cConversions.KPHToMPH(dValue) : dValue;
+					dValue = cPreferences.StaticPreferences.MetricVelocities ? cConversions.KPHToMPH(dValue) : dValue;
 					break;
 
 				case eDataType.Temperature:
-					dValue = cPreferences.MetricTemperatures ? cConversions.CelsiusToFahrenheit(dValue) : dValue;
+					dValue = cPreferences.StaticPreferences.MetricTemperatures ? cConversions.CelsiusToFahrenheit(dValue) : dValue;
 					break;
 
 				case eDataType.Velocity:
-					dValue = cPreferences.MetricVelocities ? cConversions.MSToFPS(dValue) : dValue;
+					dValue = cPreferences.StaticPreferences.MetricVelocities ? cConversions.MSToFPS(dValue) : dValue;
 					break;
 				}
 
@@ -3139,7 +3154,7 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				return (m_Preferences);
+				return (cPreferences.StaticPreferences);
 				}
 			}
 
@@ -3245,10 +3260,7 @@ namespace ReloadersWorkShop
 			// Reset Preferences
 			//----------------------------------------------------------------------------*
 
-			m_Preferences = new cPreferences();
-
-			m_Preferences.Dev = false;
-			m_Preferences.LastMainTabSelected = "ManufacturersTab";
+			cPreferences.Reset();
 
 			Save();
 			}
@@ -3287,7 +3299,7 @@ namespace ReloadersWorkShop
 					}
 				}
 
-			m_Preferences.NextBatchID = 1;
+			cPreferences.StaticPreferences.NextBatchID = 1;
 
 			Save();
 			}
@@ -3356,8 +3368,6 @@ namespace ReloadersWorkShop
 				// Serialize the data members
 				//----------------------------------------------------------------------------*
 
-				m_Preferences.RecordStatics();
-
 				Formatter.Serialize(Stream, m_ManufacturerList);
 				Formatter.Serialize(Stream, m_CaliberList);
 				Formatter.Serialize(Stream, m_FirearmList);
@@ -3373,7 +3383,13 @@ namespace ReloadersWorkShop
 				// Save Preferences
 				//----------------------------------------------------------------------------*
 
-				Formatter.Serialize(Stream, m_Preferences);
+				cPreferences.StaticPreferences.Serialize(Formatter, Stream);
+
+				//----------------------------------------------------------------------------*
+				// Save Extended Data
+				//----------------------------------------------------------------------------*
+
+				Formatter.Serialize(Stream, m_GearList);
 
 				//----------------------------------------------------------------------------*
 				// Close the stream
@@ -3412,15 +3428,15 @@ namespace ReloadersWorkShop
 					break;
 
 				case eDataType.BulletWeight:
-					TextBox.NumDecimals = cPreferences.BulletWeightDecimals;
-					TextBox.MaxLength = (cPreferences.MetricBulletWeights ? 3 : 4) + cPreferences.BulletWeightDecimals;
+					TextBox.NumDecimals = cPreferences.StaticPreferences.BulletWeightDecimals;
+					TextBox.MaxLength = (cPreferences.StaticPreferences.MetricBulletWeights ? 3 : 4) + cPreferences.StaticPreferences.BulletWeightDecimals;
 					break;
 
 				case eDataType.CanWeight:
-					if (cPreferences.TrackInventory)
+					if (cPreferences.StaticPreferences.TrackInventory)
 						TextBox.NumDecimals = 3;
 					else
-						TextBox.NumDecimals = cPreferences.CanWeightDecimals;
+						TextBox.NumDecimals = cPreferences.StaticPreferences.CanWeightDecimals;
 
 					TextBox.MaxLength = TextBox.NumDecimals + 3;
 
@@ -3432,35 +3448,35 @@ namespace ReloadersWorkShop
 					break;
 
 				case eDataType.Dimension:
-					TextBox.NumDecimals = cPreferences.DimensionDecimals;
-					TextBox.MaxLength = (cPreferences.MetricDimensions ? 4 : 2) + cPreferences.DimensionDecimals;
+					TextBox.NumDecimals = cPreferences.StaticPreferences.DimensionDecimals;
+					TextBox.MaxLength = (cPreferences.StaticPreferences.MetricDimensions ? 4 : 2) + cPreferences.StaticPreferences.DimensionDecimals;
 					break;
 
 				case eDataType.Firearm:
-					TextBox.NumDecimals = cPreferences.FirearmDecimals;
-					TextBox.MaxLength = (cPreferences.MetricFirearms ? 5 : 4) + cPreferences.FirearmDecimals;
+					TextBox.NumDecimals = cPreferences.StaticPreferences.FirearmDecimals;
+					TextBox.MaxLength = (cPreferences.StaticPreferences.MetricFirearms ? 5 : 4) + cPreferences.StaticPreferences.FirearmDecimals;
 					break;
 
 				case eDataType.GroupSize:
-					TextBox.NumDecimals = cPreferences.GroupDecimals;
-					TextBox.MaxLength = (cPreferences.MetricGroups ? 5 : 4) + cPreferences.GroupDecimals;
+					TextBox.NumDecimals = cPreferences.StaticPreferences.GroupDecimals;
+					TextBox.MaxLength = (cPreferences.StaticPreferences.MetricGroups ? 5 : 4) + cPreferences.StaticPreferences.GroupDecimals;
 					break;
 
 				case eDataType.PowderWeight:
-					TextBox.NumDecimals = cPreferences.PowderWeightDecimals;
-					TextBox.MaxLength = (cPreferences.MetricPowderWeights ? 3 : 4) + cPreferences.PowderWeightDecimals;
+					TextBox.NumDecimals = cPreferences.StaticPreferences.PowderWeightDecimals;
+					TextBox.MaxLength = (cPreferences.StaticPreferences.MetricPowderWeights ? 3 : 4) + cPreferences.StaticPreferences.PowderWeightDecimals;
 					break;
 
 				case eDataType.Pressure:
 					TextBox.NumDecimals = 2;
-					TextBox.MaxLength = (cPreferences.MetricPressures ? 7 : 5);
+					TextBox.MaxLength = (cPreferences.StaticPreferences.MetricPressures ? 7 : 5);
 					TextBox.MinValue = StandardToMetric(25.0, eDataType.Pressure);
 					TextBox.MaxValue = StandardToMetric(33.0, eDataType.Pressure);
 					break;
 
 				case eDataType.Quantity:
-					TextBox.NumDecimals = fPowder ? cPreferences.CanWeightDecimals : 0;
-					TextBox.MaxLength = fPowder ? 3 + cPreferences.CanWeightDecimals : 4;
+					TextBox.NumDecimals = fPowder ? cPreferences.StaticPreferences.CanWeightDecimals : 0;
+					TextBox.MaxLength = fPowder ? 3 + cPreferences.StaticPreferences.CanWeightDecimals : 4;
 					break;
 
 				case eDataType.Range:
@@ -3469,18 +3485,18 @@ namespace ReloadersWorkShop
 					break;
 
 				case eDataType.ShotWeight:
-					TextBox.NumDecimals = cPreferences.ShotWeightDecimals;
-					TextBox.MaxLength = (cPreferences.MetricShotWeights ? 4 : 3) + cPreferences.ShotWeightDecimals;
+					TextBox.NumDecimals = cPreferences.StaticPreferences.ShotWeightDecimals;
+					TextBox.MaxLength = (cPreferences.StaticPreferences.MetricShotWeights ? 4 : 3) + cPreferences.StaticPreferences.ShotWeightDecimals;
 					break;
 
 				case eDataType.Speed:
 					TextBox.NumDecimals = 0;
-					TextBox.MaxLength = (cPreferences.MetricVelocities ? 4 : 3);
+					TextBox.MaxLength = (cPreferences.StaticPreferences.MetricVelocities ? 4 : 3);
 					break;
 
 				case eDataType.Temperature:
 					TextBox.NumDecimals = 0;
-					TextBox.MaxLength = (cPreferences.MetricTemperatures ? 2 : 3);
+					TextBox.MaxLength = (cPreferences.StaticPreferences.MetricTemperatures ? 2 : 3);
 					TextBox.MinValue = 0.0;
 					TextBox.MaxValue = StandardToMetric(150.0, eDataType.Temperature);
 					break;
@@ -3505,7 +3521,7 @@ namespace ReloadersWorkShop
 					break;
 
 				case eDataType.BulletWeight:
-					TextBox.MaxLength = (cPreferences.MetricBulletWeights ? 2 : 3);
+					TextBox.MaxLength = (cPreferences.StaticPreferences.MetricBulletWeights ? 2 : 3);
 					break;
 
 				case eDataType.CanWeight:
@@ -3513,23 +3529,23 @@ namespace ReloadersWorkShop
 					break;
 
 				case eDataType.Dimension:
-					TextBox.MaxLength = (cPreferences.MetricDimensions ? 3 : 2);
+					TextBox.MaxLength = (cPreferences.StaticPreferences.MetricDimensions ? 3 : 2);
 					break;
 
 				case eDataType.Firearm:
-					TextBox.MaxLength = (cPreferences.MetricFirearms ? 4 : 3);
+					TextBox.MaxLength = (cPreferences.StaticPreferences.MetricFirearms ? 4 : 3);
 					break;
 
 				case eDataType.GroupSize:
-					TextBox.MaxLength = (cPreferences.MetricGroups ? 3 : 2);
+					TextBox.MaxLength = (cPreferences.StaticPreferences.MetricGroups ? 3 : 2);
 					break;
 
 				case eDataType.PowderWeight:
-					TextBox.MaxLength = (cPreferences.MetricPowderWeights ? 1 : 2);
+					TextBox.MaxLength = (cPreferences.StaticPreferences.MetricPowderWeights ? 1 : 2);
 					break;
 
 				case eDataType.Pressure:
-					TextBox.MaxLength = (cPreferences.MetricPressures ? 4 : 2);
+					TextBox.MaxLength = (cPreferences.StaticPreferences.MetricPressures ? 4 : 2);
 					break;
 
 				case eDataType.Range:
@@ -3537,15 +3553,15 @@ namespace ReloadersWorkShop
 					break;
 
 				case eDataType.ShotWeight:
-					TextBox.MaxLength = (cPreferences.MetricShotWeights ? 4 : 2);
+					TextBox.MaxLength = (cPreferences.StaticPreferences.MetricShotWeights ? 4 : 2);
 					break;
 
 				case eDataType.Speed:
-					TextBox.MaxLength = (cPreferences.MetricVelocities ? 4 : 3);
+					TextBox.MaxLength = (cPreferences.StaticPreferences.MetricVelocities ? 4 : 3);
 					break;
 
 				case eDataType.Temperature:
-					TextBox.MaxLength = (cPreferences.MetricTemperatures ? 2 : 3);
+					TextBox.MaxLength = (cPreferences.StaticPreferences.MetricTemperatures ? 2 : 3);
 					break;
 
 				case eDataType.Velocity:
@@ -3581,7 +3597,7 @@ namespace ReloadersWorkShop
 					nBatchID = CheckBatch.BatchID;
 				}
 
-			m_Preferences.NextBatchID = nBatchID + 1;
+			cPreferences.StaticPreferences.NextBatchID = nBatchID + 1;
 			}
 
 		//============================================================================*
@@ -3649,6 +3665,12 @@ namespace ReloadersWorkShop
 				m_AmmoList.Sort(cAmmo.Comparer);
 				}
 			catch { }
+
+			try
+				{
+				m_GearList.Sort(cGear.Comparer);
+				}
+			catch { }
 			}
 
 		//============================================================================*
@@ -3660,55 +3682,55 @@ namespace ReloadersWorkShop
 			switch (LabelType)
 				{
 				case eDataType.Altitude:
-					dValue = cPreferences.MetricAltitudes ? cConversions.FeetToMeters(dValue) : dValue;
+					dValue = cPreferences.StaticPreferences.MetricAltitudes ? cConversions.FeetToMeters(dValue) : dValue;
 					break;
 
 				case eDataType.BulletWeight:
-					dValue = cPreferences.MetricBulletWeights ? cConversions.GrainsToGrams(dValue) : dValue;
+					dValue = cPreferences.StaticPreferences.MetricBulletWeights ? cConversions.GrainsToGrams(dValue) : dValue;
 					break;
 
 				case eDataType.CanWeight:
-					dValue = cPreferences.MetricCanWeights ? cConversions.PoundsToKilos(dValue) : dValue;
+					dValue = cPreferences.StaticPreferences.MetricCanWeights ? cConversions.PoundsToKilos(dValue) : dValue;
 					break;
 
 				case eDataType.Dimension:
-					dValue = cPreferences.MetricDimensions ? cConversions.InchesToMillimeters(dValue) : dValue;
+					dValue = cPreferences.StaticPreferences.MetricDimensions ? cConversions.InchesToMillimeters(dValue) : dValue;
 					break;
 
 				case eDataType.Firearm:
-					dValue = cPreferences.MetricFirearms ? cConversions.InchesToCentimeters(dValue) : dValue;
+					dValue = cPreferences.StaticPreferences.MetricFirearms ? cConversions.InchesToCentimeters(dValue) : dValue;
 					break;
 
 				case eDataType.GroupSize:
-					dValue = cPreferences.MetricGroups ? cConversions.InchesToCentimeters(dValue) : dValue;
+					dValue = cPreferences.StaticPreferences.MetricGroups ? cConversions.InchesToCentimeters(dValue) : dValue;
 					break;
 
 				case eDataType.PowderWeight:
-					dValue = cPreferences.MetricPowderWeights ? cConversions.GrainsToGrams(dValue) : dValue;
+					dValue = cPreferences.StaticPreferences.MetricPowderWeights ? cConversions.GrainsToGrams(dValue) : dValue;
 					break;
 
 				case eDataType.Pressure:
-					dValue = cPreferences.MetricPressures ? cConversions.InHgToMillibars(dValue) : dValue;
+					dValue = cPreferences.StaticPreferences.MetricPressures ? cConversions.InHgToMillibars(dValue) : dValue;
 					break;
 
 				case eDataType.Range:
-					dValue = cPreferences.MetricRanges ? cConversions.YardsToMeters(dValue) : dValue;
+					dValue = cPreferences.StaticPreferences.MetricRanges ? cConversions.YardsToMeters(dValue) : dValue;
 					break;
 
 				case eDataType.ShotWeight:
-					dValue = cPreferences.MetricShotWeights ? cConversions.OuncesToGrams(dValue) : dValue;
+					dValue = cPreferences.StaticPreferences.MetricShotWeights ? cConversions.OuncesToGrams(dValue) : dValue;
 					break;
 
 				case eDataType.Speed:
-					dValue = cPreferences.MetricVelocities ? cConversions.MPHToKPH(dValue) : dValue;
+					dValue = cPreferences.StaticPreferences.MetricVelocities ? cConversions.MPHToKPH(dValue) : dValue;
 					break;
 
 				case eDataType.Temperature:
-					dValue = cPreferences.MetricTemperatures ? cConversions.FahrenheitToCelsius(dValue) : dValue;
+					dValue = cPreferences.StaticPreferences.MetricTemperatures ? cConversions.FahrenheitToCelsius(dValue) : dValue;
 					break;
 
 				case eDataType.Velocity:
-					dValue = cPreferences.MetricVelocities ? cConversions.FPSToMS(dValue) : dValue;
+					dValue = cPreferences.StaticPreferences.MetricVelocities ? cConversions.FPSToMS(dValue) : dValue;
 					break;
 				}
 
@@ -3748,7 +3770,7 @@ namespace ReloadersWorkShop
 
 			if (Supply != null)
 				{
-				if (cPreferences.TrackInventory)
+				if (cPreferences.StaticPreferences.TrackInventory)
 					{
 					if (Supply.SupplyType == cSupply.eSupplyTypes.Bullets)
 						{
@@ -3830,7 +3852,7 @@ namespace ReloadersWorkShop
 			if (Supply == null)
 				return (0.0);
 
-			if (cPreferences.TrackInventory)
+			if (cPreferences.StaticPreferences.TrackInventory)
 				{
 				if (Supply.SupplyType != cSupply.eSupplyTypes.Bullets)
 					{
@@ -3897,26 +3919,26 @@ namespace ReloadersWorkShop
 			// Preferences
 			//----------------------------------------------------------------------------*
 
-			if (m_Preferences.BallisticsBullet != null && m_Preferences.BallisticsBullet.CompareTo(Bullet) == 0)
-				m_Preferences.BallisticsBullet = Bullet;
+			if (cPreferences.StaticPreferences.BallisticsBullet != null && cPreferences.StaticPreferences.BallisticsBullet.CompareTo(Bullet) == 0)
+				cPreferences.StaticPreferences.BallisticsBullet = Bullet;
 
-			if (m_Preferences.BatchEditorBullet != null && m_Preferences.BatchEditorBullet.CompareTo(Bullet) == 0)
-				m_Preferences.BatchEditorBullet = Bullet;
+			if (cPreferences.StaticPreferences.BatchEditorBullet != null && cPreferences.StaticPreferences.BatchEditorBullet.CompareTo(Bullet) == 0)
+				cPreferences.StaticPreferences.BatchEditorBullet = Bullet;
 
-			if (m_Preferences.LastBatchBulletSelected != null && m_Preferences.LastBatchBulletSelected.CompareTo(Bullet) == 0)
-				m_Preferences.LastBatchBulletSelected = Bullet;
+			if (cPreferences.StaticPreferences.LastBatchBulletSelected != null && cPreferences.StaticPreferences.LastBatchBulletSelected.CompareTo(Bullet) == 0)
+				cPreferences.StaticPreferences.LastBatchBulletSelected = Bullet;
 
-			if (m_Preferences.LastBatchLoadBulletSelected != null && m_Preferences.LastBatchLoadBulletSelected.CompareTo(Bullet) == 0)
-				m_Preferences.LastBatchLoadBulletSelected = Bullet;
+			if (cPreferences.StaticPreferences.LastBatchLoadBulletSelected != null && cPreferences.StaticPreferences.LastBatchLoadBulletSelected.CompareTo(Bullet) == 0)
+				cPreferences.StaticPreferences.LastBatchLoadBulletSelected = Bullet;
 
-			if (m_Preferences.LastBullet != null && m_Preferences.LastBullet.CompareTo(Bullet) == 0)
-				m_Preferences.LastBullet = Bullet;
+			if (cPreferences.StaticPreferences.LastBullet != null && cPreferences.StaticPreferences.LastBullet.CompareTo(Bullet) == 0)
+				cPreferences.StaticPreferences.LastBullet = Bullet;
 
-			if (m_Preferences.LastBulletSelected != null && m_Preferences.LastBulletSelected.CompareTo(Bullet) == 0)
-				m_Preferences.LastBulletSelected = Bullet;
+			if (cPreferences.StaticPreferences.LastBulletSelected != null && cPreferences.StaticPreferences.LastBulletSelected.CompareTo(Bullet) == 0)
+				cPreferences.StaticPreferences.LastBulletSelected = Bullet;
 
-			if (m_Preferences.LastLoadDataBulletSelected != null && m_Preferences.LastLoadDataBulletSelected.CompareTo(Bullet) == 0)
-				m_Preferences.LastLoadDataBulletSelected = Bullet;
+			if (cPreferences.StaticPreferences.LastLoadDataBulletSelected != null && cPreferences.StaticPreferences.LastLoadDataBulletSelected.CompareTo(Bullet) == 0)
+				cPreferences.StaticPreferences.LastLoadDataBulletSelected = Bullet;
 			}
 
 		//============================================================================*
@@ -3964,29 +3986,29 @@ namespace ReloadersWorkShop
 			// Preferences
 			//----------------------------------------------------------------------------*
 
-			if (m_Preferences.BallisticsCaliber != null && m_Preferences.BallisticsCaliber.CompareTo(Caliber) == 0)
-				m_Preferences.BallisticsCaliber = Caliber;
+			if (cPreferences.StaticPreferences.BallisticsCaliber != null && cPreferences.StaticPreferences.BallisticsCaliber.CompareTo(Caliber) == 0)
+				cPreferences.StaticPreferences.BallisticsCaliber = Caliber;
 
-			if (m_Preferences.BatchEditorCaliber != null && m_Preferences.BatchEditorCaliber.CompareTo(Caliber) == 0)
-				m_Preferences.BatchEditorCaliber = Caliber;
+			if (cPreferences.StaticPreferences.BatchEditorCaliber != null && cPreferences.StaticPreferences.BatchEditorCaliber.CompareTo(Caliber) == 0)
+				cPreferences.StaticPreferences.BatchEditorCaliber = Caliber;
 
-			if (m_Preferences.LastBatchCaliberSelected != null && m_Preferences.LastBatchCaliberSelected.CompareTo(Caliber) == 0)
-				m_Preferences.LastBatchCaliberSelected = Caliber;
+			if (cPreferences.StaticPreferences.LastBatchCaliberSelected != null && cPreferences.StaticPreferences.LastBatchCaliberSelected.CompareTo(Caliber) == 0)
+				cPreferences.StaticPreferences.LastBatchCaliberSelected = Caliber;
 
-			if (m_Preferences.LastBatchLoadCaliberSelected != null && m_Preferences.LastBatchLoadCaliberSelected.CompareTo(Caliber) == 0)
-				m_Preferences.LastBatchLoadCaliberSelected = Caliber;
+			if (cPreferences.StaticPreferences.LastBatchLoadCaliberSelected != null && cPreferences.StaticPreferences.LastBatchLoadCaliberSelected.CompareTo(Caliber) == 0)
+				cPreferences.StaticPreferences.LastBatchLoadCaliberSelected = Caliber;
 
-			if (m_Preferences.LastBulletCaliber != null && m_Preferences.LastBulletCaliber.CompareTo(Caliber) == 0)
-				m_Preferences.LastBulletCaliber = Caliber;
+			if (cPreferences.StaticPreferences.LastBulletCaliber != null && cPreferences.StaticPreferences.LastBulletCaliber.CompareTo(Caliber) == 0)
+				cPreferences.StaticPreferences.LastBulletCaliber = Caliber;
 
-			if (m_Preferences.LastCaliber != null && m_Preferences.LastCaliber.CompareTo(Caliber) == 0)
-				m_Preferences.LastCaliber = Caliber;
+			if (cPreferences.StaticPreferences.LastCaliber != null && cPreferences.StaticPreferences.LastCaliber.CompareTo(Caliber) == 0)
+				cPreferences.StaticPreferences.LastCaliber = Caliber;
 
-			if (m_Preferences.LastCaliberSelected != null && m_Preferences.LastCaliberSelected.CompareTo(Caliber) == 0)
-				m_Preferences.LastCaliberSelected = Caliber;
+			if (cPreferences.StaticPreferences.LastCaliberSelected != null && cPreferences.StaticPreferences.LastCaliberSelected.CompareTo(Caliber) == 0)
+				cPreferences.StaticPreferences.LastCaliberSelected = Caliber;
 
-			if (m_Preferences.LastLoadDataCaliberSelected != null && m_Preferences.LastLoadDataCaliberSelected.CompareTo(Caliber) == 0)
-				m_Preferences.LastLoadDataCaliberSelected = Caliber;
+			if (cPreferences.StaticPreferences.LastLoadDataCaliberSelected != null && cPreferences.StaticPreferences.LastLoadDataCaliberSelected.CompareTo(Caliber) == 0)
+				cPreferences.StaticPreferences.LastLoadDataCaliberSelected = Caliber;
 			}
 
 		//============================================================================*
@@ -4013,11 +4035,11 @@ namespace ReloadersWorkShop
 			// Preferences
 			//----------------------------------------------------------------------------*
 
-			if (m_Preferences.LastCase != null && m_Preferences.LastCase.CompareTo(Case) == 0)
-				m_Preferences.LastCase = Case;
+			if (cPreferences.StaticPreferences.LastCase != null && cPreferences.StaticPreferences.LastCase.CompareTo(Case) == 0)
+				cPreferences.StaticPreferences.LastCase = Case;
 
-			if (m_Preferences.LastCaseSelected != null && m_Preferences.LastCaseSelected.CompareTo(Case) == 0)
-				m_Preferences.LastCaseSelected = Case;
+			if (cPreferences.StaticPreferences.LastCaseSelected != null && cPreferences.StaticPreferences.LastCaseSelected.CompareTo(Case) == 0)
+				cPreferences.StaticPreferences.LastCaseSelected = Case;
 			}
 
 		//============================================================================*
@@ -4065,14 +4087,14 @@ namespace ReloadersWorkShop
 			// Preferences
 			//----------------------------------------------------------------------------*
 
-			if (m_Preferences.BallisticsFirearm != null && m_Preferences.BallisticsFirearm.CompareTo(Firearm) == 0)
-				m_Preferences.BallisticsFirearm = Firearm;
+			if (cPreferences.StaticPreferences.BallisticsFirearm != null && cPreferences.StaticPreferences.BallisticsFirearm.CompareTo(Firearm) == 0)
+				cPreferences.StaticPreferences.BallisticsFirearm = Firearm;
 
-			if (m_Preferences.LastFirearm != null && m_Preferences.LastFirearm.CompareTo(Firearm) == 0)
-				m_Preferences.LastFirearm = Firearm;
+			if (cPreferences.StaticPreferences.LastFirearm != null && cPreferences.StaticPreferences.LastFirearm.CompareTo(Firearm) == 0)
+				cPreferences.StaticPreferences.LastFirearm = Firearm;
 
-			if (m_Preferences.LastFirearmSelected != null && m_Preferences.LastFirearmSelected.CompareTo(Firearm) == 0)
-				m_Preferences.LastFirearmSelected = Firearm;
+			if (cPreferences.StaticPreferences.LastFirearmSelected != null && cPreferences.StaticPreferences.LastFirearmSelected.CompareTo(Firearm) == 0)
+				cPreferences.StaticPreferences.LastFirearmSelected = Firearm;
 			}
 
 		//============================================================================*
@@ -4092,20 +4114,20 @@ namespace ReloadersWorkShop
 			// Preferences
 			//----------------------------------------------------------------------------*
 
-			if (m_Preferences.BallisticsLoad != null && m_Preferences.BallisticsLoad.CompareTo(Load) == 0)
-				m_Preferences.BallisticsLoad = Load;
+			if (cPreferences.StaticPreferences.BallisticsLoad != null && cPreferences.StaticPreferences.BallisticsLoad.CompareTo(Load) == 0)
+				cPreferences.StaticPreferences.BallisticsLoad = Load;
 
-			if (m_Preferences.LastBatchLoadSelected != null && m_Preferences.LastBatchLoadSelected.CompareTo(Load) == 0)
-				m_Preferences.LastBatchLoadSelected = Load;
+			if (cPreferences.StaticPreferences.LastBatchLoadSelected != null && cPreferences.StaticPreferences.LastBatchLoadSelected.CompareTo(Load) == 0)
+				cPreferences.StaticPreferences.LastBatchLoadSelected = Load;
 
-			if (m_Preferences.LastCopyLoadSelected != null && m_Preferences.LastCopyLoadSelected.CompareTo(Load) == 0)
-				m_Preferences.LastCopyLoadSelected = Load;
+			if (cPreferences.StaticPreferences.LastCopyLoadSelected != null && cPreferences.StaticPreferences.LastCopyLoadSelected.CompareTo(Load) == 0)
+				cPreferences.StaticPreferences.LastCopyLoadSelected = Load;
 
-			if (m_Preferences.LastLoad != null && m_Preferences.LastLoad.CompareTo(Load) == 0)
-				m_Preferences.LastLoad = Load;
+			if (cPreferences.StaticPreferences.LastLoad != null && cPreferences.StaticPreferences.LastLoad.CompareTo(Load) == 0)
+				cPreferences.StaticPreferences.LastLoad = Load;
 
-			if (m_Preferences.LastLoadSelected != null && m_Preferences.LastLoadSelected.CompareTo(Load) == 0)
-				m_Preferences.LastLoadSelected = Load;
+			if (cPreferences.StaticPreferences.LastLoadSelected != null && cPreferences.StaticPreferences.LastLoadSelected.CompareTo(Load) == 0)
+				cPreferences.StaticPreferences.LastLoadSelected = Load;
 			}
 
 		//============================================================================*
@@ -4160,8 +4182,8 @@ namespace ReloadersWorkShop
 			// Preferences
 			//----------------------------------------------------------------------------*
 
-			if (m_Preferences.LastManufacturerSelected != null && m_Preferences.LastManufacturerSelected.CompareTo(Manufacturer) == 0)
-				m_Preferences.LastManufacturerSelected = Manufacturer;
+			if (cPreferences.StaticPreferences.LastManufacturerSelected != null && cPreferences.StaticPreferences.LastManufacturerSelected.CompareTo(Manufacturer) == 0)
+				cPreferences.StaticPreferences.LastManufacturerSelected = Manufacturer;
 			}
 
 		//============================================================================*
@@ -4188,20 +4210,20 @@ namespace ReloadersWorkShop
 			// Preferences
 			//----------------------------------------------------------------------------*
 
-			if (m_Preferences.LastBatchLoadPowderSelected != null && m_Preferences.LastBatchLoadPowderSelected.CompareTo(Powder) == 0)
-				m_Preferences.LastBatchLoadPowderSelected = Powder;
+			if (cPreferences.StaticPreferences.LastBatchLoadPowderSelected != null && cPreferences.StaticPreferences.LastBatchLoadPowderSelected.CompareTo(Powder) == 0)
+				cPreferences.StaticPreferences.LastBatchLoadPowderSelected = Powder;
 
-			if (m_Preferences.LastBatchPowderSelected != null && m_Preferences.LastBatchPowderSelected.CompareTo(Powder) == 0)
-				m_Preferences.LastBatchPowderSelected = Powder;
+			if (cPreferences.StaticPreferences.LastBatchPowderSelected != null && cPreferences.StaticPreferences.LastBatchPowderSelected.CompareTo(Powder) == 0)
+				cPreferences.StaticPreferences.LastBatchPowderSelected = Powder;
 
-			if (m_Preferences.LastLoadDataPowderSelected != null && m_Preferences.LastLoadDataPowderSelected.CompareTo(Powder) == 0)
-				m_Preferences.LastLoadDataPowderSelected = Powder;
+			if (cPreferences.StaticPreferences.LastLoadDataPowderSelected != null && cPreferences.StaticPreferences.LastLoadDataPowderSelected.CompareTo(Powder) == 0)
+				cPreferences.StaticPreferences.LastLoadDataPowderSelected = Powder;
 
-			if (m_Preferences.LastPowder != null && m_Preferences.LastPowder.CompareTo(Powder) == 0)
-				m_Preferences.LastPowder = Powder;
+			if (cPreferences.StaticPreferences.LastPowder != null && cPreferences.StaticPreferences.LastPowder.CompareTo(Powder) == 0)
+				cPreferences.StaticPreferences.LastPowder = Powder;
 
-			if (m_Preferences.LastPowderSelected != null && m_Preferences.LastPowderSelected.CompareTo(Powder) == 0)
-				m_Preferences.LastPowderSelected = Powder;
+			if (cPreferences.StaticPreferences.LastPowderSelected != null && cPreferences.StaticPreferences.LastPowderSelected.CompareTo(Powder) == 0)
+				cPreferences.StaticPreferences.LastPowderSelected = Powder;
 			}
 
 		//============================================================================*
@@ -4228,11 +4250,11 @@ namespace ReloadersWorkShop
 			// Preferences
 			//----------------------------------------------------------------------------*
 
-			if (m_Preferences.LastPrimer != null && m_Preferences.LastPrimer.CompareTo(Primer) == 0)
-				m_Preferences.LastPrimer = Primer;
+			if (cPreferences.StaticPreferences.LastPrimer != null && cPreferences.StaticPreferences.LastPrimer.CompareTo(Primer) == 0)
+				cPreferences.StaticPreferences.LastPrimer = Primer;
 
-			if (m_Preferences.LastPrimerSelected != null && m_Preferences.LastPrimerSelected.CompareTo(Primer) == 0)
-				m_Preferences.LastPrimerSelected = Primer;
+			if (cPreferences.StaticPreferences.LastPrimerSelected != null && cPreferences.StaticPreferences.LastPrimerSelected.CompareTo(Primer) == 0)
+				cPreferences.StaticPreferences.LastPrimerSelected = Primer;
 			}
 
 		//============================================================================*
@@ -4391,7 +4413,7 @@ namespace ReloadersWorkShop
 			if (Load == null)
 				return (false);
 
-			if (!cPreferences.TrackInventory)
+			if (!cPreferences.StaticPreferences.TrackInventory)
 				return (true);
 
 			if (Load.Bullet == null || SupplyQuantity(Load.Bullet) <= 0.0)
@@ -4418,7 +4440,7 @@ namespace ReloadersWorkShop
 			if (Load == null || Batch == null)
 				return (false);
 
-			if (!cPreferences.TrackInventory || !Batch.TrackInventory)
+			if (!cPreferences.StaticPreferences.TrackInventory || !Batch.TrackInventory)
 				return (true);
 
 			if (Load.Bullet == null || SupplyQuantity(Load.Bullet) <= 0.0)

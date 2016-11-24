@@ -193,7 +193,7 @@ namespace ReloadersWorkShop
 			if (Batch.Archived)
 				Item.Text += " - Archived";
 
-			if (cPreferences.TrackInventory && !Batch.TrackInventory)
+			if (m_DataFiles.Preferences.TrackInventory && !Batch.TrackInventory)
 				Item.Text += " *";
 
 			Item.Checked = Batch.Checked;
@@ -222,7 +222,7 @@ namespace ReloadersWorkShop
 				}
 
 			string strPowderWeightFormat = "{0:F";
-			strPowderWeightFormat += String.Format("{0:G0}", cPreferences.PowderWeightDecimals);
+			strPowderWeightFormat += String.Format("{0:G0}", m_DataFiles.Preferences.PowderWeightDecimals);
 			strPowderWeightFormat += "}";
 
 			if (fCompressed)

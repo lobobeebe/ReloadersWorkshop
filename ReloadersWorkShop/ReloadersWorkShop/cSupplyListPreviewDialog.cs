@@ -339,7 +339,7 @@ namespace ReloadersWorkShop
 
 						nY = cPrintObject.PrintReportTitle(m_DataFiles.Preferences.SupplyPrintBelowStock ? "Supplies Shopping List" : "Supplies List", PageRect, e.Graphics);
 
-						if (cPreferences.TrackInventory)
+						if (m_DataFiles.Preferences.TrackInventory)
 							{
 							strText = m_DataFiles.CostText;
 
@@ -556,7 +556,7 @@ namespace ReloadersWorkShop
 
 							double dQuantity = Supply.MinimumStockLevel;
 
-							if (cPreferences.TrackInventory)
+							if (m_DataFiles.Preferences.TrackInventory)
 								{
 								if (dQuantity != 0.0)
 									strText = String.Format("{0:G0}", dQuantity);
@@ -578,7 +578,7 @@ namespace ReloadersWorkShop
 
 							dQuantity = m_DataFiles.SupplyQuantity(Supply);
 
-							if (cPreferences.TrackInventory)
+							if (m_DataFiles.Preferences.TrackInventory)
 								{
 								if (dQuantity != 0.0)
 									strText = String.Format("{0:G0}", dQuantity);
@@ -660,7 +660,7 @@ namespace ReloadersWorkShop
 
 							dQuantity = cDataFiles.StandardToMetric(Supply.MinimumStockLevel / 7000.0, cDataFiles.eDataType.CanWeight);
 
-							if (cPreferences.TrackInventory)
+							if (m_DataFiles.Preferences.TrackInventory)
 								{
 								if (dQuantity != 0.0)
 									strText = String.Format("{0:F3}", dQuantity);
@@ -682,7 +682,7 @@ namespace ReloadersWorkShop
 
 							dQuantity = cDataFiles.StandardToMetric(m_DataFiles.SupplyQuantity(Powder) / 7000.0, cDataFiles.eDataType.CanWeight);
 
-							if (cPreferences.TrackInventory)
+							if (m_DataFiles.Preferences.TrackInventory)
 								{
 								if (dQuantity != 0.0)
 									{
@@ -772,7 +772,7 @@ namespace ReloadersWorkShop
 
 							dQuantity = Supply.MinimumStockLevel;
 
-							if (cPreferences.TrackInventory)
+							if (m_DataFiles.Preferences.TrackInventory)
 								{
 								if (dQuantity != 0.0)
 									strText = String.Format("{0:G0}", dQuantity);
@@ -794,7 +794,7 @@ namespace ReloadersWorkShop
 
 							dQuantity = m_DataFiles.SupplyQuantity(Supply);
 
-							if (cPreferences.TrackInventory)
+							if (m_DataFiles.Preferences.TrackInventory)
 								{
 								if (dQuantity != 0.0)
 									strText = String.Format("{0:G0}", dQuantity);
@@ -880,7 +880,7 @@ namespace ReloadersWorkShop
 
 							dQuantity = Supply.MinimumStockLevel;
 
-							if (cPreferences.TrackInventory)
+							if (m_DataFiles.Preferences.TrackInventory)
 								{
 								if (dQuantity != 0.0)
 									strText = String.Format("{0:G0}", dQuantity);
@@ -902,7 +902,7 @@ namespace ReloadersWorkShop
 
 							dQuantity = m_DataFiles.SupplyQuantity(Supply);
 
-							if (cPreferences.TrackInventory)
+							if (m_DataFiles.Preferences.TrackInventory)
 								{
 								if (dQuantity != 0.0)
 									strText = String.Format("{0:G0}", dQuantity);

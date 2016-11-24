@@ -449,7 +449,7 @@ namespace ReloadersWorkShop
 					EditNewMenuItem.Enabled = AddSupplyButton.Enabled;
 					EditEditMenuItem.Enabled = EditSupplyButton.Enabled;
 					EditRemoveMenuItem.Enabled = RemoveSupplyButton.Enabled;
-					EditInventoryActivityMenuItem.Visible = cPreferences.TrackInventory;
+					EditInventoryActivityMenuItem.Visible = m_DataFiles.Preferences.TrackInventory;
 
 					switch ((cSupply.eSupplyTypes) SupplyTypeCombo.SelectedIndex)
 						{
@@ -514,7 +514,7 @@ namespace ReloadersWorkShop
 					EditEditMenuItem.Enabled = EditAmmoButton.Enabled;
 					EditRemoveMenuItem.Text = "&Remove Ammo";
 					EditRemoveMenuItem.Enabled = RemoveAmmoButton.Enabled;
-					EditInventoryActivityMenuItem.Visible = cPreferences.TrackInventory;
+					EditInventoryActivityMenuItem.Visible = m_DataFiles.Preferences.TrackInventory;
 					break;
 
 				case "PreferencesTab":
@@ -858,10 +858,10 @@ namespace ReloadersWorkShop
 		private void OnFilePrintClicked(Object sender, EventArgs e)
 			{
 			FilePrintAmmoListMenuItem.Enabled = AmmoListPrintButton.Enabled;
-			FilePrintAmmoShoppingListMenuItem.Enabled = cPreferences.TrackInventory && AmmoListPrintButton.Enabled && AmmoPrintBelowStockCheckBox.Checked;
+			FilePrintAmmoShoppingListMenuItem.Enabled = m_DataFiles.Preferences.TrackInventory && AmmoListPrintButton.Enabled && AmmoPrintBelowStockCheckBox.Checked;
 
 			FilePrintSupplyListMenuItem.Enabled = SupplyListPrintButton.Enabled;
-			FilePrintSupplyShoppingListMenuItem.Enabled = cPreferences.TrackInventory && SupplyListPrintButton.Enabled && SuppliesPrintBelowStockCheckBox.Checked;
+			FilePrintSupplyShoppingListMenuItem.Enabled = m_DataFiles.Preferences.TrackInventory && SupplyListPrintButton.Enabled && SuppliesPrintBelowStockCheckBox.Checked;
 
 			FilePrintLoadShoppingListMenuItem.Enabled = LoadShoppingListButton.Enabled;
 
@@ -1153,7 +1153,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			if ((sender as TabControl).SelectedTab.Name == "InventoryTab" && !cPreferences.TrackInventory)
+			if ((sender as TabControl).SelectedTab.Name == "InventoryTab" && !m_DataFiles.Preferences.TrackInventory)
 				{
 				MessageBox.Show("You must activate Inventory Tracking on the Preferences Tab in order to use the Inventory Tab", "Inventory Tracking Not Activated", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 
@@ -1214,6 +1214,9 @@ namespace ReloadersWorkShop
 
 					if (m_FirearmsListView.SelectedItems.Count > 0)
 						m_FirearmsListView.EnsureVisible(m_FirearmsListView.SelectedItems[0].Index);
+
+					if (m_FirearmAccessoriesListView.SelectedItems.Count > 0)
+						m_FirearmAccessoriesListView.EnsureVisible(m_FirearmAccessoriesListView.SelectedItems[0].Index);
 
 					break;
 
@@ -1388,14 +1391,29 @@ namespace ReloadersWorkShop
 			// Firearms Tab
 			//----------------------------------------------------------------------------*
 
-			nButtonY = ClientRectangle.Height - 20 - AddFirearmButton.Height - MainMenu.Height - ((MainTabControl.ItemSize.Height == 0) ? 21 : MainTabControl.ItemSize.Height);
+			Rectangle GroupRect = new Rectangle();
 
-			nButtonSpacing = ((MainTabControl.Width / 4) - (AddFirearmButton.Width + EditFirearmButton.Width + ViewFirearmButton.Width + RemoveFirearmButton.Width)) / 2;
+			// Firearms Group
+
+			GroupRect.X = 8;
+			GroupRect.Width = ClientRectangle.Width - 26;
+			GroupRect.Y = 6;
+			GroupRect.Height = (ClientRectangle.Height - GroupRect.Y - 40) / 2;
+
+			FirearmsGroupBox.Location = GroupRect.Location;
+			FirearmsGroupBox.Size = GroupRect.Size;
+
+			m_FirearmsListView.Location = new Point(10, FirearmPrintOptionsGroupBox.Location.Y + FirearmPrintOptionsGroupBox.Height + 10);
+			m_FirearmsListView.Size = new Size(FirearmsGroupBox.Width - 20, FirearmsGroupBox.Height - AddFirearmButton.Height - FirearmPrintOptionsGroupBox.Location.Y - FirearmPrintOptionsGroupBox.Height - 30);
+
+			nButtonY = FirearmsGroupBox.Height - AddFirearmAccessoryButton.Height - 10;
+
+			nButtonSpacing = ((FirearmsGroupBox.Width / 4) - (AddFirearmButton.Width + EditFirearmButton.Width + ViewFirearmButton.Width + RemoveFirearmButton.Width)) / 2;
 
 			if (nButtonSpacing <= 0)
 				nButtonSpacing = 20;
 
-			nButtonX = (MainTabControl.Size.Width / 2) - ((AddFirearmButton.Width + EditFirearmButton.Width + ViewFirearmButton.Width + RemoveFirearmButton.Width + (nButtonSpacing * 2)) / 2);
+			nButtonX = (FirearmsGroupBox.Size.Width / 2) - ((AddFirearmButton.Width + EditFirearmButton.Width + ViewFirearmButton.Width + RemoveFirearmButton.Width + (nButtonSpacing * 2)) / 2);
 
 			AddFirearmButton.Location = new Point(nButtonX, nButtonY);
 			nButtonX += AddFirearmButton.Width + nButtonSpacing;
@@ -1408,8 +1426,36 @@ namespace ReloadersWorkShop
 
 			RemoveFirearmButton.Location = new Point(nButtonX, nButtonY);
 
-			m_FirearmsListView.Location = new Point(10, FirearmPrintOptionsGroupBox.Location.Y + FirearmPrintOptionsGroupBox.Height + 20);
-			m_FirearmsListView.Size = new Size(MainTabControl.Width - 30, nButtonY - m_FirearmsListView.Location.Y - 20);
+			// Firearms Accessories Group
+
+			GroupRect.Y += (GroupRect.Height + 6);
+			GroupRect.Height -= 30;
+
+			FirearmAccessoriesGroupBox.Location = GroupRect.Location;
+			FirearmAccessoriesGroupBox.Size = GroupRect.Size;
+
+			m_FirearmAccessoriesListView.Location = new Point(10, FirearmAccessoriesActionsGroupBox.Location.Y + FirearmAccessoriesActionsGroupBox.Height + 10);
+			m_FirearmAccessoriesListView.Size = new Size(FirearmAccessoriesGroupBox.Width - 20, FirearmAccessoriesGroupBox.Height - AddFirearmAccessoryButton.Height - FirearmAccessoriesActionsGroupBox.Location.Y - FirearmAccessoriesActionsGroupBox.Height - 30);
+
+			nButtonY = FirearmAccessoriesGroupBox.Height - AddFirearmAccessoryButton.Height - 10;
+
+			nButtonSpacing = ((FirearmAccessoriesGroupBox.Width / 4) - (AddFirearmAccessoryButton.Width + EditFirearmAccessoryButton.Width + ViewFirearmAccessoryButton.Width + RemoveFirearmAccessoryButton.Width)) / 2;
+
+			if (nButtonSpacing <= 0)
+				nButtonSpacing = 20;
+
+			nButtonX = (FirearmAccessoriesGroupBox.Size.Width / 2) - ((AddFirearmAccessoryButton.Width + EditFirearmAccessoryButton.Width + ViewFirearmAccessoryButton.Width + RemoveFirearmAccessoryButton.Width + (nButtonSpacing * 2)) / 2);
+
+			AddFirearmAccessoryButton.Location = new Point(nButtonX, nButtonY);
+			nButtonX += AddFirearmAccessoryButton.Width + nButtonSpacing;
+
+			EditFirearmAccessoryButton.Location = new Point(nButtonX, nButtonY);
+			nButtonX += EditFirearmAccessoryButton.Width + nButtonSpacing;
+
+			ViewFirearmAccessoryButton.Location = new Point(nButtonX, nButtonY);
+			nButtonX += ViewFirearmAccessoryButton.Width + nButtonSpacing;
+
+			RemoveFirearmAccessoryButton.Location = new Point(nButtonX, nButtonY);
 
 			//----------------------------------------------------------------------------*
 			// Supplies Tab
@@ -1865,7 +1911,7 @@ namespace ReloadersWorkShop
 					ViewCheckedMenuItem.Text = "Checked Supplies &Only";
 					ViewCheckedMenuItem.Checked = m_DataFiles.Preferences.HideUncheckedSupplies;
 					ViewCheckedMenuItem.Visible = true;
-					ViewInventoryActivityMenuItem.Visible = cPreferences.TrackInventory;
+					ViewInventoryActivityMenuItem.Visible = m_DataFiles.Preferences.TrackInventory;
 
 					switch ((cSupply.eSupplyTypes) SupplyTypeCombo.SelectedIndex)
 						{
@@ -1920,7 +1966,7 @@ namespace ReloadersWorkShop
 					ViewCheckedMenuItem.Text = "Checked Only";
 					ViewCheckedMenuItem.Visible = false;
 					ViewCheckedMenuItem.Checked = false;
-					ViewInventoryActivityMenuItem.Visible = cPreferences.TrackInventory;
+					ViewInventoryActivityMenuItem.Visible = m_DataFiles.Preferences.TrackInventory;
 
 					break;
 				}

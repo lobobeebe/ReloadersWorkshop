@@ -1048,7 +1048,7 @@ namespace ReloadersWorkShop
 
 			NoInventoryWarningLabel.Text = "";
 
-			if (cPreferences.TrackInventory)
+			if (m_DataFiles.Preferences.TrackInventory)
 				{
 				bool fEnableAddBatch = false;
 
@@ -1085,7 +1085,7 @@ namespace ReloadersWorkShop
 			// Inventory Tracking Label
 			//----------------------------------------------------------------------------*
 
-			BatchNotTrackedLabel.Visible = cPreferences.TrackInventory && fUntrackedBatches;
+			BatchNotTrackedLabel.Visible = m_DataFiles.Preferences.TrackInventory && fUntrackedBatches;
 			}
 
 		//============================================================================*

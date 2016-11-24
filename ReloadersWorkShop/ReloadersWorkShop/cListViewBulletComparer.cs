@@ -191,7 +191,7 @@ namespace ReloadersWorkShop
 					double dQuantity1 = Bullet1.Quantity;
 					double dQuantity2 = Bullet2.Quantity;
 
-					if (cPreferences.TrackInventory)
+					if (m_DataFiles.Preferences.TrackInventory)
 						{
 						dQuantity1 = Bullet1.QuantityOnHand;
 						dQuantity2 = Bullet2.QuantityOnHand;

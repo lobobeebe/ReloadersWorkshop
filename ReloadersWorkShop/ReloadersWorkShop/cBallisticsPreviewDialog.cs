@@ -175,17 +175,17 @@ namespace ReloadersWorkShop
 			float nX = PageRect.Left;
 
 			string strDimensionFormat = "{0:F";
-			strDimensionFormat += String.Format("{0:G0}", cPreferences.DimensionDecimals);
+			strDimensionFormat += String.Format("{0:G0}", m_DataFiles.Preferences.DimensionDecimals);
 			strDimensionFormat += "} ";
 			strDimensionFormat += cDataFiles.MetricString(cDataFiles.eDataType.Dimension);
 
 			string strFirearmFormat = "{0:F";
-			strFirearmFormat += String.Format("{0:G0}", cPreferences.FirearmDecimals);
+			strFirearmFormat += String.Format("{0:G0}", m_DataFiles.Preferences.FirearmDecimals);
 			strFirearmFormat += "} ";
 			strFirearmFormat += cDataFiles.MetricString(cDataFiles.eDataType.Firearm);
 
 			string strBulletWeightFormat = "{0:F";
-			strBulletWeightFormat += String.Format("{0:G0}", cPreferences.BulletWeightDecimals);
+			strBulletWeightFormat += String.Format("{0:G0}", m_DataFiles.Preferences.BulletWeightDecimals);
 			strBulletWeightFormat += "} ";
 			strBulletWeightFormat += cDataFiles.MetricString(cDataFiles.eDataType.BulletWeight);
 

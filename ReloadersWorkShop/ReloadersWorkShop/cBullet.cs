@@ -583,17 +583,18 @@ namespace ReloadersWorkShop
 
 		public override string ToString()
 			{
+
 			string strString = "";
 
 			if (Manufacturer != null)
 				strString = Manufacturer.Name;
 
 			string strDiameterFormat = " {0:F";
-			strDiameterFormat += String.Format("{0:G0}", cPreferences.DimensionDecimals);
+			strDiameterFormat += String.Format("{0:G0}", cPreferences.StaticPreferences.DimensionDecimals);
 			strDiameterFormat += "}";
 
 			string strWeightFormat = " {0:F";
-			strWeightFormat += String.Format("{0:G0}", cPreferences.BulletWeightDecimals);
+			strWeightFormat += String.Format("{0:G0}", cPreferences.StaticPreferences.BulletWeightDecimals);
 			strWeightFormat += "}";
 
 			bool fType = false;
@@ -607,13 +608,13 @@ namespace ReloadersWorkShop
 				fType = true;
 				}
 
-			strString += String.Format(strDiameterFormat, cPreferences.MetricDimensions ?  cConversions.InchesToMillimeters(m_dDiameter) : m_dDiameter);
+			strString += String.Format(strDiameterFormat, cPreferences.StaticPreferences.MetricDimensions ?  cConversions.InchesToMillimeters(m_dDiameter) : m_dDiameter);
 
 			strString += cDataFiles.MetricString(cDataFiles.eDataType.Dimension);
 
-			strString += String.Format(strWeightFormat, cPreferences.MetricBulletWeights ? cConversions.GrainsToGrams(m_dWeight) : m_dWeight);
+			strString += String.Format(strWeightFormat, cPreferences.StaticPreferences.MetricBulletWeights ? cConversions.GrainsToGrams(m_dWeight) : m_dWeight);
 
-			strString += cPreferences.MetricBulletWeights ? "g" : "gr";
+			strString += cPreferences.StaticPreferences.MetricBulletWeights ? "g" : "gr";
 
 			if (!fType)
 				strString += String.Format(" {0}", m_strType);
@@ -635,7 +636,7 @@ namespace ReloadersWorkShop
 				strString = Manufacturer.Name;
 
 			string strWeightFormat = ", {0:F";
-			strWeightFormat += String.Format("{0:G0}", cPreferences.BulletWeightDecimals);
+			strWeightFormat += String.Format("{0:G0}", cPreferences.StaticPreferences.BulletWeightDecimals);
 			strWeightFormat += "}";
 
 			bool fType = false;
@@ -649,9 +650,9 @@ namespace ReloadersWorkShop
 				fType = true;
 				}
 
-			strString += String.Format(strWeightFormat, cPreferences.MetricBulletWeights ? cConversions.GrainsToGrams(m_dWeight) : m_dWeight);
+			strString += String.Format(strWeightFormat, cPreferences.StaticPreferences.MetricBulletWeights ? cConversions.GrainsToGrams(m_dWeight) : m_dWeight);
 
-			strString += cPreferences.MetricBulletWeights ? " g" : " gr";
+			strString += cPreferences.StaticPreferences.MetricBulletWeights ? " g" : " gr";
 
 			if (!fType)
 				strString += String.Format(", {0}", m_strType);

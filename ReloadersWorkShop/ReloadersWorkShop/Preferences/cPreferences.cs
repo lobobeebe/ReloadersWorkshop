@@ -12,6 +12,7 @@
 using System;
 using System.Drawing;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 
 using ReloadersWorkShop.Ballistics;
@@ -59,43 +60,7 @@ namespace ReloadersWorkShop.Preferences
 			}
 
 		//============================================================================*
-		// Private Static Data Members
-		//============================================================================*
-
-		// Measurements Settings
-
-		private static bool sm_fMetricBulletWeights = false;
-		private static bool sm_fMetricCanWeights = false;
-		private static bool sm_fMetricDimensions = false;
-		private static bool sm_fMetricFirearms = false;
-		private static bool sm_fMetricGroups = false;
-		private static bool sm_fMetricPowderWeights = false;
-		private static bool sm_fMetricRanges = false;
-		private static bool sm_fMetricShotWeights = false;
-		private static bool sm_fMetricVelocities = false;
-
-		// Inventory system
-
-		private static bool sm_fTrackInventory = false;
-
-		// Atmospheric Settings
-
-		private static bool sm_fMetricAltitudes = false;
-		private static bool sm_fMetricPressures = false;
-		private static bool sm_fMetricTemperatures = false;
-
-		// Decimals
-
-		private static int sm_nBulletWeightDecimals = 1;
-		private static int sm_nCanWeightDecimals = 0;
-		private static int sm_nDimensionDecimals = 3;
-		private static int sm_nFirearmDecimals = 2;
-		private static int sm_nGroupDecimals = 2;
-		private static int sm_nPowderWeightDecimals = 1;
-		private static int sm_nShotWeightDecimals = 1;
-
-		//============================================================================*
-		// Private Placeholder Members for Statics
+		// Private Data Members - Formatting
 		//============================================================================*
 
 		// Measurements Settings
@@ -133,6 +98,8 @@ namespace ReloadersWorkShop.Preferences
 		//============================================================================*
 		// Private Data Members
 		//============================================================================*
+
+		private static cPreferences sm_StaticPreferences;
 
 		private bool m_fDev = false;
 
@@ -1269,15 +1236,15 @@ namespace ReloadersWorkShop.Preferences
 		// BulletWeightDecimals Property
 		//============================================================================*
 
-		public static int BulletWeightDecimals
+		public int BulletWeightDecimals
 			{
 			get
 				{
-				return (sm_nBulletWeightDecimals);
+				return (m_nBulletWeightDecimals);
 				}
 			set
 				{
-				sm_nBulletWeightDecimals = value;
+				m_nBulletWeightDecimals = value;
 				}
 			}
 
@@ -1317,15 +1284,15 @@ namespace ReloadersWorkShop.Preferences
 		// CanWeightDecimals Property
 		//============================================================================*
 
-		public static int CanWeightDecimals
+		public int CanWeightDecimals
 			{
 			get
 				{
-				return (sm_nCanWeightDecimals);
+				return (m_nCanWeightDecimals);
 				}
 			set
 				{
-				sm_nCanWeightDecimals = value;
+				m_nCanWeightDecimals = value;
 				}
 			}
 
@@ -1557,15 +1524,15 @@ namespace ReloadersWorkShop.Preferences
 		// DimensionDecimals Property
 		//============================================================================*
 
-		public static int DimensionDecimals
+		public int DimensionDecimals
 			{
 			get
 				{
-				return (sm_nDimensionDecimals);
+				return (m_nDimensionDecimals);
 				}
 			set
 				{
-				sm_nDimensionDecimals = value;
+				m_nDimensionDecimals = value;
 				}
 			}
 
@@ -1599,6 +1566,25 @@ namespace ReloadersWorkShop.Preferences
 				{
 				m_strDateFormat = value;
 				}
+			}
+
+		//============================================================================*
+		// Deserialize()
+		//============================================================================*
+
+		public void Deserialize(BinaryFormatter Formatter, Stream Stream)
+			{
+			try
+				{
+				sm_StaticPreferences = (cPreferences) Formatter.Deserialize(Stream);
+				}
+			catch
+				{
+				sm_StaticPreferences = new cPreferences();
+				}
+
+			if (BallisticsData == null)
+				BallisticsData = new cBallistics();
 			}
 
 		//============================================================================*
@@ -1892,15 +1878,15 @@ namespace ReloadersWorkShop.Preferences
 		// GroupDecimals Property
 		//============================================================================*
 
-		public static int GroupDecimals
+		public int GroupDecimals
 			{
 			get
 				{
-				return (sm_nGroupDecimals);
+				return (m_nGroupDecimals);
 				}
 			set
 				{
-				sm_nGroupDecimals = value;
+				m_nGroupDecimals = value;
 				}
 			}
 
@@ -2788,15 +2774,15 @@ namespace ReloadersWorkShop.Preferences
 		// FirearmDecimals Property
 		//============================================================================*
 
-		public static int FirearmDecimals
+		public int FirearmDecimals
 			{
 			get
 				{
-				return (sm_nFirearmDecimals);
+				return (m_nFirearmDecimals);
 				}
 			set
 				{
-				sm_nFirearmDecimals = value;
+				m_nFirearmDecimals = value;
 				}
 			}
 
@@ -2932,15 +2918,15 @@ namespace ReloadersWorkShop.Preferences
 		// MetricAltitudes Property
 		//============================================================================*
 
-		public static bool MetricAltitudes
+		public bool MetricAltitudes
 			{
 			get
 				{
-				return (sm_fMetricAltitudes);
+				return (m_fMetricAltitudes);
 				}
 			set
 				{
-				sm_fMetricAltitudes = value;
+				m_fMetricAltitudes = value;
 				}
 			}
 
@@ -2948,15 +2934,15 @@ namespace ReloadersWorkShop.Preferences
 		// MetricBulletWeights Property
 		//============================================================================*
 
-		public static bool MetricBulletWeights
+		public bool MetricBulletWeights
 			{
 			get
 				{
-				return (sm_fMetricBulletWeights);
+				return (m_fMetricBulletWeights);
 				}
 			set
 				{
-				sm_fMetricBulletWeights = value;
+				m_fMetricBulletWeights = value;
 				}
 			}
 
@@ -2964,15 +2950,15 @@ namespace ReloadersWorkShop.Preferences
 		// MetricCanWeights Property
 		//============================================================================*
 
-		public static bool MetricCanWeights
+		public bool MetricCanWeights
 			{
 			get
 				{
-				return (sm_fMetricCanWeights);
+				return (m_fMetricCanWeights);
 				}
 			set
 				{
-				sm_fMetricCanWeights = value;
+				m_fMetricCanWeights = value;
 				}
 			}
 
@@ -2980,15 +2966,15 @@ namespace ReloadersWorkShop.Preferences
 		// MetricDimensions Property
 		//============================================================================*
 
-		public static bool MetricDimensions
+		public bool MetricDimensions
 			{
 			get
 				{
-				return (sm_fMetricDimensions);
+				return (m_fMetricDimensions);
 				}
 			set
 				{
-				sm_fMetricDimensions = value;
+				m_fMetricDimensions = value;
 				}
 			}
 
@@ -2996,15 +2982,15 @@ namespace ReloadersWorkShop.Preferences
 		// MetricFirearms Property
 		//============================================================================*
 
-		public static bool MetricFirearms
+		public bool MetricFirearms
 			{
 			get
 				{
-				return (sm_fMetricFirearms);
+				return (m_fMetricFirearms);
 				}
 			set
 				{
-				sm_fMetricFirearms = value;
+				m_fMetricFirearms = value;
 				}
 			}
 
@@ -3012,15 +2998,15 @@ namespace ReloadersWorkShop.Preferences
 		// MetricGroups Property
 		//============================================================================*
 
-		public static bool MetricGroups
+		public bool MetricGroups
 			{
 			get
 				{
-				return (sm_fMetricGroups);
+				return (m_fMetricGroups);
 				}
 			set
 				{
-				sm_fMetricGroups = value;
+				m_fMetricGroups = value;
 				}
 			}
 
@@ -3028,15 +3014,15 @@ namespace ReloadersWorkShop.Preferences
 		// MetricPowderWeights Property
 		//============================================================================*
 
-		public static bool MetricPowderWeights
+		public bool MetricPowderWeights
 			{
 			get
 				{
-				return (sm_fMetricPowderWeights);
+				return (m_fMetricPowderWeights);
 				}
 			set
 				{
-				sm_fMetricPowderWeights = value;
+				m_fMetricPowderWeights = value;
 				}
 			}
 
@@ -3044,15 +3030,15 @@ namespace ReloadersWorkShop.Preferences
 		// MetricPressures Property
 		//============================================================================*
 
-		public static bool MetricPressures
+		public bool MetricPressures
 			{
 			get
 				{
-				return (sm_fMetricPressures);
+				return (m_fMetricPressures);
 				}
 			set
 				{
-				sm_fMetricPressures = value;
+				m_fMetricPressures = value;
 				}
 			}
 
@@ -3060,15 +3046,15 @@ namespace ReloadersWorkShop.Preferences
 		// MetricRanges Property
 		//============================================================================*
 
-		public static bool MetricRanges
+		public bool MetricRanges
 			{
 			get
 				{
-				return (sm_fMetricRanges);
+				return (m_fMetricRanges);
 				}
 			set
 				{
-				sm_fMetricRanges = value;
+				m_fMetricRanges = value;
 				}
 			}
 
@@ -3076,15 +3062,15 @@ namespace ReloadersWorkShop.Preferences
 		// MetricShotWeights Property
 		//============================================================================*
 
-		public static bool MetricShotWeights
+		public bool MetricShotWeights
 			{
 			get
 				{
-				return (sm_fMetricShotWeights);
+				return (m_fMetricShotWeights);
 				}
 			set
 				{
-				sm_fMetricShotWeights = value;
+				m_fMetricShotWeights = value;
 				}
 			}
 
@@ -3092,15 +3078,15 @@ namespace ReloadersWorkShop.Preferences
 		// MetricTemperatures Property
 		//============================================================================*
 
-		public static bool MetricTemperatures
+		public bool MetricTemperatures
 			{
 			get
 				{
-				return (sm_fMetricTemperatures);
+				return (m_fMetricTemperatures);
 				}
 			set
 				{
-				sm_fMetricTemperatures = value;
+				m_fMetricTemperatures = value;
 				}
 			}
 
@@ -3108,15 +3094,15 @@ namespace ReloadersWorkShop.Preferences
 		// MetricVelocities Property
 		//============================================================================*
 
-		public static bool MetricVelocities
+		public bool MetricVelocities
 			{
 			get
 				{
-				return (sm_fMetricVelocities);
+				return (m_fMetricVelocities);
 				}
 			set
 				{
-				sm_fMetricVelocities = value;
+				m_fMetricVelocities = value;
 				}
 			}
 
@@ -3172,15 +3158,15 @@ namespace ReloadersWorkShop.Preferences
 		// PowderWeightDecimals Property
 		//============================================================================*
 
-		public static int PowderWeightDecimals
+		public int PowderWeightDecimals
 			{
 			get
 				{
-				return (sm_nPowderWeightDecimals);
+				return (m_nPowderWeightDecimals);
 				}
 			set
 				{
-				sm_nPowderWeightDecimals = value;
+				m_nPowderWeightDecimals = value;
 				}
 			}
 
@@ -3217,81 +3203,31 @@ namespace ReloadersWorkShop.Preferences
 			}
 
 		//============================================================================*
-		// RecordStatics()
+		// Reset()
 		//============================================================================*
 
-		public void RecordStatics()
+		public static void Reset()
 			{
-		// Measurements Settings
+			sm_StaticPreferences = new Preferences.cPreferences();
 
-		m_fMetricBulletWeights = sm_fMetricBulletWeights;
-		m_fMetricCanWeights = sm_fMetricCanWeights;
-		m_fMetricDimensions = sm_fMetricDimensions;
-		m_fMetricFirearms = sm_fMetricFirearms;
-		m_fMetricGroups = sm_fMetricGroups;
-		m_fMetricPowderWeights = sm_fMetricPowderWeights;
-		m_fMetricRanges = sm_fMetricRanges;
-		m_fMetricShotWeights = sm_fMetricShotWeights;
-		m_fMetricVelocities = sm_fMetricVelocities;
-
-		// Inventory system
-
-		m_fTrackInventory = sm_fTrackInventory;
-
-		// Atmospheric Settings
-
-		m_fMetricAltitudes = sm_fMetricAltitudes;
-		m_fMetricPressures = sm_fMetricPressures;
-		m_fMetricTemperatures = sm_fMetricTemperatures;
-
-		// Decimals
-
-		m_nBulletWeightDecimals = sm_nBulletWeightDecimals;
-		m_nCanWeightDecimals = sm_nCanWeightDecimals;
-		m_nDimensionDecimals = sm_nDimensionDecimals;
-		m_nFirearmDecimals = sm_nFirearmDecimals;
-		m_nGroupDecimals = sm_nGroupDecimals;
-		m_nPowderWeightDecimals = sm_nPowderWeightDecimals;
-		m_nShotWeightDecimals = sm_nShotWeightDecimals;
-		}
+			sm_StaticPreferences.Dev = false;
+			sm_StaticPreferences.LastMainTabSelected = "ManufacturersTab";
+			}
 
 		//============================================================================*
-		// ResetStatics()
+		// Serialize()
 		//============================================================================*
 
-		public void ResetStatics()
+		public void Serialize(BinaryFormatter Formatter, Stream Stream)
 			{
-			// Measurements Settings
-
-			sm_fMetricBulletWeights = m_fMetricBulletWeights;
-			sm_fMetricCanWeights = m_fMetricCanWeights;
-			sm_fMetricDimensions = m_fMetricDimensions;
-			sm_fMetricFirearms = m_fMetricFirearms;
-			sm_fMetricGroups = m_fMetricGroups;
-			sm_fMetricPowderWeights = m_fMetricPowderWeights;
-			sm_fMetricRanges = m_fMetricRanges;
-			sm_fMetricShotWeights = m_fMetricShotWeights;
-			sm_fMetricVelocities = m_fMetricVelocities;
-
-			// Inventory system
-
-			sm_fTrackInventory = m_fTrackInventory;
-
-			// Atmospheric Settings
-
-			sm_fMetricAltitudes = m_fMetricAltitudes;
-			sm_fMetricPressures = m_fMetricPressures;
-			sm_fMetricTemperatures = m_fMetricTemperatures;
-
-			// Decimals
-
-			sm_nBulletWeightDecimals = m_nBulletWeightDecimals;
-			sm_nCanWeightDecimals = m_nCanWeightDecimals;
-			sm_nDimensionDecimals = m_nDimensionDecimals;
-			sm_nFirearmDecimals = m_nFirearmDecimals;
-			sm_nGroupDecimals = m_nGroupDecimals;
-			sm_nPowderWeightDecimals = m_nPowderWeightDecimals;
-			sm_nShotWeightDecimals = m_nShotWeightDecimals;
+			try
+				{
+				Formatter.Serialize(Stream, this);
+				}
+			catch
+				{
+				// TODO: Do something here
+				}
 			}
 
 		//============================================================================*
@@ -3424,15 +3360,15 @@ namespace ReloadersWorkShop.Preferences
 		// ShotWeightDecimals Property
 		//============================================================================*
 
-		public static int ShotWeightDecimals
+		public int ShotWeightDecimals
 			{
 			get
 				{
-				return (sm_nShotWeightDecimals);
+				return (m_nShotWeightDecimals);
 				}
 			set
 				{
-				sm_nShotWeightDecimals = value;
+				m_nShotWeightDecimals = value;
 				}
 			}
 
@@ -3561,6 +3497,29 @@ namespace ReloadersWorkShop.Preferences
 			set
 				{
 				m_fShowWindDriftRangeMarkers = value;
+				}
+			}
+
+		//============================================================================*
+		// StaticPreferences Property
+		//============================================================================*
+
+		public static cPreferences StaticPreferences
+			{
+			get
+				{
+				if (sm_StaticPreferences == null)
+					{
+					sm_StaticPreferences = new cPreferences();
+
+					sm_StaticPreferences.Maximized = false;
+					sm_StaticPreferences.MainFormLocation = new Point(0, 0);
+					sm_StaticPreferences.MainFormSize = new Size(1024, 768);
+
+					sm_StaticPreferences.BallisticsData = new cBallistics();
+					}
+
+				return (sm_StaticPreferences);
 				}
 			}
 
@@ -3984,15 +3943,15 @@ namespace ReloadersWorkShop.Preferences
 		// TrackInventory Property
 		//============================================================================*
 
-		public static  bool TrackInventory
+		public bool TrackInventory
 			{
 			get
 				{
-				return (sm_fTrackInventory);
+				return (m_fTrackInventory);
 				}
 			set
 				{
-				sm_fTrackInventory = value;
+				m_fTrackInventory = value;
 				}
 			}
 

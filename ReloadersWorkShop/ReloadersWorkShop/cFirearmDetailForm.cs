@@ -106,19 +106,6 @@ namespace ReloadersWorkShop
 				ActionComboBox.SelectedIndexChanged += OnActionChanged;
 				HammerComboBox.SelectedIndexChanged += OnHammerChanged;
 
-				ScopeManufacturerComboBox.SelectedIndexChanged += OnScopeManufacturerChanged;
-				ScopeModelTextBox.TextChanged += OnScopeModelChanged;
-				ScopePowerTextBox.TextChanged += OnScopePowerChanged;
-				ScopeObjectiveTextBox.TextChanged += OnScopeObjectiveChanged;
-
-				StockManufacturerComboBox.SelectedIndexChanged += OnStockManufacturerChanged;
-				StockModelTextBox.TextChanged += OnStockModelChanged;
-				StockFinishComboBox.TextChanged += OnStockFinishChanged;
-
-				TriggerManufacturerComboBox.SelectedIndexChanged += OnTriggerManufacturerChanged;
-				TriggerModelTextBox.TextChanged += OnTriggerModelChanged;
-				TriggerPullTextBox.TextChanged += OnTriggerPullChanged;
-
 				MagazineComboBox.SelectedIndexChanged += OnMagazineChanged;
 				CapacityTextBox.TextChanged += OnMagazineCapacityChanged;
 
@@ -519,7 +506,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_Firearm.Price = PriceTextBox.Value;
+			m_Firearm.PurchasePrice = PriceTextBox.Value;
 
 			m_fChanged = true;
 
@@ -612,73 +599,6 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// OnScopeManufacturerChanged()
-		//============================================================================*
-
-		protected void OnScopeManufacturerChanged(object sender, EventArgs e)
-			{
-			if (!m_fInitialized)
-				return;
-
-			m_Firearm.ScopeManufacturer = ScopeManufacturerComboBox.SelectedIndex > 0 ? (cManufacturer) ScopeManufacturerComboBox.SelectedItem : null;
-
-			//			if (m_Firearm.ScopeManufacturer == null)
-			//				m_Firearm.Scoped = false;
-
-			m_fChanged = true;
-
-			UpdateButtons();
-			}
-
-		//============================================================================*
-		// OnScopeModelChanged()
-		//============================================================================*
-
-		protected void OnScopeModelChanged(object sender, EventArgs e)
-			{
-			if (!m_fInitialized)
-				return;
-
-			m_Firearm.ScopeModel = ScopeModelTextBox.Text;
-
-			m_fChanged = true;
-
-			UpdateButtons();
-			}
-
-		//============================================================================*
-		// OnScopeObjectiveChanged()
-		//============================================================================*
-
-		protected void OnScopeObjectiveChanged(object sender, EventArgs e)
-			{
-			if (!m_fInitialized)
-				return;
-
-			m_Firearm.ScopeObjective = ScopeObjectiveTextBox.Value;
-
-			m_fChanged = true;
-
-			UpdateButtons();
-			}
-
-		//============================================================================*
-		// OnScopePowerChanged()
-		//============================================================================*
-
-		protected void OnScopePowerChanged(object sender, EventArgs e)
-			{
-			if (!m_fInitialized)
-				return;
-
-			m_Firearm.ScopePower = ScopePowerTextBox.Text;
-
-			m_fChanged = true;
-
-			UpdateButtons();
-			}
-
-		//============================================================================*
 		// OnSourceChanged()
 		//============================================================================*
 
@@ -688,102 +608,6 @@ namespace ReloadersWorkShop
 				return;
 
 			m_Firearm.Source = SourceComboBox.Text;
-
-			m_fChanged = true;
-
-			UpdateButtons();
-			}
-
-		//============================================================================*
-		// OnStockFinishChanged()
-		//============================================================================*
-
-		protected void OnStockFinishChanged(object sender, EventArgs e)
-			{
-			if (!m_fInitialized)
-				return;
-
-			m_Firearm.StockFinish = StockFinishComboBox.Text;
-
-			m_fChanged = true;
-
-			UpdateButtons();
-			}
-
-		//============================================================================*
-		// OnStockManufacturerChanged()
-		//============================================================================*
-
-		protected void OnStockManufacturerChanged(object sender, EventArgs e)
-			{
-			if (!m_fInitialized)
-				return;
-
-			m_Firearm.StockManufacturer = (cManufacturer) StockManufacturerComboBox.SelectedItem;
-
-			m_fChanged = true;
-
-			UpdateButtons();
-			}
-
-		//============================================================================*
-		// OnStockModelChanged()
-		//============================================================================*
-
-		protected void OnStockModelChanged(object sender, EventArgs e)
-			{
-			if (!m_fInitialized)
-				return;
-
-			m_Firearm.StockModel = StockModelTextBox.Text;
-
-			m_fChanged = true;
-
-			UpdateButtons();
-			}
-
-		//============================================================================*
-		// OnTriggerManufacturerChanged()
-		//============================================================================*
-
-		protected void OnTriggerManufacturerChanged(object sender, EventArgs e)
-			{
-			if (!m_fInitialized)
-				return;
-
-			m_Firearm.TriggerManufacturer = (cManufacturer) TriggerManufacturerComboBox.SelectedItem;
-
-			m_fChanged = true;
-
-			UpdateButtons();
-			}
-
-		//============================================================================*
-		// OnTriggerModelChanged()
-		//============================================================================*
-
-		protected void OnTriggerModelChanged(object sender, EventArgs e)
-			{
-			if (!m_fInitialized)
-				return;
-
-			m_Firearm.TriggerModel = TriggerModelTextBox.Text;
-
-			m_fChanged = true;
-
-			UpdateButtons();
-			}
-
-		//============================================================================*
-		// OnTriggerPullChanged()
-		//============================================================================*
-
-		protected void OnTriggerPullChanged(object sender, EventArgs e)
-			{
-			if (!m_fInitialized)
-				return;
-
-			m_Firearm.TriggerPull = TriggerPullTextBox.Value;
 
 			m_fChanged = true;
 
@@ -1066,7 +890,7 @@ namespace ReloadersWorkShop
 			else
 				PurchaseDateTimePicker.Value = DateTime.Today;
 
-			PriceTextBox.Value = m_Firearm.Price;
+			PriceTextBox.Value = m_Firearm.PurchasePrice;
 
 			//----------------------------------------------------------------------------*
 			// Notes
@@ -1104,8 +928,6 @@ namespace ReloadersWorkShop
 
 			if (HammerComboBox.SelectedIndex < 0 && HammerComboBox.Items.Count > 0)
 				HammerComboBox.SelectedIndex = 0;
-
-			PopulateScopeData();
 			}
 
 		//============================================================================*
@@ -1132,63 +954,6 @@ namespace ReloadersWorkShop
 
 			CapacityTextBox.MinValue = 1;
 			CapacityTextBox.Value = m_Firearm.MagazineCapacity;
-
-			PopulateTriggerData();
-			}
-
-		//============================================================================*
-		// PopulateScopeData()
-		//============================================================================*
-
-		private void PopulateScopeData()
-			{
-			//----------------------------------------------------------------------------*
-			// Gather the list of manufacturers
-			//----------------------------------------------------------------------------*
-
-			cManufacturerList ScopeManufacturerList = new cManufacturerList();
-
-			foreach (cManufacturer Manufacturer in m_DataFiles.ManufacturerList)
-				{
-				if (Manufacturer.Scopes)
-					ScopeManufacturerList.Add(Manufacturer);
-				}
-
-			//			ScopeManufacturerList.Sort();
-
-			//----------------------------------------------------------------------------*
-			// Populate the Scope Manufacturer combo
-			//----------------------------------------------------------------------------*
-
-			ScopeManufacturerComboBox.Items.Clear();
-
-			ScopeManufacturerComboBox.Items.Add("None");
-
-			foreach (cManufacturer Manufacturer in ScopeManufacturerList)
-				ScopeManufacturerComboBox.Items.Add(Manufacturer);
-
-			//----------------------------------------------------------------------------*
-			// Select a manufacturer or "None"
-			//----------------------------------------------------------------------------*
-
-			if (m_Firearm.ScopeManufacturer != null)
-				ScopeManufacturerComboBox.SelectedItem = m_Firearm.ScopeManufacturer;
-			else
-				ScopeManufacturerComboBox.SelectedIndex = 0;
-
-			//----------------------------------------------------------------------------*
-			// fill in the other scope data
-			//----------------------------------------------------------------------------*
-
-			ScopeModelTextBox.Text = m_Firearm.ScopeModel != null ? m_Firearm.ScopeModel : "";
-			ScopePowerTextBox.Text = m_Firearm.ScopePower != null ? m_Firearm.ScopePower : "";
-			ScopeObjectiveTextBox.Value = m_Firearm.ScopeObjective;
-
-			//----------------------------------------------------------------------------*
-			// Continue the chain of population code
-			//----------------------------------------------------------------------------*
-
-			PopulateStockData();
 			}
 
 		//============================================================================*
@@ -1223,105 +988,6 @@ namespace ReloadersWorkShop
 			SourceComboBox.SelectedItem = m_Firearm.Source;
 
 			PopulateTypeCombo();
-			}
-
-		//============================================================================*
-		// PopulateStockData()
-		//============================================================================*
-
-		private void PopulateStockData()
-			{
-			//----------------------------------------------------------------------------*
-			// Manufacturers
-			//----------------------------------------------------------------------------*
-
-			StockManufacturerComboBox.Items.Clear();
-
-			if (m_Firearm.StockManufacturer == null)
-				m_Firearm.StockManufacturer = m_Firearm.Manufacturer;
-
-			foreach (cManufacturer Manufacturer in m_DataFiles.ManufacturerList)
-				{
-				if (Manufacturer.CompareTo(m_Firearm.Manufacturer) == 0 || Manufacturer.Stocks)
-					StockManufacturerComboBox.Items.Add(Manufacturer);
-				}
-
-			StockManufacturerComboBox.SelectedItem = m_Firearm.StockManufacturer;
-
-			//----------------------------------------------------------------------------*
-			// Finishes
-			//----------------------------------------------------------------------------*
-
-			bool fFound = false;
-
-			foreach (cFirearm Firearm in m_DataFiles.FirearmList)
-				{
-				fFound = false;
-
-				for (int i = 0; i < StockFinishComboBox.Items.Count; i++)
-					{
-					if (Firearm.StockFinish != null && StockFinishComboBox.Items[i].ToString().ToUpper() == Firearm.StockFinish.ToUpper())
-						{
-						fFound = true;
-
-						break;
-						}
-					}
-
-				if (!fFound && Firearm.StockFinish != null)
-					StockFinishComboBox.Items.Add(Firearm.StockFinish);
-				}
-
-			fFound = false;
-
-			for (int i = 0; i < StockFinishComboBox.Items.Count; i++)
-				{
-				if (m_Firearm.StockFinish != null && StockFinishComboBox.Items[i].ToString().ToUpper() == m_Firearm.StockFinish.ToUpper())
-					{
-					fFound = true;
-
-					break;
-					}
-				}
-
-			if (!fFound && m_Firearm.StockFinish != null)
-				StockFinishComboBox.Items.Add(m_Firearm.StockFinish);
-
-			if (m_Firearm.StockFinish != null)
-				StockFinishComboBox.SelectedItem = m_Firearm.StockFinish;
-
-			//----------------------------------------------------------------------------*
-			// Model
-			//----------------------------------------------------------------------------*
-
-			StockModelTextBox.Text = m_Firearm.StockModel;
-
-			PopulateMagazineData();
-			}
-
-		//============================================================================*
-		// PopulateTriggerData()
-		//============================================================================*
-
-		private void PopulateTriggerData()
-			{
-			if (m_Firearm.TriggerManufacturer == null)
-				m_Firearm.TriggerManufacturer = m_Firearm.Manufacturer;
-
-			TriggerManufacturerComboBox.Items.Clear();
-
-			foreach (cManufacturer Manufacturer in m_DataFiles.ManufacturerList)
-				{
-				if (Manufacturer.CompareTo(m_Firearm.Manufacturer) == 0 || Manufacturer.Triggers)
-					TriggerManufacturerComboBox.Items.Add(Manufacturer);
-				}
-
-			TriggerManufacturerComboBox.SelectedItem = m_Firearm.TriggerManufacturer;
-
-			TriggerModelTextBox.Text = m_Firearm.TriggerModel;
-			TriggerPullTextBox.Value = m_Firearm.TriggerPull;
-
-			UpdateButtons();
 			}
 
 		//============================================================================*
@@ -1544,49 +1210,6 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			if (!CapacityTextBox.ValueOK)
-				fEnableOK = false;
-
-			//----------------------------------------------------------------------------*
-			// Check Stock
-			//----------------------------------------------------------------------------*
-
-			//----------------------------------------------------------------------------*
-			// Check Scope
-			//----------------------------------------------------------------------------*
-
-			if (ScopeManufacturerComboBox.SelectedIndex == 0)
-				{
-				//				m_Firearm.Scoped = false;
-				m_Firearm.ScopeManufacturer = null;
-
-				ScopeModelTextBox.Text = "";
-				ScopeModelTextBox.Enabled = false;
-				ScopeModelTextBox.Required = false;
-
-				ScopePowerTextBox.Text = "";
-				ScopePowerTextBox.Enabled = false;
-				ScopePowerTextBox.Required = false;
-
-				ScopeObjectiveTextBox.Value = 0;
-				ScopeObjectiveTextBox.Enabled = false;
-				ScopeObjectiveTextBox.Required = false;
-				}
-			else
-				{
-				m_Firearm.Scoped = true;
-				m_Firearm.ScopeManufacturer = (cManufacturer) ScopeManufacturerComboBox.SelectedItem;
-
-				ScopeModelTextBox.Enabled = true;
-				ScopeModelTextBox.Required = true;
-
-				ScopePowerTextBox.Enabled = true;
-				ScopePowerTextBox.Required = true;
-
-				ScopeObjectiveTextBox.Enabled = true;
-				ScopeObjectiveTextBox.Required = true;
-				}
-
-			if (!ScopeModelTextBox.ValueOK || !ScopePowerTextBox.ValueOK || !ScopeObjectiveTextBox.ValueOK)
 				fEnableOK = false;
 
 			//----------------------------------------------------------------------------*

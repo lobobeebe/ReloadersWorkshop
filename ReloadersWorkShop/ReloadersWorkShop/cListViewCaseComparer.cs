@@ -215,7 +215,7 @@ namespace ReloadersWorkShop
 					double dQuantity1 = Case1.Quantity;
 					double dQuantity2 = Case2.Quantity;
 
-					if (cPreferences.TrackInventory)
+					if (m_DataFiles.Preferences.TrackInventory)
 						{
 						dQuantity1 = Case1.QuantityOnHand;
 						dQuantity2 = Case2.QuantityOnHand;

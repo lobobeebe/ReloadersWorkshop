@@ -144,7 +144,7 @@ namespace ReloadersWorkShop
 			Populating = true;
 
 			m_strDimensionFormat = "{0:F";
-			m_strDimensionFormat += String.Format("{0:G0}", cPreferences.DimensionDecimals);
+			m_strDimensionFormat += String.Format("{0:G0}", m_DataFiles.Preferences.DimensionDecimals);
 			m_strDimensionFormat += "}";
 
 			Items.Clear();

@@ -116,7 +116,7 @@ namespace ReloadersWorkShop
 			// Operations that are always performed
 			//----------------------------------------------------------------------------*
 
-			AmmoInventoryGroup.Visible = cPreferences.TrackInventory;
+			AmmoInventoryGroup.Visible = m_DataFiles.Preferences.TrackInventory;
 
 			PopulateAmmoListViewColumns();
 
@@ -548,7 +548,7 @@ namespace ReloadersWorkShop
 					// Set the quantities, costs, etc.
 					//----------------------------------------------------------------------------*
 
-					if (cPreferences.TrackInventory)
+					if (m_DataFiles.Preferences.TrackInventory)
 						{
 						CheckAmmo.QuantityOnHand = NewAmmo.QuantityOnHand;
 						CheckAmmo.Quantity = CheckAmmo.QuantityOnHand;

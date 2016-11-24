@@ -105,7 +105,7 @@ namespace ReloadersWorkShop
 					double dQuantity1 = Primer1.Quantity;
 					double dQuantity2 = Primer2.Quantity;
 
-					if (cPreferences.TrackInventory)
+					if (m_DataFiles.Preferences.TrackInventory)
 						{
 						dQuantity1 = Primer1.QuantityOnHand;
 						dQuantity2 = Primer2.QuantityOnHand;

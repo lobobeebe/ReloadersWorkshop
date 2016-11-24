@@ -267,7 +267,7 @@ namespace ReloadersWorkShop
 			strText = "Group Size: ";
 
 			string strGroupFormat = "{0:F";
-			strGroupFormat += String.Format("{0:G0}", cPreferences.GroupDecimals);
+			strGroupFormat += String.Format("{0:G0}", m_DataFiles.Preferences.GroupDecimals);
 			strGroupFormat += "}";
 
 			strText += String.Format(strGroupFormat, m_Target.GroupSize);

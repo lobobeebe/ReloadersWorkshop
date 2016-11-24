@@ -39,6 +39,7 @@
 			System.Windows.Forms.Label label12;
 			System.Windows.Forms.Label label16;
 			System.Windows.Forms.Label label18;
+			System.Windows.Forms.Label label2;
 			this.HeadspaceMeasurementLabel = new System.Windows.Forms.Label();
 			this.NeckSizeMeasurementLabel = new System.Windows.Forms.Label();
 			this.BarrelMeasurementLabel = new System.Windows.Forms.Label();
@@ -73,6 +74,7 @@
 			this.MakePrimaryButton = new System.Windows.Forms.Button();
 			this.RemoveCartridgeButton = new System.Windows.Forms.Button();
 			this.AddCartridgeButton = new System.Windows.Forms.Button();
+			this.DescriptionTextBox = new CommonLib.Controls.cTextBox();
 			label1 = new System.Windows.Forms.Label();
 			label3 = new System.Windows.Forms.Label();
 			label6 = new System.Windows.Forms.Label();
@@ -84,6 +86,7 @@
 			label12 = new System.Windows.Forms.Label();
 			label16 = new System.Windows.Forms.Label();
 			label18 = new System.Windows.Forms.Label();
+			label2 = new System.Windows.Forms.Label();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.CartridgeSpecsGroupBox.SuspendLayout();
@@ -334,7 +337,8 @@
 			// 
 			// groupBox1
 			// 
-			this.groupBox1.Controls.Add(this.FirearmDetailsButton);
+			this.groupBox1.Controls.Add(this.DescriptionTextBox);
+			this.groupBox1.Controls.Add(label2);
 			this.groupBox1.Controls.Add(this.SerialNumberTextBox);
 			this.groupBox1.Controls.Add(this.ModelTextBox);
 			this.groupBox1.Controls.Add(this.FirearmTypeCombo);
@@ -359,7 +363,7 @@
 			this.FirearmDetailsButton.AutoSize = true;
 			this.FirearmDetailsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmDetailsButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmDetailsButton.Location = new System.Drawing.Point(100, 125);
+			this.FirearmDetailsButton.Location = new System.Drawing.Point(71, 126);
 			this.FirearmDetailsButton.Margin = new System.Windows.Forms.Padding(2);
 			this.FirearmDetailsButton.Name = "FirearmDetailsButton";
 			this.FirearmDetailsButton.Size = new System.Drawing.Size(215, 23);
@@ -378,6 +382,7 @@
 			this.SerialNumberTextBox.Size = new System.Drawing.Size(215, 20);
 			this.SerialNumberTextBox.TabIndex = 3;
 			this.SerialNumberTextBox.ToolTip = "";
+			this.SerialNumberTextBox.ValidChars = "";
 			this.SerialNumberTextBox.Value = "";
 			// 
 			// ModelTextBox
@@ -391,6 +396,7 @@
 			this.ModelTextBox.Size = new System.Drawing.Size(215, 20);
 			this.ModelTextBox.TabIndex = 2;
 			this.ModelTextBox.ToolTip = "";
+			this.ModelTextBox.ValidChars = "";
 			this.ModelTextBox.Value = "";
 			// 
 			// FirearmTypeCombo
@@ -481,6 +487,9 @@
             "Shotgun",
             "Handgun",
             "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
             "Shotgun"});
 			this.FirearmTypeCombo.Location = new System.Drawing.Point(100, 22);
 			this.FirearmTypeCombo.Name = "FirearmTypeCombo";
@@ -491,6 +500,7 @@
 			// 
 			// groupBox2
 			// 
+			this.groupBox2.Controls.Add(this.FirearmDetailsButton);
 			this.groupBox2.Controls.Add(this.SightHeightMeasurementLabel);
 			this.groupBox2.Controls.Add(this.ScopedCheckBox);
 			this.groupBox2.Controls.Add(this.TurretTypeComboBox);
@@ -800,13 +810,39 @@
 			this.AddCartridgeButton.Text = "Add";
 			this.AddCartridgeButton.UseVisualStyleBackColor = true;
 			// 
+			// DescriptionTextBox
+			// 
+			this.DescriptionTextBox.BackColor = System.Drawing.Color.LightPink;
+			this.DescriptionTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.DescriptionTextBox.Location = new System.Drawing.Point(100, 124);
+			this.DescriptionTextBox.MaxLength = 50;
+			this.DescriptionTextBox.Name = "DescriptionTextBox";
+			this.DescriptionTextBox.Required = true;
+			this.DescriptionTextBox.Size = new System.Drawing.Size(215, 20);
+			this.DescriptionTextBox.TabIndex = 16;
+			this.DescriptionTextBox.ToolTip = "";
+			this.DescriptionTextBox.ValidChars = "";
+			this.DescriptionTextBox.Value = "";
+			// 
+			// label2
+			// 
+			label2.AutoSize = true;
+			label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			label2.ForeColor = System.Drawing.SystemColors.ControlText;
+			label2.Location = new System.Drawing.Point(32, 127);
+			label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			label2.Name = "label2";
+			label2.Size = new System.Drawing.Size(63, 13);
+			label2.TabIndex = 17;
+			label2.Text = "Description:";
+			// 
 			// cFirearmForm
 			// 
 			this.AcceptButton = this.OKButton;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.FirearmCancelButton;
-			this.ClientSize = new System.Drawing.Size(705, 478);
+			this.ClientSize = new System.Drawing.Size(701, 474);
 			this.ControlBox = false;
 			this.Controls.Add(this.UsableCartridgeGroup);
 			this.Controls.Add(this.CartridgeSpecsGroupBox);
@@ -869,5 +905,6 @@
 		private System.Windows.Forms.Button RemoveCartridgeButton;
 		private System.Windows.Forms.Button AddCartridgeButton;
 		private System.Windows.Forms.Button MakePrimaryButton;
+		private CommonLib.Controls.cTextBox DescriptionTextBox;
 		}
 	}

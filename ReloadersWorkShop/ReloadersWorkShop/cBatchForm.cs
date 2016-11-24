@@ -104,7 +104,7 @@ namespace ReloadersWorkShop
 
 				m_Batch.BatchID = m_DataFiles.Preferences.NextBatchID;
 
-				m_Batch.TrackInventory = cPreferences.TrackInventory;
+				m_Batch.TrackInventory = m_DataFiles.Preferences.TrackInventory;
 				}
 			else
 				{
@@ -998,7 +998,7 @@ namespace ReloadersWorkShop
 				{
 				m_DataFiles.Preferences.NextBatchID++;
 
-				Batch.TrackInventory = cPreferences.TrackInventory;
+				Batch.TrackInventory = m_DataFiles.Preferences.TrackInventory;
 				}
 			}
 
@@ -1583,6 +1583,8 @@ namespace ReloadersWorkShop
 			double dFillRatio = 0.0;
 			int nMinVelocity = 1000000;
 			int nMaxVelocity = 0;
+			int nMinPressure = 1000000;
+			int nMaxPressure = 0;
 
 			//----------------------------------------------------------------------------*
 			// See if the batch charge is valid for the selected load
@@ -1641,12 +1643,20 @@ namespace ReloadersWorkShop
 
 								if (ChargeTest.MuzzleVelocity > nMaxVelocity)
 									nMaxVelocity = ChargeTest.MuzzleVelocity;
+
+								if (ChargeTest.Pressure < nMinPressure)
+									nMinPressure = ChargeTest.Pressure;
+
+								if (ChargeTest.Pressure > nMaxPressure)
+									nMaxPressure = ChargeTest.Pressure;
 								}
 							}
 						else
 							{
 							nMinVelocity = 0;
 							nMaxVelocity = 0;
+							nMinPressure = 0;
+							nMaxPressure = 0;
 							}
 
 						break;
@@ -1680,6 +1690,26 @@ namespace ReloadersWorkShop
 				else
 					{
 					MuzzleVelocityLabel.Text = String.Format("{0:N0} to {1:N0} {2}", cDataFiles.StandardToMetric(nMinVelocity, cDataFiles.eDataType.Velocity), cDataFiles.StandardToMetric(nMaxVelocity, cDataFiles.eDataType.Velocity), cDataFiles.MetricString(cDataFiles.eDataType.Velocity));
+					}
+				}
+
+			//----------------------------------------------------------------------------*
+			// Set Pressure
+			//----------------------------------------------------------------------------*
+
+			if (nMinPressure == 0 && nMaxPressure == 0)
+				{
+				PressureLabel.Text = "N/A";
+				}
+			else
+				{
+				if (nMinPressure == nMaxPressure)
+					{
+					PressureLabel.Text = String.Format("{0:N0} {1}", nMinPressure);
+					}
+				else
+					{
+					PressureLabel.Text = String.Format("{0:N0} to {1:N0}", nMinPressure, nMaxPressure);
 					}
 				}
 
@@ -1973,7 +2003,7 @@ namespace ReloadersWorkShop
 			double dNeckTension = 0.0;
 
 			string strFormat = "{0:F";
-			strFormat += String.Format("{0:G0}", cPreferences.DimensionDecimals);
+			strFormat += String.Format("{0:G0}", m_DataFiles.Preferences.DimensionDecimals);
 			strFormat += "} ";
 			strFormat += cDataFiles.MetricString(cDataFiles.eDataType.Dimension);
 
@@ -2237,6 +2267,7 @@ namespace ReloadersWorkShop
 
 			JumpLabel.Visible = JumpSetCheckBox.Checked;
 			JumpTextBox.Visible = JumpSetCheckBox.Checked;
+			JumpMeasurementLabel.Visible = JumpSetCheckBox.Checked;
 
 			if (JumpSetCheckBox.Checked &&
 				FirearmBullet != null &&

@@ -170,7 +170,7 @@ namespace ReloadersWorkShop
 					double dQuantity1 = Powder1.Quantity;
 					double dQuantity2 = Powder2.Quantity;
 
-					if (cPreferences.TrackInventory)
+					if (m_DataFiles.Preferences.TrackInventory)
 						{
 						dQuantity1 = Powder1.QuantityOnHand;
 						dQuantity2 = Powder2.QuantityOnHand;

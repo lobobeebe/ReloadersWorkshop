@@ -87,7 +87,7 @@ namespace ReloadersWorkShop
 
 					if (rc == 0)
 						{
-						rc = Firearm1.Model.CompareTo(Firearm2.Model);
+						rc = Firearm1.PartNumber.CompareTo(Firearm2.PartNumber);
 
 						if (rc == 0)
 							rc = Firearm1.PrimaryCaliber.CompareTo(Firearm2.PrimaryCaliber);

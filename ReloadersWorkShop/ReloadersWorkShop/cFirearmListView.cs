@@ -37,15 +37,11 @@ namespace ReloadersWorkShop
 			new cListViewColumn(0, "ManufacturerHeader","Manufacturer", HorizontalAlignment.Left, 140),
 			new cListViewColumn(1, "ModelHeader", "Model", HorizontalAlignment.Left, 140),
 			new cListViewColumn(2, "SerialHeader", "Serial #", HorizontalAlignment.Left, 140),
-			new cListViewColumn(3, "CaliberHeader", "Primary Caliber", HorizontalAlignment.Left, 160),
-			new cListViewColumn(4, "BarrelLengthHeader", "Barrel Length", HorizontalAlignment.Center, 115),
-			new cListViewColumn(5, "TwistHeader", "Twist", HorizontalAlignment.Center, 115),
-			new cListViewColumn(6, "ScopedHeader", "Scoped", HorizontalAlignment.Center, 60),
-			new cListViewColumn(7, "TurretClickHeader", "Turret Click", HorizontalAlignment.Center, 120),
-			new cListViewColumn(8, "ZeroRangeHeader", "Zero Range", HorizontalAlignment.Center, 115),
-			new cListViewColumn(9, "SightHeightHeader", "Sight Height", HorizontalAlignment.Center, 115),
-			new cListViewColumn(10, "HeadspaceHeader", "Headspace", HorizontalAlignment.Center, 115),
-			new cListViewColumn(11, "NeckSizeHeader", "Neck Size", HorizontalAlignment.Center, 115)
+			new cListViewColumn(3, "DescriptionHeader", "Description", HorizontalAlignment.Left, 160),
+			new cListViewColumn(4, "CaliberHeader", "Primary Caliber", HorizontalAlignment.Left, 160),
+			new cListViewColumn(5, "SourceHeader", "Acquired from", HorizontalAlignment.Left, 200),
+			new cListViewColumn(6, "DateHeader", "Date", HorizontalAlignment.Left, 100),
+			new cListViewColumn(7, "PriceHeader", "Price", HorizontalAlignment.Right, 80)
 			};
 
 		//============================================================================*
@@ -195,11 +191,7 @@ namespace ReloadersWorkShop
 
 		public void SetColumns()
 			{
-			m_arColumns[4].Text = String.Format("Barrel Length ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Firearm));
-			m_arColumns[8].Text = String.Format("Zero Range ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Range));
-			m_arColumns[9].Text = String.Format("Sight Height ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Firearm));
-			m_arColumns[10].Text = String.Format("Headspace ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
-			m_arColumns[11].Text = String.Format("Neck Size ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
+			m_arColumns[7].Text = String.Format("Price ({0})", m_DataFiles.Preferences.Currency);
 
 			PopulateColumns(m_arColumns);
 			}
@@ -222,28 +214,24 @@ namespace ReloadersWorkShop
 			Item.Checked = Firearm.Checked;
 
 			string strLengthFormat = "{0:F";
-			strLengthFormat += String.Format("{0:G0}", cPreferences.FirearmDecimals);
+			strLengthFormat += String.Format("{0:G0}", m_DataFiles.Preferences.FirearmDecimals);
 			strLengthFormat += "}";
 
 			string strDimensionFormat = "{0:F";
-			strDimensionFormat += String.Format("{0:G0}", cPreferences.DimensionDecimals);
+			strDimensionFormat += String.Format("{0:G0}", m_DataFiles.Preferences.DimensionDecimals);
 			strDimensionFormat += "}";
 
 			string strTwistFormat = "1 in {0:F";
-			strTwistFormat += String.Format("{0:G0}", cPreferences.FirearmDecimals);
+			strTwistFormat += String.Format("{0:G0}", m_DataFiles.Preferences.FirearmDecimals);
 			strTwistFormat += "} {1}";
 
-			Item.SubItems.Add(String.Format("{0}", Firearm.Model));
+			Item.SubItems.Add(String.Format("{0}", Firearm.PartNumber));
 			Item.SubItems.Add(String.Format("{0}", Firearm.SerialNumber));
+			Item.SubItems.Add(String.Format("{0}", Firearm.Description));
 			Item.SubItems.Add(String.Format("{0}", Firearm.PrimaryCaliber));
-			Item.SubItems.Add(String.Format(strLengthFormat, cDataFiles.StandardToMetric(Firearm.BarrelLength, cDataFiles.eDataType.Firearm)));
-			Item.SubItems.Add(Firearm.Twist == 0.0 ? "N/A" : String.Format(strTwistFormat, cDataFiles.StandardToMetric(Firearm.Twist, cDataFiles.eDataType.Firearm), cDataFiles.MetricString(cDataFiles.eDataType.Firearm)));
-			Item.SubItems.Add(Firearm.Scoped ? "Y" : "");
-			Item.SubItems.Add(Firearm.TurretClickString);
-			Item.SubItems.Add(String.Format("{0:N0}", cDataFiles.StandardToMetric(Firearm.ZeroRange, cDataFiles.eDataType.Range)));
-			Item.SubItems.Add(String.Format(strLengthFormat, cDataFiles.StandardToMetric(Firearm.SightHeight, cDataFiles.eDataType.Firearm)));
-			Item.SubItems.Add(Firearm.FirearmType == cFirearm.eFireArmType.Rifle ? String.Format(strDimensionFormat, cDataFiles.StandardToMetric(Firearm.HeadSpace, cDataFiles.eDataType.Dimension)) : "-");
-			Item.SubItems.Add(Firearm.FirearmType == cFirearm.eFireArmType.Rifle ? String.Format(strDimensionFormat, cDataFiles.StandardToMetric(Firearm.Neck, cDataFiles.eDataType.Dimension)) : "-");
+			Item.SubItems.Add(String.Format("{0}", Firearm.Source));
+			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source) ? String.Format("{0}", Firearm.PurchaseDate.ToShortDateString()) : "");
+			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source) && Firearm.PurchasePrice !=  0.0 ? String.Format("{0:F2}", Firearm.PurchasePrice) : "-");
 			}
 
 		//============================================================================*
