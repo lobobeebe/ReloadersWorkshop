@@ -376,6 +376,16 @@ namespace ReloadersWorkShop
 
 			if (m_Firearm.AddCaliber(Caliber))
 				{
+				if (String.IsNullOrEmpty(m_Firearm.Description) || 
+					m_Firearm.Description == "Handgun" || 
+					m_Firearm.Description == "Pistol" || 
+					m_Firearm.Description == "Revolver")
+					{
+					m_Firearm.SetDefaultDescription();
+
+					DescriptionTextBox.Value = m_Firearm.Description;
+					}
+
 				PopulateCaliberList();
 
 				PopulateCaliberCombo();
@@ -596,6 +606,13 @@ namespace ReloadersWorkShop
 
 			PopulateCaliberList();
 
+			if (String.IsNullOrEmpty(m_Firearm.Description) || m_Firearm.Description == "Handgun")
+				{
+				m_Firearm.SetDefaultDescription();
+
+				DescriptionTextBox.Value = m_Firearm.Description;
+				}
+
 			m_fChanged = true;
 
 			UpdateButtons();
@@ -702,6 +719,13 @@ namespace ReloadersWorkShop
 			m_BulletListView.Caliber = Caliber;
 
 			PopulateCaliberList();
+
+			if (String.IsNullOrEmpty(m_Firearm.Description) || m_Firearm.Description == "Handgun")
+				{
+				m_Firearm.SetDefaultDescription();
+
+				DescriptionTextBox.Value = m_Firearm.Description;
+				}
 
 			UpdateButtons();
 			}
@@ -855,7 +879,9 @@ namespace ReloadersWorkShop
 					{
 					if (PrimaryCaliber != null)
 						{
-						if (Caliber.MinBulletDiameter >= PrimaryCaliber.MaxBulletDiameter && Caliber.MaxBulletDiameter <= PrimaryCaliber.MaxBulletDiameter)
+						if (Caliber.MinBulletDiameter >= PrimaryCaliber.MinBulletDiameter && 
+							Caliber.MaxBulletDiameter <= PrimaryCaliber.MaxBulletDiameter &&
+							(PrimaryCaliber.FirearmType == cFirearm.eFireArmType.Handgun ? PrimaryCaliber.Pistol == Caliber.Pistol : true))
 							CaliberCombo.Items.Add(Caliber);
 						}
 					else

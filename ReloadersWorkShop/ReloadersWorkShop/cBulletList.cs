@@ -76,7 +76,7 @@ namespace ReloadersWorkShop
 		// Export()
 		//============================================================================*
 
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement, bool fIncludeInventory = true)
 			{
 			if (Count > 0)
 				{
@@ -86,6 +86,9 @@ namespace ReloadersWorkShop
 				foreach (cBullet Bullet in this)
 					{
 					Bullet.Export(XMLDocument, XMLElement);
+
+					if (fIncludeInventory)
+						Bullet.TransactionList.Export(XMLDocument, XMLElement);
 					}
 				}
 			}

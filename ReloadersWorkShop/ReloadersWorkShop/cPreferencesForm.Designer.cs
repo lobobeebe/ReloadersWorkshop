@@ -33,10 +33,11 @@
 			System.Windows.Forms.Label label53;
 			System.Windows.Forms.Label label50;
 			System.Windows.Forms.Label label49;
-			this.TaxRatePercentLabel = new System.Windows.Forms.Label();
+			System.Windows.Forms.Label TaxRatePercentLabel;
 			this.TaxRateLabel = new System.Windows.Forms.Label();
 			this.CostCalculationsLabel = new System.Windows.Forms.Label();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.AutoCheckNonZeroCheckBox = new System.Windows.Forms.CheckBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.MetricPressuresRadioButton = new System.Windows.Forms.RadioButton();
@@ -120,12 +121,12 @@
 			this.RestoreBackupButton = new System.Windows.Forms.Button();
 			this.BackupButton = new System.Windows.Forms.Button();
 			this.CloseButton = new System.Windows.Forms.Button();
-			this.AutoCheckNonZeroCheckBox = new System.Windows.Forms.CheckBox();
 			label55 = new System.Windows.Forms.Label();
 			label52 = new System.Windows.Forms.Label();
 			label53 = new System.Windows.Forms.Label();
 			label50 = new System.Windows.Forms.Label();
 			label49 = new System.Windows.Forms.Label();
+			TaxRatePercentLabel = new System.Windows.Forms.Label();
 			this.groupBox3.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -195,14 +196,14 @@
 			// 
 			// TaxRatePercentLabel
 			// 
-			this.TaxRatePercentLabel.AutoSize = true;
-			this.TaxRatePercentLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.TaxRatePercentLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
-			this.TaxRatePercentLabel.Location = new System.Drawing.Point(201, 128);
-			this.TaxRatePercentLabel.Name = "TaxRatePercentLabel";
-			this.TaxRatePercentLabel.Size = new System.Drawing.Size(15, 13);
-			this.TaxRatePercentLabel.TabIndex = 14;
-			this.TaxRatePercentLabel.Text = "%";
+			TaxRatePercentLabel.AutoSize = true;
+			TaxRatePercentLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			TaxRatePercentLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
+			TaxRatePercentLabel.Location = new System.Drawing.Point(201, 128);
+			TaxRatePercentLabel.Name = "TaxRatePercentLabel";
+			TaxRatePercentLabel.Size = new System.Drawing.Size(15, 13);
+			TaxRatePercentLabel.TabIndex = 14;
+			TaxRatePercentLabel.Text = "%";
 			// 
 			// TaxRateLabel
 			// 
@@ -244,6 +245,19 @@
 			this.groupBox3.TabIndex = 0;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Data Entry";
+			// 
+			// AutoCheckNonZeroCheckBox
+			// 
+			this.AutoCheckNonZeroCheckBox.AutoCheck = false;
+			this.AutoCheckNonZeroCheckBox.AutoSize = true;
+			this.AutoCheckNonZeroCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.AutoCheckNonZeroCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.AutoCheckNonZeroCheckBox.Location = new System.Drawing.Point(242, 22);
+			this.AutoCheckNonZeroCheckBox.Name = "AutoCheckNonZeroCheckBox";
+			this.AutoCheckNonZeroCheckBox.Size = new System.Drawing.Size(245, 17);
+			this.AutoCheckNonZeroCheckBox.TabIndex = 28;
+			this.AutoCheckNonZeroCheckBox.Text = "Auto Check Supplies with Non-Zero Quantities";
+			this.AutoCheckNonZeroCheckBox.UseVisualStyleBackColor = true;
 			// 
 			// label1
 			// 
@@ -1170,7 +1184,7 @@
 			this.InventoryGroupBox.Controls.Add(this.TaxRateTextBox);
 			this.InventoryGroupBox.Controls.Add(this.CurrencyTextBox);
 			this.InventoryGroupBox.Controls.Add(label55);
-			this.InventoryGroupBox.Controls.Add(this.TaxRatePercentLabel);
+			this.InventoryGroupBox.Controls.Add(TaxRatePercentLabel);
 			this.InventoryGroupBox.Controls.Add(this.TaxRateLabel);
 			this.InventoryGroupBox.Controls.Add(this.AverageCostsRadioButton);
 			this.InventoryGroupBox.Controls.Add(this.UseLastPurchaseRadioButton);
@@ -1413,25 +1427,12 @@
 			this.CloseButton.Text = "Close";
 			this.CloseButton.UseVisualStyleBackColor = true;
 			// 
-			// AutoCheckNonZeroCheckBox
-			// 
-			this.AutoCheckNonZeroCheckBox.AutoCheck = false;
-			this.AutoCheckNonZeroCheckBox.AutoSize = true;
-			this.AutoCheckNonZeroCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.AutoCheckNonZeroCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.AutoCheckNonZeroCheckBox.Location = new System.Drawing.Point(242, 22);
-			this.AutoCheckNonZeroCheckBox.Name = "AutoCheckNonZeroCheckBox";
-			this.AutoCheckNonZeroCheckBox.Size = new System.Drawing.Size(245, 17);
-			this.AutoCheckNonZeroCheckBox.TabIndex = 28;
-			this.AutoCheckNonZeroCheckBox.Text = "Auto Check Supplies with Non-Zero Quantities";
-			this.AutoCheckNonZeroCheckBox.UseVisualStyleBackColor = true;
-			// 
 			// cPreferencesForm
 			// 
 			this.AcceptButton = this.CloseButton;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(973, 505);
+			this.ClientSize = new System.Drawing.Size(969, 501);
 			this.ControlBox = false;
 			this.Controls.Add(this.CloseButton);
 			this.Controls.Add(this.groupBox1);
@@ -1523,7 +1524,6 @@
 		private System.Windows.Forms.RadioButton FirearmZeroDecimalsRadioButton;
 		private System.Windows.Forms.RadioButton FirearmOneDecimalRadioButton;
 		private System.Windows.Forms.Label CostCalculationsLabel;
-		private System.Windows.Forms.Label TaxRatePercentLabel;
 		private System.Windows.Forms.Label TaxRateLabel;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.RadioButton CanWeightThreeDecimalsRadioButton;

@@ -145,7 +145,19 @@ namespace ReloadersWorkShop
 				FirearmAccessoriesShowAllCheckBox.Checked = true;
 				FirearmAccessoriesShowAllCheckBox.Click += OnFirearmAccessoriesShowAllClicked;
 
+				FirearmAccessoriesShowGroupsCheckBox.Checked = true;
+				FirearmAccessoriesShowGroupsCheckBox.Click += OnFirearmAccessoriesShowGroupsClicked;
+
 				FirearmAccessoryAttachButton.Click += OnFirearmAccessoryAttachClicked;
+
+				FirearmsScopeFilterCheckBox.Click += OnFirearmFilterClicked;
+				FirearmsRedDotFilterCheckBox.Click += OnFirearmFilterClicked;
+				FirearmsLightFilterCheckBox.Click += OnFirearmFilterClicked;
+				FirearmsTriggerFilterCheckBox.Click += OnFirearmFilterClicked;
+				FirearmsFurnitureFilterCheckBox.Click += OnFirearmFilterClicked;
+				FirearmsBipodFilterCheckBox.Click += OnFirearmFilterClicked;
+				FirearmsPartsFilterCheckBox.Click += OnFirearmFilterClicked;
+				FirearmsOtherFilterCheckBox.Click += OnFirearmFilterClicked;
 				}
 
 			//----------------------------------------------------------------------------*
@@ -359,6 +371,18 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// OnFirearmAccessoriesShowGroupsClicked()
+		//============================================================================*
+
+		protected void OnFirearmAccessoriesShowGroupsClicked(object sender, EventArgs args)
+			{
+			m_FirearmAccessoriesListView.ShowGroups = FirearmAccessoriesShowGroupsCheckBox.Checked;
+			m_FirearmAccessoriesListView.Populate();
+
+			UpdateFirearmTabButtons();
+			}
+
+		//============================================================================*
 		// OnFirearmAccessoryAttachClicked()
 		//============================================================================*
 
@@ -546,7 +570,51 @@ namespace ReloadersWorkShop
 				m_DataFiles.Preferences.LastFirearmSelected = Firearm;
 				}
 
-			m_FirearmAccessoriesListView.Firearm = !FirearmAccessoriesShowAllCheckBox.Checked ?  Firearm : null;
+			m_FirearmAccessoriesListView.Firearm = !FirearmAccessoriesShowAllCheckBox.Checked ? Firearm : null;
+
+			UpdateFirearmTabButtons();
+			}
+
+		//============================================================================*
+		// OnFirearmFilterClicked()
+		//============================================================================*
+
+		protected void OnFirearmFilterClicked(object sender, EventArgs args)
+			{
+			switch ((sender as CheckBox).Name)
+				{
+				case "FirearmsScopeFilterCheckBox":
+					m_FirearmAccessoriesListView.Filter( cGear.eGearTypes.Scope, (sender as CheckBox).Checked);
+						break;
+
+				case "FirearmsRedDotFilterCheckBox":
+					m_FirearmAccessoriesListView.Filter(cGear.eGearTypes.RedDot, (sender as CheckBox).Checked);
+					break;
+
+				case "FirearmsLightFilterCheckBox":
+					m_FirearmAccessoriesListView.Filter(cGear.eGearTypes.Light, (sender as CheckBox).Checked);
+					break;
+
+				case "FirearmsTriggerFilterCheckBox":
+					m_FirearmAccessoriesListView.Filter(cGear.eGearTypes.Trigger, (sender as CheckBox).Checked);
+					break;
+
+				case "FirearmsFurnitureFilterCheckBox":
+					m_FirearmAccessoriesListView.Filter(cGear.eGearTypes.Furniture, (sender as CheckBox).Checked);
+					break;
+
+				case "FirearmsBipodFilterCheckBox":
+					m_FirearmAccessoriesListView.Filter(cGear.eGearTypes.Bipod, (sender as CheckBox).Checked);
+					break;
+
+				case "FirearmsPartsFilterCheckBox":
+					m_FirearmAccessoriesListView.Filter(cGear.eGearTypes.Parts, (sender as CheckBox).Checked);
+					break;
+
+				case "FirearmsOtherFilterCheckBox":
+					m_FirearmAccessoriesListView.Filter(cGear.eGearTypes.Misc, (sender as CheckBox).Checked);
+					break;
+				}
 
 			UpdateFirearmTabButtons();
 			}
@@ -743,18 +811,24 @@ namespace ReloadersWorkShop
 			double dTotalTaxes = 0.0;
 			double dTotalShipping = 0.0;
 			double dAccessoryTotalCost = 0.0;
+			double dGrandTotal = 0.0;
 
 			if (Firearm != null)
 				{
 				dFirearmCost = Firearm.PurchasePrice;
+				dTotalTaxes = Firearm.Tax;
+				dTotalShipping = Firearm.Shipping;
 
-				dTotalCost += dFirearmCost;
+				dTotalCost = dFirearmCost;
 
 				foreach (cGear Gear in m_DataFiles.GearList)
 					{
 					if (Gear.Parent != null && Gear.Parent.CompareTo(Firearm) == 0)
 						{
 						dAccessoryTotalCost += Gear.PurchasePrice;
+
+						dTotalTaxes += Gear.Tax;
+						dTotalShipping += Gear.Shipping;
 						}
 					}
 
@@ -765,7 +839,12 @@ namespace ReloadersWorkShop
 			FirearmAccessoryCostLabel.Text = String.Format("{0:F2}", dAccessoryTotalCost);
 
 			FirearmTotalCostsLabel.Text = string.Format("{0:F2}", dTotalCost);
-			FirearmGrandTotalLabel.Text = string.Format("{0}{1:F2}", m_DataFiles.Preferences.Currency, dTotalCost + dTotalTaxes + dTotalShipping);
+			FirearmTotalTaxesLabel.Text = string.Format("{0:F2}", dTotalTaxes);
+			FirearmTotalShippingLabel.Text = string.Format("{0:F2}", dTotalShipping);
+
+			dGrandTotal += dTotalCost + dTotalTaxes + dTotalShipping;
+
+			FirearmGrandTotalLabel.Text = string.Format("{0}{1:F2}", m_DataFiles.Preferences.Currency, dGrandTotal);
 			}
 
 		//============================================================================*

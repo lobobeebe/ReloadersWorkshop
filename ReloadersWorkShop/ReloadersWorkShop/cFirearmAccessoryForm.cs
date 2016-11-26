@@ -60,6 +60,8 @@ namespace ReloadersWorkShop
 		private bool m_fInitialized = false;
 		private bool m_fPopulating = false;
 
+		private bool m_fUserTax = false;
+
 		private cDataFiles m_DataFiles = null;
 		private cGear m_Gear = null;
 
@@ -125,6 +127,8 @@ namespace ReloadersWorkShop
 				SourceCombo.TextChanged += OnSourceChanged;
 				PurchaseDatePicker.ValueChanged += OnPurchaseDateChanged;
 				PriceTextBox.TextChanged += OnPriceChanged;
+				TaxTextBox.TextChanged += OnTaxChanged;
+				ShippingTextBox.TextChanged += OnShippingChanged;
 
 				// Scope Details
 
@@ -196,6 +200,8 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 			// Set Gear Data Fields
 			//----------------------------------------------------------------------------*
+
+			SetInputParameters();
 
 			SetStaticToolTips();
 
@@ -300,6 +306,15 @@ namespace ReloadersWorkShop
 
 			m_Gear.PurchasePrice = PriceTextBox.Value;
 
+			if (m_DataFiles.Preferences.TaxRate != 0.0 && !m_fUserTax)
+				{
+				m_Gear.Tax = m_Gear.PurchasePrice * (m_DataFiles.Preferences.TaxRate / 100.0);
+
+				TaxTextBox.Value = m_Gear.Tax;
+				}
+
+			SetTotal();
+
 			m_fChanged = true;
 
 			UpdateButtons();
@@ -314,7 +329,14 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_Gear.PurchaseDate = PurchaseDatePicker.Value;
+			try
+				{
+				m_Gear.PurchaseDate = PurchaseDatePicker.Value;
+				}
+			catch
+				{
+				m_Gear.PurchaseDate = DateTime.Today;
+				}
 
 			m_fChanged = true;
 
@@ -418,6 +440,24 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// OnShippingChanged()
+		//============================================================================*
+
+		public void OnShippingChanged(Object sender, EventArgs args)
+			{
+			if (!m_fInitialized || m_fPopulating)
+				return;
+
+			m_Gear.Shipping = ShippingTextBox.Value;
+
+			SetTotal();
+
+			m_fChanged = true;
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
 		// OnSourceChanged()
 		//============================================================================*
 
@@ -427,6 +467,26 @@ namespace ReloadersWorkShop
 				return;
 
 			m_Gear.Source = SourceCombo.Text;
+
+			m_fChanged = true;
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
+		// OnTaxChanged()
+		//============================================================================*
+
+		public void OnTaxChanged(Object sender, EventArgs args)
+			{
+			if (!m_fInitialized || m_fPopulating)
+				return;
+
+			m_Gear.Tax = TaxTextBox.Value;
+
+			m_fUserTax = true;
+
+			SetTotal();
 
 			m_fChanged = true;
 
@@ -502,8 +562,25 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			SourceCombo.Text = m_Gear.Source;
-			PurchaseDatePicker.Value = m_Gear.PurchaseDate;
+
+			try
+				{
+				PurchaseDatePicker.Value = m_Gear.PurchaseDate;
+				}
+			catch
+				{
+				PurchaseDatePicker.Value = DateTime.Today;
+
+				m_Gear.PurchaseDate = PurchaseDatePicker.Value;
+
+				m_fChanged = true;
+				}
+
 			PriceTextBox.Value = m_Gear.PurchasePrice;
+			TaxTextBox.Value = m_Gear.Tax;
+			ShippingTextBox.Value = m_Gear.Shipping;
+
+			SetTotal();
 
 			//----------------------------------------------------------------------------*
 			// Gear Specific Details
@@ -773,7 +850,14 @@ namespace ReloadersWorkShop
 			ScopeObjectiveTextBox.MaxLength = 5;
 			ScopeObjectiveTextBox.ValidChars = "0123456789.";
 
+			cDataFiles.SetInputParameters(PriceTextBox, cDataFiles.eDataType.Cost);
+			cDataFiles.SetInputParameters(TaxTextBox, cDataFiles.eDataType.Cost);
+			cDataFiles.SetInputParameters(ShippingTextBox, cDataFiles.eDataType.Cost);
+
 			PriceLabel.Text = String.Format("Price ({0}):", m_DataFiles.Preferences.Currency);
+			TaxLabel.Text = String.Format("Tax ({0}):", m_DataFiles.Preferences.Currency);
+			ShippingLabel.Text = String.Format("Shipping ({0}):", m_DataFiles.Preferences.Currency);
+
 
 			cDataFiles.SetInputParameters(PriceTextBox, cDataFiles.eDataType.Cost);
 			}
@@ -837,6 +921,15 @@ namespace ReloadersWorkShop
 			m_CancelButtonToolTip.ShowAlways = true;
 			m_CancelButtonToolTip.RemoveAll();
 			m_CancelButtonToolTip.SetToolTip(FormCancelButton, m_fViewOnly ? cm_strCloseButtonToolTip : cm_strCancelButtonToolTip);
+			}
+
+		//============================================================================*
+		// SetTotal()
+		//============================================================================*
+
+		private void SetTotal()
+			{
+			TotalLabel.Text = String.Format("{0:F2}", m_Gear.PurchasePrice + m_Gear.Tax + m_Gear.Shipping);
 			}
 
 		//============================================================================*

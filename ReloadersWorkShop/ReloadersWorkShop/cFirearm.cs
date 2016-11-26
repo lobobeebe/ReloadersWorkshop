@@ -1052,13 +1052,20 @@ namespace ReloadersWorkShop
 				{
 				case eFireArmType.Handgun:
 					Description = "Handgun";
+
+					if (PrimaryCaliber != null)
+						Description = PrimaryCaliber.Pistol ? "Pistol" : "Revolver";
+
 					break;
+
 				case eFireArmType.Rifle:
 					Description = "Rifle";
 					break;
+
 				case eFireArmType.Shotgun:
 					Description = "Shotgun";
 					break;
+
 				default:
 					Description = "Other Firearm Type";
 					break;

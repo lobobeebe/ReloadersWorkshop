@@ -61,13 +61,15 @@ namespace ReloadersWorkShop
 			ManufacturersCheckBox.Click += OnFilterClicked;
 			CalibersCheckBox.Click += OnFilterClicked;
 			FirearmsCheckBox.Click += OnFilterClicked;
-			AmmoCheckBox.Click += OnFilterClicked;
+			FirearmPartsCheckBox.Click += OnFilterClicked;
 
+			AmmoCheckBox.Click += OnFilterClicked;
 			BulletsCheckBox.Click += OnFilterClicked;
 			CasesCheckBox.Click += OnFilterClicked;
 			PowdersCheckBox.Click += OnFilterClicked;
 			PrimersCheckBox.Click += OnFilterClicked;
 
+			InventoryCheckBox.Click += OnFilterClicked;
 			BatchTestsCheckBox.Click += OnFilterClicked;
 			ChargeDataCheckBox.Click += OnFilterClicked;
 
@@ -284,17 +286,16 @@ namespace ReloadersWorkShop
 				m_DataFiles.CaliberList.Export(XMLDocument, MainElement);
 
 			if (FirearmsCheckBox.Checked)
-				{
 				m_DataFiles.FirearmList.Export(XMLDocument, MainElement);
 
+			if (FirearmPartsCheckBox.Checked)
 				m_DataFiles.GearList.Export(XMLDocument, MainElement);
-				}
 
 			if (AmmoCheckBox.Checked)
 				m_DataFiles.AmmoList.Export(XMLDocument, MainElement);
 
 			if (BulletsCheckBox.Checked)
-				m_DataFiles.BulletList.Export(XMLDocument, MainElement);
+				m_DataFiles.BulletList.Export(XMLDocument, MainElement, InventoryCheckBox.Checked);
 
 			if (PowdersCheckBox.Checked)
 				m_DataFiles.PowderList.Export(XMLDocument, MainElement);

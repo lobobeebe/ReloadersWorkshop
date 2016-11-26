@@ -10,7 +10,7 @@
 //============================================================================*
 
 using System;
-using System.Collections;
+using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -302,6 +302,63 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// CSVHeader Property
+		//============================================================================*
+
+		public static string CSVHeader
+			{
+			get
+				{
+				return ("Transactions");
+				}
+			}
+
+		//============================================================================*
+		// CSVLine Property
+		//============================================================================*
+
+		public string CSVLine
+			{
+			get
+				{
+				string strLine = "";
+
+				strLine += cTransaction.TransactionTypeString(m_eTransactionType);
+
+				strLine += m_strSource;
+				strLine += m_Date.ToShortDateString();
+
+				strLine += m_dQuantity;
+				strLine += m_dCost;
+				strLine += m_dTax;
+				strLine += m_dShipping;
+
+				strLine += m_nBatchID;
+
+				strLine += m_fArchived ? "Yes" : "-";
+				strLine += m_fChecked ? "Yes" : "-";
+				strLine += m_fApplyTax ? "Yes" : "-";
+				strLine += m_fAutoTrans ? "Yes" : "-";
+
+				return (strLine);
+				}
+			}
+
+		//============================================================================*
+		// CSVLineHeader Property
+		//============================================================================*
+
+		public static string CSVLineHeader
+			{
+			get
+				{
+				string strLine = "Transaction Type,Source,Date,Quantity,Cost,Tax,Shipping,Batch ID,Archived,Checked,Apply Tax,Auto Trans";
+
+				return (strLine);
+				}
+			}
+
+		//============================================================================*
 		// Date Property
 		//============================================================================*
 
@@ -309,6 +366,112 @@ namespace ReloadersWorkShop
 			{
 			get { return (m_Date); }
 			set { m_Date = value; }
+			}
+
+		//============================================================================*
+		// Export()
+		//============================================================================*
+
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			XmlElement XMLThisElement = XMLDocument.CreateElement("InventoryTransaction");
+			XMLParentElement.AppendChild(XMLThisElement);
+
+			// Transaction Type
+
+			XmlElement XMLElement = XMLDocument.CreateElement("TransactionType");
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(cTransaction.TransactionTypeString(m_eTransactionType));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Source
+
+			XMLElement = XMLDocument.CreateElement("Source");
+			XMLTextElement = XMLDocument.CreateTextNode(m_strSource);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Date
+
+			XMLElement = XMLDocument.CreateElement("Date");
+			XMLTextElement = XMLDocument.CreateTextNode(m_Date.ToShortDateString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Quantity
+
+			XMLElement = XMLDocument.CreateElement("Qty");
+			XMLTextElement = XMLDocument.CreateTextNode(m_dQuantity.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Cost
+
+			XMLElement = XMLDocument.CreateElement("Cost");
+			XMLTextElement = XMLDocument.CreateTextNode(m_dCost.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Tax
+
+			XMLElement = XMLDocument.CreateElement("Tax");
+			XMLTextElement = XMLDocument.CreateTextNode(m_dTax.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Shipping
+
+			XMLElement = XMLDocument.CreateElement("Shipping");
+			XMLTextElement = XMLDocument.CreateTextNode(m_dShipping.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// BatchID
+
+			XMLElement = XMLDocument.CreateElement("BatchID");
+			XMLTextElement = XMLDocument.CreateTextNode(m_nBatchID.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Archived
+
+			XMLElement = XMLDocument.CreateElement("Archived");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fArchived ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Checked
+
+			XMLElement = XMLDocument.CreateElement("Checked");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fChecked ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// ApplyTax
+
+			XMLElement = XMLDocument.CreateElement("ApplyTax");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fApplyTax ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// AutoTrans
+
+			XMLElement = XMLDocument.CreateElement("AutoTrans");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fAutoTrans ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
 			}
 
 		//============================================================================*

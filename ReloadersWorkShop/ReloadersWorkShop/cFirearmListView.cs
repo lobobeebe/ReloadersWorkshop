@@ -41,7 +41,10 @@ namespace ReloadersWorkShop
 			new cListViewColumn(4, "CaliberHeader", "Primary Caliber", HorizontalAlignment.Left, 160),
 			new cListViewColumn(5, "SourceHeader", "Acquired from", HorizontalAlignment.Left, 200),
 			new cListViewColumn(6, "DateHeader", "Date", HorizontalAlignment.Left, 100),
-			new cListViewColumn(7, "PriceHeader", "Price", HorizontalAlignment.Right, 80)
+			new cListViewColumn(7, "PriceHeader", "Price", HorizontalAlignment.Right, 80),
+			new cListViewColumn(8, "TaxHeader", "Tax", HorizontalAlignment.Right, 80),
+			new cListViewColumn(9, "ShippingHeader", "Shipping", HorizontalAlignment.Right, 80),
+			new cListViewColumn(10, "TotalHeader", "Total", HorizontalAlignment.Right, 80)
 			};
 
 		//============================================================================*
@@ -192,6 +195,9 @@ namespace ReloadersWorkShop
 		public void SetColumns()
 			{
 			m_arColumns[7].Text = String.Format("Price ({0})", m_DataFiles.Preferences.Currency);
+			m_arColumns[8].Text = String.Format("Tax ({0})", m_DataFiles.Preferences.Currency);
+			m_arColumns[9].Text = String.Format("Shipping ({0})", m_DataFiles.Preferences.Currency);
+			m_arColumns[10].Text = String.Format("Total ({0})", m_DataFiles.Preferences.Currency);
 
 			PopulateColumns(m_arColumns);
 			}
@@ -232,6 +238,12 @@ namespace ReloadersWorkShop
 			Item.SubItems.Add(String.Format("{0}", Firearm.Source));
 			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source) ? String.Format("{0}", Firearm.PurchaseDate.ToShortDateString()) : "");
 			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source) && Firearm.PurchasePrice !=  0.0 ? String.Format("{0:F2}", Firearm.PurchasePrice) : "-");
+			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source) && Firearm.Tax != 0.0 ? String.Format("{0:F2}", Firearm.Tax) : "-");
+			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source) && Firearm.Shipping != 0.0 ? String.Format("{0:F2}", Firearm.Shipping) : "-");
+
+			double dTotal = Firearm.PurchasePrice + Firearm.Tax + Firearm.Shipping;
+
+			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source) && dTotal != 0.0 ? String.Format("{0:F2}", dTotal) : "-");
 			}
 
 		//============================================================================*

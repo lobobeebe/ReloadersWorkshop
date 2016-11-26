@@ -41,6 +41,13 @@
 			this.TypeCombo = new System.Windows.Forms.ComboBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.AcquisitionGroupBox = new System.Windows.Forms.GroupBox();
+			this.TotalLabel = new System.Windows.Forms.Label();
+			this.label21 = new System.Windows.Forms.Label();
+			this.ShippingTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.ShippingLabel = new System.Windows.Forms.Label();
+			this.TaxTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.TaxLabel = new System.Windows.Forms.Label();
+			this.SourceCombo = new System.Windows.Forms.ComboBox();
 			this.PriceTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			this.PurchaseDatePicker = new System.Windows.Forms.DateTimePicker();
 			this.PriceLabel = new System.Windows.Forms.Label();
@@ -69,7 +76,6 @@
 			this.RedDotBatteryTextBox = new CommonLib.Controls.cTextBox();
 			this.label17 = new System.Windows.Forms.Label();
 			this.label19 = new System.Windows.Forms.Label();
-			this.SourceCombo = new System.Windows.Forms.ComboBox();
 			label18 = new System.Windows.Forms.Label();
 			this.GeneralGroup.SuspendLayout();
 			this.AcquisitionGroupBox.SuspendLayout();
@@ -238,6 +244,12 @@
 			// 
 			// AcquisitionGroupBox
 			// 
+			this.AcquisitionGroupBox.Controls.Add(this.TotalLabel);
+			this.AcquisitionGroupBox.Controls.Add(this.label21);
+			this.AcquisitionGroupBox.Controls.Add(this.ShippingTextBox);
+			this.AcquisitionGroupBox.Controls.Add(this.ShippingLabel);
+			this.AcquisitionGroupBox.Controls.Add(this.TaxTextBox);
+			this.AcquisitionGroupBox.Controls.Add(this.TaxLabel);
 			this.AcquisitionGroupBox.Controls.Add(this.SourceCombo);
 			this.AcquisitionGroupBox.Controls.Add(this.PriceTextBox);
 			this.AcquisitionGroupBox.Controls.Add(this.PurchaseDatePicker);
@@ -248,10 +260,99 @@
 			this.AcquisitionGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
 			this.AcquisitionGroupBox.Location = new System.Drawing.Point(12, 188);
 			this.AcquisitionGroupBox.Name = "AcquisitionGroupBox";
-			this.AcquisitionGroupBox.Size = new System.Drawing.Size(339, 83);
+			this.AcquisitionGroupBox.Size = new System.Drawing.Size(339, 160);
 			this.AcquisitionGroupBox.TabIndex = 1;
 			this.AcquisitionGroupBox.TabStop = false;
 			this.AcquisitionGroupBox.Text = "Acquisition Details";
+			// 
+			// TotalLabel
+			// 
+			this.TotalLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TotalLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.TotalLabel.Location = new System.Drawing.Point(257, 130);
+			this.TotalLabel.Name = "TotalLabel";
+			this.TotalLabel.Size = new System.Drawing.Size(72, 20);
+			this.TotalLabel.TabIndex = 11;
+			this.TotalLabel.Text = "0.00";
+			this.TotalLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// label21
+			// 
+			this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label21.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label21.Location = new System.Drawing.Point(195, 132);
+			this.label21.Name = "label21";
+			this.label21.Size = new System.Drawing.Size(56, 13);
+			this.label21.TabIndex = 10;
+			this.label21.Text = "Total:";
+			this.label21.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// ShippingTextBox
+			// 
+			this.ShippingTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.ShippingTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ShippingTextBox.Location = new System.Drawing.Point(281, 102);
+			this.ShippingTextBox.MaxValue = 0D;
+			this.ShippingTextBox.MinValue = 0D;
+			this.ShippingTextBox.Name = "ShippingTextBox";
+			this.ShippingTextBox.NumDecimals = 0;
+			this.ShippingTextBox.Size = new System.Drawing.Size(48, 20);
+			this.ShippingTextBox.TabIndex = 4;
+			this.ShippingTextBox.Text = "0";
+			this.ShippingTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.ShippingTextBox.ToolTip = "";
+			this.ShippingTextBox.Value = 0D;
+			this.ShippingTextBox.ZeroAllowed = true;
+			// 
+			// ShippingLabel
+			// 
+			this.ShippingLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ShippingLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.ShippingLabel.Location = new System.Drawing.Point(200, 105);
+			this.ShippingLabel.Name = "ShippingLabel";
+			this.ShippingLabel.Size = new System.Drawing.Size(75, 13);
+			this.ShippingLabel.TabIndex = 9;
+			this.ShippingLabel.Text = "Shipping ($):";
+			this.ShippingLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// TaxTextBox
+			// 
+			this.TaxTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.TaxTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TaxTextBox.Location = new System.Drawing.Point(281, 76);
+			this.TaxTextBox.MaxValue = 0D;
+			this.TaxTextBox.MinValue = 0D;
+			this.TaxTextBox.Name = "TaxTextBox";
+			this.TaxTextBox.NumDecimals = 0;
+			this.TaxTextBox.Size = new System.Drawing.Size(48, 20);
+			this.TaxTextBox.TabIndex = 3;
+			this.TaxTextBox.Text = "0";
+			this.TaxTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.TaxTextBox.ToolTip = "";
+			this.TaxTextBox.Value = 0D;
+			this.TaxTextBox.ZeroAllowed = true;
+			// 
+			// TaxLabel
+			// 
+			this.TaxLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TaxLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.TaxLabel.Location = new System.Drawing.Point(219, 79);
+			this.TaxLabel.Name = "TaxLabel";
+			this.TaxLabel.Size = new System.Drawing.Size(56, 13);
+			this.TaxLabel.TabIndex = 7;
+			this.TaxLabel.Text = "Tax ($):";
+			this.TaxLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// SourceCombo
+			// 
+			this.SourceCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+			this.SourceCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+			this.SourceCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.SourceCombo.FormattingEnabled = true;
+			this.SourceCombo.Location = new System.Drawing.Point(107, 24);
+			this.SourceCombo.Name = "SourceCombo";
+			this.SourceCombo.Size = new System.Drawing.Size(222, 21);
+			this.SourceCombo.TabIndex = 0;
 			// 
 			// PriceTextBox
 			// 
@@ -287,7 +388,7 @@
 			this.PriceLabel.Name = "PriceLabel";
 			this.PriceLabel.Size = new System.Drawing.Size(56, 13);
 			this.PriceLabel.TabIndex = 4;
-			this.PriceLabel.Text = "Price:";
+			this.PriceLabel.Text = "Price ($):";
 			this.PriceLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
 			// 
 			// label9
@@ -315,7 +416,7 @@
 			// OKButton
 			// 
 			this.OKButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.OKButton.Location = new System.Drawing.Point(85, 291);
+			this.OKButton.Location = new System.Drawing.Point(85, 364);
 			this.OKButton.Name = "OKButton";
 			this.OKButton.Size = new System.Drawing.Size(75, 23);
 			this.OKButton.TabIndex = 3;
@@ -325,7 +426,7 @@
 			// FormCancelButton
 			// 
 			this.FormCancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.FormCancelButton.Location = new System.Drawing.Point(201, 291);
+			this.FormCancelButton.Location = new System.Drawing.Point(201, 364);
 			this.FormCancelButton.Name = "FormCancelButton";
 			this.FormCancelButton.Size = new System.Drawing.Size(75, 23);
 			this.FormCancelButton.TabIndex = 4;
@@ -623,24 +724,13 @@
 			this.label19.TabIndex = 0;
 			this.label19.Text = "Dot MOA:";
 			// 
-			// SourceCombo
-			// 
-			this.SourceCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-			this.SourceCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-			this.SourceCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.SourceCombo.FormattingEnabled = true;
-			this.SourceCombo.Location = new System.Drawing.Point(107, 24);
-			this.SourceCombo.Name = "SourceCombo";
-			this.SourceCombo.Size = new System.Drawing.Size(222, 21);
-			this.SourceCombo.TabIndex = 5;
-			// 
 			// cFirearmAccessoryForm
 			// 
 			this.AcceptButton = this.OKButton;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.FormCancelButton;
-			this.ClientSize = new System.Drawing.Size(750, 321);
+			this.ClientSize = new System.Drawing.Size(742, 403);
 			this.ControlBox = false;
 			this.Controls.Add(this.RedDotDetailsGroupBox);
 			this.Controls.Add(this.ScopeDetailsGroupBox);
@@ -711,5 +801,11 @@
 		private System.Windows.Forms.Label label17;
 		private System.Windows.Forms.Label label19;
 		private System.Windows.Forms.ComboBox SourceCombo;
+		private System.Windows.Forms.Label TotalLabel;
+		private System.Windows.Forms.Label label21;
+		private CommonLib.Controls.cDoubleValueTextBox ShippingTextBox;
+		private System.Windows.Forms.Label ShippingLabel;
+		private CommonLib.Controls.cDoubleValueTextBox TaxTextBox;
+		private System.Windows.Forms.Label TaxLabel;
 		}
 	}

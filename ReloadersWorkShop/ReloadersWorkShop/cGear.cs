@@ -55,8 +55,10 @@ namespace ReloadersWorkShop
 		private string m_strDescription = "";
 
 		private string m_strSource = "";
-		private DateTime m_PurchaseDate = DateTime.Today;
-		private double m_dPurchasePrice = 0.0;
+		private DateTime m_Date = DateTime.Today;
+		private double m_dPrice = 0.0;
+		private double m_dTax = 0.0;
+		private double m_dShipping = 0.0;
 
 		private cGear m_Parent = null;
 
@@ -176,8 +178,10 @@ namespace ReloadersWorkShop
 			m_strDescription = Gear.m_strDescription;
 
 			m_strSource = Gear.m_strSource;
-			m_PurchaseDate = Gear.PurchaseDate;
-			m_dPurchasePrice = Gear.m_dPurchasePrice;
+			m_Date = Gear.PurchaseDate;
+			m_dPrice = Gear.m_dPrice;
+			m_dTax = Gear.m_dTax;
+			m_dShipping = Gear.m_dShipping;
 			}
 
 		//============================================================================*
@@ -186,13 +190,7 @@ namespace ReloadersWorkShop
 
 		public static string CSVHeader(cGear.eGearTypes eType)
 			{
-			switch (eType)
-				{
-				case eGearTypes.Scope:
-					return ("Scope");
-				}
-
-			return ("Other Firearm Accessory");
+			return (cGear.GearTypeString(eType));
 			}
 
 		//============================================================================*
@@ -227,9 +225,13 @@ namespace ReloadersWorkShop
 				strLine += ",";
 				strLine += m_strSource;
 				strLine += ",";
-				strLine += m_PurchaseDate.ToShortDateString();
+				strLine += m_Date.ToShortDateString();
 				strLine += ",";
-				strLine += m_dPurchasePrice;
+				strLine += m_dPrice;
+				strLine += ",";
+				strLine += m_dTax;
+				strLine += ",";
+				strLine += m_dShipping;
 
 				switch (m_eType)
 					{
@@ -262,7 +264,7 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				string strLine = "Gear Type,Manufacturer,Part Number,Serial Number,Description,Acquired From,Purchase Date,Purchase Price";
+				string strLine = "Gear Type,Manufacturer,Part Number,Serial Number,Description,Acquired From,Purchase Date,Purchase Price,Tax,Shipping";
 
 				switch (m_eType)
 					{
@@ -355,7 +357,7 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			XMLElement = XMLDocument.CreateElement("PurchaseDate");
-			XMLTextElement = XMLDocument.CreateTextNode(m_PurchaseDate.ToShortDateString());
+			XMLTextElement = XMLDocument.CreateTextNode(m_Date.ToShortDateString());
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
@@ -365,7 +367,7 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			XMLElement = XMLDocument.CreateElement("PurchasePrice");
-			XMLTextElement = XMLDocument.CreateTextNode(m_dPurchasePrice.ToString());
+			XMLTextElement = XMLDocument.CreateTextNode(m_dPrice.ToString());
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
@@ -445,48 +447,34 @@ namespace ReloadersWorkShop
 
 		public static string GearTypeString(eGearTypes eGearType)
 			{
-			string strTypeString = "";
-
 			switch (eGearType)
 				{
 				case cGear.eGearTypes.Firearm:
-					strTypeString = "Firearm";
-					break;
+					return("Firearm");
 
 				case cGear.eGearTypes.Scope:
-					strTypeString = "Scope";
-					break;
+					return ("Scope");
 
 				case cGear.eGearTypes.RedDot:
-					strTypeString = "Red Dot";
-					break;
+					return ("Red Dot");
 
 				case cGear.eGearTypes.Light:
-					strTypeString = "Laser/Light";
-					break;
+					return("Laser/Light");
 
 				case cGear.eGearTypes.Trigger:
-					strTypeString = "Trigger";
-					break;
+					return ("Trigger");
 
 				case cGear.eGearTypes.Furniture:
-					strTypeString = "Furniture";
-					break;
+					return ("Furniture");
 
 				case cGear.eGearTypes.Bipod:
-					strTypeString = "Bipod/Monopod";
-					break;
+					return("Bipod/Monopod");
 
 				case cGear.eGearTypes.Parts:
-					strTypeString = "Firearm Parts";
-					break;
-
-				default:
-					strTypeString = "Other Firearm Part/Accessory";
-					break;
+					return ("Firearm Parts");
 				}
 
-			return (strTypeString);
+			return ("Other Part/Accessory");
 			}
 
 		//============================================================================*
@@ -545,11 +533,11 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				return (m_PurchaseDate);
+				return (m_Date);
 				}
 			set
 				{
-				m_PurchaseDate = value;
+				m_Date = value;
 				}
 			}
 
@@ -561,11 +549,11 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				return (m_dPurchasePrice);
+				return (m_dPrice);
 				}
 			set
 				{
-				m_dPurchasePrice = value;
+				m_dPrice = value;
 				}
 			}
 
@@ -595,6 +583,22 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Shipping Property
+		//============================================================================*
+
+		public double Shipping
+			{
+			get
+				{
+				return (m_dShipping);
+				}
+			set
+				{
+				m_dShipping = value;
+				}
+			}
+
+		//============================================================================*
 		// Source Property
 		//============================================================================*
 
@@ -611,12 +615,50 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Synch() - Firearm
+		//============================================================================*
+
+		public virtual bool Firearm(cFirearm Firearm)
+			{
+			if (Firearm == null || Parent == null)
+				return (false);
+
+			if (CompareTo(Firearm) == 0)
+				{
+				m_Parent = Firearm;
+
+				return (true);
+				}
+
+			return (false);
+			}
+
+		//============================================================================*
+		// Synch() - Gear
+		//============================================================================*
+
+		public virtual bool Synch(cGear Gear)
+			{
+			if (Gear == null || Parent == null)
+				return (false);
+
+			if (CompareTo(Gear) == 0)
+				{
+				m_Parent = Gear;
+
+				return (true);
+				}
+
+			return (false);
+			}
+
+		//============================================================================*
 		// Synch() - Manufacturer
 		//============================================================================*
 
 		public virtual bool Synch(cManufacturer Manufacturer)
 			{
-			if (m_Manufacturer == null)
+			if (Manufacturer == null)
 				return (false);
 
 			if (m_Manufacturer.CompareTo(Manufacturer) == 0)
@@ -627,6 +669,22 @@ namespace ReloadersWorkShop
 				}
 
 			return (false);
+			}
+
+		//============================================================================*
+		// Tax Property
+		//============================================================================*
+
+		public double Tax
+			{
+			get
+				{
+				return (m_dTax);
+				}
+			set
+				{
+				m_dTax = value;
+				}
 			}
 		}
 	}

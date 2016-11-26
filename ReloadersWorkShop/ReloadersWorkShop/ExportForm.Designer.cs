@@ -50,6 +50,8 @@
 			this.ManufacturersCheckBox = new System.Windows.Forms.CheckBox();
 			this.ExportButton = new System.Windows.Forms.Button();
 			this.CancelFormButton = new System.Windows.Forms.Button();
+			this.FirearmPartsCheckBox = new System.Windows.Forms.CheckBox();
+			this.InventoryCheckBox = new System.Windows.Forms.CheckBox();
 			this.ExportFileGroupBox.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.SuspendLayout();
@@ -100,6 +102,7 @@
 			this.FileNameTextBox.Size = new System.Drawing.Size(314, 20);
 			this.FileNameTextBox.TabIndex = 3;
 			this.FileNameTextBox.ToolTip = "";
+			this.FileNameTextBox.ValidChars = "";
 			this.FileNameTextBox.Value = "";
 			// 
 			// ExportFileGroupBox
@@ -143,6 +146,8 @@
 			// 
 			// groupBox2
 			// 
+			this.groupBox2.Controls.Add(this.InventoryCheckBox);
+			this.groupBox2.Controls.Add(this.FirearmPartsCheckBox);
 			this.groupBox2.Controls.Add(this.AmmoCheckBox);
 			this.groupBox2.Controls.Add(this.BatchTestsCheckBox);
 			this.groupBox2.Controls.Add(this.BatchesCheckBox);
@@ -159,7 +164,7 @@
 			this.groupBox2.ForeColor = System.Drawing.SystemColors.HotTrack;
 			this.groupBox2.Location = new System.Drawing.Point(12, 103);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(454, 122);
+			this.groupBox2.Size = new System.Drawing.Size(454, 173);
 			this.groupBox2.TabIndex = 5;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Filters";
@@ -171,7 +176,7 @@
 			this.AmmoCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.AmmoCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.AmmoCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.AmmoCheckBox.Location = new System.Drawing.Point(22, 90);
+			this.AmmoCheckBox.Location = new System.Drawing.Point(183, 21);
 			this.AmmoCheckBox.Name = "AmmoCheckBox";
 			this.AmmoCheckBox.Size = new System.Drawing.Size(80, 17);
 			this.AmmoCheckBox.TabIndex = 11;
@@ -185,7 +190,7 @@
 			this.BatchTestsCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.BatchTestsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BatchTestsCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.BatchTestsCheckBox.Location = new System.Drawing.Point(331, 90);
+			this.BatchTestsCheckBox.Location = new System.Drawing.Point(317, 113);
 			this.BatchTestsCheckBox.Name = "BatchTestsCheckBox";
 			this.BatchTestsCheckBox.Size = new System.Drawing.Size(83, 17);
 			this.BatchTestsCheckBox.TabIndex = 10;
@@ -199,7 +204,7 @@
 			this.BatchesCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.BatchesCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BatchesCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.BatchesCheckBox.Location = new System.Drawing.Point(307, 67);
+			this.BatchesCheckBox.Location = new System.Drawing.Point(293, 90);
 			this.BatchesCheckBox.Name = "BatchesCheckBox";
 			this.BatchesCheckBox.Size = new System.Drawing.Size(65, 17);
 			this.BatchesCheckBox.TabIndex = 9;
@@ -213,7 +218,7 @@
 			this.ChargeDataCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.ChargeDataCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.ChargeDataCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.ChargeDataCheckBox.Location = new System.Drawing.Point(331, 44);
+			this.ChargeDataCheckBox.Location = new System.Drawing.Point(317, 67);
 			this.ChargeDataCheckBox.Name = "ChargeDataCheckBox";
 			this.ChargeDataCheckBox.Size = new System.Drawing.Size(86, 17);
 			this.ChargeDataCheckBox.TabIndex = 8;
@@ -227,7 +232,7 @@
 			this.LoadsCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.LoadsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.LoadsCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.LoadsCheckBox.Location = new System.Drawing.Point(307, 21);
+			this.LoadsCheckBox.Location = new System.Drawing.Point(293, 44);
 			this.LoadsCheckBox.Name = "LoadsCheckBox";
 			this.LoadsCheckBox.Size = new System.Drawing.Size(55, 17);
 			this.LoadsCheckBox.TabIndex = 7;
@@ -241,7 +246,7 @@
 			this.PowdersCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.PowdersCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.PowdersCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.PowdersCheckBox.Location = new System.Drawing.Point(183, 44);
+			this.PowdersCheckBox.Location = new System.Drawing.Point(183, 67);
 			this.PowdersCheckBox.Name = "PowdersCheckBox";
 			this.PowdersCheckBox.Size = new System.Drawing.Size(67, 17);
 			this.PowdersCheckBox.TabIndex = 6;
@@ -255,7 +260,7 @@
 			this.PrimersCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.PrimersCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.PrimersCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.PrimersCheckBox.Location = new System.Drawing.Point(183, 67);
+			this.PrimersCheckBox.Location = new System.Drawing.Point(183, 90);
 			this.PrimersCheckBox.Name = "PrimersCheckBox";
 			this.PrimersCheckBox.Size = new System.Drawing.Size(60, 17);
 			this.PrimersCheckBox.TabIndex = 5;
@@ -269,7 +274,7 @@
 			this.CasesCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.CasesCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.CasesCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.CasesCheckBox.Location = new System.Drawing.Point(183, 90);
+			this.CasesCheckBox.Location = new System.Drawing.Point(183, 113);
 			this.CasesCheckBox.Name = "CasesCheckBox";
 			this.CasesCheckBox.Size = new System.Drawing.Size(55, 17);
 			this.CasesCheckBox.TabIndex = 4;
@@ -283,7 +288,7 @@
 			this.BulletsCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.BulletsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BulletsCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.BulletsCheckBox.Location = new System.Drawing.Point(183, 21);
+			this.BulletsCheckBox.Location = new System.Drawing.Point(183, 44);
 			this.BulletsCheckBox.Name = "BulletsCheckBox";
 			this.BulletsCheckBox.Size = new System.Drawing.Size(57, 17);
 			this.BulletsCheckBox.TabIndex = 3;
@@ -336,7 +341,7 @@
 			// 
 			this.ExportButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.ExportButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.ExportButton.Location = new System.Drawing.Point(143, 249);
+			this.ExportButton.Location = new System.Drawing.Point(130, 326);
 			this.ExportButton.Name = "ExportButton";
 			this.ExportButton.Size = new System.Drawing.Size(75, 23);
 			this.ExportButton.TabIndex = 12;
@@ -348,19 +353,47 @@
 			this.CancelFormButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.CancelFormButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.CancelFormButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.CancelFormButton.Location = new System.Drawing.Point(261, 249);
+			this.CancelFormButton.Location = new System.Drawing.Point(248, 326);
 			this.CancelFormButton.Name = "CancelFormButton";
 			this.CancelFormButton.Size = new System.Drawing.Size(75, 23);
 			this.CancelFormButton.TabIndex = 13;
 			this.CancelFormButton.Text = "Done";
 			this.CancelFormButton.UseVisualStyleBackColor = true;
 			// 
+			// FirearmPartsCheckBox
+			// 
+			this.FirearmPartsCheckBox.AutoSize = true;
+			this.FirearmPartsCheckBox.Checked = true;
+			this.FirearmPartsCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.FirearmPartsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmPartsCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmPartsCheckBox.Location = new System.Drawing.Point(22, 90);
+			this.FirearmPartsCheckBox.Name = "FirearmPartsCheckBox";
+			this.FirearmPartsCheckBox.Size = new System.Drawing.Size(150, 17);
+			this.FirearmPartsCheckBox.TabIndex = 12;
+			this.FirearmPartsCheckBox.Text = "Firearm Parts & Accessories";
+			this.FirearmPartsCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// InventoryCheckBox
+			// 
+			this.InventoryCheckBox.AutoSize = true;
+			this.InventoryCheckBox.Checked = true;
+			this.InventoryCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.InventoryCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.InventoryCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.InventoryCheckBox.Location = new System.Drawing.Point(292, 21);
+			this.InventoryCheckBox.Name = "InventoryCheckBox";
+			this.InventoryCheckBox.Size = new System.Drawing.Size(107, 17);
+			this.InventoryCheckBox.TabIndex = 13;
+			this.InventoryCheckBox.Text = "Inventory Activity";
+			this.InventoryCheckBox.UseVisualStyleBackColor = true;
+			// 
 			// cExportForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.CancelFormButton;
-			this.ClientSize = new System.Drawing.Size(466, 269);
+			this.ClientSize = new System.Drawing.Size(462, 361);
 			this.ControlBox = false;
 			this.Controls.Add(this.CancelFormButton);
 			this.Controls.Add(this.groupBox2);
@@ -406,5 +439,7 @@
 		private System.Windows.Forms.Button ExportButton;
 		private System.Windows.Forms.Button CancelFormButton;
 		private System.Windows.Forms.Button BrowseButton;
+		private System.Windows.Forms.CheckBox InventoryCheckBox;
+		private System.Windows.Forms.CheckBox FirearmPartsCheckBox;
 		}
 	}

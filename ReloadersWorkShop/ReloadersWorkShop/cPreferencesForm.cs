@@ -1072,6 +1072,8 @@ namespace ReloadersWorkShop
 		protected void OnTaxRateChanged(object sender, EventArgs args)
 			{
 			m_DataFiles.Preferences.TaxRate = TaxRateTextBox.Value;
+
+			UpdateButtons();
 			}
 
 		//============================================================================*
@@ -1083,6 +1085,8 @@ namespace ReloadersWorkShop
 			ToolTipsCheckBox.Checked = ToolTipsCheckBox.Checked ? false : true;
 
 			m_DataFiles.Preferences.ToolTips = ToolTipsCheckBox.Checked;
+
+			UpdateButtons();
 			}
 
 		//============================================================================*
@@ -1644,11 +1648,6 @@ namespace ReloadersWorkShop
 				IncludeTaxShippingCheckBox.Enabled = true;
 
 				CostCalculationsLabel.Enabled = true;
-
-				TaxRateLabel.Enabled = true;
-				TaxRatePercentLabel.Enabled = true;
-				TaxRateTextBox.Enabled = true;
-				TaxRateTextBox.Value = m_DataFiles.Preferences.TaxRate;
 				}
 			else
 				{
@@ -1665,11 +1664,6 @@ namespace ReloadersWorkShop
 				IncludeTaxShippingCheckBox.Enabled = false;
 
 				CostCalculationsLabel.Enabled = false;
-
-				TaxRateLabel.Enabled = false;
-				TaxRatePercentLabel.Enabled = false;
-				TaxRateTextBox.Enabled = false;
-				TaxRateTextBox.Value = 0.0;
 				}
 
 			//----------------------------------------------------------------------------*

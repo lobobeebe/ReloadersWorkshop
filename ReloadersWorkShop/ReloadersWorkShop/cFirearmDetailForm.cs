@@ -64,6 +64,8 @@ namespace ReloadersWorkShop
 
 		private List<string> m_ImageList = new List<string>();
 
+		private bool m_fUserTax = false;
+
 		//============================================================================*
 		// cFirearmDetailForm() - Constructor
 		//============================================================================*
@@ -95,6 +97,8 @@ namespace ReloadersWorkShop
 				SourceComboBox.TextChanged += OnSourceChanged;
 				PurchaseDateTimePicker.TextChanged += OnPurchaseDateChanged;
 				PriceTextBox.TextChanged += OnPriceChanged;
+				TaxTextBox.TextChanged += OnTaxChanged;
+				ShippingTextBox.TextChanged += OnShippingChanged;
 
 				ReceiverFinishComboBox.TextChanged += OnReceiverFinishChanged;
 				ReceiverFinishComboBox.GotFocus += OnFinishComboGotFocus;
@@ -126,6 +130,8 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			PriceLabel.Text = String.Format("Price ({0}):", m_DataFiles.Preferences.Currency);
+			TaxLabel.Text = String.Format("Tax ({0}):", m_DataFiles.Preferences.Currency);
+			ShippingLabel.Text = String.Format("Shipping ({0}):", m_DataFiles.Preferences.Currency);
 
 			//----------------------------------------------------------------------------*
 			// Verify Firearm Image Info
@@ -169,6 +175,10 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 			// Fill in the firearm data
 			//----------------------------------------------------------------------------*
+
+			cDataFiles.SetInputParameters(PriceTextBox, cDataFiles.eDataType.Cost);
+			cDataFiles.SetInputParameters(TaxTextBox, cDataFiles.eDataType.Cost);
+			cDataFiles.SetInputParameters(ShippingTextBox, cDataFiles.eDataType.Cost);
 
 			PopulateFirearmData();
 
@@ -508,6 +518,15 @@ namespace ReloadersWorkShop
 
 			m_Firearm.PurchasePrice = PriceTextBox.Value;
 
+			if (m_DataFiles.Preferences.TaxRate != 0.0 && !m_fUserTax)
+				{
+				m_Firearm.Tax = m_Firearm.PurchasePrice * (m_DataFiles.Preferences.TaxRate / 100.0);
+
+				TaxTextBox.Value = m_Firearm.Tax;
+				}
+
+			SetTotal();
+
 			m_fChanged = true;
 
 			UpdateButtons();
@@ -522,7 +541,14 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_Firearm.PurchaseDate = PurchaseDateTimePicker.Value;
+			try
+				{
+				m_Firearm.PurchaseDate = PurchaseDateTimePicker.Value;
+				}
+			catch
+				{
+				m_Firearm.PurchaseDate = DateTime.Today;
+				}
 
 			m_fChanged = true;
 
@@ -599,6 +625,24 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// OnShippingChanged()
+		//============================================================================*
+
+		protected void OnShippingChanged(object sender, EventArgs e)
+			{
+			if (!m_fInitialized)
+				return;
+
+			m_Firearm.Shipping = ShippingTextBox.Value;
+
+			SetTotal();
+
+			m_fChanged = true;
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
 		// OnSourceChanged()
 		//============================================================================*
 
@@ -608,6 +652,26 @@ namespace ReloadersWorkShop
 				return;
 
 			m_Firearm.Source = SourceComboBox.Text;
+
+			m_fChanged = true;
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
+		// OnTaxChanged()
+		//============================================================================*
+
+		protected void OnTaxChanged(object sender, EventArgs e)
+			{
+			if (!m_fInitialized)
+				return;
+
+			m_Firearm.Tax = TaxTextBox.Value;
+
+			m_fUserTax = true;
+
+			SetTotal();
 
 			m_fChanged = true;
 
@@ -885,12 +949,24 @@ namespace ReloadersWorkShop
 			// Purchase Data
 			//----------------------------------------------------------------------------*
 
-			if (m_Firearm.PurchaseDate >= PurchaseDateTimePicker.MinDate && m_Firearm.PurchaseDate <= PurchaseDateTimePicker.MaxDate)
+			try
+				{
 				PurchaseDateTimePicker.Value = m_Firearm.PurchaseDate;
-			else
+				}
+			catch
+				{
 				PurchaseDateTimePicker.Value = DateTime.Today;
 
+				m_Firearm.PurchaseDate = DateTime.Today;
+
+				m_fChanged = true;
+				}
+
 			PriceTextBox.Value = m_Firearm.PurchasePrice;
+			TaxTextBox.Value = m_Firearm.Tax;
+			ShippingTextBox.Value = m_Firearm.Shipping;
+
+			SetTotal();
 
 			//----------------------------------------------------------------------------*
 			// Notes
@@ -1090,37 +1166,37 @@ namespace ReloadersWorkShop
 			if (FirearmPictureBox.Image == null)
 				return;
 
-			FirearmPictureBox.Size = new Size(480, 270);
-			FirearmPictureBox.Location = new Point(126, 23);
+			FirearmPictureBox.Size = new Size(576, 295);
+			FirearmPictureBox.Location = new Point(17, 23);
 
 			double dWidth = FirearmPictureBox.Image.Width;
 			double dHeight = FirearmPictureBox.Image.Height;
 
-			if (dWidth > 480.0 || dHeight > 270.0)
+			if (dWidth > 576.0 || dHeight > 295.0)
 				{
-				if (dWidth > 480.0)
+				if (dWidth > 576.0)
 					{
 					dHeight = dHeight / dWidth;
-					dWidth = 480.0;
+					dWidth = 576.0;
 					dHeight *= dWidth;
 
-					if (dHeight > 270.0)
+					if (dHeight > 295.0)
 						{
 						dWidth = dWidth / dHeight;
-						dHeight = 270.0;
+						dHeight = 295.0;
 						dWidth *= dHeight;
 						}
 					}
 				else
 					{
 					dWidth = dWidth / dHeight;
-					dHeight = 270.0;
+					dHeight = 295.0;
 					dWidth *= dHeight;
 
-					if (dWidth > 480.0)
+					if (dWidth > 576.0)
 						{
 						dHeight = dHeight / dWidth;
-						dWidth = 480.0;
+						dWidth = 576.0;
 						dHeight *= dWidth;
 						}
 					}
@@ -1128,7 +1204,7 @@ namespace ReloadersWorkShop
 
 			FirearmPictureBox.Size = new Size((int) dWidth, (int) dHeight);
 
-			FirearmPictureBox.Location = new Point((FirearmImageGroupBox.Width / 2) - (FirearmPictureBox.Width / 2), FirearmPictureBox.Location.Y + 135 - (FirearmPictureBox.Height / 2));
+			FirearmPictureBox.Location = new Point((FirearmImageGroupBox.Width / 2) - (FirearmPictureBox.Width / 2), FirearmPictureBox.Location.Y + 148 - (FirearmPictureBox.Height / 2));
 			}
 
 		//============================================================================*
@@ -1140,6 +1216,15 @@ namespace ReloadersWorkShop
 			if (!m_DataFiles.Preferences.ToolTips)
 				return;
 
+			}
+
+		//============================================================================*
+		// SetTotal()
+		//============================================================================*
+
+		private void SetTotal()
+			{
+			TotalLabel.Text = String.Format("{0:F2}", m_Firearm.PurchasePrice + m_Firearm.Tax + m_Firearm.Shipping);
 			}
 
 		//============================================================================*

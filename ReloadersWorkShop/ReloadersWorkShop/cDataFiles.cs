@@ -4084,6 +4084,13 @@ namespace ReloadersWorkShop
 				Ammo.Synch(Firearm);
 
 			//----------------------------------------------------------------------------*
+			// Gear
+			//----------------------------------------------------------------------------*
+
+			foreach (cGear Gear in m_GearList)
+				Gear.Synch(Firearm);
+
+			//----------------------------------------------------------------------------*
 			// Preferences
 			//----------------------------------------------------------------------------*
 
@@ -4095,6 +4102,16 @@ namespace ReloadersWorkShop
 
 			if (cPreferences.StaticPreferences.LastFirearmSelected != null && cPreferences.StaticPreferences.LastFirearmSelected.CompareTo(Firearm) == 0)
 				cPreferences.StaticPreferences.LastFirearmSelected = Firearm;
+			}
+
+		//============================================================================*
+		// Synch() - Firearm Accessories
+		//============================================================================*
+
+		public void Synch(cGear Gear)
+			{
+			foreach (cGear CheckGear in m_GearList)
+				CheckGear.Synch(Gear);
 			}
 
 		//============================================================================*
@@ -4177,6 +4194,13 @@ namespace ReloadersWorkShop
 
 			foreach (cPowder CheckPowder in m_PowderList)
 				CheckPowder.Synch(Manufacturer);
+
+			//----------------------------------------------------------------------------*
+			// Firearm Accessories
+			//----------------------------------------------------------------------------*
+
+			foreach (cGear CheckGear in m_GearList)
+				CheckGear.Synch(Manufacturer);
 
 			//----------------------------------------------------------------------------*
 			// Preferences

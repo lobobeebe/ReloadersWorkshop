@@ -202,7 +202,6 @@ namespace ReloadersWorkShop
 			this.AdjBCHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.label17 = new System.Windows.Forms.Label();
 			this.MuzzleVelocityMeasurementLabel = new System.Windows.Forms.Label();
-			this.BallisticsMuzzleVelocityTextBox = new CommonLib.Controls.cIntegerValueTextBox();
 			this.BallisticsDatabaseGroupBox = new System.Windows.Forms.GroupBox();
 			this.label2 = new System.Windows.Forms.Label();
 			this.BallisticsResetButton = new System.Windows.Forms.Button();
@@ -228,11 +227,8 @@ namespace ReloadersWorkShop
 			this.TemperatureMeasurementLabel = new System.Windows.Forms.Label();
 			this.label14 = new System.Windows.Forms.Label();
 			this.BallisticsUseDensityAltitudeCheckBox = new System.Windows.Forms.CheckBox();
-			this.BallisticsTemperatureTextBox = new CommonLib.Controls.cIntegerValueTextBox();
 			this.BallisticsDensityAltitudeLabel = new System.Windows.Forms.Label();
 			this.label7 = new System.Windows.Forms.Label();
-			this.BallisticsHumidityTextBox = new CommonLib.Controls.cIntegerValueTextBox();
-			this.BallisticsAltitudeTextBox = new CommonLib.Controls.cIntegerValueTextBox();
 			this.label22 = new System.Windows.Forms.Label();
 			this.AltitudeMeasurementLabel = new System.Windows.Forms.Label();
 			this.label32 = new System.Windows.Forms.Label();
@@ -241,16 +237,11 @@ namespace ReloadersWorkShop
 			this.label30 = new System.Windows.Forms.Label();
 			this.label19 = new System.Windows.Forms.Label();
 			this.label31 = new System.Windows.Forms.Label();
-			this.BallisticsPressureTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			this.WindSpeedMeasurementLabel = new System.Windows.Forms.Label();
-			this.BallisticsWindSpeedTextBox = new CommonLib.Controls.cIntegerValueTextBox();
 			this.CrossWindLabel = new System.Windows.Forms.Label();
 			this.HeadWindLabel = new System.Windows.Forms.Label();
-			this.BallisticsWindDirectionTextBox = new CommonLib.Controls.cIntegerValueTextBox();
-			this.BallisticsTwistTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			this.TwistMeasurementLabel = new System.Windows.Forms.Label();
 			this.label33 = new System.Windows.Forms.Label();
-			this.BallisticsBulletLengthTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			this.BulletLengthMeasurementLabel = new System.Windows.Forms.Label();
 			this.label29 = new System.Windows.Forms.Label();
 			this.ShowReferenceDataCheckBox = new System.Windows.Forms.CheckBox();
@@ -260,23 +251,13 @@ namespace ReloadersWorkShop
 			this.label36 = new System.Windows.Forms.Label();
 			this.label38 = new System.Windows.Forms.Label();
 			this.IncrementMeasurementLabel = new System.Windows.Forms.Label();
-			this.BallisticsIncrementTextBox = new CommonLib.Controls.cIntegerValueTextBox();
 			this.MinRangeMeasurementLabel = new System.Windows.Forms.Label();
-			this.BallisticsMinRangeTextBox = new CommonLib.Controls.cIntegerValueTextBox();
-			this.BallisticsMaxRangeTextBox = new CommonLib.Controls.cIntegerValueTextBox();
 			this.label3 = new System.Windows.Forms.Label();
-			this.BallisticsTargetRangeTextBox = new CommonLib.Controls.cIntegerValueTextBox();
 			this.TargetRangeMeasurementLabel = new System.Windows.Forms.Label();
 			this.BallisticsTurretTypeComboBox = new System.Windows.Forms.ComboBox();
-			this.BallisticsSightHeightTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			this.SightHeightMeasurementLabel = new System.Windows.Forms.Label();
-			this.BallisticsScopeClickTextBox = new CommonLib.Controls.cDoubleValueTextBox();
-			this.BallisticsBCTextBox = new CommonLib.Controls.cDoubleValueTextBox();
-			this.BallisticsZeroRangeTextBox = new CommonLib.Controls.cIntegerValueTextBox();
 			this.ZeroRangeMeasurementLabel = new System.Windows.Forms.Label();
-			this.BallisticsBulletDiameterTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			this.BulletDiameterMeasurementLabel = new System.Windows.Forms.Label();
-			this.BallisticsBulletWeightTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			this.BulletWeightMeasurementLabel = new System.Windows.Forms.Label();
 			this.SaveReferenceBulletButton = new System.Windows.Forms.Button();
 			this.RestoreReferenceBulletButton = new System.Windows.Forms.Button();
@@ -368,6 +349,19 @@ namespace ReloadersWorkShop
 			this.EditFirearmAccessoryButton = new System.Windows.Forms.Button();
 			this.ViewFirearmAccessoryButton = new System.Windows.Forms.Button();
 			this.FirearmsGroupBox = new System.Windows.Forms.GroupBox();
+			this.FirearmCostDetailsGroupBox = new System.Windows.Forms.GroupBox();
+			this.FirearmGrandTotalLabel = new System.Windows.Forms.Label();
+			this.FirearmTotalCostsLabel = new System.Windows.Forms.Label();
+			this.label45 = new System.Windows.Forms.Label();
+			this.label46 = new System.Windows.Forms.Label();
+			this.FirearmTotalShippingLabel = new System.Windows.Forms.Label();
+			this.FirearmTotalTaxesLabel = new System.Windows.Forms.Label();
+			this.label41 = new System.Windows.Forms.Label();
+			this.label42 = new System.Windows.Forms.Label();
+			this.FirearmAccessoryCostLabel = new System.Windows.Forms.Label();
+			this.FirearmCostLabel = new System.Windows.Forms.Label();
+			this.label27 = new System.Windows.Forms.Label();
+			this.label20 = new System.Windows.Forms.Label();
 			this.RemoveFirearmButton = new System.Windows.Forms.Button();
 			this.AddFirearmButton = new System.Windows.Forms.Button();
 			this.FirearmPrintOptionsGroupBox = new System.Windows.Forms.GroupBox();
@@ -396,19 +390,35 @@ namespace ReloadersWorkShop
 			this.radioButton1 = new System.Windows.Forms.RadioButton();
 			this.radioButton2 = new System.Windows.Forms.RadioButton();
 			this.button1 = new System.Windows.Forms.Button();
-			this.FirearmCostDetailsGroupBox = new System.Windows.Forms.GroupBox();
-			this.label20 = new System.Windows.Forms.Label();
-			this.label27 = new System.Windows.Forms.Label();
-			this.FirearmCostLabel = new System.Windows.Forms.Label();
-			this.FirearmAccessoryCostLabel = new System.Windows.Forms.Label();
-			this.FirearmTotalShippingLabel = new System.Windows.Forms.Label();
-			this.FirearmTotalTaxesLabel = new System.Windows.Forms.Label();
-			this.label41 = new System.Windows.Forms.Label();
-			this.label42 = new System.Windows.Forms.Label();
-			this.FirearmGrandTotalLabel = new System.Windows.Forms.Label();
-			this.FirearmTotalCostsLabel = new System.Windows.Forms.Label();
-			this.label45 = new System.Windows.Forms.Label();
-			this.label46 = new System.Windows.Forms.Label();
+			this.BallisticsMuzzleVelocityTextBox = new CommonLib.Controls.cIntegerValueTextBox();
+			this.BallisticsTemperatureTextBox = new CommonLib.Controls.cIntegerValueTextBox();
+			this.BallisticsHumidityTextBox = new CommonLib.Controls.cIntegerValueTextBox();
+			this.BallisticsAltitudeTextBox = new CommonLib.Controls.cIntegerValueTextBox();
+			this.BallisticsPressureTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.BallisticsWindSpeedTextBox = new CommonLib.Controls.cIntegerValueTextBox();
+			this.BallisticsWindDirectionTextBox = new CommonLib.Controls.cIntegerValueTextBox();
+			this.BallisticsTwistTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.BallisticsBulletLengthTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.BallisticsIncrementTextBox = new CommonLib.Controls.cIntegerValueTextBox();
+			this.BallisticsMinRangeTextBox = new CommonLib.Controls.cIntegerValueTextBox();
+			this.BallisticsMaxRangeTextBox = new CommonLib.Controls.cIntegerValueTextBox();
+			this.BallisticsTargetRangeTextBox = new CommonLib.Controls.cIntegerValueTextBox();
+			this.BallisticsSightHeightTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.BallisticsScopeClickTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.BallisticsBCTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.BallisticsZeroRangeTextBox = new CommonLib.Controls.cIntegerValueTextBox();
+			this.BallisticsBulletDiameterTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.BallisticsBulletWeightTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.FirearmAccessoriesShowGroupsCheckBox = new System.Windows.Forms.CheckBox();
+			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.FirearmsRedDotFilterCheckBox = new System.Windows.Forms.CheckBox();
+			this.FirearmsScopeFilterCheckBox = new System.Windows.Forms.CheckBox();
+			this.FirearmsLightFilterCheckBox = new System.Windows.Forms.CheckBox();
+			this.FirearmsTriggerFilterCheckBox = new System.Windows.Forms.CheckBox();
+			this.FirearmsFurnitureFilterCheckBox = new System.Windows.Forms.CheckBox();
+			this.FirearmsBipodFilterCheckBox = new System.Windows.Forms.CheckBox();
+			this.FirearmsPartsFilterCheckBox = new System.Windows.Forms.CheckBox();
+			this.FirearmsOtherFilterCheckBox = new System.Windows.Forms.CheckBox();
 			this.LoadDataFirearmTypeCombo = new ReloadersWorkShop.Controls.cFirearmTypeCombo();
 			this.BatchFirearmTypeCombo = new ReloadersWorkShop.Controls.cFirearmTypeCombo();
 			this.BallisticsFirearmTypeCombo = new ReloadersWorkShop.Controls.cFirearmTypeCombo();
@@ -452,11 +462,12 @@ namespace ReloadersWorkShop
 			this.FirearmAccessoriesGroupBox.SuspendLayout();
 			this.FirearmAccessoriesActionsGroupBox.SuspendLayout();
 			this.FirearmsGroupBox.SuspendLayout();
+			this.FirearmCostDetailsGroupBox.SuspendLayout();
 			this.FirearmPrintOptionsGroupBox.SuspendLayout();
 			this.CalibersTab.SuspendLayout();
 			this.ManufacturersTab.SuspendLayout();
 			this.MainTabControl.SuspendLayout();
-			this.FirearmCostDetailsGroupBox.SuspendLayout();
+			this.groupBox3.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// label54
@@ -1791,22 +1802,6 @@ namespace ReloadersWorkShop
 			this.MuzzleVelocityMeasurementLabel.TabIndex = 3;
 			this.MuzzleVelocityMeasurementLabel.Text = "fps";
 			// 
-			// BallisticsMuzzleVelocityTextBox
-			// 
-			this.BallisticsMuzzleVelocityTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.BallisticsMuzzleVelocityTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BallisticsMuzzleVelocityTextBox.Location = new System.Drawing.Point(131, 415);
-			this.BallisticsMuzzleVelocityTextBox.MaxLength = 4;
-			this.BallisticsMuzzleVelocityTextBox.MaxValue = 0;
-			this.BallisticsMuzzleVelocityTextBox.MinValue = 0;
-			this.BallisticsMuzzleVelocityTextBox.Name = "BallisticsMuzzleVelocityTextBox";
-			this.BallisticsMuzzleVelocityTextBox.Required = false;
-			this.BallisticsMuzzleVelocityTextBox.Size = new System.Drawing.Size(42, 20);
-			this.BallisticsMuzzleVelocityTextBox.TabIndex = 0;
-			this.BallisticsMuzzleVelocityTextBox.Text = "0";
-			this.BallisticsMuzzleVelocityTextBox.ToolTip = "";
-			this.BallisticsMuzzleVelocityTextBox.Value = 0;
-			// 
 			// BallisticsDatabaseGroupBox
 			// 
 			this.BallisticsDatabaseGroupBox.BackColor = System.Drawing.SystemColors.Control;
@@ -2200,22 +2195,6 @@ namespace ReloadersWorkShop
 			this.BallisticsUseDensityAltitudeCheckBox.Text = "Use Density Altitude:";
 			this.BallisticsUseDensityAltitudeCheckBox.UseVisualStyleBackColor = true;
 			// 
-			// BallisticsTemperatureTextBox
-			// 
-			this.BallisticsTemperatureTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.BallisticsTemperatureTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BallisticsTemperatureTextBox.Location = new System.Drawing.Point(118, 47);
-			this.BallisticsTemperatureTextBox.MaxLength = 3;
-			this.BallisticsTemperatureTextBox.MaxValue = 120;
-			this.BallisticsTemperatureTextBox.MinValue = 0;
-			this.BallisticsTemperatureTextBox.Name = "BallisticsTemperatureTextBox";
-			this.BallisticsTemperatureTextBox.Required = false;
-			this.BallisticsTemperatureTextBox.Size = new System.Drawing.Size(38, 20);
-			this.BallisticsTemperatureTextBox.TabIndex = 11;
-			this.BallisticsTemperatureTextBox.Text = "59";
-			this.BallisticsTemperatureTextBox.ToolTip = "";
-			this.BallisticsTemperatureTextBox.Value = 59;
-			// 
 			// BallisticsDensityAltitudeLabel
 			// 
 			this.BallisticsDensityAltitudeLabel.AutoSize = true;
@@ -2239,38 +2218,6 @@ namespace ReloadersWorkShop
 			this.label7.Size = new System.Drawing.Size(70, 13);
 			this.label7.TabIndex = 47;
 			this.label7.Text = "Temperature:";
-			// 
-			// BallisticsHumidityTextBox
-			// 
-			this.BallisticsHumidityTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.BallisticsHumidityTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BallisticsHumidityTextBox.Location = new System.Drawing.Point(615, 47);
-			this.BallisticsHumidityTextBox.MaxLength = 3;
-			this.BallisticsHumidityTextBox.MaxValue = 100;
-			this.BallisticsHumidityTextBox.MinValue = 0;
-			this.BallisticsHumidityTextBox.Name = "BallisticsHumidityTextBox";
-			this.BallisticsHumidityTextBox.Required = false;
-			this.BallisticsHumidityTextBox.Size = new System.Drawing.Size(38, 20);
-			this.BallisticsHumidityTextBox.TabIndex = 14;
-			this.BallisticsHumidityTextBox.Text = "0";
-			this.BallisticsHumidityTextBox.ToolTip = "";
-			this.BallisticsHumidityTextBox.Value = 0;
-			// 
-			// BallisticsAltitudeTextBox
-			// 
-			this.BallisticsAltitudeTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.BallisticsAltitudeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BallisticsAltitudeTextBox.Location = new System.Drawing.Point(275, 47);
-			this.BallisticsAltitudeTextBox.MaxLength = 5;
-			this.BallisticsAltitudeTextBox.MaxValue = 15000;
-			this.BallisticsAltitudeTextBox.MinValue = 0;
-			this.BallisticsAltitudeTextBox.Name = "BallisticsAltitudeTextBox";
-			this.BallisticsAltitudeTextBox.Required = false;
-			this.BallisticsAltitudeTextBox.Size = new System.Drawing.Size(38, 20);
-			this.BallisticsAltitudeTextBox.TabIndex = 12;
-			this.BallisticsAltitudeTextBox.Text = "0";
-			this.BallisticsAltitudeTextBox.ToolTip = "";
-			this.BallisticsAltitudeTextBox.Value = 0;
 			// 
 			// label22
 			// 
@@ -2368,23 +2315,6 @@ namespace ReloadersWorkShop
 			this.label31.TabIndex = 9;
 			this.label31.Text = "deg.";
 			// 
-			// BallisticsPressureTextBox
-			// 
-			this.BallisticsPressureTextBox.BackColor = System.Drawing.Color.LightPink;
-			this.BallisticsPressureTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BallisticsPressureTextBox.Location = new System.Drawing.Point(471, 47);
-			this.BallisticsPressureTextBox.MaxLength = 5;
-			this.BallisticsPressureTextBox.MaxValue = 33D;
-			this.BallisticsPressureTextBox.MinValue = 25D;
-			this.BallisticsPressureTextBox.Name = "BallisticsPressureTextBox";
-			this.BallisticsPressureTextBox.NumDecimals = 2;
-			this.BallisticsPressureTextBox.Size = new System.Drawing.Size(42, 20);
-			this.BallisticsPressureTextBox.TabIndex = 13;
-			this.BallisticsPressureTextBox.Text = "0.00";
-			this.BallisticsPressureTextBox.ToolTip = "";
-			this.BallisticsPressureTextBox.Value = 0D;
-			this.BallisticsPressureTextBox.ZeroAllowed = true;
-			// 
 			// WindSpeedMeasurementLabel
 			// 
 			this.WindSpeedMeasurementLabel.AutoSize = true;
@@ -2396,22 +2326,6 @@ namespace ReloadersWorkShop
 			this.WindSpeedMeasurementLabel.Size = new System.Drawing.Size(27, 13);
 			this.WindSpeedMeasurementLabel.TabIndex = 29;
 			this.WindSpeedMeasurementLabel.Text = "mph";
-			// 
-			// BallisticsWindSpeedTextBox
-			// 
-			this.BallisticsWindSpeedTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.BallisticsWindSpeedTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BallisticsWindSpeedTextBox.Location = new System.Drawing.Point(118, 21);
-			this.BallisticsWindSpeedTextBox.MaxLength = 2;
-			this.BallisticsWindSpeedTextBox.MaxValue = 0;
-			this.BallisticsWindSpeedTextBox.MinValue = 0;
-			this.BallisticsWindSpeedTextBox.Name = "BallisticsWindSpeedTextBox";
-			this.BallisticsWindSpeedTextBox.Required = false;
-			this.BallisticsWindSpeedTextBox.Size = new System.Drawing.Size(38, 20);
-			this.BallisticsWindSpeedTextBox.TabIndex = 9;
-			this.BallisticsWindSpeedTextBox.Text = "0";
-			this.BallisticsWindSpeedTextBox.ToolTip = "";
-			this.BallisticsWindSpeedTextBox.Value = 0;
 			// 
 			// CrossWindLabel
 			// 
@@ -2437,40 +2351,6 @@ namespace ReloadersWorkShop
 			this.HeadWindLabel.TabIndex = 45;
 			this.HeadWindLabel.Text = "0";
 			// 
-			// BallisticsWindDirectionTextBox
-			// 
-			this.BallisticsWindDirectionTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.BallisticsWindDirectionTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BallisticsWindDirectionTextBox.Location = new System.Drawing.Point(276, 22);
-			this.BallisticsWindDirectionTextBox.MaxLength = 3;
-			this.BallisticsWindDirectionTextBox.MaxValue = 0;
-			this.BallisticsWindDirectionTextBox.MinValue = 0;
-			this.BallisticsWindDirectionTextBox.Name = "BallisticsWindDirectionTextBox";
-			this.BallisticsWindDirectionTextBox.Required = false;
-			this.BallisticsWindDirectionTextBox.Size = new System.Drawing.Size(38, 20);
-			this.BallisticsWindDirectionTextBox.TabIndex = 10;
-			this.BallisticsWindDirectionTextBox.Text = "0";
-			this.BallisticsWindDirectionTextBox.ToolTip = "";
-			this.BallisticsWindDirectionTextBox.Value = 0;
-			// 
-			// BallisticsTwistTextBox
-			// 
-			this.BallisticsTwistTextBox.BackColor = System.Drawing.Color.LightPink;
-			this.BallisticsTwistTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BallisticsTwistTextBox.Location = new System.Drawing.Point(612, 47);
-			this.BallisticsTwistTextBox.MaxLength = 5;
-			this.BallisticsTwistTextBox.MaxValue = 78D;
-			this.BallisticsTwistTextBox.MinValue = 5D;
-			this.BallisticsTwistTextBox.Name = "BallisticsTwistTextBox";
-			this.BallisticsTwistTextBox.NumDecimals = 1;
-			this.BallisticsTwistTextBox.Size = new System.Drawing.Size(42, 20);
-			this.BallisticsTwistTextBox.TabIndex = 8;
-			this.BallisticsTwistTextBox.Text = "0.0";
-			this.BallisticsTwistTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.BallisticsTwistTextBox.ToolTip = "";
-			this.BallisticsTwistTextBox.Value = 0D;
-			this.BallisticsTwistTextBox.ZeroAllowed = true;
-			// 
 			// TwistMeasurementLabel
 			// 
 			this.TwistMeasurementLabel.AutoSize = true;
@@ -2494,24 +2374,6 @@ namespace ReloadersWorkShop
 			this.label33.Size = new System.Drawing.Size(55, 13);
 			this.label33.TabIndex = 60;
 			this.label33.Text = "Twist: 1 in";
-			// 
-			// BallisticsBulletLengthTextBox
-			// 
-			this.BallisticsBulletLengthTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.BallisticsBulletLengthTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BallisticsBulletLengthTextBox.Location = new System.Drawing.Point(613, 22);
-			this.BallisticsBulletLengthTextBox.MaxLength = 5;
-			this.BallisticsBulletLengthTextBox.MaxValue = 0D;
-			this.BallisticsBulletLengthTextBox.MinValue = 0D;
-			this.BallisticsBulletLengthTextBox.Name = "BallisticsBulletLengthTextBox";
-			this.BallisticsBulletLengthTextBox.NumDecimals = 1;
-			this.BallisticsBulletLengthTextBox.Size = new System.Drawing.Size(42, 20);
-			this.BallisticsBulletLengthTextBox.TabIndex = 3;
-			this.BallisticsBulletLengthTextBox.Text = "0.0";
-			this.BallisticsBulletLengthTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.BallisticsBulletLengthTextBox.ToolTip = "";
-			this.BallisticsBulletLengthTextBox.Value = 0D;
-			this.BallisticsBulletLengthTextBox.ZeroAllowed = true;
 			// 
 			// BulletLengthMeasurementLabel
 			// 
@@ -2632,22 +2494,6 @@ namespace ReloadersWorkShop
 			this.IncrementMeasurementLabel.TabIndex = 12;
 			this.IncrementMeasurementLabel.Text = "yds";
 			// 
-			// BallisticsIncrementTextBox
-			// 
-			this.BallisticsIncrementTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.BallisticsIncrementTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BallisticsIncrementTextBox.Location = new System.Drawing.Point(414, 22);
-			this.BallisticsIncrementTextBox.MaxLength = 3;
-			this.BallisticsIncrementTextBox.MaxValue = 0;
-			this.BallisticsIncrementTextBox.MinValue = 0;
-			this.BallisticsIncrementTextBox.Name = "BallisticsIncrementTextBox";
-			this.BallisticsIncrementTextBox.Required = false;
-			this.BallisticsIncrementTextBox.Size = new System.Drawing.Size(38, 20);
-			this.BallisticsIncrementTextBox.TabIndex = 2;
-			this.BallisticsIncrementTextBox.Text = "0";
-			this.BallisticsIncrementTextBox.ToolTip = "";
-			this.BallisticsIncrementTextBox.Value = 0;
-			// 
 			// MinRangeMeasurementLabel
 			// 
 			this.MinRangeMeasurementLabel.AutoSize = true;
@@ -2660,38 +2506,6 @@ namespace ReloadersWorkShop
 			this.MinRangeMeasurementLabel.TabIndex = 11;
 			this.MinRangeMeasurementLabel.Text = "yds";
 			// 
-			// BallisticsMinRangeTextBox
-			// 
-			this.BallisticsMinRangeTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.BallisticsMinRangeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BallisticsMinRangeTextBox.Location = new System.Drawing.Point(111, 21);
-			this.BallisticsMinRangeTextBox.MaxLength = 4;
-			this.BallisticsMinRangeTextBox.MaxValue = 0;
-			this.BallisticsMinRangeTextBox.MinValue = 0;
-			this.BallisticsMinRangeTextBox.Name = "BallisticsMinRangeTextBox";
-			this.BallisticsMinRangeTextBox.Required = false;
-			this.BallisticsMinRangeTextBox.Size = new System.Drawing.Size(42, 20);
-			this.BallisticsMinRangeTextBox.TabIndex = 0;
-			this.BallisticsMinRangeTextBox.Text = "0";
-			this.BallisticsMinRangeTextBox.ToolTip = "";
-			this.BallisticsMinRangeTextBox.Value = 0;
-			// 
-			// BallisticsMaxRangeTextBox
-			// 
-			this.BallisticsMaxRangeTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.BallisticsMaxRangeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BallisticsMaxRangeTextBox.Location = new System.Drawing.Point(268, 22);
-			this.BallisticsMaxRangeTextBox.MaxLength = 4;
-			this.BallisticsMaxRangeTextBox.MaxValue = 0;
-			this.BallisticsMaxRangeTextBox.MinValue = 0;
-			this.BallisticsMaxRangeTextBox.Name = "BallisticsMaxRangeTextBox";
-			this.BallisticsMaxRangeTextBox.Required = false;
-			this.BallisticsMaxRangeTextBox.Size = new System.Drawing.Size(42, 20);
-			this.BallisticsMaxRangeTextBox.TabIndex = 1;
-			this.BallisticsMaxRangeTextBox.Text = "0";
-			this.BallisticsMaxRangeTextBox.ToolTip = "";
-			this.BallisticsMaxRangeTextBox.Value = 0;
-			// 
 			// label3
 			// 
 			this.label3.AutoSize = true;
@@ -2703,22 +2517,6 @@ namespace ReloadersWorkShop
 			this.label3.Size = new System.Drawing.Size(76, 13);
 			this.label3.TabIndex = 51;
 			this.label3.Text = "Target Range:";
-			// 
-			// BallisticsTargetRangeTextBox
-			// 
-			this.BallisticsTargetRangeTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.BallisticsTargetRangeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BallisticsTargetRangeTextBox.Location = new System.Drawing.Point(608, 22);
-			this.BallisticsTargetRangeTextBox.MaxLength = 4;
-			this.BallisticsTargetRangeTextBox.MaxValue = 0;
-			this.BallisticsTargetRangeTextBox.MinValue = 0;
-			this.BallisticsTargetRangeTextBox.Name = "BallisticsTargetRangeTextBox";
-			this.BallisticsTargetRangeTextBox.Required = false;
-			this.BallisticsTargetRangeTextBox.Size = new System.Drawing.Size(42, 20);
-			this.BallisticsTargetRangeTextBox.TabIndex = 3;
-			this.BallisticsTargetRangeTextBox.Text = "0";
-			this.BallisticsTargetRangeTextBox.ToolTip = "";
-			this.BallisticsTargetRangeTextBox.Value = 0;
 			// 
 			// TargetRangeMeasurementLabel
 			// 
@@ -2742,23 +2540,6 @@ namespace ReloadersWorkShop
 			this.BallisticsTurretTypeComboBox.Size = new System.Drawing.Size(50, 21);
 			this.BallisticsTurretTypeComboBox.TabIndex = 7;
 			// 
-			// BallisticsSightHeightTextBox
-			// 
-			this.BallisticsSightHeightTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.BallisticsSightHeightTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BallisticsSightHeightTextBox.Location = new System.Drawing.Point(274, 48);
-			this.BallisticsSightHeightTextBox.MaxLength = 5;
-			this.BallisticsSightHeightTextBox.MaxValue = 0D;
-			this.BallisticsSightHeightTextBox.MinValue = 0D;
-			this.BallisticsSightHeightTextBox.Name = "BallisticsSightHeightTextBox";
-			this.BallisticsSightHeightTextBox.NumDecimals = 2;
-			this.BallisticsSightHeightTextBox.Size = new System.Drawing.Size(34, 20);
-			this.BallisticsSightHeightTextBox.TabIndex = 5;
-			this.BallisticsSightHeightTextBox.Text = "0.00";
-			this.BallisticsSightHeightTextBox.ToolTip = "";
-			this.BallisticsSightHeightTextBox.Value = 0D;
-			this.BallisticsSightHeightTextBox.ZeroAllowed = true;
-			// 
 			// SightHeightMeasurementLabel
 			// 
 			this.SightHeightMeasurementLabel.AutoSize = true;
@@ -2770,56 +2551,6 @@ namespace ReloadersWorkShop
 			this.SightHeightMeasurementLabel.Size = new System.Drawing.Size(18, 13);
 			this.SightHeightMeasurementLabel.TabIndex = 6;
 			this.SightHeightMeasurementLabel.Text = "in.";
-			// 
-			// BallisticsScopeClickTextBox
-			// 
-			this.BallisticsScopeClickTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.BallisticsScopeClickTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BallisticsScopeClickTextBox.Location = new System.Drawing.Point(419, 48);
-			this.BallisticsScopeClickTextBox.MaxLength = 5;
-			this.BallisticsScopeClickTextBox.MaxValue = 0D;
-			this.BallisticsScopeClickTextBox.MinValue = 0D;
-			this.BallisticsScopeClickTextBox.Name = "BallisticsScopeClickTextBox";
-			this.BallisticsScopeClickTextBox.NumDecimals = 3;
-			this.BallisticsScopeClickTextBox.Size = new System.Drawing.Size(38, 20);
-			this.BallisticsScopeClickTextBox.TabIndex = 6;
-			this.BallisticsScopeClickTextBox.Text = "0.000";
-			this.BallisticsScopeClickTextBox.ToolTip = "";
-			this.BallisticsScopeClickTextBox.Value = 0D;
-			this.BallisticsScopeClickTextBox.ZeroAllowed = true;
-			// 
-			// BallisticsBCTextBox
-			// 
-			this.BallisticsBCTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.BallisticsBCTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BallisticsBCTextBox.Location = new System.Drawing.Point(116, 21);
-			this.BallisticsBCTextBox.MaxLength = 5;
-			this.BallisticsBCTextBox.MaxValue = 0D;
-			this.BallisticsBCTextBox.MinValue = 0D;
-			this.BallisticsBCTextBox.Name = "BallisticsBCTextBox";
-			this.BallisticsBCTextBox.NumDecimals = 3;
-			this.BallisticsBCTextBox.Size = new System.Drawing.Size(38, 20);
-			this.BallisticsBCTextBox.TabIndex = 0;
-			this.BallisticsBCTextBox.Text = "0.000";
-			this.BallisticsBCTextBox.ToolTip = "";
-			this.BallisticsBCTextBox.Value = 0D;
-			this.BallisticsBCTextBox.ZeroAllowed = true;
-			// 
-			// BallisticsZeroRangeTextBox
-			// 
-			this.BallisticsZeroRangeTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.BallisticsZeroRangeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BallisticsZeroRangeTextBox.Location = new System.Drawing.Point(116, 48);
-			this.BallisticsZeroRangeTextBox.MaxLength = 4;
-			this.BallisticsZeroRangeTextBox.MaxValue = 0;
-			this.BallisticsZeroRangeTextBox.MinValue = 0;
-			this.BallisticsZeroRangeTextBox.Name = "BallisticsZeroRangeTextBox";
-			this.BallisticsZeroRangeTextBox.Required = false;
-			this.BallisticsZeroRangeTextBox.Size = new System.Drawing.Size(42, 20);
-			this.BallisticsZeroRangeTextBox.TabIndex = 4;
-			this.BallisticsZeroRangeTextBox.Text = "0";
-			this.BallisticsZeroRangeTextBox.ToolTip = "";
-			this.BallisticsZeroRangeTextBox.Value = 0;
 			// 
 			// ZeroRangeMeasurementLabel
 			// 
@@ -2833,23 +2564,6 @@ namespace ReloadersWorkShop
 			this.ZeroRangeMeasurementLabel.TabIndex = 20;
 			this.ZeroRangeMeasurementLabel.Text = "yds";
 			// 
-			// BallisticsBulletDiameterTextBox
-			// 
-			this.BallisticsBulletDiameterTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.BallisticsBulletDiameterTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BallisticsBulletDiameterTextBox.Location = new System.Drawing.Point(274, 22);
-			this.BallisticsBulletDiameterTextBox.MaxLength = 5;
-			this.BallisticsBulletDiameterTextBox.MaxValue = 0D;
-			this.BallisticsBulletDiameterTextBox.MinValue = 0D;
-			this.BallisticsBulletDiameterTextBox.Name = "BallisticsBulletDiameterTextBox";
-			this.BallisticsBulletDiameterTextBox.NumDecimals = 3;
-			this.BallisticsBulletDiameterTextBox.Size = new System.Drawing.Size(42, 20);
-			this.BallisticsBulletDiameterTextBox.TabIndex = 1;
-			this.BallisticsBulletDiameterTextBox.Text = "0.000";
-			this.BallisticsBulletDiameterTextBox.ToolTip = "";
-			this.BallisticsBulletDiameterTextBox.Value = 0D;
-			this.BallisticsBulletDiameterTextBox.ZeroAllowed = true;
-			// 
 			// BulletDiameterMeasurementLabel
 			// 
 			this.BulletDiameterMeasurementLabel.AutoSize = true;
@@ -2861,24 +2575,6 @@ namespace ReloadersWorkShop
 			this.BulletDiameterMeasurementLabel.Size = new System.Drawing.Size(18, 13);
 			this.BulletDiameterMeasurementLabel.TabIndex = 1;
 			this.BulletDiameterMeasurementLabel.Text = "in.";
-			// 
-			// BallisticsBulletWeightTextBox
-			// 
-			this.BallisticsBulletWeightTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.BallisticsBulletWeightTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BallisticsBulletWeightTextBox.Location = new System.Drawing.Point(449, 22);
-			this.BallisticsBulletWeightTextBox.MaxLength = 5;
-			this.BallisticsBulletWeightTextBox.MaxValue = 0D;
-			this.BallisticsBulletWeightTextBox.MinValue = 0D;
-			this.BallisticsBulletWeightTextBox.Name = "BallisticsBulletWeightTextBox";
-			this.BallisticsBulletWeightTextBox.NumDecimals = 1;
-			this.BallisticsBulletWeightTextBox.Size = new System.Drawing.Size(46, 20);
-			this.BallisticsBulletWeightTextBox.TabIndex = 2;
-			this.BallisticsBulletWeightTextBox.Text = "0.0";
-			this.BallisticsBulletWeightTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.BallisticsBulletWeightTextBox.ToolTip = "";
-			this.BallisticsBulletWeightTextBox.Value = 0D;
-			this.BallisticsBulletWeightTextBox.ZeroAllowed = true;
 			// 
 			// BulletWeightMeasurementLabel
 			// 
@@ -3924,6 +3620,7 @@ namespace ReloadersWorkShop
 			// 
 			// FirearmAccessoriesGroupBox
 			// 
+			this.FirearmAccessoriesGroupBox.Controls.Add(this.groupBox3);
 			this.FirearmAccessoriesGroupBox.Controls.Add(this.FirearmAccessoriesActionsGroupBox);
 			this.FirearmAccessoriesGroupBox.Controls.Add(this.RemoveFirearmAccessoryButton);
 			this.FirearmAccessoriesGroupBox.Controls.Add(this.AddFirearmAccessoryButton);
@@ -3940,13 +3637,14 @@ namespace ReloadersWorkShop
 			// 
 			// FirearmAccessoriesActionsGroupBox
 			// 
+			this.FirearmAccessoriesActionsGroupBox.Controls.Add(this.FirearmAccessoriesShowGroupsCheckBox);
 			this.FirearmAccessoriesActionsGroupBox.Controls.Add(this.FirearmAccessoriesShowAllCheckBox);
 			this.FirearmAccessoriesActionsGroupBox.Controls.Add(this.FirearmAccessoryAttachButton);
 			this.FirearmAccessoriesActionsGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmAccessoriesActionsGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
-			this.FirearmAccessoriesActionsGroupBox.Location = new System.Drawing.Point(173, 23);
+			this.FirearmAccessoriesActionsGroupBox.Location = new System.Drawing.Point(173, 20);
 			this.FirearmAccessoriesActionsGroupBox.Name = "FirearmAccessoriesActionsGroupBox";
-			this.FirearmAccessoriesActionsGroupBox.Size = new System.Drawing.Size(246, 56);
+			this.FirearmAccessoriesActionsGroupBox.Size = new System.Drawing.Size(218, 66);
 			this.FirearmAccessoriesActionsGroupBox.TabIndex = 8;
 			this.FirearmAccessoriesActionsGroupBox.TabStop = false;
 			this.FirearmAccessoriesActionsGroupBox.Text = "Additional Actions";
@@ -3954,9 +3652,11 @@ namespace ReloadersWorkShop
 			// FirearmAccessoriesShowAllCheckBox
 			// 
 			this.FirearmAccessoriesShowAllCheckBox.AutoSize = true;
+			this.FirearmAccessoriesShowAllCheckBox.Checked = true;
+			this.FirearmAccessoriesShowAllCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.FirearmAccessoriesShowAllCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmAccessoriesShowAllCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmAccessoriesShowAllCheckBox.Location = new System.Drawing.Point(23, 23);
+			this.FirearmAccessoriesShowAllCheckBox.Location = new System.Drawing.Point(23, 19);
 			this.FirearmAccessoriesShowAllCheckBox.Name = "FirearmAccessoriesShowAllCheckBox";
 			this.FirearmAccessoriesShowAllCheckBox.Size = new System.Drawing.Size(67, 17);
 			this.FirearmAccessoriesShowAllCheckBox.TabIndex = 5;
@@ -3967,7 +3667,7 @@ namespace ReloadersWorkShop
 			// 
 			this.FirearmAccessoryAttachButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmAccessoryAttachButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmAccessoryAttachButton.Location = new System.Drawing.Point(138, 19);
+			this.FirearmAccessoryAttachButton.Location = new System.Drawing.Point(130, 25);
 			this.FirearmAccessoryAttachButton.Name = "FirearmAccessoryAttachButton";
 			this.FirearmAccessoryAttachButton.Size = new System.Drawing.Size(75, 23);
 			this.FirearmAccessoryAttachButton.TabIndex = 0;
@@ -4034,10 +3734,165 @@ namespace ReloadersWorkShop
 			this.FirearmsGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
 			this.FirearmsGroupBox.Location = new System.Drawing.Point(8, 5);
 			this.FirearmsGroupBox.Name = "FirearmsGroupBox";
-			this.FirearmsGroupBox.Size = new System.Drawing.Size(1081, 309);
+			this.FirearmsGroupBox.Size = new System.Drawing.Size(1190, 309);
 			this.FirearmsGroupBox.TabIndex = 0;
 			this.FirearmsGroupBox.TabStop = false;
 			this.FirearmsGroupBox.Text = "Firearms";
+			// 
+			// FirearmCostDetailsGroupBox
+			// 
+			this.FirearmCostDetailsGroupBox.Controls.Add(this.FirearmGrandTotalLabel);
+			this.FirearmCostDetailsGroupBox.Controls.Add(this.FirearmTotalCostsLabel);
+			this.FirearmCostDetailsGroupBox.Controls.Add(this.label45);
+			this.FirearmCostDetailsGroupBox.Controls.Add(this.label46);
+			this.FirearmCostDetailsGroupBox.Controls.Add(this.FirearmTotalShippingLabel);
+			this.FirearmCostDetailsGroupBox.Controls.Add(this.FirearmTotalTaxesLabel);
+			this.FirearmCostDetailsGroupBox.Controls.Add(this.label41);
+			this.FirearmCostDetailsGroupBox.Controls.Add(this.label42);
+			this.FirearmCostDetailsGroupBox.Controls.Add(this.FirearmAccessoryCostLabel);
+			this.FirearmCostDetailsGroupBox.Controls.Add(this.FirearmCostLabel);
+			this.FirearmCostDetailsGroupBox.Controls.Add(this.label27);
+			this.FirearmCostDetailsGroupBox.Controls.Add(this.label20);
+			this.FirearmCostDetailsGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmCostDetailsGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
+			this.FirearmCostDetailsGroupBox.Location = new System.Drawing.Point(456, 23);
+			this.FirearmCostDetailsGroupBox.Name = "FirearmCostDetailsGroupBox";
+			this.FirearmCostDetailsGroupBox.Size = new System.Drawing.Size(505, 71);
+			this.FirearmCostDetailsGroupBox.TabIndex = 7;
+			this.FirearmCostDetailsGroupBox.TabStop = false;
+			this.FirearmCostDetailsGroupBox.Text = "Cost Details";
+			// 
+			// FirearmGrandTotalLabel
+			// 
+			this.FirearmGrandTotalLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmGrandTotalLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmGrandTotalLabel.Location = new System.Drawing.Point(402, 43);
+			this.FirearmGrandTotalLabel.Name = "FirearmGrandTotalLabel";
+			this.FirearmGrandTotalLabel.Size = new System.Drawing.Size(91, 25);
+			this.FirearmGrandTotalLabel.TabIndex = 11;
+			this.FirearmGrandTotalLabel.Text = "1000.00";
+			this.FirearmGrandTotalLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// FirearmTotalCostsLabel
+			// 
+			this.FirearmTotalCostsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmTotalCostsLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmTotalCostsLabel.Location = new System.Drawing.Point(394, 23);
+			this.FirearmTotalCostsLabel.Name = "FirearmTotalCostsLabel";
+			this.FirearmTotalCostsLabel.Size = new System.Drawing.Size(53, 13);
+			this.FirearmTotalCostsLabel.TabIndex = 10;
+			this.FirearmTotalCostsLabel.Text = "0.00";
+			this.FirearmTotalCostsLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// label45
+			// 
+			this.label45.AutoSize = true;
+			this.label45.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label45.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label45.Location = new System.Drawing.Point(318, 48);
+			this.label45.Name = "label45";
+			this.label45.Size = new System.Drawing.Size(78, 13);
+			this.label45.TabIndex = 9;
+			this.label45.Text = "Grand Total:";
+			// 
+			// label46
+			// 
+			this.label46.AutoSize = true;
+			this.label46.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label46.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label46.Location = new System.Drawing.Point(325, 23);
+			this.label46.Name = "label46";
+			this.label46.Size = new System.Drawing.Size(63, 13);
+			this.label46.TabIndex = 8;
+			this.label46.Text = "Total Costs:";
+			// 
+			// FirearmTotalShippingLabel
+			// 
+			this.FirearmTotalShippingLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmTotalShippingLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmTotalShippingLabel.Location = new System.Drawing.Point(247, 43);
+			this.FirearmTotalShippingLabel.Name = "FirearmTotalShippingLabel";
+			this.FirearmTotalShippingLabel.Size = new System.Drawing.Size(53, 13);
+			this.FirearmTotalShippingLabel.TabIndex = 7;
+			this.FirearmTotalShippingLabel.Text = "0.00";
+			this.FirearmTotalShippingLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// FirearmTotalTaxesLabel
+			// 
+			this.FirearmTotalTaxesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmTotalTaxesLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmTotalTaxesLabel.Location = new System.Drawing.Point(247, 23);
+			this.FirearmTotalTaxesLabel.Name = "FirearmTotalTaxesLabel";
+			this.FirearmTotalTaxesLabel.Size = new System.Drawing.Size(53, 13);
+			this.FirearmTotalTaxesLabel.TabIndex = 6;
+			this.FirearmTotalTaxesLabel.Text = "0.00";
+			this.FirearmTotalTaxesLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// label41
+			// 
+			this.label41.AutoSize = true;
+			this.label41.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label41.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label41.Location = new System.Drawing.Point(163, 43);
+			this.label41.Name = "label41";
+			this.label41.Size = new System.Drawing.Size(78, 13);
+			this.label41.TabIndex = 5;
+			this.label41.Text = "Total Shipping:";
+			// 
+			// label42
+			// 
+			this.label42.AutoSize = true;
+			this.label42.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label42.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label42.Location = new System.Drawing.Point(175, 23);
+			this.label42.Name = "label42";
+			this.label42.Size = new System.Drawing.Size(66, 13);
+			this.label42.TabIndex = 4;
+			this.label42.Text = "Total Taxes:";
+			// 
+			// FirearmAccessoryCostLabel
+			// 
+			this.FirearmAccessoryCostLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmAccessoryCostLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmAccessoryCostLabel.Location = new System.Drawing.Point(103, 43);
+			this.FirearmAccessoryCostLabel.Name = "FirearmAccessoryCostLabel";
+			this.FirearmAccessoryCostLabel.Size = new System.Drawing.Size(53, 13);
+			this.FirearmAccessoryCostLabel.TabIndex = 3;
+			this.FirearmAccessoryCostLabel.Text = "0.00";
+			this.FirearmAccessoryCostLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// FirearmCostLabel
+			// 
+			this.FirearmCostLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmCostLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmCostLabel.Location = new System.Drawing.Point(103, 23);
+			this.FirearmCostLabel.Name = "FirearmCostLabel";
+			this.FirearmCostLabel.Size = new System.Drawing.Size(53, 13);
+			this.FirearmCostLabel.TabIndex = 2;
+			this.FirearmCostLabel.Text = "0.00";
+			this.FirearmCostLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// label27
+			// 
+			this.label27.AutoSize = true;
+			this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label27.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label27.Location = new System.Drawing.Point(6, 43);
+			this.label27.Name = "label27";
+			this.label27.Size = new System.Drawing.Size(91, 13);
+			this.label27.TabIndex = 1;
+			this.label27.Text = "Accessories Cost:";
+			// 
+			// label20
+			// 
+			this.label20.AutoSize = true;
+			this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label20.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label20.Location = new System.Drawing.Point(29, 23);
+			this.label20.Name = "label20";
+			this.label20.Size = new System.Drawing.Size(68, 13);
+			this.label20.TabIndex = 0;
+			this.label20.Text = "Firearm Cost:";
 			// 
 			// RemoveFirearmButton
 			// 
@@ -4354,160 +4209,465 @@ namespace ReloadersWorkShop
 			this.button1.Size = new System.Drawing.Size(75, 23);
 			this.button1.TabIndex = 0;
 			// 
-			// FirearmCostDetailsGroupBox
+			// BallisticsMuzzleVelocityTextBox
 			// 
-			this.FirearmCostDetailsGroupBox.Controls.Add(this.FirearmGrandTotalLabel);
-			this.FirearmCostDetailsGroupBox.Controls.Add(this.FirearmTotalCostsLabel);
-			this.FirearmCostDetailsGroupBox.Controls.Add(this.label45);
-			this.FirearmCostDetailsGroupBox.Controls.Add(this.label46);
-			this.FirearmCostDetailsGroupBox.Controls.Add(this.FirearmTotalShippingLabel);
-			this.FirearmCostDetailsGroupBox.Controls.Add(this.FirearmTotalTaxesLabel);
-			this.FirearmCostDetailsGroupBox.Controls.Add(this.label41);
-			this.FirearmCostDetailsGroupBox.Controls.Add(this.label42);
-			this.FirearmCostDetailsGroupBox.Controls.Add(this.FirearmAccessoryCostLabel);
-			this.FirearmCostDetailsGroupBox.Controls.Add(this.FirearmCostLabel);
-			this.FirearmCostDetailsGroupBox.Controls.Add(this.label27);
-			this.FirearmCostDetailsGroupBox.Controls.Add(this.label20);
-			this.FirearmCostDetailsGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.FirearmCostDetailsGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
-			this.FirearmCostDetailsGroupBox.Location = new System.Drawing.Point(456, 23);
-			this.FirearmCostDetailsGroupBox.Name = "FirearmCostDetailsGroupBox";
-			this.FirearmCostDetailsGroupBox.Size = new System.Drawing.Size(499, 71);
-			this.FirearmCostDetailsGroupBox.TabIndex = 7;
-			this.FirearmCostDetailsGroupBox.TabStop = false;
-			this.FirearmCostDetailsGroupBox.Text = "Cost Details";
+			this.BallisticsMuzzleVelocityTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.BallisticsMuzzleVelocityTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BallisticsMuzzleVelocityTextBox.Location = new System.Drawing.Point(131, 415);
+			this.BallisticsMuzzleVelocityTextBox.MaxLength = 4;
+			this.BallisticsMuzzleVelocityTextBox.MaxValue = 0;
+			this.BallisticsMuzzleVelocityTextBox.MinValue = 0;
+			this.BallisticsMuzzleVelocityTextBox.Name = "BallisticsMuzzleVelocityTextBox";
+			this.BallisticsMuzzleVelocityTextBox.Required = false;
+			this.BallisticsMuzzleVelocityTextBox.Size = new System.Drawing.Size(42, 20);
+			this.BallisticsMuzzleVelocityTextBox.TabIndex = 0;
+			this.BallisticsMuzzleVelocityTextBox.Text = "0";
+			this.BallisticsMuzzleVelocityTextBox.ToolTip = "";
+			this.BallisticsMuzzleVelocityTextBox.Value = 0;
 			// 
-			// label20
+			// BallisticsTemperatureTextBox
 			// 
-			this.label20.AutoSize = true;
-			this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label20.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label20.Location = new System.Drawing.Point(29, 23);
-			this.label20.Name = "label20";
-			this.label20.Size = new System.Drawing.Size(68, 13);
-			this.label20.TabIndex = 0;
-			this.label20.Text = "Firearm Cost:";
+			this.BallisticsTemperatureTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.BallisticsTemperatureTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BallisticsTemperatureTextBox.Location = new System.Drawing.Point(118, 47);
+			this.BallisticsTemperatureTextBox.MaxLength = 3;
+			this.BallisticsTemperatureTextBox.MaxValue = 120;
+			this.BallisticsTemperatureTextBox.MinValue = 0;
+			this.BallisticsTemperatureTextBox.Name = "BallisticsTemperatureTextBox";
+			this.BallisticsTemperatureTextBox.Required = false;
+			this.BallisticsTemperatureTextBox.Size = new System.Drawing.Size(38, 20);
+			this.BallisticsTemperatureTextBox.TabIndex = 11;
+			this.BallisticsTemperatureTextBox.Text = "59";
+			this.BallisticsTemperatureTextBox.ToolTip = "";
+			this.BallisticsTemperatureTextBox.Value = 59;
 			// 
-			// label27
+			// BallisticsHumidityTextBox
 			// 
-			this.label27.AutoSize = true;
-			this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label27.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label27.Location = new System.Drawing.Point(6, 43);
-			this.label27.Name = "label27";
-			this.label27.Size = new System.Drawing.Size(91, 13);
-			this.label27.TabIndex = 1;
-			this.label27.Text = "Accessories Cost:";
+			this.BallisticsHumidityTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.BallisticsHumidityTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BallisticsHumidityTextBox.Location = new System.Drawing.Point(615, 47);
+			this.BallisticsHumidityTextBox.MaxLength = 3;
+			this.BallisticsHumidityTextBox.MaxValue = 100;
+			this.BallisticsHumidityTextBox.MinValue = 0;
+			this.BallisticsHumidityTextBox.Name = "BallisticsHumidityTextBox";
+			this.BallisticsHumidityTextBox.Required = false;
+			this.BallisticsHumidityTextBox.Size = new System.Drawing.Size(38, 20);
+			this.BallisticsHumidityTextBox.TabIndex = 14;
+			this.BallisticsHumidityTextBox.Text = "0";
+			this.BallisticsHumidityTextBox.ToolTip = "";
+			this.BallisticsHumidityTextBox.Value = 0;
 			// 
-			// FirearmCostLabel
+			// BallisticsAltitudeTextBox
 			// 
-			this.FirearmCostLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.FirearmCostLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmCostLabel.Location = new System.Drawing.Point(103, 23);
-			this.FirearmCostLabel.Name = "FirearmCostLabel";
-			this.FirearmCostLabel.Size = new System.Drawing.Size(53, 13);
-			this.FirearmCostLabel.TabIndex = 2;
-			this.FirearmCostLabel.Text = "0.00";
-			this.FirearmCostLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			this.BallisticsAltitudeTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.BallisticsAltitudeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BallisticsAltitudeTextBox.Location = new System.Drawing.Point(275, 47);
+			this.BallisticsAltitudeTextBox.MaxLength = 5;
+			this.BallisticsAltitudeTextBox.MaxValue = 15000;
+			this.BallisticsAltitudeTextBox.MinValue = 0;
+			this.BallisticsAltitudeTextBox.Name = "BallisticsAltitudeTextBox";
+			this.BallisticsAltitudeTextBox.Required = false;
+			this.BallisticsAltitudeTextBox.Size = new System.Drawing.Size(38, 20);
+			this.BallisticsAltitudeTextBox.TabIndex = 12;
+			this.BallisticsAltitudeTextBox.Text = "0";
+			this.BallisticsAltitudeTextBox.ToolTip = "";
+			this.BallisticsAltitudeTextBox.Value = 0;
 			// 
-			// FirearmAccessoryCostLabel
+			// BallisticsPressureTextBox
 			// 
-			this.FirearmAccessoryCostLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.FirearmAccessoryCostLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmAccessoryCostLabel.Location = new System.Drawing.Point(103, 43);
-			this.FirearmAccessoryCostLabel.Name = "FirearmAccessoryCostLabel";
-			this.FirearmAccessoryCostLabel.Size = new System.Drawing.Size(53, 13);
-			this.FirearmAccessoryCostLabel.TabIndex = 3;
-			this.FirearmAccessoryCostLabel.Text = "0.00";
-			this.FirearmAccessoryCostLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			this.BallisticsPressureTextBox.BackColor = System.Drawing.Color.LightPink;
+			this.BallisticsPressureTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BallisticsPressureTextBox.Location = new System.Drawing.Point(471, 47);
+			this.BallisticsPressureTextBox.MaxLength = 5;
+			this.BallisticsPressureTextBox.MaxValue = 33D;
+			this.BallisticsPressureTextBox.MinValue = 25D;
+			this.BallisticsPressureTextBox.Name = "BallisticsPressureTextBox";
+			this.BallisticsPressureTextBox.NumDecimals = 2;
+			this.BallisticsPressureTextBox.Size = new System.Drawing.Size(42, 20);
+			this.BallisticsPressureTextBox.TabIndex = 13;
+			this.BallisticsPressureTextBox.Text = "0.00";
+			this.BallisticsPressureTextBox.ToolTip = "";
+			this.BallisticsPressureTextBox.Value = 0D;
+			this.BallisticsPressureTextBox.ZeroAllowed = true;
 			// 
-			// FirearmTotalShippingLabel
+			// BallisticsWindSpeedTextBox
 			// 
-			this.FirearmTotalShippingLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.FirearmTotalShippingLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmTotalShippingLabel.Location = new System.Drawing.Point(247, 43);
-			this.FirearmTotalShippingLabel.Name = "FirearmTotalShippingLabel";
-			this.FirearmTotalShippingLabel.Size = new System.Drawing.Size(53, 13);
-			this.FirearmTotalShippingLabel.TabIndex = 7;
-			this.FirearmTotalShippingLabel.Text = "0.00";
-			this.FirearmTotalShippingLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			this.BallisticsWindSpeedTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.BallisticsWindSpeedTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BallisticsWindSpeedTextBox.Location = new System.Drawing.Point(118, 21);
+			this.BallisticsWindSpeedTextBox.MaxLength = 2;
+			this.BallisticsWindSpeedTextBox.MaxValue = 0;
+			this.BallisticsWindSpeedTextBox.MinValue = 0;
+			this.BallisticsWindSpeedTextBox.Name = "BallisticsWindSpeedTextBox";
+			this.BallisticsWindSpeedTextBox.Required = false;
+			this.BallisticsWindSpeedTextBox.Size = new System.Drawing.Size(38, 20);
+			this.BallisticsWindSpeedTextBox.TabIndex = 9;
+			this.BallisticsWindSpeedTextBox.Text = "0";
+			this.BallisticsWindSpeedTextBox.ToolTip = "";
+			this.BallisticsWindSpeedTextBox.Value = 0;
 			// 
-			// FirearmTotalTaxesLabel
+			// BallisticsWindDirectionTextBox
 			// 
-			this.FirearmTotalTaxesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.FirearmTotalTaxesLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmTotalTaxesLabel.Location = new System.Drawing.Point(247, 23);
-			this.FirearmTotalTaxesLabel.Name = "FirearmTotalTaxesLabel";
-			this.FirearmTotalTaxesLabel.Size = new System.Drawing.Size(53, 13);
-			this.FirearmTotalTaxesLabel.TabIndex = 6;
-			this.FirearmTotalTaxesLabel.Text = "0.00";
-			this.FirearmTotalTaxesLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			this.BallisticsWindDirectionTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.BallisticsWindDirectionTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BallisticsWindDirectionTextBox.Location = new System.Drawing.Point(276, 22);
+			this.BallisticsWindDirectionTextBox.MaxLength = 3;
+			this.BallisticsWindDirectionTextBox.MaxValue = 0;
+			this.BallisticsWindDirectionTextBox.MinValue = 0;
+			this.BallisticsWindDirectionTextBox.Name = "BallisticsWindDirectionTextBox";
+			this.BallisticsWindDirectionTextBox.Required = false;
+			this.BallisticsWindDirectionTextBox.Size = new System.Drawing.Size(38, 20);
+			this.BallisticsWindDirectionTextBox.TabIndex = 10;
+			this.BallisticsWindDirectionTextBox.Text = "0";
+			this.BallisticsWindDirectionTextBox.ToolTip = "";
+			this.BallisticsWindDirectionTextBox.Value = 0;
 			// 
-			// label41
+			// BallisticsTwistTextBox
 			// 
-			this.label41.AutoSize = true;
-			this.label41.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label41.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label41.Location = new System.Drawing.Point(163, 43);
-			this.label41.Name = "label41";
-			this.label41.Size = new System.Drawing.Size(78, 13);
-			this.label41.TabIndex = 5;
-			this.label41.Text = "Total Shipping:";
+			this.BallisticsTwistTextBox.BackColor = System.Drawing.Color.LightPink;
+			this.BallisticsTwistTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BallisticsTwistTextBox.Location = new System.Drawing.Point(612, 47);
+			this.BallisticsTwistTextBox.MaxLength = 5;
+			this.BallisticsTwistTextBox.MaxValue = 78D;
+			this.BallisticsTwistTextBox.MinValue = 5D;
+			this.BallisticsTwistTextBox.Name = "BallisticsTwistTextBox";
+			this.BallisticsTwistTextBox.NumDecimals = 1;
+			this.BallisticsTwistTextBox.Size = new System.Drawing.Size(42, 20);
+			this.BallisticsTwistTextBox.TabIndex = 8;
+			this.BallisticsTwistTextBox.Text = "0.0";
+			this.BallisticsTwistTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.BallisticsTwistTextBox.ToolTip = "";
+			this.BallisticsTwistTextBox.Value = 0D;
+			this.BallisticsTwistTextBox.ZeroAllowed = true;
 			// 
-			// label42
+			// BallisticsBulletLengthTextBox
 			// 
-			this.label42.AutoSize = true;
-			this.label42.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label42.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label42.Location = new System.Drawing.Point(175, 23);
-			this.label42.Name = "label42";
-			this.label42.Size = new System.Drawing.Size(66, 13);
-			this.label42.TabIndex = 4;
-			this.label42.Text = "Total Taxes:";
+			this.BallisticsBulletLengthTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.BallisticsBulletLengthTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BallisticsBulletLengthTextBox.Location = new System.Drawing.Point(613, 22);
+			this.BallisticsBulletLengthTextBox.MaxLength = 5;
+			this.BallisticsBulletLengthTextBox.MaxValue = 0D;
+			this.BallisticsBulletLengthTextBox.MinValue = 0D;
+			this.BallisticsBulletLengthTextBox.Name = "BallisticsBulletLengthTextBox";
+			this.BallisticsBulletLengthTextBox.NumDecimals = 1;
+			this.BallisticsBulletLengthTextBox.Size = new System.Drawing.Size(42, 20);
+			this.BallisticsBulletLengthTextBox.TabIndex = 3;
+			this.BallisticsBulletLengthTextBox.Text = "0.0";
+			this.BallisticsBulletLengthTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.BallisticsBulletLengthTextBox.ToolTip = "";
+			this.BallisticsBulletLengthTextBox.Value = 0D;
+			this.BallisticsBulletLengthTextBox.ZeroAllowed = true;
 			// 
-			// FirearmGrandTotalLabel
+			// BallisticsIncrementTextBox
 			// 
-			this.FirearmGrandTotalLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.FirearmGrandTotalLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmGrandTotalLabel.Location = new System.Drawing.Point(402, 43);
-			this.FirearmGrandTotalLabel.Name = "FirearmGrandTotalLabel";
-			this.FirearmGrandTotalLabel.Size = new System.Drawing.Size(91, 25);
-			this.FirearmGrandTotalLabel.TabIndex = 11;
-			this.FirearmGrandTotalLabel.Text = "1000.00";
-			this.FirearmGrandTotalLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			this.BallisticsIncrementTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.BallisticsIncrementTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BallisticsIncrementTextBox.Location = new System.Drawing.Point(414, 22);
+			this.BallisticsIncrementTextBox.MaxLength = 3;
+			this.BallisticsIncrementTextBox.MaxValue = 0;
+			this.BallisticsIncrementTextBox.MinValue = 0;
+			this.BallisticsIncrementTextBox.Name = "BallisticsIncrementTextBox";
+			this.BallisticsIncrementTextBox.Required = false;
+			this.BallisticsIncrementTextBox.Size = new System.Drawing.Size(38, 20);
+			this.BallisticsIncrementTextBox.TabIndex = 2;
+			this.BallisticsIncrementTextBox.Text = "0";
+			this.BallisticsIncrementTextBox.ToolTip = "";
+			this.BallisticsIncrementTextBox.Value = 0;
 			// 
-			// FirearmTotalCostsLabel
+			// BallisticsMinRangeTextBox
 			// 
-			this.FirearmTotalCostsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.FirearmTotalCostsLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmTotalCostsLabel.Location = new System.Drawing.Point(394, 23);
-			this.FirearmTotalCostsLabel.Name = "FirearmTotalCostsLabel";
-			this.FirearmTotalCostsLabel.Size = new System.Drawing.Size(53, 13);
-			this.FirearmTotalCostsLabel.TabIndex = 10;
-			this.FirearmTotalCostsLabel.Text = "0.00";
-			this.FirearmTotalCostsLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			this.BallisticsMinRangeTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.BallisticsMinRangeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BallisticsMinRangeTextBox.Location = new System.Drawing.Point(111, 21);
+			this.BallisticsMinRangeTextBox.MaxLength = 4;
+			this.BallisticsMinRangeTextBox.MaxValue = 0;
+			this.BallisticsMinRangeTextBox.MinValue = 0;
+			this.BallisticsMinRangeTextBox.Name = "BallisticsMinRangeTextBox";
+			this.BallisticsMinRangeTextBox.Required = false;
+			this.BallisticsMinRangeTextBox.Size = new System.Drawing.Size(42, 20);
+			this.BallisticsMinRangeTextBox.TabIndex = 0;
+			this.BallisticsMinRangeTextBox.Text = "0";
+			this.BallisticsMinRangeTextBox.ToolTip = "";
+			this.BallisticsMinRangeTextBox.Value = 0;
 			// 
-			// label45
+			// BallisticsMaxRangeTextBox
 			// 
-			this.label45.AutoSize = true;
-			this.label45.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label45.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label45.Location = new System.Drawing.Point(318, 48);
-			this.label45.Name = "label45";
-			this.label45.Size = new System.Drawing.Size(78, 13);
-			this.label45.TabIndex = 9;
-			this.label45.Text = "Grand Total:";
+			this.BallisticsMaxRangeTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.BallisticsMaxRangeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BallisticsMaxRangeTextBox.Location = new System.Drawing.Point(268, 22);
+			this.BallisticsMaxRangeTextBox.MaxLength = 4;
+			this.BallisticsMaxRangeTextBox.MaxValue = 0;
+			this.BallisticsMaxRangeTextBox.MinValue = 0;
+			this.BallisticsMaxRangeTextBox.Name = "BallisticsMaxRangeTextBox";
+			this.BallisticsMaxRangeTextBox.Required = false;
+			this.BallisticsMaxRangeTextBox.Size = new System.Drawing.Size(42, 20);
+			this.BallisticsMaxRangeTextBox.TabIndex = 1;
+			this.BallisticsMaxRangeTextBox.Text = "0";
+			this.BallisticsMaxRangeTextBox.ToolTip = "";
+			this.BallisticsMaxRangeTextBox.Value = 0;
 			// 
-			// label46
+			// BallisticsTargetRangeTextBox
 			// 
-			this.label46.AutoSize = true;
-			this.label46.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label46.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label46.Location = new System.Drawing.Point(325, 23);
-			this.label46.Name = "label46";
-			this.label46.Size = new System.Drawing.Size(63, 13);
-			this.label46.TabIndex = 8;
-			this.label46.Text = "Total Costs:";
+			this.BallisticsTargetRangeTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.BallisticsTargetRangeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BallisticsTargetRangeTextBox.Location = new System.Drawing.Point(608, 22);
+			this.BallisticsTargetRangeTextBox.MaxLength = 4;
+			this.BallisticsTargetRangeTextBox.MaxValue = 0;
+			this.BallisticsTargetRangeTextBox.MinValue = 0;
+			this.BallisticsTargetRangeTextBox.Name = "BallisticsTargetRangeTextBox";
+			this.BallisticsTargetRangeTextBox.Required = false;
+			this.BallisticsTargetRangeTextBox.Size = new System.Drawing.Size(42, 20);
+			this.BallisticsTargetRangeTextBox.TabIndex = 3;
+			this.BallisticsTargetRangeTextBox.Text = "0";
+			this.BallisticsTargetRangeTextBox.ToolTip = "";
+			this.BallisticsTargetRangeTextBox.Value = 0;
+			// 
+			// BallisticsSightHeightTextBox
+			// 
+			this.BallisticsSightHeightTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.BallisticsSightHeightTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BallisticsSightHeightTextBox.Location = new System.Drawing.Point(274, 48);
+			this.BallisticsSightHeightTextBox.MaxLength = 5;
+			this.BallisticsSightHeightTextBox.MaxValue = 0D;
+			this.BallisticsSightHeightTextBox.MinValue = 0D;
+			this.BallisticsSightHeightTextBox.Name = "BallisticsSightHeightTextBox";
+			this.BallisticsSightHeightTextBox.NumDecimals = 2;
+			this.BallisticsSightHeightTextBox.Size = new System.Drawing.Size(34, 20);
+			this.BallisticsSightHeightTextBox.TabIndex = 5;
+			this.BallisticsSightHeightTextBox.Text = "0.00";
+			this.BallisticsSightHeightTextBox.ToolTip = "";
+			this.BallisticsSightHeightTextBox.Value = 0D;
+			this.BallisticsSightHeightTextBox.ZeroAllowed = true;
+			// 
+			// BallisticsScopeClickTextBox
+			// 
+			this.BallisticsScopeClickTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.BallisticsScopeClickTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BallisticsScopeClickTextBox.Location = new System.Drawing.Point(419, 48);
+			this.BallisticsScopeClickTextBox.MaxLength = 5;
+			this.BallisticsScopeClickTextBox.MaxValue = 0D;
+			this.BallisticsScopeClickTextBox.MinValue = 0D;
+			this.BallisticsScopeClickTextBox.Name = "BallisticsScopeClickTextBox";
+			this.BallisticsScopeClickTextBox.NumDecimals = 3;
+			this.BallisticsScopeClickTextBox.Size = new System.Drawing.Size(38, 20);
+			this.BallisticsScopeClickTextBox.TabIndex = 6;
+			this.BallisticsScopeClickTextBox.Text = "0.000";
+			this.BallisticsScopeClickTextBox.ToolTip = "";
+			this.BallisticsScopeClickTextBox.Value = 0D;
+			this.BallisticsScopeClickTextBox.ZeroAllowed = true;
+			// 
+			// BallisticsBCTextBox
+			// 
+			this.BallisticsBCTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.BallisticsBCTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BallisticsBCTextBox.Location = new System.Drawing.Point(116, 21);
+			this.BallisticsBCTextBox.MaxLength = 5;
+			this.BallisticsBCTextBox.MaxValue = 0D;
+			this.BallisticsBCTextBox.MinValue = 0D;
+			this.BallisticsBCTextBox.Name = "BallisticsBCTextBox";
+			this.BallisticsBCTextBox.NumDecimals = 3;
+			this.BallisticsBCTextBox.Size = new System.Drawing.Size(38, 20);
+			this.BallisticsBCTextBox.TabIndex = 0;
+			this.BallisticsBCTextBox.Text = "0.000";
+			this.BallisticsBCTextBox.ToolTip = "";
+			this.BallisticsBCTextBox.Value = 0D;
+			this.BallisticsBCTextBox.ZeroAllowed = true;
+			// 
+			// BallisticsZeroRangeTextBox
+			// 
+			this.BallisticsZeroRangeTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.BallisticsZeroRangeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BallisticsZeroRangeTextBox.Location = new System.Drawing.Point(116, 48);
+			this.BallisticsZeroRangeTextBox.MaxLength = 4;
+			this.BallisticsZeroRangeTextBox.MaxValue = 0;
+			this.BallisticsZeroRangeTextBox.MinValue = 0;
+			this.BallisticsZeroRangeTextBox.Name = "BallisticsZeroRangeTextBox";
+			this.BallisticsZeroRangeTextBox.Required = false;
+			this.BallisticsZeroRangeTextBox.Size = new System.Drawing.Size(42, 20);
+			this.BallisticsZeroRangeTextBox.TabIndex = 4;
+			this.BallisticsZeroRangeTextBox.Text = "0";
+			this.BallisticsZeroRangeTextBox.ToolTip = "";
+			this.BallisticsZeroRangeTextBox.Value = 0;
+			// 
+			// BallisticsBulletDiameterTextBox
+			// 
+			this.BallisticsBulletDiameterTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.BallisticsBulletDiameterTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BallisticsBulletDiameterTextBox.Location = new System.Drawing.Point(274, 22);
+			this.BallisticsBulletDiameterTextBox.MaxLength = 5;
+			this.BallisticsBulletDiameterTextBox.MaxValue = 0D;
+			this.BallisticsBulletDiameterTextBox.MinValue = 0D;
+			this.BallisticsBulletDiameterTextBox.Name = "BallisticsBulletDiameterTextBox";
+			this.BallisticsBulletDiameterTextBox.NumDecimals = 3;
+			this.BallisticsBulletDiameterTextBox.Size = new System.Drawing.Size(42, 20);
+			this.BallisticsBulletDiameterTextBox.TabIndex = 1;
+			this.BallisticsBulletDiameterTextBox.Text = "0.000";
+			this.BallisticsBulletDiameterTextBox.ToolTip = "";
+			this.BallisticsBulletDiameterTextBox.Value = 0D;
+			this.BallisticsBulletDiameterTextBox.ZeroAllowed = true;
+			// 
+			// BallisticsBulletWeightTextBox
+			// 
+			this.BallisticsBulletWeightTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.BallisticsBulletWeightTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BallisticsBulletWeightTextBox.Location = new System.Drawing.Point(449, 22);
+			this.BallisticsBulletWeightTextBox.MaxLength = 5;
+			this.BallisticsBulletWeightTextBox.MaxValue = 0D;
+			this.BallisticsBulletWeightTextBox.MinValue = 0D;
+			this.BallisticsBulletWeightTextBox.Name = "BallisticsBulletWeightTextBox";
+			this.BallisticsBulletWeightTextBox.NumDecimals = 1;
+			this.BallisticsBulletWeightTextBox.Size = new System.Drawing.Size(46, 20);
+			this.BallisticsBulletWeightTextBox.TabIndex = 2;
+			this.BallisticsBulletWeightTextBox.Text = "0.0";
+			this.BallisticsBulletWeightTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.BallisticsBulletWeightTextBox.ToolTip = "";
+			this.BallisticsBulletWeightTextBox.Value = 0D;
+			this.BallisticsBulletWeightTextBox.ZeroAllowed = true;
+			// 
+			// FirearmAccessoriesShowGroupsCheckBox
+			// 
+			this.FirearmAccessoriesShowGroupsCheckBox.AutoSize = true;
+			this.FirearmAccessoriesShowGroupsCheckBox.Checked = true;
+			this.FirearmAccessoriesShowGroupsCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.FirearmAccessoriesShowGroupsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmAccessoriesShowGroupsCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmAccessoriesShowGroupsCheckBox.Location = new System.Drawing.Point(23, 42);
+			this.FirearmAccessoriesShowGroupsCheckBox.Name = "FirearmAccessoriesShowGroupsCheckBox";
+			this.FirearmAccessoriesShowGroupsCheckBox.Size = new System.Drawing.Size(90, 17);
+			this.FirearmAccessoriesShowGroupsCheckBox.TabIndex = 6;
+			this.FirearmAccessoriesShowGroupsCheckBox.Text = "Show Groups";
+			this.FirearmAccessoriesShowGroupsCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// groupBox3
+			// 
+			this.groupBox3.Controls.Add(this.FirearmsOtherFilterCheckBox);
+			this.groupBox3.Controls.Add(this.FirearmsPartsFilterCheckBox);
+			this.groupBox3.Controls.Add(this.FirearmsBipodFilterCheckBox);
+			this.groupBox3.Controls.Add(this.FirearmsFurnitureFilterCheckBox);
+			this.groupBox3.Controls.Add(this.FirearmsTriggerFilterCheckBox);
+			this.groupBox3.Controls.Add(this.FirearmsLightFilterCheckBox);
+			this.groupBox3.Controls.Add(this.FirearmsRedDotFilterCheckBox);
+			this.groupBox3.Controls.Add(this.FirearmsScopeFilterCheckBox);
+			this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.groupBox3.ForeColor = System.Drawing.SystemColors.HotTrack;
+			this.groupBox3.Location = new System.Drawing.Point(410, 20);
+			this.groupBox3.Name = "groupBox3";
+			this.groupBox3.Size = new System.Drawing.Size(372, 66);
+			this.groupBox3.TabIndex = 9;
+			this.groupBox3.TabStop = false;
+			this.groupBox3.Text = "Filters";
+			// 
+			// FirearmsRedDotFilterCheckBox
+			// 
+			this.FirearmsRedDotFilterCheckBox.AutoSize = true;
+			this.FirearmsRedDotFilterCheckBox.Checked = true;
+			this.FirearmsRedDotFilterCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.FirearmsRedDotFilterCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmsRedDotFilterCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmsRedDotFilterCheckBox.Location = new System.Drawing.Point(23, 42);
+			this.FirearmsRedDotFilterCheckBox.Name = "FirearmsRedDotFilterCheckBox";
+			this.FirearmsRedDotFilterCheckBox.Size = new System.Drawing.Size(71, 17);
+			this.FirearmsRedDotFilterCheckBox.TabIndex = 6;
+			this.FirearmsRedDotFilterCheckBox.Text = "Red Dots";
+			this.FirearmsRedDotFilterCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// FirearmsScopeFilterCheckBox
+			// 
+			this.FirearmsScopeFilterCheckBox.AutoSize = true;
+			this.FirearmsScopeFilterCheckBox.Checked = true;
+			this.FirearmsScopeFilterCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.FirearmsScopeFilterCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmsScopeFilterCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmsScopeFilterCheckBox.Location = new System.Drawing.Point(23, 19);
+			this.FirearmsScopeFilterCheckBox.Name = "FirearmsScopeFilterCheckBox";
+			this.FirearmsScopeFilterCheckBox.Size = new System.Drawing.Size(62, 17);
+			this.FirearmsScopeFilterCheckBox.TabIndex = 5;
+			this.FirearmsScopeFilterCheckBox.Text = "Scopes";
+			this.FirearmsScopeFilterCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// FirearmsLightFilterCheckBox
+			// 
+			this.FirearmsLightFilterCheckBox.AutoSize = true;
+			this.FirearmsLightFilterCheckBox.Checked = true;
+			this.FirearmsLightFilterCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.FirearmsLightFilterCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmsLightFilterCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmsLightFilterCheckBox.Location = new System.Drawing.Point(100, 19);
+			this.FirearmsLightFilterCheckBox.Name = "FirearmsLightFilterCheckBox";
+			this.FirearmsLightFilterCheckBox.Size = new System.Drawing.Size(90, 17);
+			this.FirearmsLightFilterCheckBox.TabIndex = 7;
+			this.FirearmsLightFilterCheckBox.Text = "Lasers/Lights";
+			this.FirearmsLightFilterCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// FirearmsTriggerFilterCheckBox
+			// 
+			this.FirearmsTriggerFilterCheckBox.AutoSize = true;
+			this.FirearmsTriggerFilterCheckBox.Checked = true;
+			this.FirearmsTriggerFilterCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.FirearmsTriggerFilterCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmsTriggerFilterCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmsTriggerFilterCheckBox.Location = new System.Drawing.Point(100, 42);
+			this.FirearmsTriggerFilterCheckBox.Name = "FirearmsTriggerFilterCheckBox";
+			this.FirearmsTriggerFilterCheckBox.Size = new System.Drawing.Size(64, 17);
+			this.FirearmsTriggerFilterCheckBox.TabIndex = 8;
+			this.FirearmsTriggerFilterCheckBox.Text = "Triggers";
+			this.FirearmsTriggerFilterCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// FirearmsFurnitureFilterCheckBox
+			// 
+			this.FirearmsFurnitureFilterCheckBox.AutoSize = true;
+			this.FirearmsFurnitureFilterCheckBox.Checked = true;
+			this.FirearmsFurnitureFilterCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.FirearmsFurnitureFilterCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmsFurnitureFilterCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmsFurnitureFilterCheckBox.Location = new System.Drawing.Point(189, 19);
+			this.FirearmsFurnitureFilterCheckBox.Name = "FirearmsFurnitureFilterCheckBox";
+			this.FirearmsFurnitureFilterCheckBox.Size = new System.Drawing.Size(67, 17);
+			this.FirearmsFurnitureFilterCheckBox.TabIndex = 9;
+			this.FirearmsFurnitureFilterCheckBox.Text = "Furniture";
+			this.FirearmsFurnitureFilterCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// FirearmsBipodFilterCheckBox
+			// 
+			this.FirearmsBipodFilterCheckBox.AutoSize = true;
+			this.FirearmsBipodFilterCheckBox.Checked = true;
+			this.FirearmsBipodFilterCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.FirearmsBipodFilterCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmsBipodFilterCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmsBipodFilterCheckBox.Location = new System.Drawing.Point(189, 42);
+			this.FirearmsBipodFilterCheckBox.Name = "FirearmsBipodFilterCheckBox";
+			this.FirearmsBipodFilterCheckBox.Size = new System.Drawing.Size(58, 17);
+			this.FirearmsBipodFilterCheckBox.TabIndex = 10;
+			this.FirearmsBipodFilterCheckBox.Text = "Bipods";
+			this.FirearmsBipodFilterCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// FirearmsPartsFilterCheckBox
+			// 
+			this.FirearmsPartsFilterCheckBox.AutoSize = true;
+			this.FirearmsPartsFilterCheckBox.Checked = true;
+			this.FirearmsPartsFilterCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.FirearmsPartsFilterCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmsPartsFilterCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmsPartsFilterCheckBox.Location = new System.Drawing.Point(262, 19);
+			this.FirearmsPartsFilterCheckBox.Name = "FirearmsPartsFilterCheckBox";
+			this.FirearmsPartsFilterCheckBox.Size = new System.Drawing.Size(87, 17);
+			this.FirearmsPartsFilterCheckBox.TabIndex = 11;
+			this.FirearmsPartsFilterCheckBox.Text = "Firearm Parts";
+			this.FirearmsPartsFilterCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// FirearmsOtherFilterCheckBox
+			// 
+			this.FirearmsOtherFilterCheckBox.AutoSize = true;
+			this.FirearmsOtherFilterCheckBox.Checked = true;
+			this.FirearmsOtherFilterCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.FirearmsOtherFilterCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmsOtherFilterCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmsOtherFilterCheckBox.Location = new System.Drawing.Point(262, 42);
+			this.FirearmsOtherFilterCheckBox.Name = "FirearmsOtherFilterCheckBox";
+			this.FirearmsOtherFilterCheckBox.Size = new System.Drawing.Size(52, 17);
+			this.FirearmsOtherFilterCheckBox.TabIndex = 12;
+			this.FirearmsOtherFilterCheckBox.Text = "Other";
+			this.FirearmsOtherFilterCheckBox.UseVisualStyleBackColor = true;
 			// 
 			// LoadDataFirearmTypeCombo
 			// 
@@ -4517,6 +4677,8 @@ namespace ReloadersWorkShop
 			this.LoadDataFirearmTypeCombo.FormattingEnabled = true;
 			this.LoadDataFirearmTypeCombo.IncludeShotgun = false;
 			this.LoadDataFirearmTypeCombo.Items.AddRange(new object[] {
+            "Handgun",
+            "Rifle",
             "Handgun",
             "Rifle",
             "Handgun",
@@ -5133,6 +5295,8 @@ namespace ReloadersWorkShop
             "Handgun",
             "Rifle",
             "Handgun",
+            "Rifle",
+            "Handgun",
             "Rifle"});
 			this.BatchFirearmTypeCombo.Location = new System.Drawing.Point(83, 22);
 			this.BatchFirearmTypeCombo.Name = "BatchFirearmTypeCombo";
@@ -5149,6 +5313,8 @@ namespace ReloadersWorkShop
 			this.BallisticsFirearmTypeCombo.FormattingEnabled = true;
 			this.BallisticsFirearmTypeCombo.IncludeShotgun = false;
 			this.BallisticsFirearmTypeCombo.Items.AddRange(new object[] {
+            "Handgun",
+            "Rifle",
             "Handgun",
             "Rifle",
             "Handgun",
@@ -5512,14 +5678,16 @@ namespace ReloadersWorkShop
 			this.FirearmAccessoriesActionsGroupBox.ResumeLayout(false);
 			this.FirearmAccessoriesActionsGroupBox.PerformLayout();
 			this.FirearmsGroupBox.ResumeLayout(false);
+			this.FirearmCostDetailsGroupBox.ResumeLayout(false);
+			this.FirearmCostDetailsGroupBox.PerformLayout();
 			this.FirearmPrintOptionsGroupBox.ResumeLayout(false);
 			this.FirearmPrintOptionsGroupBox.PerformLayout();
 			this.CalibersTab.ResumeLayout(false);
 			this.CalibersTab.PerformLayout();
 			this.ManufacturersTab.ResumeLayout(false);
 			this.MainTabControl.ResumeLayout(false);
-			this.FirearmCostDetailsGroupBox.ResumeLayout(false);
-			this.FirearmCostDetailsGroupBox.PerformLayout();
+			this.groupBox3.ResumeLayout(false);
+			this.groupBox3.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -5876,6 +6044,16 @@ namespace ReloadersWorkShop
 		private System.Windows.Forms.Label FirearmTotalTaxesLabel;
 		private System.Windows.Forms.Label label41;
 		private System.Windows.Forms.Label label42;
+		private System.Windows.Forms.GroupBox groupBox3;
+		private System.Windows.Forms.CheckBox FirearmsOtherFilterCheckBox;
+		private System.Windows.Forms.CheckBox FirearmsPartsFilterCheckBox;
+		private System.Windows.Forms.CheckBox FirearmsBipodFilterCheckBox;
+		private System.Windows.Forms.CheckBox FirearmsFurnitureFilterCheckBox;
+		private System.Windows.Forms.CheckBox FirearmsTriggerFilterCheckBox;
+		private System.Windows.Forms.CheckBox FirearmsLightFilterCheckBox;
+		private System.Windows.Forms.CheckBox FirearmsRedDotFilterCheckBox;
+		private System.Windows.Forms.CheckBox FirearmsScopeFilterCheckBox;
+		private System.Windows.Forms.CheckBox FirearmAccessoriesShowGroupsCheckBox;
 		}
 	}
 

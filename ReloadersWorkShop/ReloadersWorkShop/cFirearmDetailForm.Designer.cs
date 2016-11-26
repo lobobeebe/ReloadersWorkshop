@@ -41,6 +41,12 @@
 			this.FirearmNameLabel = new System.Windows.Forms.Label();
 			this.AddImageButton = new System.Windows.Forms.Button();
 			this.AcquisitionDetailsGroupBox = new System.Windows.Forms.GroupBox();
+			this.TotalLabel = new System.Windows.Forms.Label();
+			this.label21 = new System.Windows.Forms.Label();
+			this.ShippingTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.ShippingLabel = new System.Windows.Forms.Label();
+			this.TaxTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.TaxLabel = new System.Windows.Forms.Label();
 			this.SourceComboBox = new System.Windows.Forms.ComboBox();
 			this.PriceTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			this.PurchaseDateTimePicker = new System.Windows.Forms.DateTimePicker();
@@ -162,20 +168,20 @@
 			// 
 			// PriceLabel
 			// 
-			this.PriceLabel.AutoSize = true;
 			this.PriceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.PriceLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.PriceLabel.Location = new System.Drawing.Point(36, 79);
+			this.PriceLabel.Location = new System.Drawing.Point(204, 53);
 			this.PriceLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.PriceLabel.Name = "PriceLabel";
 			this.PriceLabel.Size = new System.Drawing.Size(49, 13);
 			this.PriceLabel.TabIndex = 22;
 			this.PriceLabel.Text = "Price ($):";
+			this.PriceLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
 			// 
 			// DetailCancelButton
 			// 
 			this.DetailCancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.DetailCancelButton.Location = new System.Drawing.Point(492, 533);
+			this.DetailCancelButton.Location = new System.Drawing.Point(508, 557);
 			this.DetailCancelButton.Margin = new System.Windows.Forms.Padding(2);
 			this.DetailCancelButton.Name = "DetailCancelButton";
 			this.DetailCancelButton.Size = new System.Drawing.Size(56, 19);
@@ -187,9 +193,9 @@
 			// 
 			this.FirearmPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
 			this.FirearmPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.FirearmPictureBox.Location = new System.Drawing.Point(65, 23);
+			this.FirearmPictureBox.Location = new System.Drawing.Point(17, 23);
 			this.FirearmPictureBox.Name = "FirearmPictureBox";
-			this.FirearmPictureBox.Size = new System.Drawing.Size(480, 270);
+			this.FirearmPictureBox.Size = new System.Drawing.Size(576, 295);
 			this.FirearmPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
 			this.FirearmPictureBox.TabIndex = 7;
 			this.FirearmPictureBox.TabStop = false;
@@ -210,7 +216,7 @@
 			this.AddImageButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.AddImageButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.AddImageButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.AddImageButton.Location = new System.Drawing.Point(188, 308);
+			this.AddImageButton.Location = new System.Drawing.Point(195, 337);
 			this.AddImageButton.Margin = new System.Windows.Forms.Padding(2);
 			this.AddImageButton.Name = "AddImageButton";
 			this.AddImageButton.Size = new System.Drawing.Size(36, 23);
@@ -220,6 +226,12 @@
 			// 
 			// AcquisitionDetailsGroupBox
 			// 
+			this.AcquisitionDetailsGroupBox.Controls.Add(this.TotalLabel);
+			this.AcquisitionDetailsGroupBox.Controls.Add(this.label21);
+			this.AcquisitionDetailsGroupBox.Controls.Add(this.ShippingTextBox);
+			this.AcquisitionDetailsGroupBox.Controls.Add(this.ShippingLabel);
+			this.AcquisitionDetailsGroupBox.Controls.Add(this.TaxTextBox);
+			this.AcquisitionDetailsGroupBox.Controls.Add(this.TaxLabel);
 			this.AcquisitionDetailsGroupBox.Controls.Add(this.SourceComboBox);
 			this.AcquisitionDetailsGroupBox.Controls.Add(label2);
 			this.AcquisitionDetailsGroupBox.Controls.Add(this.PriceTextBox);
@@ -230,10 +242,93 @@
 			this.AcquisitionDetailsGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
 			this.AcquisitionDetailsGroupBox.Location = new System.Drawing.Point(629, 44);
 			this.AcquisitionDetailsGroupBox.Name = "AcquisitionDetailsGroupBox";
-			this.AcquisitionDetailsGroupBox.Size = new System.Drawing.Size(309, 113);
+			this.AcquisitionDetailsGroupBox.Size = new System.Drawing.Size(334, 160);
 			this.AcquisitionDetailsGroupBox.TabIndex = 1;
 			this.AcquisitionDetailsGroupBox.TabStop = false;
 			this.AcquisitionDetailsGroupBox.Text = "Acquisition Details";
+			// 
+			// TotalLabel
+			// 
+			this.TotalLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TotalLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.TotalLabel.Location = new System.Drawing.Point(246, 130);
+			this.TotalLabel.Name = "TotalLabel";
+			this.TotalLabel.Size = new System.Drawing.Size(72, 20);
+			this.TotalLabel.TabIndex = 30;
+			this.TotalLabel.Text = "0.00";
+			this.TotalLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// label21
+			// 
+			this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label21.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label21.Location = new System.Drawing.Point(182, 132);
+			this.label21.Name = "label21";
+			this.label21.Size = new System.Drawing.Size(56, 13);
+			this.label21.TabIndex = 29;
+			this.label21.Text = "Total:";
+			this.label21.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// ShippingTextBox
+			// 
+			this.ShippingTextBox.AllowDrop = true;
+			this.ShippingTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.ShippingTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ShippingTextBox.Location = new System.Drawing.Point(258, 102);
+			this.ShippingTextBox.MaxLength = 8;
+			this.ShippingTextBox.MaxValue = 0D;
+			this.ShippingTextBox.MinValue = 0D;
+			this.ShippingTextBox.Name = "ShippingTextBox";
+			this.ShippingTextBox.NumDecimals = 2;
+			this.ShippingTextBox.Size = new System.Drawing.Size(60, 20);
+			this.ShippingTextBox.TabIndex = 4;
+			this.ShippingTextBox.Text = "0.00";
+			this.ShippingTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.ShippingTextBox.ToolTip = "";
+			this.ShippingTextBox.Value = 0D;
+			this.ShippingTextBox.ZeroAllowed = true;
+			// 
+			// ShippingLabel
+			// 
+			this.ShippingLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ShippingLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.ShippingLabel.Location = new System.Drawing.Point(187, 105);
+			this.ShippingLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.ShippingLabel.Name = "ShippingLabel";
+			this.ShippingLabel.Size = new System.Drawing.Size(66, 13);
+			this.ShippingLabel.TabIndex = 28;
+			this.ShippingLabel.Text = "Shipping ($):";
+			// 
+			// TaxTextBox
+			// 
+			this.TaxTextBox.AllowDrop = true;
+			this.TaxTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.TaxTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TaxTextBox.Location = new System.Drawing.Point(258, 76);
+			this.TaxTextBox.MaxLength = 8;
+			this.TaxTextBox.MaxValue = 0D;
+			this.TaxTextBox.MinValue = 0D;
+			this.TaxTextBox.Name = "TaxTextBox";
+			this.TaxTextBox.NumDecimals = 2;
+			this.TaxTextBox.Size = new System.Drawing.Size(60, 20);
+			this.TaxTextBox.TabIndex = 3;
+			this.TaxTextBox.Text = "0.00";
+			this.TaxTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.TaxTextBox.ToolTip = "";
+			this.TaxTextBox.Value = 0D;
+			this.TaxTextBox.ZeroAllowed = true;
+			// 
+			// TaxLabel
+			// 
+			this.TaxLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TaxLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.TaxLabel.Location = new System.Drawing.Point(185, 79);
+			this.TaxLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.TaxLabel.Name = "TaxLabel";
+			this.TaxLabel.Size = new System.Drawing.Size(68, 13);
+			this.TaxLabel.TabIndex = 26;
+			this.TaxLabel.Text = "Tax ($):";
+			this.TaxLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
 			// 
 			// SourceComboBox
 			// 
@@ -243,7 +338,7 @@
 			this.SourceComboBox.FormattingEnabled = true;
 			this.SourceComboBox.Location = new System.Drawing.Point(90, 23);
 			this.SourceComboBox.Name = "SourceComboBox";
-			this.SourceComboBox.Size = new System.Drawing.Size(207, 21);
+			this.SourceComboBox.Size = new System.Drawing.Size(228, 21);
 			this.SourceComboBox.Sorted = true;
 			this.SourceComboBox.TabIndex = 0;
 			// 
@@ -252,7 +347,7 @@
 			this.PriceTextBox.AllowDrop = true;
 			this.PriceTextBox.BackColor = System.Drawing.SystemColors.Window;
 			this.PriceTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.PriceTextBox.Location = new System.Drawing.Point(90, 76);
+			this.PriceTextBox.Location = new System.Drawing.Point(258, 50);
 			this.PriceTextBox.MaxLength = 8;
 			this.PriceTextBox.MaxValue = 0D;
 			this.PriceTextBox.MinValue = 0D;
@@ -311,7 +406,7 @@
 			this.FirearmImageGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
 			this.FirearmImageGroupBox.Location = new System.Drawing.Point(12, 44);
 			this.FirearmImageGroupBox.Name = "FirearmImageGroupBox";
-			this.FirearmImageGroupBox.Size = new System.Drawing.Size(611, 349);
+			this.FirearmImageGroupBox.Size = new System.Drawing.Size(611, 373);
 			this.FirearmImageGroupBox.TabIndex = 0;
 			this.FirearmImageGroupBox.TabStop = false;
 			this.FirearmImageGroupBox.Text = "Firearm Image";
@@ -321,7 +416,7 @@
 			this.MakePrimaryButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.MakePrimaryButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.MakePrimaryButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.MakePrimaryButton.Location = new System.Drawing.Point(343, 308);
+			this.MakePrimaryButton.Location = new System.Drawing.Point(336, 337);
 			this.MakePrimaryButton.Margin = new System.Windows.Forms.Padding(2);
 			this.MakePrimaryButton.Name = "MakePrimaryButton";
 			this.MakePrimaryButton.Size = new System.Drawing.Size(79, 23);
@@ -335,7 +430,7 @@
 			this.NextImageButton.Enabled = false;
 			this.NextImageButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.NextImageButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.NextImageButton.Location = new System.Drawing.Point(453, 308);
+			this.NextImageButton.Location = new System.Drawing.Point(439, 337);
 			this.NextImageButton.Margin = new System.Windows.Forms.Padding(2);
 			this.NextImageButton.Name = "NextImageButton";
 			this.NextImageButton.Size = new System.Drawing.Size(79, 23);
@@ -349,7 +444,7 @@
 			this.PreviousImageButton.Enabled = false;
 			this.PreviousImageButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.PreviousImageButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.PreviousImageButton.Location = new System.Drawing.Point(78, 308);
+			this.PreviousImageButton.Location = new System.Drawing.Point(92, 337);
 			this.PreviousImageButton.Margin = new System.Windows.Forms.Padding(2);
 			this.PreviousImageButton.Name = "PreviousImageButton";
 			this.PreviousImageButton.Size = new System.Drawing.Size(79, 23);
@@ -363,7 +458,7 @@
 			this.RemoveImageButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.RemoveImageButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.RemoveImageButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.RemoveImageButton.Location = new System.Drawing.Point(255, 308);
+			this.RemoveImageButton.Location = new System.Drawing.Point(255, 337);
 			this.RemoveImageButton.Margin = new System.Windows.Forms.Padding(2);
 			this.RemoveImageButton.Name = "RemoveImageButton";
 			this.RemoveImageButton.Size = new System.Drawing.Size(57, 23);
@@ -400,7 +495,7 @@
 			this.NotesGroupBox.Controls.Add(this.NotesTextBox);
 			this.NotesGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.NotesGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
-			this.NotesGroupBox.Location = new System.Drawing.Point(12, 399);
+			this.NotesGroupBox.Location = new System.Drawing.Point(12, 423);
 			this.NotesGroupBox.Name = "NotesGroupBox";
 			this.NotesGroupBox.Size = new System.Drawing.Size(926, 117);
 			this.NotesGroupBox.TabIndex = 4;
@@ -420,7 +515,7 @@
 			// OKButton
 			// 
 			this.OKButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.OKButton.Location = new System.Drawing.Point(391, 533);
+			this.OKButton.Location = new System.Drawing.Point(407, 557);
 			this.OKButton.Margin = new System.Windows.Forms.Padding(2);
 			this.OKButton.Name = "OKButton";
 			this.OKButton.Size = new System.Drawing.Size(56, 19);
@@ -446,9 +541,9 @@
 			this.FirearmDetailsGroupBox.Controls.Add(label9);
 			this.FirearmDetailsGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmDetailsGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
-			this.FirearmDetailsGroupBox.Location = new System.Drawing.Point(629, 163);
+			this.FirearmDetailsGroupBox.Location = new System.Drawing.Point(629, 210);
 			this.FirearmDetailsGroupBox.Name = "FirearmDetailsGroupBox";
-			this.FirearmDetailsGroupBox.Size = new System.Drawing.Size(309, 230);
+			this.FirearmDetailsGroupBox.Size = new System.Drawing.Size(334, 207);
 			this.FirearmDetailsGroupBox.TabIndex = 2;
 			this.FirearmDetailsGroupBox.TabStop = false;
 			this.FirearmDetailsGroupBox.Text = "Firearm Details";
@@ -523,7 +618,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.DetailCancelButton;
-			this.ClientSize = new System.Drawing.Size(938, 574);
+			this.ClientSize = new System.Drawing.Size(971, 605);
 			this.ControlBox = false;
 			this.Controls.Add(this.FirearmDetailsGroupBox);
 			this.Controls.Add(this.OKButton);
@@ -582,5 +677,11 @@
 		private System.Windows.Forms.Button PreviousImageButton;
 		private System.Windows.Forms.Button RemoveImageButton;
 		private System.Windows.Forms.Button MakePrimaryButton;
+		private CommonLib.Controls.cDoubleValueTextBox TaxTextBox;
+		private System.Windows.Forms.Label TaxLabel;
+		private CommonLib.Controls.cDoubleValueTextBox ShippingTextBox;
+		private System.Windows.Forms.Label ShippingLabel;
+		private System.Windows.Forms.Label TotalLabel;
+		private System.Windows.Forms.Label label21;
 		}
 	}

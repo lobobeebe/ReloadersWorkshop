@@ -34,6 +34,8 @@ namespace ReloadersWorkShop
 
 		private cFirearm m_Firearm = null;
 
+		private bool[] m_afFilters = new bool[9];
+
 		private cListViewColumn[] m_arColumns = new cListViewColumn[]
 			{
 			new cListViewColumn(0, "ManufacturerHeader","Manufacturer", HorizontalAlignment.Left, 200),
@@ -43,7 +45,10 @@ namespace ReloadersWorkShop
 			new cListViewColumn(4, "FirearmHeader", "Firearm", HorizontalAlignment.Left, 200),
 			new cListViewColumn(5, "SourceHeader", "Acquired from", HorizontalAlignment.Left, 200),
 			new cListViewColumn(6, "DateHeader", "Date", HorizontalAlignment.Center, 100),
-			new cListViewColumn(7, "PriceHeader", "Price", HorizontalAlignment.Right, 80)
+			new cListViewColumn(7, "PriceHeader", "Price", HorizontalAlignment.Right, 80),
+			new cListViewColumn(8, "TaxHeader", "Tax", HorizontalAlignment.Right, 80),
+			new cListViewColumn(9, "ShippingHeader", "Shipping", HorizontalAlignment.Right, 80),
+			new cListViewColumn(10, "TotalHeader", "Total", HorizontalAlignment.Right, 80)
 			};
 
 		//============================================================================*
@@ -60,6 +65,10 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			SetColumns();
+			ShowGroups = true;
+
+			for(int i = 0;i < (int) cGear.eGearTypes.NumGearTypes;i++)
+				m_afFilters[i] = true;
 
 			//----------------------------------------------------------------------------*
 			// Event Handlers
@@ -110,6 +119,17 @@ namespace ReloadersWorkShop
 			AddItem(Item, fSelect);
 
 			return (Item);
+			}
+
+		//============================================================================*
+		// Filter()
+		//============================================================================*
+
+		public void Filter(cGear.eGearTypes eType, bool fShow = true)
+			{
+			m_afFilters[(int) eType] = fShow;
+
+			Populate();
 			}
 
 		//============================================================================*
@@ -187,6 +207,8 @@ namespace ReloadersWorkShop
 
 		protected override void PopulateGroups()
 			{
+			Groups.Clear();
+
 			ListViewGroup Group = new ListViewGroup("ScopeGroup", cGear.GearTypeString(cGear.eGearTypes.Scope));
 
 			Groups.Add(Group);
@@ -226,6 +248,11 @@ namespace ReloadersWorkShop
 
 		public void SetColumns()
 			{
+			m_arColumns[7].Text = String.Format("Price ({0})", m_DataFiles.Preferences.Currency);
+			m_arColumns[8].Text = String.Format("Tax ({0})", m_DataFiles.Preferences.Currency);
+			m_arColumns[9].Text = String.Format("Shipping ({0})", m_DataFiles.Preferences.Currency);
+			m_arColumns[10].Text = String.Format("Total ({0})", m_DataFiles.Preferences.Currency);
+
 			PopulateColumns(m_arColumns);
 			}
 
@@ -251,6 +278,12 @@ namespace ReloadersWorkShop
 			Item.SubItems.Add(String.Format("{0}", Gear.Source));
 			Item.SubItems.Add(!String.IsNullOrEmpty(Gear.Source) ? String.Format("{0}", Gear.PurchaseDate.ToShortDateString()) : "");
 			Item.SubItems.Add(!String.IsNullOrEmpty(Gear.Source) && Gear.PurchasePrice > 0.0 ? String.Format("{0:F2}", Gear.PurchasePrice) : "-");
+			Item.SubItems.Add(!String.IsNullOrEmpty(Gear.Source) && Gear.Tax > 0.0 ? String.Format("{0:F2}", Gear.Tax) : "-");
+			Item.SubItems.Add(!String.IsNullOrEmpty(Gear.Source) && Gear.Shipping > 0.0 ? String.Format("{0:F2}", Gear.Shipping) : "-");
+
+			double dTotal = Gear.PurchasePrice + Gear.Tax + Gear.Shipping;
+
+			Item.SubItems.Add(!String.IsNullOrEmpty(Gear.Source) && dTotal != 0.0 ? String.Format("{0:F2}", dTotal) : "-");
 			}
 
 		//============================================================================*
@@ -299,6 +332,13 @@ namespace ReloadersWorkShop
 
 		public bool VerifyFirearmAccessory(cGear Gear)
 			{
+			//----------------------------------------------------------------------------*
+			// Check Filters
+			//----------------------------------------------------------------------------*
+
+			if (!m_afFilters[(int) Gear.GearType])
+				return (false);
+
 			//----------------------------------------------------------------------------*
 			// If firearm  is null, it's good to go
 			//----------------------------------------------------------------------------*
