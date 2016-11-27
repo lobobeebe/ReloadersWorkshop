@@ -942,6 +942,7 @@ namespace ReloadersWorkShop
 				int nPowderCount = 0;
 				int nPrimerCount = 0;
 				int nFirearmCount = 0;
+				int nFirearmAccessoryCount = 0;
 
 				//----------------------------------------------------------------------------*
 				// Count all firearms made by this manufacturer
@@ -951,6 +952,16 @@ namespace ReloadersWorkShop
 					{
 					if (CheckFirearm.Manufacturer.CompareTo(Manufacturer) == 0)
 						nFirearmCount++;
+					}
+
+				//----------------------------------------------------------------------------*
+				// Count all firearm Accessories made by this manufacturer
+				//----------------------------------------------------------------------------*
+
+				foreach (cGear CheckGear in m_GearList)
+					{
+					if (CheckGear.Manufacturer.CompareTo(Manufacturer) == 0)
+						nFirearmAccessoryCount++;
 					}
 
 				//----------------------------------------------------------------------------*
@@ -995,6 +1006,9 @@ namespace ReloadersWorkShop
 
 				if (nFirearmCount > 0)
 					strCount += String.Format("{0:G0} Firearm{1}\n", nFirearmCount, nFirearmCount > 1 ? "s" : "");
+
+				if (nFirearmAccessoryCount > 0)
+					strCount += String.Format("{0:G0} Firearm Accessor{1}\n", nFirearmAccessoryCount, nFirearmAccessoryCount > 1 ? "ies" : "y");
 
 				if (nBulletCount > 0)
 					strCount += String.Format("{0:G0} Bullet{1}\n", nBulletCount, nBulletCount > 1 ? "s" : "");

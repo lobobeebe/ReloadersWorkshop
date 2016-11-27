@@ -125,13 +125,39 @@ namespace ReloadersWorkShop
 				ShotgunsCheckBox.Click += OnCheckBoxClicked;
 
 				ScopesCheckBox.Click += OnCheckBoxClicked;
+				LasersCheckBox.Click += OnCheckBoxClicked;
 				RedDotsCheckBox.Click += OnCheckBoxClicked;
+				MagnifiersCheckBox.Click += OnCheckBoxClicked;
 				LightsCheckBox.Click += OnCheckBoxClicked;
 				TriggersCheckBox.Click += OnCheckBoxClicked;
 				FurnitureCheckBox.Click += OnCheckBoxClicked;
 				BipodsCheckBox.Click += OnCheckBoxClicked;
 				PartsCheckBox.Click += OnCheckBoxClicked;
 				OtherCheckBox.Click += OnCheckBoxClicked;
+				}
+			else
+				{
+				AmmoCheckBox.AutoCheck = false;
+				BulletsCheckBox.AutoCheck = false;
+				CasesCheckBox.AutoCheck = false;
+				PowderCheckBox.AutoCheck = false;
+				PrimersCheckBox.AutoCheck = false;
+				BulletMoldsCheckBox.AutoCheck = false;
+
+				HandgunsCheckBox.AutoCheck = false;
+				RiflesCheckBox.AutoCheck = false;
+				ShotgunsCheckBox.AutoCheck = false;
+
+				ScopesCheckBox.AutoCheck = false;
+				LasersCheckBox.AutoCheck = false;
+				RedDotsCheckBox.AutoCheck = false;
+				MagnifiersCheckBox.AutoCheck = false;
+				LightsCheckBox.AutoCheck = false;
+				TriggersCheckBox.AutoCheck = false;
+				FurnitureCheckBox.AutoCheck = false;
+				BipodsCheckBox.AutoCheck = false;
+				PartsCheckBox.AutoCheck = false;
+				OtherCheckBox.AutoCheck = false;
 				}
 
 			ManufacturerOKButton.Click += OnOKClicked;
@@ -169,7 +195,9 @@ namespace ReloadersWorkShop
 			ShotgunsCheckBox.Checked = m_Manufacturer.Shotguns;
 
 			ScopesCheckBox.Checked = m_Manufacturer.Scopes;
+			LasersCheckBox.Checked = m_Manufacturer.Lasers;
 			RedDotsCheckBox.Checked = m_Manufacturer.RedDots;
+			MagnifiersCheckBox.Checked = m_Manufacturer.Magnifiers;
 			LightsCheckBox.Checked = m_Manufacturer.Lights;
 			TriggersCheckBox.Checked = m_Manufacturer.Triggers;
 			FurnitureCheckBox.Checked = m_Manufacturer.Furniture;
@@ -584,8 +612,16 @@ namespace ReloadersWorkShop
 					m_Manufacturer.Scopes = CheckBox.Checked;
 					break;
 
+				case "LasersCheckBox":
+					m_Manufacturer.Lasers = CheckBox.Checked;
+					break;
+
 				case "RedDotsCheckBox":
 					m_Manufacturer.RedDots = CheckBox.Checked;
+					break;
+
+				case "MagnifiersCheckBox":
+					m_Manufacturer.Magnifiers = CheckBox.Checked;
 					break;
 
 				case "LightsCheckBox":
@@ -712,7 +748,9 @@ namespace ReloadersWorkShop
 			m_ProductsToolTip.SetToolTip(ShotgunsCheckBox, cm_strProductsToolTip);
 
 			m_ProductsToolTip.SetToolTip(ScopesCheckBox, cm_strProductsToolTip);
+			m_ProductsToolTip.SetToolTip(LasersCheckBox, cm_strProductsToolTip);
 			m_ProductsToolTip.SetToolTip(RedDotsCheckBox, cm_strProductsToolTip);
+			m_ProductsToolTip.SetToolTip(MagnifiersCheckBox, cm_strProductsToolTip);
 			m_ProductsToolTip.SetToolTip(LightsCheckBox, cm_strProductsToolTip);
 			m_ProductsToolTip.SetToolTip(TriggersCheckBox, cm_strProductsToolTip);
 			m_ProductsToolTip.SetToolTip(FurnitureCheckBox, cm_strProductsToolTip);
@@ -823,7 +861,9 @@ namespace ReloadersWorkShop
 				!RiflesCheckBox.Checked &&
 				!ShotgunsCheckBox.Checked &&
 				!ScopesCheckBox.Checked &&
+				!LasersCheckBox.Checked &&
 				!RedDotsCheckBox.Checked &&
+				!MagnifiersCheckBox.Checked &&
 				!LightsCheckBox.Checked &&
 				!TriggersCheckBox.Checked &&
 				!FurnitureCheckBox.Checked &&
@@ -844,7 +884,9 @@ namespace ReloadersWorkShop
 				ShotgunsCheckBox.BackColor = Color.LightPink;
 
 				ScopesCheckBox.BackColor = Color.LightPink;
+				LasersCheckBox.BackColor = Color.LightPink;
 				RedDotsCheckBox.BackColor = Color.LightPink;
+				MagnifiersCheckBox.BackColor = Color.LightPink;
 				LightsCheckBox.BackColor = Color.LightPink;
 				TriggersCheckBox.BackColor = Color.LightPink;
 				FurnitureCheckBox.BackColor = Color.LightPink;
@@ -867,7 +909,9 @@ namespace ReloadersWorkShop
 				ShotgunsCheckBox.BackColor = SystemColors.Control;
 
 				ScopesCheckBox.BackColor = SystemColors.Control;
+				LasersCheckBox.BackColor = SystemColors.Control;
 				RedDotsCheckBox.BackColor = SystemColors.Control;
+				MagnifiersCheckBox.BackColor = SystemColors.Control;
 				LightsCheckBox.BackColor = SystemColors.Control;
 				TriggersCheckBox.BackColor = SystemColors.Control;
 				FurnitureCheckBox.BackColor = SystemColors.Control;
@@ -890,7 +934,9 @@ namespace ReloadersWorkShop
 				m_ProductsToolTip.SetToolTip(ShotgunsCheckBox, strToolTip);
 
 				m_ProductsToolTip.SetToolTip(ScopesCheckBox, strToolTip);
+				m_ProductsToolTip.SetToolTip(LasersCheckBox, strToolTip);
 				m_ProductsToolTip.SetToolTip(RedDotsCheckBox, strToolTip);
+				m_ProductsToolTip.SetToolTip(MagnifiersCheckBox, strToolTip);
 				m_ProductsToolTip.SetToolTip(LightsCheckBox, strToolTip);
 				m_ProductsToolTip.SetToolTip(TriggersCheckBox, strToolTip);
 				m_ProductsToolTip.SetToolTip(FurnitureCheckBox, strToolTip);

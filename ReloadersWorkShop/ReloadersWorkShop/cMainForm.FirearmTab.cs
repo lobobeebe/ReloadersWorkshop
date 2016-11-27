@@ -140,24 +140,24 @@ namespace ReloadersWorkShop
 				m_FirearmAccessoriesListView.SelectedIndexChanged += OnFirearmAccessorySelected;
 				m_FirearmAccessoriesListView.DoubleClick += OnFirearmAccessoryDoubleClicked;
 
-				m_fFirearmTabInitialized = true;
-
-				FirearmAccessoriesShowAllCheckBox.Checked = true;
 				FirearmAccessoriesShowAllCheckBox.Click += OnFirearmAccessoriesShowAllClicked;
 
-				FirearmAccessoriesShowGroupsCheckBox.Checked = true;
 				FirearmAccessoriesShowGroupsCheckBox.Click += OnFirearmAccessoriesShowGroupsClicked;
 
 				FirearmAccessoryAttachButton.Click += OnFirearmAccessoryAttachClicked;
 
 				FirearmsScopeFilterCheckBox.Click += OnFirearmFilterClicked;
+				FirearmsLaserFilterCheckBox.Click += OnFirearmFilterClicked;
 				FirearmsRedDotFilterCheckBox.Click += OnFirearmFilterClicked;
+				FirearmsMagnifierFilterCheckBox.Click += OnFirearmFilterClicked;
 				FirearmsLightFilterCheckBox.Click += OnFirearmFilterClicked;
 				FirearmsTriggerFilterCheckBox.Click += OnFirearmFilterClicked;
 				FirearmsFurnitureFilterCheckBox.Click += OnFirearmFilterClicked;
 				FirearmsBipodFilterCheckBox.Click += OnFirearmFilterClicked;
 				FirearmsPartsFilterCheckBox.Click += OnFirearmFilterClicked;
 				FirearmsOtherFilterCheckBox.Click += OnFirearmFilterClicked;
+
+				m_fFirearmTabInitialized = true;
 				}
 
 			//----------------------------------------------------------------------------*
@@ -172,6 +172,31 @@ namespace ReloadersWorkShop
 			FirearmCostDetailsGroupBox.Text = String.Format("Cost Details ({0})", m_DataFiles.Preferences.Currency);
 
 			SetFirearmCostDetails();
+
+			FirearmAccessoriesShowAllCheckBox.Checked = m_DataFiles.Preferences.FirearmAccessoryShowAll;
+			FirearmAccessoriesShowGroupsCheckBox.Checked = m_DataFiles.Preferences.FirearmAccessoryShowGroups;
+
+			FirearmsScopeFilterCheckBox.Checked = m_DataFiles.Preferences.FirearmAccessoryScopeFilter;
+			FirearmsLaserFilterCheckBox.Checked = m_DataFiles.Preferences.FirearmAccessoryLaserFilter;
+			FirearmsRedDotFilterCheckBox.Checked = m_DataFiles.Preferences.FirearmAccessoryRedDotFilter;
+			FirearmsMagnifierFilterCheckBox.Checked = m_DataFiles.Preferences.FirearmAccessoryMagnifierFilter;
+			FirearmsLightFilterCheckBox.Checked = m_DataFiles.Preferences.FirearmAccessoryLightFilter;
+			FirearmsTriggerFilterCheckBox.Checked = m_DataFiles.Preferences.FirearmAccessoryTriggerFilter;
+			FirearmsFurnitureFilterCheckBox.Checked = m_DataFiles.Preferences.FirearmAccessoryFurnitureFilter;
+			FirearmsBipodFilterCheckBox.Checked = m_DataFiles.Preferences.FirearmAccessoryBipodFilter;
+			FirearmsPartsFilterCheckBox.Checked = m_DataFiles.Preferences.FirearmAccessoryPartsFilter;
+			FirearmsOtherFilterCheckBox.Checked = m_DataFiles.Preferences.FirearmAccessoryOtherFilter;
+
+			cFirearm Firearm = null;
+
+			if (m_FirearmsListView.SelectedItems.Count > 0 && !FirearmAccessoriesShowAllCheckBox.Checked)
+				Firearm = (cFirearm) m_FirearmsListView.SelectedItems[0].Tag;
+
+			m_FirearmAccessoriesListView.Firearm = Firearm;
+
+			m_FirearmAccessoriesListView.ShowGroups = m_DataFiles.Preferences.FirearmAccessoryShowGroups;
+
+			SetFirearmAttachButton();
 
 			UpdateFirearmTabButtons();
 			}
@@ -367,6 +392,8 @@ namespace ReloadersWorkShop
 
 			m_FirearmAccessoriesListView.Firearm = Firearm;
 
+			m_DataFiles.Preferences.FirearmAccessoryShowAll = FirearmAccessoriesShowAllCheckBox.Checked;
+
 			UpdateFirearmTabButtons();
 			}
 
@@ -378,6 +405,9 @@ namespace ReloadersWorkShop
 			{
 			m_FirearmAccessoriesListView.ShowGroups = FirearmAccessoriesShowGroupsCheckBox.Checked;
 			m_FirearmAccessoriesListView.Populate();
+			SetFirearmAttachButton();
+
+			m_DataFiles.Preferences.FirearmAccessoryShowGroups = FirearmAccessoriesShowGroupsCheckBox.Checked;
 
 			UpdateFirearmTabButtons();
 			}
@@ -419,6 +449,15 @@ namespace ReloadersWorkShop
 			{
 			if (!m_fInitialized || m_FirearmAccessoriesListView.Populating)
 				return;
+
+			cGear Gear = null;
+
+			if (m_FirearmAccessoriesListView.SelectedItems.Count > 0)
+				{
+				Gear = (cGear) m_FirearmAccessoriesListView.SelectedItems[0].Tag;
+
+				m_DataFiles.Preferences.LastFirearmAccessorySelected = Gear;
+				}
 
 			UpdateFirearmTabButtons();
 			}
@@ -584,35 +623,53 @@ namespace ReloadersWorkShop
 			switch ((sender as CheckBox).Name)
 				{
 				case "FirearmsScopeFilterCheckBox":
-					m_FirearmAccessoriesListView.Filter( cGear.eGearTypes.Scope, (sender as CheckBox).Checked);
-						break;
+					m_FirearmAccessoriesListView.Filter(cGear.eGearTypes.Scope, (sender as CheckBox).Checked);
+					m_DataFiles.Preferences.FirearmAccessoryScopeFilter = (sender as CheckBox).Checked;
+					break;
+
+				case "FirearmsLaserFilterCheckBox":
+					m_FirearmAccessoriesListView.Filter(cGear.eGearTypes.Laser, (sender as CheckBox).Checked);
+					m_DataFiles.Preferences.FirearmAccessoryLaserFilter = (sender as CheckBox).Checked;
+					break;
 
 				case "FirearmsRedDotFilterCheckBox":
 					m_FirearmAccessoriesListView.Filter(cGear.eGearTypes.RedDot, (sender as CheckBox).Checked);
+					m_DataFiles.Preferences.FirearmAccessoryRedDotFilter = (sender as CheckBox).Checked;
+					break;
+
+				case "FirearmsMagnifierFilterCheckBox":
+					m_FirearmAccessoriesListView.Filter(cGear.eGearTypes.Magnifier, (sender as CheckBox).Checked);
+					m_DataFiles.Preferences.FirearmAccessoryMagnifierFilter = (sender as CheckBox).Checked;
 					break;
 
 				case "FirearmsLightFilterCheckBox":
 					m_FirearmAccessoriesListView.Filter(cGear.eGearTypes.Light, (sender as CheckBox).Checked);
+					m_DataFiles.Preferences.FirearmAccessoryLightFilter = (sender as CheckBox).Checked;
 					break;
 
 				case "FirearmsTriggerFilterCheckBox":
 					m_FirearmAccessoriesListView.Filter(cGear.eGearTypes.Trigger, (sender as CheckBox).Checked);
+					m_DataFiles.Preferences.FirearmAccessoryTriggerFilter = (sender as CheckBox).Checked;
 					break;
 
 				case "FirearmsFurnitureFilterCheckBox":
 					m_FirearmAccessoriesListView.Filter(cGear.eGearTypes.Furniture, (sender as CheckBox).Checked);
+					m_DataFiles.Preferences.FirearmAccessoryFurnitureFilter = (sender as CheckBox).Checked;
 					break;
 
 				case "FirearmsBipodFilterCheckBox":
 					m_FirearmAccessoriesListView.Filter(cGear.eGearTypes.Bipod, (sender as CheckBox).Checked);
+					m_DataFiles.Preferences.FirearmAccessoryBipodFilter = (sender as CheckBox).Checked;
 					break;
 
 				case "FirearmsPartsFilterCheckBox":
 					m_FirearmAccessoriesListView.Filter(cGear.eGearTypes.Parts, (sender as CheckBox).Checked);
+					m_DataFiles.Preferences.FirearmAccessoryPartsFilter = (sender as CheckBox).Checked;
 					break;
 
 				case "FirearmsOtherFilterCheckBox":
 					m_FirearmAccessoriesListView.Filter(cGear.eGearTypes.Misc, (sender as CheckBox).Checked);
+					m_DataFiles.Preferences.FirearmAccessoryOtherFilter = (sender as CheckBox).Checked;
 					break;
 				}
 
@@ -793,6 +850,25 @@ namespace ReloadersWorkShop
 			m_FirearmsListView.Populate();
 
 			UpdateFirearmTabButtons();
+			}
+
+		//============================================================================*
+		// SetFirearmAttachButton()
+		//============================================================================*
+
+		public void SetFirearmAttachButton()
+			{
+			string strText = "Attach";
+
+			if (m_FirearmAccessoriesListView.SelectedItems.Count > 0)
+				{
+				cGear Gear = (cGear) m_FirearmAccessoriesListView.SelectedItems[0].Tag;
+
+				if (Gear != null && Gear.Parent != null)
+					strText = "Detach";
+				}
+
+			FirearmAccessoryAttachButton.Text = strText;
 			}
 
 		//============================================================================*

@@ -55,7 +55,9 @@ namespace ReloadersWorkShop
 		// Firearm Accessories
 
 		private bool m_fScopes = false;
+		private bool m_fLasers = false;
 		private bool m_fRedDots = false;
+		private bool m_fMagnifiers = false;
 		private bool m_fLights = false;
 		private bool m_fTriggers = false;
 		private bool m_fFurniture = false;
@@ -235,7 +237,9 @@ namespace ReloadersWorkShop
 			m_fShotguns = Manufacturer.m_fShotguns;
 
 			m_fScopes = Manufacturer.m_fScopes;
+			m_fLasers = Manufacturer.m_fLasers;
 			m_fRedDots = Manufacturer.m_fRedDots;
+			m_fMagnifiers = Manufacturer.m_fMagnifiers;
 			m_fLights = Manufacturer.m_fLights;
 			m_fTriggers = Manufacturer.m_fTriggers;
 			m_fFurniture = Manufacturer.m_fFurniture;
@@ -285,7 +289,9 @@ namespace ReloadersWorkShop
 				// Firearms Parts
 
 				strLine += m_fScopes ? ",Yes" : ",-";
+				strLine += m_fLasers ? ",Yes" : ",-";
 				strLine += m_fRedDots ? ",Yes" : ",-";
+				strLine += m_fMagnifiers ? ",Yes" : ",-";
 				strLine += m_fLights ? ",Yes" : ",-";
 				strLine += m_fTriggers ? ",Yes" : ",-";
 				strLine += m_fFurniture ? ",Yes" : ",-";
@@ -304,7 +310,7 @@ namespace ReloadersWorkShop
 		public static string CSVLineHeader			{
 			get
 				{
-				string strLine = "Name,Website,Bullets,Powder,Primers,Cases,Ammo,Bullet Molds,Head Stamp,Handguns,Rifles,Shotguns, Scopes,Red Dots,Lights,Triggers,Furniture,Bipods,Firearm Parts,Other";
+				string strLine = "Name,Website,Bullets,Powder,Primers,Cases,Ammo,Bullet Molds,Head Stamp,Handguns,Rifles,Shotguns, Scopes,Lasers,Red Dots,Magnifiers,Lights,Triggers,Furniture,Bipods,Firearm Parts,Other";
 
 				return (strLine);
 				}
@@ -423,10 +429,26 @@ namespace ReloadersWorkShop
 
 			XMLThisElement.AppendChild(XMLElement);
 
+			// Lasers
+
+			XMLElement = XMLDocument.CreateElement("Lasers");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fLasers ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
 			// Red Dots
 
 			XMLElement = XMLDocument.CreateElement("RedDots");
 			XMLTextElement = XMLDocument.CreateTextNode(m_fRedDots ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Magnifiers
+
+			XMLElement = XMLDocument.CreateElement("Magnifiers");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fMagnifiers ? "Yes" : "-");
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
@@ -506,8 +528,12 @@ namespace ReloadersWorkShop
 				{
 				case cGear.eGearTypes.Scope:
 					return (m_fScopes);
+				case cGear.eGearTypes.Laser:
+					return (m_fLasers);
 				case cGear.eGearTypes.RedDot:
 					return (m_fRedDots);
+				case cGear.eGearTypes.Magnifier:
+					return (m_fMagnifiers);
 				case cGear.eGearTypes.Light:
 					return (m_fLights);
 				case cGear.eGearTypes.Trigger:
@@ -541,6 +567,22 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Lasers Property
+		//============================================================================*
+
+		public bool Lasers
+			{
+			get
+				{
+				return (m_fLasers);
+				}
+			set
+				{
+				m_fLasers = value;
+				}
+			}
+
+		//============================================================================*
 		// Lights Property
 		//============================================================================*
 
@@ -553,6 +595,22 @@ namespace ReloadersWorkShop
 			set
 				{
 				m_fLights = value;
+				}
+			}
+
+		//============================================================================*
+		// Magnifiers Property
+		//============================================================================*
+
+		public bool Magnifiers
+			{
+			get
+				{
+				return (m_fMagnifiers);
+				}
+			set
+				{
+				m_fMagnifiers = value;
 				}
 			}
 

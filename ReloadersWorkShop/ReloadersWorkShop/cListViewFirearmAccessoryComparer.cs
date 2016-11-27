@@ -83,21 +83,26 @@ namespace ReloadersWorkShop
 				//----------------------------------------------------------------------------*
 
 				case 0:
-					rc = Gear1.Manufacturer.CompareTo(Gear2.Manufacturer);
-
-					if (rc == 0)
-						rc = Gear1.PartNumber.CompareTo(Gear2.PartNumber);
+					rc = CompareGear(Gear1, Gear2);
 
 					fSpecial = true;
 
 					break;
 
 				//----------------------------------------------------------------------------*
-				// Part Number
+				// Model
 				//----------------------------------------------------------------------------*
 
 				case 1:
 					rc = cDataFiles.ComparePartNumbers(Gear1.PartNumber, Gear2.PartNumber);
+
+					if (rc == 0)
+						{
+						rc = Gear1.Manufacturer.CompareTo(Gear2.Manufacturer);
+
+						if (rc == 0)
+							rc = cDataFiles.ComparePartNumbers(Gear1.SerialNumber, Gear2.SerialNumber);
+						}
 
 					fSpecial = true;
 
@@ -110,6 +115,14 @@ namespace ReloadersWorkShop
 				case 2:
 					rc = cDataFiles.ComparePartNumbers(Gear1.SerialNumber, Gear2.SerialNumber);
 
+					if (rc == 0)
+						{
+						rc = Gear1.Manufacturer.CompareTo(Gear2.Manufacturer);
+
+						if (rc == 0)
+							rc = cDataFiles.ComparePartNumbers(Gear1.PartNumber, Gear2.PartNumber);
+						}
+
 					fSpecial = true;
 
 					break;
@@ -120,7 +133,222 @@ namespace ReloadersWorkShop
 
 				case 3:
 					rc = Gear1.Description.CompareTo(Gear2.Description);
-					;
+
+					if (rc == 0)
+						{
+						rc = Gear1.Manufacturer.CompareTo(Gear2.Manufacturer);
+
+						if (rc == 0)
+							{
+							rc = cDataFiles.ComparePartNumbers(Gear1.PartNumber, Gear2.PartNumber);
+
+							if (rc == 0)
+								rc = cDataFiles.ComparePartNumbers(Gear1.SerialNumber, Gear2.SerialNumber);
+							}
+						}
+
+					fSpecial = true;
+
+					break;
+
+				//----------------------------------------------------------------------------*
+				// Firearm
+				//----------------------------------------------------------------------------*
+
+				case 4:
+					rc = (Object1 as ListViewItem).SubItems[4].Text.CompareTo((Object2 as ListViewItem).SubItems[4].Text);
+
+					if (rc == 0)
+						CompareGear(Gear1, Gear2);
+
+					fSpecial = true;
+
+					break;
+
+				//----------------------------------------------------------------------------*
+				// Source
+				//----------------------------------------------------------------------------*
+
+				case 5:
+					rc = Gear1.Source.CompareTo(Gear2.Source);
+
+					if (rc == 0)
+						{
+						rc = Gear1.Manufacturer.CompareTo(Gear2.Manufacturer);
+
+						if (rc == 0)
+							{
+							rc = cDataFiles.ComparePartNumbers(Gear1.PartNumber, Gear2.PartNumber);
+
+							if (rc == 0)
+								{
+								rc = cDataFiles.ComparePartNumbers(Gear1.SerialNumber, Gear2.SerialNumber);
+
+								if (rc == 0)
+									rc = Gear1.Description.CompareTo(Gear2.Description);
+								}
+							}
+						}
+
+					fSpecial = true;
+
+					break;
+
+				//----------------------------------------------------------------------------*
+				// Date
+				//----------------------------------------------------------------------------*
+
+				case 6:
+					rc = Gear1.PurchaseDate.CompareTo(Gear2.PurchaseDate);
+
+					if (rc == 0)
+						rc = CompareGear(Gear1, Gear2);
+
+					fSpecial = true;
+
+					break;
+
+				//----------------------------------------------------------------------------*
+				// Price
+				//----------------------------------------------------------------------------*
+
+				case 7:
+					rc = Gear1.PurchasePrice.CompareTo(Gear2.PurchasePrice);
+
+					if (rc == 0)
+						{
+						rc = Gear1.Manufacturer.CompareTo(Gear2.Manufacturer);
+
+						if (rc == 0)
+							{
+							rc = cDataFiles.ComparePartNumbers(Gear1.PartNumber, Gear2.PartNumber);
+
+							if (rc == 0)
+								{
+								rc = Gear1.Description.CompareTo(Gear2.Description);
+
+								if (rc == 0)
+									{
+									rc = cDataFiles.ComparePartNumbers(Gear1.SerialNumber, Gear2.SerialNumber);
+
+									if (rc == 0)
+										rc = Gear1.Source.CompareTo(Gear2.Source);
+									}
+								}
+							}
+						}
+
+					fSpecial = true;
+
+					break;
+
+				//----------------------------------------------------------------------------*
+				// Tax
+				//----------------------------------------------------------------------------*
+
+				case 8:
+					rc = Gear1.Tax.CompareTo(Gear2.Tax);
+
+					if (rc == 0)
+						{
+						rc = Gear1.Manufacturer.CompareTo(Gear2.Manufacturer);
+
+						if (rc == 0)
+							{
+							rc = cDataFiles.ComparePartNumbers(Gear1.PartNumber, Gear2.PartNumber);
+
+							if (rc == 0)
+								{
+								rc = Gear1.Description.CompareTo(Gear2.Description);
+
+								if (rc == 0)
+									{
+									rc = cDataFiles.ComparePartNumbers(Gear1.SerialNumber, Gear2.SerialNumber);
+
+									if (rc == 0)
+										rc = Gear1.Source.CompareTo(Gear2.Source);
+									}
+								}
+							}
+						}
+
+					fSpecial = true;
+
+					break;
+
+				//----------------------------------------------------------------------------*
+				// Shipping
+				//----------------------------------------------------------------------------*
+
+				case 9:
+					rc = Gear1.Shipping.CompareTo(Gear2.Shipping);
+
+					if (rc == 0)
+						{
+						rc = Gear1.Manufacturer.CompareTo(Gear2.Manufacturer);
+
+						if (rc == 0)
+							{
+							rc = cDataFiles.ComparePartNumbers(Gear1.PartNumber, Gear2.PartNumber);
+
+							if (rc == 0)
+								{
+								rc = Gear1.Description.CompareTo(Gear2.Description);
+
+								if (rc == 0)
+									{
+									rc = cDataFiles.ComparePartNumbers(Gear1.SerialNumber, Gear2.SerialNumber);
+
+									if (rc == 0)
+										rc = Gear1.Source.CompareTo(Gear2.Source);
+									}
+								}
+							}
+						}
+
+					fSpecial = true;
+
+					break;
+
+				//----------------------------------------------------------------------------*
+				// Total
+				//----------------------------------------------------------------------------*
+
+				case 10:
+					double dTotal1 = 0.0;
+
+					if ((Object1 as ListViewItem).Text != "-")
+						Double.TryParse((Object1 as ListViewItem).SubItems[10].Text, out dTotal1);
+
+					double dTotal2 = 0.0;
+
+					if ((Object2 as ListViewItem).Text != "-")
+						Double.TryParse((Object2 as ListViewItem).SubItems[10].Text, out dTotal2);
+
+					rc = dTotal1.CompareTo(dTotal2);
+
+					if (rc == 0)
+						{
+						rc = Gear1.Manufacturer.CompareTo(Gear2.Manufacturer);
+
+						if (rc == 0)
+							{
+							rc = cDataFiles.ComparePartNumbers(Gear1.PartNumber, Gear2.PartNumber);
+
+							if (rc == 0)
+								{
+								rc = Gear1.Description.CompareTo(Gear2.Description);
+
+								if (rc == 0)
+									{
+									rc = cDataFiles.ComparePartNumbers(Gear1.SerialNumber, Gear2.SerialNumber);
+
+									if (rc == 0)
+										rc = Gear1.Source.CompareTo(Gear2.Source);
+									}
+								}
+							}
+						}
 
 					fSpecial = true;
 
@@ -136,6 +364,30 @@ namespace ReloadersWorkShop
 				}
 
 			return (base.Compare(Object1, Object2));
+			}
+
+		//============================================================================*
+		// CompareGear()
+		//============================================================================*
+
+		public int CompareGear(cGear Gear1, cGear Gear2)
+			{
+			int rc = Gear1.Manufacturer.CompareTo(Gear2.Manufacturer);
+
+			if (rc == 0)
+				{
+				rc = cDataFiles.ComparePartNumbers(Gear1.PartNumber, Gear2.PartNumber);
+
+				if (rc == 0)
+					{
+					rc = Gear1.Description.CompareTo(Gear2.Description);
+
+					if (rc == 0)
+						rc = cDataFiles.ComparePartNumbers(Gear1.SerialNumber, Gear2.SerialNumber);
+					}
+				}
+
+			return (rc);
 			}
 		}
 	}

@@ -34,7 +34,7 @@ namespace ReloadersWorkShop
 
 		private cFirearm m_Firearm = null;
 
-		private bool[] m_afFilters = new bool[9];
+		private bool[] m_afFilters = new bool[(int) cGear.eGearTypes.NumGearTypes];
 
 		private cListViewColumn[] m_arColumns = new cListViewColumn[]
 			{
@@ -56,7 +56,7 @@ namespace ReloadersWorkShop
 		//============================================================================*
 
 		public cFirearmAccessoryListView(cDataFiles DataFiles)
-			: base(DataFiles, cPreferences.eApplicationListView.FirearmsListView)
+			: base(DataFiles, cPreferences.eApplicationListView.FirearmAccessoriesListView)
 			{
 			m_DataFiles = DataFiles;
 
@@ -65,9 +65,8 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			SetColumns();
-			ShowGroups = true;
 
-			for(int i = 0;i < (int) cGear.eGearTypes.NumGearTypes;i++)
+			for (int i = 0; i < (int) cGear.eGearTypes.NumGearTypes; i++)
 				m_afFilters[i] = true;
 
 			//----------------------------------------------------------------------------*
@@ -133,7 +132,7 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// Firearm()
+		// Firearm Property
 		//============================================================================*
 
 		public cFirearm Firearm
@@ -144,9 +143,24 @@ namespace ReloadersWorkShop
 				}
 			set
 				{
-				m_Firearm = value;
+				if (value == null)
+					{
+					if (m_Firearm != null)
+						{
+						m_Firearm = value;
 
-				Populate();
+						Populate();
+						}
+					}
+				else
+					{
+					if (value.CompareTo(m_Firearm) != 0)
+						{
+						m_Firearm = value;
+
+						Populate();
+						}
+					}
 				}
 			}
 
@@ -188,15 +202,37 @@ namespace ReloadersWorkShop
 			Populating = true;
 
 			//----------------------------------------------------------------------------*
-			// FirearmAccessoryListView Items
+			// FirearmListView Items
 			//----------------------------------------------------------------------------*
 
 			Items.Clear();
 
-			ListViewItem Item = null;
+			ListViewItem SelectItem = null;
 
 			foreach (cGear Gear in m_DataFiles.GearList)
-				Item = AddFirearmAccessory(Gear, false);
+				{
+				ListViewItem Item = AddFirearmAccessory(Gear);
+
+				if (Item != null && m_DataFiles.Preferences.LastFirearmAccessorySelected != null && m_DataFiles.Preferences.LastFirearmAccessorySelected.CompareTo(Gear) == 0)
+					SelectItem = Item;
+				}
+
+			if (SelectItem != null)
+				{
+				SelectItem.Selected = true;
+				}
+			else
+				{
+				if (Items.Count > 0)
+					{
+					Items[0].Selected = true;
+
+					m_DataFiles.Preferences.LastFirearmAccessorySelected = (cGear) Items[0].Tag;
+					}
+				}
+
+			if (SelectedItems.Count > 0)
+				SelectedItems[0].EnsureVisible();
 
 			Populating = false;
 			}
@@ -213,7 +249,15 @@ namespace ReloadersWorkShop
 
 			Groups.Add(Group);
 
+			Group = new ListViewGroup("LaserGroup", cGear.GearTypeString(cGear.eGearTypes.Laser));
+
+			Groups.Add(Group);
+
 			Group = new ListViewGroup("RedDotGroup", cGear.GearTypeString(cGear.eGearTypes.RedDot));
+
+			Groups.Add(Group);
+
+			Group = new ListViewGroup("MagnifierGroup", cGear.GearTypeString(cGear.eGearTypes.Magnifier));
 
 			Groups.Add(Group);
 
@@ -309,6 +353,13 @@ namespace ReloadersWorkShop
 				}
 
 			//----------------------------------------------------------------------------*
+			// If the item was not found, add it
+			//----------------------------------------------------------------------------*
+
+			if (Item == null)
+				return (AddFirearmAccessory(Gear, fSelect));
+
+			//----------------------------------------------------------------------------*
 			// Otherwise, update the Item Data
 			//----------------------------------------------------------------------------*
 
@@ -320,8 +371,6 @@ namespace ReloadersWorkShop
 
 				Item.EnsureVisible();
 				}
-
-			Focus();
 
 			return (Item);
 			}

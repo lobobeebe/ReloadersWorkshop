@@ -89,8 +89,6 @@ namespace ReloadersWorkShop
 		private string m_strMagazine = "";
 		private int m_nCapacity = 1;
 
-		private string m_strNotes = "";
-
 		//----------------------------------------------------------------------------*
 		// Miscellaneous
 		//----------------------------------------------------------------------------*
@@ -167,8 +165,6 @@ namespace ReloadersWorkShop
 
 			m_strMagazine = Firearm.m_strMagazine;
 			m_nCapacity = Firearm.m_nCapacity;
-
-			m_strNotes = Firearm.m_strNotes;
 			}
 
 		//============================================================================*
@@ -432,8 +428,6 @@ namespace ReloadersWorkShop
 				strLine += ",";
 				strLine += m_nCapacity;
 
-				strLine += m_strNotes;
-
 				return (strLine);
 				}
 			}
@@ -446,7 +440,7 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				return("Manufacturer,Model,Serial Number,Firearm Type,Barrel Length,Twist,Sight Height,Scoped,Scope Click, Turret Type,Zero Range,HeadSpace,Neck,Source,Purchase Date,Price,Receiver Finish,Barrel Finish,Type,Action,Hammer,Magazine,Capacity,Notes");
+				return("Manufacturer,Model,Serial Number,Firearm Type,Barrel Length,Twist,Sight Height,Scoped,Scope Click, Turret Type,Zero Range,HeadSpace,Neck,Source,Purchase Date,Price,Receiver Finish,Barrel Finish,Type,Action,Hammer,Magazine,Capacity");
 				}
 			}
 
@@ -639,14 +633,6 @@ namespace ReloadersWorkShop
 
 			XMLElement = XMLDocument.CreateElement("Capacity");
 			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nCapacity));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Notes
-
-			XMLElement = XMLDocument.CreateElement("Notes");
-			XMLTextElement = XMLDocument.CreateTextNode(m_strNotes);
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
@@ -871,22 +857,6 @@ namespace ReloadersWorkShop
 				{
 				if (value >= 0.00)
 					m_dNeck = value;
-				}
-			}
-
-		//============================================================================*
-		// Notes Property
-		//============================================================================*
-
-		public string Notes
-			{
-			get
-				{
-				return (m_strNotes);
-				}
-			set
-				{
-				m_strNotes = value;
 				}
 			}
 

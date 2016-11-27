@@ -56,7 +56,8 @@ namespace ReloadersWorkShop.Preferences
 			TransactionsListView,
 			AmmoListView,
 			EvaluationListView,
-			AmmoTestListView
+			AmmoTestListView,
+			FirearmAccessoriesListView
 			}
 
 		//============================================================================*
@@ -340,6 +341,24 @@ namespace ReloadersWorkShop.Preferences
 		private bool m_fFirearmListPreviewMaximized = false;
 		private Point m_FirearmListPreviewLocation = new Point(100, 100);
 		private Size m_FirearmListPreviewSize = new Size(425, 550);
+
+		// Firearm Accessory List Settings
+
+		private bool m_fFirearmAccessoryShowAll = true;
+		private bool m_fFirearmAccessoryShowGroups = true;
+
+		private bool m_fFirearmAccessoryScopeFilter = true;
+		private bool m_fFirearmAccessoryLaserFilter = true;
+		private bool m_fFirearmAccessoryRedDotFilter = true;
+		private bool m_fFirearmAccessoryMagnifierFilter = true;
+		private bool m_fFirearmAccessoryLightFilter = true;
+		private bool m_fFirearmAccessoryTriggerFilter = true;
+		private bool m_fFirearmAccessoryFurnitureFilter = true;
+		private bool m_fFirearmAccessoryBipodFilter = true;
+		private bool m_fFirearmAccessoryPartsFilter = true;
+		private bool m_fFirearmAccessoryOtherFilter = true;
+
+		private cGear m_LastFirearmAccessorySelected = null;
 
 		// Hide Unchecked Button States
 
@@ -1796,6 +1815,198 @@ namespace ReloadersWorkShop.Preferences
 			}
 
 		//============================================================================*
+		// FirearmAccessoryBipodFilter Property
+		//============================================================================*
+
+		public bool FirearmAccessoryBipodFilter
+			{
+			get
+				{
+				return (m_fFirearmAccessoryBipodFilter);
+				}
+			set
+				{
+				m_fFirearmAccessoryBipodFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// FirearmAccessoryFurnitureFilter Property
+		//============================================================================*
+
+		public bool FirearmAccessoryFurnitureFilter
+			{
+			get
+				{
+				return (m_fFirearmAccessoryFurnitureFilter);
+				}
+			set
+				{
+				m_fFirearmAccessoryFurnitureFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// FirearmAccessoryLaserFilter Property
+		//============================================================================*
+
+		public bool FirearmAccessoryLaserFilter
+			{
+			get
+				{
+				return (m_fFirearmAccessoryLaserFilter);
+				}
+			set
+				{
+				m_fFirearmAccessoryLaserFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// FirearmAccessoryLightFilter Property
+		//============================================================================*
+
+		public bool FirearmAccessoryLightFilter
+			{
+			get
+				{
+				return (m_fFirearmAccessoryLightFilter);
+				}
+			set
+				{
+				m_fFirearmAccessoryLightFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// FirearmAccessoryMagnifierFilter Property
+		//============================================================================*
+
+		public bool FirearmAccessoryMagnifierFilter
+			{
+			get
+				{
+				return (m_fFirearmAccessoryMagnifierFilter);
+				}
+			set
+				{
+				m_fFirearmAccessoryMagnifierFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// FirearmAccessoryOtherFilter Property
+		//============================================================================*
+
+		public bool FirearmAccessoryOtherFilter
+			{
+			get
+				{
+				return (m_fFirearmAccessoryOtherFilter);
+				}
+			set
+				{
+				m_fFirearmAccessoryOtherFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// FirearmAccessoryPartsFilter Property
+		//============================================================================*
+
+		public bool FirearmAccessoryPartsFilter
+			{
+			get
+				{
+				return (m_fFirearmAccessoryPartsFilter);
+				}
+			set
+				{
+				m_fFirearmAccessoryPartsFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// FirearmAccessoryRedDotFilter Property
+		//============================================================================*
+
+		public bool FirearmAccessoryRedDotFilter
+			{
+			get
+				{
+				return (m_fFirearmAccessoryRedDotFilter);
+				}
+			set
+				{
+				m_fFirearmAccessoryRedDotFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// FirearmAccessoryScopeFilter Property
+		//============================================================================*
+
+		public bool FirearmAccessoryScopeFilter
+			{
+			get
+				{
+				return (m_fFirearmAccessoryScopeFilter);
+				}
+			set
+				{
+				m_fFirearmAccessoryScopeFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// FirearmAccessoryShowAll Property
+		//============================================================================*
+
+		public bool FirearmAccessoryShowAll
+			{
+			get
+				{
+				return (m_fFirearmAccessoryShowAll);
+				}
+			set
+				{
+				m_fFirearmAccessoryShowAll = value;
+				}
+			}
+
+		//============================================================================*
+		// FirearmAccessoryShowGroups Property
+		//============================================================================*
+
+		public bool FirearmAccessoryShowGroups
+			{
+			get
+				{
+				return (m_fFirearmAccessoryShowGroups);
+				}
+			set
+				{
+				m_fFirearmAccessoryShowGroups = value;
+				}
+			}
+
+		//============================================================================*
+		// FirearmAccessoryTriggerFilter Property
+		//============================================================================*
+
+		public bool FirearmAccessoryTriggerFilter
+			{
+			get
+				{
+				return (m_fFirearmAccessoryTriggerFilter);
+				}
+			set
+				{
+				m_fFirearmAccessoryTriggerFilter = value;
+				}
+			}
+
+		//============================================================================*
 		// FirearmSortColumn Property
 		//============================================================================*
 
@@ -2463,6 +2674,22 @@ namespace ReloadersWorkShop.Preferences
 			set
 				{
 				m_LastFirearm = value;
+				}
+			}
+
+		//============================================================================*
+		// LastFirearmAccessorySelected Property
+		//============================================================================*
+
+		public cGear LastFirearmAccessorySelected
+			{
+			get
+				{
+				return (m_LastFirearmAccessorySelected);
+				}
+			set
+				{
+				m_LastFirearmAccessorySelected = value;
 				}
 			}
 

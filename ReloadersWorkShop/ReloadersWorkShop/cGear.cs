@@ -32,7 +32,9 @@ namespace ReloadersWorkShop
 		public enum eGearTypes
 			{
 			Scope = 0,
+			Laser,
 			RedDot,
+			Magnifier,
 			Light,
 			Trigger,
 			Furniture,
@@ -53,6 +55,7 @@ namespace ReloadersWorkShop
 		private string m_strPartNumber = "";
 		private string m_strSerialNumber = "";
 		private string m_strDescription = "";
+		private string m_strNotes = "";
 
 		private string m_strSource = "";
 		private DateTime m_Date = DateTime.Today;
@@ -176,6 +179,7 @@ namespace ReloadersWorkShop
 			m_strPartNumber = Gear.m_strPartNumber;
 			m_strSerialNumber = Gear.m_strSerialNumber;
 			m_strDescription = Gear.m_strDescription;
+			m_strNotes = Gear.m_strNotes;
 
 			m_strSource = Gear.m_strSource;
 			m_Date = Gear.PurchaseDate;
@@ -240,6 +244,9 @@ namespace ReloadersWorkShop
 						break;
 					}
 
+				strLine += ",";
+				strLine += m_strNotes;
+
 				return (strLine);
 				}
 			}
@@ -272,6 +279,8 @@ namespace ReloadersWorkShop
 						strLine += (this as cScope).CSVLineHeaderExtension;
 						break;
 					}
+
+				strLine += ",Notes";
 
 				return (strLine);
 				}
@@ -377,6 +386,16 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			ExportDetails(XMLDocument, XMLThisElement);
+
+			//----------------------------------------------------------------------------*
+			// Notes
+			//----------------------------------------------------------------------------*
+
+			XMLElement = XMLDocument.CreateElement("Notes");
+			XMLTextElement = XMLDocument.CreateTextNode(m_strNotes);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
 			}
 
 		//============================================================================*
@@ -415,9 +434,13 @@ namespace ReloadersWorkShop
 					return (cGear.eGearTypes.Firearm);
 				case "Scope":
 					return (cGear.eGearTypes.Scope);
+				case "Laser":
+					return (cGear.eGearTypes.Laser);
 				case "Red Dot":
 					return (cGear.eGearTypes.RedDot);
-				case "Laser/Light":
+				case "Magnifier":
+					return (cGear.eGearTypes.Magnifier);
+				case "Light":
 					return (cGear.eGearTypes.Light);
 				case "Trigger":
 					return (cGear.eGearTypes.Trigger);
@@ -455,11 +478,17 @@ namespace ReloadersWorkShop
 				case cGear.eGearTypes.Scope:
 					return ("Scope");
 
+				case cGear.eGearTypes.Laser:
+					return ("Laser");
+
 				case cGear.eGearTypes.RedDot:
 					return ("Red Dot");
 
+				case cGear.eGearTypes.Magnifier:
+					return ("Magnifier");
+
 				case cGear.eGearTypes.Light:
-					return("Laser/Light");
+					return("Light");
 
 				case cGear.eGearTypes.Trigger:
 					return ("Trigger");
@@ -474,7 +503,7 @@ namespace ReloadersWorkShop
 					return ("Firearm Parts");
 				}
 
-			return ("Other Part/Accessory");
+			return ("Other");
 			}
 
 		//============================================================================*
@@ -490,6 +519,22 @@ namespace ReloadersWorkShop
 			set
 				{
 				m_Manufacturer = value;
+				}
+			}
+
+		//============================================================================*
+		// Notes Property
+		//============================================================================*
+
+		public string Notes
+			{
+			get
+				{
+				return (m_strNotes);
+				}
+			set
+				{
+				m_strNotes = value;
 				}
 			}
 

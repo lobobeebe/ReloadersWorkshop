@@ -29,11 +29,12 @@ namespace ReloadersWorkShop
 		// Private Constant Data Members
 		//============================================================================*
 
-		private const string cm_strTypeToolTip = "Select the type of this part or accessory.";
+		private const string cm_strTypeToolTip = "The general type of this part or accessory.";
 		private const string cm_strManufacturerToolTip = "Select the manufacturer of this part or accessory.";
 		private const string cm_strPartNumberToolTip = "Enter the manufacturer's part number for this part or accessory.";
 		private const string cm_strSerialNumberToolTip = "Enter this part or accessory's serial number, if any.";
 		private const string cm_strDescriptionToolTip = "Enter a description of this part or accessory.";
+		private const string cm_strNotesToolTip = "Enter any notes you might have for this part or accessory.";
 
 		private const string cm_strSourceToolTip = "Enter where you obtained this part or accessory.";
 		private const string cm_strPriceToolTip = "Enter what you paid for this part or accessory.";
@@ -44,6 +45,11 @@ namespace ReloadersWorkShop
 		private const string cm_strScopeTubeToolTip = "Select this scope's tube diameter.";
 		private const string cm_strScopeClickToolTip = "Enter this scope's turret click increment.";
 		private const string cm_strScopeTypeToolTip = "Select this scope's turret type.";
+
+		private const string cm_strRedDotMOAToolTip = "Enter the MOA of this sight's dot.";
+		private const string cm_strRedDotCowitnessHeightToolTip = "Enter the height at which this sight will line up with iron sights.";
+		private const string cm_strRedDotTubeDiameterToolTip = "Enter this sight's tube diameter.";
+		private const string cm_strRedDotBatteryToolTip = "Enter the battery information for this sight.  (2x2032, CR200, etc...)";
 
 		private const string cm_strOKButtonToolTip = "Click to add or update this part or accessory with the above data.";
 		private const string cm_strCancelButtonToolTip = "Click to cancel changes and return to the main window.";
@@ -100,6 +106,10 @@ namespace ReloadersWorkShop
 						m_Gear = new cScope((Gear as cScope));
 						break;
 
+					case cGear.eGearTypes.RedDot:
+						m_Gear = new cRedDot((Gear as cRedDot));
+						break;
+
 					default:
 						m_Gear = new cGear(Gear);
 						break;
@@ -121,6 +131,7 @@ namespace ReloadersWorkShop
 				PartNumberTextBox.TextChanged += OnPartNumberChanged;
 				SerialNumberTextBox.TextChanged += OnSerialNumberChanged;
 				DescriptionTextBox.TextChanged += OnDescriptionChanged;
+				NotesTextBox.TextChanged += OnNotesChanged;
 
 				// Acquisition Details
 
@@ -137,6 +148,13 @@ namespace ReloadersWorkShop
 				ScopeTubeCombo.SelectedIndexChanged += OnScopeTubeSizeChanged;
 				ScopeClickTextBox.TextChanged += OnScopeClickChanged;
 				ScopeTurretTypeCombo.SelectedIndexChanged += OnScopeTurretTypeChanged;
+
+				// Red Dot Details
+
+				RedDotMOATextBox.TextChanged += OnRedDotMOAChanged;
+				RedDotCowitnessTextBox.TextChanged += OnRedDotCowitnessChanged;
+				RedDotTubeDiameterTextBox.TextChanged += OnRedDotTubeSizeChanged;
+				RedDotBatteryTextBox.TextChanged += OnRedDotBatteryChanged;
 				}
 			else
 				{
@@ -145,6 +163,7 @@ namespace ReloadersWorkShop
 				PartNumberTextBox.ReadOnly = true;
 				SerialNumberTextBox.ReadOnly = true;
 				DescriptionTextBox.ReadOnly = true;
+				NotesTextBox.ReadOnly = true;
 
 				// Acquisition Details
 
@@ -157,6 +176,14 @@ namespace ReloadersWorkShop
 				ScopePowerTextBox.ReadOnly = true;
 				ScopeObjectiveTextBox.ReadOnly = true;
 				ScopeClickTextBox.ReadOnly = true;
+
+
+				// Red Dot Details
+
+				RedDotMOATextBox.ReadOnly = true;
+				RedDotCowitnessTextBox.ReadOnly = true;
+				RedDotTubeDiameterTextBox.ReadOnly = true;
+				RedDotBatteryTextBox.ReadOnly = true;
 				}
 
 			//----------------------------------------------------------------------------*
@@ -230,6 +257,9 @@ namespace ReloadersWorkShop
 				{
 				case cGear.eGearTypes.Scope:
 					return (new cScope());
+
+				case cGear.eGearTypes.RedDot:
+					return (new cRedDot());
 				}
 
 			return (new cGear(eType));
@@ -273,6 +303,22 @@ namespace ReloadersWorkShop
 				return;
 
 			m_Gear.Manufacturer = (cManufacturer) ManufacturerCombo.SelectedItem;
+
+			m_fChanged = true;
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
+		// OnNotesChanged()
+		//============================================================================*
+
+		public void OnNotesChanged(Object sender, EventArgs args)
+			{
+			if (!m_fInitialized || m_fPopulating)
+				return;
+
+			m_Gear.Notes = NotesTextBox.Value;
 
 			m_fChanged = true;
 
@@ -337,6 +383,70 @@ namespace ReloadersWorkShop
 				{
 				m_Gear.PurchaseDate = DateTime.Today;
 				}
+
+			m_fChanged = true;
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
+		// OnRedDotBatteryChanged()
+		//============================================================================*
+
+		public void OnRedDotBatteryChanged(Object sender, EventArgs args)
+			{
+			if (!m_fInitialized || m_fPopulating)
+				return;
+
+			(m_Gear as cRedDot).Battery = RedDotBatteryTextBox.Value;
+
+			m_fChanged = true;
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
+		// OnRedDotCowitnessChanged()
+		//============================================================================*
+
+		public void OnRedDotCowitnessChanged(Object sender, EventArgs args)
+			{
+			if (!m_fInitialized || m_fPopulating)
+				return;
+
+			(m_Gear as cRedDot).CowitnessHeight = RedDotCowitnessTextBox.Value;
+
+			m_fChanged = true;
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
+		// OnRedDotMOAChanged()
+		//============================================================================*
+
+		public void OnRedDotMOAChanged(Object sender, EventArgs args)
+			{
+			if (!m_fInitialized || m_fPopulating)
+				return;
+
+			(m_Gear as cRedDot).DotMOA = RedDotMOATextBox.Value;
+
+			m_fChanged = true;
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
+		// OnRedDotTubeSizeChanged()
+		//============================================================================*
+
+		public void OnRedDotTubeSizeChanged(Object sender, EventArgs args)
+			{
+			if (!m_fInitialized || m_fPopulating)
+				return;
+
+			(m_Gear as cRedDot).TubeDiameter = RedDotTubeDiameterTextBox.Value;
 
 			m_fChanged = true;
 
@@ -468,6 +578,15 @@ namespace ReloadersWorkShop
 
 			m_Gear.Source = SourceCombo.Text;
 
+			if (String.IsNullOrEmpty(m_Gear.Source))
+				{
+				m_Gear.PurchasePrice = 0.0;
+				m_Gear.Tax = 0.0;
+				m_Gear.Shipping = 0.0;
+
+				PopulateGearData();
+				}
+
 			m_fChanged = true;
 
 			UpdateButtons();
@@ -556,6 +675,7 @@ namespace ReloadersWorkShop
 			PartNumberTextBox.Value = m_Gear.PartNumber;
 			SerialNumberTextBox.Value = m_Gear.SerialNumber;
 			DescriptionTextBox.Value = m_Gear.Description;
+			NotesTextBox.Value = m_Gear.Notes;
 
 			//----------------------------------------------------------------------------*
 			// Acquisition Details
@@ -646,6 +766,17 @@ namespace ReloadersWorkShop
 						}
 
 					break;
+
+				//----------------------------------------------------------------------------*
+				// Red Dot Details
+				//----------------------------------------------------------------------------*
+
+				case cGear.eGearTypes.RedDot:
+					RedDotMOATextBox.Value = (m_Gear as cRedDot).DotMOA;
+					RedDotCowitnessTextBox.Value = (m_Gear as cRedDot).CowitnessHeight;
+					RedDotTubeDiameterTextBox.Value = (m_Gear as cRedDot).TubeDiameter;
+					RedDotBatteryTextBox.Value = (m_Gear as cRedDot).Battery;
+					break;
 				}
 
 			m_fPopulating = false;
@@ -729,7 +860,9 @@ namespace ReloadersWorkShop
 			else
 				{
 				bool fScopes = false;
+				bool fLasers = false;
 				bool fRedDots = false;
+				bool fMagnifiers = false;
 				bool fLights = false;
 				bool fTriggers = false;
 				bool fFurniture = false;
@@ -740,7 +873,9 @@ namespace ReloadersWorkShop
 				foreach (cManufacturer Manufacturer in m_DataFiles.ManufacturerList)
 					{
 					fScopes = !fScopes ? Manufacturer.Scopes : fScopes;
+					fLasers = !fLasers ? Manufacturer.Lasers : fLasers;
 					fRedDots = !fRedDots ? Manufacturer.RedDots : fRedDots;
+					fMagnifiers = !fMagnifiers ? Manufacturer.Magnifiers : fMagnifiers;
 					fLights = !fLights ? Manufacturer.Lights : fLights;
 					fTriggers = !fTriggers ? Manufacturer.Triggers : fTriggers;
 					fFurniture = !fFurniture ? Manufacturer.Furniture : fFurniture;
@@ -752,8 +887,14 @@ namespace ReloadersWorkShop
 				if (fScopes)
 					TypeCombo.Items.Add(cGear.GearTypeString(cGear.eGearTypes.Scope));
 
+				if (fLasers)
+					TypeCombo.Items.Add(cGear.GearTypeString(cGear.eGearTypes.Laser));
+
 				if (fRedDots)
 					TypeCombo.Items.Add(cGear.GearTypeString(cGear.eGearTypes.RedDot));
+
+				if (fMagnifiers)
+					TypeCombo.Items.Add(cGear.GearTypeString(cGear.eGearTypes.Magnifier));
 
 				if (fLights)
 					TypeCombo.Items.Add(cGear.GearTypeString(cGear.eGearTypes.Light));
@@ -800,29 +941,34 @@ namespace ReloadersWorkShop
 			ScopeDetailsGroupBox.Visible = m_Gear.GearType == cGear.eGearTypes.Scope;
 			RedDotDetailsGroupBox.Visible = m_Gear.GearType == cGear.eGearTypes.RedDot;
 
-			GroupBox DetailsGroup = m_Gear.GearType == cGear.eGearTypes.Scope ? ScopeDetailsGroupBox : null;
+			GroupBox DetailsGroup = null;
 
-			if (DetailsGroup == null)
-				DetailsGroup = m_Gear.GearType == cGear.eGearTypes.RedDot ? RedDotDetailsGroupBox : null;
+			switch (m_Gear.GearType)
+				{
+				case cGear.eGearTypes.Scope:
+					DetailsGroup = ScopeDetailsGroupBox;
+					break;
+
+				case cGear.eGearTypes.RedDot:
+					DetailsGroup = RedDotDetailsGroupBox;
+					break;
+				}
 
 			if (DetailsGroup != null)
 				{
 				DetailsGroup.Location = new Point(12, AcquisitionGroupBox.Location.Y + AcquisitionGroupBox.Height + 6);
 
-				OKButton.Location = new Point(OKButton.Location.X, DetailsGroup.Location.Y + DetailsGroup.Size.Height + 10);
-				FormCancelButton.Location = new Point(FormCancelButton.Location.X, DetailsGroup.Location.Y + DetailsGroup.Size.Height + 10);
+				NotesGroup.Location = new Point(12, DetailsGroup.Location.Y + DetailsGroup.Height + 6);
 				}
 			else
-				{
-				OKButton.Location = new Point(OKButton.Location.X, AcquisitionGroupBox.Location.Y + AcquisitionGroupBox.Size.Height + 10);
-				FormCancelButton.Location = new Point(FormCancelButton.Location.X, AcquisitionGroupBox.Location.Y + AcquisitionGroupBox.Size.Height + 10);
-				}
+				NotesGroup.Location = new Point(12, AcquisitionGroupBox.Location.Y + AcquisitionGroupBox.Height + 6);
+
+			OKButton.Location = new Point(OKButton.Location.X, NotesGroup.Location.Y + NotesGroup.Size.Height + 10);
+			FormCancelButton.Location = new Point(FormCancelButton.Location.X, NotesGroup.Location.Y + NotesGroup.Size.Height + 10);
 
 			ScopePowerTextBox.Required = m_Gear.GearType == cGear.eGearTypes.Scope;
 			ScopeObjectiveTextBox.Required = m_Gear.GearType == cGear.eGearTypes.Scope;
 			ScopeClickTextBox.MinValue = m_Gear.GearType == cGear.eGearTypes.Scope ? 0.001 : 0.000;
-
-			// TODO: Add Red Dot Settings here
 
 			SetClientSizeCore(GeneralGroup.Location.X + GeneralGroup.Width + 10, FormCancelButton.Location.Y + FormCancelButton.Height + 20);
 			}
@@ -842,6 +988,8 @@ namespace ReloadersWorkShop
 			DescriptionTextBox.Required = true;
 			DescriptionTextBox.MaxLength = 60;
 
+			NotesTextBox.MaxLength = 1000;
+
 			SourceCombo.MaxLength = 35;
 
 			ScopePowerTextBox.MaxLength = 10;
@@ -850,6 +998,19 @@ namespace ReloadersWorkShop
 			ScopeObjectiveTextBox.MaxLength = 5;
 			ScopeObjectiveTextBox.ValidChars = "0123456789.";
 
+			RedDotMOATextBox.NumDecimals = m_DataFiles.Preferences.FirearmDecimals;
+			RedDotMOATextBox.MaxLength = RedDotMOATextBox.NumDecimals + 2;
+
+			RedDotCowitnessTextBox.NumDecimals = m_DataFiles.Preferences.FirearmDecimals;
+			RedDotCowitnessTextBox.MaxLength = RedDotCowitnessTextBox.NumDecimals + 2;
+			RedDotCowitnessMeasurementLabel.Text = cDataFiles.MetricString(cDataFiles.eDataType.Firearm);
+
+			RedDotTubeDiameterTextBox.NumDecimals = m_DataFiles.Preferences.FirearmDecimals;
+			RedDotTubeDiameterTextBox.MaxLength = RedDotTubeDiameterTextBox.NumDecimals + 3;
+			RedDotTubeDiameterMeasurementLabel.Text = cDataFiles.MetricString(cDataFiles.eDataType.Firearm);
+
+			RedDotBatteryTextBox.MaxLength = 30;
+
 			cDataFiles.SetInputParameters(PriceTextBox, cDataFiles.eDataType.Cost);
 			cDataFiles.SetInputParameters(TaxTextBox, cDataFiles.eDataType.Cost);
 			cDataFiles.SetInputParameters(ShippingTextBox, cDataFiles.eDataType.Cost);
@@ -857,7 +1018,6 @@ namespace ReloadersWorkShop
 			PriceLabel.Text = String.Format("Price ({0}):", m_DataFiles.Preferences.Currency);
 			TaxLabel.Text = String.Format("Tax ({0}):", m_DataFiles.Preferences.Currency);
 			ShippingLabel.Text = String.Format("Shipping ({0}):", m_DataFiles.Preferences.Currency);
-
 
 			cDataFiles.SetInputParameters(PriceTextBox, cDataFiles.eDataType.Cost);
 			}
@@ -876,6 +1036,7 @@ namespace ReloadersWorkShop
 			PartNumberTextBox.ToolTip = cm_strPartNumberToolTip;
 			SerialNumberTextBox.ToolTip = cm_strSerialNumberToolTip;
 			DescriptionTextBox.ToolTip = cm_strDescriptionToolTip;
+			NotesTextBox.ToolTip = cm_strNotesToolTip;
 
 			// Acquisition Details
 
@@ -912,6 +1073,13 @@ namespace ReloadersWorkShop
 			m_ScopeTypeToolTip.RemoveAll();
 			m_ScopeTypeToolTip.SetToolTip(ScopeTurretTypeCombo, cm_strScopeTypeToolTip);
 
+			// Red Dot
+
+			RedDotMOATextBox.ToolTip = cm_strRedDotMOAToolTip;
+			RedDotCowitnessTextBox.ToolTip = cm_strRedDotCowitnessHeightToolTip;
+			RedDotTubeDiameterTextBox.ToolTip = cm_strRedDotTubeDiameterToolTip;
+			RedDotBatteryTextBox.ToolTip = cm_strRedDotBatteryToolTip;
+
 			// Buttons
 
 			m_OKButtonToolTip.ShowAlways = true;
@@ -941,6 +1109,17 @@ namespace ReloadersWorkShop
 			bool fEnableOK = m_fChanged;
 
 			//----------------------------------------------------------------------------*
+			// Set Type ToolTip
+			//----------------------------------------------------------------------------*
+
+			string strToolTip = cm_strTypeToolTip;
+
+			if (m_fViewOnly || !m_fAdd)
+				strToolTip += "\n\nThe type may not be  changed when editing or viewing accessories.";
+
+			m_TypeToolTip.SetToolTip(TypeCombo, strToolTip);
+
+			//----------------------------------------------------------------------------*
 			// Check Type and Manufacturer
 			//----------------------------------------------------------------------------*
 
@@ -966,16 +1145,25 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			PurchaseDatePicker.Enabled = !String.IsNullOrEmpty(SourceCombo.Text);
-			PriceTextBox.Enabled = !String.IsNullOrEmpty(SourceCombo.Text);
+			PriceTextBox.ReadOnly = String.IsNullOrEmpty(SourceCombo.Text);
+			TaxTextBox.ReadOnly = String.IsNullOrEmpty(SourceCombo.Text);
+			ShippingTextBox.ReadOnly = String.IsNullOrEmpty(SourceCombo.Text);
 
 			//----------------------------------------------------------------------------*
 			// Check Scope Details
 			//----------------------------------------------------------------------------*
 
-			if (m_Gear.GearType == cGear.eGearTypes.Scope)
+			switch (m_Gear.GearType)
 				{
-				if (!ScopePowerTextBox.ValueOK || !ScopeObjectiveTextBox.ValueOK || !ScopeClickTextBox.ValueOK)
-					fEnableOK = false;
+				case cGear.eGearTypes.Scope:
+					if (!ScopePowerTextBox.ValueOK || !ScopeObjectiveTextBox.ValueOK || !ScopeClickTextBox.ValueOK)
+						fEnableOK = false;
+					break;
+
+				case cGear.eGearTypes.RedDot:
+					if (!RedDotMOATextBox.ValueOK || !RedDotCowitnessTextBox.ValueOK || !RedDotTubeDiameterTextBox.ValueOK || !RedDotBatteryTextBox.ValueOK)
+						fEnableOK = false;
+					break;
 				}
 
 			//----------------------------------------------------------------------------*

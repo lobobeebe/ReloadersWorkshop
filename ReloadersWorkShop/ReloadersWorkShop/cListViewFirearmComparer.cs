@@ -53,8 +53,8 @@ namespace ReloadersWorkShop
 					return (1);
 				}
 
-			cFirearm Firearm1 = (cFirearm)(Object1 as ListViewItem).Tag;
-			cFirearm Firearm2 = (cFirearm)(Object2 as ListViewItem).Tag;
+			cFirearm Firearm1 = (cFirearm) (Object1 as ListViewItem).Tag;
+			cFirearm Firearm2 = (cFirearm) (Object2 as ListViewItem).Tag;
 
 			if (Firearm1 == null)
 				{
@@ -66,7 +66,7 @@ namespace ReloadersWorkShop
 			else
 				{
 				if (Firearm2 == null)
-					return(1);
+					return (1);
 				}
 
 			//----------------------------------------------------------------------------*
@@ -83,14 +83,28 @@ namespace ReloadersWorkShop
 				//----------------------------------------------------------------------------*
 
 				case 0:
-					rc = Firearm1.Manufacturer.CompareTo(Firearm2.Manufacturer);
+					rc = CompareGear(Firearm1, Firearm2);
+
+					if (rc == 0)
+						rc = Firearm1.PrimaryCaliber.CompareTo(Firearm2.PrimaryCaliber);
+
+					fSpecial = true;
+
+					break;
+
+				//----------------------------------------------------------------------------*
+				// Model
+				//----------------------------------------------------------------------------*
+
+				case 1:
+					rc = cDataFiles.ComparePartNumbers(Firearm1.PartNumber, Firearm2.PartNumber);
 
 					if (rc == 0)
 						{
-						rc = Firearm1.PartNumber.CompareTo(Firearm2.PartNumber);
+						rc = Firearm1.Manufacturer.CompareTo(Firearm2.Manufacturer);
 
 						if (rc == 0)
-							rc = Firearm1.PrimaryCaliber.CompareTo(Firearm2.PrimaryCaliber);
+							rc = cDataFiles.ComparePartNumbers(Firearm1.SerialNumber, Firearm2.SerialNumber);
 						}
 
 					fSpecial = true;
@@ -98,77 +112,246 @@ namespace ReloadersWorkShop
 					break;
 
 				//----------------------------------------------------------------------------*
-				// Barrel Length
+				// Serial  Number
+				//----------------------------------------------------------------------------*
+
+				case 2:
+					rc = cDataFiles.ComparePartNumbers(Firearm1.SerialNumber, Firearm2.SerialNumber);
+
+					if (rc == 0)
+						{
+						rc = Firearm1.Manufacturer.CompareTo(Firearm2.Manufacturer);
+
+						if (rc == 0)
+							rc = cDataFiles.ComparePartNumbers(Firearm1.PartNumber, Firearm2.PartNumber);
+						}
+
+					fSpecial = true;
+
+					break;
+
+				//----------------------------------------------------------------------------*
+				// Description
+				//----------------------------------------------------------------------------*
+
+				case 3:
+					rc = Firearm1.Description.CompareTo(Firearm2.Description);
+
+					if (rc == 0)
+						{
+						rc = Firearm1.Manufacturer.CompareTo(Firearm2.Manufacturer);
+
+						if (rc == 0)
+							{
+							rc = cDataFiles.ComparePartNumbers(Firearm1.PartNumber, Firearm2.PartNumber);
+
+							if (rc == 0)
+								rc = cDataFiles.ComparePartNumbers(Firearm1.SerialNumber, Firearm2.SerialNumber);
+							}
+						}
+
+					fSpecial = true;
+
+					break;
+
+				//----------------------------------------------------------------------------*
+				// Caliber
 				//----------------------------------------------------------------------------*
 
 				case 4:
-					rc = Firearm1.BarrelLength.CompareTo(Firearm2.BarrelLength);
+					rc = Firearm1.PrimaryCaliber.CompareTo(Firearm2.PrimaryCaliber);
+
+					if (rc == 0)
+						CompareGear(Firearm1, Firearm2);
 
 					fSpecial = true;
 
 					break;
 
 				//----------------------------------------------------------------------------*
-				// Twist Rate
+				// Source
 				//----------------------------------------------------------------------------*
 
 				case 5:
-					rc = Firearm1.Twist.CompareTo(Firearm2.Twist);
+					rc = Firearm1.Source.CompareTo(Firearm2.Source);
+
+					if (rc == 0)
+						{
+						rc = Firearm1.Manufacturer.CompareTo(Firearm2.Manufacturer);
+
+						if (rc == 0)
+							{
+							rc = cDataFiles.ComparePartNumbers(Firearm1.PartNumber, Firearm2.PartNumber);
+
+							if (rc == 0)
+								{
+								rc = cDataFiles.ComparePartNumbers(Firearm1.SerialNumber, Firearm2.SerialNumber);
+
+								if (rc == 0)
+									rc = Firearm1.Description.CompareTo(Firearm2.Description);
+								}
+							}
+						}
 
 					fSpecial = true;
 
 					break;
 
 				//----------------------------------------------------------------------------*
-				// Turret Click
+				// Date
+				//----------------------------------------------------------------------------*
+
+				case 6:
+					rc = Firearm1.PurchaseDate.CompareTo(Firearm2.PurchaseDate);
+
+					if (rc == 0)
+						rc = CompareGear(Firearm1,Firearm2);
+
+					fSpecial = true;
+
+					break;
+
+				//----------------------------------------------------------------------------*
+				// Price
 				//----------------------------------------------------------------------------*
 
 				case 7:
-					rc = Firearm1.ScopeClick.CompareTo(Firearm2.ScopeClick);
+					rc = Firearm1.PurchasePrice.CompareTo(Firearm2.PurchasePrice);
+
+					if (rc == 0)
+						{
+						rc = Firearm1.Manufacturer.CompareTo(Firearm2.Manufacturer);
+
+						if (rc == 0)
+							{
+							rc = cDataFiles.ComparePartNumbers(Firearm1.PartNumber, Firearm2.PartNumber);
+
+							if (rc == 0)
+								{
+								rc = Firearm1.Description.CompareTo(Firearm2.Description);
+
+								if (rc == 0)
+									{
+									rc = cDataFiles.ComparePartNumbers(Firearm1.SerialNumber, Firearm2.SerialNumber);
+
+									if (rc == 0)
+										rc = Firearm1.Source.CompareTo(Firearm2.Source);
+									}
+								}
+							}
+						}
 
 					fSpecial = true;
 
 					break;
 
 				//----------------------------------------------------------------------------*
-				// Zero Range
+				// Tax
 				//----------------------------------------------------------------------------*
 
 				case 8:
-					rc = Firearm1.ZeroRange.CompareTo(Firearm2.ZeroRange);
+					rc = Firearm1.Tax.CompareTo(Firearm2.Tax);
+
+					if (rc == 0)
+						{
+						rc = Firearm1.Manufacturer.CompareTo(Firearm2.Manufacturer);
+
+						if (rc == 0)
+							{
+							rc = cDataFiles.ComparePartNumbers(Firearm1.PartNumber, Firearm2.PartNumber);
+
+							if (rc == 0)
+								{
+								rc = Firearm1.Description.CompareTo(Firearm2.Description);
+
+								if (rc == 0)
+									{
+									rc = cDataFiles.ComparePartNumbers(Firearm1.SerialNumber, Firearm2.SerialNumber);
+
+									if (rc == 0)
+										rc = Firearm1.Source.CompareTo(Firearm2.Source);
+									}
+								}
+							}
+						}
 
 					fSpecial = true;
 
 					break;
 
 				//----------------------------------------------------------------------------*
-				// Sight Height
+				// Shipping
 				//----------------------------------------------------------------------------*
 
 				case 9:
-					rc = Firearm1.SightHeight.CompareTo(Firearm2.SightHeight);
+					rc = Firearm1.Shipping.CompareTo(Firearm2.Shipping);
+
+					if (rc == 0)
+						{
+						rc = Firearm1.Manufacturer.CompareTo(Firearm2.Manufacturer);
+
+						if (rc == 0)
+							{
+							rc = cDataFiles.ComparePartNumbers(Firearm1.PartNumber, Firearm2.PartNumber);
+
+							if (rc == 0)
+								{
+								rc = Firearm1.Description.CompareTo(Firearm2.Description);
+
+								if (rc == 0)
+									{
+									rc = cDataFiles.ComparePartNumbers(Firearm1.SerialNumber, Firearm2.SerialNumber);
+
+									if (rc == 0)
+										rc = Firearm1.Source.CompareTo(Firearm2.Source);
+									}
+								}
+							}
+						}
 
 					fSpecial = true;
 
 					break;
 
 				//----------------------------------------------------------------------------*
-				// Head Space
+				// Total
 				//----------------------------------------------------------------------------*
 
 				case 10:
-					rc = Firearm1.HeadSpace.CompareTo(Firearm2.HeadSpace);
+					double dTotal1 = 0.0;
 
-					fSpecial = true;
+					if ((Object1 as ListViewItem).Text != "-")
+						Double.TryParse((Object1 as ListViewItem).SubItems[10].Text, out dTotal1);
 
-					break;
+					double dTotal2 = 0.0;
 
-				//----------------------------------------------------------------------------*
-				// Neck Size
-				//----------------------------------------------------------------------------*
+					if ((Object2 as ListViewItem).Text != "-")
+						Double.TryParse((Object2 as ListViewItem).SubItems[10].Text, out dTotal2);
 
-				case 11:
-					rc = Firearm1.Neck.CompareTo(Firearm2.Neck);
+					rc = dTotal1.CompareTo(dTotal2);
+
+					if (rc == 0)
+						{
+						rc = Firearm1.Manufacturer.CompareTo(Firearm2.Manufacturer);
+
+						if (rc == 0)
+							{
+							rc = cDataFiles.ComparePartNumbers(Firearm1.PartNumber, Firearm2.PartNumber);
+
+							if (rc == 0)
+								{
+								rc = Firearm1.Description.CompareTo(Firearm2.Description);
+
+								if (rc == 0)
+									{
+									rc = cDataFiles.ComparePartNumbers(Firearm1.SerialNumber, Firearm2.SerialNumber);
+
+									if (rc == 0)
+										rc = Firearm1.Source.CompareTo(Firearm2.Source);
+									}
+								}
+							}
+						}
 
 					fSpecial = true;
 
@@ -185,5 +368,30 @@ namespace ReloadersWorkShop
 
 			return (base.Compare(Object1, Object2));
 			}
+
+		//============================================================================*
+		// CompareGear()
+		//============================================================================*
+
+		public int CompareGear(cGear Gear1, cGear Gear2)
+			{
+			int rc = Gear1.Manufacturer.CompareTo(Gear2.Manufacturer);
+
+			if (rc == 0)
+				{
+				rc = cDataFiles.ComparePartNumbers(Gear1.PartNumber, Gear2.PartNumber);
+
+				if (rc == 0)
+					{
+					rc = Gear1.Description.CompareTo(Gear2.Description);
+
+					if (rc == 0)
+						rc = cDataFiles.ComparePartNumbers(Gear1.SerialNumber, Gear2.SerialNumber);
+					}
+				}
+
+			return (rc);
+			}
 		}
 	}
+

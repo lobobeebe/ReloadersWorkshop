@@ -49,7 +49,7 @@
 			this.TaxLabel = new System.Windows.Forms.Label();
 			this.SourceComboBox = new System.Windows.Forms.ComboBox();
 			this.PriceTextBox = new CommonLib.Controls.cDoubleValueTextBox();
-			this.PurchaseDateTimePicker = new System.Windows.Forms.DateTimePicker();
+			this.PurchaseDatePicker = new System.Windows.Forms.DateTimePicker();
 			this.TypeComboBox = new System.Windows.Forms.ComboBox();
 			this.ActionComboBox = new System.Windows.Forms.ComboBox();
 			this.FirearmImageGroupBox = new System.Windows.Forms.GroupBox();
@@ -236,7 +236,7 @@
 			this.AcquisitionDetailsGroupBox.Controls.Add(label2);
 			this.AcquisitionDetailsGroupBox.Controls.Add(this.PriceTextBox);
 			this.AcquisitionDetailsGroupBox.Controls.Add(this.PriceLabel);
-			this.AcquisitionDetailsGroupBox.Controls.Add(this.PurchaseDateTimePicker);
+			this.AcquisitionDetailsGroupBox.Controls.Add(this.PurchaseDatePicker);
 			this.AcquisitionDetailsGroupBox.Controls.Add(label5);
 			this.AcquisitionDetailsGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.AcquisitionDetailsGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
@@ -361,14 +361,14 @@
 			this.PriceTextBox.Value = 0D;
 			this.PriceTextBox.ZeroAllowed = true;
 			// 
-			// PurchaseDateTimePicker
+			// PurchaseDatePicker
 			// 
-			this.PurchaseDateTimePicker.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.PurchaseDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-			this.PurchaseDateTimePicker.Location = new System.Drawing.Point(90, 50);
-			this.PurchaseDateTimePicker.Name = "PurchaseDateTimePicker";
-			this.PurchaseDateTimePicker.Size = new System.Drawing.Size(96, 20);
-			this.PurchaseDateTimePicker.TabIndex = 1;
+			this.PurchaseDatePicker.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.PurchaseDatePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+			this.PurchaseDatePicker.Location = new System.Drawing.Point(90, 50);
+			this.PurchaseDatePicker.Name = "PurchaseDatePicker";
+			this.PurchaseDatePicker.Size = new System.Drawing.Size(96, 20);
+			this.PurchaseDatePicker.TabIndex = 1;
 			// 
 			// TypeComboBox
 			// 
@@ -618,7 +618,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.DetailCancelButton;
-			this.ClientSize = new System.Drawing.Size(971, 605);
+			this.ClientSize = new System.Drawing.Size(967, 601);
 			this.ControlBox = false;
 			this.Controls.Add(this.FirearmDetailsGroupBox);
 			this.Controls.Add(this.OKButton);
@@ -656,7 +656,7 @@
 		private System.Windows.Forms.Button AddImageButton;
 		private System.Windows.Forms.GroupBox AcquisitionDetailsGroupBox;
 		private CommonLib.Controls.cDoubleValueTextBox PriceTextBox;
-		private System.Windows.Forms.DateTimePicker PurchaseDateTimePicker;
+		private System.Windows.Forms.DateTimePicker PurchaseDatePicker;
 		private System.Windows.Forms.ComboBox SourceComboBox;
 		private System.Windows.Forms.Label PriceLabel;
 		private System.Windows.Forms.ComboBox TypeComboBox;

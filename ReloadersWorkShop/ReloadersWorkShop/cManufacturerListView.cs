@@ -49,13 +49,15 @@ namespace ReloadersWorkShop
 			new cListViewColumn(11, "ShotgunsHeader", "Shotguns", HorizontalAlignment.Center, 70),
 
 			new cListViewColumn(12, "ScopesHeader", "Scopes", HorizontalAlignment.Center, 70),
-			new cListViewColumn(13, "RedDotsHeader", "Red Dots", HorizontalAlignment.Center, 70),
-			new cListViewColumn(14, "LightsHeader", "Lasers/Lights", HorizontalAlignment.Center, 70),
-			new cListViewColumn(15, "TriggersHeader", "Triggers", HorizontalAlignment.Center, 70),
-			new cListViewColumn(16, "FurnitureHeader", "Furniture", HorizontalAlignment.Center, 70),
-			new cListViewColumn(17, "BipodsHeader", "Bipods", HorizontalAlignment.Center, 70),
-			new cListViewColumn(18, "PartsHeader", "Firearm Parts", HorizontalAlignment.Center, 70),
-			new cListViewColumn(19, "OtherHeader", "Other", HorizontalAlignment.Center, 70)
+			new cListViewColumn(13, "LasersHeader", "Lasers", HorizontalAlignment.Center, 70),
+			new cListViewColumn(14, "RedDotsHeader", "Red Dots", HorizontalAlignment.Center, 70),
+			new cListViewColumn(15, "MagnifiersHeader", "Magnifiers", HorizontalAlignment.Center, 70),
+			new cListViewColumn(16, "LightsHeader", "Lights", HorizontalAlignment.Center, 70),
+			new cListViewColumn(17, "TriggersHeader", "Triggers", HorizontalAlignment.Center, 70),
+			new cListViewColumn(18, "FurnitureHeader", "Furniture", HorizontalAlignment.Center, 70),
+			new cListViewColumn(19, "BipodsHeader", "Bipods", HorizontalAlignment.Center, 70),
+			new cListViewColumn(20, "PartsHeader", "Firearm Parts", HorizontalAlignment.Center, 70),
+			new cListViewColumn(21, "OtherHeader", "Other", HorizontalAlignment.Center, 70)
 			};
 
 		//============================================================================*
@@ -218,7 +220,9 @@ namespace ReloadersWorkShop
 			Item.SubItems.Add((Manufacturer.Shotguns ? "Y" : ""));
 
 			Item.SubItems.Add((Manufacturer.Scopes ? "Y" : ""));
+			Item.SubItems.Add((Manufacturer.Lasers ? "Y" : ""));
 			Item.SubItems.Add((Manufacturer.RedDots ? "Y" : ""));
+			Item.SubItems.Add((Manufacturer.Magnifiers ? "Y" : ""));
 			Item.SubItems.Add((Manufacturer.Lights ? "Y" : ""));
 			Item.SubItems.Add((Manufacturer.Triggers ? "Y" : ""));
 			Item.SubItems.Add((Manufacturer.Furniture ? "Y" : ""));

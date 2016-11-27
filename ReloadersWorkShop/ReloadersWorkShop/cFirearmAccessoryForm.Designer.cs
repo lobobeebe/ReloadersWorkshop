@@ -67,8 +67,9 @@
 			this.ScopePowerTextBox = new CommonLib.Controls.cTextBox();
 			this.label11 = new System.Windows.Forms.Label();
 			this.RedDotDetailsGroupBox = new System.Windows.Forms.GroupBox();
-			this.label15 = new System.Windows.Forms.Label();
-			this.RedDotTubeSizeTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.RedDotCowitnessMeasurementLabel = new System.Windows.Forms.Label();
+			this.RedDotTubeDiameterMeasurementLabel = new System.Windows.Forms.Label();
+			this.RedDotTubeDiameterTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			this.label8 = new System.Windows.Forms.Label();
 			this.RedDotCowitnessTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			this.RedDotMOATextBox = new CommonLib.Controls.cDoubleValueTextBox();
@@ -76,11 +77,14 @@
 			this.RedDotBatteryTextBox = new CommonLib.Controls.cTextBox();
 			this.label17 = new System.Windows.Forms.Label();
 			this.label19 = new System.Windows.Forms.Label();
+			this.NotesTextBox = new CommonLib.Controls.cTextBox();
+			this.NotesGroup = new System.Windows.Forms.GroupBox();
 			label18 = new System.Windows.Forms.Label();
 			this.GeneralGroup.SuspendLayout();
 			this.AcquisitionGroupBox.SuspendLayout();
 			this.ScopeDetailsGroupBox.SuspendLayout();
 			this.RedDotDetailsGroupBox.SuspendLayout();
+			this.NotesGroup.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// label18
@@ -416,20 +420,20 @@
 			// OKButton
 			// 
 			this.OKButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.OKButton.Location = new System.Drawing.Point(85, 364);
+			this.OKButton.Location = new System.Drawing.Point(85, 460);
 			this.OKButton.Name = "OKButton";
 			this.OKButton.Size = new System.Drawing.Size(75, 23);
-			this.OKButton.TabIndex = 3;
+			this.OKButton.TabIndex = 4;
 			this.OKButton.Text = "OK";
 			this.OKButton.UseVisualStyleBackColor = true;
 			// 
 			// FormCancelButton
 			// 
 			this.FormCancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.FormCancelButton.Location = new System.Drawing.Point(201, 364);
+			this.FormCancelButton.Location = new System.Drawing.Point(201, 460);
 			this.FormCancelButton.Name = "FormCancelButton";
 			this.FormCancelButton.Size = new System.Drawing.Size(75, 23);
-			this.FormCancelButton.TabIndex = 4;
+			this.FormCancelButton.TabIndex = 5;
 			this.FormCancelButton.Text = "Cancel";
 			this.FormCancelButton.UseVisualStyleBackColor = true;
 			// 
@@ -586,8 +590,9 @@
 			// 
 			// RedDotDetailsGroupBox
 			// 
-			this.RedDotDetailsGroupBox.Controls.Add(this.label15);
-			this.RedDotDetailsGroupBox.Controls.Add(this.RedDotTubeSizeTextBox);
+			this.RedDotDetailsGroupBox.Controls.Add(this.RedDotCowitnessMeasurementLabel);
+			this.RedDotDetailsGroupBox.Controls.Add(this.RedDotTubeDiameterMeasurementLabel);
+			this.RedDotDetailsGroupBox.Controls.Add(this.RedDotTubeDiameterTextBox);
 			this.RedDotDetailsGroupBox.Controls.Add(this.label8);
 			this.RedDotDetailsGroupBox.Controls.Add(this.RedDotCowitnessTextBox);
 			this.RedDotDetailsGroupBox.Controls.Add(this.RedDotMOATextBox);
@@ -605,32 +610,43 @@
 			this.RedDotDetailsGroupBox.Text = "Red Dot Details";
 			this.RedDotDetailsGroupBox.Visible = false;
 			// 
-			// label15
+			// RedDotCowitnessMeasurementLabel
 			// 
-			this.label15.AutoSize = true;
-			this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label15.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label15.Location = new System.Drawing.Point(126, 53);
-			this.label15.Name = "label15";
-			this.label15.Size = new System.Drawing.Size(23, 13);
-			this.label15.TabIndex = 36;
-			this.label15.Text = "mm";
+			this.RedDotCowitnessMeasurementLabel.AutoSize = true;
+			this.RedDotCowitnessMeasurementLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.RedDotCowitnessMeasurementLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.RedDotCowitnessMeasurementLabel.Location = new System.Drawing.Point(286, 27);
+			this.RedDotCowitnessMeasurementLabel.Name = "RedDotCowitnessMeasurementLabel";
+			this.RedDotCowitnessMeasurementLabel.Size = new System.Drawing.Size(23, 13);
+			this.RedDotCowitnessMeasurementLabel.TabIndex = 37;
+			this.RedDotCowitnessMeasurementLabel.Text = "mm";
 			// 
-			// RedDotTubeSizeTextBox
+			// RedDotTubeDiameterMeasurementLabel
 			// 
-			this.RedDotTubeSizeTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.RedDotTubeSizeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.RedDotTubeSizeTextBox.Location = new System.Drawing.Point(80, 50);
-			this.RedDotTubeSizeTextBox.MaxValue = 0D;
-			this.RedDotTubeSizeTextBox.MinValue = 0D;
-			this.RedDotTubeSizeTextBox.Name = "RedDotTubeSizeTextBox";
-			this.RedDotTubeSizeTextBox.NumDecimals = 0;
-			this.RedDotTubeSizeTextBox.Size = new System.Drawing.Size(40, 20);
-			this.RedDotTubeSizeTextBox.TabIndex = 2;
-			this.RedDotTubeSizeTextBox.Text = "0";
-			this.RedDotTubeSizeTextBox.ToolTip = "";
-			this.RedDotTubeSizeTextBox.Value = 0D;
-			this.RedDotTubeSizeTextBox.ZeroAllowed = true;
+			this.RedDotTubeDiameterMeasurementLabel.AutoSize = true;
+			this.RedDotTubeDiameterMeasurementLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.RedDotTubeDiameterMeasurementLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.RedDotTubeDiameterMeasurementLabel.Location = new System.Drawing.Point(126, 53);
+			this.RedDotTubeDiameterMeasurementLabel.Name = "RedDotTubeDiameterMeasurementLabel";
+			this.RedDotTubeDiameterMeasurementLabel.Size = new System.Drawing.Size(23, 13);
+			this.RedDotTubeDiameterMeasurementLabel.TabIndex = 36;
+			this.RedDotTubeDiameterMeasurementLabel.Text = "mm";
+			// 
+			// RedDotTubeDiameterTextBox
+			// 
+			this.RedDotTubeDiameterTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.RedDotTubeDiameterTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.RedDotTubeDiameterTextBox.Location = new System.Drawing.Point(80, 50);
+			this.RedDotTubeDiameterTextBox.MaxValue = 0D;
+			this.RedDotTubeDiameterTextBox.MinValue = 0D;
+			this.RedDotTubeDiameterTextBox.Name = "RedDotTubeDiameterTextBox";
+			this.RedDotTubeDiameterTextBox.NumDecimals = 0;
+			this.RedDotTubeDiameterTextBox.Size = new System.Drawing.Size(40, 20);
+			this.RedDotTubeDiameterTextBox.TabIndex = 2;
+			this.RedDotTubeDiameterTextBox.Text = "0";
+			this.RedDotTubeDiameterTextBox.ToolTip = "";
+			this.RedDotTubeDiameterTextBox.Value = 0D;
+			this.RedDotTubeDiameterTextBox.ZeroAllowed = true;
 			// 
 			// label8
 			// 
@@ -724,20 +740,49 @@
 			this.label19.TabIndex = 0;
 			this.label19.Text = "Dot MOA:";
 			// 
+			// NotesTextBox
+			// 
+			this.NotesTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.NotesTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.NotesTextBox.Location = new System.Drawing.Point(16, 21);
+			this.NotesTextBox.MaxLength = 1000;
+			this.NotesTextBox.Multiline = true;
+			this.NotesTextBox.Name = "NotesTextBox";
+			this.NotesTextBox.Required = false;
+			this.NotesTextBox.Size = new System.Drawing.Size(307, 57);
+			this.NotesTextBox.TabIndex = 0;
+			this.NotesTextBox.ToolTip = "";
+			this.NotesTextBox.ValidChars = "";
+			this.NotesTextBox.Value = "";
+			// 
+			// NotesGroup
+			// 
+			this.NotesGroup.Controls.Add(this.NotesTextBox);
+			this.NotesGroup.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.NotesGroup.ForeColor = System.Drawing.SystemColors.HotTrack;
+			this.NotesGroup.Location = new System.Drawing.Point(12, 354);
+			this.NotesGroup.Name = "NotesGroup";
+			this.NotesGroup.Size = new System.Drawing.Size(339, 91);
+			this.NotesGroup.TabIndex = 3;
+			this.NotesGroup.TabStop = false;
+			this.NotesGroup.Text = "Notes";
+			// 
 			// cFirearmAccessoryForm
 			// 
 			this.AcceptButton = this.OKButton;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.FormCancelButton;
-			this.ClientSize = new System.Drawing.Size(742, 403);
+			this.ClientSize = new System.Drawing.Size(726, 496);
 			this.ControlBox = false;
+			this.Controls.Add(this.NotesGroup);
 			this.Controls.Add(this.RedDotDetailsGroupBox);
 			this.Controls.Add(this.ScopeDetailsGroupBox);
 			this.Controls.Add(this.FormCancelButton);
 			this.Controls.Add(this.OKButton);
 			this.Controls.Add(this.AcquisitionGroupBox);
 			this.Controls.Add(this.GeneralGroup);
+			this.DoubleBuffered = true;
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
@@ -754,6 +799,8 @@
 			this.ScopeDetailsGroupBox.PerformLayout();
 			this.RedDotDetailsGroupBox.ResumeLayout(false);
 			this.RedDotDetailsGroupBox.PerformLayout();
+			this.NotesGroup.ResumeLayout(false);
+			this.NotesGroup.PerformLayout();
 			this.ResumeLayout(false);
 
 			}
@@ -791,8 +838,8 @@
 		private System.Windows.Forms.ComboBox ScopeTurretTypeCombo;
 		private CommonLib.Controls.cDoubleValueTextBox ScopeClickTextBox;
 		private System.Windows.Forms.GroupBox RedDotDetailsGroupBox;
-		private System.Windows.Forms.Label label15;
-		private CommonLib.Controls.cDoubleValueTextBox RedDotTubeSizeTextBox;
+		private System.Windows.Forms.Label RedDotTubeDiameterMeasurementLabel;
+		private CommonLib.Controls.cDoubleValueTextBox RedDotTubeDiameterTextBox;
 		private System.Windows.Forms.Label label8;
 		private CommonLib.Controls.cDoubleValueTextBox RedDotCowitnessTextBox;
 		private CommonLib.Controls.cDoubleValueTextBox RedDotMOATextBox;
@@ -807,5 +854,8 @@
 		private System.Windows.Forms.Label ShippingLabel;
 		private CommonLib.Controls.cDoubleValueTextBox TaxTextBox;
 		private System.Windows.Forms.Label TaxLabel;
+		private System.Windows.Forms.Label RedDotCowitnessMeasurementLabel;
+		private CommonLib.Controls.cTextBox NotesTextBox;
+		private System.Windows.Forms.GroupBox NotesGroup;
 		}
 	}

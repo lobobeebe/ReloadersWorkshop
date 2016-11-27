@@ -95,7 +95,7 @@ namespace ReloadersWorkShop
 				MakePrimaryButton.Click += OnMakePrimaryClicked;
 
 				SourceComboBox.TextChanged += OnSourceChanged;
-				PurchaseDateTimePicker.TextChanged += OnPurchaseDateChanged;
+				PurchaseDatePicker.TextChanged += OnPurchaseDateChanged;
 				PriceTextBox.TextChanged += OnPriceChanged;
 				TaxTextBox.TextChanged += OnTaxChanged;
 				ShippingTextBox.TextChanged += OnShippingChanged;
@@ -543,7 +543,7 @@ namespace ReloadersWorkShop
 
 			try
 				{
-				m_Firearm.PurchaseDate = PurchaseDateTimePicker.Value;
+				m_Firearm.PurchaseDate = PurchaseDatePicker.Value;
 				}
 			catch
 				{
@@ -652,6 +652,15 @@ namespace ReloadersWorkShop
 				return;
 
 			m_Firearm.Source = SourceComboBox.Text;
+
+			if (String.IsNullOrEmpty(m_Firearm.Source))
+				{
+				m_Firearm.PurchasePrice = 0.0;
+				m_Firearm.Tax = 0.0;
+				m_Firearm.Shipping = 0.0;
+
+				PopulateFirearmData();
+				}
 
 			m_fChanged = true;
 
@@ -951,16 +960,20 @@ namespace ReloadersWorkShop
 
 			try
 				{
-				PurchaseDateTimePicker.Value = m_Firearm.PurchaseDate;
+				PurchaseDatePicker.Value = m_Firearm.PurchaseDate;
 				}
 			catch
 				{
-				PurchaseDateTimePicker.Value = DateTime.Today;
+				PurchaseDatePicker.Value = DateTime.Today;
 
 				m_Firearm.PurchaseDate = DateTime.Today;
 
 				m_fChanged = true;
 				}
+
+			//----------------------------------------------------------------------------*
+			// Acquisition Details
+			//----------------------------------------------------------------------------*
 
 			PriceTextBox.Value = m_Firearm.PurchasePrice;
 			TaxTextBox.Value = m_Firearm.Tax;
@@ -1004,13 +1017,15 @@ namespace ReloadersWorkShop
 
 			if (HammerComboBox.SelectedIndex < 0 && HammerComboBox.Items.Count > 0)
 				HammerComboBox.SelectedIndex = 0;
+
+			PopulateMagazineCombo();
 			}
 
 		//============================================================================*
-		// PopulateMagazineData()
+		// PopulateMagazineCombo()
 		//============================================================================*
 
-		private void PopulateMagazineData()
+		private void PopulateMagazineCombo()
 			{
 			MagazineComboBox.Items.Clear();
 
@@ -1277,6 +1292,15 @@ namespace ReloadersWorkShop
 
 			if (m_fViewOnly)
 				return;
+
+			//----------------------------------------------------------------------------*
+			// Check Acquisition Details
+			//----------------------------------------------------------------------------*
+
+			PurchaseDatePicker.Enabled = !String.IsNullOrEmpty(m_Firearm.Source);
+			PriceTextBox.ReadOnly = String.IsNullOrEmpty(m_Firearm.Source);
+			TaxTextBox.ReadOnly = String.IsNullOrEmpty(m_Firearm.Source);
+			ShippingTextBox.ReadOnly = String.IsNullOrEmpty(m_Firearm.Source);
 
 			//----------------------------------------------------------------------------*
 			// Check Type
