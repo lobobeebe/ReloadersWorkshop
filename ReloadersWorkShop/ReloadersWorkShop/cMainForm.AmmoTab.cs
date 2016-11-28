@@ -10,6 +10,7 @@
 //============================================================================*
 
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 //============================================================================*
@@ -37,6 +38,7 @@ namespace ReloadersWorkShop
 		cAmmoListView m_AmmoListView = null;
 
 		private bool m_fAmmoTabInitialized = false;
+		private bool m_fAmmoPopulating = false;
 
 		//============================================================================*
 		// AddAmmo()
@@ -89,18 +91,28 @@ namespace ReloadersWorkShop
 				m_AmmoListView.ItemSelectionChanged += OnAmmoSelected;
 				m_AmmoListView.DoubleClick += OnAmmoDoubleClicked;
 
+				AmmunitionFirearmTypeCombo.SelectedIndexChanged += OnAmmoFirearmTypeChanged;
+				AmmunitionCaliberCombo.SelectedIndexChanged += OnAmmoCaliberChanged;
+				AmmunitionManufacturerCombo.SelectedIndexChanged += OnAmmoManufacturerChanged;
+
 				AmmoPrintAllRadioButton.Click += OnAmmoPrintAllClicked;
 				AmmoPrintCheckedRadioButton.Click += OnAmmoPrintCheckedClicked;
-				AmmoPrintNonZeroCheckBox.Click += OnAmmoPrintNonZeroClicked;
-				AmmoPrintBelowStockCheckBox.Click += OnAmmoPrintBelowStockClicked;
-				AmmoPrintFactoryOnlyCheckBox.Click += OnAmmoPrintFactoryOnlyClicked;
+				AmmoNonZeroCheckBox.Click += OnAmmoNonZeroFilterClicked;
+				AmmoMinStockCheckBox.Click += OnAmmoMinStockFilterClicked;
+				AmmoFactoryCheckBox.Click += OnAmmoFactoryFilterClicked;
+				AmmoFactoryReloadsCheckBox.Click += OnAmmoFactoryReloadsFilterClicked;
+				AmmoMyReloadsCheckBox.Click += OnAmmoMyReloadsFilterClicked;
 				AmmoListPrintButton.Click += OnPrintAmmoListClicked;
 
 				AmmoPrintAllRadioButton.Checked = m_DataFiles.Preferences.AmmoPrintAll;
 				AmmoPrintCheckedRadioButton.Checked = m_DataFiles.Preferences.AmmoPrintChecked;
-				AmmoPrintNonZeroCheckBox.Checked = m_DataFiles.Preferences.AmmoPrintNonZero;
-				AmmoPrintBelowStockCheckBox.Checked = m_DataFiles.Preferences.AmmoPrintBelowStock;
-				AmmoPrintFactoryOnlyCheckBox.Checked = m_DataFiles.Preferences.AmmoPrintFactoryOnly;
+
+				AmmoFactoryCheckBox.Checked = m_DataFiles.Preferences.AmmoFactoryFilter;
+				AmmoFactoryReloadsCheckBox.Checked = m_DataFiles.Preferences.AmmoFactoryReloadFilter;
+				AmmoMyReloadsCheckBox.Checked = m_DataFiles.Preferences.AmmoMyReloadFilter;
+
+				AmmoNonZeroCheckBox.Checked = m_DataFiles.Preferences.AmmoNonZeroFilter;
+				AmmoMinStockCheckBox.Checked = m_DataFiles.Preferences.AmmoMinStockFilter;
 
 				EditAmmoInventoryButton.Click += OnEditInventoryActivity;
 				ViewAmmoInventoryButton.Click += OnViewInventoryActivity;
@@ -116,7 +128,20 @@ namespace ReloadersWorkShop
 			// Operations that are always performed
 			//----------------------------------------------------------------------------*
 
+			AmmunitionCaliberCombo.SelectedIndex = 0;
+			AmmunitionManufacturerCombo.SelectedIndex = 0;
+
+			AmmoNonZeroCheckBox.Visible = m_DataFiles.Preferences.TrackInventory;
+			AmmoNonZeroCheckBox.Checked = false;
+
+			AmmoMinStockCheckBox.Visible = m_DataFiles.Preferences.TrackInventory;
+			AmmoMinStockCheckBox.Checked = false;
+
 			AmmoInventoryGroup.Visible = m_DataFiles.Preferences.TrackInventory;
+
+			AmmunitionFirearmTypeCombo.SelectedIndex = 0;
+
+			PopulateAmmoCaliberCombo();
 
 			PopulateAmmoListViewColumns();
 
@@ -165,6 +190,34 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// OnAmmoCaliberChanged()
+		//============================================================================*
+
+		protected void OnAmmoCaliberChanged(object sender, EventArgs args)
+			{
+			if (m_fAmmoPopulating)
+				return;
+
+			PopulateAmmoManufacturerCombo();
+
+			UpdateAmmoTabButtons();
+			}
+
+		//============================================================================*
+		// OnAmmoFirearmTypeChanged()
+		//============================================================================*
+
+		protected void OnAmmoFirearmTypeChanged(object sender, EventArgs args)
+			{
+			if (m_fAmmoPopulating)
+				return;
+
+			PopulateAmmoCaliberCombo();
+
+			UpdateAmmoTabButtons();
+			}
+
+		//============================================================================*
 		// OnAmmoItemChecked()
 		//============================================================================*
 
@@ -177,6 +230,20 @@ namespace ReloadersWorkShop
 
 			if (Ammo != null)
 				Ammo.Checked = args.Item.Checked;
+
+			UpdateAmmoTabButtons();
+			}
+
+		//============================================================================*
+		// OnAmmoManufacturerChanged()
+		//============================================================================*
+
+		protected void OnAmmoManufacturerChanged(object sender, EventArgs args)
+			{
+			if (m_fAmmoPopulating)
+				return;
+
+			PopulateAmmoListView();
 
 			UpdateAmmoTabButtons();
 			}
@@ -197,14 +264,14 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// OnAmmoPrintBelowStockClicked()
+		// OnAmmoMinStockFilterClicked()
 		//============================================================================*
 
-		protected void OnAmmoPrintBelowStockClicked(object sender, EventArgs args)
+		protected void OnAmmoMinStockFilterClicked(object sender, EventArgs args)
 			{
-			AmmoPrintBelowStockCheckBox.Checked = !AmmoPrintBelowStockCheckBox.Checked;
+			m_DataFiles.Preferences.AmmoMinStockFilter = AmmoMinStockCheckBox.Checked;
 
-			m_DataFiles.Preferences.AmmoPrintBelowStock = AmmoPrintBelowStockCheckBox.Checked;
+			PopulateAmmoListView();
 
 			UpdateAmmoTabButtons();
 			}
@@ -225,27 +292,40 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// OnAmmoPrintFactoryOnlyClicked()
+		// OnAmmoFactoryFilterClicked()
 		//============================================================================*
 
-		protected void OnAmmoPrintFactoryOnlyClicked(object sender, EventArgs args)
+		protected void OnAmmoFactoryFilterClicked(object sender, EventArgs args)
 			{
-			AmmoPrintFactoryOnlyCheckBox.Checked = !AmmoPrintFactoryOnlyCheckBox.Checked;
+			m_DataFiles.Preferences.AmmoFactoryFilter = AmmoFactoryCheckBox.Checked;
 
-			m_DataFiles.Preferences.AmmoPrintFactoryOnly = AmmoPrintFactoryOnlyCheckBox.Checked;
+			PopulateAmmoListView();
 
 			UpdateAmmoTabButtons();
 			}
 
 		//============================================================================*
-		// OnAmmoPrintNonZeroClicked()
+		// OnAmmoFactoryReloadsFilterClicked()
 		//============================================================================*
 
-		protected void OnAmmoPrintNonZeroClicked(object sender, EventArgs args)
+		protected void OnAmmoFactoryReloadsFilterClicked(object sender, EventArgs args)
 			{
-			AmmoPrintNonZeroCheckBox.Checked = !AmmoPrintNonZeroCheckBox.Checked;
+			m_DataFiles.Preferences.AmmoFactoryReloadFilter = AmmoFactoryReloadsCheckBox.Checked;
 
-			m_DataFiles.Preferences.AmmoPrintNonZero = AmmoPrintNonZeroCheckBox.Checked;
+			PopulateAmmoListView();
+
+			UpdateAmmoTabButtons();
+			}
+
+		//============================================================================*
+		// OnAmmoNonZeroFilterClicked()
+		//============================================================================*
+
+		protected void OnAmmoNonZeroFilterClicked(object sender, EventArgs args)
+			{
+			m_DataFiles.Preferences.AmmoNonZeroFilter = AmmoNonZeroCheckBox.Checked;
+
+			PopulateAmmoListView();
 
 			UpdateAmmoTabButtons();
 			}
@@ -331,6 +411,19 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// OnAmmoMyReloadsFilterClicked()
+		//============================================================================*
+
+		protected void OnAmmoMyReloadsFilterClicked(object sender, EventArgs args)
+			{
+			m_DataFiles.Preferences.AmmoMyReloadFilter = AmmoMyReloadsCheckBox.Checked;
+
+			PopulateAmmoListView();
+
+			UpdateAmmoTabButtons();
+			}
+
+		//============================================================================*
 		// OnPrintAmmoListClicked()
 		//============================================================================*
 
@@ -340,7 +433,7 @@ namespace ReloadersWorkShop
 			// Show the dialog
 			//----------------------------------------------------------------------------*
 
-			cAmmoListPreviewDialog AmmoListDialog = new cAmmoListPreviewDialog(m_DataFiles);
+			cAmmoListPreviewDialog AmmoListDialog = new cAmmoListPreviewDialog(m_DataFiles, m_AmmoListView);
 
 			AmmoListDialog.ShowDialog();
 			}
@@ -417,12 +510,76 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// PopulateAmmoCaliberCombo()
+		//============================================================================*
+
+		public void PopulateAmmoCaliberCombo()
+			{
+			List<string> StringList = new List<string>();
+
+			foreach (cAmmo Ammo in m_DataFiles.AmmoList)
+				{
+				cCaliber.CurrentFirearmType = Ammo.FirearmType;
+
+				if (StringList.IndexOf(Ammo.Caliber.ToString()) >= 0)
+					continue;
+
+				bool fOK = false;
+
+				switch (AmmunitionFirearmTypeCombo.Text)
+					{
+					case "Handgun":
+						if (Ammo.FirearmType == cFirearm.eFireArmType.Handgun)
+							fOK = true;
+						break;
+
+					case "Rifle":
+						if (Ammo.FirearmType == cFirearm.eFireArmType.Rifle)
+							fOK = true;
+						break;
+
+					default:
+						fOK = true;
+						break;
+					}
+
+				if (fOK)
+					StringList.Add(Ammo.Caliber.ToString());
+				}
+
+			m_fAmmoPopulating = true;
+
+			AmmunitionCaliberCombo.Items.Clear();
+
+			AmmunitionCaliberCombo.Items.Add("Any Caliber");
+
+			StringList.Sort();
+
+			foreach (string strString in StringList)
+				AmmunitionCaliberCombo.Items.Add(strString);
+
+			AmmunitionCaliberCombo.SelectedIndex = 0;
+
+			m_fAmmoPopulating = false;
+
+			PopulateAmmoManufacturerCombo();
+			}
+
+		//============================================================================*
 		// PopulateAmmoListView()
 		//============================================================================*
 
 		public void PopulateAmmoListView()
 			{
+			m_fAmmoPopulating = true;
+
+			m_AmmoListView.FirearmType = (cFirearm.eFireArmType) AmmunitionFirearmTypeCombo.SelectedIndex - 1;
+			m_AmmoListView.Caliber = AmmunitionCaliberCombo.SelectedIndex > 0 ? m_DataFiles.GetCaliberByName(AmmunitionCaliberCombo.SelectedItem.ToString()) : null;
+			m_AmmoListView.Manufacturer = AmmunitionManufacturerCombo.SelectedIndex > 0 ? m_DataFiles.GetManufacturerByName(AmmunitionManufacturerCombo.SelectedItem.ToString()) : null;
+
 			m_AmmoListView.Populate();
+
+			m_fAmmoPopulating = false;
 
 			UpdateAmmoTabButtons();
 			}
@@ -434,6 +591,68 @@ namespace ReloadersWorkShop
 		public void PopulateAmmoListViewColumns()
 			{
 			m_AmmoListView.PopulateColumns();
+
+			PopulateAmmoListView();
+			}
+
+		//============================================================================*
+		// PopulateAmmoManufacturerCombo()
+		//============================================================================*
+
+		public void PopulateAmmoManufacturerCombo()
+			{
+			List<string> StringList = new List<string>();
+
+			foreach (cAmmo Ammo in m_DataFiles.AmmoList)
+				{
+				cCaliber.CurrentFirearmType = Ammo.FirearmType;
+
+				if (StringList.IndexOf(Ammo.Manufacturer.ToString()) >= 0)
+					continue;
+
+				bool fOK = false;
+
+				switch (AmmunitionFirearmTypeCombo.Text)
+					{
+					case "Handgun":
+						if (Ammo.FirearmType == cFirearm.eFireArmType.Handgun)
+							fOK = true;
+						break;
+
+					case "Rifle":
+						if (Ammo.FirearmType == cFirearm.eFireArmType.Rifle)
+							fOK = true;
+						break;
+
+					default:
+						fOK = true;
+						break;
+					}
+
+				if (fOK)
+					{
+					if (AmmunitionCaliberCombo.Text != "Any Caliber")
+						fOK = AmmunitionCaliberCombo.Text == Ammo.Caliber.ToString();
+					}
+
+				if (fOK)
+					StringList.Add(Ammo.Manufacturer.ToString());
+				}
+
+			m_fAmmoPopulating = true;
+
+			AmmunitionManufacturerCombo.Items.Clear();
+
+			AmmunitionManufacturerCombo.Items.Add("Any Manufacturer");
+
+			StringList.Sort();
+
+			foreach (string strString in StringList)
+				AmmunitionManufacturerCombo.Items.Add(strString);
+
+			AmmunitionManufacturerCombo.SelectedIndex = 0;
+
+			m_fAmmoPopulating = false;
 
 			PopulateAmmoListView();
 			}
@@ -528,38 +747,9 @@ namespace ReloadersWorkShop
 					// Update the current Firearm record
 					//----------------------------------------------------------------------------*
 
-					CheckAmmo.FirearmType = NewAmmo.FirearmType;
-					CheckAmmo.Manufacturer = NewAmmo.Manufacturer;
-					CheckAmmo.BatchID = NewAmmo.BatchID;
-					CheckAmmo.PartNumber = NewAmmo.PartNumber;
-					CheckAmmo.Type = NewAmmo.Type;
-					CheckAmmo.Caliber = NewAmmo.Caliber;
-					CheckAmmo.BallisticCoefficient = NewAmmo.BallisticCoefficient;
-					CheckAmmo.BulletDiameter = NewAmmo.BulletDiameter;
-					CheckAmmo.BulletWeight = NewAmmo.BulletWeight;
-                    CheckAmmo.Reload = NewAmmo.Reload;
-                    CheckAmmo.TestList = NewAmmo.TestList;
-
-					CheckAmmo.TransactionList = new cTransactionList(NewAmmo.TransactionList);
+					CheckAmmo.Copy(NewAmmo);
 
 					CheckAmmo.RecalculateInventory(m_DataFiles);
-
-					//----------------------------------------------------------------------------*
-					// Set the quantities, costs, etc.
-					//----------------------------------------------------------------------------*
-
-					if (m_DataFiles.Preferences.TrackInventory)
-						{
-						CheckAmmo.QuantityOnHand = NewAmmo.QuantityOnHand;
-						CheckAmmo.Quantity = CheckAmmo.QuantityOnHand;
-						}
-					else
-						{
-						CheckAmmo.Quantity = NewAmmo.Quantity;
-						CheckAmmo.QuantityOnHand = CheckAmmo.Quantity;
-						}
-
-					CheckAmmo.Cost = NewAmmo.Cost;
 
 					//----------------------------------------------------------------------------*
 					// Update the Firearm on the Firearm tab
@@ -608,7 +798,7 @@ namespace ReloadersWorkShop
 			// Print Button
 			//----------------------------------------------------------------------------*
 
-			if (m_DataFiles.GetAmmoList().Count == 0)
+			if (m_AmmoListView.Items.Count == 0)
 				{
 				AmmoListPrintButton.Enabled = false;
 
@@ -619,7 +809,6 @@ namespace ReloadersWorkShop
 				AmmoListPrintButton.Enabled = true;
 
 				NoAmmoListLabel.Visible = false;
-
 				}
 
 			//----------------------------------------------------------------------------*

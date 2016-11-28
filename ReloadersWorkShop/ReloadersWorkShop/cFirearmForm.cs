@@ -13,9 +13,6 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-using ReloadersWorkShop.Controls;
-using ReloadersWorkShop.Preferences;
-
 //============================================================================*
 // NameSpace
 //============================================================================*
@@ -447,7 +444,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_Firearm.Description = DescriptionTextBox.Value;
+			m_Firearm.Description = @DescriptionTextBox.Value;
 
 			m_fChanged = true;
 
@@ -643,7 +640,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_Firearm.PartNumber = ModelTextBox.Value;
+			m_Firearm.PartNumber = @ModelTextBox.Value;
 
 			m_fChanged = true;
 
@@ -776,7 +773,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_Firearm.SerialNumber = SerialNumberTextBox.Value;
+			m_Firearm.SerialNumber = @SerialNumberTextBox.Value;
 
 			m_fChanged = true;
 

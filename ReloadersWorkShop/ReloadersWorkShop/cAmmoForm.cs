@@ -11,11 +11,7 @@
 
 using System;
 using System.Drawing;
-using System.Windows;
 using System.Windows.Forms;
-
-using ReloadersWorkShop.Controls;
-using ReloadersWorkShop.Preferences;
 
 //============================================================================*
 // NameSpace
@@ -783,6 +779,8 @@ namespace ReloadersWorkShop
 		private void PopulateCaliberCombo()
 			{
 			m_fPopulating = true;
+
+			cCaliber.CurrentFirearmType = FirearmTypeCombo.Value;
 
 			CaliberCombo.Items.Clear();
 

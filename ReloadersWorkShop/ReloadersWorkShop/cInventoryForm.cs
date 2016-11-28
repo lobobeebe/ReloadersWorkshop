@@ -89,8 +89,6 @@ namespace ReloadersWorkShop
 				AddActivityButton.Click += OnAddActivityClicked;
 				EditActivityButton.Click += OnEditActivityClicked;
 				RemoveActivityButton.Click += OnRemoveActivityClicked;
-
-				CloseButton.Click += OnCloseButtonClicked;
 				}
 			else
 				{
@@ -177,18 +175,6 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// OnCloseButtonClicked()
-		//============================================================================*
-
-		private void OnCloseButtonClicked(object sender, EventArgs e)
-			{
-			if (m_Supply.SupplyType == cSupply.eSupplyTypes.Powder)
-				m_Supply.MinimumStockLevel = cDataFiles.MetricToStandard(MinimumStockLevelTextBox.Value, cDataFiles.eDataType.CanWeight) * 7000.0;
-			else
-				m_Supply.MinimumStockLevel = MinimumStockLevelTextBox.Value;
-			}
-
-		//============================================================================*
 		// OnEditActivityClicked()
 		//============================================================================*
 
@@ -232,7 +218,10 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_Supply.MinimumStockLevel = MinimumStockLevelTextBox.Value;
+			if (m_Supply.SupplyType == cSupply.eSupplyTypes.Powder)
+				m_Supply.MinimumStockLevel = cDataFiles.MetricToStandard(MinimumStockLevelTextBox.Value, cDataFiles.eDataType.CanWeight) * 7000.0;
+			else
+				m_Supply.MinimumStockLevel = MinimumStockLevelTextBox.Value;
 
 			m_fChanged = true;
 

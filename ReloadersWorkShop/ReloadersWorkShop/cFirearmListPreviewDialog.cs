@@ -115,7 +115,6 @@ namespace ReloadersWorkShop
 			// Create the fonts
 			//----------------------------------------------------------------------------*
 
-//			Font TitleFont = new Font("Trebuchet MS", 16, FontStyle.Bold);
 			Font FirearmTypeFont = new Font("Trebuchet MS", 14, FontStyle.Bold);
 			Font HeaderFont = new Font("Trebuchet MS", 10, FontStyle.Bold);
 			Font DataFont = new Font("Trebuchet MS", 9, FontStyle.Regular);
@@ -144,12 +143,14 @@ namespace ReloadersWorkShop
 				{
 				// Name
 
-				TextSize = e.Graphics.MeasureString(Firearm.ToString(), DataFont);
+				TextSize = e.Graphics.MeasureString(Firearm.ToShortString(), DataFont);
 
 				if (TextSize.Width > m_Columns[0].Width)
 					m_Columns[0].Width = TextSize.Width;
 
 				// Caliber
+
+				cCaliber.CurrentFirearmType = Firearm.PrimaryCaliber.FirearmType;
 
 				TextSize = e.Graphics.MeasureString(Firearm.PrimaryCaliber.ToString(), DataFont);
 
@@ -244,21 +245,7 @@ namespace ReloadersWorkShop
 						//----------------------------------------------------------------------------*
 
 						nY = cPrintObject.PrintReportTitle("Firearm List", PageRect, e.Graphics);
-/*
-						strText = "Reloader's WorkShop";
-						TextSize = e.Graphics.MeasureString(strText, TitleFont);
 
-						e.Graphics.DrawString(strText, TitleFont, Brushes.Black, (PageRect.Width / 2) - (TextSize.Width / 2), nY);
-
-						nY += TextSize.Height;
-
-						strText = "Firearm List";
-						TextSize = e.Graphics.MeasureString(strText, TitleFont);
-
-						e.Graphics.DrawString(strText, TitleFont, Brushes.Black, (PageRect.Width / 2) - (TextSize.Width / 2), nY);
-
-						nY += TextSize.Height;
-*/
 						fPageHeader = true;
 						fTypeHeader = false;
 						}
@@ -277,14 +264,17 @@ namespace ReloadersWorkShop
 							{
 							case cFirearm.eFireArmType.Handgun:
 								strText = "Handguns";
+								cCaliber.CurrentFirearmType = cFirearm.eFireArmType.Handgun;
 								break;
 
 							case cFirearm.eFireArmType.Rifle:
 								strText = "Rifles";
+								cCaliber.CurrentFirearmType = cFirearm.eFireArmType.Rifle;
 								break;
 
 							case cFirearm.eFireArmType.Shotgun:
 								strText = "Shotguns";
+								cCaliber.CurrentFirearmType = cFirearm.eFireArmType.Shotgun;
 								break;
 							}
 
@@ -329,7 +319,7 @@ namespace ReloadersWorkShop
 
 					// Name
 
-					strText = Firearm.ToString();
+					strText = Firearm.ToShortString();
 
 					nX = PageRect.Left;
 

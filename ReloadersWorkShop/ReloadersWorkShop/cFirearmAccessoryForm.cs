@@ -286,7 +286,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_Gear.Description = DescriptionTextBox.Value;
+			m_Gear.Description = @DescriptionTextBox.Value;
 
 			m_fChanged = true;
 
@@ -318,7 +318,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_Gear.Notes = NotesTextBox.Value;
+			m_Gear.Notes = @NotesTextBox.Value;
 
 			m_fChanged = true;
 
@@ -334,7 +334,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_Gear.PartNumber = PartNumberTextBox.Value;
+			m_Gear.PartNumber = @PartNumberTextBox.Value;
 
 			m_fChanged = true;
 
@@ -354,7 +354,7 @@ namespace ReloadersWorkShop
 
 			if (m_DataFiles.Preferences.TaxRate != 0.0 && !m_fUserTax)
 				{
-				m_Gear.Tax = m_Gear.PurchasePrice * (m_DataFiles.Preferences.TaxRate / 100.0);
+				m_Gear.Tax = Math.Round(m_Gear.PurchasePrice * (m_DataFiles.Preferences.TaxRate / 100.0), 2);
 
 				TaxTextBox.Value = m_Gear.Tax;
 				}
@@ -398,7 +398,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			(m_Gear as cRedDot).Battery = RedDotBatteryTextBox.Value;
+			(m_Gear as cRedDot).Battery = @RedDotBatteryTextBox.Value;
 
 			m_fChanged = true;
 
@@ -542,7 +542,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_Gear.SerialNumber = SerialNumberTextBox.Value;
+			m_Gear.SerialNumber = @SerialNumberTextBox.Value;
 
 			m_fChanged = true;
 
@@ -1115,7 +1115,7 @@ namespace ReloadersWorkShop
 			string strToolTip = cm_strTypeToolTip;
 
 			if (m_fViewOnly || !m_fAdd)
-				strToolTip += "\n\nThe type may not be  changed when editing or viewing accessories.";
+				strToolTip += "\n\nThe type may not be changed when editing or viewing accessories.";
 
 			m_TypeToolTip.SetToolTip(TypeCombo, strToolTip);
 

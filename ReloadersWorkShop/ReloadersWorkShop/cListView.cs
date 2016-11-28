@@ -395,7 +395,7 @@ namespace ReloadersWorkShop
 			// Caliber Name
 			//----------------------------------------------------------------------------*
 
-			if (args.Header.Text == "Caliber")
+			if (args.Header.Text == "Caliber" || args.Header.Text == "Primary Caliber")
 				{
 				cCaliber Caliber = GetCaliberFromTag(args.Item);
 
@@ -600,7 +600,7 @@ namespace ReloadersWorkShop
 				// Caliber Column
 				//----------------------------------------------------------------------------*
 
-				if (Header.Text == "Caliber")
+				if (Header.Text == "Caliber" || Header.Text == "Primary Caliber")
 					{
 					cCaliber Caliber = GetCaliberFromTag(Item);
 
@@ -694,7 +694,7 @@ namespace ReloadersWorkShop
 				// Caliber Column
 				//----------------------------------------------------------------------------*
 
-				if (Header.Text == "Caliber")
+				if (Header.Text == "Caliber" || Header.Text == "Primary Caliber")
 					{
 					cCaliber Caliber = GetCaliberFromTag(Item);
 

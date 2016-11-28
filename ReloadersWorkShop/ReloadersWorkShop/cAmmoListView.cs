@@ -35,6 +35,10 @@ namespace ReloadersWorkShop
 		private string m_strDimensionFormat = "{0:F3}";
 		private string m_strBulletWeightFormat = "{0:F1}";
 
+		private cFirearm.eFireArmType m_eFirearmType = cFirearm.eFireArmType.None;
+		private cCaliber m_Caliber = null;
+		private cManufacturer m_Manufacturer = null;
+
 		private cListViewColumn[] m_arColumns = new cListViewColumn[]
 			{
 			new cListViewColumn(0, "ManufacturerHeader","Manufacturer", HorizontalAlignment.Left, 140),
@@ -47,8 +51,9 @@ namespace ReloadersWorkShop
 			new cListViewColumn(7, "BulletDiameterHeader", "Bullet Diameter", HorizontalAlignment.Center, 115),
 			new cListViewColumn(8, "BCHeader", "B.C.", HorizontalAlignment.Center, 80),
 			new cListViewColumn(9, "SDHeader", "S.D.", HorizontalAlignment.Center, 80),
-			new cListViewColumn(10, "QuantityHeader", "Box of", HorizontalAlignment.Center, 80),
-			new cListViewColumn(11, "CostHeader", "Costs", HorizontalAlignment.Right, 80),
+			new cListViewColumn(10, "MinStockHeader", "Min Stock Lvl", HorizontalAlignment.Center, 80),
+			new cListViewColumn(11, "QuantityHeader", "Box of", HorizontalAlignment.Center, 80),
+			new cListViewColumn(12, "CostHeader", "Costs", HorizontalAlignment.Right, 80),
 			};
 
 		//============================================================================*
@@ -119,6 +124,54 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Caliber Property
+		//============================================================================*
+
+		public cCaliber Caliber
+			{
+			get
+				{
+				return (m_Caliber);
+				}
+			set
+				{
+				m_Caliber = value;
+				}
+			}
+
+		//============================================================================*
+		// FirearmType Property
+		//============================================================================*
+
+		public cFirearm.eFireArmType FirearmType
+			{
+			get
+				{
+				return (m_eFirearmType);
+				}
+			set
+				{
+				m_eFirearmType = value;
+				}
+			}
+
+		//============================================================================*
+		// Manufacturer Property
+		//============================================================================*
+
+		public cManufacturer Manufacturer
+			{
+			get
+				{
+				return (m_Manufacturer);
+				}
+			set
+				{
+				m_Manufacturer = value;
+				}
+			}
+
+		//============================================================================*
 		// OnColumnClick()
 		//============================================================================*
 
@@ -168,7 +221,7 @@ namespace ReloadersWorkShop
 			m_strBulletWeightFormat += "}";
 
 			//----------------------------------------------------------------------------*
-			// FirearmListView Items
+			// AmmoListView Items
 			//----------------------------------------------------------------------------*
 
 			Items.Clear();
@@ -225,13 +278,13 @@ namespace ReloadersWorkShop
 
 			if (m_DataFiles.Preferences.TrackInventory)
 				{
-				Columns[10].Text = "Qty on Hand";
-				Columns[11].Text = String.Format("Value ({0})", m_DataFiles.Preferences.Currency);
+				Columns[11].Text = "Qty on Hand";
+				Columns[12].Text = String.Format("Value ({0})", m_DataFiles.Preferences.Currency);
 				}
 			else
 				{
-				Columns[10].Text = "Box of";
-				Columns[11].Text = String.Format("Costs ({0})", m_DataFiles.Preferences.Currency);
+				Columns[11].Text = "Box of";
+				Columns[12].Text = String.Format("Costs ({0})", m_DataFiles.Preferences.Currency);
 				}
 			}
 
@@ -255,19 +308,27 @@ namespace ReloadersWorkShop
 			Item.SubItems.Add(Ammo.Caliber.ToString());
 			Item.SubItems.Add(String.Format(m_strBulletWeightFormat, cDataFiles.StandardToMetric(Ammo.BulletWeight, cDataFiles.eDataType.BulletWeight)));
 			Item.SubItems.Add(String.Format(m_strDimensionFormat, cDataFiles.StandardToMetric(Ammo.BulletDiameter, cDataFiles.eDataType.Dimension)));
-			Item.SubItems.Add(String.Format("{0:F3}", Ammo.BallisticCoefficient));
+			Item.SubItems.Add(Ammo.BallisticCoefficient > 0.0 ? String.Format("{0:F3}", Ammo.BallisticCoefficient) : "-");
 			Item.SubItems.Add(String.Format("{0:F3}", cBullet.CalculateSectionalDensity(Ammo.BulletDiameter, Ammo.BulletWeight)));
+
+			Item.SubItems.Add(Ammo.MinimumStockLevel != 0 ? String.Format("{0:N0}", Ammo.MinimumStockLevel) : "-");
+
+			double dCost = 0.0;
 
 			if (m_DataFiles.Preferences.TrackInventory)
 				{
-				Item.SubItems.Add(String.Format("{0:G0}", Ammo.QuantityOnHand));
-				Item.SubItems.Add(String.Format("{0:F2}", Ammo.QuantityOnHand * m_DataFiles.SupplyCostEach(Ammo)));
+				Item.SubItems.Add(Ammo.QuantityOnHand != 0.0 ? String.Format("{0:N0}", Ammo.QuantityOnHand) : "-");
+
+				dCost = Ammo.QuantityOnHand * m_DataFiles.SupplyCostEach(Ammo);
 				}
 			else
 				{
-				Item.SubItems.Add(String.Format("{0:G0}", Ammo.Quantity));
-				Item.SubItems.Add(String.Format("{0:F2}", Ammo.Cost));
+				Item.SubItems.Add(String.Format("{0:N0}", Ammo.Quantity));
+
+				dCost = Ammo.Cost;
 				}
+
+			Item.SubItems.Add(dCost != 0.0 ? String.Format("{0:F2}", dCost) : "-");
 			}
 
 		//============================================================================*
@@ -322,8 +383,58 @@ namespace ReloadersWorkShop
 			// Make sure we're tracking reloads if this is a reload
 			//----------------------------------------------------------------------------*
 
-			if (!m_DataFiles.Preferences.TrackReloads && Ammo.Manufacturer == null)
-				return(false);
+
+			//----------------------------------------------------------------------------*
+			// Check the internal filters
+			//----------------------------------------------------------------------------*
+
+			if (m_eFirearmType != cFirearm.eFireArmType.None && Ammo.FirearmType != m_eFirearmType)
+				return (false);
+
+			if (m_Caliber != null && m_Caliber.CompareTo(Ammo.Caliber) != 0)
+				return (false);
+
+			if (m_Manufacturer != null && m_Manufacturer.CompareTo(Ammo.Manufacturer) != 0)
+				return (false);
+
+			//----------------------------------------------------------------------------*
+			// Check the external filters
+			//----------------------------------------------------------------------------*
+
+			if (Ammo.Reload)
+				{
+				if (Ammo.BatchID != 0)
+					{
+					if (!m_DataFiles.Preferences.AmmoMyReloadFilter)
+						return (false);
+					}
+				else
+					{
+					if (!m_DataFiles.Preferences.AmmoFactoryReloadFilter)
+						return (false);
+					}
+				}
+			else
+				{
+				if (!m_DataFiles.Preferences.AmmoFactoryFilter)
+					return (false);
+				}
+
+			//----------------------------------------------------------------------------*
+			// Check the inventory control filters
+			//----------------------------------------------------------------------------*
+
+			if (m_DataFiles.Preferences.TrackInventory)
+				{
+				if (!m_DataFiles.Preferences.TrackReloads && Ammo.Reload && Ammo.BatchID != 0)
+					return (false);
+
+				if (Ammo.QuantityOnHand <= 0.0 && m_DataFiles.Preferences.AmmoNonZeroFilter)
+					return (false);
+
+				if (Ammo.QuantityOnHand >= Ammo.MinimumStockLevel && m_DataFiles.Preferences.AmmoMinStockFilter)
+					return (false);
+				}
 
 			return (true);
 			}

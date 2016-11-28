@@ -69,6 +69,9 @@ namespace ReloadersWorkShop
 		private double m_dHeadSpace = 0.0;
 		private double m_dNeck = 0.0;
 
+		private double m_dTransferFees = 0.0;
+		private double m_dOtherFees = 0.0;
+
 		private cFirearmCaliberList m_FirearmCaliberList = new cFirearmCaliberList();
 
 		private cFirearmBulletList m_FirearmBulletList = new cFirearmBulletList();
@@ -155,6 +158,9 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			m_strImageFile = Firearm.m_strImageFile;
+
+			m_dTransferFees = Firearm.m_dTransferFees;
+			m_dOtherFees = Firearm.m_dOtherFees;
 
 			m_strReceiverFinish = Firearm.m_strReceiverFinish;
 			m_strBarrelFinish = Firearm.m_strBarrelFinish;
@@ -412,6 +418,14 @@ namespace ReloadersWorkShop
 				strLine += ",";
 				strLine += PurchasePrice;
 				strLine += ",";
+				strLine += Tax;
+				strLine += ",";
+				strLine += Shipping;
+				strLine += ",";
+				strLine += m_dTransferFees;
+				strLine += ",";
+				strLine += m_dOtherFees;
+				strLine += ",";
 
 				strLine += m_strReceiverFinish;
 				strLine += ",";
@@ -440,7 +454,7 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				return("Manufacturer,Model,Serial Number,Firearm Type,Barrel Length,Twist,Sight Height,Scoped,Scope Click, Turret Type,Zero Range,HeadSpace,Neck,Source,Purchase Date,Price,Receiver Finish,Barrel Finish,Type,Action,Hammer,Magazine,Capacity");
+				return("Manufacturer,Model,Serial Number,Firearm Type,Barrel Length,Twist,Sight Height,Scoped,Scope Click, Turret Type,Zero Range,HeadSpace,Neck,Source,Purchase Date,Price,Tax,Shipping,Transfer Fees,Other Fees,Receiver Finish,Barrel Finish,Type,Action,Hammer,Magazine,Capacity");
 				}
 			}
 
@@ -576,7 +590,39 @@ namespace ReloadersWorkShop
 			// Price
 
 			XMLElement = XMLDocument.CreateElement("Price");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", PurchasePrice));
+			XMLTextElement = XMLDocument.CreateTextNode(PurchasePrice.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Tax
+
+			XMLElement = XMLDocument.CreateElement("Tax");
+			XMLTextElement = XMLDocument.CreateTextNode(Tax.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Shipping
+
+			XMLElement = XMLDocument.CreateElement("Shipping");
+			XMLTextElement = XMLDocument.CreateTextNode(Shipping.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Transfer Fees
+
+			XMLElement = XMLDocument.CreateElement("TransferFees");
+			XMLTextElement = XMLDocument.CreateTextNode(m_dTransferFees.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Other Fees
+
+			XMLElement = XMLDocument.CreateElement("OtherFees");
+			XMLTextElement = XMLDocument.CreateTextNode(m_dOtherFees.ToString());
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
@@ -861,6 +907,22 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// OtherFees Property
+		//============================================================================*
+
+		public double OtherFees
+			{
+			get
+				{
+				return (m_dOtherFees);
+				}
+			set
+				{
+				m_dOtherFees = value;
+				}
+			}
+
+		//============================================================================*
 		// PrimaryCaliber Property
 		//============================================================================*
 
@@ -1109,7 +1171,7 @@ namespace ReloadersWorkShop
 
 		public override string ToString()
 			{
-			return (String.Format("{0} {1} ({2})", (Manufacturer != null) ? Manufacturer.Name : "", PartNumber, SerialNumber));
+			return (String.Format("{0} {1} ({2})", (Manufacturer != null) ? @Manufacturer.Name : "", @PartNumber, @SerialNumber));
 			}
 
 		//============================================================================*
@@ -1119,6 +1181,22 @@ namespace ReloadersWorkShop
 		public string ToLongString()
 			{
 			return (ToString() + String.Format(" - {0}", PrimaryCaliber.ToString()));
+			}
+
+		//============================================================================*
+		// TransferFees Property
+		//============================================================================*
+
+		public double TransferFees
+			{
+			get
+				{
+				return (m_dTransferFees);
+				}
+			set
+				{
+				m_dTransferFees = value;
+				}
 			}
 
 		//============================================================================*

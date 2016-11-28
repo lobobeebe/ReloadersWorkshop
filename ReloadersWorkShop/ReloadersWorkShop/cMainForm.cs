@@ -858,7 +858,7 @@ namespace ReloadersWorkShop
 		private void OnFilePrintClicked(Object sender, EventArgs e)
 			{
 			FilePrintAmmoListMenuItem.Enabled = AmmoListPrintButton.Enabled;
-			FilePrintAmmoShoppingListMenuItem.Enabled = m_DataFiles.Preferences.TrackInventory && AmmoListPrintButton.Enabled && AmmoPrintBelowStockCheckBox.Checked;
+			FilePrintAmmoShoppingListMenuItem.Enabled = m_DataFiles.Preferences.TrackInventory && AmmoListPrintButton.Enabled && AmmoMinStockCheckBox.Checked;
 
 			FilePrintSupplyListMenuItem.Enabled = SupplyListPrintButton.Enabled;
 			FilePrintSupplyShoppingListMenuItem.Enabled = m_DataFiles.Preferences.TrackInventory && SupplyListPrintButton.Enabled && SuppliesPrintBelowStockCheckBox.Checked;
@@ -1382,8 +1382,8 @@ namespace ReloadersWorkShop
 
 			RemoveCaliberButton.Location = new Point(nButtonX, nButtonY);
 
-			m_CalibersListView.Location = new Point(0, CaliberCountLabel.Location.Y + CaliberCountLabel.Height + 20);
-			m_CalibersListView.Size = new Size(MainTabControl.Width, nButtonY - 20 - m_CalibersListView.Location.Y);
+			m_CalibersListView.Location = new Point(6, CaliberCountLabel.Location.Y + CaliberCountLabel.Height + 6);
+			m_CalibersListView.Size = new Size(MainTabControl.Width - 26, nButtonY - 20 - m_CalibersListView.Location.Y);
 
 			HideUncheckedCalibersCheckBox.Location = new Point(20, nButtonY);
 
@@ -1391,20 +1391,26 @@ namespace ReloadersWorkShop
 			// Firearms Tab
 			//----------------------------------------------------------------------------*
 
-			Rectangle GroupRect = new Rectangle();
-
 			// Firearms Group
 
+			FirearmCollectionGroupBox.Location = new Point(FirearmCostDetailsGroupBox.Location.X + FirearmCostDetailsGroupBox.Width + 6, FirearmCostDetailsGroupBox.Location.Y);
+
+			Rectangle GroupRect = MainTabControl.ClientRectangle;
+
 			GroupRect.X = 8;
-			GroupRect.Width = ClientRectangle.Width - 26;
 			GroupRect.Y = 6;
-			GroupRect.Height = (ClientRectangle.Height - GroupRect.Y - 40) / 2;
+			GroupRect.Height -= (MainMenu.Height + MainTabControl.ItemSize.Height + 18);
+			GroupRect.Height /= 2;
+			GroupRect.Width -= 16;
+
+			if (GroupRect.X + GroupRect.Width < FirearmCollectionGroupBox.Location.X + FirearmCollectionGroupBox.Width)
+				GroupRect.Width = FirearmCollectionGroupBox.Location.X + FirearmCollectionGroupBox.Width + 8;
 
 			FirearmsGroupBox.Location = GroupRect.Location;
 			FirearmsGroupBox.Size = GroupRect.Size;
 
-			m_FirearmsListView.Location = new Point(10, FirearmPrintOptionsGroupBox.Location.Y + FirearmPrintOptionsGroupBox.Height + 10);
-			m_FirearmsListView.Size = new Size(FirearmsGroupBox.Width - 20, FirearmsGroupBox.Height - AddFirearmButton.Height - FirearmPrintOptionsGroupBox.Location.Y - FirearmPrintOptionsGroupBox.Height - 30);
+			m_FirearmsListView.Location = new Point(10, FirearmCollectionGroupBox.Location.Y + FirearmCollectionGroupBox.Height + 10);
+			m_FirearmsListView.Size = new Size(FirearmsGroupBox.Width - 20, FirearmsGroupBox.Height - AddFirearmButton.Height - FirearmCollectionGroupBox.Location.Y - FirearmCollectionGroupBox.Height - 30);
 
 			nButtonY = FirearmsGroupBox.Height - AddFirearmAccessoryButton.Height - 10;
 
@@ -1429,7 +1435,6 @@ namespace ReloadersWorkShop
 			// Firearms Accessories Group
 
 			GroupRect.Y += (GroupRect.Height + 6);
-			GroupRect.Height -= 30;
 
 			FirearmAccessoriesGroupBox.Location = GroupRect.Location;
 			FirearmAccessoriesGroupBox.Size = GroupRect.Size;
@@ -1482,8 +1487,8 @@ namespace ReloadersWorkShop
 			RemoveSupplyButton.Location = new Point(nButtonX, nButtonY);
 			nButtonX += ViewSupplyButton.Width + nButtonSpacing;
 
-			m_SuppliesListView.Location = new Point(0, SupplyCountLabel.Location.Y + SupplyCountLabel.Height + 20);
-			m_SuppliesListView.Size = new Size(MainTabControl.Width, nButtonY - m_SuppliesListView.Location.Y - 30);
+			m_SuppliesListView.Location = new Point(6, SupplyCountLabel.Location.Y + SupplyCountLabel.Height + 6);
+			m_SuppliesListView.Size = new Size(MainTabControl.Width - 20, nButtonY - m_SuppliesListView.Location.Y - 30);
 
 			HideUncheckedSuppliesCheckBox.Location = new Point(20, nButtonY);
 
@@ -1521,21 +1526,21 @@ namespace ReloadersWorkShop
 
 			LoadDataListViewInfoLabel.Size = new Size(ClientRectangle.Width, LoadDataListViewInfoLabel.Height);
 
-			m_LoadDataListView.Location = new Point(10, LoadDataListViewInfoLabel.Location.Y + LoadDataListViewInfoLabel.Height + 10);
-			m_LoadDataListView.Size = new Size(MainTabControl.Width - 30, nButtonY - m_LoadDataListView.Location.Y - 20);
+			m_LoadDataListView.Location = new Point(6, LoadDataListViewInfoLabel.Location.Y + LoadDataListViewInfoLabel.Height + 6);
+			m_LoadDataListView.Size = new Size(MainTabControl.Width - 26, nButtonY - m_LoadDataListView.Location.Y -20);
 
 			//----------------------------------------------------------------------------*
 			// Batch Editor Tab
 			//----------------------------------------------------------------------------*
 
-			nButtonY = ClientRectangle.Height - 20 - AddBatchButton.Height - MainMenu.Height - ((MainTabControl.ItemSize.Height == 0) ? 21 : MainTabControl.ItemSize.Height);
+			nButtonY = ClientRectangle.Height - 20 - AddBatchButton.Height - MainMenu.Height - MainTabControl.ItemSize.Height;
 
 			nButtonSpacing = ((MainTabControl.Width / 4) - (AddBatchButton.Width + EditBatchButton.Width + RemoveBatchButton.Width + ViewBatchButton.Width)) / 2;
 
 			if (nButtonSpacing <= 0)
 				nButtonSpacing = 20;
 
-			nButtonX = (MainTabControl.Size.Width / 2) - ((AddBatchButton.Width + EditBatchButton.Width + RemoveBatchButton.Width + ViewBatchButton.Width + (nButtonSpacing * 2)) / 2);
+			nButtonX = (ClientRectangle.Size.Width / 2) - ((AddBatchButton.Width + EditBatchButton.Width + RemoveBatchButton.Width + ViewBatchButton.Width + (nButtonSpacing * 2)) / 2);
 
 			AddBatchButton.Location = new Point(nButtonX, nButtonY);
 			nButtonX += AddBatchButton.Width + nButtonSpacing;
@@ -1550,21 +1555,21 @@ namespace ReloadersWorkShop
 
 			BatchNotTrackedLabel.Location = new Point(10, nButtonY);
 
-			m_BatchListView.Location = new Point(0, BatchFiltersGroupBox.Location.Y + BatchFiltersGroupBox.Height + 20);
-			m_BatchListView.Size = new Size(MainTabControl.Width, nButtonY - m_BatchListView.Location.Y - 20);
+			m_BatchListView.Location = new Point(6, BatchFiltersGroupBox.Location.Y + BatchFiltersGroupBox.Height + 6);
+			m_BatchListView.Size = new Size(MainTabControl.Width - 20, nButtonY - m_BatchListView.Location.Y - 12);
 
 			//----------------------------------------------------------------------------*
 			// Ammo Tab
 			//----------------------------------------------------------------------------*
 
-			nButtonY = ClientRectangle.Height - 20 - AddAmmoButton.Height - MainMenu.Height - ((MainTabControl.ItemSize.Height == 0) ? 21 : MainTabControl.ItemSize.Height);
+			nButtonY = ClientRectangle.Height - 20 - AddAmmoButton.Height - MainMenu.Height - MainTabControl.ItemSize.Height;
 
-			nButtonSpacing = ((MainTabControl.Width / 4) - (AddAmmoButton.Width + EditAmmoButton.Width + RemoveAmmoButton.Width + ViewAmmoButton.Width)) / 2;
+			nButtonSpacing = ((ClientRectangle.Width / 4) - (AddAmmoButton.Width + EditAmmoButton.Width + RemoveAmmoButton.Width + ViewAmmoButton.Width)) / 2;
 
 			if (nButtonSpacing <= 0)
 				nButtonSpacing = 20;
 
-			nButtonX = (MainTabControl.Size.Width / 2) - ((AddAmmoButton.Width + EditAmmoButton.Width + RemoveAmmoButton.Width + ViewAmmoButton.Width + (nButtonSpacing * 2)) / 2);
+			nButtonX = (ClientRectangle.Width / 2) - ((AddAmmoButton.Width + EditAmmoButton.Width + RemoveAmmoButton.Width + ViewAmmoButton.Width + (nButtonSpacing * 2)) / 2);
 
 			AddAmmoButton.Location = new Point(nButtonX, nButtonY);
 			nButtonX += AddAmmoButton.Width + nButtonSpacing;
@@ -1577,8 +1582,8 @@ namespace ReloadersWorkShop
 
 			RemoveAmmoButton.Location = new Point(nButtonX, nButtonY);
 
-			m_AmmoListView.Location = new Point(0, AmmoPrintOptionsGroupBox.Location.Y + AmmoPrintOptionsGroupBox.Height + 20);
-			m_AmmoListView.Size = new Size(MainTabControl.Width, nButtonY - m_AmmoListView.Location.Y - 30);
+			m_AmmoListView.Location = new Point(7, AmmoPrintOptionsGroupBox.Location.Y + AmmoPrintOptionsGroupBox.Height + 6);
+			m_AmmoListView.Size = new Size(ClientRectangle.Width - 24, nButtonY - m_AmmoListView.Location.Y - 12);
 			}
 
 		//============================================================================*

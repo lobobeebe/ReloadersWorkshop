@@ -40,6 +40,24 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// cPrintObject() - Copy Constructor
+		//============================================================================*
+
+		public cPrintObject(cPrintObject PrintObj)
+			{
+			Copy(PrintObj);
+			}
+
+		//============================================================================*
+		// Copy()
+		//============================================================================*
+
+		public void Copy(cPrintObject PrintObj)
+			{
+			m_fPrinted = PrintObj.m_fPrinted;
+			}
+
+		//============================================================================*
 		// Printed Property
 		//============================================================================*
 
@@ -50,7 +68,7 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// Printed Property
+		// PrintReportTitle()
 		//============================================================================*
 
 		public static float PrintReportTitle(string strReportTitle, Rectangle PageRect, Graphics g)
@@ -84,7 +102,7 @@ namespace ReloadersWorkShop
 
 			g.DrawString(strText, TitleFont, Brushes.Black, PageRect.Left + (PageRect.Width / 2) - (TextSize.Width / 2), nY);
 
-			nY += (int) (TextSize.Height * 1.5);
+			nY += (int) TextSize.Height;
 
 			return (nY);
 			}

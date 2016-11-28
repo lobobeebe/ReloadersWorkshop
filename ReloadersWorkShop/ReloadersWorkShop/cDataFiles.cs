@@ -1108,6 +1108,40 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// FirearmAccessoryCount()
+		//============================================================================*
+
+		public int FirearmAccessoryCount(cFirearm Firearm = null)
+			{
+			int nCount = 0;
+
+			foreach (cGear Gear in m_GearList)
+				nCount += Firearm == null ? 1 : (Gear.Parent != null && Gear.Parent.CompareTo(Firearm) == 0 ? 1 : 0);
+
+			return (nCount);
+			}
+
+		//============================================================================*
+		// FirearmAccessoryList()
+		//============================================================================*
+
+		public cGearList FirearmAccessoryList(cFirearm Firearm = null, cGear.eGearTypes eType = cGear.eGearTypes.Firearm)
+			{
+			cGearList GearList = new cGearList();
+
+			foreach (cGear Gear in m_GearList)
+				{
+				if (Firearm == null || Firearm.CompareTo(Gear.Parent) == 0)
+					{
+					if (eType == cGear.eGearTypes.Firearm || Gear.GearType == eType)
+						GearList.Add(Gear);
+					}
+				}
+
+			return (GearList);
+			}
+
+		//============================================================================*
 		// FirearmList Property
 		//============================================================================*
 
@@ -1231,9 +1265,9 @@ namespace ReloadersWorkShop
 				{
 				if ((cPreferences.StaticPreferences.AmmoPrintAll ||
 					(cPreferences.StaticPreferences.AmmoPrintChecked && Ammo.Checked)) &&
-					(!cPreferences.StaticPreferences.AmmoPrintNonZero || SupplyQuantity(Ammo) != 0.0) &&
-					(!cPreferences.StaticPreferences.AmmoPrintFactoryOnly || Ammo.BatchID == 0) &&
-					(!cPreferences.StaticPreferences.AmmoPrintBelowStock || SupplyQuantity(Ammo) < Ammo.MinimumStockLevel))
+					(!cPreferences.StaticPreferences.AmmoNonZeroFilter || SupplyQuantity(Ammo) != 0.0) &&
+					(!cPreferences.StaticPreferences.AmmoFactoryFilter || Ammo.BatchID == 0) &&
+					(!cPreferences.StaticPreferences.AmmoMinStockFilter || SupplyQuantity(Ammo) < Ammo.MinimumStockLevel))
 
 					if (!AmmoList.Contains(Ammo))
 						AmmoList.Add(Ammo);
@@ -1264,12 +1298,44 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// GetCaliberByName()
+		//============================================================================*
+
+		public cCaliber GetCaliberByName(string strName)
+			{
+			foreach (cCaliber Caliber in m_CaliberList)
+				{
+				cCaliber.CurrentFirearmType = Caliber.FirearmType;
+
+				if (Caliber.ToString() == strName)
+					return (Caliber);
+				}
+
+			return (null);
+			}
+
+		//============================================================================*
 		// GetDataPath()
 		//============================================================================*
 
 		public string GetDataPath()
 			{
 			return (@"c:\Users\Public\Reloader's WorkShop");
+			}
+
+		//============================================================================*
+		// GetManufacturerByName()
+		//============================================================================*
+
+		public cManufacturer GetManufacturerByName(string strName)
+			{
+			foreach (cManufacturer Manufacturer in m_ManufacturerList)
+				{
+				if (Manufacturer.ToString() == strName)
+					return (Manufacturer);
+				}
+
+			return (null);
 			}
 
 		//============================================================================*

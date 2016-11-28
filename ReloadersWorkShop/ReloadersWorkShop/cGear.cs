@@ -25,9 +25,9 @@ namespace ReloadersWorkShop
 	[Serializable]
 	public class cGear : cPrintObject, IComparable
 		{
-		//----------------------------------------------------------------------------*
+		//============================================================================*
 		// Public Enumerations
-		//----------------------------------------------------------------------------*
+		//============================================================================*
 
 		public enum eGearTypes
 			{
@@ -45,9 +45,15 @@ namespace ReloadersWorkShop
 			Firearm = 99,
 			};
 
-		//----------------------------------------------------------------------------*
+		//============================================================================*
+		// Private Static Data Members
+		//============================================================================*
+
+		private static bool sm_fSortByType = true;
+
+		//============================================================================*
 		// Private Data Members
-		//----------------------------------------------------------------------------*
+		//============================================================================*
 
 		private eGearTypes m_eType;
 
@@ -119,13 +125,16 @@ namespace ReloadersWorkShop
 			if (obj == null)
 				return (1);
 
+			int rc = 0;
+
 			//----------------------------------------------------------------------------*
 			// Gear Type
 			//----------------------------------------------------------------------------*
 
 			cGear Gear = (cGear) obj;
 
-			int rc = m_eType.CompareTo(Gear.m_eType);
+			if (sm_fSortByType)
+				rc = m_eType.CompareTo(Gear.m_eType);
 
 			//----------------------------------------------------------------------------*
 			// Manufacturer
@@ -173,6 +182,8 @@ namespace ReloadersWorkShop
 
 		public virtual void Copy(cGear Gear)
 			{
+			base.Copy(Gear);
+
 			m_eType = Gear.m_eType;
 			m_Manufacturer = Gear.m_Manufacturer;
 
@@ -640,6 +651,22 @@ namespace ReloadersWorkShop
 			set
 				{
 				m_dShipping = value;
+				}
+			}
+
+		//============================================================================*
+		// SortByType Property
+		//============================================================================*
+
+		public static bool SortByType
+			{
+			get
+				{
+				return (sm_fSortByType);
+				}
+			set
+				{
+				sm_fSortByType = value;
 				}
 			}
 

@@ -99,6 +99,8 @@ namespace ReloadersWorkShop
 				PriceTextBox.TextChanged += OnPriceChanged;
 				TaxTextBox.TextChanged += OnTaxChanged;
 				ShippingTextBox.TextChanged += OnShippingChanged;
+				TransferFeesTextBox.TextChanged += OnTransferFeesChanged;
+				OtherFeesTextBox.TextChanged += OnOtherFeesChanged;
 
 				ReceiverFinishComboBox.TextChanged += OnReceiverFinishChanged;
 				ReceiverFinishComboBox.GotFocus += OnFinishComboGotFocus;
@@ -467,6 +469,24 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// OnOtherFeesChanged()
+		//============================================================================*
+
+		protected void OnOtherFeesChanged(object sender, EventArgs e)
+			{
+			if (!m_fInitialized)
+				return;
+
+			m_Firearm.OtherFees = OtherFeesTextBox.Value;
+
+			SetTotal();
+
+			m_fChanged = true;
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
 		// OnPreviousImageClicked()
 		//============================================================================*
 
@@ -679,6 +699,24 @@ namespace ReloadersWorkShop
 			m_Firearm.Tax = TaxTextBox.Value;
 
 			m_fUserTax = true;
+
+			SetTotal();
+
+			m_fChanged = true;
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
+		// OnTransferFeesChanged()
+		//============================================================================*
+
+		protected void OnTransferFeesChanged(object sender, EventArgs e)
+			{
+			if (!m_fInitialized)
+				return;
+
+			m_Firearm.TransferFees = TransferFeesTextBox.Value;
 
 			SetTotal();
 
@@ -978,6 +1016,8 @@ namespace ReloadersWorkShop
 			PriceTextBox.Value = m_Firearm.PurchasePrice;
 			TaxTextBox.Value = m_Firearm.Tax;
 			ShippingTextBox.Value = m_Firearm.Shipping;
+			TransferFeesTextBox.Value = m_Firearm.TransferFees;
+			OtherFeesTextBox.Value = m_Firearm.OtherFees;
 
 			SetTotal();
 
@@ -1239,7 +1279,7 @@ namespace ReloadersWorkShop
 
 		private void SetTotal()
 			{
-			TotalLabel.Text = String.Format("{0:F2}", m_Firearm.PurchasePrice + m_Firearm.Tax + m_Firearm.Shipping);
+			TotalLabel.Text = String.Format("{0:F2}", m_Firearm.PurchasePrice + m_Firearm.Tax + m_Firearm.Shipping + m_Firearm.TransferFees + m_Firearm.OtherFees);
 			}
 
 		//============================================================================*
@@ -1301,6 +1341,8 @@ namespace ReloadersWorkShop
 			PriceTextBox.ReadOnly = String.IsNullOrEmpty(m_Firearm.Source);
 			TaxTextBox.ReadOnly = String.IsNullOrEmpty(m_Firearm.Source);
 			ShippingTextBox.ReadOnly = String.IsNullOrEmpty(m_Firearm.Source);
+			TransferFeesTextBox.ReadOnly = String.IsNullOrEmpty(m_Firearm.Source);
+			OtherFeesTextBox.ReadOnly = String.IsNullOrEmpty(m_Firearm.Source);
 
 			//----------------------------------------------------------------------------*
 			// Check Type

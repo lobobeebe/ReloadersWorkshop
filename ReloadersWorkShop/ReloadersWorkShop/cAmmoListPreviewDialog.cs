@@ -36,7 +36,7 @@ namespace ReloadersWorkShop
 
 		private cDataFiles m_DataFiles = null;
 
-		private cAmmoList m_AmmoList = null;
+		private cAmmoList m_AmmoList = new cAmmoList();
 
 		private cPrintColumn[] m_AmmoColumns = new cPrintColumn[]
 			{
@@ -54,7 +54,7 @@ namespace ReloadersWorkShop
 		// cAmmoListPreviewDialog() - Constructor
 		//============================================================================*
 
-		public cAmmoListPreviewDialog(cDataFiles DataFiles)
+		public cAmmoListPreviewDialog(cDataFiles DataFiles, ListView AmmoListView)
 			{
 			m_DataFiles = DataFiles;
 
@@ -82,6 +82,7 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			m_AmmoColumns[4].Name += String.Format(" ({0})", cDataFiles.MetricString(cDataFiles.eDataType.BulletWeight));
+			m_AmmoColumns[7].Name += String.Format(" ({0})", m_DataFiles.Preferences.Currency);
 
 			if (!m_DataFiles.Preferences.TrackInventory)
 				m_AmmoColumns[6].Name = "Box of";
@@ -90,7 +91,13 @@ namespace ReloadersWorkShop
 			// Gather the list of ammo, reset flags, and exit
 			//----------------------------------------------------------------------------*
 
-			m_AmmoList = m_DataFiles.GetAmmoList();
+			foreach (ListViewItem Item in AmmoListView.Items)
+				{
+				cAmmo Ammo = (cAmmo) Item.Tag;
+
+				if (Ammo != null)
+					m_AmmoList.Add(Ammo);
+				}
 
 			ResetPrintedFlag();
 
@@ -146,6 +153,8 @@ namespace ReloadersWorkShop
 
 			foreach (cAmmo Ammo in m_AmmoList)
 				{
+				cCaliber.CurrentFirearmType = Ammo.FirearmType;
+
 				//----------------------------------------------------------------------------*
 				// Manufacturer
 				//----------------------------------------------------------------------------*
@@ -179,9 +188,27 @@ namespace ReloadersWorkShop
 
 				TextSize = e.Graphics.MeasureString(Ammo.Caliber.ToString(), DataFont);
 
-				if (TextSize.Width > m_AmmoColumns[3].Width)
+				if (TextSize.Width > m_AmmoColumns[4].Width)
 					m_AmmoColumns[4].Width = TextSize.Width;
+
+				//----------------------------------------------------------------------------*
+				// Cost
+				//----------------------------------------------------------------------------*
+
+				TextSize = e.Graphics.MeasureString("99999.99", DataFont);
+
+				if (TextSize.Width > m_AmmoColumns[7].Width)
+					m_AmmoColumns[7].Width = TextSize.Width;
 				}
+
+			float nLineWidth = 0;
+
+			foreach (cPrintColumn PrintColumn in m_AmmoColumns)
+				nLineWidth += PrintColumn.Width;
+
+			nLineWidth += ((m_AmmoColumns.Length - 1) * 10.0f);
+
+			float nLeftMargin = (e.PageBounds.Width / 2) - (nLineWidth / 2.0f);
 
 			//----------------------------------------------------------------------------*
 			// Prepare for printing
@@ -199,7 +226,7 @@ namespace ReloadersWorkShop
 			PageRect.Height -= ((int)((double)nYDPI * 0.5) * 2);
 
 			float nY = PageRect.Top;
-			float nX = PageRect.Left;
+			float nX = nLeftMargin;
 
 			bool fPageHeader = false;
 
@@ -228,6 +255,8 @@ namespace ReloadersWorkShop
 
 				Ammo.Printed = true;
 
+				cCaliber.CurrentFirearmType = Ammo.FirearmType;
+
 				//----------------------------------------------------------------------------*
 				// Draw the page header if needed
 				//----------------------------------------------------------------------------*
@@ -238,7 +267,7 @@ namespace ReloadersWorkShop
 					// Draw the Title
 					//----------------------------------------------------------------------------*
 
-					nY = cPrintObject.PrintReportTitle(m_DataFiles.Preferences.AmmoPrintBelowStock ? "Ammunition Shopping List" : "Ammunition List", PageRect, e.Graphics);
+					nY = cPrintObject.PrintReportTitle(m_DataFiles.Preferences.AmmoMinStockFilter ? "Ammunition Shopping List" : "Ammunition List", PageRect, e.Graphics);
 
 					if (m_DataFiles.Preferences.TrackInventory)
 						{
@@ -246,7 +275,7 @@ namespace ReloadersWorkShop
 
 						TextSize = e.Graphics.MeasureString(strText, HeaderFont);
 
-						e.Graphics.DrawString(strText, HeaderFont, Brushes.Black, (PageRect.Width / 2) - (TextSize.Width / 2), nY);
+						e.Graphics.DrawString(strText, HeaderFont, Brushes.Black, e.MarginBounds.Left + (e.MarginBounds.Width / 2) - (TextSize.Width / 2), nY);
 
 						nY += TextSize.Height;
 						}
@@ -267,9 +296,18 @@ namespace ReloadersWorkShop
 					// Loop through the headers
 					//----------------------------------------------------------------------------*
 
+					nX = nLeftMargin;
+
 					foreach (cPrintColumn PrintColumn in m_AmmoColumns)
 						{
-						e.Graphics.DrawString(PrintColumn.Name, HeaderFont, Brushes.Black, nX, nY);
+						if (PrintColumn.Name.Substring(0, 4) == "Cost")
+							{
+							TextSize = e.Graphics.MeasureString(PrintColumn.Name, HeaderFont);
+
+							e.Graphics.DrawString(PrintColumn.Name, HeaderFont, Brushes.Black, nX + PrintColumn.Width - TextSize.Width, nY);
+							}
+						else
+							e.Graphics.DrawString(PrintColumn.Name, HeaderFont, Brushes.Black, nX, nY);
 
 						nX += (PrintColumn.Width + 10);
 						}
@@ -278,9 +316,9 @@ namespace ReloadersWorkShop
 
 					nY += TextSize.Height;
 
-					e.Graphics.DrawLine(Pens.Black, PageRect.Left, nY, nX, nY);
+					e.Graphics.DrawLine(Pens.Black, nLeftMargin, nY, nX, nY);
 
-					nX = PageRect.Left;
+					nX = nLeftMargin;
 
 					fHeader = true;
 					}
@@ -293,7 +331,7 @@ namespace ReloadersWorkShop
 
 				strText = Ammo.Manufacturer.ToString();
 
-				nX = PageRect.Left;
+				nX = nLeftMargin;
 
 				e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX, nY);
 
@@ -338,7 +376,7 @@ namespace ReloadersWorkShop
 
 				TextSize = e.Graphics.MeasureString(strText, DataFont);
 
-				e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX + (m_AmmoColumns[4].Width / 2) - (TextSize.Width / 2), nY);
+				e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX, nY);
 
 				nX += (m_AmmoColumns[4].Width + 10);
 
@@ -406,7 +444,7 @@ namespace ReloadersWorkShop
 
 				e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX + m_AmmoColumns[7].Width - TextSize.Width, nY);
 
-				nX = PageRect.Left;
+				nX = nLeftMargin;
 
 				nY += TextSize.Height;
 				}

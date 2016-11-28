@@ -119,9 +119,11 @@ namespace ReloadersWorkShop.Preferences
 
 		private bool m_fAmmoPrintAll = true;
 		private bool m_fAmmoPrintChecked = false;
-		private bool m_fAmmoPrintNonZero = false;
-		private bool m_fAmmoPrintBelowStock = false;
-		private bool m_fAmmoPrintFactoryOnly = false;
+		private bool m_fAmmoNonZeroFilter = false;
+		private bool m_fAmmoMinStockFilter = false;
+		private bool m_fAmmoFactoryFilter = false;
+		private bool m_fAmmoFactoryReloadFilter = false;
+		private bool m_fAmmoMyReloadFilter = false;
 
 		// Ammo List Settings
 
@@ -564,18 +566,18 @@ namespace ReloadersWorkShop.Preferences
 			}
 
 		//============================================================================*
-		// AmmoPrintBelowStock Property
+		// AmmoMinStockFilter Property
 		//============================================================================*
 
-		public bool AmmoPrintBelowStock
+		public bool AmmoMinStockFilter
 			{
 			get
 				{
-				return (m_fAmmoPrintBelowStock);
+				return (m_fAmmoMinStockFilter);
 				}
 			set
 				{
-				m_fAmmoPrintBelowStock = value;
+				m_fAmmoMinStockFilter = value;
 				}
 			}
 
@@ -596,18 +598,50 @@ namespace ReloadersWorkShop.Preferences
 			}
 
 		//============================================================================*
-		// AmmoPrintFactoryOnly Property
+		// AmmoFactoryFilter Property
 		//============================================================================*
 
-		public bool AmmoPrintFactoryOnly
+		public bool AmmoFactoryFilter
 			{
 			get
 				{
-				return (m_fAmmoPrintFactoryOnly);
+				return (m_fAmmoFactoryFilter);
 				}
 			set
 				{
-				m_fAmmoPrintFactoryOnly = value;
+				m_fAmmoFactoryFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// AmmoFactoryReloadFilter Property
+		//============================================================================*
+
+		public bool AmmoFactoryReloadFilter
+			{
+			get
+				{
+				return (m_fAmmoFactoryReloadFilter);
+				}
+			set
+				{
+				m_fAmmoFactoryReloadFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// AmmoMyReloadFilter Property
+		//============================================================================*
+
+		public bool AmmoMyReloadFilter
+			{
+			get
+				{
+				return (m_fAmmoMyReloadFilter);
+				}
+			set
+				{
+				m_fAmmoMyReloadFilter = value;
 				}
 			}
 
@@ -615,15 +649,15 @@ namespace ReloadersWorkShop.Preferences
 		// AmmoPrintNonZero Property
 		//============================================================================*
 
-		public bool AmmoPrintNonZero
+		public bool AmmoNonZeroFilter
 			{
 			get
 				{
-				return (m_fAmmoPrintNonZero);
+				return (m_fAmmoNonZeroFilter);
 				}
 			set
 				{
-				m_fAmmoPrintNonZero = value;
+				m_fAmmoNonZeroFilter = value;
 				}
 			}
 

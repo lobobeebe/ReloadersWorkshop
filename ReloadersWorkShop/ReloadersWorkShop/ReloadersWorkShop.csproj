@@ -242,6 +242,9 @@
     <Compile Include="cFirearmAccessoryForm.Designer.cs">
       <DependentUpon>cFirearmAccessoryForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="cFirearmAccessoryListPreviewDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="cFirearmAccessoryListView.cs">
       <SubType>Component</SubType>
     </Compile>

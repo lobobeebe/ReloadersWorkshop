@@ -62,6 +62,8 @@ namespace ReloadersWorkShop
 			System.Windows.Forms.Label BatchFirearmTypeLabel;
 			System.Windows.Forms.Label LoadDataFiltersPowderLabel;
 			System.Windows.Forms.Label label1;
+			System.Windows.Forms.Label label37;
+			System.Windows.Forms.Label label39;
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(cMainForm));
 			this.MainMenu = new System.Windows.Forms.MenuStrip();
 			this.FileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -205,7 +207,6 @@ namespace ReloadersWorkShop
 			this.BallisticsMuzzleVelocityTextBox = new CommonLib.Controls.cIntegerValueTextBox();
 			this.BallisticsDatabaseGroupBox = new System.Windows.Forms.GroupBox();
 			this.label2 = new System.Windows.Forms.Label();
-			this.BallisticsFirearmTypeCombo = new ReloadersWorkShop.Controls.cFirearmTypeCombo();
 			this.BallisticsResetButton = new System.Windows.Forms.Button();
 			this.BallisticsLoadDataVelocityRadioButton = new System.Windows.Forms.RadioButton();
 			this.BallisticsBatchTestVelocityRadioButton = new System.Windows.Forms.RadioButton();
@@ -294,10 +295,7 @@ namespace ReloadersWorkShop
 			this.ViewAmmoInventoryButton = new System.Windows.Forms.Button();
 			this.EditAmmoInventoryButton = new System.Windows.Forms.Button();
 			this.AmmoPrintOptionsGroupBox = new System.Windows.Forms.GroupBox();
-			this.AmmoPrintBelowStockCheckBox = new System.Windows.Forms.CheckBox();
 			this.NoAmmoListLabel = new System.Windows.Forms.Label();
-			this.AmmoPrintFactoryOnlyCheckBox = new System.Windows.Forms.CheckBox();
-			this.AmmoPrintNonZeroCheckBox = new System.Windows.Forms.CheckBox();
 			this.AmmoPrintCheckedRadioButton = new System.Windows.Forms.RadioButton();
 			this.AmmoPrintAllRadioButton = new System.Windows.Forms.RadioButton();
 			this.AmmoListPrintButton = new System.Windows.Forms.Button();
@@ -318,7 +316,6 @@ namespace ReloadersWorkShop
 			this.EditBatchButton = new System.Windows.Forms.Button();
 			this.AddBatchButton = new System.Windows.Forms.Button();
 			this.BatchFiltersGroupBox = new System.Windows.Forms.GroupBox();
-			this.BatchFirearmTypeCombo = new ReloadersWorkShop.Controls.cFirearmTypeCombo();
 			this.BatchCaliberCombo = new System.Windows.Forms.ComboBox();
 			this.BatchBulletCombo = new System.Windows.Forms.ComboBox();
 			this.BatchPowderCombo = new System.Windows.Forms.ComboBox();
@@ -331,7 +328,6 @@ namespace ReloadersWorkShop
 			this.EditLoadButton = new System.Windows.Forms.Button();
 			this.AddLoadButton = new System.Windows.Forms.Button();
 			this.LoadDataFiltersGroupBox = new System.Windows.Forms.GroupBox();
-			this.LoadDataFirearmTypeCombo = new ReloadersWorkShop.Controls.cFirearmTypeCombo();
 			this.LoadDataCaliberCombo = new System.Windows.Forms.ComboBox();
 			this.LoadDataBulletCombo = new System.Windows.Forms.ComboBox();
 			this.LoadDataPowderCombo = new System.Windows.Forms.ComboBox();
@@ -363,7 +359,20 @@ namespace ReloadersWorkShop
 			this.AddSupplyButton = new System.Windows.Forms.Button();
 			this.FirearmsTab = new System.Windows.Forms.TabPage();
 			this.FirearmAccessoriesGroupBox = new System.Windows.Forms.GroupBox();
+			this.FirearmAccessoriesCostDetailsGroupBox = new System.Windows.Forms.GroupBox();
+			this.FirearmAccessoriesGrandTotalLabel = new System.Windows.Forms.Label();
+			this.label43 = new System.Windows.Forms.Label();
+			this.FirearmAccessoriesTotalShippingLabel = new System.Windows.Forms.Label();
+			this.FirearmAccessoriesTotalTaxLabel = new System.Windows.Forms.Label();
+			this.label49 = new System.Windows.Forms.Label();
+			this.label50 = new System.Windows.Forms.Label();
+			this.FirearmAccessoriesTotalCostLabel = new System.Windows.Forms.Label();
+			this.FirearmAccessoriesCountLabel = new System.Windows.Forms.Label();
+			this.label53 = new System.Windows.Forms.Label();
+			this.label55 = new System.Windows.Forms.Label();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.FirearmsLightFilterCheckBox = new System.Windows.Forms.CheckBox();
+			this.FirearmsMagnifierFilterCheckBox = new System.Windows.Forms.CheckBox();
 			this.FirearmsOtherFilterCheckBox = new System.Windows.Forms.CheckBox();
 			this.FirearmsPartsFilterCheckBox = new System.Windows.Forms.CheckBox();
 			this.FirearmsBipodFilterCheckBox = new System.Windows.Forms.CheckBox();
@@ -373,6 +382,7 @@ namespace ReloadersWorkShop
 			this.FirearmsRedDotFilterCheckBox = new System.Windows.Forms.CheckBox();
 			this.FirearmsScopeFilterCheckBox = new System.Windows.Forms.CheckBox();
 			this.FirearmAccessoriesActionsGroupBox = new System.Windows.Forms.GroupBox();
+			this.FirearmAccessoriesPrintButton = new System.Windows.Forms.Button();
 			this.FirearmAccessoriesShowGroupsCheckBox = new System.Windows.Forms.CheckBox();
 			this.FirearmAccessoriesShowAllCheckBox = new System.Windows.Forms.CheckBox();
 			this.FirearmAccessoryAttachButton = new System.Windows.Forms.Button();
@@ -381,7 +391,28 @@ namespace ReloadersWorkShop
 			this.EditFirearmAccessoryButton = new System.Windows.Forms.Button();
 			this.ViewFirearmAccessoryButton = new System.Windows.Forms.Button();
 			this.FirearmsGroupBox = new System.Windows.Forms.GroupBox();
+			this.FirearmCollectionGroupBox = new System.Windows.Forms.GroupBox();
+			this.FirearmCollectionOtherFeesLabel = new System.Windows.Forms.Label();
+			this.FirearmCollectionTransferFeesLabel = new System.Windows.Forms.Label();
+			this.label48 = new System.Windows.Forms.Label();
+			this.label51 = new System.Windows.Forms.Label();
+			this.FirearmCollectionGrandTotalLabel = new System.Windows.Forms.Label();
+			this.FirearmCollectionTotalCostLabel = new System.Windows.Forms.Label();
+			this.label58 = new System.Windows.Forms.Label();
+			this.label59 = new System.Windows.Forms.Label();
+			this.FirearmCollectionTotalShippingLabel = new System.Windows.Forms.Label();
+			this.FirearmCollectionTotalTaxLabel = new System.Windows.Forms.Label();
+			this.label62 = new System.Windows.Forms.Label();
+			this.label63 = new System.Windows.Forms.Label();
+			this.FirearmCollectionAccessoryCostLabel = new System.Windows.Forms.Label();
+			this.FirearmCollectionCostLabel = new System.Windows.Forms.Label();
+			this.label66 = new System.Windows.Forms.Label();
+			this.label67 = new System.Windows.Forms.Label();
 			this.FirearmCostDetailsGroupBox = new System.Windows.Forms.GroupBox();
+			this.FirearmOtherFeesLabel = new System.Windows.Forms.Label();
+			this.FirearmTransferFeesLabel = new System.Windows.Forms.Label();
+			this.label44 = new System.Windows.Forms.Label();
+			this.label47 = new System.Windows.Forms.Label();
 			this.FirearmGrandTotalLabel = new System.Windows.Forms.Label();
 			this.FirearmTotalCostsLabel = new System.Windows.Forms.Label();
 			this.label45 = new System.Windows.Forms.Label();
@@ -422,8 +453,19 @@ namespace ReloadersWorkShop
 			this.radioButton1 = new System.Windows.Forms.RadioButton();
 			this.radioButton2 = new System.Windows.Forms.RadioButton();
 			this.button1 = new System.Windows.Forms.Button();
-			this.FirearmsMagnifierFilterCheckBox = new System.Windows.Forms.CheckBox();
-			this.FirearmsLightFilterCheckBox = new System.Windows.Forms.CheckBox();
+			this.AmmunitionFiltersGroupBox = new System.Windows.Forms.GroupBox();
+			this.AmmunitionCaliberCombo = new System.Windows.Forms.ComboBox();
+			this.label52 = new System.Windows.Forms.Label();
+			this.AmmunitionManufacturerCombo = new System.Windows.Forms.ComboBox();
+			this.AmmoMinStockCheckBox = new System.Windows.Forms.CheckBox();
+			this.AmmoFactoryCheckBox = new System.Windows.Forms.CheckBox();
+			this.AmmoNonZeroCheckBox = new System.Windows.Forms.CheckBox();
+			this.AmmunitionFirearmTypeCombo = new System.Windows.Forms.ComboBox();
+			this.LoadDataFirearmTypeCombo = new ReloadersWorkShop.Controls.cFirearmTypeCombo();
+			this.BatchFirearmTypeCombo = new ReloadersWorkShop.Controls.cFirearmTypeCombo();
+			this.BallisticsFirearmTypeCombo = new ReloadersWorkShop.Controls.cFirearmTypeCombo();
+			this.AmmoFactoryReloadsCheckBox = new System.Windows.Forms.CheckBox();
+			this.AmmoMyReloadsCheckBox = new System.Windows.Forms.CheckBox();
 			label54 = new System.Windows.Forms.Label();
 			label56 = new System.Windows.Forms.Label();
 			LoadDataFiltersFirearmTypeLabel = new System.Windows.Forms.Label();
@@ -435,6 +477,8 @@ namespace ReloadersWorkShop
 			BatchFirearmTypeLabel = new System.Windows.Forms.Label();
 			LoadDataFiltersPowderLabel = new System.Windows.Forms.Label();
 			label1 = new System.Windows.Forms.Label();
+			label37 = new System.Windows.Forms.Label();
+			label39 = new System.Windows.Forms.Label();
 			this.MainMenu.SuspendLayout();
 			this.BallisticsTab.SuspendLayout();
 			this.WindDriftChartGroup.SuspendLayout();
@@ -462,14 +506,17 @@ namespace ReloadersWorkShop
 			this.SuppliesPrintOptionsGroupBox.SuspendLayout();
 			this.FirearmsTab.SuspendLayout();
 			this.FirearmAccessoriesGroupBox.SuspendLayout();
+			this.FirearmAccessoriesCostDetailsGroupBox.SuspendLayout();
 			this.groupBox3.SuspendLayout();
 			this.FirearmAccessoriesActionsGroupBox.SuspendLayout();
 			this.FirearmsGroupBox.SuspendLayout();
+			this.FirearmCollectionGroupBox.SuspendLayout();
 			this.FirearmCostDetailsGroupBox.SuspendLayout();
 			this.FirearmPrintOptionsGroupBox.SuspendLayout();
 			this.CalibersTab.SuspendLayout();
 			this.ManufacturersTab.SuspendLayout();
 			this.MainTabControl.SuspendLayout();
+			this.AmmunitionFiltersGroupBox.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// label54
@@ -1863,321 +1910,6 @@ namespace ReloadersWorkShop
 			this.label2.TabIndex = 10;
 			this.label2.Text = "Bullet:";
 			// 
-			// BallisticsFirearmTypeCombo
-			// 
-			this.BallisticsFirearmTypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.BallisticsFirearmTypeCombo.DropDownWidth = 115;
-			this.BallisticsFirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BallisticsFirearmTypeCombo.FormattingEnabled = true;
-			this.BallisticsFirearmTypeCombo.IncludeShotgun = false;
-			this.BallisticsFirearmTypeCombo.Items.AddRange(new object[] {
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle"});
-			this.BallisticsFirearmTypeCombo.Location = new System.Drawing.Point(94, 22);
-			this.BallisticsFirearmTypeCombo.Name = "BallisticsFirearmTypeCombo";
-			this.BallisticsFirearmTypeCombo.Size = new System.Drawing.Size(98, 21);
-			this.BallisticsFirearmTypeCombo.TabIndex = 0;
-			this.BallisticsFirearmTypeCombo.ToolTip = "";
-			this.BallisticsFirearmTypeCombo.Value = ReloadersWorkShop.cFirearm.eFireArmType.Handgun;
-			// 
 			// BallisticsResetButton
 			// 
 			this.BallisticsResetButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -3332,6 +3064,7 @@ namespace ReloadersWorkShop
 			// 
 			// AmmoTab
 			// 
+			this.AmmoTab.Controls.Add(this.AmmunitionFiltersGroupBox);
 			this.AmmoTab.Controls.Add(this.AmmoInventoryGroup);
 			this.AmmoTab.Controls.Add(this.AmmoPrintOptionsGroupBox);
 			this.AmmoTab.Controls.Add(this.ViewAmmoButton);
@@ -3353,9 +3086,9 @@ namespace ReloadersWorkShop
 			this.AmmoInventoryGroup.Controls.Add(this.EditAmmoInventoryButton);
 			this.AmmoInventoryGroup.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.AmmoInventoryGroup.ForeColor = System.Drawing.SystemColors.HotTrack;
-			this.AmmoInventoryGroup.Location = new System.Drawing.Point(587, 6);
+			this.AmmoInventoryGroup.Location = new System.Drawing.Point(891, 6);
 			this.AmmoInventoryGroup.Name = "AmmoInventoryGroup";
-			this.AmmoInventoryGroup.Size = new System.Drawing.Size(315, 94);
+			this.AmmoInventoryGroup.Size = new System.Drawing.Size(227, 109);
 			this.AmmoInventoryGroup.TabIndex = 15;
 			this.AmmoInventoryGroup.TabStop = false;
 			this.AmmoInventoryGroup.Text = "Inventory";
@@ -3364,7 +3097,7 @@ namespace ReloadersWorkShop
 			// 
 			this.AmmoCostAnalysisButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.AmmoCostAnalysisButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.AmmoCostAnalysisButton.Location = new System.Drawing.Point(215, 36);
+			this.AmmoCostAnalysisButton.Location = new System.Drawing.Point(120, 26);
 			this.AmmoCostAnalysisButton.Margin = new System.Windows.Forms.Padding(2);
 			this.AmmoCostAnalysisButton.Name = "AmmoCostAnalysisButton";
 			this.AmmoCostAnalysisButton.Size = new System.Drawing.Size(79, 23);
@@ -3376,7 +3109,7 @@ namespace ReloadersWorkShop
 			// 
 			this.ViewAmmoInventoryButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.ViewAmmoInventoryButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.ViewAmmoInventoryButton.Location = new System.Drawing.Point(119, 36);
+			this.ViewAmmoInventoryButton.Location = new System.Drawing.Point(27, 56);
 			this.ViewAmmoInventoryButton.Margin = new System.Windows.Forms.Padding(2);
 			this.ViewAmmoInventoryButton.Name = "ViewAmmoInventoryButton";
 			this.ViewAmmoInventoryButton.Size = new System.Drawing.Size(79, 23);
@@ -3388,7 +3121,7 @@ namespace ReloadersWorkShop
 			// 
 			this.EditAmmoInventoryButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.EditAmmoInventoryButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.EditAmmoInventoryButton.Location = new System.Drawing.Point(23, 36);
+			this.EditAmmoInventoryButton.Location = new System.Drawing.Point(27, 26);
 			this.EditAmmoInventoryButton.Margin = new System.Windows.Forms.Padding(2);
 			this.EditAmmoInventoryButton.Name = "EditAmmoInventoryButton";
 			this.EditAmmoInventoryButton.Size = new System.Drawing.Size(79, 23);
@@ -3398,71 +3131,29 @@ namespace ReloadersWorkShop
 			// 
 			// AmmoPrintOptionsGroupBox
 			// 
-			this.AmmoPrintOptionsGroupBox.Controls.Add(this.AmmoPrintBelowStockCheckBox);
 			this.AmmoPrintOptionsGroupBox.Controls.Add(this.NoAmmoListLabel);
-			this.AmmoPrintOptionsGroupBox.Controls.Add(this.AmmoPrintFactoryOnlyCheckBox);
-			this.AmmoPrintOptionsGroupBox.Controls.Add(this.AmmoPrintNonZeroCheckBox);
 			this.AmmoPrintOptionsGroupBox.Controls.Add(this.AmmoPrintCheckedRadioButton);
 			this.AmmoPrintOptionsGroupBox.Controls.Add(this.AmmoPrintAllRadioButton);
 			this.AmmoPrintOptionsGroupBox.Controls.Add(this.AmmoListPrintButton);
 			this.AmmoPrintOptionsGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.AmmoPrintOptionsGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
-			this.AmmoPrintOptionsGroupBox.Location = new System.Drawing.Point(8, 6);
+			this.AmmoPrintOptionsGroupBox.Location = new System.Drawing.Point(633, 6);
 			this.AmmoPrintOptionsGroupBox.Name = "AmmoPrintOptionsGroupBox";
-			this.AmmoPrintOptionsGroupBox.Size = new System.Drawing.Size(573, 94);
+			this.AmmoPrintOptionsGroupBox.Size = new System.Drawing.Size(252, 109);
 			this.AmmoPrintOptionsGroupBox.TabIndex = 9;
 			this.AmmoPrintOptionsGroupBox.TabStop = false;
 			this.AmmoPrintOptionsGroupBox.Text = "Print Options";
-			// 
-			// AmmoPrintBelowStockCheckBox
-			// 
-			this.AmmoPrintBelowStockCheckBox.AutoCheck = false;
-			this.AmmoPrintBelowStockCheckBox.AutoSize = true;
-			this.AmmoPrintBelowStockCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.AmmoPrintBelowStockCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.AmmoPrintBelowStockCheckBox.Location = new System.Drawing.Point(139, 47);
-			this.AmmoPrintBelowStockCheckBox.Name = "AmmoPrintBelowStockCheckBox";
-			this.AmmoPrintBelowStockCheckBox.Size = new System.Drawing.Size(183, 17);
-			this.AmmoPrintBelowStockCheckBox.TabIndex = 17;
-			this.AmmoPrintBelowStockCheckBox.Text = "Below Minimum Stock Level Only";
-			this.AmmoPrintBelowStockCheckBox.UseVisualStyleBackColor = true;
 			// 
 			// NoAmmoListLabel
 			// 
 			this.NoAmmoListLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.NoAmmoListLabel.ForeColor = System.Drawing.Color.Maroon;
-			this.NoAmmoListLabel.Location = new System.Drawing.Point(12, 70);
+			this.NoAmmoListLabel.Location = new System.Drawing.Point(15, 84);
 			this.NoAmmoListLabel.Name = "NoAmmoListLabel";
-			this.NoAmmoListLabel.Size = new System.Drawing.Size(443, 13);
+			this.NoAmmoListLabel.Size = new System.Drawing.Size(231, 13);
 			this.NoAmmoListLabel.TabIndex = 16;
-			this.NoAmmoListLabel.Text = "No Ammo meets the above criteria";
+			this.NoAmmoListLabel.Text = "No Ammo meets the filter criteria";
 			this.NoAmmoListLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-			// 
-			// AmmoPrintFactoryOnlyCheckBox
-			// 
-			this.AmmoPrintFactoryOnlyCheckBox.AutoCheck = false;
-			this.AmmoPrintFactoryOnlyCheckBox.AutoSize = true;
-			this.AmmoPrintFactoryOnlyCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.AmmoPrintFactoryOnlyCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.AmmoPrintFactoryOnlyCheckBox.Location = new System.Drawing.Point(338, 24);
-			this.AmmoPrintFactoryOnlyCheckBox.Name = "AmmoPrintFactoryOnlyCheckBox";
-			this.AmmoPrintFactoryOnlyCheckBox.Size = new System.Drawing.Size(117, 17);
-			this.AmmoPrintFactoryOnlyCheckBox.TabIndex = 8;
-			this.AmmoPrintFactoryOnlyCheckBox.Text = "Factory Ammo Only";
-			this.AmmoPrintFactoryOnlyCheckBox.UseVisualStyleBackColor = true;
-			// 
-			// AmmoPrintNonZeroCheckBox
-			// 
-			this.AmmoPrintNonZeroCheckBox.AutoCheck = false;
-			this.AmmoPrintNonZeroCheckBox.AutoSize = true;
-			this.AmmoPrintNonZeroCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.AmmoPrintNonZeroCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.AmmoPrintNonZeroCheckBox.Location = new System.Drawing.Point(139, 24);
-			this.AmmoPrintNonZeroCheckBox.Name = "AmmoPrintNonZeroCheckBox";
-			this.AmmoPrintNonZeroCheckBox.Size = new System.Drawing.Size(145, 17);
-			this.AmmoPrintNonZeroCheckBox.TabIndex = 7;
-			this.AmmoPrintNonZeroCheckBox.Text = "Non-Zero Quantities Only";
-			this.AmmoPrintNonZeroCheckBox.UseVisualStyleBackColor = true;
 			// 
 			// AmmoPrintCheckedRadioButton
 			// 
@@ -3470,7 +3161,7 @@ namespace ReloadersWorkShop
 			this.AmmoPrintCheckedRadioButton.AutoSize = true;
 			this.AmmoPrintCheckedRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.AmmoPrintCheckedRadioButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.AmmoPrintCheckedRadioButton.Location = new System.Drawing.Point(15, 46);
+			this.AmmoPrintCheckedRadioButton.Location = new System.Drawing.Point(19, 46);
 			this.AmmoPrintCheckedRadioButton.Name = "AmmoPrintCheckedRadioButton";
 			this.AmmoPrintCheckedRadioButton.Size = new System.Drawing.Size(92, 17);
 			this.AmmoPrintCheckedRadioButton.TabIndex = 6;
@@ -3484,19 +3175,19 @@ namespace ReloadersWorkShop
 			this.AmmoPrintAllRadioButton.AutoSize = true;
 			this.AmmoPrintAllRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.AmmoPrintAllRadioButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.AmmoPrintAllRadioButton.Location = new System.Drawing.Point(15, 23);
+			this.AmmoPrintAllRadioButton.Location = new System.Drawing.Point(19, 23);
 			this.AmmoPrintAllRadioButton.Name = "AmmoPrintAllRadioButton";
-			this.AmmoPrintAllRadioButton.Size = new System.Drawing.Size(68, 17);
+			this.AmmoPrintAllRadioButton.Size = new System.Drawing.Size(117, 17);
 			this.AmmoPrintAllRadioButton.TabIndex = 5;
 			this.AmmoPrintAllRadioButton.TabStop = true;
-			this.AmmoPrintAllRadioButton.Text = "All Ammo";
+			this.AmmoPrintAllRadioButton.Text = "All Ammo Displayed";
 			this.AmmoPrintAllRadioButton.UseVisualStyleBackColor = true;
 			// 
 			// AmmoListPrintButton
 			// 
 			this.AmmoListPrintButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.AmmoListPrintButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.AmmoListPrintButton.Location = new System.Drawing.Point(484, 36);
+			this.AmmoListPrintButton.Location = new System.Drawing.Point(159, 32);
 			this.AmmoListPrintButton.Name = "AmmoListPrintButton";
 			this.AmmoListPrintButton.Size = new System.Drawing.Size(75, 23);
 			this.AmmoListPrintButton.TabIndex = 4;
@@ -3707,323 +3398,6 @@ namespace ReloadersWorkShop
 			this.BatchFiltersGroupBox.TabStop = false;
 			this.BatchFiltersGroupBox.Text = "Filters";
 			// 
-			// BatchFirearmTypeCombo
-			// 
-			this.BatchFirearmTypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.BatchFirearmTypeCombo.DropDownWidth = 115;
-			this.BatchFirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BatchFirearmTypeCombo.FormattingEnabled = true;
-			this.BatchFirearmTypeCombo.IncludeShotgun = false;
-			this.BatchFirearmTypeCombo.Items.AddRange(new object[] {
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle"});
-			this.BatchFirearmTypeCombo.Location = new System.Drawing.Point(83, 22);
-			this.BatchFirearmTypeCombo.Name = "BatchFirearmTypeCombo";
-			this.BatchFirearmTypeCombo.Size = new System.Drawing.Size(100, 21);
-			this.BatchFirearmTypeCombo.TabIndex = 15;
-			this.BatchFirearmTypeCombo.ToolTip = "";
-			this.BatchFirearmTypeCombo.Value = ReloadersWorkShop.cFirearm.eFireArmType.Handgun;
-			// 
 			// BatchCaliberCombo
 			// 
 			this.BatchCaliberCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
@@ -4182,329 +3556,6 @@ namespace ReloadersWorkShop
 			this.LoadDataFiltersGroupBox.TabIndex = 0;
 			this.LoadDataFiltersGroupBox.TabStop = false;
 			this.LoadDataFiltersGroupBox.Text = "Filters";
-			// 
-			// LoadDataFirearmTypeCombo
-			// 
-			this.LoadDataFirearmTypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.LoadDataFirearmTypeCombo.DropDownWidth = 115;
-			this.LoadDataFirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.LoadDataFirearmTypeCombo.FormattingEnabled = true;
-			this.LoadDataFirearmTypeCombo.IncludeShotgun = false;
-			this.LoadDataFirearmTypeCombo.Items.AddRange(new object[] {
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle"});
-			this.LoadDataFirearmTypeCombo.Location = new System.Drawing.Point(83, 22);
-			this.LoadDataFirearmTypeCombo.Name = "LoadDataFirearmTypeCombo";
-			this.LoadDataFirearmTypeCombo.Size = new System.Drawing.Size(100, 21);
-			this.LoadDataFirearmTypeCombo.TabIndex = 11;
-			this.LoadDataFirearmTypeCombo.ToolTip = "";
-			this.LoadDataFirearmTypeCombo.Value = ReloadersWorkShop.cFirearm.eFireArmType.Handgun;
 			// 
 			// LoadDataCaliberCombo
 			// 
@@ -4878,6 +3929,7 @@ namespace ReloadersWorkShop
 			// 
 			// FirearmsTab
 			// 
+			this.FirearmsTab.AutoScroll = true;
 			this.FirearmsTab.Controls.Add(this.FirearmAccessoriesGroupBox);
 			this.FirearmsTab.Controls.Add(this.FirearmsGroupBox);
 			this.FirearmsTab.Location = new System.Drawing.Point(4, 22);
@@ -4892,6 +3944,7 @@ namespace ReloadersWorkShop
 			// 
 			// FirearmAccessoriesGroupBox
 			// 
+			this.FirearmAccessoriesGroupBox.Controls.Add(this.FirearmAccessoriesCostDetailsGroupBox);
 			this.FirearmAccessoriesGroupBox.Controls.Add(this.groupBox3);
 			this.FirearmAccessoriesGroupBox.Controls.Add(this.FirearmAccessoriesActionsGroupBox);
 			this.FirearmAccessoriesGroupBox.Controls.Add(this.RemoveFirearmAccessoryButton);
@@ -4899,13 +3952,144 @@ namespace ReloadersWorkShop
 			this.FirearmAccessoriesGroupBox.Controls.Add(this.EditFirearmAccessoryButton);
 			this.FirearmAccessoriesGroupBox.Controls.Add(this.ViewFirearmAccessoryButton);
 			this.FirearmAccessoriesGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.FirearmAccessoriesGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
+			this.FirearmAccessoriesGroupBox.ForeColor = System.Drawing.SystemColors.Highlight;
 			this.FirearmAccessoriesGroupBox.Location = new System.Drawing.Point(8, 320);
 			this.FirearmAccessoriesGroupBox.Name = "FirearmAccessoriesGroupBox";
-			this.FirearmAccessoriesGroupBox.Size = new System.Drawing.Size(1081, 244);
+			this.FirearmAccessoriesGroupBox.Size = new System.Drawing.Size(1452, 244);
 			this.FirearmAccessoriesGroupBox.TabIndex = 5;
 			this.FirearmAccessoriesGroupBox.TabStop = false;
 			this.FirearmAccessoriesGroupBox.Text = "Parts && Accessories";
+			// 
+			// FirearmAccessoriesCostDetailsGroupBox
+			// 
+			this.FirearmAccessoriesCostDetailsGroupBox.Controls.Add(this.FirearmAccessoriesGrandTotalLabel);
+			this.FirearmAccessoriesCostDetailsGroupBox.Controls.Add(this.label43);
+			this.FirearmAccessoriesCostDetailsGroupBox.Controls.Add(this.FirearmAccessoriesTotalShippingLabel);
+			this.FirearmAccessoriesCostDetailsGroupBox.Controls.Add(this.FirearmAccessoriesTotalTaxLabel);
+			this.FirearmAccessoriesCostDetailsGroupBox.Controls.Add(this.label49);
+			this.FirearmAccessoriesCostDetailsGroupBox.Controls.Add(this.label50);
+			this.FirearmAccessoriesCostDetailsGroupBox.Controls.Add(this.FirearmAccessoriesTotalCostLabel);
+			this.FirearmAccessoriesCostDetailsGroupBox.Controls.Add(this.FirearmAccessoriesCountLabel);
+			this.FirearmAccessoriesCostDetailsGroupBox.Controls.Add(this.label53);
+			this.FirearmAccessoriesCostDetailsGroupBox.Controls.Add(this.label55);
+			this.FirearmAccessoriesCostDetailsGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmAccessoriesCostDetailsGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
+			this.FirearmAccessoriesCostDetailsGroupBox.Location = new System.Drawing.Point(687, 23);
+			this.FirearmAccessoriesCostDetailsGroupBox.Name = "FirearmAccessoriesCostDetailsGroupBox";
+			this.FirearmAccessoriesCostDetailsGroupBox.Size = new System.Drawing.Size(525, 74);
+			this.FirearmAccessoriesCostDetailsGroupBox.TabIndex = 10;
+			this.FirearmAccessoriesCostDetailsGroupBox.TabStop = false;
+			this.FirearmAccessoriesCostDetailsGroupBox.Text = "Accessory Costs";
+			// 
+			// FirearmAccessoriesGrandTotalLabel
+			// 
+			this.FirearmAccessoriesGrandTotalLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmAccessoriesGrandTotalLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmAccessoriesGrandTotalLabel.Location = new System.Drawing.Point(417, 27);
+			this.FirearmAccessoriesGrandTotalLabel.Name = "FirearmAccessoriesGrandTotalLabel";
+			this.FirearmAccessoriesGrandTotalLabel.Size = new System.Drawing.Size(91, 25);
+			this.FirearmAccessoriesGrandTotalLabel.TabIndex = 11;
+			this.FirearmAccessoriesGrandTotalLabel.Text = "1000.00";
+			this.FirearmAccessoriesGrandTotalLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// label43
+			// 
+			this.label43.AutoSize = true;
+			this.label43.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label43.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label43.Location = new System.Drawing.Point(333, 32);
+			this.label43.Name = "label43";
+			this.label43.Size = new System.Drawing.Size(78, 13);
+			this.label43.TabIndex = 9;
+			this.label43.Text = "Grand Total:";
+			// 
+			// FirearmAccessoriesTotalShippingLabel
+			// 
+			this.FirearmAccessoriesTotalShippingLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmAccessoriesTotalShippingLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmAccessoriesTotalShippingLabel.Location = new System.Drawing.Point(259, 43);
+			this.FirearmAccessoriesTotalShippingLabel.Name = "FirearmAccessoriesTotalShippingLabel";
+			this.FirearmAccessoriesTotalShippingLabel.Size = new System.Drawing.Size(53, 13);
+			this.FirearmAccessoriesTotalShippingLabel.TabIndex = 7;
+			this.FirearmAccessoriesTotalShippingLabel.Text = "0.00";
+			this.FirearmAccessoriesTotalShippingLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// FirearmAccessoriesTotalTaxLabel
+			// 
+			this.FirearmAccessoriesTotalTaxLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmAccessoriesTotalTaxLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmAccessoriesTotalTaxLabel.Location = new System.Drawing.Point(259, 23);
+			this.FirearmAccessoriesTotalTaxLabel.Name = "FirearmAccessoriesTotalTaxLabel";
+			this.FirearmAccessoriesTotalTaxLabel.Size = new System.Drawing.Size(53, 13);
+			this.FirearmAccessoriesTotalTaxLabel.TabIndex = 6;
+			this.FirearmAccessoriesTotalTaxLabel.Text = "0.00";
+			this.FirearmAccessoriesTotalTaxLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// label49
+			// 
+			this.label49.AutoSize = true;
+			this.label49.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label49.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label49.Location = new System.Drawing.Point(175, 43);
+			this.label49.Name = "label49";
+			this.label49.Size = new System.Drawing.Size(78, 13);
+			this.label49.TabIndex = 5;
+			this.label49.Text = "Total Shipping:";
+			// 
+			// label50
+			// 
+			this.label50.AutoSize = true;
+			this.label50.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label50.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label50.Location = new System.Drawing.Point(187, 22);
+			this.label50.Name = "label50";
+			this.label50.Size = new System.Drawing.Size(66, 13);
+			this.label50.TabIndex = 4;
+			this.label50.Text = "Total Taxes:";
+			// 
+			// FirearmAccessoriesTotalCostLabel
+			// 
+			this.FirearmAccessoriesTotalCostLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmAccessoriesTotalCostLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmAccessoriesTotalCostLabel.Location = new System.Drawing.Point(103, 43);
+			this.FirearmAccessoriesTotalCostLabel.Name = "FirearmAccessoriesTotalCostLabel";
+			this.FirearmAccessoriesTotalCostLabel.Size = new System.Drawing.Size(66, 13);
+			this.FirearmAccessoriesTotalCostLabel.TabIndex = 3;
+			this.FirearmAccessoriesTotalCostLabel.Text = "0.00";
+			this.FirearmAccessoriesTotalCostLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// FirearmAccessoriesCountLabel
+			// 
+			this.FirearmAccessoriesCountLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmAccessoriesCountLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmAccessoriesCountLabel.Location = new System.Drawing.Point(103, 23);
+			this.FirearmAccessoriesCountLabel.Name = "FirearmAccessoriesCountLabel";
+			this.FirearmAccessoriesCountLabel.Size = new System.Drawing.Size(66, 13);
+			this.FirearmAccessoriesCountLabel.TabIndex = 2;
+			this.FirearmAccessoriesCountLabel.Text = "0";
+			this.FirearmAccessoriesCountLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+			// 
+			// label53
+			// 
+			this.label53.AutoSize = true;
+			this.label53.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label53.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label53.Location = new System.Drawing.Point(35, 43);
+			this.label53.Name = "label53";
+			this.label53.Size = new System.Drawing.Size(60, 13);
+			this.label53.TabIndex = 1;
+			this.label53.Text = "Total Costs";
+			// 
+			// label55
+			// 
+			this.label55.AutoSize = true;
+			this.label55.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label55.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label55.Location = new System.Drawing.Point(20, 23);
+			this.label55.Name = "label55";
+			this.label55.Size = new System.Drawing.Size(77, 13);
+			this.label55.TabIndex = 0;
+			this.label55.Text = "# Accessories:";
 			// 
 			// groupBox3
 			// 
@@ -4921,12 +4105,40 @@ namespace ReloadersWorkShop
 			this.groupBox3.Controls.Add(this.FirearmsScopeFilterCheckBox);
 			this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.groupBox3.ForeColor = System.Drawing.SystemColors.HotTrack;
-			this.groupBox3.Location = new System.Drawing.Point(410, 20);
+			this.groupBox3.Location = new System.Drawing.Point(230, 23);
 			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(451, 66);
+			this.groupBox3.Size = new System.Drawing.Size(451, 74);
 			this.groupBox3.TabIndex = 9;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Filters";
+			// 
+			// FirearmsLightFilterCheckBox
+			// 
+			this.FirearmsLightFilterCheckBox.AutoSize = true;
+			this.FirearmsLightFilterCheckBox.Checked = true;
+			this.FirearmsLightFilterCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.FirearmsLightFilterCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmsLightFilterCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmsLightFilterCheckBox.Location = new System.Drawing.Point(197, 45);
+			this.FirearmsLightFilterCheckBox.Name = "FirearmsLightFilterCheckBox";
+			this.FirearmsLightFilterCheckBox.Size = new System.Drawing.Size(54, 17);
+			this.FirearmsLightFilterCheckBox.TabIndex = 14;
+			this.FirearmsLightFilterCheckBox.Text = "Lights";
+			this.FirearmsLightFilterCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// FirearmsMagnifierFilterCheckBox
+			// 
+			this.FirearmsMagnifierFilterCheckBox.AutoSize = true;
+			this.FirearmsMagnifierFilterCheckBox.Checked = true;
+			this.FirearmsMagnifierFilterCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.FirearmsMagnifierFilterCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmsMagnifierFilterCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmsMagnifierFilterCheckBox.Location = new System.Drawing.Point(100, 45);
+			this.FirearmsMagnifierFilterCheckBox.Name = "FirearmsMagnifierFilterCheckBox";
+			this.FirearmsMagnifierFilterCheckBox.Size = new System.Drawing.Size(74, 17);
+			this.FirearmsMagnifierFilterCheckBox.TabIndex = 13;
+			this.FirearmsMagnifierFilterCheckBox.Text = "Magnifiers";
+			this.FirearmsMagnifierFilterCheckBox.UseVisualStyleBackColor = true;
 			// 
 			// FirearmsOtherFilterCheckBox
 			// 
@@ -4935,7 +4147,7 @@ namespace ReloadersWorkShop
 			this.FirearmsOtherFilterCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.FirearmsOtherFilterCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmsOtherFilterCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmsOtherFilterCheckBox.Location = new System.Drawing.Point(357, 42);
+			this.FirearmsOtherFilterCheckBox.Location = new System.Drawing.Point(357, 45);
 			this.FirearmsOtherFilterCheckBox.Name = "FirearmsOtherFilterCheckBox";
 			this.FirearmsOtherFilterCheckBox.Size = new System.Drawing.Size(52, 17);
 			this.FirearmsOtherFilterCheckBox.TabIndex = 12;
@@ -4949,7 +4161,7 @@ namespace ReloadersWorkShop
 			this.FirearmsPartsFilterCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.FirearmsPartsFilterCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmsPartsFilterCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmsPartsFilterCheckBox.Location = new System.Drawing.Point(357, 19);
+			this.FirearmsPartsFilterCheckBox.Location = new System.Drawing.Point(357, 22);
 			this.FirearmsPartsFilterCheckBox.Name = "FirearmsPartsFilterCheckBox";
 			this.FirearmsPartsFilterCheckBox.Size = new System.Drawing.Size(87, 17);
 			this.FirearmsPartsFilterCheckBox.TabIndex = 11;
@@ -4963,7 +4175,7 @@ namespace ReloadersWorkShop
 			this.FirearmsBipodFilterCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.FirearmsBipodFilterCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmsBipodFilterCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmsBipodFilterCheckBox.Location = new System.Drawing.Point(284, 42);
+			this.FirearmsBipodFilterCheckBox.Location = new System.Drawing.Point(284, 45);
 			this.FirearmsBipodFilterCheckBox.Name = "FirearmsBipodFilterCheckBox";
 			this.FirearmsBipodFilterCheckBox.Size = new System.Drawing.Size(58, 17);
 			this.FirearmsBipodFilterCheckBox.TabIndex = 10;
@@ -4977,7 +4189,7 @@ namespace ReloadersWorkShop
 			this.FirearmsFurnitureFilterCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.FirearmsFurnitureFilterCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmsFurnitureFilterCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmsFurnitureFilterCheckBox.Location = new System.Drawing.Point(284, 19);
+			this.FirearmsFurnitureFilterCheckBox.Location = new System.Drawing.Point(284, 22);
 			this.FirearmsFurnitureFilterCheckBox.Name = "FirearmsFurnitureFilterCheckBox";
 			this.FirearmsFurnitureFilterCheckBox.Size = new System.Drawing.Size(67, 17);
 			this.FirearmsFurnitureFilterCheckBox.TabIndex = 9;
@@ -4991,7 +4203,7 @@ namespace ReloadersWorkShop
 			this.FirearmsTriggerFilterCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.FirearmsTriggerFilterCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmsTriggerFilterCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmsTriggerFilterCheckBox.Location = new System.Drawing.Point(196, 19);
+			this.FirearmsTriggerFilterCheckBox.Location = new System.Drawing.Point(196, 22);
 			this.FirearmsTriggerFilterCheckBox.Name = "FirearmsTriggerFilterCheckBox";
 			this.FirearmsTriggerFilterCheckBox.Size = new System.Drawing.Size(64, 17);
 			this.FirearmsTriggerFilterCheckBox.TabIndex = 8;
@@ -5005,7 +4217,7 @@ namespace ReloadersWorkShop
 			this.FirearmsLaserFilterCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.FirearmsLaserFilterCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmsLaserFilterCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmsLaserFilterCheckBox.Location = new System.Drawing.Point(100, 19);
+			this.FirearmsLaserFilterCheckBox.Location = new System.Drawing.Point(100, 22);
 			this.FirearmsLaserFilterCheckBox.Name = "FirearmsLaserFilterCheckBox";
 			this.FirearmsLaserFilterCheckBox.Size = new System.Drawing.Size(57, 17);
 			this.FirearmsLaserFilterCheckBox.TabIndex = 7;
@@ -5019,7 +4231,7 @@ namespace ReloadersWorkShop
 			this.FirearmsRedDotFilterCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.FirearmsRedDotFilterCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmsRedDotFilterCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmsRedDotFilterCheckBox.Location = new System.Drawing.Point(23, 42);
+			this.FirearmsRedDotFilterCheckBox.Location = new System.Drawing.Point(23, 45);
 			this.FirearmsRedDotFilterCheckBox.Name = "FirearmsRedDotFilterCheckBox";
 			this.FirearmsRedDotFilterCheckBox.Size = new System.Drawing.Size(71, 17);
 			this.FirearmsRedDotFilterCheckBox.TabIndex = 6;
@@ -5033,7 +4245,7 @@ namespace ReloadersWorkShop
 			this.FirearmsScopeFilterCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.FirearmsScopeFilterCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmsScopeFilterCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmsScopeFilterCheckBox.Location = new System.Drawing.Point(23, 19);
+			this.FirearmsScopeFilterCheckBox.Location = new System.Drawing.Point(23, 22);
 			this.FirearmsScopeFilterCheckBox.Name = "FirearmsScopeFilterCheckBox";
 			this.FirearmsScopeFilterCheckBox.Size = new System.Drawing.Size(62, 17);
 			this.FirearmsScopeFilterCheckBox.TabIndex = 5;
@@ -5042,17 +4254,29 @@ namespace ReloadersWorkShop
 			// 
 			// FirearmAccessoriesActionsGroupBox
 			// 
+			this.FirearmAccessoriesActionsGroupBox.Controls.Add(this.FirearmAccessoriesPrintButton);
 			this.FirearmAccessoriesActionsGroupBox.Controls.Add(this.FirearmAccessoriesShowGroupsCheckBox);
 			this.FirearmAccessoriesActionsGroupBox.Controls.Add(this.FirearmAccessoriesShowAllCheckBox);
 			this.FirearmAccessoriesActionsGroupBox.Controls.Add(this.FirearmAccessoryAttachButton);
 			this.FirearmAccessoriesActionsGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmAccessoriesActionsGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
-			this.FirearmAccessoriesActionsGroupBox.Location = new System.Drawing.Point(173, 20);
+			this.FirearmAccessoriesActionsGroupBox.Location = new System.Drawing.Point(6, 23);
 			this.FirearmAccessoriesActionsGroupBox.Name = "FirearmAccessoriesActionsGroupBox";
-			this.FirearmAccessoriesActionsGroupBox.Size = new System.Drawing.Size(218, 66);
+			this.FirearmAccessoriesActionsGroupBox.Size = new System.Drawing.Size(218, 74);
 			this.FirearmAccessoriesActionsGroupBox.TabIndex = 8;
 			this.FirearmAccessoriesActionsGroupBox.TabStop = false;
 			this.FirearmAccessoriesActionsGroupBox.Text = "Additional Actions";
+			// 
+			// FirearmAccessoriesPrintButton
+			// 
+			this.FirearmAccessoriesPrintButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmAccessoriesPrintButton.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmAccessoriesPrintButton.Location = new System.Drawing.Point(137, 44);
+			this.FirearmAccessoriesPrintButton.Name = "FirearmAccessoriesPrintButton";
+			this.FirearmAccessoriesPrintButton.Size = new System.Drawing.Size(75, 23);
+			this.FirearmAccessoriesPrintButton.TabIndex = 7;
+			this.FirearmAccessoriesPrintButton.Text = "Print";
+			this.FirearmAccessoriesPrintButton.UseVisualStyleBackColor = true;
 			// 
 			// FirearmAccessoriesShowGroupsCheckBox
 			// 
@@ -5061,7 +4285,7 @@ namespace ReloadersWorkShop
 			this.FirearmAccessoriesShowGroupsCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.FirearmAccessoriesShowGroupsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmAccessoriesShowGroupsCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmAccessoriesShowGroupsCheckBox.Location = new System.Drawing.Point(23, 42);
+			this.FirearmAccessoriesShowGroupsCheckBox.Location = new System.Drawing.Point(23, 45);
 			this.FirearmAccessoriesShowGroupsCheckBox.Name = "FirearmAccessoriesShowGroupsCheckBox";
 			this.FirearmAccessoriesShowGroupsCheckBox.Size = new System.Drawing.Size(90, 17);
 			this.FirearmAccessoriesShowGroupsCheckBox.TabIndex = 6;
@@ -5075,7 +4299,7 @@ namespace ReloadersWorkShop
 			this.FirearmAccessoriesShowAllCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.FirearmAccessoriesShowAllCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmAccessoriesShowAllCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmAccessoriesShowAllCheckBox.Location = new System.Drawing.Point(23, 19);
+			this.FirearmAccessoriesShowAllCheckBox.Location = new System.Drawing.Point(23, 22);
 			this.FirearmAccessoriesShowAllCheckBox.Name = "FirearmAccessoriesShowAllCheckBox";
 			this.FirearmAccessoriesShowAllCheckBox.Size = new System.Drawing.Size(67, 17);
 			this.FirearmAccessoriesShowAllCheckBox.TabIndex = 5;
@@ -5086,7 +4310,7 @@ namespace ReloadersWorkShop
 			// 
 			this.FirearmAccessoryAttachButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmAccessoryAttachButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmAccessoryAttachButton.Location = new System.Drawing.Point(130, 25);
+			this.FirearmAccessoryAttachButton.Location = new System.Drawing.Point(137, 15);
 			this.FirearmAccessoryAttachButton.Name = "FirearmAccessoryAttachButton";
 			this.FirearmAccessoryAttachButton.Size = new System.Drawing.Size(75, 23);
 			this.FirearmAccessoryAttachButton.TabIndex = 0;
@@ -5143,6 +4367,7 @@ namespace ReloadersWorkShop
 			// 
 			// FirearmsGroupBox
 			// 
+			this.FirearmsGroupBox.Controls.Add(this.FirearmCollectionGroupBox);
 			this.FirearmsGroupBox.Controls.Add(this.FirearmCostDetailsGroupBox);
 			this.FirearmsGroupBox.Controls.Add(this.RemoveFirearmButton);
 			this.FirearmsGroupBox.Controls.Add(this.AddFirearmButton);
@@ -5150,16 +4375,223 @@ namespace ReloadersWorkShop
 			this.FirearmsGroupBox.Controls.Add(this.EditFirearmButton);
 			this.FirearmsGroupBox.Controls.Add(this.ViewFirearmButton);
 			this.FirearmsGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.FirearmsGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
+			this.FirearmsGroupBox.ForeColor = System.Drawing.SystemColors.Highlight;
 			this.FirearmsGroupBox.Location = new System.Drawing.Point(8, 5);
 			this.FirearmsGroupBox.Name = "FirearmsGroupBox";
-			this.FirearmsGroupBox.Size = new System.Drawing.Size(1190, 309);
+			this.FirearmsGroupBox.Size = new System.Drawing.Size(1690, 309);
 			this.FirearmsGroupBox.TabIndex = 0;
 			this.FirearmsGroupBox.TabStop = false;
 			this.FirearmsGroupBox.Text = "Firearms";
 			// 
+			// FirearmCollectionGroupBox
+			// 
+			this.FirearmCollectionGroupBox.Controls.Add(this.FirearmCollectionOtherFeesLabel);
+			this.FirearmCollectionGroupBox.Controls.Add(this.FirearmCollectionTransferFeesLabel);
+			this.FirearmCollectionGroupBox.Controls.Add(this.label48);
+			this.FirearmCollectionGroupBox.Controls.Add(this.label51);
+			this.FirearmCollectionGroupBox.Controls.Add(this.FirearmCollectionGrandTotalLabel);
+			this.FirearmCollectionGroupBox.Controls.Add(this.FirearmCollectionTotalCostLabel);
+			this.FirearmCollectionGroupBox.Controls.Add(this.label58);
+			this.FirearmCollectionGroupBox.Controls.Add(this.label59);
+			this.FirearmCollectionGroupBox.Controls.Add(this.FirearmCollectionTotalShippingLabel);
+			this.FirearmCollectionGroupBox.Controls.Add(this.FirearmCollectionTotalTaxLabel);
+			this.FirearmCollectionGroupBox.Controls.Add(this.label62);
+			this.FirearmCollectionGroupBox.Controls.Add(this.label63);
+			this.FirearmCollectionGroupBox.Controls.Add(this.FirearmCollectionAccessoryCostLabel);
+			this.FirearmCollectionGroupBox.Controls.Add(this.FirearmCollectionCostLabel);
+			this.FirearmCollectionGroupBox.Controls.Add(this.label66);
+			this.FirearmCollectionGroupBox.Controls.Add(this.label67);
+			this.FirearmCollectionGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmCollectionGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
+			this.FirearmCollectionGroupBox.Location = new System.Drawing.Point(362, 100);
+			this.FirearmCollectionGroupBox.Name = "FirearmCollectionGroupBox";
+			this.FirearmCollectionGroupBox.Size = new System.Drawing.Size(688, 71);
+			this.FirearmCollectionGroupBox.TabIndex = 16;
+			this.FirearmCollectionGroupBox.TabStop = false;
+			this.FirearmCollectionGroupBox.Text = "Collection Costs";
+			// 
+			// FirearmCollectionOtherFeesLabel
+			// 
+			this.FirearmCollectionOtherFeesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmCollectionOtherFeesLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmCollectionOtherFeesLabel.Location = new System.Drawing.Point(256, 43);
+			this.FirearmCollectionOtherFeesLabel.Name = "FirearmCollectionOtherFeesLabel";
+			this.FirearmCollectionOtherFeesLabel.Size = new System.Drawing.Size(53, 13);
+			this.FirearmCollectionOtherFeesLabel.TabIndex = 15;
+			this.FirearmCollectionOtherFeesLabel.Text = "0.00";
+			this.FirearmCollectionOtherFeesLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// FirearmCollectionTransferFeesLabel
+			// 
+			this.FirearmCollectionTransferFeesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmCollectionTransferFeesLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmCollectionTransferFeesLabel.Location = new System.Drawing.Point(256, 23);
+			this.FirearmCollectionTransferFeesLabel.Name = "FirearmCollectionTransferFeesLabel";
+			this.FirearmCollectionTransferFeesLabel.Size = new System.Drawing.Size(53, 13);
+			this.FirearmCollectionTransferFeesLabel.TabIndex = 14;
+			this.FirearmCollectionTransferFeesLabel.Text = "0.00";
+			this.FirearmCollectionTransferFeesLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// label48
+			// 
+			this.label48.AutoSize = true;
+			this.label48.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label48.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label48.Location = new System.Drawing.Point(188, 43);
+			this.label48.Name = "label48";
+			this.label48.Size = new System.Drawing.Size(62, 13);
+			this.label48.TabIndex = 13;
+			this.label48.Text = "Other Fees:";
+			// 
+			// label51
+			// 
+			this.label51.AutoSize = true;
+			this.label51.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label51.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label51.Location = new System.Drawing.Point(175, 23);
+			this.label51.Name = "label51";
+			this.label51.Size = new System.Drawing.Size(75, 13);
+			this.label51.TabIndex = 12;
+			this.label51.Text = "Transfer Fees:";
+			// 
+			// FirearmCollectionGrandTotalLabel
+			// 
+			this.FirearmCollectionGrandTotalLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmCollectionGrandTotalLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmCollectionGrandTotalLabel.Location = new System.Drawing.Point(554, 43);
+			this.FirearmCollectionGrandTotalLabel.Name = "FirearmCollectionGrandTotalLabel";
+			this.FirearmCollectionGrandTotalLabel.Size = new System.Drawing.Size(125, 25);
+			this.FirearmCollectionGrandTotalLabel.TabIndex = 11;
+			this.FirearmCollectionGrandTotalLabel.Text = "1000.00";
+			this.FirearmCollectionGrandTotalLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// FirearmCollectionTotalCostLabel
+			// 
+			this.FirearmCollectionTotalCostLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmCollectionTotalCostLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmCollectionTotalCostLabel.Location = new System.Drawing.Point(552, 23);
+			this.FirearmCollectionTotalCostLabel.Name = "FirearmCollectionTotalCostLabel";
+			this.FirearmCollectionTotalCostLabel.Size = new System.Drawing.Size(78, 13);
+			this.FirearmCollectionTotalCostLabel.TabIndex = 10;
+			this.FirearmCollectionTotalCostLabel.Text = "0.00";
+			this.FirearmCollectionTotalCostLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// label58
+			// 
+			this.label58.AutoSize = true;
+			this.label58.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label58.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label58.Location = new System.Drawing.Point(470, 48);
+			this.label58.Name = "label58";
+			this.label58.Size = new System.Drawing.Size(78, 13);
+			this.label58.TabIndex = 9;
+			this.label58.Text = "Grand Total:";
+			// 
+			// label59
+			// 
+			this.label59.AutoSize = true;
+			this.label59.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label59.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label59.Location = new System.Drawing.Point(483, 23);
+			this.label59.Name = "label59";
+			this.label59.Size = new System.Drawing.Size(63, 13);
+			this.label59.TabIndex = 8;
+			this.label59.Text = "Total Costs:";
+			// 
+			// FirearmCollectionTotalShippingLabel
+			// 
+			this.FirearmCollectionTotalShippingLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmCollectionTotalShippingLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmCollectionTotalShippingLabel.Location = new System.Drawing.Point(399, 43);
+			this.FirearmCollectionTotalShippingLabel.Name = "FirearmCollectionTotalShippingLabel";
+			this.FirearmCollectionTotalShippingLabel.Size = new System.Drawing.Size(65, 13);
+			this.FirearmCollectionTotalShippingLabel.TabIndex = 7;
+			this.FirearmCollectionTotalShippingLabel.Text = "0.00";
+			this.FirearmCollectionTotalShippingLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// FirearmCollectionTotalTaxLabel
+			// 
+			this.FirearmCollectionTotalTaxLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmCollectionTotalTaxLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmCollectionTotalTaxLabel.Location = new System.Drawing.Point(399, 23);
+			this.FirearmCollectionTotalTaxLabel.Name = "FirearmCollectionTotalTaxLabel";
+			this.FirearmCollectionTotalTaxLabel.Size = new System.Drawing.Size(65, 13);
+			this.FirearmCollectionTotalTaxLabel.TabIndex = 6;
+			this.FirearmCollectionTotalTaxLabel.Text = "0.00";
+			this.FirearmCollectionTotalTaxLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// label62
+			// 
+			this.label62.AutoSize = true;
+			this.label62.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label62.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label62.Location = new System.Drawing.Point(315, 43);
+			this.label62.Name = "label62";
+			this.label62.Size = new System.Drawing.Size(78, 13);
+			this.label62.TabIndex = 5;
+			this.label62.Text = "Total Shipping:";
+			// 
+			// label63
+			// 
+			this.label63.AutoSize = true;
+			this.label63.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label63.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label63.Location = new System.Drawing.Point(327, 23);
+			this.label63.Name = "label63";
+			this.label63.Size = new System.Drawing.Size(66, 13);
+			this.label63.TabIndex = 4;
+			this.label63.Text = "Total Taxes:";
+			// 
+			// FirearmCollectionAccessoryCostLabel
+			// 
+			this.FirearmCollectionAccessoryCostLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmCollectionAccessoryCostLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmCollectionAccessoryCostLabel.Location = new System.Drawing.Point(103, 43);
+			this.FirearmCollectionAccessoryCostLabel.Name = "FirearmCollectionAccessoryCostLabel";
+			this.FirearmCollectionAccessoryCostLabel.Size = new System.Drawing.Size(65, 13);
+			this.FirearmCollectionAccessoryCostLabel.TabIndex = 3;
+			this.FirearmCollectionAccessoryCostLabel.Text = "0.00";
+			this.FirearmCollectionAccessoryCostLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// FirearmCollectionCostLabel
+			// 
+			this.FirearmCollectionCostLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmCollectionCostLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmCollectionCostLabel.Location = new System.Drawing.Point(103, 23);
+			this.FirearmCollectionCostLabel.Name = "FirearmCollectionCostLabel";
+			this.FirearmCollectionCostLabel.Size = new System.Drawing.Size(66, 13);
+			this.FirearmCollectionCostLabel.TabIndex = 2;
+			this.FirearmCollectionCostLabel.Text = "0.00";
+			this.FirearmCollectionCostLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// label66
+			// 
+			this.label66.AutoSize = true;
+			this.label66.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label66.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label66.Location = new System.Drawing.Point(9, 43);
+			this.label66.Name = "label66";
+			this.label66.Size = new System.Drawing.Size(88, 13);
+			this.label66.TabIndex = 1;
+			this.label66.Text = "Accessory Costs:";
+			// 
+			// label67
+			// 
+			this.label67.AutoSize = true;
+			this.label67.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label67.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label67.Location = new System.Drawing.Point(24, 23);
+			this.label67.Name = "label67";
+			this.label67.Size = new System.Drawing.Size(73, 13);
+			this.label67.TabIndex = 0;
+			this.label67.Text = "Firearm Costs:";
+			// 
 			// FirearmCostDetailsGroupBox
 			// 
+			this.FirearmCostDetailsGroupBox.Controls.Add(this.FirearmOtherFeesLabel);
+			this.FirearmCostDetailsGroupBox.Controls.Add(this.FirearmTransferFeesLabel);
+			this.FirearmCostDetailsGroupBox.Controls.Add(this.label44);
+			this.FirearmCostDetailsGroupBox.Controls.Add(this.label47);
 			this.FirearmCostDetailsGroupBox.Controls.Add(this.FirearmGrandTotalLabel);
 			this.FirearmCostDetailsGroupBox.Controls.Add(this.FirearmTotalCostsLabel);
 			this.FirearmCostDetailsGroupBox.Controls.Add(this.label45);
@@ -5174,20 +4606,64 @@ namespace ReloadersWorkShop
 			this.FirearmCostDetailsGroupBox.Controls.Add(this.label20);
 			this.FirearmCostDetailsGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmCostDetailsGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
-			this.FirearmCostDetailsGroupBox.Location = new System.Drawing.Point(456, 23);
+			this.FirearmCostDetailsGroupBox.Location = new System.Drawing.Point(362, 23);
 			this.FirearmCostDetailsGroupBox.Name = "FirearmCostDetailsGroupBox";
-			this.FirearmCostDetailsGroupBox.Size = new System.Drawing.Size(505, 71);
+			this.FirearmCostDetailsGroupBox.Size = new System.Drawing.Size(679, 71);
 			this.FirearmCostDetailsGroupBox.TabIndex = 7;
 			this.FirearmCostDetailsGroupBox.TabStop = false;
-			this.FirearmCostDetailsGroupBox.Text = "Cost Details";
+			this.FirearmCostDetailsGroupBox.Text = "Firearm Costs";
+			// 
+			// FirearmOtherFeesLabel
+			// 
+			this.FirearmOtherFeesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmOtherFeesLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmOtherFeesLabel.Location = new System.Drawing.Point(255, 43);
+			this.FirearmOtherFeesLabel.Name = "FirearmOtherFeesLabel";
+			this.FirearmOtherFeesLabel.Size = new System.Drawing.Size(53, 13);
+			this.FirearmOtherFeesLabel.TabIndex = 15;
+			this.FirearmOtherFeesLabel.Text = "0.00";
+			this.FirearmOtherFeesLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// FirearmTransferFeesLabel
+			// 
+			this.FirearmTransferFeesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmTransferFeesLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmTransferFeesLabel.Location = new System.Drawing.Point(255, 23);
+			this.FirearmTransferFeesLabel.Name = "FirearmTransferFeesLabel";
+			this.FirearmTransferFeesLabel.Size = new System.Drawing.Size(53, 13);
+			this.FirearmTransferFeesLabel.TabIndex = 14;
+			this.FirearmTransferFeesLabel.Text = "0.00";
+			this.FirearmTransferFeesLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// label44
+			// 
+			this.label44.AutoSize = true;
+			this.label44.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label44.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label44.Location = new System.Drawing.Point(187, 41);
+			this.label44.Name = "label44";
+			this.label44.Size = new System.Drawing.Size(62, 13);
+			this.label44.TabIndex = 13;
+			this.label44.Text = "Other Fees:";
+			// 
+			// label47
+			// 
+			this.label47.AutoSize = true;
+			this.label47.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label47.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label47.Location = new System.Drawing.Point(174, 23);
+			this.label47.Name = "label47";
+			this.label47.Size = new System.Drawing.Size(75, 13);
+			this.label47.TabIndex = 12;
+			this.label47.Text = "Transfer Fees:";
 			// 
 			// FirearmGrandTotalLabel
 			// 
 			this.FirearmGrandTotalLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmGrandTotalLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmGrandTotalLabel.Location = new System.Drawing.Point(402, 43);
+			this.FirearmGrandTotalLabel.Location = new System.Drawing.Point(541, 43);
 			this.FirearmGrandTotalLabel.Name = "FirearmGrandTotalLabel";
-			this.FirearmGrandTotalLabel.Size = new System.Drawing.Size(91, 25);
+			this.FirearmGrandTotalLabel.Size = new System.Drawing.Size(125, 25);
 			this.FirearmGrandTotalLabel.TabIndex = 11;
 			this.FirearmGrandTotalLabel.Text = "1000.00";
 			this.FirearmGrandTotalLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
@@ -5196,9 +4672,9 @@ namespace ReloadersWorkShop
 			// 
 			this.FirearmTotalCostsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmTotalCostsLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmTotalCostsLabel.Location = new System.Drawing.Point(394, 23);
+			this.FirearmTotalCostsLabel.Location = new System.Drawing.Point(541, 23);
 			this.FirearmTotalCostsLabel.Name = "FirearmTotalCostsLabel";
-			this.FirearmTotalCostsLabel.Size = new System.Drawing.Size(53, 13);
+			this.FirearmTotalCostsLabel.Size = new System.Drawing.Size(78, 13);
 			this.FirearmTotalCostsLabel.TabIndex = 10;
 			this.FirearmTotalCostsLabel.Text = "0.00";
 			this.FirearmTotalCostsLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
@@ -5208,7 +4684,7 @@ namespace ReloadersWorkShop
 			this.label45.AutoSize = true;
 			this.label45.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label45.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label45.Location = new System.Drawing.Point(318, 48);
+			this.label45.Location = new System.Drawing.Point(457, 48);
 			this.label45.Name = "label45";
 			this.label45.Size = new System.Drawing.Size(78, 13);
 			this.label45.TabIndex = 9;
@@ -5219,7 +4695,7 @@ namespace ReloadersWorkShop
 			this.label46.AutoSize = true;
 			this.label46.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label46.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label46.Location = new System.Drawing.Point(325, 23);
+			this.label46.Location = new System.Drawing.Point(472, 23);
 			this.label46.Name = "label46";
 			this.label46.Size = new System.Drawing.Size(63, 13);
 			this.label46.TabIndex = 8;
@@ -5229,7 +4705,7 @@ namespace ReloadersWorkShop
 			// 
 			this.FirearmTotalShippingLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmTotalShippingLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmTotalShippingLabel.Location = new System.Drawing.Point(247, 43);
+			this.FirearmTotalShippingLabel.Location = new System.Drawing.Point(398, 43);
 			this.FirearmTotalShippingLabel.Name = "FirearmTotalShippingLabel";
 			this.FirearmTotalShippingLabel.Size = new System.Drawing.Size(53, 13);
 			this.FirearmTotalShippingLabel.TabIndex = 7;
@@ -5240,7 +4716,7 @@ namespace ReloadersWorkShop
 			// 
 			this.FirearmTotalTaxesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmTotalTaxesLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmTotalTaxesLabel.Location = new System.Drawing.Point(247, 23);
+			this.FirearmTotalTaxesLabel.Location = new System.Drawing.Point(398, 23);
 			this.FirearmTotalTaxesLabel.Name = "FirearmTotalTaxesLabel";
 			this.FirearmTotalTaxesLabel.Size = new System.Drawing.Size(53, 13);
 			this.FirearmTotalTaxesLabel.TabIndex = 6;
@@ -5252,7 +4728,7 @@ namespace ReloadersWorkShop
 			this.label41.AutoSize = true;
 			this.label41.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label41.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label41.Location = new System.Drawing.Point(163, 43);
+			this.label41.Location = new System.Drawing.Point(314, 43);
 			this.label41.Name = "label41";
 			this.label41.Size = new System.Drawing.Size(78, 13);
 			this.label41.TabIndex = 5;
@@ -5263,7 +4739,7 @@ namespace ReloadersWorkShop
 			this.label42.AutoSize = true;
 			this.label42.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label42.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label42.Location = new System.Drawing.Point(175, 23);
+			this.label42.Location = new System.Drawing.Point(326, 23);
 			this.label42.Name = "label42";
 			this.label42.Size = new System.Drawing.Size(66, 13);
 			this.label42.TabIndex = 4;
@@ -5273,7 +4749,7 @@ namespace ReloadersWorkShop
 			// 
 			this.FirearmAccessoryCostLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmAccessoryCostLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmAccessoryCostLabel.Location = new System.Drawing.Point(103, 43);
+			this.FirearmAccessoryCostLabel.Location = new System.Drawing.Point(115, 41);
 			this.FirearmAccessoryCostLabel.Name = "FirearmAccessoryCostLabel";
 			this.FirearmAccessoryCostLabel.Size = new System.Drawing.Size(53, 13);
 			this.FirearmAccessoryCostLabel.TabIndex = 3;
@@ -5286,7 +4762,7 @@ namespace ReloadersWorkShop
 			this.FirearmCostLabel.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.FirearmCostLabel.Location = new System.Drawing.Point(103, 23);
 			this.FirearmCostLabel.Name = "FirearmCostLabel";
-			this.FirearmCostLabel.Size = new System.Drawing.Size(53, 13);
+			this.FirearmCostLabel.Size = new System.Drawing.Size(65, 13);
 			this.FirearmCostLabel.TabIndex = 2;
 			this.FirearmCostLabel.Text = "0.00";
 			this.FirearmCostLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
@@ -5346,7 +4822,7 @@ namespace ReloadersWorkShop
 			this.FirearmPrintOptionsGroupBox.Controls.Add(this.FirearmPrintButton);
 			this.FirearmPrintOptionsGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmPrintOptionsGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
-			this.FirearmPrintOptionsGroupBox.Location = new System.Drawing.Point(100, 23);
+			this.FirearmPrintOptionsGroupBox.Location = new System.Drawing.Point(6, 23);
 			this.FirearmPrintOptionsGroupBox.Name = "FirearmPrintOptionsGroupBox";
 			this.FirearmPrintOptionsGroupBox.Size = new System.Drawing.Size(350, 71);
 			this.FirearmPrintOptionsGroupBox.TabIndex = 4;
@@ -5628,33 +5104,1146 @@ namespace ReloadersWorkShop
 			this.button1.Size = new System.Drawing.Size(75, 23);
 			this.button1.TabIndex = 0;
 			// 
-			// FirearmsMagnifierFilterCheckBox
+			// AmmunitionFiltersGroupBox
 			// 
-			this.FirearmsMagnifierFilterCheckBox.AutoSize = true;
-			this.FirearmsMagnifierFilterCheckBox.Checked = true;
-			this.FirearmsMagnifierFilterCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.FirearmsMagnifierFilterCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.FirearmsMagnifierFilterCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmsMagnifierFilterCheckBox.Location = new System.Drawing.Point(100, 42);
-			this.FirearmsMagnifierFilterCheckBox.Name = "FirearmsMagnifierFilterCheckBox";
-			this.FirearmsMagnifierFilterCheckBox.Size = new System.Drawing.Size(74, 17);
-			this.FirearmsMagnifierFilterCheckBox.TabIndex = 13;
-			this.FirearmsMagnifierFilterCheckBox.Text = "Magnifiers";
-			this.FirearmsMagnifierFilterCheckBox.UseVisualStyleBackColor = true;
+			this.AmmunitionFiltersGroupBox.Controls.Add(this.AmmoMyReloadsCheckBox);
+			this.AmmunitionFiltersGroupBox.Controls.Add(this.AmmoFactoryReloadsCheckBox);
+			this.AmmunitionFiltersGroupBox.Controls.Add(this.AmmunitionFirearmTypeCombo);
+			this.AmmunitionFiltersGroupBox.Controls.Add(this.AmmoMinStockCheckBox);
+			this.AmmunitionFiltersGroupBox.Controls.Add(this.AmmoFactoryCheckBox);
+			this.AmmunitionFiltersGroupBox.Controls.Add(this.AmmoNonZeroCheckBox);
+			this.AmmunitionFiltersGroupBox.Controls.Add(label37);
+			this.AmmunitionFiltersGroupBox.Controls.Add(label39);
+			this.AmmunitionFiltersGroupBox.Controls.Add(this.AmmunitionCaliberCombo);
+			this.AmmunitionFiltersGroupBox.Controls.Add(this.label52);
+			this.AmmunitionFiltersGroupBox.Controls.Add(this.AmmunitionManufacturerCombo);
+			this.AmmunitionFiltersGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.AmmunitionFiltersGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
+			this.AmmunitionFiltersGroupBox.Location = new System.Drawing.Point(7, 6);
+			this.AmmunitionFiltersGroupBox.Margin = new System.Windows.Forms.Padding(2);
+			this.AmmunitionFiltersGroupBox.Name = "AmmunitionFiltersGroupBox";
+			this.AmmunitionFiltersGroupBox.Padding = new System.Windows.Forms.Padding(2);
+			this.AmmunitionFiltersGroupBox.Size = new System.Drawing.Size(621, 109);
+			this.AmmunitionFiltersGroupBox.TabIndex = 16;
+			this.AmmunitionFiltersGroupBox.TabStop = false;
+			this.AmmunitionFiltersGroupBox.Text = "Filters";
 			// 
-			// FirearmsLightFilterCheckBox
+			// label37
 			// 
-			this.FirearmsLightFilterCheckBox.AutoSize = true;
-			this.FirearmsLightFilterCheckBox.Checked = true;
-			this.FirearmsLightFilterCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.FirearmsLightFilterCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.FirearmsLightFilterCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmsLightFilterCheckBox.Location = new System.Drawing.Point(197, 42);
-			this.FirearmsLightFilterCheckBox.Name = "FirearmsLightFilterCheckBox";
-			this.FirearmsLightFilterCheckBox.Size = new System.Drawing.Size(54, 17);
-			this.FirearmsLightFilterCheckBox.TabIndex = 14;
-			this.FirearmsLightFilterCheckBox.Text = "Lights";
-			this.FirearmsLightFilterCheckBox.UseVisualStyleBackColor = true;
+			label37.AutoSize = true;
+			label37.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			label37.ForeColor = System.Drawing.SystemColors.ControlText;
+			label37.Location = new System.Drawing.Point(6, 26);
+			label37.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			label37.Name = "label37";
+			label37.Size = new System.Drawing.Size(71, 13);
+			label37.TabIndex = 8;
+			label37.Text = "Firearm Type:";
+			// 
+			// label39
+			// 
+			label39.AutoSize = true;
+			label39.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			label39.ForeColor = System.Drawing.SystemColors.ControlText;
+			label39.Location = new System.Drawing.Point(35, 51);
+			label39.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			label39.Name = "label39";
+			label39.Size = new System.Drawing.Size(42, 13);
+			label39.TabIndex = 3;
+			label39.Text = "Caliber:";
+			// 
+			// AmmunitionCaliberCombo
+			// 
+			this.AmmunitionCaliberCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+			this.AmmunitionCaliberCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+			this.AmmunitionCaliberCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.AmmunitionCaliberCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.AmmunitionCaliberCombo.FormattingEnabled = true;
+			this.AmmunitionCaliberCombo.Items.AddRange(new object[] {
+            "Any Caliber"});
+			this.AmmunitionCaliberCombo.Location = new System.Drawing.Point(81, 48);
+			this.AmmunitionCaliberCombo.Margin = new System.Windows.Forms.Padding(2);
+			this.AmmunitionCaliberCombo.Name = "AmmunitionCaliberCombo";
+			this.AmmunitionCaliberCombo.Size = new System.Drawing.Size(200, 21);
+			this.AmmunitionCaliberCombo.TabIndex = 1;
+			// 
+			// label52
+			// 
+			this.label52.AutoSize = true;
+			this.label52.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label52.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label52.Location = new System.Drawing.Point(4, 76);
+			this.label52.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.label52.Name = "label52";
+			this.label52.Size = new System.Drawing.Size(73, 13);
+			this.label52.TabIndex = 4;
+			this.label52.Text = "Manufacturer:";
+			// 
+			// AmmunitionManufacturerCombo
+			// 
+			this.AmmunitionManufacturerCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+			this.AmmunitionManufacturerCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+			this.AmmunitionManufacturerCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.AmmunitionManufacturerCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.AmmunitionManufacturerCombo.FormattingEnabled = true;
+			this.AmmunitionManufacturerCombo.Items.AddRange(new object[] {
+            "Any Manufacturer"});
+			this.AmmunitionManufacturerCombo.Location = new System.Drawing.Point(81, 73);
+			this.AmmunitionManufacturerCombo.Margin = new System.Windows.Forms.Padding(2);
+			this.AmmunitionManufacturerCombo.MaxDropDownItems = 15;
+			this.AmmunitionManufacturerCombo.Name = "AmmunitionManufacturerCombo";
+			this.AmmunitionManufacturerCombo.Size = new System.Drawing.Size(200, 21);
+			this.AmmunitionManufacturerCombo.TabIndex = 2;
+			// 
+			// AmmoMinStockCheckBox
+			// 
+			this.AmmoMinStockCheckBox.AutoSize = true;
+			this.AmmoMinStockCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.AmmoMinStockCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.AmmoMinStockCheckBox.Location = new System.Drawing.Point(320, 73);
+			this.AmmoMinStockCheckBox.Name = "AmmoMinStockCheckBox";
+			this.AmmoMinStockCheckBox.Size = new System.Drawing.Size(183, 17);
+			this.AmmoMinStockCheckBox.TabIndex = 20;
+			this.AmmoMinStockCheckBox.Text = "Below Minimum Stock Level Only";
+			this.AmmoMinStockCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// AmmoFactoryCheckBox
+			// 
+			this.AmmoFactoryCheckBox.AutoSize = true;
+			this.AmmoFactoryCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.AmmoFactoryCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.AmmoFactoryCheckBox.Location = new System.Drawing.Point(320, 27);
+			this.AmmoFactoryCheckBox.Name = "AmmoFactoryCheckBox";
+			this.AmmoFactoryCheckBox.Size = new System.Drawing.Size(93, 17);
+			this.AmmoFactoryCheckBox.TabIndex = 19;
+			this.AmmoFactoryCheckBox.Text = "Factory Ammo";
+			this.AmmoFactoryCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// AmmoNonZeroCheckBox
+			// 
+			this.AmmoNonZeroCheckBox.AutoSize = true;
+			this.AmmoNonZeroCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.AmmoNonZeroCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.AmmoNonZeroCheckBox.Location = new System.Drawing.Point(320, 50);
+			this.AmmoNonZeroCheckBox.Name = "AmmoNonZeroCheckBox";
+			this.AmmoNonZeroCheckBox.Size = new System.Drawing.Size(145, 17);
+			this.AmmoNonZeroCheckBox.TabIndex = 18;
+			this.AmmoNonZeroCheckBox.Text = "Non-Zero Quantities Only";
+			this.AmmoNonZeroCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// AmmunitionFirearmTypeCombo
+			// 
+			this.AmmunitionFirearmTypeCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+			this.AmmunitionFirearmTypeCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+			this.AmmunitionFirearmTypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.AmmunitionFirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.AmmunitionFirearmTypeCombo.FormattingEnabled = true;
+			this.AmmunitionFirearmTypeCombo.Items.AddRange(new object[] {
+            "Any Type",
+            "Handgun",
+            "Rifle"});
+			this.AmmunitionFirearmTypeCombo.Location = new System.Drawing.Point(81, 23);
+			this.AmmunitionFirearmTypeCombo.Margin = new System.Windows.Forms.Padding(2);
+			this.AmmunitionFirearmTypeCombo.Name = "AmmunitionFirearmTypeCombo";
+			this.AmmunitionFirearmTypeCombo.Size = new System.Drawing.Size(123, 21);
+			this.AmmunitionFirearmTypeCombo.TabIndex = 21;
+			// 
+			// LoadDataFirearmTypeCombo
+			// 
+			this.LoadDataFirearmTypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.LoadDataFirearmTypeCombo.DropDownWidth = 115;
+			this.LoadDataFirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.LoadDataFirearmTypeCombo.FormattingEnabled = true;
+			this.LoadDataFirearmTypeCombo.IncludeShotgun = false;
+			this.LoadDataFirearmTypeCombo.Items.AddRange(new object[] {
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle"});
+			this.LoadDataFirearmTypeCombo.Location = new System.Drawing.Point(83, 22);
+			this.LoadDataFirearmTypeCombo.Name = "LoadDataFirearmTypeCombo";
+			this.LoadDataFirearmTypeCombo.Size = new System.Drawing.Size(100, 21);
+			this.LoadDataFirearmTypeCombo.TabIndex = 11;
+			this.LoadDataFirearmTypeCombo.ToolTip = "";
+			this.LoadDataFirearmTypeCombo.Value = ReloadersWorkShop.cFirearm.eFireArmType.Handgun;
+			// 
+			// BatchFirearmTypeCombo
+			// 
+			this.BatchFirearmTypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.BatchFirearmTypeCombo.DropDownWidth = 115;
+			this.BatchFirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BatchFirearmTypeCombo.FormattingEnabled = true;
+			this.BatchFirearmTypeCombo.IncludeShotgun = false;
+			this.BatchFirearmTypeCombo.Items.AddRange(new object[] {
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle"});
+			this.BatchFirearmTypeCombo.Location = new System.Drawing.Point(83, 22);
+			this.BatchFirearmTypeCombo.Name = "BatchFirearmTypeCombo";
+			this.BatchFirearmTypeCombo.Size = new System.Drawing.Size(100, 21);
+			this.BatchFirearmTypeCombo.TabIndex = 15;
+			this.BatchFirearmTypeCombo.ToolTip = "";
+			this.BatchFirearmTypeCombo.Value = ReloadersWorkShop.cFirearm.eFireArmType.Handgun;
+			// 
+			// BallisticsFirearmTypeCombo
+			// 
+			this.BallisticsFirearmTypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.BallisticsFirearmTypeCombo.DropDownWidth = 115;
+			this.BallisticsFirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BallisticsFirearmTypeCombo.FormattingEnabled = true;
+			this.BallisticsFirearmTypeCombo.IncludeShotgun = false;
+			this.BallisticsFirearmTypeCombo.Items.AddRange(new object[] {
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle"});
+			this.BallisticsFirearmTypeCombo.Location = new System.Drawing.Point(94, 22);
+			this.BallisticsFirearmTypeCombo.Name = "BallisticsFirearmTypeCombo";
+			this.BallisticsFirearmTypeCombo.Size = new System.Drawing.Size(98, 21);
+			this.BallisticsFirearmTypeCombo.TabIndex = 0;
+			this.BallisticsFirearmTypeCombo.ToolTip = "";
+			this.BallisticsFirearmTypeCombo.Value = ReloadersWorkShop.cFirearm.eFireArmType.Handgun;
+			// 
+			// AmmoFactoryReloadsCheckBox
+			// 
+			this.AmmoFactoryReloadsCheckBox.AutoSize = true;
+			this.AmmoFactoryReloadsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.AmmoFactoryReloadsCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.AmmoFactoryReloadsCheckBox.Location = new System.Drawing.Point(419, 27);
+			this.AmmoFactoryReloadsCheckBox.Name = "AmmoFactoryReloadsCheckBox";
+			this.AmmoFactoryReloadsCheckBox.Size = new System.Drawing.Size(103, 17);
+			this.AmmoFactoryReloadsCheckBox.TabIndex = 22;
+			this.AmmoFactoryReloadsCheckBox.Text = "Factory Reloads";
+			this.AmmoFactoryReloadsCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// AmmoMyReloadsCheckBox
+			// 
+			this.AmmoMyReloadsCheckBox.AutoSize = true;
+			this.AmmoMyReloadsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.AmmoMyReloadsCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.AmmoMyReloadsCheckBox.Location = new System.Drawing.Point(528, 27);
+			this.AmmoMyReloadsCheckBox.Name = "AmmoMyReloadsCheckBox";
+			this.AmmoMyReloadsCheckBox.Size = new System.Drawing.Size(82, 17);
+			this.AmmoMyReloadsCheckBox.TabIndex = 23;
+			this.AmmoMyReloadsCheckBox.Text = "My Reloads";
+			this.AmmoMyReloadsCheckBox.UseVisualStyleBackColor = true;
 			// 
 			// cMainForm
 			// 
@@ -5713,11 +6302,15 @@ namespace ReloadersWorkShop
 			this.SuppliesPrintOptionsGroupBox.PerformLayout();
 			this.FirearmsTab.ResumeLayout(false);
 			this.FirearmAccessoriesGroupBox.ResumeLayout(false);
+			this.FirearmAccessoriesCostDetailsGroupBox.ResumeLayout(false);
+			this.FirearmAccessoriesCostDetailsGroupBox.PerformLayout();
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox3.PerformLayout();
 			this.FirearmAccessoriesActionsGroupBox.ResumeLayout(false);
 			this.FirearmAccessoriesActionsGroupBox.PerformLayout();
 			this.FirearmsGroupBox.ResumeLayout(false);
+			this.FirearmCollectionGroupBox.ResumeLayout(false);
+			this.FirearmCollectionGroupBox.PerformLayout();
 			this.FirearmCostDetailsGroupBox.ResumeLayout(false);
 			this.FirearmCostDetailsGroupBox.PerformLayout();
 			this.FirearmPrintOptionsGroupBox.ResumeLayout(false);
@@ -5726,6 +6319,8 @@ namespace ReloadersWorkShop
 			this.CalibersTab.PerformLayout();
 			this.ManufacturersTab.ResumeLayout(false);
 			this.MainTabControl.ResumeLayout(false);
+			this.AmmunitionFiltersGroupBox.ResumeLayout(false);
+			this.AmmunitionFiltersGroupBox.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -5857,8 +6452,6 @@ namespace ReloadersWorkShop
 		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.TabPage AmmoTab;
 		private System.Windows.Forms.GroupBox AmmoPrintOptionsGroupBox;
-		private System.Windows.Forms.CheckBox AmmoPrintFactoryOnlyCheckBox;
-		private System.Windows.Forms.CheckBox AmmoPrintNonZeroCheckBox;
 		private System.Windows.Forms.RadioButton AmmoPrintCheckedRadioButton;
 		private System.Windows.Forms.RadioButton AmmoPrintAllRadioButton;
 		private System.Windows.Forms.Button AmmoListPrintButton;
@@ -6046,7 +6639,6 @@ namespace ReloadersWorkShop
 		private System.Windows.Forms.ToolStripMenuItem HelpPurchaseMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem FilePrintSupplyShoppingListMenuItem;
 		private System.Windows.Forms.CheckBox SuppliesPrintBelowStockCheckBox;
-		private System.Windows.Forms.CheckBox AmmoPrintBelowStockCheckBox;
 		private System.Windows.Forms.ToolStripMenuItem FilePrintAmmoShoppingListMenuItem;
 		private System.Windows.Forms.Button BallisticsKestrelButton;
 		private System.Windows.Forms.ToolStripMenuItem ToolsTargetCalculatorMenuItem;
@@ -6094,6 +6686,49 @@ namespace ReloadersWorkShop
 		private System.Windows.Forms.CheckBox FirearmAccessoriesShowGroupsCheckBox;
 		private System.Windows.Forms.CheckBox FirearmsLightFilterCheckBox;
 		private System.Windows.Forms.CheckBox FirearmsMagnifierFilterCheckBox;
+		private System.Windows.Forms.Button FirearmAccessoriesPrintButton;
+		private System.Windows.Forms.GroupBox FirearmAccessoriesCostDetailsGroupBox;
+		private System.Windows.Forms.Label FirearmAccessoriesGrandTotalLabel;
+		private System.Windows.Forms.Label label43;
+		private System.Windows.Forms.Label FirearmAccessoriesTotalShippingLabel;
+		private System.Windows.Forms.Label FirearmAccessoriesTotalTaxLabel;
+		private System.Windows.Forms.Label label49;
+		private System.Windows.Forms.Label label50;
+		private System.Windows.Forms.Label FirearmAccessoriesTotalCostLabel;
+		private System.Windows.Forms.Label FirearmAccessoriesCountLabel;
+		private System.Windows.Forms.Label label53;
+		private System.Windows.Forms.Label label55;
+		private System.Windows.Forms.Label FirearmOtherFeesLabel;
+		private System.Windows.Forms.Label FirearmTransferFeesLabel;
+		private System.Windows.Forms.Label label44;
+		private System.Windows.Forms.Label label47;
+		private System.Windows.Forms.GroupBox FirearmCollectionGroupBox;
+		private System.Windows.Forms.Label FirearmCollectionOtherFeesLabel;
+		private System.Windows.Forms.Label FirearmCollectionTransferFeesLabel;
+		private System.Windows.Forms.Label label48;
+		private System.Windows.Forms.Label label51;
+		private System.Windows.Forms.Label FirearmCollectionGrandTotalLabel;
+		private System.Windows.Forms.Label FirearmCollectionTotalCostLabel;
+		private System.Windows.Forms.Label label58;
+		private System.Windows.Forms.Label label59;
+		private System.Windows.Forms.Label FirearmCollectionTotalShippingLabel;
+		private System.Windows.Forms.Label FirearmCollectionTotalTaxLabel;
+		private System.Windows.Forms.Label label62;
+		private System.Windows.Forms.Label label63;
+		private System.Windows.Forms.Label FirearmCollectionAccessoryCostLabel;
+		private System.Windows.Forms.Label FirearmCollectionCostLabel;
+		private System.Windows.Forms.Label label66;
+		private System.Windows.Forms.Label label67;
+		private System.Windows.Forms.GroupBox AmmunitionFiltersGroupBox;
+		private System.Windows.Forms.ComboBox AmmunitionCaliberCombo;
+		private System.Windows.Forms.Label label52;
+		private System.Windows.Forms.ComboBox AmmunitionManufacturerCombo;
+		private System.Windows.Forms.CheckBox AmmoMinStockCheckBox;
+		private System.Windows.Forms.CheckBox AmmoFactoryCheckBox;
+		private System.Windows.Forms.CheckBox AmmoNonZeroCheckBox;
+		private System.Windows.Forms.ComboBox AmmunitionFirearmTypeCombo;
+		private System.Windows.Forms.CheckBox AmmoMyReloadsCheckBox;
+		private System.Windows.Forms.CheckBox AmmoFactoryReloadsCheckBox;
 		}
 	}
 

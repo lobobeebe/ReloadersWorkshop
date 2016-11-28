@@ -87,5 +87,16 @@ namespace ReloadersWorkShop
 					Gear.Export(XMLDocument, XMLElement);
 				}
 			}
+
+		//============================================================================*
+		// Sort()
+		//============================================================================*
+
+		public void Sort(bool fSortByType = true)
+			{
+			cGear.SortByType = fSortByType;
+
+			Sort(cGear.Comparer);
+			}
 		}
 	}

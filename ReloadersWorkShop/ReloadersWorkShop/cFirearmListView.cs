@@ -44,7 +44,9 @@ namespace ReloadersWorkShop
 			new cListViewColumn(7, "PriceHeader", "Price", HorizontalAlignment.Right, 80),
 			new cListViewColumn(8, "TaxHeader", "Tax", HorizontalAlignment.Right, 80),
 			new cListViewColumn(9, "ShippingHeader", "Shipping", HorizontalAlignment.Right, 80),
-			new cListViewColumn(10, "TotalHeader", "Total", HorizontalAlignment.Right, 80)
+			new cListViewColumn(10, "TransferFeesHeader", "Transfer Fees", HorizontalAlignment.Right, 100),
+			new cListViewColumn(11, "OtherFeesHeader", "Other Fees", HorizontalAlignment.Right, 100),
+			new cListViewColumn(12, "TotalHeader", "Total", HorizontalAlignment.Right, 80)
 			};
 
 		//============================================================================*
@@ -197,7 +199,9 @@ namespace ReloadersWorkShop
 			m_arColumns[7].Text = String.Format("Price ({0})", m_DataFiles.Preferences.Currency);
 			m_arColumns[8].Text = String.Format("Tax ({0})", m_DataFiles.Preferences.Currency);
 			m_arColumns[9].Text = String.Format("Shipping ({0})", m_DataFiles.Preferences.Currency);
-			m_arColumns[10].Text = String.Format("Total ({0})", m_DataFiles.Preferences.Currency);
+			m_arColumns[10].Text = String.Format("Transfer Fees ({0})", m_DataFiles.Preferences.Currency);
+			m_arColumns[11].Text = String.Format("Other Fees ({0})", m_DataFiles.Preferences.Currency);
+			m_arColumns[12].Text = String.Format("Total ({0})", m_DataFiles.Preferences.Currency);
 
 			PopulateColumns(m_arColumns);
 			}
@@ -240,8 +244,10 @@ namespace ReloadersWorkShop
 			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source) && Firearm.PurchasePrice !=  0.0 ? String.Format("{0:F2}", Firearm.PurchasePrice) : "-");
 			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source) && Firearm.Tax != 0.0 ? String.Format("{0:F2}", Firearm.Tax) : "-");
 			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source) && Firearm.Shipping != 0.0 ? String.Format("{0:F2}", Firearm.Shipping) : "-");
+			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source) && Firearm.TransferFees != 0.0 ? String.Format("{0:F2}", Firearm.TransferFees) : "-");
+			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source) && Firearm.OtherFees != 0.0 ? String.Format("{0:F2}", Firearm.OtherFees) : "-");
 
-			double dTotal = Firearm.PurchasePrice + Firearm.Tax + Firearm.Shipping;
+			double dTotal = Firearm.PurchasePrice + Firearm.Tax + Firearm.Shipping + Firearm.TransferFees + Firearm.OtherFees;
 
 			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source) && dTotal != 0.0 ? String.Format("{0:F2}", dTotal) : "-");
 			}

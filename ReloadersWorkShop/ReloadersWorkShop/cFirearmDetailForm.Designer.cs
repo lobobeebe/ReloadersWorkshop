@@ -68,6 +68,10 @@
 			this.ReceiverFinishComboBox = new System.Windows.Forms.ComboBox();
 			this.ReceiverFinishLabel = new System.Windows.Forms.Label();
 			this.CapacityTextBox = new CommonLib.Controls.cIntegerValueTextBox();
+			this.TransferFeesTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.label1 = new System.Windows.Forms.Label();
+			this.OtherFeesTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.label8 = new System.Windows.Forms.Label();
 			label5 = new System.Windows.Forms.Label();
 			label2 = new System.Windows.Forms.Label();
 			label3 = new System.Windows.Forms.Label();
@@ -99,7 +103,7 @@
 			label2.AutoSize = true;
 			label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			label2.ForeColor = System.Drawing.SystemColors.ControlText;
-			label2.Location = new System.Drawing.Point(49, 53);
+			label2.Location = new System.Drawing.Point(52, 53);
 			label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			label2.Name = "label2";
 			label2.Size = new System.Drawing.Size(33, 13);
@@ -226,6 +230,10 @@
 			// 
 			// AcquisitionDetailsGroupBox
 			// 
+			this.AcquisitionDetailsGroupBox.Controls.Add(this.OtherFeesTextBox);
+			this.AcquisitionDetailsGroupBox.Controls.Add(this.label8);
+			this.AcquisitionDetailsGroupBox.Controls.Add(this.TransferFeesTextBox);
+			this.AcquisitionDetailsGroupBox.Controls.Add(this.label1);
 			this.AcquisitionDetailsGroupBox.Controls.Add(this.TotalLabel);
 			this.AcquisitionDetailsGroupBox.Controls.Add(this.label21);
 			this.AcquisitionDetailsGroupBox.Controls.Add(this.ShippingTextBox);
@@ -249,9 +257,9 @@
 			// 
 			// TotalLabel
 			// 
-			this.TotalLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TotalLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.TotalLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.TotalLabel.Location = new System.Drawing.Point(246, 130);
+			this.TotalLabel.Location = new System.Drawing.Point(163, 130);
 			this.TotalLabel.Name = "TotalLabel";
 			this.TotalLabel.Size = new System.Drawing.Size(72, 20);
 			this.TotalLabel.TabIndex = 30;
@@ -262,7 +270,7 @@
 			// 
 			this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label21.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label21.Location = new System.Drawing.Point(182, 132);
+			this.label21.Location = new System.Drawing.Point(99, 132);
 			this.label21.Name = "label21";
 			this.label21.Size = new System.Drawing.Size(56, 13);
 			this.label21.TabIndex = 29;
@@ -612,6 +620,68 @@
 			this.CapacityTextBox.ToolTip = "";
 			this.CapacityTextBox.Value = 0;
 			// 
+			// TransferFeesTextBox
+			// 
+			this.TransferFeesTextBox.AllowDrop = true;
+			this.TransferFeesTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.TransferFeesTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TransferFeesTextBox.Location = new System.Drawing.Point(115, 76);
+			this.TransferFeesTextBox.MaxLength = 8;
+			this.TransferFeesTextBox.MaxValue = 0D;
+			this.TransferFeesTextBox.MinValue = 0D;
+			this.TransferFeesTextBox.Name = "TransferFeesTextBox";
+			this.TransferFeesTextBox.NumDecimals = 2;
+			this.TransferFeesTextBox.Size = new System.Drawing.Size(60, 20);
+			this.TransferFeesTextBox.TabIndex = 31;
+			this.TransferFeesTextBox.Text = "0.00";
+			this.TransferFeesTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.TransferFeesTextBox.ToolTip = "";
+			this.TransferFeesTextBox.Value = 0D;
+			this.TransferFeesTextBox.ZeroAllowed = true;
+			// 
+			// label1
+			// 
+			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label1.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label1.Location = new System.Drawing.Point(10, 79);
+			this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(100, 13);
+			this.label1.TabIndex = 32;
+			this.label1.Text = "Transfer Fees ($):";
+			this.label1.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// OtherFeesTextBox
+			// 
+			this.OtherFeesTextBox.AllowDrop = true;
+			this.OtherFeesTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.OtherFeesTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.OtherFeesTextBox.Location = new System.Drawing.Point(115, 102);
+			this.OtherFeesTextBox.MaxLength = 8;
+			this.OtherFeesTextBox.MaxValue = 0D;
+			this.OtherFeesTextBox.MinValue = 0D;
+			this.OtherFeesTextBox.Name = "OtherFeesTextBox";
+			this.OtherFeesTextBox.NumDecimals = 2;
+			this.OtherFeesTextBox.Size = new System.Drawing.Size(60, 20);
+			this.OtherFeesTextBox.TabIndex = 33;
+			this.OtherFeesTextBox.Text = "0.00";
+			this.OtherFeesTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.OtherFeesTextBox.ToolTip = "";
+			this.OtherFeesTextBox.Value = 0D;
+			this.OtherFeesTextBox.ZeroAllowed = true;
+			// 
+			// label8
+			// 
+			this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label8.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label8.Location = new System.Drawing.Point(10, 105);
+			this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(100, 13);
+			this.label8.TabIndex = 34;
+			this.label8.Text = "Other Fees ($):";
+			this.label8.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
 			// cFirearmDetailForm
 			// 
 			this.AcceptButton = this.OKButton;
@@ -683,5 +753,9 @@
 		private System.Windows.Forms.Label ShippingLabel;
 		private System.Windows.Forms.Label TotalLabel;
 		private System.Windows.Forms.Label label21;
+		private CommonLib.Controls.cDoubleValueTextBox OtherFeesTextBox;
+		private System.Windows.Forms.Label label8;
+		private CommonLib.Controls.cDoubleValueTextBox TransferFeesTextBox;
+		private System.Windows.Forms.Label label1;
 		}
 	}
