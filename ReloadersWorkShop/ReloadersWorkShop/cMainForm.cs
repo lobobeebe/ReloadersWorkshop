@@ -861,7 +861,7 @@ namespace ReloadersWorkShop
 			FilePrintAmmoShoppingListMenuItem.Enabled = m_DataFiles.Preferences.TrackInventory && AmmoListPrintButton.Enabled && AmmoMinStockCheckBox.Checked;
 
 			FilePrintSupplyListMenuItem.Enabled = SupplyListPrintButton.Enabled;
-			FilePrintSupplyShoppingListMenuItem.Enabled = m_DataFiles.Preferences.TrackInventory && SupplyListPrintButton.Enabled && SuppliesPrintBelowStockCheckBox.Checked;
+			FilePrintSupplyShoppingListMenuItem.Enabled = m_DataFiles.Preferences.TrackInventory && SupplyListPrintButton.Enabled && SuppliesMinStockCheckBox.Checked;
 
 			FilePrintLoadShoppingListMenuItem.Enabled = LoadShoppingListButton.Enabled;
 
@@ -1382,10 +1382,8 @@ namespace ReloadersWorkShop
 
 			RemoveCaliberButton.Location = new Point(nButtonX, nButtonY);
 
-			m_CalibersListView.Location = new Point(6, CaliberCountLabel.Location.Y + CaliberCountLabel.Height + 6);
+			m_CalibersListView.Location = new Point(6, CaliberCountLabel.Location.Y + CaliberCountLabel.Height + 12);
 			m_CalibersListView.Size = new Size(MainTabControl.Width - 26, nButtonY - 20 - m_CalibersListView.Location.Y);
-
-			HideUncheckedCalibersCheckBox.Location = new Point(20, nButtonY);
 
 			//----------------------------------------------------------------------------*
 			// Firearms Tab
@@ -1489,11 +1487,6 @@ namespace ReloadersWorkShop
 
 			m_SuppliesListView.Location = new Point(6, SupplyCountLabel.Location.Y + SupplyCountLabel.Height + 6);
 			m_SuppliesListView.Size = new Size(MainTabControl.Width - 20, nButtonY - m_SuppliesListView.Location.Y - 30);
-
-			HideUncheckedSuppliesCheckBox.Location = new Point(20, nButtonY);
-
-			SelectAllSuppliesButton.Location = new Point(HideUncheckedSuppliesCheckBox.Location.X + HideUncheckedSuppliesCheckBox.Width + 20, m_SuppliesListView.Location.Y + m_SuppliesListView.Height + 10);
-			DeselectAllSuppliesButton.Location = new Point(SelectAllSuppliesButton.Location.X, SelectAllSuppliesButton.Location.Y + SelectAllSuppliesButton.Height + 6);
 
 			//----------------------------------------------------------------------------*
 			// Load Data Tab

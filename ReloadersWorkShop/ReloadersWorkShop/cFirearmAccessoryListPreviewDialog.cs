@@ -40,8 +40,11 @@ namespace ReloadersWorkShop
 			new cPrintColumn("Manufacturer"),
 			new cPrintColumn("Part #"),
 			new cPrintColumn("Description"),
-			new cPrintColumn("Purchase Date"),
-			new cPrintColumn("Purchase Price")
+			new cPrintColumn("Acquired on"),
+			new cPrintColumn("Price"),
+			new cPrintColumn("Tax"),
+			new cPrintColumn("Shipping"),
+			new cPrintColumn("Total")
 			};
 
 		//============================================================================*
@@ -76,6 +79,11 @@ namespace ReloadersWorkShop
 				}
 
 			Text = "Reloader's WorkShop Firearm Accessory List - Print Preview";
+
+			sm_Columns[4].Name = String.Format("Price ({0})", m_DataFiles.Preferences.Currency);
+			sm_Columns[5].Name = String.Format("Tax ({0})", m_DataFiles.Preferences.Currency);
+			sm_Columns[6].Name = String.Format("Shipping ({0})", m_DataFiles.Preferences.Currency);
+			sm_Columns[7].Name = String.Format("Total ({0})", m_DataFiles.Preferences.Currency);
 
 			PrintDocument FirearmAccessoryListDocument = new PrintDocument();
 			FirearmAccessoryListDocument.PrintPage += OnPrintPage;
@@ -114,10 +122,9 @@ namespace ReloadersWorkShop
 			// Create the fonts
 			//----------------------------------------------------------------------------*
 
-			Font AccessoryTypeFont = new Font("Trebuchet MS", 12, FontStyle.Bold);
-			Font HeaderFont = new Font("Trebuchet MS", 10, FontStyle.Bold);
-			Font DataFont = new Font("Trebuchet MS", 9, FontStyle.Regular);
-			Font SpecsFont = new Font("Trebuchet MS", 8, FontStyle.Regular);
+			Font AccessoryTypeFont = new Font("Trebuchet MS", 10, FontStyle.Bold);
+			Font HeaderFont = new Font("Trebuchet MS", 8, FontStyle.Bold);
+			Font DataFont = new Font("Trebuchet MS", 8, FontStyle.Regular);
 
 			//----------------------------------------------------------------------------*
 			// Calculate Column Header Name Widths
@@ -170,10 +177,31 @@ namespace ReloadersWorkShop
 
 				// Purchase Price
 
-				TextSize = e.Graphics.MeasureString(String.Format("{0:F2}", Gear.PurchasePrice), DataFont);
+				TextSize = e.Graphics.MeasureString(String.Format("{0:N2}", Gear.PurchasePrice), DataFont);
 
 				if (TextSize.Width > sm_Columns[4].Width)
 					sm_Columns[4].Width = TextSize.Width;
+
+				// Tax
+
+				TextSize = e.Graphics.MeasureString(String.Format("{0:N2}", Gear.Tax), DataFont);
+
+				if (TextSize.Width > sm_Columns[5].Width)
+					sm_Columns[5].Width = TextSize.Width;
+
+				// Shipping
+
+				TextSize = e.Graphics.MeasureString(String.Format("{0:N2}", Gear.Shipping), DataFont);
+
+				if (TextSize.Width > sm_Columns[6].Width)
+					sm_Columns[6].Width = TextSize.Width;
+
+				// Total
+
+				TextSize = e.Graphics.MeasureString(String.Format("{0:N2}", Gear.PurchasePrice + Gear.Tax + Gear.Shipping), DataFont);
+
+				if (TextSize.Width > sm_Columns[7].Width)
+					sm_Columns[7].Width = TextSize.Width;
 				}
 
 			float nLineWidth = 0;
@@ -181,7 +209,7 @@ namespace ReloadersWorkShop
 			foreach (cPrintColumn PrintColumn in sm_Columns)
 				nLineWidth += PrintColumn.Width;
 
-			nLineWidth += ((sm_Columns.Length - 1) * 20.0f);
+			nLineWidth += ((sm_Columns.Length - 1) * 10.0f);
 
 			float nLeftMargin = (e.PageBounds.Width / 2) - (nLineWidth / 2.0f);
 
@@ -244,7 +272,7 @@ namespace ReloadersWorkShop
 					// Draw the Title
 					//----------------------------------------------------------------------------*
 
-					nY = cPrintObject.PrintReportTitle("Firearm Parts && Accessories List", PageRect, e.Graphics);
+					nY = cPrintObject.PrintReportTitle("Firearm Parts & Accessories List", PageRect, e.Graphics);
 
 					strText = "";
 
@@ -255,7 +283,7 @@ namespace ReloadersWorkShop
 						{
 						TextSize = e.Graphics.MeasureString(strText, HeaderFont);
 
-						e.Graphics.DrawString(strText, HeaderFont, Brushes.Black, PageRect.Left + (PageRect.Width / 2) - (TextSize.Width / 2), nY);
+						e.Graphics.DrawString(strText, HeaderFont, Brushes.Black, e.MarginBounds.Left + (e.MarginBounds.Width / 2) - (TextSize.Width / 2), nY);
 
 						nY += HeaderFont.Height;
 						}
@@ -298,12 +326,12 @@ namespace ReloadersWorkShop
 						{
 						e.Graphics.DrawString(PrintColumn.Name, HeaderFont, Brushes.Black, nX, nY);
 
-						nX += (PrintColumn.Width + 20);
+						nX += (PrintColumn.Width + 10);
 						}
 
 					nY += HeaderFont.Height;
 
-					e.Graphics.DrawLine(Pens.Black, nLeftMargin, nY, nX - 20, nY);
+					e.Graphics.DrawLine(Pens.Black, nLeftMargin, nY, nX - 10, nY);
 
 					nY += 4;
 
@@ -322,7 +350,7 @@ namespace ReloadersWorkShop
 
 				e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX, nY);
 
-				nX += (sm_Columns[0].Width + 20);
+				nX += (sm_Columns[0].Width + 10);
 
 				// Part #
 
@@ -330,7 +358,7 @@ namespace ReloadersWorkShop
 
 				e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX, nY);
 
-				nX += (sm_Columns[1].Width + 20);
+				nX += (sm_Columns[1].Width + 10);
 
 				// Description
 
@@ -338,7 +366,7 @@ namespace ReloadersWorkShop
 
 				e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX, nY);
 
-				nX += (sm_Columns[2].Width + 20);
+				nX += (sm_Columns[2].Width + 10);
 
 				// Purchase Date
 
@@ -351,17 +379,47 @@ namespace ReloadersWorkShop
 
 				e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX + (sm_Columns[3].Width / 2) - (TextSize.Width / 2), nY);
 
-				nX += (sm_Columns[3].Width + 20);
+				nX += (sm_Columns[3].Width + 10);
 
 				// Purchase Price
 
-				strText = Gear.PurchasePrice > 0.0 ? String.Format("{0:F2}", Gear.PurchasePrice) : "-";
+				strText = Gear.PurchasePrice > 0.0 ? String.Format("{0:N2}", Gear.PurchasePrice) : "-";
 
 				TextSize = e.Graphics.MeasureString(strText, DataFont);
 
 				e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX + sm_Columns[4].Width - TextSize.Width, nY);
 
-				nX += (sm_Columns[4].Width + 20);
+				nX += (sm_Columns[4].Width + 10);
+
+				// Tax
+
+				strText = Gear.PurchasePrice > 0.0 ? String.Format("{0:N2}", Gear.Tax) : "-";
+
+				TextSize = e.Graphics.MeasureString(strText, DataFont);
+
+				e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX + sm_Columns[5].Width - TextSize.Width, nY);
+
+				nX += (sm_Columns[5].Width + 10);
+
+				// Shipping
+
+				strText = Gear.PurchasePrice > 0.0 ? String.Format("{0:N2}", Gear.Shipping) : "-";
+
+				TextSize = e.Graphics.MeasureString(strText, DataFont);
+
+				e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX + sm_Columns[6].Width - TextSize.Width, nY);
+
+				nX += (sm_Columns[6].Width + 10);
+
+				// Total
+
+				strText = Gear.PurchasePrice > 0.0 ? String.Format("{0:N2}", Gear.PurchasePrice + Gear.Tax + Gear.Shipping) : "-";
+
+				TextSize = e.Graphics.MeasureString(strText, DataFont);
+
+				e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX + sm_Columns[7].Width - TextSize.Width, nY);
+
+				nX += (sm_Columns[7].Width);
 
 				nY += DataFont.Height;
 

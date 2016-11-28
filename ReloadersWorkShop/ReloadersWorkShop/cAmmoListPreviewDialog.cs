@@ -128,8 +128,7 @@ namespace ReloadersWorkShop
 			// Create the fonts
 			//----------------------------------------------------------------------------*
 
-//			Font TitleFont = new Font("Trebuchet MS", 16, FontStyle.Bold);
-			Font HeaderFont = new Font("Trebuchet MS", 10, FontStyle.Bold);
+			Font HeaderFont = new Font("Trebuchet MS", 8, FontStyle.Bold);
 			Font DataFont = new Font("Trebuchet MS", 8, FontStyle.Regular);
 
 			//----------------------------------------------------------------------------*
@@ -312,6 +311,8 @@ namespace ReloadersWorkShop
 						nX += (PrintColumn.Width + 10);
 						}
 
+					nX -= 10;
+
 					TextSize = e.Graphics.MeasureString(m_AmmoColumns[0].Name, HeaderFont);
 
 					nY += TextSize.Height;
@@ -411,7 +412,7 @@ namespace ReloadersWorkShop
 					dQuantity = m_DataFiles.SupplyQuantity(Ammo);
 
 					if (dQuantity != 0.0)
-						strText = String.Format("{0:G0}", dQuantity);
+						strText = String.Format("{0:N0}", dQuantity);
 					else
 						strText = "-";
 					}
@@ -436,13 +437,13 @@ namespace ReloadersWorkShop
 				double dCostEach = m_DataFiles.SupplyCostEach(Ammo);
 
 				if (dCostEach > 0.0)
-					strText = String.Format("{0}{1:F2}/{2:F0}", m_DataFiles.Preferences.Currency, m_DataFiles.SupplyCostEach(Ammo) * dBoxSize, dBoxSize);
+					strText = String.Format("{0:F2}/{1:F0}", m_DataFiles.SupplyCostEach(Ammo) * dBoxSize, dBoxSize);
 				else
 					strText = "-";
 
 				TextSize = e.Graphics.MeasureString(strText, DataFont);
 
-				e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX + m_AmmoColumns[7].Width - TextSize.Width, nY);
+				e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX + m_AmmoColumns[7].Width - TextSize.Width - 10, nY);
 
 				nX = nLeftMargin;
 

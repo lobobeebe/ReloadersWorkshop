@@ -82,7 +82,7 @@ namespace ReloadersWorkShop
 		// cSupplyListPreviewDialog() - Constructor
 		//============================================================================*
 
-		public cSupplyListPreviewDialog(cDataFiles DataFiles)
+		public cSupplyListPreviewDialog(cDataFiles DataFiles, ListView SuppliesListView)
 			{
 			m_DataFiles = DataFiles;
 
@@ -126,7 +126,19 @@ namespace ReloadersWorkShop
 			// Gather the list of supplies, reset flags, and exit
 			//----------------------------------------------------------------------------*
 
-			m_SupplyList = m_DataFiles.GetSupplyList();
+			m_SupplyList = new cSupplyList();
+
+			foreach (ListViewItem Item in SuppliesListView.Items)
+				{
+				cSupply Supply = (cSupply) Item.Tag;
+
+				if (Supply != null && (!m_DataFiles.Preferences.SupplyPrintChecked || Supply.Checked))
+					m_SupplyList.Add(Supply);
+				}
+
+			//----------------------------------------------------------------------------*
+			// Reset flags and exit
+			//----------------------------------------------------------------------------*
 
 			ResetPrintedFlag();
 
@@ -157,8 +169,8 @@ namespace ReloadersWorkShop
 			// Create the fonts
 			//----------------------------------------------------------------------------*
 
-			Font SupplyTypeFont = new Font("Trebuchet MS", 14, FontStyle.Bold);
-			Font HeaderFont = new Font("Trebuchet MS", 10, FontStyle.Bold);
+			Font SupplyTypeFont = new Font("Trebuchet MS", 10, FontStyle.Bold);
+			Font HeaderFont = new Font("Trebuchet MS", 8, FontStyle.Bold);
 			Font DataFont = new Font("Trebuchet MS", 8, FontStyle.Regular);
 
 			//----------------------------------------------------------------------------*
@@ -204,6 +216,10 @@ namespace ReloadersWorkShop
 			// Calculate Header Widths for Supplies
 			//----------------------------------------------------------------------------*
 
+			float nLineWidth = 0;
+
+			cPrintColumn[] PrintColumns = null;
+
 			foreach (cSupply Supply in m_SupplyList)
 				{
 				switch (Supply.SupplyType)
@@ -213,6 +229,8 @@ namespace ReloadersWorkShop
 
 						if (TextSize.Width > m_BulletColumns[0].Width)
 							m_BulletColumns[0].Width = TextSize.Width;
+
+						PrintColumns = m_BulletColumns;
 
 						break;
 
@@ -232,6 +250,8 @@ namespace ReloadersWorkShop
 						if (TextSize.Width > m_PowderColumns[2].Width)
 							m_PowderColumns[2].Width = TextSize.Width;
 
+						PrintColumns = m_PowderColumns;
+
 						break;
 
 					case cSupply.eSupplyTypes.Primers:
@@ -249,6 +269,9 @@ namespace ReloadersWorkShop
 
 						if (TextSize.Width > m_PrimerColumns[3].Width)
 							m_PrimerColumns[3].Width = TextSize.Width;
+
+						PrintColumns = m_PrimerColumns;
+
 						break;
 
 					case cSupply.eSupplyTypes.Cases:
@@ -262,9 +285,17 @@ namespace ReloadersWorkShop
 						if (TextSize.Width > m_CaseColumns[1].Width)
 							m_CaseColumns[1].Width = TextSize.Width;
 
+						PrintColumns = m_CaseColumns;
+
 						break;
 					}
 				}
+
+			foreach (cPrintColumn PrintColumn in PrintColumns)
+				nLineWidth += PrintColumn.Width;
+
+			nLineWidth += ((m_BulletColumns.Length - 1) * 10.0f);
+			float nLeftMargin = (e.PageBounds.Width / 2.0f) - (nLineWidth / 2.0f);
 
 			//----------------------------------------------------------------------------*
 			// Loop through the supply types
@@ -282,7 +313,7 @@ namespace ReloadersWorkShop
 			PageRect.Height -= ((int) ((double) nYDPI * 0.5) * 2);
 
 			float nY = PageRect.Top;
-			float nX = PageRect.Left;
+			float nX = nLeftMargin;
 
 			float nCostX = 0.0f;
 
@@ -345,7 +376,7 @@ namespace ReloadersWorkShop
 
 							TextSize = e.Graphics.MeasureString(strText, HeaderFont);
 
-							e.Graphics.DrawString(strText, HeaderFont, Brushes.Black, (PageRect.Width / 2) - (TextSize.Width / 2), nY);
+							e.Graphics.DrawString(strText, HeaderFont, Brushes.Black, e.MarginBounds.Left + (e.MarginBounds.Width / 2) - (TextSize.Width / 2), nY);
 
 							nY += TextSize.Height;
 							}
@@ -380,22 +411,22 @@ namespace ReloadersWorkShop
 								e.Graphics.DrawString(strText, SupplyTypeFont, Brushes.Black, nX, nY);
 
 								nY += (TextSize.Height * (float) 1.5);
-								nX = PageRect.Left;
+								nX = nLeftMargin;
 
 								foreach (cPrintColumn PrintColumn in m_BulletColumns)
 									{
 									e.Graphics.DrawString(PrintColumn.Name, HeaderFont, Brushes.Black, nX, nY);
 
-									nX += (PrintColumn.Width + 20);
+									nX += (PrintColumn.Width + 10);
 									}
 
 								TextSize = e.Graphics.MeasureString(m_BulletColumns[0].Name, HeaderFont);
 
 								nY += TextSize.Height;
 
-								e.Graphics.DrawLine(Pens.Black, PageRect.Left, nY, nX, nY);
+								e.Graphics.DrawLine(Pens.Black, nLeftMargin, nY, nX, nY);
 
-								nX = PageRect.Left;
+								nX = nLeftMargin;
 
 								break;
 
@@ -413,22 +444,22 @@ namespace ReloadersWorkShop
 								e.Graphics.DrawString(strText, SupplyTypeFont, Brushes.Black, nX, nY);
 
 								nY += (TextSize.Height * (float) 1.5);
-								nX = PageRect.Left;
+								nX = nLeftMargin;
 
 								foreach (cPrintColumn PrintColumn in m_PowderColumns)
 									{
 									e.Graphics.DrawString(PrintColumn.Name, HeaderFont, Brushes.Black, nX, nY);
 
-									nX += (PrintColumn.Width + 20);
+									nX += (PrintColumn.Width + 10);
 									}
 
 								TextSize = e.Graphics.MeasureString(m_PowderColumns[0].Name, HeaderFont);
 
 								nY += TextSize.Height;
 
-								e.Graphics.DrawLine(Pens.Black, PageRect.Left, nY, nX, nY);
+								e.Graphics.DrawLine(Pens.Black, nLeftMargin, nY, nX, nY);
 
-								nX = PageRect.Left;
+								nX = nLeftMargin;
 
 								break;
 
@@ -446,22 +477,22 @@ namespace ReloadersWorkShop
 								e.Graphics.DrawString(strText, SupplyTypeFont, Brushes.Black, nX, nY);
 
 								nY += (TextSize.Height * (float) 1.5);
-								nX = PageRect.Left;
+								nX = nLeftMargin;
 
 								foreach (cPrintColumn PrintColumn in m_PrimerColumns)
 									{
 									e.Graphics.DrawString(PrintColumn.Name, HeaderFont, Brushes.Black, nX, nY);
 
-									nX += (PrintColumn.Width + 20);
+									nX += (PrintColumn.Width + 10);
 									}
 
 								TextSize = e.Graphics.MeasureString(m_PrimerColumns[0].Name, HeaderFont);
 
 								nY += TextSize.Height;
 
-								e.Graphics.DrawLine(Pens.Black, PageRect.Left, nY, nX, nY);
+								e.Graphics.DrawLine(Pens.Black, nLeftMargin, nY, nX, nY);
 
-								nX = PageRect.Left;
+								nX = nLeftMargin;
 
 
 								break;
@@ -478,22 +509,22 @@ namespace ReloadersWorkShop
 								e.Graphics.DrawString(strText, SupplyTypeFont, Brushes.Black, nX, nY);
 
 								nY += (TextSize.Height * (float) 1.5);
-								nX = PageRect.Left;
+								nX = nLeftMargin;
 
 								foreach (cPrintColumn PrintColumn in m_CaseColumns)
 									{
 									e.Graphics.DrawString(PrintColumn.Name, HeaderFont, Brushes.Black, nX, nY);
 
-									nX += (PrintColumn.Width + 20);
+									nX += (PrintColumn.Width + 10);
 									}
 
 								TextSize = e.Graphics.MeasureString(m_CaseColumns[0].Name, HeaderFont);
 
 								nY += TextSize.Height;
 
-								e.Graphics.DrawLine(Pens.Black, PageRect.Left, nY, nX, nY);
+								e.Graphics.DrawLine(Pens.Black, nLeftMargin, nY, nX, nY);
 
-								nX = PageRect.Left;
+								nX = nLeftMargin;
 
 								break;
 							}
@@ -520,11 +551,11 @@ namespace ReloadersWorkShop
 
 							strText = Bullet.ToShortString();
 
-							nX = PageRect.Left;
+							nX = nLeftMargin;
 
 							e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX, nY);
 
-							nX += (m_BulletColumns[0].Width + 20);
+							nX += (m_BulletColumns[0].Width + 10);
 
 							//----------------------------------------------------------------------------*
 							// Bullet Diameter
@@ -536,7 +567,7 @@ namespace ReloadersWorkShop
 
 							e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX + (m_BulletColumns[1].Width / 2) - (TextSize.Width / 2), nY);
 
-							nX += (m_BulletColumns[1].Width + 20);
+							nX += (m_BulletColumns[1].Width + 10);
 
 							//----------------------------------------------------------------------------*
 							// Bullet Weight
@@ -548,7 +579,7 @@ namespace ReloadersWorkShop
 
 							e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX + (m_BulletColumns[2].Width / 2) - (TextSize.Width / 2), nY);
 
-							nX += (m_BulletColumns[2].Width + 20);
+							nX += (m_BulletColumns[2].Width + 10);
 
 							//----------------------------------------------------------------------------*
 							// Min Stock Level
@@ -570,7 +601,7 @@ namespace ReloadersWorkShop
 
 							e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX + (m_BulletColumns[3].Width / 2) - (TextSize.Width / 2), nY);
 
-							nX += (m_BulletColumns[3].Width + 20);
+							nX += (m_BulletColumns[3].Width + 10);
 
 							//----------------------------------------------------------------------------*
 							// Qty on Hand
@@ -592,7 +623,7 @@ namespace ReloadersWorkShop
 
 							e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX + (m_BulletColumns[4].Width / 2) - (TextSize.Width / 2), nY);
 
-							nX += (m_BulletColumns[4].Width + 20);
+							nX += (m_BulletColumns[4].Width + 10);
 
 							//----------------------------------------------------------------------------*
 							// Estimated Cost
@@ -609,7 +640,7 @@ namespace ReloadersWorkShop
 
 							e.Graphics.DrawString(strText, DataFont, Brushes.Black, nCostX, nY);
 
-							nX = PageRect.Left;
+							nX = nLeftMargin;
 
 							nY += TextSize.Height;
 
@@ -628,11 +659,11 @@ namespace ReloadersWorkShop
 
 							strText = Powder.ToString();
 
-							nX = PageRect.Left;
+							nX = nLeftMargin;
 
 							e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX, nY);
 
-							nX += (m_PowderColumns[0].Width + 20);
+							nX += (m_PowderColumns[0].Width + 10);
 
 							//----------------------------------------------------------------------------*
 							// Powder Type
@@ -642,7 +673,7 @@ namespace ReloadersWorkShop
 
 							e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX, nY);
 
-							nX += (m_PowderColumns[1].Width + 20);
+							nX += (m_PowderColumns[1].Width + 10);
 
 							//----------------------------------------------------------------------------*
 							// Powder shape
@@ -652,7 +683,7 @@ namespace ReloadersWorkShop
 
 							e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX, nY);
 
-							nX += (m_PowderColumns[2].Width + 20);
+							nX += (m_PowderColumns[2].Width + 10);
 
 							//----------------------------------------------------------------------------*
 							// Min Stock Level
@@ -674,7 +705,7 @@ namespace ReloadersWorkShop
 
 							e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX + (m_PowderColumns[3].Width / 2) - (TextSize.Width / 2), nY);
 
-							nX += (m_PowderColumns[3].Width + 20);
+							nX += (m_PowderColumns[3].Width + 10);
 
 							//----------------------------------------------------------------------------*
 							// Qty on Hand
@@ -700,7 +731,7 @@ namespace ReloadersWorkShop
 
 							e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX + (m_PowderColumns[4].Width / 2) - (TextSize.Width / 2), nY);
 
-							nX += (m_PowderColumns[4].Width + 20);
+							nX += (m_PowderColumns[4].Width + 10);
 
 							//----------------------------------------------------------------------------*
 							// Estimated Cost
@@ -717,7 +748,7 @@ namespace ReloadersWorkShop
 
 							e.Graphics.DrawString(strText, DataFont, Brushes.Black, nCostX, nY);
 
-							nX = PageRect.Left;
+							nX = nLeftMargin;
 
 							nY += TextSize.Height;
 
@@ -736,11 +767,11 @@ namespace ReloadersWorkShop
 
 							strText = Primer.ToShortString();
 
-							nX = PageRect.Left;
+							nX = nLeftMargin;
 
 							e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX, nY);
 
-							nX += (m_PrimerColumns[0].Width + 20);
+							nX += (m_PrimerColumns[0].Width + 10);
 
 							//----------------------------------------------------------------------------*
 							// Size
@@ -752,7 +783,7 @@ namespace ReloadersWorkShop
 
 							e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX, nY);
 
-							nX += (m_PrimerColumns[1].Width + 20);
+							nX += (m_PrimerColumns[1].Width + 10);
 
 							//----------------------------------------------------------------------------*
 							// Magnum
@@ -764,7 +795,7 @@ namespace ReloadersWorkShop
 
 							e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX + (m_PrimerColumns[2].Width / 2) - (TextSize.Width / 2), nY);
 
-							nX += (m_PrimerColumns[2].Width + 20);
+							nX += (m_PrimerColumns[2].Width + 10);
 
 							//----------------------------------------------------------------------------*
 							// Min Stock Level
@@ -786,7 +817,7 @@ namespace ReloadersWorkShop
 
 							e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX + (m_PrimerColumns[3].Width / 2) - (TextSize.Width / 2), nY);
 
-							nX += (m_PrimerColumns[3].Width + 20);
+							nX += (m_PrimerColumns[3].Width + 10);
 
 							//----------------------------------------------------------------------------*
 							// Qty on Hand
@@ -808,14 +839,14 @@ namespace ReloadersWorkShop
 
 							e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX + (m_PrimerColumns[4].Width / 2) - (TextSize.Width / 2), nY);
 
-							nX += (m_PrimerColumns[4].Width + 20);
+							nX += (m_PrimerColumns[4].Width + 10);
 
 							//----------------------------------------------------------------------------*
 							// Estimated Cost
 							//----------------------------------------------------------------------------*
 
 							if (m_DataFiles.SupplyCostEach(Supply) != 0.0)
-								strText = String.Format("{0}{1:F2}/1000", m_DataFiles.Preferences.Currency, m_DataFiles.SupplyCostEach(Supply) * 1000);
+								strText = String.Format("{1:F2}/1000", m_DataFiles.SupplyCostEach(Supply) * 1000);
 							else
 								strText = "-";
 
@@ -825,7 +856,7 @@ namespace ReloadersWorkShop
 
 							e.Graphics.DrawString(strText, DataFont, Brushes.Black, nCostX, nY);
 
-							nX = PageRect.Left;
+							nX = nLeftMargin;
 
 							nY += TextSize.Height;
 
@@ -844,11 +875,11 @@ namespace ReloadersWorkShop
 
 							strText = Case.Manufacturer.ToString();
 
-							nX = PageRect.Left;
+							nX = nLeftMargin;
 
 							e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX, nY);
 
-							nX += (m_CaseColumns[0].Width + 20);
+							nX += (m_CaseColumns[0].Width + 10);
 
 							//----------------------------------------------------------------------------*
 							// Caliber
@@ -860,7 +891,7 @@ namespace ReloadersWorkShop
 
 							e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX, nY);
 
-							nX += (m_CaseColumns[1].Width + 20);
+							nX += (m_CaseColumns[1].Width + 10);
 
 							//----------------------------------------------------------------------------*
 							// Primer
@@ -872,7 +903,7 @@ namespace ReloadersWorkShop
 
 							e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX + (m_CaseColumns[2].Width / 2) - (TextSize.Width / 2), nY);
 
-							nX += (m_CaseColumns[2].Width + 20);
+							nX += (m_CaseColumns[2].Width + 10);
 
 							//----------------------------------------------------------------------------*
 							// Min Stock Level
@@ -894,7 +925,7 @@ namespace ReloadersWorkShop
 
 							e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX + (m_CaseColumns[3].Width / 2) - (TextSize.Width / 2), nY);
 
-							nX += (m_CaseColumns[3].Width + 20);
+							nX += (m_CaseColumns[3].Width + 10);
 
 							//----------------------------------------------------------------------------*
 							// Qty on Hand
@@ -916,7 +947,7 @@ namespace ReloadersWorkShop
 
 							e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX + (m_CaseColumns[4].Width / 2) - (TextSize.Width / 2), nY);
 
-							nX += (m_CaseColumns[4].Width + 20);
+							nX += (m_CaseColumns[4].Width + 10);
 
 							//----------------------------------------------------------------------------*
 							// Estimated Cost
@@ -933,7 +964,7 @@ namespace ReloadersWorkShop
 
 							e.Graphics.DrawString(strText, DataFont, Brushes.Black, nCostX, nY);
 
-							nX = PageRect.Left;
+							nX = nLeftMargin;
 
 							nY += TextSize.Height;
 

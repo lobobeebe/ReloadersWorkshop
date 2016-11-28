@@ -1250,33 +1250,6 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// GetAmmoList()
-		//============================================================================*
-
-		public cAmmoList GetAmmoList()
-			{
-			//----------------------------------------------------------------------------*
-			// Gather the list of ammo
-			//----------------------------------------------------------------------------*
-
-			cAmmoList AmmoList = new cAmmoList();
-
-			foreach (cAmmo Ammo in m_AmmoList)
-				{
-				if ((cPreferences.StaticPreferences.AmmoPrintAll ||
-					(cPreferences.StaticPreferences.AmmoPrintChecked && Ammo.Checked)) &&
-					(!cPreferences.StaticPreferences.AmmoNonZeroFilter || SupplyQuantity(Ammo) != 0.0) &&
-					(!cPreferences.StaticPreferences.AmmoFactoryFilter || Ammo.BatchID == 0) &&
-					(!cPreferences.StaticPreferences.AmmoMinStockFilter || SupplyQuantity(Ammo) < Ammo.MinimumStockLevel))
-
-					if (!AmmoList.Contains(Ammo))
-						AmmoList.Add(Ammo);
-				}
-
-			return (AmmoList);
-			}
-
-		//============================================================================*
 		// GetBatchByID()
 		//============================================================================*
 
@@ -1321,6 +1294,47 @@ namespace ReloadersWorkShop
 		public string GetDataPath()
 			{
 			return (@"c:\Users\Public\Reloader's WorkShop");
+			}
+
+		//============================================================================*
+		// GetFirearmTotalCost()
+		//============================================================================*
+
+		public double GetFirearmTotalCost(cFirearm Firearm)
+			{
+			double dFirearmCost = 0.0;
+			double dTotalCost = 0.0;
+			double dTotalTaxes = 0.0;
+			double dTotalShipping = 0.0;
+			double dAccessoryTotalCost = 0.0;
+			double dTransferFees = 0.0;
+			double dOtherFees = 0.0;
+
+			if (Firearm != null)
+				{
+				dFirearmCost = Firearm.PurchasePrice;
+				dTotalTaxes = Firearm.Tax;
+				dTotalShipping = Firearm.Shipping;
+				dTransferFees = Firearm.TransferFees;
+				dOtherFees = Firearm.OtherFees;
+
+				dTotalCost = dFirearmCost + dTransferFees + dOtherFees;
+
+				foreach (cGear Gear in m_GearList)
+					{
+					if (Gear.Parent != null && Gear.Parent.CompareTo(Firearm) == 0)
+						{
+						dAccessoryTotalCost += Gear.PurchasePrice;
+
+						dTotalTaxes += Gear.Tax;
+						dTotalShipping += Gear.Shipping;
+						}
+					}
+
+				dTotalCost += dAccessoryTotalCost;
+				}
+
+			return (dTotalCost + dTotalTaxes + dTotalShipping + dTransferFees + dOtherFees);
 			}
 
 		//============================================================================*
