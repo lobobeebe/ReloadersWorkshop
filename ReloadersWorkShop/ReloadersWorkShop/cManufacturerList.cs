@@ -49,7 +49,7 @@ namespace ReloadersWorkShop
 			if (Count <= 0)
 				return;
 
-			Writer.WriteLine(cManufacturer.CSVHeader);
+			Writer.WriteLine(ExportName);
 			Writer.WriteLine();
 
 			string strLine = "";
@@ -71,16 +71,51 @@ namespace ReloadersWorkShop
 		// Export()
 		//============================================================================*
 
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+		public void Export(XmlDocument XMLDocument, XmlNode XMLParentNode)
 			{
 			if (Count > 0)
 				{
-				XmlElement XMLElement = XMLDocument.CreateElement(string.Empty, "Manufacturers", string.Empty);
-				XMLParentElement.AppendChild(XMLElement);
+				XmlElement XMLElement = XMLDocument.CreateElement(ExportName);
+				XMLParentNode.AppendChild(XMLElement);
 
 				foreach (cManufacturer Manufacturer in this)
 					{
 					Manufacturer.Export(XMLDocument, XMLElement);
+					}
+				}
+			}
+
+		//============================================================================*
+		// ExportName Property
+		//============================================================================*
+
+		public static string ExportName
+			{
+			get
+				{
+				return ("Manufacturers");
+				}
+			}
+
+		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public void Import(XmlDocument XMLDocument, XmlNode XMLThisNode)
+			{
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "Manufacturer":
+						cManufacturer Manufacturer = new cManufacturer();
+
+						if (Manufacturer.Import(XMLDocument, XMLNode))
+							AddManufacturer(Manufacturer);
+
+						break;
 					}
 				}
 			}

@@ -179,7 +179,7 @@ namespace ReloadersWorkShop
 					// Store the header
 					//----------------------------------------------------------------------------*
 
-					Writer.WriteLine("Reloader's WorkShop Data File Export");
+					Writer.WriteLine(cDataFiles.XMLHeaderString);
 					Writer.WriteLine();
 
 					//----------------------------------------------------------------------------*
@@ -276,7 +276,7 @@ namespace ReloadersWorkShop
 			XmlElement MainElement = XMLDocument.CreateElement("Body");
 			XMLDocument.AppendChild(MainElement);
 
-			XmlText XMLTextElement = XMLDocument.CreateTextNode("Reloader's WorkShop Data File Export");
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(cDataFiles.XMLHeaderString);
 			MainElement.AppendChild(XMLTextElement);
 
 			if (ManufacturersCheckBox.Checked)

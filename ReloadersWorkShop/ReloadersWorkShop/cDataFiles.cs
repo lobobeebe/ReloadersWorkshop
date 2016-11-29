@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
+using System.Xml;
 
 //============================================================================*
 // CommonLib Using Statements
@@ -1528,6 +1529,103 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Import() - XML
+		//============================================================================*
+
+		public bool Import(string strFilePath, bool fMerge = true)
+			{
+			//----------------------------------------------------------------------------*
+			// Make sure the file exists
+			//----------------------------------------------------------------------------*
+
+			if (!File.Exists(strFilePath))
+				return (false);
+
+			//----------------------------------------------------------------------------*
+			// Reset the data if not merging
+			//----------------------------------------------------------------------------*
+
+			if (!fMerge)
+				Reset();
+
+			//----------------------------------------------------------------------------*
+			// Create and Load the XML document
+			//----------------------------------------------------------------------------*
+
+			XmlDocument XMLDocument = new XmlDocument();
+
+			try
+				{
+				XMLDocument.Load(strFilePath);
+				}
+			catch
+				{
+				string strMessage = String.Format("Unable to load {0}!\n\nThis may not be a valid XML file!", strFilePath);
+
+				MessageBox.Show(strMessage, "XML Load Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+				return (false);
+				}
+
+			//----------------------------------------------------------------------------*
+			// Make sure it's an RW XML file
+			//----------------------------------------------------------------------------*
+
+			XmlElement XMLRoot = XMLDocument.DocumentElement;
+
+			if (XMLRoot.FirstChild == null || !(XMLRoot.FirstChild is XmlText) || (XMLRoot.FirstChild as XmlText).Value != cDataFiles.XMLHeaderString)
+				{
+				string strMessage = String.Format("{0} does not appear to contain Reloader's WorkShop data!", strFilePath);
+
+				MessageBox.Show(strMessage, "XML Data Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+				return (false);
+				}
+
+			//----------------------------------------------------------------------------*
+			// OK, if we get to here, go for it...
+			//----------------------------------------------------------------------------*
+
+			Import(XMLDocument);
+
+			//----------------------------------------------------------------------------*
+			// Return success!
+			//----------------------------------------------------------------------------*
+
+			return (true);
+			}
+
+		//============================================================================*
+		// Import() - XML Document
+		//============================================================================*
+
+		public bool Import(XmlDocument XMLDocument)
+			{
+			XmlElement XMLRoot = XMLDocument.DocumentElement;
+
+			//----------------------------------------------------------------------------*
+			// Start looping through the child elements
+			//----------------------------------------------------------------------------*
+
+			XmlNode XMLNode = XMLRoot.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "Manufacturers":
+						m_ManufacturerList.Import(XMLDocument, XMLNode);
+
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+
+			return (true);
+			}
+
+		//============================================================================*
 		// LastTransactionDate Property
 		//============================================================================*
 
@@ -1832,25 +1930,43 @@ namespace ReloadersWorkShop
 
 						cPreferences.StaticPreferences.Deserialize(Formatter, Stream);
 
-						try
-							{
-							m_GearList = (cGearList) Formatter.Deserialize(Stream);
-							}
-						catch { }
+						m_GearList = (cGearList) Formatter.Deserialize(Stream);
 						}
 					catch
 						{
-						string strMessage = String.Format("An error was encountered while reading the file {0}.  This can be caused by a corrupted data file or by attempting to load an older data file from an earlier release of Reloader's WorkShop.  Some or all of your data may not have loaded properly.", Path.GetFileName(strFilePath));
-
-						if (fRestore)
-							strMessage += "\n\nDo you wish to continue?";
-
-						DialogResult rc = MessageBox.Show(strMessage, "Data File Load Error", (fRestore) ? MessageBoxButtons.YesNo : MessageBoxButtons.OK, MessageBoxIcon.Exclamation, (fRestore) ? MessageBoxDefaultButton.Button2 : MessageBoxDefaultButton.Button1);
-
 						if (fRestore)
 							{
-							if (rc == DialogResult.No)
-								fLoadOK = false;
+							MessageBox.Show("Error while restoring backup!!", "Restore Backup Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+							fLoadOK = false;
+							}
+						else
+							{
+							if (File.Exists(Path.Combine(GetDataPath(), "RWRecovery.xml")))
+								{
+								string strMessage = "An error was encountered while reading the Reloader's WorkShop data file!  This can be caused by a recent update with an incompatible data format.";
+
+								strMessage += "\n\nFortunately, I've been saving a data recovery file every time you exit Reloader's WorkShop for just such an occurence.\n\nThis recovery file will now be used to restore your data.\n\nClick OK to continue...";
+
+								MessageBox.Show(strMessage, "Data File Load Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+
+								Import(Path.Combine(GetDataPath(), "RWRecovery.xml"), false);
+								}
+							else
+								{
+								string strMessage = String.Format("An error was encountered while reading the file {0}.  This can be caused by a corrupted data file or by attempting to load an older data file from an earlier release of Reloader's WorkShop.  Some or all of your data may not have loaded properly.", Path.GetFileName(strFilePath));
+
+								if (fRestore)
+									strMessage += "\n\nDo you wish to continue?";
+
+								DialogResult rc = MessageBox.Show(strMessage, "Data File Load Error", (fRestore) ? MessageBoxButtons.YesNo : MessageBoxButtons.OK, MessageBoxIcon.Exclamation, (fRestore) ? MessageBoxDefaultButton.Button2 : MessageBoxDefaultButton.Button1);
+
+								if (fRestore)
+									{
+									if (rc == DialogResult.No)
+										fLoadOK = false;
+									}
+								}
 							}
 						}
 					}
@@ -4580,42 +4696,15 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// VerifySMTPAddress()
+		// XMLHeaderString Property
 		//============================================================================*
 
-		public bool VerifySMTPAddress(string strSMTPAddress)
+		public static string XMLHeaderString
 			{
-			string strValidChars = ".-_";
-
-			if (strSMTPAddress.Length < 4)
-				return (false);
-
-			if (!char.IsLetter(strSMTPAddress[0]) && !char.IsDigit(strSMTPAddress[0]))
-				return (false);
-
-			if (strSMTPAddress[strSMTPAddress.Length - 3] != '.' && strSMTPAddress[strSMTPAddress.Length - 4] != '.')
-				return (false);
-
-			if (strSMTPAddress.IndexOf("..") != -1 || strSMTPAddress.IndexOf("--") != -1)
-				return (false);
-
-			int nPos = 0;
-
-			foreach (char chChar in strSMTPAddress)
+			get
 				{
-				if (!char.IsLetter(chChar) && !char.IsDigit(chChar))
-					{
-					if (strValidChars.IndexOf(chChar) == -1)
-						return (false);
-
-					if (strSMTPAddress[nPos - 1] == '.' || strSMTPAddress[nPos + 1] == '.')
-						return (false);
-					}
-
-				nPos++;
+				return ("Reloader's WorkShop Data File Export");
 				}
-
-			return (true);
 			}
 		}
 	}

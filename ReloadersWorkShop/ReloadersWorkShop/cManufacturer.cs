@@ -307,7 +307,8 @@ namespace ReloadersWorkShop
 		// CSVLineHeader Property
 		//============================================================================*
 
-		public static string CSVLineHeader			{
+		public static string CSVLineHeader
+			{
 			get
 				{
 				string strLine = "Name,Website,Bullets,Powder,Primers,Cases,Ammo,Bullet Molds,Head Stamp,Handguns,Rifles,Shotguns, Scopes,Lasers,Red Dots,Magnifiers,Lights,Triggers,Furniture,Bipods,Firearm Parts,Other";
@@ -503,6 +504,18 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// ExportName Property
+		//============================================================================*
+
+		public static string ExportName
+			{
+			get
+				{
+				return ("Manufacturer");
+				}
+			}
+
+		//============================================================================*
 		// Handguns Property
 		//============================================================================*
 
@@ -564,6 +577,194 @@ namespace ReloadersWorkShop
 				{
 				m_strHeadStamp = value;
 				}
+			}
+
+		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public bool Import(XmlDocument XMLDocument, XmlNode XMLThisNode)
+			{
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "Name":
+						m_strName = XMLNode.Value;
+						break;
+						/*
+										XMLElement = XMLDocument.CreateElement("Website");
+										XMLTextElement = XMLDocument.CreateTextNode(m_strWebsite);
+										XMLElement.AppendChild(XMLTextElement);
+
+										XMLThisElement.AppendChild(XMLElement);
+
+										// Bullets
+
+										XMLElement = XMLDocument.CreateElement("Bullets");
+										XMLTextElement = XMLDocument.CreateTextNode(m_fBullets ? "Yes" : "-");
+										XMLElement.AppendChild(XMLTextElement);
+
+										XMLThisElement.AppendChild(XMLElement);
+
+										// Powder
+
+										XMLElement = XMLDocument.CreateElement("Powders");
+										XMLTextElement = XMLDocument.CreateTextNode(m_fPowder ? "Yes" : "-");
+										XMLElement.AppendChild(XMLTextElement);
+
+										XMLThisElement.AppendChild(XMLElement);
+
+										// Primers
+
+										XMLElement = XMLDocument.CreateElement("Primers");
+										XMLTextElement = XMLDocument.CreateTextNode(m_fPrimers ? "Yes" : "-");
+										XMLElement.AppendChild(XMLTextElement);
+
+										XMLThisElement.AppendChild(XMLElement);
+
+										// Case
+
+										XMLElement = XMLDocument.CreateElement("Cases");
+										XMLTextElement = XMLDocument.CreateTextNode(m_fCases ? "Yes" : "-");
+										XMLElement.AppendChild(XMLTextElement);
+
+										XMLThisElement.AppendChild(XMLElement);
+
+										// Bullet Molds
+
+										XMLElement = XMLDocument.CreateElement("BulletMolds");
+										XMLTextElement = XMLDocument.CreateTextNode(m_fBulletMolds ? "Yes" : "-");
+										XMLElement.AppendChild(XMLTextElement);
+
+										XMLThisElement.AppendChild(XMLElement);
+
+										// Head Stamp
+
+										XMLElement = XMLDocument.CreateElement("HeadStamp");
+										XMLTextElement = XMLDocument.CreateTextNode(m_strHeadStamp);
+										XMLElement.AppendChild(XMLTextElement);
+
+										XMLThisElement.AppendChild(XMLElement);
+
+										// Ammo
+
+										XMLElement = XMLDocument.CreateElement("Ammo");
+										XMLTextElement = XMLDocument.CreateTextNode(m_fAmmo ? "Yes" : "-");
+										XMLElement.AppendChild(XMLTextElement);
+
+										XMLThisElement.AppendChild(XMLElement);
+
+										// Handguns
+
+										XMLElement = XMLDocument.CreateElement("Handguns");
+										XMLTextElement = XMLDocument.CreateTextNode(m_fHandguns ? "Yes" : "-");
+										XMLElement.AppendChild(XMLTextElement);
+
+										XMLThisElement.AppendChild(XMLElement);
+
+										// Rifles
+
+										XMLElement = XMLDocument.CreateElement("Rifles");
+										XMLTextElement = XMLDocument.CreateTextNode(m_fRifles ? "Yes" : "-");
+										XMLElement.AppendChild(XMLTextElement);
+
+										XMLThisElement.AppendChild(XMLElement);
+
+										// Shotguns
+
+										XMLElement = XMLDocument.CreateElement("Shotguns");
+										XMLTextElement = XMLDocument.CreateTextNode(m_fShotguns ? "Yes" : "-");
+										XMLElement.AppendChild(XMLTextElement);
+
+										XMLThisElement.AppendChild(XMLElement);
+
+										// Scopes
+
+										XMLElement = XMLDocument.CreateElement("Scopes");
+										XMLTextElement = XMLDocument.CreateTextNode(m_fScopes ? "Yes" : "-");
+										XMLElement.AppendChild(XMLTextElement);
+
+										XMLThisElement.AppendChild(XMLElement);
+
+										// Lasers
+
+										XMLElement = XMLDocument.CreateElement("Lasers");
+										XMLTextElement = XMLDocument.CreateTextNode(m_fLasers ? "Yes" : "-");
+										XMLElement.AppendChild(XMLTextElement);
+
+										XMLThisElement.AppendChild(XMLElement);
+
+										// Red Dots
+
+										XMLElement = XMLDocument.CreateElement("RedDots");
+										XMLTextElement = XMLDocument.CreateTextNode(m_fRedDots ? "Yes" : "-");
+										XMLElement.AppendChild(XMLTextElement);
+
+										XMLThisElement.AppendChild(XMLElement);
+
+										// Magnifiers
+
+										XMLElement = XMLDocument.CreateElement("Magnifiers");
+										XMLTextElement = XMLDocument.CreateTextNode(m_fMagnifiers ? "Yes" : "-");
+										XMLElement.AppendChild(XMLTextElement);
+
+										XMLThisElement.AppendChild(XMLElement);
+
+										// Lights
+
+										XMLElement = XMLDocument.CreateElement("Lights");
+										XMLTextElement = XMLDocument.CreateTextNode(m_fLights ? "Yes" : "-");
+										XMLElement.AppendChild(XMLTextElement);
+
+										XMLThisElement.AppendChild(XMLElement);
+
+										// Triggers
+
+										XMLElement = XMLDocument.CreateElement("Triggers");
+										XMLTextElement = XMLDocument.CreateTextNode(m_fTriggers ? "Yes" : "-");
+										XMLElement.AppendChild(XMLTextElement);
+
+										XMLThisElement.AppendChild(XMLElement);
+
+										// Furniture
+
+										XMLElement = XMLDocument.CreateElement("Furniture");
+										XMLTextElement = XMLDocument.CreateTextNode(m_fFurniture ? "Yes" : "-");
+										XMLElement.AppendChild(XMLTextElement);
+
+										XMLThisElement.AppendChild(XMLElement);
+
+										// Bipods
+
+										XMLElement = XMLDocument.CreateElement("Bipods");
+										XMLTextElement = XMLDocument.CreateTextNode(m_fBipods ? "Yes" : "-");
+										XMLElement.AppendChild(XMLTextElement);
+
+										XMLThisElement.AppendChild(XMLElement);
+
+										// Firearm  Parts
+
+										XMLElement = XMLDocument.CreateElement("FirearmParts");
+										XMLTextElement = XMLDocument.CreateTextNode(m_fParts ? "Yes" : "-");
+										XMLElement.AppendChild(XMLTextElement);
+
+										XMLThisElement.AppendChild(XMLElement);
+
+										// Other
+
+										XMLElement = XMLDocument.CreateElement("Other");
+										XMLTextElement = XMLDocument.CreateTextNode(m_fMisc ? "Yes" : "-");
+										XMLElement.AppendChild(XMLTextElement);
+
+										XMLThisElement.AppendChild(XMLElement);
+						*/
+					}
+				}
+
+			return (Validate());
 			}
 
 		//============================================================================*
@@ -783,6 +984,15 @@ namespace ReloadersWorkShop
 				{
 				m_fTriggers = value;
 				}
+			}
+
+		//============================================================================*
+		// Validate()
+		//============================================================================*
+
+		public bool Validate()
+			{
+			return (true);
 			}
 
 		//============================================================================*
