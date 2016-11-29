@@ -300,6 +300,7 @@ namespace ReloadersWorkShop
 
 			Item.Group = Groups[(int)Ammo.FirearmType];
 			Item.Tag = Ammo;
+			Item.Checked = Ammo.Checked;
 
 			Item.SubItems.Add(Ammo.PartNumber);
 			Item.SubItems.Add(Ammo.Type);

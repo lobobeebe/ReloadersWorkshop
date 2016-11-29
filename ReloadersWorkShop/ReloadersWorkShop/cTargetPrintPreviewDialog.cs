@@ -126,7 +126,7 @@ namespace ReloadersWorkShop
 			// Draw the page header
 			//----------------------------------------------------------------------------*
 
-			nY = cPrintObject.PrintReportTitle("Target Detail", PageRect, e.Graphics);
+			nY = cPrintObject.PrintReportTitle("Target Detail", e, PageRect);
 
 			//----------------------------------------------------------------------------*
 			// Event

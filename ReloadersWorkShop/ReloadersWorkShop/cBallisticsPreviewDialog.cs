@@ -193,7 +193,7 @@ namespace ReloadersWorkShop
 			// Draw the page header
 			//----------------------------------------------------------------------------*
 
-			nY = cPrintObject.PrintReportTitle("Ballistics Table", PageRect, e.Graphics);
+			nY = cPrintObject.PrintReportTitle("Ballistics Table", e, PageRect);
 			/*
 			strText = "Reloader's WorkShop";
 			TextSize = e.Graphics.MeasureString(strText, TitleFont);

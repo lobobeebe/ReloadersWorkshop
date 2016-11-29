@@ -368,7 +368,7 @@ namespace ReloadersWorkShop
 						// Draw the Title
 						//----------------------------------------------------------------------------*
 
-						nY = cPrintObject.PrintReportTitle(m_DataFiles.Preferences.SupplyPrintBelowStock ? "Supplies Shopping List" : "Supplies List", PageRect, e.Graphics);
+						nY = cPrintObject.PrintReportTitle(m_DataFiles.Preferences.SupplyPrintBelowStock ? "Supplies Shopping List" : "Supplies List", e, PageRect);
 
 						if (m_DataFiles.Preferences.TrackInventory)
 							{

@@ -319,7 +319,7 @@ namespace ReloadersWorkShop
 						// Draw the Title
 						//----------------------------------------------------------------------------*
 
-						nY = cPrintObject.PrintReportTitle("Load Shopping List", PageRect, e.Graphics);
+						nY = cPrintObject.PrintReportTitle("Load Shopping List", e,  PageRect);
 /*
 						strText = "Reloader's WorkShop";
 						TextSize = e.Graphics.MeasureString(strText, TitleFont);

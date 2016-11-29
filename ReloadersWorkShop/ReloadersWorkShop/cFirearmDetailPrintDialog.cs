@@ -169,7 +169,7 @@ namespace ReloadersWorkShop
 				// Draw the page header
 				//----------------------------------------------------------------------------*
 
-				nY = cPrintObject.PrintReportTitle("Firearm Detail Report", PageRect, e.Graphics);
+				nY = cPrintObject.PrintReportTitle("Firearm Detail Report", e, PageRect);
 
 				string strText = "";
 				SizeF TextSize;

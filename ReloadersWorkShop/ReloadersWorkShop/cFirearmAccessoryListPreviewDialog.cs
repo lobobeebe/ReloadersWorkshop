@@ -272,7 +272,7 @@ namespace ReloadersWorkShop
 					// Draw the Title
 					//----------------------------------------------------------------------------*
 
-					nY = cPrintObject.PrintReportTitle("Firearm Parts & Accessories List", PageRect, e.Graphics);
+					nY = cPrintObject.PrintReportTitle("Firearm Parts & Accessories List", e, PageRect);
 
 					strText = "";
 

@@ -96,7 +96,10 @@ namespace ReloadersWorkShop
 				cAmmo Ammo = (cAmmo) Item.Tag;
 
 				if (Ammo != null)
-					m_AmmoList.Add(Ammo);
+					{
+					if (!m_DataFiles.Preferences.AmmoPrintChecked || Ammo.Checked)
+						m_AmmoList.Add(Ammo);
+					}
 				}
 
 			ResetPrintedFlag();
@@ -215,14 +218,14 @@ namespace ReloadersWorkShop
 
 			Rectangle PageRect = e.PageBounds;
 
-			int nXDPI = (int)((double)PageRect.Width / 8.5);
-			int nYDPI = (int)((double)PageRect.Height / 11);
+			int nXDPI = (int) ((double) PageRect.Width / 8.5);
+			int nYDPI = (int) ((double) PageRect.Height / 11);
 
-			PageRect.X += (int)((double)nXDPI * 0.5);
-			PageRect.Width -= ((int)((double)nXDPI * 0.5) * 2);
+			PageRect.X += (int) ((double) nXDPI * 0.5);
+			PageRect.Width -= ((int) ((double) nXDPI * 0.5) * 2);
 
-			PageRect.Y += (int)((double)nYDPI * 0.5);
-			PageRect.Height -= ((int)((double)nYDPI * 0.5) * 2);
+			PageRect.Y += (int) ((double) nYDPI * 0.5);
+			PageRect.Height -= ((int) ((double) nYDPI * 0.5) * 2);
 
 			float nY = PageRect.Top;
 			float nX = nLeftMargin;
@@ -266,7 +269,7 @@ namespace ReloadersWorkShop
 					// Draw the Title
 					//----------------------------------------------------------------------------*
 
-					nY = cPrintObject.PrintReportTitle(m_DataFiles.Preferences.AmmoMinStockFilter ? "Ammunition Shopping List" : "Ammunition List", PageRect, e.Graphics);
+					nY = cPrintObject.PrintReportTitle(m_DataFiles.Preferences.AmmoMinStockFilter ? "Ammunition Shopping List" : "Ammunition List", e, PageRect);
 
 					if (m_DataFiles.Preferences.TrackInventory)
 						{
