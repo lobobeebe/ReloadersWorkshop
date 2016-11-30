@@ -116,7 +116,7 @@ namespace ReloadersWorkShop
 		// Import()
 		//============================================================================*
 
-		public void Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+		public void Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles, cAmmo Ammo)
 			{
 			XmlNode XMLNode = XMLThisNode.FirstChild;
 
@@ -126,6 +126,7 @@ namespace ReloadersWorkShop
 					{
 					case "AmmoTest":
 						cAmmoTest AmmoTest = new cAmmoTest();
+						AmmoTest.Ammo = Ammo;
 
 						if (AmmoTest.Import(XMLDocument, XMLNode, DataFiles))
 							AddAmmoTest(AmmoTest);

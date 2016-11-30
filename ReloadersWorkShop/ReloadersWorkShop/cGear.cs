@@ -523,6 +523,9 @@ namespace ReloadersWorkShop
 					case "Manufacturer":
 						Manufacturer = DataFiles.GetManufacturerByName(XMLNode.FirstChild.Value);
 						break;
+					case "PartNumber":
+						m_strPartNumber = XMLNode.FirstChild.Value;
+						break;
 					case "SerialNumber":
 						m_strSerialNumber = XMLNode.FirstChild.Value;
 						break;

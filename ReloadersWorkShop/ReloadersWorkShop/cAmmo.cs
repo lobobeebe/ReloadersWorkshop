@@ -421,7 +421,7 @@ namespace ReloadersWorkShop
 						Double.TryParse(XMLNode.FirstChild.Value, out m_dBallisticCoefficient);
 						break;
 					case "AmmoTests":
-						m_TestList.Import(XMLDocument, XMLNode, DataFiles);
+						m_TestList.Import(XMLDocument, XMLNode, DataFiles, this);
 						break;
 					default:
 						break;

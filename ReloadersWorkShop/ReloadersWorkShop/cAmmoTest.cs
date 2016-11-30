@@ -426,7 +426,7 @@ namespace ReloadersWorkShop
 						DateTime.TryParse(XMLNode.FirstChild.Value, out m_TestDate);
 						break;
 					case "FirearmIdentity":
-						m_Firearm = cDataFiles.GetFirearmByIdentity(XMLDocument, XMLThisNode, DataFiles);
+						m_Firearm = cDataFiles.GetFirearmByIdentity(XMLDocument, XMLNode, DataFiles);
 						break;
 					case "BarrelLength":
 						Double.TryParse(XMLNode.FirstChild.Value,  out m_dBarrelLength);
