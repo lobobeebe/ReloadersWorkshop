@@ -1359,6 +1359,40 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// GetCaliberByIdentity()
+		//============================================================================*
+
+		public static cCaliber GetCaliberByIdentity(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			cCaliber CaliberIdentity = new cCaliber();
+
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "FirearmType":
+						CaliberIdentity.FirearmType = cFirearm.FirearmTypeFromString(XMLNode.FirstChild.Value);
+						break;
+					case "Name":
+						CaliberIdentity.Name = XMLNode.FirstChild.Value;
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+
+			foreach (cCaliber Caliber in DataFiles.CaliberList)
+				{
+				if (CaliberIdentity.CompareTo(Caliber) == 0)
+					return (Caliber);
+				}
+
+			return (null);
+			}
+
+		//============================================================================*
 		// GetCaliberByName()
 		//============================================================================*
 
@@ -1701,7 +1735,7 @@ namespace ReloadersWorkShop
 				switch (XMLNode.Name)
 					{
 					case "Ammunition":
-//						m_AmmoList.Import(XMLDocument, XMLNode);
+						m_AmmoList.Import(XMLDocument, XMLNode, this);
 
 						break;
 
@@ -1722,7 +1756,7 @@ namespace ReloadersWorkShop
 						break;
 
 					case "Firearms":
-						m_FirearmList.Import(XMLDocument, XMLNode);
+						m_FirearmList.Import(XMLDocument, XMLNode, this);
 
 						break;
 					}

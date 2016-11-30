@@ -167,7 +167,7 @@ namespace ReloadersWorkShop
 		// ExportDetails() - XML Document
 		//============================================================================*
 
-		public override void ExportDetails(XmlDocument XMLDocument, XmlElement XMLThisElement)
+		public override void ExportDetails(XmlDocument XMLDocument, XmlNode XMLThisElement)
 			{
 			//----------------------------------------------------------------------------*
 			// Dot  MOA

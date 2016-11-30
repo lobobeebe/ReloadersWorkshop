@@ -404,7 +404,7 @@ namespace ReloadersWorkShop
 		// ExportDetails() - XML Document
 		//============================================================================*
 
-		public virtual void ExportDetails(XmlDocument XMLDocument, XmlElement XMLThisElement)
+		public virtual void ExportDetails(XmlDocument XMLDocument, XmlNode XMLThisNode)
 			{
 			}
 
@@ -506,6 +506,56 @@ namespace ReloadersWorkShop
 				}
 
 			return ("Other");
+			}
+
+		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public virtual bool Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "Manufacturer":
+						Manufacturer = DataFiles.GetManufacturerByName(XMLNode.FirstChild.Value);
+						break;
+					case "SerialNumber":
+						m_strSerialNumber = XMLNode.FirstChild.Value;
+						break;
+					case "Description":
+						m_strDescription = XMLNode.FirstChild.Value;
+						break;
+					case "AcquiredFrom":
+						m_strSource = XMLNode.FirstChild.Value;
+						break;
+					case "PurchaseDate":
+						DateTime.TryParse(XMLNode.FirstChild.Value, out m_Date);
+						break;
+					case "PurchasePrice":
+					case "Price":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dPrice);
+						break;
+					case "Notes":
+						m_strNotes = XMLNode.FirstChild.Value;
+						break;
+					default:
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+
+			//----------------------------------------------------------------------------*
+			//  Export Details if needed
+			//----------------------------------------------------------------------------*
+
+			ExportDetails(XMLDocument, XMLThisNode);
+
+			return (Validate());
 			}
 
 		//============================================================================*
@@ -748,6 +798,23 @@ namespace ReloadersWorkShop
 				{
 				m_dTax = value;
 				}
+			}
+
+		//============================================================================*
+		// Validate()
+		//============================================================================*
+
+		public virtual bool Validate()
+			{
+			bool fOK = Manufacturer != null;
+
+			if (fOK)
+				fOK = !String.IsNullOrEmpty(m_strPartNumber);
+
+			if (fOK && m_eType == eGearTypes.Firearm)
+				fOK = !String.IsNullOrEmpty(m_strSerialNumber) && !String.IsNullOrEmpty(m_strDescription);
+
+			return (fOK);
 			}
 		}
 	}

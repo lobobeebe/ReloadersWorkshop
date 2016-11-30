@@ -28,6 +28,23 @@ namespace ReloadersWorkShop
 	public class cAmmoList : List<cAmmo>
 		{
 		//============================================================================*
+		// AddAmmo()
+		//============================================================================*
+
+		public bool AddAmmo(cAmmo Ammo)
+			{
+			foreach (cAmmo CheckAmmo in this)
+				{
+				if (CheckAmmo.CompareTo(Ammo) == 0)
+					return (false);
+				}
+
+			Add(Ammo);
+
+			return (true);
+			}
+
+		//============================================================================*
 		// Export()
 		//============================================================================*
 
@@ -79,6 +96,31 @@ namespace ReloadersWorkShop
 			get
 				{
 				return ("Ammunition");
+				}
+			}
+
+		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public void Import(XmlDocument XMLDocument, XmlNode XMLThisNode,  cDataFiles DataFiles)
+			{
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "Ammo":
+						cAmmo Ammo = new cAmmo();
+
+						if (Ammo.Import(XMLDocument, XMLNode, DataFiles))
+							AddAmmo(Ammo);
+
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
 				}
 			}
 

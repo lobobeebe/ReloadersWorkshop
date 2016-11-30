@@ -885,8 +885,10 @@ namespace ReloadersWorkShop
 		// Import()
 		//============================================================================*
 
-		public bool Import(XmlDocument XMLDocument, XmlNode XMLThisNode)
+		public override bool Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
 			{
+			base.Import(XMLDocument, XMLThisNode, DataFiles);
+
 			XmlNode XMLNode = XMLThisNode.FirstChild;
 
 			while (XMLNode != null)
@@ -917,7 +919,7 @@ namespace ReloadersWorkShop
 					case "ZeroRange":
 						Int32.TryParse(XMLNode.FirstChild.Value, out m_nZeroRange);
 						break;
-					case "HeadSpace":
+					case "Headspace":
 						Double.TryParse(XMLNode.FirstChild.Value, out m_dHeadSpace);
 						break;
 					case "NeckSize":
@@ -1412,12 +1414,9 @@ namespace ReloadersWorkShop
 		// Validate()
 		//============================================================================*
 
-		public bool Validate()
+		public override bool Validate()
 			{
-			bool fOK = Manufacturer != null;
-
-			if (fOK)
-				fOK = !String.IsNullOrEmpty(PartNumber);
+			bool fOK = base.Validate();
 
 			return (fOK);
 			}

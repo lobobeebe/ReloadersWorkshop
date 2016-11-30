@@ -93,7 +93,7 @@ namespace ReloadersWorkShop
 		// Import()
 		//============================================================================*
 
-		public void Import(XmlDocument XMLDocument, XmlNode XMLThisNode)
+		public void Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
 			{
 			XmlNode XMLNode = XMLThisNode.FirstChild;
 
@@ -104,7 +104,7 @@ namespace ReloadersWorkShop
 					case "Firearm":
 						cFirearm Firearm = new cFirearm();
 
-						if (Firearm.Import(XMLDocument, XMLNode))
+						if (Firearm.Import(XMLDocument, XMLNode, DataFiles))
 							AddFirearm(Firearm);
 
 						break;

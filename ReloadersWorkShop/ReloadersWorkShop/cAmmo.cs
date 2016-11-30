@@ -381,6 +381,60 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public override bool Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			base.Import(XMLDocument, XMLThisNode, DataFiles);
+
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "CaliberIdentity":
+						m_Caliber = cDataFiles.GetCaliberByIdentity(XMLDocument, XMLThisNode, DataFiles);
+						break;
+					case "Caliber":
+						m_Caliber = cDataFiles.GetCaliberByIdentity(XMLDocument, XMLThisNode, DataFiles);
+						break;
+					case "PartNumber":
+						m_strPartNumber = XMLNode.FirstChild.Value;
+						break;
+					case "Type":
+						m_strType = XMLNode.FirstChild.Value;
+						break;
+					case "BatchID":
+						Int32.TryParse(XMLNode.FirstChild.Value,  out m_nBatchID);
+						break;
+					case "Reload":
+						m_fReload = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "BulletDiameter":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dBulletDiameter);
+						break;
+					case "BulletWeight":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dBulletWeight);
+						break;
+					case "BallisticCoefficient":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dBallisticCoefficient);
+						break;
+					case "AmmoTests":
+//						m_TestList.Import(XMLDocument, XMLThisNode, DataFiles);
+						break;
+					default:
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+
+			return (Validate());
+			}
+
+		//============================================================================*
 		// PartNumber Property
 		//============================================================================*
 
@@ -526,43 +580,17 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// XMLHeader Property
+		// Validate()
 		//============================================================================*
 
-		public static string XMLHeader
+		public override bool Validate()
 			{
-			get
-				{
-				return ("Ammunition");
-				}
-			}
+			bool fOK = base.Validate();
 
-		//============================================================================*
-		// XMLLine Property
-		//============================================================================*
+			if (fOK)
+				fOK = m_Caliber != null && !String.IsNullOrEmpty(m_strPartNumber) && !String.IsNullOrEmpty(m_strType);
 
-		public string XMLLine
-			{
-			get
-				{
-				string strLine = "";
-
-				return (strLine);
-				}
-			}
-
-		//============================================================================*
-		// XMLLineHeader Property
-		//============================================================================*
-
-		public static string XMLLineHeader
-			{
-			get
-				{
-				string strLine = "";
-
-				return (strLine);
-				}
+			return (fOK);
 			}
 		}
 	}

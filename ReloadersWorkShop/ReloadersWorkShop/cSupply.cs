@@ -422,6 +422,49 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public virtual bool Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "FirearmType":
+						m_eFirearmType = cFirearm.FirearmTypeFromString(XMLNode.FirstChild.Value);
+						break;
+					case "Manufacturer":
+						m_Manufacturer = DataFiles.GetManufacturerByName(XMLNode.FirstChild.Value);
+						break;
+					case "CrossUse":
+						m_fCrossUse = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "MinStockLevel":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dMinimumStockLevel);
+						break;
+					case "Quantity":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dQuantity);
+						break;
+					case "Cost":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dCost);
+						break;
+					case "Checked":
+						m_fChecked = XMLNode.FirstChild.Value == "Yes";
+						break;
+					default:
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+
+			return (true);
+			}
+
+		//============================================================================*
 		// LastPurchaseCost Property
 		//============================================================================*
 
@@ -1046,6 +1089,15 @@ namespace ReloadersWorkShop
 				{
 				m_TransactionList = value;
 				}
+			}
+
+		//============================================================================*
+		// Validate()
+		//============================================================================*
+
+		public virtual bool Validate()
+			{
+			return (m_Manufacturer != null);
 			}
 		}
 	}
