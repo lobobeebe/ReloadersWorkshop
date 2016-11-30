@@ -11,6 +11,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 
 namespace ReloadersWorkShop
 	{
@@ -42,6 +44,61 @@ namespace ReloadersWorkShop
 				}
 
 			Sort(cBulletCaliber.Comparer);
+			}
+
+		//============================================================================*
+		// Export()
+		//============================================================================*
+
+		public void Export(StreamWriter Writer)
+			{
+			if (Count <= 0)
+				return;
+
+			string strLine = "";
+
+			Writer.WriteLine(ExportName);
+			Writer.WriteLine();
+
+			Writer.WriteLine(cPowder.CSVLineHeader);
+			Writer.WriteLine();
+
+			foreach (cBulletCaliber BulletCaliber in this)
+				{
+				strLine = BulletCaliber.CSVLine;
+
+				Writer.WriteLine(strLine);
+				}
+
+			Writer.WriteLine();
+			}
+
+		//============================================================================*
+		// Export()
+		//============================================================================*
+
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			if (Count > 0)
+				{
+				XmlElement XMLElement = XMLDocument.CreateElement(ExportName);
+				XMLParentElement.AppendChild(XMLElement);
+
+				foreach (cBulletCaliber BulletCaliber in this)
+					BulletCaliber.Export(XMLDocument, XMLElement);
+				}
+			}
+
+		//============================================================================*
+		// ExportName Property
+		//============================================================================*
+
+		public string ExportName
+			{
+			get
+				{
+				return ("BulletCalibers");
+				}
 			}
 		}
 	}

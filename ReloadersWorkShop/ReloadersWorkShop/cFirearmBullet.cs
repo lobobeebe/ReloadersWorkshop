@@ -10,10 +10,7 @@
 //============================================================================*
 
 using System;
-
-using System.Windows.Forms;
-
-using ReloadersWorkShop.Preferences;
+using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -150,6 +147,56 @@ namespace ReloadersWorkShop
 			{
 			get { return (m_dCBTO); }
 			set { m_dCBTO = value; }
+			}
+
+		//============================================================================*
+		// Export() - XML Document
+		//============================================================================*
+
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			XmlElement XMLThisElement = XMLDocument.CreateElement(ExportName);
+			XMLParentElement.AppendChild(XMLThisElement);
+
+			// Caliber
+
+			m_Caliber.ExportIdentity(XMLDocument, XMLThisElement);
+
+			// COAL
+
+			XmlElement XMLElement = XMLDocument.CreateElement("COAL");
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(m_dCOL.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// CBTO
+
+			XMLElement = XMLDocument.CreateElement("CBTO");
+			XMLTextElement = XMLDocument.CreateTextNode(m_dCBTO.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Jump
+
+			XMLElement = XMLDocument.CreateElement("Jump");
+			XMLTextElement = XMLDocument.CreateTextNode(m_dJump.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+			}
+
+		//============================================================================*
+		// ExportName Property
+		//============================================================================*
+
+		public string ExportName
+			{
+			get
+				{
+				return ("FirearmBullet");
+				}
 			}
 
 		//============================================================================*

@@ -37,14 +37,14 @@ namespace ReloadersWorkShop
 		// Private Static Data Members
 		//============================================================================*
 
-        private static double sm_dMinBulletWeight = cBullet.MinBulletWeight;
-        private static double sm_dMaxBulletWeight = cBullet.MaxBulletWeight;
+		private static double sm_dMinBulletWeight = cBullet.MinBulletWeight;
+		private static double sm_dMaxBulletWeight = cBullet.MaxBulletWeight;
 
-        //============================================================================*
-        // Private Data Members
-        //============================================================================*
+		//============================================================================*
+		// Private Data Members
+		//============================================================================*
 
-        private string m_strPartNumber = "";
+		private string m_strPartNumber = "";
 		private string m_strType = "";
 		private Double m_dDiameter = 0.0;
 		private double m_dLength = 0.0;
@@ -267,36 +267,20 @@ namespace ReloadersWorkShop
 		// CSVLine Property
 		//============================================================================*
 
-		public string CSVLine
+		public override string CSVLine
 			{
 			get
 				{
-				string strLine = "";
+				string strLine = base.CSVLine;
 
-				strLine += Manufacturer.Name;
-				strLine += ",";
 				strLine += m_strPartNumber;
 				strLine += ",";
 				strLine += m_strType;
 				strLine += ",";
-
-				switch (FirearmType)
-					{
-					case cFirearm.eFireArmType.Handgun:
-						strLine += "Handgun,";
-						break;
-					case cFirearm.eFireArmType.Rifle:
-						strLine += "Rifle,";
-						break;
-					case cFirearm.eFireArmType.Shotgun:
-						strLine += "Shotgun,";
-						break;
-					default:
-						strLine += ",";
-						break;
-					}
-
-				strLine += CrossUse ? "Yes," : "-,";
+				strLine += m_fSelfCast ? "Yes" : "";
+				strLine += ",";
+				strLine += m_nTopPunch;
+				strLine += ",";
 
 				strLine += m_dDiameter;
 				strLine += ",";
@@ -318,7 +302,9 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				string strLine = "Manufacturer,Part Number,Type,Firearm Type,Cross Use,Diameter,Length,Weight,Ballistic Coefficient";
+				string strLine = cSupply.CSVSupplyLineHeader;
+
+				strLine += "Part Number,Type,Self Cast,Top Punch,Diameter,Length,Weight,Ballistic Coefficient";
 
 				return (strLine);
 				}
@@ -344,23 +330,17 @@ namespace ReloadersWorkShop
 		// Export() - XML Document
 		//============================================================================*
 
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+		public override void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
 			{
 			XmlElement XMLThisElement = XMLDocument.CreateElement("Bullet");
 			XMLParentElement.AppendChild(XMLThisElement);
 
-			// Manufacturer
-
-			XmlElement XMLElement = XMLDocument.CreateElement("Manufacturer");
-			XmlText XMLTextElement = XMLDocument.CreateTextNode(Manufacturer.Name);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
+			base.Export(XMLDocument, XMLThisElement);
 
 			// Part Number
 
-			XMLElement = XMLDocument.CreateElement("PartNumber");
-			XMLTextElement = XMLDocument.CreateTextNode(m_strPartNumber);
+			XmlElement XMLElement = XMLDocument.CreateElement("PartNumber");
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(m_strPartNumber);
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
@@ -373,18 +353,18 @@ namespace ReloadersWorkShop
 
 			XMLThisElement.AppendChild(XMLElement);
 
-			// Firearm Type
+			// Self Cast
 
-			XMLElement = XMLDocument.CreateElement("FirearmType");
-			XMLTextElement = XMLDocument.CreateTextNode(cFirearm.FirearmTypeString(FirearmType));
+			XMLElement = XMLDocument.CreateElement("SelfCast");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fSelfCast ? "Yes" : "-");
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
 
-			// Cross Use
+			// Top Punch
 
-			XMLElement = XMLDocument.CreateElement("CrossUse");
-			XMLTextElement = XMLDocument.CreateTextNode(CrossUse ? "Yes," : "-,");
+			XMLElement = XMLDocument.CreateElement("TopPunch");
+			XMLTextElement = XMLDocument.CreateTextNode(m_nTopPunch.ToString());
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
@@ -420,6 +400,8 @@ namespace ReloadersWorkShop
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
+
+			m_CaliberList.Export(XMLDocument, XMLThisElement);
 			}
 
 		//============================================================================*
@@ -456,29 +438,29 @@ namespace ReloadersWorkShop
 				}
 			}
 
-        //============================================================================*
-        // MaxBulletWeight Property
-        //============================================================================*
+		//============================================================================*
+		// MaxBulletWeight Property
+		//============================================================================*
 
-        public static double MaxBulletWeight
-            {
-            get
-                {
-                return (sm_dMinBulletWeight);
-                }
-            }
+		public static double MaxBulletWeight
+			{
+			get
+				{
+				return (sm_dMinBulletWeight);
+				}
+			}
 
-        //============================================================================*
-        // MinBulletWeight Property
-        //============================================================================*
+		//============================================================================*
+		// MinBulletWeight Property
+		//============================================================================*
 
-        public static double MinBulletWeight
-            {
-            get
-                {
-                return (sm_dMinBulletWeight);
-                }
-            }
+		public static double MinBulletWeight
+			{
+			get
+				{
+				return (sm_dMinBulletWeight);
+				}
+			}
 
 		//============================================================================*
 		// PartNumber Property
@@ -608,7 +590,7 @@ namespace ReloadersWorkShop
 				fType = true;
 				}
 
-			strString += String.Format(strDiameterFormat, cPreferences.StaticPreferences.MetricDimensions ?  cConversions.InchesToMillimeters(m_dDiameter) : m_dDiameter);
+			strString += String.Format(strDiameterFormat, cPreferences.StaticPreferences.MetricDimensions ? cConversions.InchesToMillimeters(m_dDiameter) : m_dDiameter);
 
 			strString += cDataFiles.MetricString(cDataFiles.eDataType.Dimension);
 
@@ -691,33 +673,6 @@ namespace ReloadersWorkShop
 				m_dWeight = value;
 				}
 			}
-
-		//============================================================================*
-		// XMLLine Property
-		//============================================================================*
-
-		public string XMLLine
-			{
-			get
-				{
-				string strLine = "";
-
-				return (strLine);
-				}
-			}
-
-		//============================================================================*
-		// XMLLineHeader Property
-		//============================================================================*
-
-		public static string XMLLineHeader
-			{
-			get
-				{
-				string strLine = "Firearm Type,Name,Headstamp,Handgun Type,Small Primer,Large Primer,Magnum Primer,Min Bullet Dia.,Max Bullet Dia.,Min Bullet Weight,Max Bullet Weight,Case Trim Length,Max Case Length,Max COAL,Max Neck Dia";
-
-				return (strLine);
-				}
-			}
 		}
 	}
+

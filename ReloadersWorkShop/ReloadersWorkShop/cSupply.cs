@@ -10,6 +10,7 @@
 //============================================================================*
 
 using System;
+using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -260,6 +261,148 @@ namespace ReloadersWorkShop
 				{
 				m_fCrossUse = value;
 				}
+			}
+
+		//============================================================================*
+		// CSVLine Property
+		//============================================================================*
+
+		public virtual string CSVLine
+			{
+			get
+				{
+				string strLine = "";
+
+				strLine += SupplyTypeString(m_eType);
+				strLine += ",";
+
+				strLine += cFirearm.FirearmTypeString(m_eFirearmType);
+				strLine += ",";
+				strLine += m_Manufacturer.Name;
+				strLine += ",";
+
+				strLine += m_dMinimumStockLevel;
+				strLine += ",";
+
+				strLine += m_fCrossUse ? "Yes" : "";
+				strLine += ",";
+
+				strLine += m_dQuantity;
+				strLine += ",";
+
+				strLine += m_dCost;
+				strLine += ",";
+
+				strLine += m_fChecked ? "Yes" : "";
+
+				return (strLine);
+				}
+			}
+
+		//============================================================================*
+		// CSVSupplyLineHeader Property
+		//============================================================================*
+
+		public static string CSVSupplyLineHeader
+			{
+			get
+				{
+				return ("Supply Type,Firearm Type,Manufacturer,Min Stock Level,Cross Use,Quantity,Cost,Checked");
+				}
+			}
+
+		//============================================================================*
+		// Export() - XML Document
+		//============================================================================*
+
+		public virtual void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			// Firearm Type
+
+			XmlElement XMLElement = XMLDocument.CreateElement("FirearmType");
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(cFirearm.FirearmTypeString(m_eFirearmType));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLParentElement.AppendChild(XMLElement);
+
+			// Manufacturer
+
+			XMLElement = XMLDocument.CreateElement("Manufacturer");
+			XMLTextElement = XMLDocument.CreateTextNode(m_Manufacturer.Name);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLParentElement.AppendChild(XMLElement);
+
+			// Cross Use
+
+			XMLElement = XMLDocument.CreateElement("CrossUse");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fCrossUse ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLParentElement.AppendChild(XMLElement);
+
+			// Min Stock Level
+
+			XMLElement = XMLDocument.CreateElement("MinStockLevel");
+			XMLTextElement = XMLDocument.CreateTextNode(m_dMinimumStockLevel.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLParentElement.AppendChild(XMLElement);
+
+			// Quantity
+
+			XMLElement = XMLDocument.CreateElement("Quantity");
+			XMLTextElement = XMLDocument.CreateTextNode(m_dQuantity.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLParentElement.AppendChild(XMLElement);
+
+			// Cost
+
+			XMLElement = XMLDocument.CreateElement("Cost");
+			XMLTextElement = XMLDocument.CreateTextNode(m_dCost.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLParentElement.AppendChild(XMLElement);
+
+			// Checked
+
+			XMLElement = XMLDocument.CreateElement("Checked");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fChecked ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLParentElement.AppendChild(XMLElement);
+			}
+
+		//============================================================================*
+		// ExportIdentity() - XML Document
+		//============================================================================*
+
+		public virtual void ExportIdentity(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			// Supply Type
+
+			XmlElement XMLElement = XMLDocument.CreateElement("SupplyType");
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(cSupply.SupplyTypeString(m_eType));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLParentElement.AppendChild(XMLElement);
+
+			// Firearm Type
+
+			XMLElement = XMLDocument.CreateElement("FirearmType");
+			XMLTextElement = XMLDocument.CreateTextNode(cFirearm.FirearmTypeString(m_eFirearmType));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLParentElement.AppendChild(XMLElement);
+
+			// Manufacturer
+
+			XMLElement = XMLDocument.CreateElement("Manufacturer");
+			XMLTextElement = XMLDocument.CreateTextNode(m_Manufacturer.Name);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLParentElement.AppendChild(XMLElement);
 			}
 
 		//============================================================================*

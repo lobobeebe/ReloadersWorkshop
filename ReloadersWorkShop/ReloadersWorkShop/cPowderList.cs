@@ -47,7 +47,7 @@ namespace ReloadersWorkShop
 
 			string strLine = "";
 
-			Writer.WriteLine(cPowder.CSVHeader);
+			Writer.WriteLine(ExportName);
 			Writer.WriteLine();
 
 			Writer.WriteLine(cPowder.CSVLineHeader);
@@ -71,13 +71,23 @@ namespace ReloadersWorkShop
 			{
 			if (Count > 0)
 				{
-				XmlElement XMLElement = XMLDocument.CreateElement(string.Empty, "Powders", string.Empty);
+				XmlElement XMLElement = XMLDocument.CreateElement(ExportName);
 				XMLParentElement.AppendChild(XMLElement);
 
 				foreach (cPowder Powder in this)
-					{
 					Powder.Export(XMLDocument, XMLElement);
-					}
+				}
+			}
+
+		//============================================================================*
+		// ExportName Property
+		//============================================================================*
+
+		public string ExportName
+			{
+			get
+				{
+				return ("Powders");
 				}
 			}
 

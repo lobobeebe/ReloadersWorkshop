@@ -11,6 +11,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Xml;
 
 //============================================================================*
 // Namespace
@@ -49,6 +50,34 @@ namespace ReloadersWorkShop
 				cFirearmBullet FirearmBullet = new cFirearmBullet(CheckFirearmBullet);
 
 				Add(FirearmBullet);
+				}
+			}
+
+		//============================================================================*
+		// Export()
+		//============================================================================*
+
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			if (Count > 0)
+				{
+				XmlElement XMLElement = XMLDocument.CreateElement(ExportName);
+				XMLParentElement.AppendChild(XMLElement);
+
+				foreach (cFirearmBullet FirearmBullet in this)
+					FirearmBullet.Export(XMLDocument, XMLElement);
+				}
+			}
+
+		//============================================================================*
+		// ExportName Property
+		//============================================================================*
+
+		public string ExportName
+			{
+			get
+				{
+				return ("FirearmBullets");
 				}
 			}
 		}

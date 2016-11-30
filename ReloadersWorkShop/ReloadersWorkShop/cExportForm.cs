@@ -218,7 +218,7 @@ namespace ReloadersWorkShop
 						m_DataFiles.LoadList.Export(Writer);
 
 					if (BatchesCheckBox.Checked)
-						m_DataFiles.BatchList.Export(Writer, BatchTestsCheckBox.Checked);
+						m_DataFiles.BatchList.Export(Writer);
 					}
 				}
 			catch

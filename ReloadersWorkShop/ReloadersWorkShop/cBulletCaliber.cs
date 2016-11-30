@@ -10,6 +10,7 @@
 //============================================================================*
 
 using System;
+using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -129,6 +130,80 @@ namespace ReloadersWorkShop
 			{
 			get { return (m_dCBTO); }
 			set { m_dCBTO = value; }
+			}
+
+		//============================================================================*
+		// CSVLine Property
+		//============================================================================*
+
+		public string CSVLine
+			{
+			get
+				{
+				string strLine = m_Caliber.ToString(); ;
+				strLine += ",";
+
+				strLine += m_dCOL.ToString();
+				strLine += ",";
+				strLine += m_dCBTO.ToString();
+				strLine += ",";
+
+				return (strLine);
+				}
+			}
+
+		//============================================================================*
+		// CSVLineHeader Property
+		//============================================================================*
+
+		public static string CSVLineHeader
+			{
+			get
+				{
+				return("Caliber,COAL,CBTO");
+				}
+			}
+
+		//============================================================================*
+		// Export() - XML Document
+		//============================================================================*
+
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			XmlElement XMLThisElement = XMLDocument.CreateElement(ExportName);
+			XMLParentElement.AppendChild(XMLThisElement);
+
+			// Caliber
+
+			m_Caliber.ExportIdentity(XMLDocument, XMLThisElement);
+
+			// COAL
+
+			XmlElement XMLElement = XMLDocument.CreateElement("COAL");
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(m_dCOL.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// CBTO
+
+			XMLElement = XMLDocument.CreateElement("CBTO");
+			XMLTextElement = XMLDocument.CreateTextNode(m_dCBTO.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+			}
+
+		//============================================================================*
+		// ExportName Property
+		//============================================================================*
+
+		public string ExportName
+			{
+			get
+				{
+				return ("BulletCaliber");
+				}
 			}
 
 		//============================================================================*

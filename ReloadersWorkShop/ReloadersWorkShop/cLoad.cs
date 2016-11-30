@@ -381,6 +381,44 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// ExportIdentity()
+		//============================================================================*
+
+		public void ExportIdentity(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			XmlElement XMLThisElement = XMLDocument.CreateElement("FirearmIdentity");
+			XMLParentElement.AppendChild(XMLThisElement);
+
+			// Firearm Type
+
+			XmlElement XMLElement = XMLDocument.CreateElement("FirearmType");
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(cFirearm.FirearmTypeString(m_eFirearmType));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Caliber
+
+			m_Caliber.ExportIdentity(XMLDocument, XMLThisElement);
+
+			// Bullet
+
+			m_Bullet.ExportIdentity(XMLDocument, XMLThisElement);
+
+			// Case
+
+			m_Case.ExportIdentity(XMLDocument, XMLThisElement);
+
+			// Powder
+
+			m_Powder.ExportIdentity(XMLDocument, XMLThisElement);
+
+			// Primer
+
+			m_Primer.ExportIdentity(XMLDocument, XMLThisElement);
+			}
+
+		//============================================================================*
 		// FirearmType Property
 		//============================================================================*
 

@@ -107,18 +107,6 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// CSVHeader Property
-		//============================================================================*
-
-		public static string CSVHeader
-			{
-			get
-				{
-				return ("TestShot");
-				}
-			}
-
-		//============================================================================*
 		// CSVLine Property
 		//============================================================================*
 
@@ -153,21 +141,12 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// Export() - CSV
-		//============================================================================*
-
-		public void Export(StreamWriter Writer)
-			{
-			Writer.WriteLine(CSVLine);
-			}
-
-		//============================================================================*
 		// Export() - XML Document
 		//============================================================================*
 
 		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
 			{
-			XmlElement XMLThisElement = XMLDocument.CreateElement("TestShot");
+			XmlElement XMLThisElement = XMLDocument.CreateElement(ExportName);
 			XMLParentElement.AppendChild(XMLThisElement);
 
 			// Muzzle Velocity
@@ -201,6 +180,18 @@ namespace ReloadersWorkShop
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
+			}
+
+		//============================================================================*
+		// ExportName Property
+		//============================================================================*
+
+		public string ExportName
+			{
+			get
+				{
+				return ("TestShot");
+				}
 			}
 
 		//============================================================================*

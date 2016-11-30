@@ -29,7 +29,7 @@ namespace ReloadersWorkShop
 		// Public Enumerations
 		//----------------------------------------------------------------------------*
 
-		public enum ePowderType
+		public enum ePowderShapes
 			{
 			Spherical = 0,
 			Extruded,
@@ -42,7 +42,7 @@ namespace ReloadersWorkShop
 		//============================================================================*
 
 		private string m_strType = "";
-		private ePowderType m_ePowderType = ePowderType.Other;
+		private ePowderShapes m_ePowderType = ePowderShapes.Other;
 
 		//============================================================================*
 		// cPowder() - Constructor
@@ -103,7 +103,7 @@ namespace ReloadersWorkShop
 			int rc = base.CompareTo(Supply);
 
 			//----------------------------------------------------------------------------*
-			// Model
+			// Type
 			//----------------------------------------------------------------------------*
 
 			if (rc == 0)
@@ -130,37 +130,18 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// CSVHeader Property
-		//============================================================================*
-
-		public static string CSVHeader
-			{
-			get
-				{
-				return ("Powders");
-				}
-			}
-
-		//============================================================================*
 		// CSVLine Property
 		//============================================================================*
 
-		public string CSVLine
+		public override string CSVLine
 			{
 			get
 				{
-				string strLine = "";
+				string strLine = base.CSVLine;
 
-				strLine += Manufacturer.Name;
-				strLine += ",";
 				strLine += m_strType;
 				strLine += ",";
-				strLine += TypeString;
-				strLine += ",";
-
-				strLine += cFirearm.FirearmTypeString(FirearmType);
-				strLine += ",";
-				strLine += CrossUse ? "Yes" : "-";
+				strLine += ShapeString;
 
 				return (strLine);
 				}
@@ -174,7 +155,11 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				return ("Manufacturer,Type,Shape,Firearm Type,Cross Use");
+				string strLine = cSupply.CSVSupplyLineHeader;
+
+				strLine += "Type,Shape";
+
+				return (strLine);
 				}
 			}
 
@@ -182,31 +167,17 @@ namespace ReloadersWorkShop
 		// Export() - XML Document
 		//============================================================================*
 
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+		public override void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
 			{
 			XmlElement XMLThisElement = XMLDocument.CreateElement("Powder");
 			XMLParentElement.AppendChild(XMLThisElement);
 
-			// Manufacture Name
-
-			XmlElement XMLElement = XMLDocument.CreateElement("ManufactureName");
-			XmlText XMLTextElement = XMLDocument.CreateTextNode(Manufacturer.Name);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
+			base.Export(XMLDocument, XMLThisElement);
 
 			// Type
 
-			XMLElement = XMLDocument.CreateElement("Type");
-			XMLTextElement = XMLDocument.CreateTextNode(m_strType);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Firearm Type
-
-			XMLElement = XMLDocument.CreateElement("FirearmType");
-			XMLTextElement = XMLDocument.CreateTextNode(cFirearm.FirearmTypeString(FirearmType));
+			XmlElement XMLElement = XMLDocument.CreateElement("Type");
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(m_strType);
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
@@ -214,18 +185,39 @@ namespace ReloadersWorkShop
 			// Shape
 
 			XMLElement = XMLDocument.CreateElement("Shape");
-			XMLTextElement = XMLDocument.CreateTextNode(TypeString);
+			XMLTextElement = XMLDocument.CreateTextNode(ShapeString);
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
+			}
 
-			// Cross Use
+		//============================================================================*
+		// ExportIdentity() - XML Document
+		//============================================================================*
 
-			XMLElement = XMLDocument.CreateElement("CrossUse");
-			XMLTextElement = XMLDocument.CreateTextNode(CrossUse ? "Yes" : "-");
+		public override void ExportIdentity(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			base.Export(XMLDocument, XMLParentElement);
+
+			// Type
+
+			XmlElement XMLElement = XMLDocument.CreateElement("Type");
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(m_strType);
 			XMLElement.AppendChild(XMLTextElement);
 
-			XMLThisElement.AppendChild(XMLElement);
+			XMLParentElement.AppendChild(XMLElement);
+			}
+
+		//============================================================================*
+		// ExportName Property
+		//============================================================================*
+
+		public string ExportName
+			{
+			get
+				{
+				return ("Powder");
+				}
 			}
 
 		//============================================================================*
@@ -239,10 +231,10 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// PowderType Property
+		// Shape Property
 		//============================================================================*
 
-		public ePowderType PowderType
+		public ePowderShapes Shape
 			{
 			get { return (m_ePowderType); }
 			set { m_ePowderType = value; }
@@ -275,67 +267,27 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// TypeString Property
+		// ShapeString Property
 		//============================================================================*
 
-		public string TypeString
+		public string ShapeString
 			{
 			get
 				{
 				switch(m_ePowderType)
 					{
-					case ePowderType.Spherical:
+					case ePowderShapes.Spherical:
 						return("Spherical");
 
-					case ePowderType.Extruded:
+					case ePowderShapes.Extruded:
 						return ("Extruded");
 
-					case ePowderType.Flake:
+					case ePowderShapes.Flake:
 						return ("Flake");
 					}
 
 				return ("Other");
 				}	
-			}
-
-		//============================================================================*
-		// XMLHeader Property
-		//============================================================================*
-
-		public static string XMLHeader
-			{
-			get
-				{
-				return ("Powders");
-				}
-			}
-
-		//============================================================================*
-		// XMLLine Property
-		//============================================================================*
-
-		public string XMLLine
-			{
-			get
-				{
-				string strLine = "";
-
-				return (strLine);
-				}
-			}
-
-		//============================================================================*
-		// XMLLineHeader Property
-		//============================================================================*
-
-		public static string XMLLineHeader
-			{
-			get
-				{
-				string strLine = "Firearm Type,Name,Headstamp,Handgun Type,Small Primer,Large Primer,Magnum Primer,Min Bullet Dia.,Max Bullet Dia.,Min Bullet Weight,Max Bullet Weight,Case Trim Length,Max Case Length,Max COAL,Max Neck Dia";
-
-				return (strLine);
-				}
 			}
 		}
 	}

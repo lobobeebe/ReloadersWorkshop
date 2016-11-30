@@ -46,7 +46,7 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// Export() - CSV
+		// Export()
 		//============================================================================*
 
 		public void Export(StreamWriter Writer)
@@ -54,14 +54,14 @@ namespace ReloadersWorkShop
 			if (Count <= 0)
 				return;
 
-			Writer.WriteLine(",,TestShots");
+			Writer.WriteLine(ExportName);
 			Writer.WriteLine();
 
-			Writer.WriteLine(",," + cTestShot.CSVLineHeader);
+			Writer.WriteLine(cTestShot.CSVLineHeader);
 			Writer.WriteLine();
 
 			foreach (cTestShot TestShot in this)
-				TestShot.Export(Writer);
+				Writer.WriteLine(TestShot.CSVLine);
 
 			Writer.WriteLine();
 			}
@@ -74,11 +74,23 @@ namespace ReloadersWorkShop
 			{
 			if (Count > 0)
 				{
-				XmlElement XMLElement = XMLDocument.CreateElement(string.Empty, "TestShots", string.Empty);
+				XmlElement XMLElement = XMLDocument.CreateElement(ExportName);
 				XMLParentElement.AppendChild(XMLElement);
 
 				foreach (cTestShot TestShot in this)
 					TestShot.Export(XMLDocument, XMLElement);
+				}
+			}
+
+		//============================================================================*
+		// ExportName Property
+		//============================================================================*
+
+		public string ExportName
+			{
+			get
+				{
+				return ("TestShots");
 				}
 			}
 

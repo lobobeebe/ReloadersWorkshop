@@ -1109,6 +1109,93 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// ExportRecoveryFile()
+		//============================================================================*
+
+		public void ExportRecoveryFile()
+			{
+			string strFilePath = Path.Combine(GetDataPath(), "RWRecovery.xml");
+
+			XmlDocument XMLDocument = ExportXML();
+
+			if (XMLDocument != null)
+				{
+				try
+					{
+					XmlTextWriter XMLTextWriter = new XmlTextWriter(strFilePath, System.Text.Encoding.ASCII);
+					XMLTextWriter.Formatting = Formatting.Indented;
+					XMLTextWriter.Indentation = 4;
+					XMLTextWriter.IndentChar = '\t';
+
+					XMLDocument.PreserveWhitespace = true;
+
+					XMLDocument.Save(XMLTextWriter);
+
+					XMLTextWriter.Close();
+					}
+				catch
+					{
+					MessageBox.Show("Unable to export XML file!  Make sure  you have the appropriate permissions for the destination folder.", "XML Export Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+					return;
+					}
+				}
+			}
+
+		//============================================================================*
+		// ExportXML()
+		//============================================================================*
+
+		public XmlDocument ExportXML()
+			{
+			XmlDocument XMLDocument = new XmlDocument();
+			XMLDocument.PreserveWhitespace = true;
+
+			//----------------------------------------------------------------------------*
+			// Create Declaration
+			//----------------------------------------------------------------------------*
+
+			XmlDeclaration xmlDeclaration = XMLDocument.CreateXmlDeclaration("1.0", "UTF-8", null);
+			XmlElement RootElement = XMLDocument.DocumentElement;
+
+			XMLDocument.InsertBefore(xmlDeclaration, RootElement);
+
+			//----------------------------------------------------------------------------*
+			// Create the Main Element
+			//----------------------------------------------------------------------------*
+
+			XmlElement MainElement = XMLDocument.CreateElement("Body");
+			XMLDocument.AppendChild(MainElement);
+
+			XmlText XMLTextElement = XMLDocument.CreateTextNode("Reloader's WorkShop Data File Export");
+			MainElement.AppendChild(XMLTextElement);
+
+			Preferences.Export(XMLDocument, MainElement);
+
+			ManufacturerList.Export(XMLDocument, MainElement);
+
+			CaliberList.Export(XMLDocument, MainElement);
+
+			FirearmList.Export(XMLDocument, MainElement);
+
+			AmmoList.Export(XMLDocument, MainElement);
+
+			BulletList.Export(XMLDocument, MainElement);
+
+			PowderList.Export(XMLDocument, MainElement);
+
+			PrimerList.Export(XMLDocument, MainElement);
+
+			CaseList.Export(XMLDocument, MainElement);
+
+			LoadList.Export(XMLDocument, MainElement);
+
+			BatchList.Export(XMLDocument, MainElement);
+
+			return (XMLDocument);
+			}
+
+		//============================================================================*
 		// FirearmAccessoryCount()
 		//============================================================================*
 
@@ -1599,7 +1686,7 @@ namespace ReloadersWorkShop
 		// Import() - XML Document
 		//============================================================================*
 
-		public bool Import(XmlDocument XMLDocument)
+		public bool Import(XmlDocument XMLDocument, bool fMerge = true)
 			{
 			XmlElement XMLRoot = XMLDocument.DocumentElement;
 
@@ -1613,8 +1700,24 @@ namespace ReloadersWorkShop
 				{
 				switch (XMLNode.Name)
 					{
+					case "Ammunition":
+//						m_AmmoList.Import(XMLDocument, XMLNode);
+
+						break;
+
+					case "Preferences":
+						if (!fMerge)
+							Preferences.Import(XMLDocument, XMLNode);
+
+						break;
+
 					case "Manufacturers":
 						m_ManufacturerList.Import(XMLDocument, XMLNode);
+
+						break;
+
+					case "Calibers":
+						m_CaliberList.Import(XMLDocument, XMLNode);
 
 						break;
 					}
@@ -3063,10 +3166,10 @@ namespace ReloadersWorkShop
 
 						fFound = true;
 
-						if (Powder.PowderType != cPowder.ePowderType.Other && Powder.PowderType != CheckPowder.PowderType)
+						if (Powder.Shape != cPowder.ePowderShapes.Other && Powder.Shape != CheckPowder.Shape)
 							{
 							if (!fCountOnly)
-								CheckPowder.PowderType = Powder.PowderType;
+								CheckPowder.Shape = Powder.Shape;
 
 							nUpdateCount++;
 							}

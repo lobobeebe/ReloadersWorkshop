@@ -380,18 +380,6 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// CSVHeader Property
-		//============================================================================*
-
-		public static string CSVHeader
-			{
-			get
-				{
-				return ("Batches");
-				}
-			}
-
-		//============================================================================*
 		// CSVLine Property
 		//============================================================================*
 
@@ -507,28 +495,12 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// Export() - CSV
-		//============================================================================*
-
-		public void Export(StreamWriter Writer, bool fIncludeTests = true)
-			{
-			Writer.WriteLine(CSVLine);
-
-			if (fIncludeTests && m_BatchTest != null)
-				{
-				Writer.WriteLine();
-
-				m_BatchTest.Export(Writer);
-				}
-			}
-
-		//============================================================================*
 		// Export() - XML Document
 		//============================================================================*
 
 		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement, bool fIncludeTests = true)
 			{
-			XmlElement XMLThisElement = XMLDocument.CreateElement("Batch");
+			XmlElement XMLThisElement = XMLDocument.CreateElement(ExportName);
 			XMLParentElement.AppendChild(XMLThisElement);
 
 			// Batch ID
@@ -558,53 +530,19 @@ namespace ReloadersWorkShop
 
 			XMLThisElement.AppendChild(XMLElement);
 
-			// Bullet
+			// Load
 
-			XMLElement = XMLDocument.CreateElement("Bullet");
-			XMLTextElement = XMLDocument.CreateTextNode(m_Load.Bullet.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Powder
-
-			XMLElement = XMLDocument.CreateElement("Powder");
-			XMLTextElement = XMLDocument.CreateTextNode(m_Load.Powder.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Primer
-
-			XMLElement = XMLDocument.CreateElement("Primer");
-			XMLTextElement = XMLDocument.CreateTextNode(m_Load.Primer.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Case
-
-			XMLElement = XMLDocument.CreateElement("Case");
-			XMLTextElement = XMLDocument.CreateTextNode(m_Load.Case.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
+			m_Load.ExportIdentity(XMLDocument, XMLThisElement);
 
 			// Firearm
 
 			if (m_Firearm != null)
-				{
-				XMLElement = XMLDocument.CreateElement("Firearm");
-				XMLTextElement = XMLDocument.CreateTextNode(m_Firearm.ToString());
-				XMLElement.AppendChild(XMLTextElement);
-
-				XMLThisElement.AppendChild(XMLElement);
-				}
+				m_Firearm.ExportIdentity(XMLDocument, XMLThisElement);
 
 			// Powder Weight
 
 			XMLElement = XMLDocument.CreateElement("PowderWeight");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dPowderWeight));
+			XMLTextElement = XMLDocument.CreateTextNode(m_dPowderWeight.ToString());
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
@@ -612,7 +550,7 @@ namespace ReloadersWorkShop
 			// Num Rounds
 
 			XMLElement = XMLDocument.CreateElement("NumRounds");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nNumRounds));
+			XMLTextElement = XMLDocument.CreateTextNode(m_nNumRounds.ToString());
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
@@ -620,7 +558,7 @@ namespace ReloadersWorkShop
 			// Cases Fired
 
 			XMLElement = XMLDocument.CreateElement("CasesFired");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nTimesFired));
+			XMLTextElement = XMLDocument.CreateTextNode(m_nTimesFired.ToString());
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
@@ -628,7 +566,7 @@ namespace ReloadersWorkShop
 			// COAL
 
 			XMLElement = XMLDocument.CreateElement("COAL");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dCOL));
+			XMLTextElement = XMLDocument.CreateTextNode(m_dCOL.ToString());
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
@@ -636,7 +574,7 @@ namespace ReloadersWorkShop
 			// CBTO
 
 			XMLElement = XMLDocument.CreateElement("CBTO");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dCBTO));
+			XMLTextElement = XMLDocument.CreateTextNode(m_dCBTO.ToString());
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
@@ -753,8 +691,38 @@ namespace ReloadersWorkShop
 
 			XMLThisElement.AppendChild(XMLElement);
 
+			// Track Inventory
+
+			XMLElement = XMLDocument.CreateElement("TrackInventory");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fTrackInventory ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Checked
+
+			XMLElement = XMLDocument.CreateElement("Checked");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fChecked ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Batch Tests
+
 			if (m_BatchTest != null && fIncludeTests)
 				m_BatchTest.Export(XMLDocument, XMLThisElement);
+			}
+
+		//============================================================================*
+		// ExportName Property
+		//============================================================================*
+
+		public string ExportName
+			{
+			get
+				{
+				return ("Batch");
+				}
 			}
 
 		//============================================================================*

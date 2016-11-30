@@ -10,6 +10,8 @@
 //============================================================================*
 
 using System;
+using System.IO;
+using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -98,8 +100,14 @@ namespace ReloadersWorkShop
 
 		public double BarrelLength
 			{
-			get { return (m_dBarrelLength); }
-			set { m_dBarrelLength = value; }
+			get
+				{
+				return (m_dBarrelLength);
+				}
+			set
+				{
+				m_dBarrelLength = value;
+				}
 			}
 
 		//============================================================================*
@@ -108,8 +116,14 @@ namespace ReloadersWorkShop
 
 		public double BestGroup
 			{
-			get { return (m_dBestGroup); }
-			set { m_dBestGroup = value; }
+			get
+				{
+				return (m_dBestGroup);
+				}
+			set
+				{
+				m_dBestGroup = value;
+				}
 			}
 
 		//============================================================================*
@@ -118,8 +132,14 @@ namespace ReloadersWorkShop
 
 		public int BestGroupRange
 			{
-			get { return (m_nBestGroupRange); }
-			set { m_nBestGroupRange = value; }
+			get
+				{
+				return (m_nBestGroupRange);
+				}
+			set
+				{
+				m_nBestGroupRange = value;
+				}
 			}
 
 		//============================================================================*
@@ -158,18 +178,18 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			int rc = 0;
-			
+
 			if (m_Firearm == null)
 				{
 				if (AmmoTest.Firearm != null)
-					return(-1);
+					return (-1);
 				else
-					return(0);
+					return (0);
 				}
 			else
 				{
 				if (AmmoTest.Firearm == null)
-					return(1);
+					return (1);
 				else
 					rc = m_Firearm.CompareTo(AmmoTest.m_Firearm);
 				}
@@ -187,13 +207,160 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// CSVLine Property
+		//============================================================================*
+
+		public string CSVLine
+			{
+			get
+				{
+				string strLine = m_TestDate.ToShortDateString();
+				strLine += ",";
+
+				strLine += m_Firearm.ToString();
+				strLine += ",";
+
+				strLine += m_dBarrelLength;
+				strLine += ",";
+				strLine += m_dTwist;
+				strLine += ",";
+				strLine += m_nNumRounds;
+				strLine += ",";
+				strLine += m_dBestGroup;
+				strLine += ",";
+				strLine += m_nBestGroupRange;
+				strLine += ",";
+				strLine += m_nMuzzleVelocity;
+				strLine += ",";
+				strLine += m_strNotes;
+
+				return (strLine);
+				}
+			}
+
+		//============================================================================*
+		// CSVLineHeader Property
+		//============================================================================*
+
+		public static string CSVLineHeader
+			{
+			get
+				{
+				return ("Date,Firearm,Barrel Length,Twist,NumRounds,Best Group,Best Group Range,Muzzle Velocity,Notes");
+				}
+			}
+
+		//============================================================================*
+		// Export() - XML Document
+		//============================================================================*
+
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			XmlElement XMLThisElement = XMLDocument.CreateElement(ExportName);
+			XMLParentElement.AppendChild(XMLThisElement);
+
+			// Date
+
+			XmlElement XMLElement = XMLDocument.CreateElement("Date");
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(m_TestDate.ToShortDateString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Firearm
+
+			m_Firearm.ExportIdentity(XMLDocument, XMLThisElement);
+
+			// Barrel Length
+
+			XMLElement = XMLDocument.CreateElement("BarrelLength");
+			XMLTextElement = XMLDocument.CreateTextNode(m_dBarrelLength.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Twist
+
+			XMLElement = XMLDocument.CreateElement("Twist");
+			XMLTextElement = XMLDocument.CreateTextNode(m_dTwist.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// NumRounds
+
+			XMLElement = XMLDocument.CreateElement("NumRounds");
+			XMLTextElement = XMLDocument.CreateTextNode(m_nNumRounds.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Best Group
+
+			XMLElement = XMLDocument.CreateElement("BestGroup");
+			XMLTextElement = XMLDocument.CreateTextNode(m_dBestGroup.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Best Group Range
+
+			XMLElement = XMLDocument.CreateElement("BestGroupRange");
+			XMLTextElement = XMLDocument.CreateTextNode(m_nBestGroupRange.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Muzzle Velocity
+
+			XMLElement = XMLDocument.CreateElement("MuzzleVelocity");
+			XMLTextElement = XMLDocument.CreateTextNode(m_nMuzzleVelocity.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Notes
+
+			if (!String.IsNullOrEmpty(m_strNotes))
+				{
+				XMLElement = XMLDocument.CreateElement("Notes");
+				XMLTextElement = XMLDocument.CreateTextNode(m_strNotes);
+				XMLElement.AppendChild(XMLTextElement);
+
+				XMLThisElement.AppendChild(XMLElement);
+				}
+
+			// Test List
+
+			m_TestShotList.Export(XMLDocument, XMLThisElement);
+			}
+
+		//============================================================================*
+		// ExportName Property
+		//============================================================================*
+
+		public static string ExportName
+			{
+			get
+				{
+				return ("AmmoTest");
+				}
+			}
+
+		//============================================================================*
 		// Firearm Property
 		//============================================================================*
 
 		public cFirearm Firearm
 			{
-			get { return (m_Firearm); }
-			set { m_Firearm = value; }
+			get
+				{
+				return (m_Firearm);
+				}
+			set
+				{
+				m_Firearm = value;
+				}
 			}
 
 		//============================================================================*
@@ -227,15 +394,15 @@ namespace ReloadersWorkShop
 
 			if (Statistics.NumShots > 0 && nTotalVelocity > 0)
 				{
-				Statistics.AverageVelocity = (double)nTotalVelocity / (double)Statistics.NumShots;
+				Statistics.AverageVelocity = (double) nTotalVelocity / (double) Statistics.NumShots;
 
 				foreach (cTestShot TestShot in TestShotList)
 					{
 					if (TestShot.MuzzleVelocity > 0 && !TestShot.Misfire && !TestShot.Squib)
-						Statistics.Variance += (((double)TestShot.MuzzleVelocity - Statistics.AverageVelocity) * ((double)TestShot.MuzzleVelocity - Statistics.AverageVelocity));
+						Statistics.Variance += (((double) TestShot.MuzzleVelocity - Statistics.AverageVelocity) * ((double) TestShot.MuzzleVelocity - Statistics.AverageVelocity));
 					}
 
-				Statistics.Variance /= (double)Statistics.NumShots;
+				Statistics.Variance /= (double) Statistics.NumShots;
 
 				Statistics.StdDev = Math.Sqrt(Statistics.Variance);
 				}
@@ -264,7 +431,10 @@ namespace ReloadersWorkShop
 				return (m_nMuzzleVelocity);
 				}
 
-			set { m_nMuzzleVelocity = value; }
+			set
+				{
+				m_nMuzzleVelocity = value;
+				}
 			}
 
 		//============================================================================*
@@ -273,8 +443,14 @@ namespace ReloadersWorkShop
 
 		public string Notes
 			{
-			get { return (m_strNotes); }
-			set { m_strNotes = value; }
+			get
+				{
+				return (m_strNotes);
+				}
+			set
+				{
+				m_strNotes = value;
+				}
 			}
 
 		//============================================================================*
@@ -283,8 +459,14 @@ namespace ReloadersWorkShop
 
 		public int NumRounds
 			{
-			get { return (m_nNumRounds); }
-			set { m_nNumRounds = value; }
+			get
+				{
+				return (m_nNumRounds);
+				}
+			set
+				{
+				m_nNumRounds = value;
+				}
 			}
 
 		//============================================================================*
@@ -323,8 +505,14 @@ namespace ReloadersWorkShop
 
 		public DateTime TestDate
 			{
-			get { return (m_TestDate); }
-			set { m_TestDate = value; }
+			get
+				{
+				return (m_TestDate);
+				}
+			set
+				{
+				m_TestDate = value;
+				}
 			}
 
 		//============================================================================*
@@ -333,8 +521,14 @@ namespace ReloadersWorkShop
 
 		public cTestShotList TestShotList
 			{
-			get { return (m_TestShotList); }
-			set { m_TestShotList = value; }
+			get
+				{
+				return (m_TestShotList);
+				}
+			set
+				{
+				m_TestShotList = value;
+				}
 			}
 
 		//============================================================================*
@@ -354,8 +548,14 @@ namespace ReloadersWorkShop
 
 		public double Twist
 			{
-			get { return (m_dTwist); }
-			set { m_dTwist = value; }
+			get
+				{
+				return (m_dTwist);
+				}
+			set
+				{
+				m_dTwist = value;
+				}
 			}
 		}
 	}

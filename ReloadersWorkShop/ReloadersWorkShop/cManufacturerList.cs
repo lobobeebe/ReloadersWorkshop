@@ -49,7 +49,7 @@ namespace ReloadersWorkShop
 			if (Count <= 0)
 				return;
 
-			Writer.WriteLine(ExportName);
+			Writer.WriteLine(cManufacturer.CSVHeader);
 			Writer.WriteLine();
 
 			string strLine = "";
@@ -71,12 +71,12 @@ namespace ReloadersWorkShop
 		// Export()
 		//============================================================================*
 
-		public void Export(XmlDocument XMLDocument, XmlNode XMLParentNode)
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
 			{
 			if (Count > 0)
 				{
 				XmlElement XMLElement = XMLDocument.CreateElement(ExportName);
-				XMLParentNode.AppendChild(XMLElement);
+				XMLParentElement.AppendChild(XMLElement);
 
 				foreach (cManufacturer Manufacturer in this)
 					{
@@ -117,6 +117,8 @@ namespace ReloadersWorkShop
 
 						break;
 					}
+
+				XMLNode = XMLNode.NextSibling;
 				}
 			}
 		}

@@ -31,19 +31,25 @@ namespace ReloadersWorkShop
 		// Export()
 		//============================================================================*
 
-		public void Export(StreamWriter Writer, bool fBatchTests)
+		public void Export(StreamWriter Writer)
 			{
 			if (Count <= 0)
 				return;
 
-			Writer.WriteLine("Batches");
+			string strLine = "";
+
+			Writer.WriteLine(ExportName);
 			Writer.WriteLine();
 
 			Writer.WriteLine(cBatch.CSVLineHeader);
 			Writer.WriteLine();
 
 			foreach (cBatch Batch in this)
-				Batch.Export(Writer, fBatchTests);
+				{
+				strLine = Batch.CSVLine;
+
+				Writer.WriteLine(strLine);
+				}
 
 			Writer.WriteLine();
 			}
@@ -56,11 +62,23 @@ namespace ReloadersWorkShop
 			{
 			if (Count > 0)
 				{
-				XmlElement XMLElement = XMLDocument.CreateElement("Batches");
+				XmlElement XMLElement = XMLDocument.CreateElement(ExportName);
 				XMLParentElement.AppendChild(XMLElement);
 
 				foreach (cBatch Batch in this)
 					Batch.Export(XMLDocument, XMLElement, fIncludeTests);
+				}
+			}
+
+		//============================================================================*
+		// ExportName()
+		//============================================================================*
+
+		public string ExportName
+			{
+			get
+				{
+				return ("Batches");
 				}
 			}
 		}

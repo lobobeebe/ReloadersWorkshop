@@ -119,8 +119,14 @@ namespace ReloadersWorkShop
 
 		public bool Checked
 			{
-			get { return (m_fChecked); }
-			set { m_fChecked = value; }
+			get
+				{
+				return (m_fChecked);
+				}
+			set
+				{
+				m_fChecked = value;
+				}
 			}
 
 		//============================================================================*
@@ -129,8 +135,14 @@ namespace ReloadersWorkShop
 
 		public double CaseTrimLength
 			{
-			get { return (m_dCaseTrimLength); }
-			set { m_dCaseTrimLength = value; }
+			get
+				{
+				return (m_dCaseTrimLength);
+				}
+			set
+				{
+				m_dCaseTrimLength = value;
+				}
 			}
 
 		//============================================================================*
@@ -149,7 +161,7 @@ namespace ReloadersWorkShop
 			else
 				{
 				if (Caliber2 == null)
-					return(1);
+					return (1);
 				}
 
 			return (Caliber1.CompareTo(Caliber2));
@@ -307,17 +319,31 @@ namespace ReloadersWorkShop
 
 			// Handgun Type
 
-			XMLElement = XMLDocument.CreateElement("HandgunType");
-
-			string strHandgunType = "N/A";
-
 			if (m_eFirearmType == cFirearm.eFireArmType.Handgun)
-				strHandgunType = m_fPistol ? "Pistol" : "Revolver";
+				{
+				XMLElement = XMLDocument.CreateElement("HandgunType");
 
-			XMLTextElement = XMLDocument.CreateTextNode(strHandgunType);
-			XMLElement.AppendChild(XMLTextElement);
+				string strHandgunType = "N/A";
 
-			XMLThisElement.AppendChild(XMLElement);
+				if (m_eFirearmType == cFirearm.eFireArmType.Handgun)
+					strHandgunType = m_fPistol ? "Pistol" : "Revolver";
+
+				XMLTextElement = XMLDocument.CreateTextNode(strHandgunType);
+				XMLElement.AppendChild(XMLTextElement);
+
+				XMLThisElement.AppendChild(XMLElement);
+				}
+
+			// SAAMI PDF
+
+			if (!String.IsNullOrEmpty(m_strSAAMIPDF))
+				{
+				XMLElement = XMLDocument.CreateElement("SAAMIPDF");
+				XMLTextElement = XMLDocument.CreateTextNode(m_strSAAMIPDF);
+				XMLElement.AppendChild(XMLTextElement);
+
+				XMLThisElement.AppendChild(XMLElement);
+				}
 
 			// Small Primer
 
@@ -350,7 +376,7 @@ namespace ReloadersWorkShop
 			// Min Bullet Diameter
 
 			XMLElement = XMLDocument.CreateElement("MinBulletDiameter");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dMinBulletDiameter));
+			XMLTextElement = XMLDocument.CreateTextNode(m_dMinBulletDiameter.ToString());
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
@@ -358,7 +384,7 @@ namespace ReloadersWorkShop
 			// Max Bullet Diameter
 
 			XMLElement = XMLDocument.CreateElement("MaxBulletDiameter");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dMaxBulletDiameter));
+			XMLTextElement = XMLDocument.CreateTextNode(m_dMaxBulletDiameter.ToString());
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
@@ -366,7 +392,7 @@ namespace ReloadersWorkShop
 			// Min  Bullet Weight
 
 			XMLElement = XMLDocument.CreateElement("MinBulletWeight");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dMinBulletWeight));
+			XMLTextElement = XMLDocument.CreateTextNode(m_dMinBulletWeight.ToString());
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
@@ -374,7 +400,7 @@ namespace ReloadersWorkShop
 			// Max  Bullet Weight
 
 			XMLElement = XMLDocument.CreateElement("MaxBulletWeight");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dMaxBulletWeight));
+			XMLTextElement = XMLDocument.CreateTextNode(m_dMaxBulletWeight.ToString());
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
@@ -382,7 +408,7 @@ namespace ReloadersWorkShop
 			// Case Trim Length
 
 			XMLElement = XMLDocument.CreateElement("CaseTrimLength");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dCaseTrimLength));
+			XMLTextElement = XMLDocument.CreateTextNode(m_dCaseTrimLength.ToString());
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
@@ -390,7 +416,7 @@ namespace ReloadersWorkShop
 			// Max Case Length
 
 			XMLElement = XMLDocument.CreateElement("MaxCaseLength");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dMaxCaseLength));
+			XMLTextElement = XMLDocument.CreateTextNode(m_dMaxCaseLength.ToString());
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
@@ -398,7 +424,7 @@ namespace ReloadersWorkShop
 			// Max COAL
 
 			XMLElement = XMLDocument.CreateElement("MaxCOAL");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dMaxCOL));
+			XMLTextElement = XMLDocument.CreateTextNode(m_dMaxCOL.ToString());
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
@@ -406,10 +432,56 @@ namespace ReloadersWorkShop
 			// Max Neck Diameter
 
 			XMLElement = XMLDocument.CreateElement("MaxNeckDiameter");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dMaxNeckDiameter));
+			XMLTextElement = XMLDocument.CreateTextNode(m_dMaxNeckDiameter.ToString());
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
+
+			// Checked
+
+			XMLElement = XMLDocument.CreateElement("Checked");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fChecked ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+			}
+
+		//============================================================================*
+		// ExportIdentity() - XML Document
+		//============================================================================*
+
+		public void ExportIdentity(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			XmlElement XMLThisElement = XMLDocument.CreateElement("CaliberIdentity");
+			XMLParentElement.AppendChild(XMLThisElement);
+
+			// Firearm Type
+
+			XmlElement XMLElement = XMLDocument.CreateElement("FirearmType");
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(cFirearm.FirearmTypeString(m_eFirearmType));
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+
+			// Name
+
+			XMLElement = XMLDocument.CreateElement("Name");
+			XMLTextElement = XMLDocument.CreateTextNode(m_strName);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
+			}
+
+		//============================================================================*
+		// ExportName Property
+		//============================================================================*
+
+		public string ExportName
+			{
+			get
+				{
+				return ("Caliber");
+				}
 			}
 
 		//============================================================================*
@@ -418,34 +490,13 @@ namespace ReloadersWorkShop
 
 		public cFirearm.eFireArmType FirearmType
 			{
-			get { return (m_eFirearmType); }
-			set { m_eFirearmType = value; }
-			}
-
-		//============================================================================*
-		// FirearmTypeString Property
-		//============================================================================*
-
-		public string FirearmTypeString
-			{
 			get
 				{
-				switch (m_eFirearmType)
-					{
-					case cFirearm.eFireArmType.Handgun:
-						if (m_fPistol)
-							return ("Pistol");
-
-						return ("Revolver");
-
-					case cFirearm.eFireArmType.Rifle:
-						return ("Rifle");
-
-					case cFirearm.eFireArmType.Shotgun:
-						return ("Shotgun");
-					}
-
-				return ("Unknown");
+				return (m_eFirearmType);
+				}
+			set
+				{
+				m_eFirearmType = value;
 				}
 			}
 
@@ -455,8 +506,87 @@ namespace ReloadersWorkShop
 
 		public string HeadStamp
 			{
-			get { return (m_strHeadStamp); }
-			set { m_strHeadStamp = value; }
+			get
+				{
+				return (m_strHeadStamp);
+				}
+			set
+				{
+				m_strHeadStamp = value;
+				}
+			}
+
+		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public bool Import(XmlDocument XMLDocument, XmlNode XMLThisNode)
+			{
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "FirearmType":
+						m_eFirearmType = cFirearm.FirearmTypeFromString(XMLNode.FirstChild.Value);
+						break;
+					case "Name":
+						m_strName = XMLNode.FirstChild.Value;
+						break;
+					case "HeadStamp":
+						m_strHeadStamp = XMLNode.FirstChild.Value;
+						break;
+					case "HandgunType":
+						m_fPistol = XMLNode.FirstChild.Value == "Pistol";
+						break;
+					case "SmallPrimer":
+						m_fSmallPrimer = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "LargePrimer":
+						m_fLargePrimer = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "MagnumPrimer":
+						m_fMagnumPrimer = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "MinBulletDiameter":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dMinBulletDiameter);
+						break;
+					case "MaxBulletDiameter":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dMaxBulletDiameter);
+						break;
+					case "MinBulletWeight":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dMinBulletWeight);
+						break;
+					case "MaxBulletWeight":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dMaxBulletWeight);
+						break;
+					case "CaseTrimLength":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dCaseTrimLength);
+						break;
+					case "MaxCaseLength":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dMaxCaseLength);
+						break;
+					case "MaxCOAL":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dMaxCOL);
+						break;
+					case "MaxNeckDiameter":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dMaxNeckDiameter);
+						break;
+					case "SAAMIPDF":
+						m_strSAAMIPDF = XMLNode.FirstChild.Value;
+						break;
+					case "Checked":
+						m_fChecked = XMLNode.FirstChild.Value == "Yes";
+						break;
+					default:
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+
+			return (Validate());
 			}
 
 		//============================================================================*
@@ -465,8 +595,14 @@ namespace ReloadersWorkShop
 
 		public bool LargePrimer
 			{
-			get { return (m_fLargePrimer); }
-			set { m_fLargePrimer = value; }
+			get
+				{
+				return (m_fLargePrimer);
+				}
+			set
+				{
+				m_fLargePrimer = value;
+				}
 			}
 
 		//============================================================================*
@@ -475,8 +611,14 @@ namespace ReloadersWorkShop
 
 		public bool MagnumPrimer
 			{
-			get { return (m_fMagnumPrimer); }
-			set { m_fMagnumPrimer = value; }
+			get
+				{
+				return (m_fMagnumPrimer);
+				}
+			set
+				{
+				m_fMagnumPrimer = value;
+				}
 			}
 
 		//============================================================================*
@@ -485,8 +627,14 @@ namespace ReloadersWorkShop
 
 		public double MaxBulletDiameter
 			{
-			get { return (m_dMaxBulletDiameter); }
-			set { m_dMaxBulletDiameter = value; }
+			get
+				{
+				return (m_dMaxBulletDiameter);
+				}
+			set
+				{
+				m_dMaxBulletDiameter = value;
+				}
 			}
 
 		//============================================================================*
@@ -495,8 +643,14 @@ namespace ReloadersWorkShop
 
 		public double MaxBulletWeight
 			{
-			get { return (m_dMaxBulletWeight); }
-			set { m_dMaxBulletWeight = value; }
+			get
+				{
+				return (m_dMaxBulletWeight);
+				}
+			set
+				{
+				m_dMaxBulletWeight = value;
+				}
 			}
 
 		//============================================================================*
@@ -505,8 +659,14 @@ namespace ReloadersWorkShop
 
 		public double MaxCaseLength
 			{
-			get { return (m_dMaxCaseLength); }
-			set { m_dMaxCaseLength = value; }
+			get
+				{
+				return (m_dMaxCaseLength);
+				}
+			set
+				{
+				m_dMaxCaseLength = value;
+				}
 			}
 
 		//============================================================================*
@@ -515,8 +675,14 @@ namespace ReloadersWorkShop
 
 		public double MaxCOL
 			{
-			get { return (m_dMaxCOL); }
-			set { m_dMaxCOL = value; }
+			get
+				{
+				return (m_dMaxCOL);
+				}
+			set
+				{
+				m_dMaxCOL = value;
+				}
 			}
 
 		//============================================================================*
@@ -525,8 +691,14 @@ namespace ReloadersWorkShop
 
 		public double MaxNeckDiameter
 			{
-			get { return (m_dMaxNeckDiameter); }
-			set { m_dMaxNeckDiameter = value; }
+			get
+				{
+				return (m_dMaxNeckDiameter);
+				}
+			set
+				{
+				m_dMaxNeckDiameter = value;
+				}
 			}
 
 		//============================================================================*
@@ -535,8 +707,14 @@ namespace ReloadersWorkShop
 
 		public double MinBulletDiameter
 			{
-			get { return (m_dMinBulletDiameter); }
-			set { m_dMinBulletDiameter = value; }
+			get
+				{
+				return (m_dMinBulletDiameter);
+				}
+			set
+				{
+				m_dMinBulletDiameter = value;
+				}
 			}
 
 		//============================================================================*
@@ -545,8 +723,14 @@ namespace ReloadersWorkShop
 
 		public double MinBulletWeight
 			{
-			get { return (m_dMinBulletWeight); }
-			set { m_dMinBulletWeight = value; }
+			get
+				{
+				return (m_dMinBulletWeight);
+				}
+			set
+				{
+				m_dMinBulletWeight = value;
+				}
 			}
 
 		//============================================================================*
@@ -555,8 +739,14 @@ namespace ReloadersWorkShop
 
 		public string Name
 			{
-			get { return (m_strName); }
-			set { m_strName = value; }
+			get
+				{
+				return (m_strName);
+				}
+			set
+				{
+				m_strName = value;
+				}
 			}
 
 		//============================================================================*
@@ -565,8 +755,14 @@ namespace ReloadersWorkShop
 
 		public bool Pistol
 			{
-			get { return (m_fPistol); }
-			set { m_fPistol = value; }
+			get
+				{
+				return (m_fPistol);
+				}
+			set
+				{
+				m_fPistol = value;
+				}
 			}
 
 		//============================================================================*
@@ -575,8 +771,14 @@ namespace ReloadersWorkShop
 
 		public string SAAMIPDF
 			{
-			get { return (m_strSAAMIPDF); }
-			set { m_strSAAMIPDF = value; }
+			get
+				{
+				return (m_strSAAMIPDF);
+				}
+			set
+				{
+				m_strSAAMIPDF = value;
+				}
 			}
 
 		//============================================================================*
@@ -606,7 +808,7 @@ namespace ReloadersWorkShop
 
 			strDocPath = Path.ChangeExtension(strDocPath, ".pdf");
 
-			return(cMainForm.DownloadSAAMIDoc(DataFiles, strDocPath));
+			return (cMainForm.DownloadSAAMIDoc(DataFiles, strDocPath));
 			}
 
 		//============================================================================*
@@ -615,8 +817,14 @@ namespace ReloadersWorkShop
 
 		public bool SmallPrimer
 			{
-			get { return (m_fSmallPrimer); }
-			set { m_fSmallPrimer = value; }
+			get
+				{
+				return (m_fSmallPrimer);
+				}
+			set
+				{
+				m_fSmallPrimer = value;
+				}
 			}
 
 		//============================================================================*
@@ -655,97 +863,12 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// XMLHeader Property
+		// Validate()
 		//============================================================================*
 
-		public static string XMLHeader
+		public bool Validate()
 			{
-			get
-				{
-				return ("Calibers");
-				}
-			}
-
-		//============================================================================*
-		// XMLLine Property
-		//============================================================================*
-
-		public string XMLLine
-			{
-			get
-				{
-				string strLine = "";
-
-				switch (m_eFirearmType)
-					{
-					case cFirearm.eFireArmType.Handgun:
-						strLine += "Handgun,";
-						break;
-					case cFirearm.eFireArmType.Rifle:
-						strLine += "Rifle,";
-						break;
-					case cFirearm.eFireArmType.Shotgun:
-						strLine += "Shotgun,";
-						break;
-					default:
-						strLine += ",";
-						break;
-					}
-
-				strLine += m_strName;
-				strLine += ",";
-				strLine += m_strHeadStamp;
-
-				if (m_eFirearmType == cFirearm.eFireArmType.Handgun)
-					strLine += m_fPistol ? ",Pistol" : ",Revolver";
-				else
-					strLine += ",N/A";
-
-				strLine += m_fSmallPrimer ? ",Yes" : ",-";
-				strLine += m_fLargePrimer ? ",Yes" : ",-";
-				strLine += m_fMagnumPrimer ? ",Yes" : ",-";
-
-				//----------------------------------------------------------------------------*
-				// Dimensions
-				//----------------------------------------------------------------------------*
-
-				strLine += ",";
-				strLine += m_dMinBulletDiameter;
-				strLine += ",";
-				strLine += m_dMaxBulletDiameter;
-
-				strLine += ",";
-				strLine += m_dMinBulletWeight;
-				strLine += ",";
-				strLine += m_dMaxBulletWeight;
-
-				strLine += ",";
-				strLine += m_dCaseTrimLength;
-				strLine += ",";
-				strLine += m_dMaxCaseLength;
-
-				strLine += ",";
-				strLine += m_dMaxCOL;
-
-				strLine += ",";
-				strLine += m_dMaxNeckDiameter;
-
-				return (strLine);
-				}
-			}
-
-		//============================================================================*
-		// XMLLineHeader Property
-		//============================================================================*
-
-		public static string XMLLineHeader
-			{
-			get
-				{
-				string strLine = "Firearm Type,Name,Headstamp,Handgun Type,Small Primer,Large Primer,Magnum Primer,Min Bullet Dia.,Max Bullet Dia.,Min Bullet Weight,Max Bullet Weight,Case Trim Length,Max Case Length,Max COAL,Max Neck Dia";
-
-				return (strLine);
-				}
+			return (true);
 			}
 		}
 	}

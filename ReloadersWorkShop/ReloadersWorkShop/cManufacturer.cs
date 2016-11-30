@@ -592,176 +592,75 @@ namespace ReloadersWorkShop
 				switch (XMLNode.Name)
 					{
 					case "Name":
-						m_strName = XMLNode.Value;
+						m_strName = XMLNode.FirstChild.Value;
 						break;
-						/*
-										XMLElement = XMLDocument.CreateElement("Website");
-										XMLTextElement = XMLDocument.CreateTextNode(m_strWebsite);
-										XMLElement.AppendChild(XMLTextElement);
-
-										XMLThisElement.AppendChild(XMLElement);
-
-										// Bullets
-
-										XMLElement = XMLDocument.CreateElement("Bullets");
-										XMLTextElement = XMLDocument.CreateTextNode(m_fBullets ? "Yes" : "-");
-										XMLElement.AppendChild(XMLTextElement);
-
-										XMLThisElement.AppendChild(XMLElement);
-
-										// Powder
-
-										XMLElement = XMLDocument.CreateElement("Powders");
-										XMLTextElement = XMLDocument.CreateTextNode(m_fPowder ? "Yes" : "-");
-										XMLElement.AppendChild(XMLTextElement);
-
-										XMLThisElement.AppendChild(XMLElement);
-
-										// Primers
-
-										XMLElement = XMLDocument.CreateElement("Primers");
-										XMLTextElement = XMLDocument.CreateTextNode(m_fPrimers ? "Yes" : "-");
-										XMLElement.AppendChild(XMLTextElement);
-
-										XMLThisElement.AppendChild(XMLElement);
-
-										// Case
-
-										XMLElement = XMLDocument.CreateElement("Cases");
-										XMLTextElement = XMLDocument.CreateTextNode(m_fCases ? "Yes" : "-");
-										XMLElement.AppendChild(XMLTextElement);
-
-										XMLThisElement.AppendChild(XMLElement);
-
-										// Bullet Molds
-
-										XMLElement = XMLDocument.CreateElement("BulletMolds");
-										XMLTextElement = XMLDocument.CreateTextNode(m_fBulletMolds ? "Yes" : "-");
-										XMLElement.AppendChild(XMLTextElement);
-
-										XMLThisElement.AppendChild(XMLElement);
-
-										// Head Stamp
-
-										XMLElement = XMLDocument.CreateElement("HeadStamp");
-										XMLTextElement = XMLDocument.CreateTextNode(m_strHeadStamp);
-										XMLElement.AppendChild(XMLTextElement);
-
-										XMLThisElement.AppendChild(XMLElement);
-
-										// Ammo
-
-										XMLElement = XMLDocument.CreateElement("Ammo");
-										XMLTextElement = XMLDocument.CreateTextNode(m_fAmmo ? "Yes" : "-");
-										XMLElement.AppendChild(XMLTextElement);
-
-										XMLThisElement.AppendChild(XMLElement);
-
-										// Handguns
-
-										XMLElement = XMLDocument.CreateElement("Handguns");
-										XMLTextElement = XMLDocument.CreateTextNode(m_fHandguns ? "Yes" : "-");
-										XMLElement.AppendChild(XMLTextElement);
-
-										XMLThisElement.AppendChild(XMLElement);
-
-										// Rifles
-
-										XMLElement = XMLDocument.CreateElement("Rifles");
-										XMLTextElement = XMLDocument.CreateTextNode(m_fRifles ? "Yes" : "-");
-										XMLElement.AppendChild(XMLTextElement);
-
-										XMLThisElement.AppendChild(XMLElement);
-
-										// Shotguns
-
-										XMLElement = XMLDocument.CreateElement("Shotguns");
-										XMLTextElement = XMLDocument.CreateTextNode(m_fShotguns ? "Yes" : "-");
-										XMLElement.AppendChild(XMLTextElement);
-
-										XMLThisElement.AppendChild(XMLElement);
-
-										// Scopes
-
-										XMLElement = XMLDocument.CreateElement("Scopes");
-										XMLTextElement = XMLDocument.CreateTextNode(m_fScopes ? "Yes" : "-");
-										XMLElement.AppendChild(XMLTextElement);
-
-										XMLThisElement.AppendChild(XMLElement);
-
-										// Lasers
-
-										XMLElement = XMLDocument.CreateElement("Lasers");
-										XMLTextElement = XMLDocument.CreateTextNode(m_fLasers ? "Yes" : "-");
-										XMLElement.AppendChild(XMLTextElement);
-
-										XMLThisElement.AppendChild(XMLElement);
-
-										// Red Dots
-
-										XMLElement = XMLDocument.CreateElement("RedDots");
-										XMLTextElement = XMLDocument.CreateTextNode(m_fRedDots ? "Yes" : "-");
-										XMLElement.AppendChild(XMLTextElement);
-
-										XMLThisElement.AppendChild(XMLElement);
-
-										// Magnifiers
-
-										XMLElement = XMLDocument.CreateElement("Magnifiers");
-										XMLTextElement = XMLDocument.CreateTextNode(m_fMagnifiers ? "Yes" : "-");
-										XMLElement.AppendChild(XMLTextElement);
-
-										XMLThisElement.AppendChild(XMLElement);
-
-										// Lights
-
-										XMLElement = XMLDocument.CreateElement("Lights");
-										XMLTextElement = XMLDocument.CreateTextNode(m_fLights ? "Yes" : "-");
-										XMLElement.AppendChild(XMLTextElement);
-
-										XMLThisElement.AppendChild(XMLElement);
-
-										// Triggers
-
-										XMLElement = XMLDocument.CreateElement("Triggers");
-										XMLTextElement = XMLDocument.CreateTextNode(m_fTriggers ? "Yes" : "-");
-										XMLElement.AppendChild(XMLTextElement);
-
-										XMLThisElement.AppendChild(XMLElement);
-
-										// Furniture
-
-										XMLElement = XMLDocument.CreateElement("Furniture");
-										XMLTextElement = XMLDocument.CreateTextNode(m_fFurniture ? "Yes" : "-");
-										XMLElement.AppendChild(XMLTextElement);
-
-										XMLThisElement.AppendChild(XMLElement);
-
-										// Bipods
-
-										XMLElement = XMLDocument.CreateElement("Bipods");
-										XMLTextElement = XMLDocument.CreateTextNode(m_fBipods ? "Yes" : "-");
-										XMLElement.AppendChild(XMLTextElement);
-
-										XMLThisElement.AppendChild(XMLElement);
-
-										// Firearm  Parts
-
-										XMLElement = XMLDocument.CreateElement("FirearmParts");
-										XMLTextElement = XMLDocument.CreateTextNode(m_fParts ? "Yes" : "-");
-										XMLElement.AppendChild(XMLTextElement);
-
-										XMLThisElement.AppendChild(XMLElement);
-
-										// Other
-
-										XMLElement = XMLDocument.CreateElement("Other");
-										XMLTextElement = XMLDocument.CreateTextNode(m_fMisc ? "Yes" : "-");
-										XMLElement.AppendChild(XMLTextElement);
-
-										XMLThisElement.AppendChild(XMLElement);
-						*/
+					case "Website":
+						m_strWebsite = XMLNode.FirstChild.Value;
+						break;
+					case "Bullets":
+						m_fBullets = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "Powders":
+						m_fPowder = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "Primers":
+						m_fPrimers = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "Cases":
+						m_fCases = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "BulletMolds":
+						m_fBulletMolds = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "HeadStamp":
+						m_strHeadStamp = XMLNode.FirstChild.Value;
+						break;
+					case "Ammo":
+						m_fAmmo = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "Handguns":
+						m_fHandguns = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "Rifles":
+						m_fRifles = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "Shotguns":
+						m_fShotguns = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "Scopes":
+						m_fScopes = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "Lasers":
+						m_fLasers = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "RedDots":
+						m_fRedDots = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "Magnifiers":
+						m_fMagnifiers = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "Lights":
+						m_fLights = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "Triggers":
+						m_fTriggers = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "Furniture":
+					case "Stocks":
+						m_fFurniture = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "Bipods":
+						m_fBipods = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "FirearmParts":
+						m_fParts = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "Other":
+						 m_fMisc = XMLNode.FirstChild.Value == "Yes";
+						break;
 					}
+
+				XMLNode = XMLNode.NextSibling;
 				}
 
 			return (Validate());

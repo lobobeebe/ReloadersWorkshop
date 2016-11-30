@@ -38,7 +38,7 @@ namespace ReloadersWorkShop
 
 			string strLine = "";
 
-			Writer.WriteLine(cAmmo.CSVHeader);
+			Writer.WriteLine(ExportName);
 			Writer.WriteLine();
 
 			Writer.WriteLine(cAmmo.CSVLineHeader);
@@ -62,7 +62,7 @@ namespace ReloadersWorkShop
 			{
 			if (Count > 0)
 				{
-				XmlElement XMLElement = XMLDocument.CreateElement(string.Empty, "Ammunition", string.Empty);
+				XmlElement XMLElement = XMLDocument.CreateElement(ExportName);
 				XMLParentElement.AppendChild(XMLElement);
 
 				foreach (cAmmo Ammo in this)
@@ -71,7 +71,19 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// RecalulateInventory()
+		// ExportName Property
+		//============================================================================*
+
+		public static string ExportName
+			{
+			get
+				{
+				return ("Ammunition");
+				}
+			}
+
+		//============================================================================*
+		// RecalculateInventory()
 		//============================================================================*
 
 		public void RecalulateInventory(cDataFiles DataFiles)

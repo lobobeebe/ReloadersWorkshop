@@ -10,10 +10,7 @@
 //============================================================================*
 
 using System;
-
-using System.Windows.Forms;
-
-using ReloadersWorkShop.Preferences;
+using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -104,6 +101,63 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			return (m_Caliber.CompareTo(FirearmCaliber.m_Caliber));
+			}
+
+		//============================================================================*
+		// CSVLine Property
+		//============================================================================*
+
+		public string CSVLine
+			{
+			get
+				{
+				string strLine = "";
+
+				//----------------------------------------------------------------------------*
+				// General
+				//----------------------------------------------------------------------------*
+
+				strLine += m_Caliber.ToString();
+				strLine += ",";
+				strLine += m_fPrimary ? "Yes" : "";
+				strLine += ",";
+
+				return (strLine);
+				}
+			}
+
+		//============================================================================*
+		// CSVLineHeader Property
+		//============================================================================*
+
+		public static string CSVLineHeader
+			{
+			get
+				{
+				return ("Caliber,Primary");
+				}
+			}
+
+		//============================================================================*
+		// Export() - XML Document
+		//============================================================================*
+
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			XmlElement XMLThisElement = XMLDocument.CreateElement("FirearmCaliber");
+			XMLParentElement.AppendChild(XMLThisElement);
+
+			// Caliber
+
+			m_Caliber.ExportIdentity(XMLDocument,  XMLThisElement);
+
+			// Primary
+
+			XmlElement XMLElement = XMLDocument.CreateElement("Primary");
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(m_fPrimary ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
 			}
 
 		//============================================================================*

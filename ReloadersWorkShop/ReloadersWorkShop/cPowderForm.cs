@@ -94,7 +94,7 @@ namespace ReloadersWorkShop
 						m_Powder = new cPowder(m_DataFiles.Preferences.LastPowder);
 
 					m_Powder.Model = "";
-					m_Powder.PowderType = cPowder.ePowderType.Other;
+					m_Powder.Shape = cPowder.ePowderShapes.Other;
 					m_Powder.Cost = 0.0;
 					m_Powder.Quantity = 0;
 
@@ -167,8 +167,8 @@ namespace ReloadersWorkShop
 
 			ModelTextBox.Text = m_Powder.Model;
 
-			if ((int) m_Powder.PowderType < ShapeCombo.Items.Count)
-				ShapeCombo.SelectedIndex = (int) m_Powder.PowderType;
+			if ((int) m_Powder.Shape < ShapeCombo.Items.Count)
+				ShapeCombo.SelectedIndex = (int) m_Powder.Shape;
 			else
 				{
 				if (ShapeCombo.Items.Count > 0)
@@ -365,7 +365,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_Powder.PowderType = (cPowder.ePowderType) ShapeCombo.SelectedIndex;
+			m_Powder.Shape = (cPowder.ePowderShapes) ShapeCombo.SelectedIndex;
  
 			m_fChanged = true;
 

@@ -277,18 +277,6 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// CSVHeader Property
-		//============================================================================*
-
-		public static string CSVHeader
-			{
-			get
-				{
-				return (",Batch Tests");
-				}
-			}
-
-		//============================================================================*
 		// CSVLine Property
 		//============================================================================*
 
@@ -374,7 +362,7 @@ namespace ReloadersWorkShop
 			{
 			string strLine = ",";
 
-			Writer.WriteLine(cBatchTest.CSVHeader);
+			Writer.WriteLine(ExportName);
 			Writer.WriteLine();
 
 			Writer.WriteLine(cBatchTest.CSVLineHeader);
@@ -398,7 +386,7 @@ namespace ReloadersWorkShop
 
 		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
 			{
-			XmlElement XMLThisElement = XMLDocument.CreateElement("BatchTest");
+			XmlElement XMLThisElement = XMLDocument.CreateElement(ExportName);
 			XMLParentElement.AppendChild(XMLThisElement);
 
 			// Test Date
@@ -412,13 +400,7 @@ namespace ReloadersWorkShop
 			// Firearm
 
 			if (m_Firearm != null)
-				{
-				XMLElement = XMLDocument.CreateElement("Firearm");
-				XMLTextElement = XMLDocument.CreateTextNode(m_Firearm.ToString());
-				XMLElement.AppendChild(XMLTextElement);
-
-				XMLThisElement.AppendChild(XMLElement);
-				}
+				m_Firearm.ExportIdentity(XMLDocument, XMLThisElement);
 
 			// Suppressed
 
@@ -430,16 +412,19 @@ namespace ReloadersWorkShop
 
 			// Location
 
-			XMLElement = XMLDocument.CreateElement("Location");
-			XMLTextElement = XMLDocument.CreateTextNode(m_strLocation);
-			XMLElement.AppendChild(XMLTextElement);
+			if (!String.IsNullOrEmpty(m_strLocation))
+				{
+				XMLElement = XMLDocument.CreateElement("Location");
+				XMLTextElement = XMLDocument.CreateTextNode(m_strLocation);
+				XMLElement.AppendChild(XMLTextElement);
 
-			XMLThisElement.AppendChild(XMLElement);
+				XMLThisElement.AppendChild(XMLElement);
+				}
 
 			// Altitude
 
 			XMLElement = XMLDocument.CreateElement("Altitude");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nAltitude));
+			XMLTextElement = XMLDocument.CreateTextNode(m_nAltitude.ToString());
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
@@ -447,7 +432,7 @@ namespace ReloadersWorkShop
 			// Pressure
 
 			XMLElement = XMLDocument.CreateElement("Pressure");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dPressure));
+			XMLTextElement = XMLDocument.CreateTextNode(m_dPressure.ToString());
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
@@ -455,7 +440,7 @@ namespace ReloadersWorkShop
 			// Temperature
 
 			XMLElement = XMLDocument.CreateElement("Temperature");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nTemperature));
+			XMLTextElement = XMLDocument.CreateTextNode(m_nTemperature.ToString());
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
@@ -463,7 +448,7 @@ namespace ReloadersWorkShop
 			// Humidity
 
 			XMLElement = XMLDocument.CreateElement("Humidity");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dHumidity));
+			XMLTextElement = XMLDocument.CreateTextNode(m_dHumidity.ToString());
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
@@ -471,7 +456,7 @@ namespace ReloadersWorkShop
 			// Wind Speed
 
 			XMLElement = XMLDocument.CreateElement("WindSpeed");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nWindSpeed));
+			XMLTextElement = XMLDocument.CreateTextNode(m_nWindSpeed.ToString());
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
@@ -479,7 +464,7 @@ namespace ReloadersWorkShop
 			// Wind Direction
 
 			XMLElement = XMLDocument.CreateElement("WindDirection");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nWindDirection));
+			XMLTextElement = XMLDocument.CreateTextNode(m_nWindDirection.ToString());
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
@@ -487,7 +472,7 @@ namespace ReloadersWorkShop
 			// Num Rounds
 
 			XMLElement = XMLDocument.CreateElement("NumRounds");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nNumRounds));
+			XMLTextElement = XMLDocument.CreateTextNode(m_nNumRounds.ToString());
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
@@ -495,7 +480,7 @@ namespace ReloadersWorkShop
 			// Best Group
 
 			XMLElement = XMLDocument.CreateElement("BestGroup");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dBestGroup));
+			XMLTextElement = XMLDocument.CreateTextNode(m_dBestGroup.ToString());
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
@@ -503,7 +488,7 @@ namespace ReloadersWorkShop
 			// Best Group Range
 
 			XMLElement = XMLDocument.CreateElement("BestGroupRange");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nBestGroupRange));
+			XMLTextElement = XMLDocument.CreateTextNode(m_nBestGroupRange.ToString());
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
@@ -519,7 +504,21 @@ namespace ReloadersWorkShop
 				XMLThisElement.AppendChild(XMLElement);
 				}
 
+			// Test Shots
+
 			m_TestShotList.Export(XMLDocument, XMLThisElement);
+			}
+
+		//============================================================================*
+		// ExportName Property
+		//============================================================================*
+
+		public string ExportName
+			{
+			get
+				{
+				return ("BatchTest");
+				}
 			}
 
 		//============================================================================*

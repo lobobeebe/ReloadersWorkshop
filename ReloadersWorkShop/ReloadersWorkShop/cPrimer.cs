@@ -158,35 +158,17 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// CSVHeader Property
-		//============================================================================*
-
-		public static string CSVHeader
-			{
-			get
-				{
-				return ("Primers");
-				}
-			}
-
-		//============================================================================*
 		// CSVLine Property
 		//============================================================================*
 
-		public string CSVLine
+		public override string CSVLine
 			{
 			get
 				{
-				string strLine = "";
-
-				strLine += Manufacturer.Name;
-				strLine += ",";
+				string strLine = base.CSVLine;
 
 				strLine += m_strModel;
 				strLine += ",";
-				strLine += cFirearm.FirearmTypeString(FirearmType);
-				strLine += ",";
-				strLine += CrossUse ? "Yes," : "-,";
 
 				strLine += m_eSize == ePrimerSize.Small ? "Small" : "Large";
 				strLine += ",";
@@ -208,7 +190,11 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				return ("Manufacturer,Model,Firearm Type,Cross Use?,Size,Standard,Magnum,Bench Rest,Military");
+				string strLine = cSupply.CSVSupplyLineHeader;
+
+				strLine += "Model,Size,Standard,Magnum,Bench Rest,Military";
+
+				return (strLine);
 				}
 			}
 
@@ -216,39 +202,17 @@ namespace ReloadersWorkShop
 		// Export() - XML Document
 		//============================================================================*
 
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+		public override void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
 			{
 			XmlElement XMLThisElement = XMLDocument.CreateElement("Primer");
 			XMLParentElement.AppendChild(XMLThisElement);
 
-			// Manufacturer
-
-			XmlElement XMLElement = XMLDocument.CreateElement("Manufacturer");
-			XmlText XMLTextElement = XMLDocument.CreateTextNode(Manufacturer.Name);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
+			base.Export(XMLDocument, XMLThisElement);
 
 			// Model
 
-			XMLElement = XMLDocument.CreateElement("Model");
-			XMLTextElement = XMLDocument.CreateTextNode(m_strModel);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Firearm Type
-
-			XMLElement = XMLDocument.CreateElement("FirearmType");
-			XMLTextElement = XMLDocument.CreateTextNode(cFirearm.FirearmTypeString(FirearmType));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Cross  Use
-
-			XMLElement = XMLDocument.CreateElement("CrossUse");
-			XMLTextElement = XMLDocument.CreateTextNode(CrossUse ? "Yes" : "-");
+			XmlElement XMLElement = XMLDocument.CreateElement("Model");
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(m_strModel);
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
@@ -292,6 +256,18 @@ namespace ReloadersWorkShop
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
+			}
+
+		//============================================================================*
+		// ExportName Property
+		//============================================================================*
+
+		public string ExportName
+			{
+			get
+				{
+				return ("Primer");
+				}
 			}
 
 		//============================================================================*

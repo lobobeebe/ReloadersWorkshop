@@ -927,6 +927,7 @@ namespace ReloadersWorkShop
 			m_DataFiles.Preferences.Maximized = WindowState == FormWindowState.Maximized;
 
 			m_DataFiles.Save();
+//			m_DataFiles.ExportRecoveryFile();		TODO: Put this back in
 
 			if (m_DataFiles.Preferences.BackupOK && m_DataFiles.Preferences.AutoBackup)
 				{
