@@ -261,7 +261,7 @@ namespace ReloadersWorkShop
 
 			// Date
 
-			XmlElement XMLElement = XMLDocument.CreateElement("Date");
+			XmlElement XMLElement = XMLDocument.CreateElement("TestDate");
 			XmlText XMLTextElement = XMLDocument.CreateTextNode(m_TestDate.ToShortDateString());
 			XMLElement.AppendChild(XMLTextElement);
 
@@ -450,7 +450,7 @@ namespace ReloadersWorkShop
 						m_strNotes = XMLNode.FirstChild.Value;
 						break;
 					case "TestShots":
-						m_TestShotList.Import(XMLDocument, XMLThisNode, DataFiles);
+						m_TestShotList.Import(XMLDocument, XMLNode, DataFiles);
 						break;
 					default:
 						break;
