@@ -1720,6 +1720,11 @@ namespace ReloadersWorkShop
 						m_CaliberList.Import(XMLDocument, XMLNode);
 
 						break;
+
+					case "Firearms":
+						m_FirearmList.Import(XMLDocument, XMLNode);
+
+						break;
 					}
 
 				XMLNode = XMLNode.NextSibling;

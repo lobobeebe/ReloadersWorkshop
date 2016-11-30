@@ -882,6 +882,94 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public bool Import(XmlDocument XMLDocument, XmlNode XMLThisNode)
+			{
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "FirearmType":
+						m_eFirearmType = cFirearm.FirearmTypeFromString(XMLNode.FirstChild.Value);
+						break;
+					case "BarrelLength":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dBarrelLength);
+						break;
+					case "Twist":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dTwist);
+						break;
+					case "SightHeight":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dSightHeight);
+						break;
+					case "Scoped":
+						m_fScoped = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "ScopeClick":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dScopeClick);
+						break;
+					case "TurretType":
+						m_eTurretType = XMLNode.FirstChild.Value == "MOA" ? eTurretType.MOA : eTurretType.MilDot;
+						break;
+					case "ZeroRange":
+						Int32.TryParse(XMLNode.FirstChild.Value, out m_nZeroRange);
+						break;
+					case "HeadSpace":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dHeadSpace);
+						break;
+					case "NeckSize":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dNeck);
+						break;
+					case "ReceiverFinish":
+						m_strReceiverFinish = XMLNode.FirstChild.Value;
+						break;
+					case "BarrelFinish":
+						m_strBarrelFinish = XMLNode.FirstChild.Value;
+						break;
+					case "Type":
+						m_strType = XMLNode.FirstChild.Value;
+						break;
+					case "Action":
+						m_strAction = XMLNode.FirstChild.Value;
+						break;
+					case "Hammer":
+						m_strHammer = XMLNode.FirstChild.Value;
+						break;
+					case "Magazine":
+						m_strMagazine = XMLNode.FirstChild.Value;
+						break;
+					case "Capacity":
+						Int32.TryParse(XMLNode.FirstChild.Value, out m_nCapacity);
+						break;
+					case "TransferFees":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dTransferFees);
+						break;
+					case "OtherFees":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dOtherFees);
+						break;
+					case "Checked":
+						m_fChecked = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "FirearmCalibers":
+//						m_FirearmCaliberList.Import(XMLDocument, XMLThisElement);
+						break;
+					case "FirearmBullets":
+//						m_FirearmBulletList.Import(XMLDocument, XMLThisElement);
+						break;
+					default:
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+
+			return (Validate());
+			}
+
+		//============================================================================*
 		// Magazine Property
 		//============================================================================*
 

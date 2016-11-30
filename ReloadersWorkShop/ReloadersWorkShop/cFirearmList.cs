@@ -28,6 +28,23 @@ namespace ReloadersWorkShop
 	public class cFirearmList : List<cFirearm>
 		{
 		//============================================================================*
+		// AddFirearm()
+		//============================================================================*
+
+		public bool AddFirearm(cFirearm Firearm)
+			{
+			foreach (cFirearm CheckFirearm in this)
+				{
+				if (CheckFirearm.CompareTo(Firearm) == 0)
+					return (false);
+				}
+
+			Add(Firearm);
+
+			return (true);
+			}
+
+		//============================================================================*
 		// Export()
 		//============================================================================*
 
@@ -69,6 +86,31 @@ namespace ReloadersWorkShop
 					{
 					Firearm.Export(XMLDocument, XMLElement);
 					}
+				}
+			}
+
+		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public void Import(XmlDocument XMLDocument, XmlNode XMLThisNode)
+			{
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "Firearm":
+						cFirearm Firearm = new cFirearm();
+
+						if (Firearm.Import(XMLDocument, XMLNode))
+							AddFirearm(Firearm);
+
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
 				}
 			}
 
