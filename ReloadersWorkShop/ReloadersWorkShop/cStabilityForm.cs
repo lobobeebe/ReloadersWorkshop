@@ -697,7 +697,7 @@ namespace ReloadersWorkShop
 				{
 				CaliberList = new cCaliberList();
 
-				foreach (cBulletCaliber BulletCaliber in Bullet.CaliberList)
+				foreach (cBulletCaliber BulletCaliber in Bullet.BulletCaliberList)
 					CaliberList.Add(BulletCaliber.Caliber);
 				}
 			else

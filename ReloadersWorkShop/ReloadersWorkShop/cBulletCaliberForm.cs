@@ -289,7 +289,7 @@ namespace ReloadersWorkShop
 					{
 					bool fAlreadyAdded = false;
 
-					foreach (cBulletCaliber BulletCaliber in m_Bullet.CaliberList)
+					foreach (cBulletCaliber BulletCaliber in m_Bullet.BulletCaliberList)
 						{
 						if (BulletCaliber.Caliber.CompareTo(CheckCaliber) == 0)
 							{

@@ -112,6 +112,31 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public void Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "Powder":
+						cPowder Powder = new cPowder();
+
+						if (Powder.Import(XMLDocument, XMLNode, DataFiles))
+							AddPowder(Powder);
+
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+			}
+
+		//============================================================================*
 		// RecalulateInventory()
 		//============================================================================*
 
@@ -119,6 +144,20 @@ namespace ReloadersWorkShop
 			{
 			foreach (cSupply Supply in this)
 				Supply.RecalculateInventory(DataFiles);
+			}
+
+		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public bool ResolveIdentities(cDataFiles Datafiles)
+			{
+			bool fChanged = false;
+
+			foreach (cPowder Powder in this)
+				fChanged = Powder.ResolveIdentities(Datafiles) ? true : fChanged;
+
+			return (fChanged);
 			}
 
 		//============================================================================*

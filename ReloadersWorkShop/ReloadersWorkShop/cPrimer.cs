@@ -52,8 +52,8 @@ namespace ReloadersWorkShop
 		// cPrimer() - Constructor
 		//============================================================================*
 
-		public cPrimer()
-			: base(cSupply.eSupplyTypes.Primers)
+		public cPrimer(bool fIdentity = false)
+			: base(cSupply.eSupplyTypes.Primers, fIdentity)
 			{
 			}
 
@@ -319,6 +319,15 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public override bool ResolveIdentities(cDataFiles DataFiles)
+			{
+			return(base.ResolveIdentities(DataFiles));
+			}
+
+		//============================================================================*
 		// SortSizeString Property
 		//============================================================================*
 
@@ -429,46 +438,6 @@ namespace ReloadersWorkShop
 			strString = ToCrossUseString(strString);
 
 			return (strString);
-			}
-
-		//============================================================================*
-		// XMLHeader Property
-		//============================================================================*
-
-		public static string XMLHeader
-			{
-			get
-				{
-				return ("Primers");
-				}
-			}
-
-		//============================================================================*
-		// XMLLine Property
-		//============================================================================*
-
-		public string XMLLine
-			{
-			get
-				{
-				string strLine = "";
-
-				return (strLine);
-				}
-			}
-
-		//============================================================================*
-		// XMLLineHeader Property
-		//============================================================================*
-
-		public static string XMLLineHeader
-			{
-			get
-				{
-				string strLine = "Firearm Type,Name,Headstamp,Handgun Type,Small Primer,Large Primer,Magnum Primer,Min Bullet Dia.,Max Bullet Dia.,Min Bullet Weight,Max Bullet Weight,Case Trim Length,Max Case Length,Max COAL,Max Neck Dia";
-
-				return (strLine);
-				}
 			}
 		}
 	}

@@ -1176,7 +1176,7 @@ namespace ReloadersWorkShop
 
 			foreach (cBullet Bullet in m_DataFiles.BulletList)
 				{
-				foreach (cBulletCaliber BulletCaliber in Bullet.CaliberList)
+				foreach (cBulletCaliber BulletCaliber in Bullet.BulletCaliberList)
 					{
 					if (BulletCaliber.CompareTo(m_Caliber) == 0)
 						{

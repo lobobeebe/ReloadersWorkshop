@@ -82,5 +82,23 @@ namespace ReloadersWorkShop
 					ChargeTest.Export(XMLDocument, XMLElement);
 				}
 			}
+
+		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public bool ResolveIdentities(cDataFiles Datafiles,  cCharge Charge)
+			{
+			bool fChanged = false;
+
+			foreach (cChargeTest ChargeTest in this)
+				{
+				ChargeTest.Charge = Charge;
+
+				fChanged = ChargeTest.ResolveIdentities(Datafiles) ? true : fChanged;
+				}
+
+			return (fChanged);
+			}
 		}
 	}

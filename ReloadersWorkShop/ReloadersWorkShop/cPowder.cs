@@ -48,8 +48,8 @@ namespace ReloadersWorkShop
 		// cPowder() - Constructor
 		//============================================================================*
 
-		public cPowder()
-			: base(cSupply.eSupplyTypes.Powder)
+		public cPowder(bool fIdentity = false)
+			: base(cSupply.eSupplyTypes.Powder, fIdentity)
 			{
 			}
 
@@ -228,6 +228,15 @@ namespace ReloadersWorkShop
 			{
 			get { return (m_strType); }
 			set { m_strType = value; }
+			}
+
+		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public override bool ResolveIdentities(cDataFiles DataFiles)
+			{
+			return (base.ResolveIdentities(DataFiles));
 			}
 
 		//============================================================================*

@@ -28,6 +28,23 @@ namespace ReloadersWorkShop
 	public class cGearList : List<cGear>
 		{
 		//============================================================================*
+		// AddGear()
+		//============================================================================*
+
+		public bool AddGear(cGear Gear)
+			{
+			foreach (cGear CheckGear in this)
+				{
+				if (CheckGear.CompareTo(Gear) == 0)
+					return (false);
+				}
+
+			Add(Gear);
+
+			return (true);
+			}
+
+		//============================================================================*
 		// Export()
 		//============================================================================*
 
@@ -86,6 +103,45 @@ namespace ReloadersWorkShop
 				foreach (cGear Gear in this)
 					Gear.Export(XMLDocument, XMLElement);
 				}
+			}
+
+		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public void Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "Gear":
+						cGear Gear = new cGear(cGear.eGearTypes.Misc);
+
+						if (Gear.Import(XMLDocument, XMLNode, DataFiles))
+							AddGear(Gear);
+
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+			}
+
+		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public bool ResolveIdentities(cDataFiles Datafiles)
+			{
+			bool fChanged = false;
+
+			foreach (cGear Gear in this)
+				fChanged = Gear.ResolveIdentities(Datafiles) ? true : fChanged;
+
+			return (fChanged);
 			}
 
 		//============================================================================*

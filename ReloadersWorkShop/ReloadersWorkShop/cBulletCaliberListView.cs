@@ -151,7 +151,7 @@ namespace ReloadersWorkShop
 
 			ListViewItem SelectItem = null;
 
-			foreach (cBulletCaliber BulletCaliber in Bullet.CaliberList)
+			foreach (cBulletCaliber BulletCaliber in Bullet.BulletCaliberList)
 				{
 				ListViewItem Item = AddBulletCaliber(BulletCaliber);
 

@@ -542,6 +542,47 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public bool ResolveIdentities(cDataFiles Datafiles)
+			{
+			bool fChanged = false;
+
+			if (m_Ammo != null && m_Ammo.Identity)
+				{
+				foreach (cAmmo Ammo in Datafiles.AmmoList)
+					{
+					if (m_Ammo.CompareTo(Ammo) == 0)
+						{
+						m_Ammo = Ammo;
+
+						fChanged = true;
+
+						break;
+						}
+					}
+				}
+
+			if (m_Firearm != null && m_Firearm.Identity)
+				{
+				foreach (cFirearm Firearm in Datafiles.FirearmList)
+					{
+					if (m_Firearm.CompareTo(Firearm) == 0)
+						{
+						m_Firearm = Firearm;
+
+						fChanged = true;
+
+						break;
+						}
+					}
+				}
+
+			return (fChanged);
+			}
+
+		//============================================================================*
 		// Synch() - AmmoTest
 		//============================================================================*
 
@@ -616,9 +657,7 @@ namespace ReloadersWorkShop
 
 		public bool Validate()
 			{
-			bool fOK = true;
-
-			return (fOK);
+			return (m_Firearm != null && m_Ammo != null);
 			}
 		}
 	}

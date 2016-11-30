@@ -256,12 +256,37 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// RemoveTest()
+		// Import()
 		//============================================================================*
 
-		public void RemoveTest(cChargeTest ChargeTest)
+		public bool Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
 			{
-			m_TestList.Remove(ChargeTest);
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "PowderWeight":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dPowderWeight);
+						break;
+					case "FillRatio":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dFillRatio);
+						break;
+					case "Favorite":
+						m_fFavorite = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "Reject":
+						m_fReject = XMLNode.FirstChild.Value == "Yes";
+						break;
+					default:
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+
+			return (Validate());
 			}
 
 		//============================================================================*
@@ -282,6 +307,15 @@ namespace ReloadersWorkShop
 			{
 			get { return (m_fReject); }
 			set { m_fReject = value; }
+			}
+
+		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public bool ResolveIdentities(cDataFiles DataFiles)
+			{
+			return(m_TestList.ResolveIdentities(DataFiles, this));
 			}
 
 		//============================================================================*
@@ -333,6 +367,15 @@ namespace ReloadersWorkShop
 			string strString = String.Format(strFormat, Math.Round(cPreferences.StaticPreferences.MetricPowderWeights ? cConversions.GrainsToGrams(m_dPowderWeight) :  m_dPowderWeight, cPreferences.StaticPreferences.PowderWeightDecimals), (m_dFillRatio > 100.0 ? "C" : ""));
 
 			return (strString);
+			}
+
+		//============================================================================*
+		// Validate()
+		//============================================================================*
+
+		public bool Validate()
+			{
+			return (m_dPowderWeight != 0.0);
 			}
 		}
 	}

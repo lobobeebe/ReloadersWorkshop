@@ -95,7 +95,7 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				return ("Ammunition");
+				return ("AmmoList");
 				}
 			}
 
@@ -132,6 +132,20 @@ namespace ReloadersWorkShop
 			{
 			foreach (cSupply Supply in this)
 				Supply.RecalculateInventory(DataFiles);
+			}
+
+		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public bool ResolveIdentities(cDataFiles Datafiles)
+			{
+			bool fChanged = false;
+
+			foreach (cAmmo Ammo in this)
+				fChanged = Ammo.ResolveIdentities(Datafiles) ? true : fChanged;
+				
+			return (fChanged);
 			}
 		}
 	}

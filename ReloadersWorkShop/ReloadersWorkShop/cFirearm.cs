@@ -956,10 +956,12 @@ namespace ReloadersWorkShop
 						m_fChecked = XMLNode.FirstChild.Value == "Yes";
 						break;
 					case "FirearmCalibers":
-						m_FirearmCaliberList.Import(XMLDocument, XMLThisNode,DataFiles);
+					case "FirearmCaliberList":
+						m_FirearmCaliberList.Import(XMLDocument, XMLNode,DataFiles);
 						break;
 					case "FirearmBullets":
-//						m_FirearmBulletList.Import(XMLDocument, XMLThisNode);
+					case "FirearmBulletList":
+						m_FirearmBulletList.Import(XMLDocument, XMLNode, DataFiles);
 						break;
 					default:
 						break;
@@ -1155,6 +1157,16 @@ namespace ReloadersWorkShop
 				if (!fRemoved)
 					break;
 				}
+			}
+
+
+		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public override bool ResolveIdentities(cDataFiles Datafiles)
+			{
+			return(false);
 			}
 
 		//============================================================================*

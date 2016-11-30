@@ -54,14 +54,14 @@ namespace ReloadersWorkShop
 		private bool m_fSelfCast = false;
 		private int m_nTopPunch = 0;
 
-		private cBulletCaliberList m_CaliberList = new cBulletCaliberList();
+		private cBulletCaliberList m_BulletCaliberList = new cBulletCaliberList();
 
 		//============================================================================*
 		// cBullet() - Constructor
 		//============================================================================*
 
-		public cBullet()
-			: base(cSupply.eSupplyTypes.Bullets)
+		public cBullet(bool fIdentity = false)
+			: base(cSupply.eSupplyTypes.Bullets,fIdentity)
 			{
 			}
 
@@ -99,7 +99,7 @@ namespace ReloadersWorkShop
 			{
 			cBulletCaliber BulletCaliber = null;
 
-			foreach (cBulletCaliber CheckBulletCaliber in CaliberList)
+			foreach (cBulletCaliber CheckBulletCaliber in m_BulletCaliberList)
 				{
 				if (CheckBulletCaliber.Caliber.CompareTo(Caliber) == 0)
 					{
@@ -110,6 +110,22 @@ namespace ReloadersWorkShop
 				}
 
 			return (BulletCaliber);
+			}
+
+		//============================================================================*
+		// BulletCaliberList Property
+		//============================================================================*
+
+		public cBulletCaliberList BulletCaliberList
+			{
+			get
+				{
+				return (m_BulletCaliberList);
+				}
+			set
+				{
+				m_BulletCaliberList = value;
+				}
 			}
 
 		//============================================================================*
@@ -130,22 +146,6 @@ namespace ReloadersWorkShop
 				}
 
 			return (dSectionalDensity);
-			}
-
-		//============================================================================*
-		// CaliberList Property
-		//============================================================================*
-
-		public cBulletCaliberList CaliberList
-			{
-			get
-				{
-				return (m_CaliberList);
-				}
-			set
-				{
-				m_CaliberList = value;
-				}
 			}
 
 		//============================================================================*
@@ -245,22 +245,10 @@ namespace ReloadersWorkShop
 			m_fSelfCast = Bullet.m_fSelfCast;
 			m_nTopPunch = Bullet.m_nTopPunch;
 
-			if (Bullet.CaliberList != null)
-				m_CaliberList = new cBulletCaliberList(Bullet.CaliberList);
+			if (Bullet.BulletCaliberList != null)
+				m_BulletCaliberList = new cBulletCaliberList(Bullet.BulletCaliberList);
 			else
-				m_CaliberList = new cBulletCaliberList();
-			}
-
-		//============================================================================*
-		// CSVHeader Property
-		//============================================================================*
-
-		public static string CSVHeader
-			{
-			get
-				{
-				return ("Bullets");
-				}
+				m_BulletCaliberList = new cBulletCaliberList();
 			}
 
 		//============================================================================*
@@ -401,7 +389,27 @@ namespace ReloadersWorkShop
 
 			XMLThisElement.AppendChild(XMLElement);
 
-			m_CaliberList.Export(XMLDocument, XMLThisElement);
+			m_BulletCaliberList.Export(XMLDocument, XMLThisElement);
+			}
+
+		//============================================================================*
+		// ExportIdentity() - XML Document
+		//============================================================================*
+
+		public override void ExportIdentity(XmlDocument XMLDocument, XmlElement XMLParentElement)
+			{
+			XmlElement XMLThisElement = XMLDocument.CreateElement("BulletIdentity");
+			XMLParentElement.AppendChild(XMLThisElement);
+
+			base.Export(XMLDocument, XMLThisElement);
+
+			// Part Number
+
+			XmlElement XMLElement = XMLDocument.CreateElement("PartNumber");
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(m_strPartNumber);
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLThisElement.AppendChild(XMLElement);
 			}
 
 		//============================================================================*
@@ -410,7 +418,7 @@ namespace ReloadersWorkShop
 
 		public bool HasCaliber(cCaliber Caliber, bool fHideCalibers = false)
 			{
-			foreach (cBulletCaliber CheckCaliber in m_CaliberList)
+			foreach (cBulletCaliber CheckCaliber in m_BulletCaliberList)
 				{
 				if (CheckCaliber.CompareTo(Caliber) == 0)
 					{
@@ -420,6 +428,59 @@ namespace ReloadersWorkShop
 				}
 
 			return (false);
+			}
+
+		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public override bool Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			base.Import(XMLDocument, XMLThisNode, DataFiles);
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "PartNumber":
+						m_strPartNumber = XMLNode.FirstChild.Value;
+						break;
+					case "Type":
+						m_strType = XMLNode.FirstChild.Value;
+						break;
+					case "SelfCast":
+						m_fSelfCast = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "TopPunch":
+						m_fSelfCast = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "Diameter":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dDiameter);
+						break;
+					case "Length":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dLength);
+						break;
+					case "Weight":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dWeight);
+						break;
+					case "BallisticCoefficient":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dBallisticCoefficient);
+						break;
+					case "Calibers":
+					case "CaliberList":
+						m_BulletCaliberList.Import(XMLDocument, XMLNode, DataFiles);
+						break;
+
+					default:
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+
+			return (true);
 			}
 
 		//============================================================================*
@@ -483,6 +544,22 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public override bool ResolveIdentities(cDataFiles DataFiles)
+			{
+			bool fChanged = base.ResolveIdentities(DataFiles);
+
+			if (m_BulletCaliberList == null)
+				m_BulletCaliberList = new cBulletCaliberList();
+
+			fChanged = m_BulletCaliberList.ResolveIdentities(DataFiles) ? true : fChanged;
+
+			return (fChanged);
+			}
+
+		//============================================================================*
 		// SectionalDensity Property
 		//============================================================================*
 
@@ -518,7 +595,7 @@ namespace ReloadersWorkShop
 			{
 			bool fFound = false;
 
-			foreach (cBulletCaliber CheckBulletCaliber in m_CaliberList)
+			foreach (cBulletCaliber CheckBulletCaliber in m_BulletCaliberList)
 				fFound = CheckBulletCaliber.Synch(Caliber);
 
 			return (fFound);
@@ -656,6 +733,38 @@ namespace ReloadersWorkShop
 				{
 				m_strType = value;
 				}
+			}
+
+		//============================================================================*
+		// Validate()
+		//============================================================================*
+
+		public override bool Validate()
+			{
+			//----------------------------------------------------------------------------*
+			// Check the basic identity info
+			//----------------------------------------------------------------------------*
+
+			bool fOK = base.Validate();
+
+			if (fOK)
+				fOK = !String.IsNullOrEmpty(m_strPartNumber);
+
+			//----------------------------------------------------------------------------*
+			// If this is an identity, return now
+			//----------------------------------------------------------------------------*
+
+			if (Identity)
+				return (fOK);
+
+			//----------------------------------------------------------------------------*
+			// Otherwise, check the full monte for this bullet
+			//----------------------------------------------------------------------------*
+
+			if (m_dDiameter == 0.0 || m_dWeight == 0.0)
+				fOK = false;
+
+			return (fOK);
 			}
 
 		//============================================================================*

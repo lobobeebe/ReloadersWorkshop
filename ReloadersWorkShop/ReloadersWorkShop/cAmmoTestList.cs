@@ -137,5 +137,19 @@ namespace ReloadersWorkShop
 				XMLNode = XMLNode.NextSibling;
 				}
 			}
+
+		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public bool ResolveIdentities(cDataFiles DataFiles)
+			{
+			bool fChanged = false;
+
+			foreach (cAmmoTest AmmoTest in this)
+				fChanged = AmmoTest.ResolveIdentities(DataFiles) ? true : fChanged;
+
+			return (fChanged);
+			}
 		}
 	}

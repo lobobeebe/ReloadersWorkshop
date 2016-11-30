@@ -1569,7 +1569,7 @@ namespace ReloadersWorkShop
 
 			if (m_Batch.Load != null && m_Batch.Load.Bullet != null)
 				{
-				foreach (cBulletCaliber BulletCaliber in m_Batch.Load.Bullet.CaliberList)
+				foreach (cBulletCaliber BulletCaliber in m_Batch.Load.Bullet.BulletCaliberList)
 					{
 					if (BulletCaliber.Caliber.CompareTo(m_Batch.Load.Caliber) == 0)
 						{
@@ -1916,7 +1916,7 @@ namespace ReloadersWorkShop
 
 				if (m_Batch.COL == 0.0 || m_Batch.CBTO == 0.0)
 					{
-					foreach (cBulletCaliber BulletCaliber in m_Batch.Load.Bullet.CaliberList)
+					foreach (cBulletCaliber BulletCaliber in m_Batch.Load.Bullet.BulletCaliberList)
 						{
 						if (BulletCaliber.Caliber.CompareTo(m_Batch.Load.Caliber) == 0)
 							{

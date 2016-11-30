@@ -146,7 +146,7 @@ namespace ReloadersWorkShop
 
                     m_Bullet.ResetAllInventoryData();
 
-                    m_Bullet.CaliberList.Clear();
+                    m_Bullet.BulletCaliberList.Clear();
                     }
                 }
             else
@@ -325,7 +325,7 @@ namespace ReloadersWorkShop
             // If the Caliber already exists, update the existing one and exit
             //----------------------------------------------------------------------------*
 
-            foreach (cBulletCaliber CheckBulletCaliber in m_Bullet.CaliberList)
+            foreach (cBulletCaliber CheckBulletCaliber in m_Bullet.BulletCaliberList)
                 {
                 if (CheckBulletCaliber.CompareTo(BulletCaliber) == 0)
                     {
@@ -341,7 +341,7 @@ namespace ReloadersWorkShop
             // Add the new caliber to the list
             //----------------------------------------------------------------------------*
 
-            m_Bullet.CaliberList.Add(BulletCaliber);
+            m_Bullet.BulletCaliberList.Add(BulletCaliber);
 
             SetBulletMinMax();
 
@@ -672,7 +672,7 @@ namespace ReloadersWorkShop
 
                 m_BulletCalibersListView.Items.Remove(m_BulletCalibersListView.SelectedItems[0]);
 
-                m_Bullet.CaliberList.Remove(Caliber);
+                m_Bullet.BulletCaliberList.Remove(Caliber);
 
                 m_fChanged = true;
 
@@ -909,9 +909,9 @@ namespace ReloadersWorkShop
             // Get bullet caliber min/max values
             //----------------------------------------------------------------------------*
 
-            if (m_Bullet.CaliberList.Count > 0)
+            if (m_Bullet.BulletCaliberList.Count > 0)
                 {
-                foreach (cBulletCaliber BulletCaliber in m_Bullet.CaliberList)
+                foreach (cBulletCaliber BulletCaliber in m_Bullet.BulletCaliberList)
                     {
                     if (dMinWeight > BulletCaliber.Caliber.MinBulletWeight)
                         dMinWeight = BulletCaliber.Caliber.MinBulletWeight;
@@ -1173,7 +1173,7 @@ namespace ReloadersWorkShop
             // Find the Bullet Caliber
             //----------------------------------------------------------------------------*
 
-            foreach (cBulletCaliber CheckBulletCaliber in m_Bullet.CaliberList)
+            foreach (cBulletCaliber CheckBulletCaliber in m_Bullet.BulletCaliberList)
                 {
                 //----------------------------------------------------------------------------*
                 // See if this is the same Caliber
@@ -1230,7 +1230,7 @@ namespace ReloadersWorkShop
             // Check FirearmType
             //----------------------------------------------------------------------------*
 
-            if (m_Bullet.CaliberList.Count > 0)
+            if (m_Bullet.BulletCaliberList.Count > 0)
                 FirearmTypeCombo.Enabled = false;
 
             //----------------------------------------------------------------------------*
@@ -1399,7 +1399,7 @@ namespace ReloadersWorkShop
                 }
             else
                 {
-                foreach (cBulletCaliber CheckBulletCaliber in m_Bullet.CaliberList)
+                foreach (cBulletCaliber CheckBulletCaliber in m_Bullet.BulletCaliberList)
                     {
                     if (CheckBulletCaliber.Caliber.MinBulletDiameter < dMinAllowedDiameter)
                         dMinAllowedDiameter = CheckBulletCaliber.Caliber.MinBulletDiameter;
@@ -1498,7 +1498,7 @@ namespace ReloadersWorkShop
 
             strToolTip = cm_strCaliberListToolTip;
 
-            if (m_Bullet.CaliberList.Count == 0)
+            if (m_Bullet.BulletCaliberList.Count == 0)
                 {
                 fEnableOK = false;
 
@@ -1544,7 +1544,7 @@ namespace ReloadersWorkShop
                         Math.Round(dWeight, 3) >= Math.Round(CheckCaliber.MinBulletWeight, 3) &&
                         Math.Round(dWeight, 3) <= Math.Round(CheckCaliber.MaxBulletWeight, 3))
                         {
-                        foreach (cBulletCaliber BulletCaliber in m_Bullet.CaliberList)
+                        foreach (cBulletCaliber BulletCaliber in m_Bullet.BulletCaliberList)
                             {
                             if (BulletCaliber.Caliber.CompareTo(CheckCaliber) == 0)
                                 {

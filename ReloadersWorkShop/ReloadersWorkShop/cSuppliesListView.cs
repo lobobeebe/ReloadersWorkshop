@@ -722,7 +722,7 @@ namespace ReloadersWorkShop
 
 			Item.SubItems.Add(String.Format("{0:F3}", Bullet.BallisticCoefficient));
 			Item.SubItems.Add(String.Format("{0:F3}", Bullet.SectionalDensity));
-			Item.SubItems.Add(String.Format("{0:N0}", (Bullet.CaliberList != null) ? Bullet.CaliberList.Count : 0));
+			Item.SubItems.Add(String.Format("{0:N0}", (Bullet.BulletCaliberList != null) ? Bullet.BulletCaliberList.Count : 0));
 			Item.SubItems.Add(Bullet.SelfCast ? "Y" : "");
 			Item.SubItems.Add(Bullet.SelfCast ? String.Format("{0:G}", Bullet.TopPunch) : "-");
 
@@ -1179,7 +1179,7 @@ namespace ReloadersWorkShop
 				{
 				bool fCaliberFound = false;
 
-				foreach (cBulletCaliber BulletCaliber in Bullet.CaliberList)
+				foreach (cBulletCaliber BulletCaliber in Bullet.BulletCaliberList)
 					{
 					if (BulletCaliber.Caliber.Checked)
 						{

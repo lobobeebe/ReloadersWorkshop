@@ -32,6 +32,7 @@ namespace ReloadersWorkShop
 		private cCaliber m_Caliber = new cCaliber();
 
 		private cBullet m_Bullet = null;
+
 		private double m_dCOL = 0.0;
 		private double m_dCBTO = 0.0;
 		private double m_dJump = 0.0;
@@ -162,6 +163,10 @@ namespace ReloadersWorkShop
 
 			m_Caliber.ExportIdentity(XMLDocument, XMLThisElement);
 
+			// Bullet
+
+			m_Bullet.ExportIdentity(XMLDocument, XMLThisElement);
+
 			// COAL
 
 			XmlElement XMLElement = XMLDocument.CreateElement("COAL");
@@ -197,6 +202,43 @@ namespace ReloadersWorkShop
 				{
 				return ("FirearmBullet");
 				}
+			}
+
+		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public bool Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "CaliberIdentity":
+						m_Caliber = cDataFiles.GetCaliberByIdentity(XMLDocument, XMLNode, DataFiles);
+						break;
+					case "BulletIdentity":
+						m_Bullet = cDataFiles.GetBulletByIdentity(XMLDocument, XMLNode, DataFiles);
+						break;
+					case "COAL":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dCOL);
+						break;
+					case "CBTO":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dCBTO);
+						break;
+					case "Jump":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dJump);
+						break;
+					default:
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+
+			return (Validate());
 			}
 
 		//============================================================================*
@@ -240,6 +282,17 @@ namespace ReloadersWorkShop
 			string strString = String.Format("{0}", m_Bullet.ToWeightString());
 
 			return (strString);
+			}
+
+		//============================================================================*
+		// Validate()
+		//============================================================================*
+
+		public bool Validate()
+			{
+			bool fOK = m_Caliber != null && m_Bullet !=  null;
+
+			return (fOK);
 			}
 		}
 	}

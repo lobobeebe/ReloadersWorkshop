@@ -122,7 +122,7 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				return ("FirearmCalibers");
+				return ("FirearmCaliberList");
 				}
 			}
 
@@ -149,6 +149,20 @@ namespace ReloadersWorkShop
 
 				XMLNode = XMLNode.NextSibling;
 				}
+			}
+
+		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public bool ResolveIdentities(cDataFiles Datafiles)
+			{
+			bool fChanged = false;
+
+			foreach (cFirearmCaliber FirearmCaliber in this)
+				fChanged = FirearmCaliber.ResolveIdentities(Datafiles) ? true : fChanged;
+
+			return (fChanged);
 			}
 		}
 	}

@@ -48,8 +48,8 @@ namespace ReloadersWorkShop
 		// cAmmo() - Constructor
 		//============================================================================*
 
-		public cAmmo()
-			: base(cSupply.eSupplyTypes.Ammo)
+		public cAmmo(bool fIdentity = false)
+			: base(cSupply.eSupplyTypes.Ammo, fIdentity)
 			{
 			}
 
@@ -78,6 +78,15 @@ namespace ReloadersWorkShop
 
 		public cAmmo(cAmmo Ammo)
 				: base(Ammo)
+			{
+			Copy(Ammo);
+			}
+
+		//============================================================================*
+		// cAmmo() - Copy Constructor
+		//============================================================================*
+
+		public void Copy(cAmmo Ammo)
 			{
 			m_strPartNumber = Ammo.m_strPartNumber;
 			m_strType = Ammo.m_strType;
@@ -406,7 +415,7 @@ namespace ReloadersWorkShop
 						m_strType = XMLNode.FirstChild.Value;
 						break;
 					case "BatchID":
-						Int32.TryParse(XMLNode.FirstChild.Value,  out m_nBatchID);
+						Int32.TryParse(XMLNode.FirstChild.Value, out m_nBatchID);
 						break;
 					case "Reload":
 						m_fReload = XMLNode.FirstChild.Value == "Yes";
@@ -463,6 +472,34 @@ namespace ReloadersWorkShop
 				{
 				m_fReload = value;
 				}
+			}
+
+		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public override bool ResolveIdentities(cDataFiles DataFiles)
+			{
+			bool fChanged = base.ResolveIdentities(DataFiles);
+
+			if (m_Caliber.Identity)
+				{
+				foreach (cCaliber Caliber in DataFiles.CaliberList)
+					{
+					if (!Caliber.Identity && Caliber.CompareTo(m_Caliber) == 0)
+						{
+						m_Caliber = Caliber;
+
+						fChanged = true;
+
+						break;
+						}
+					}
+				}
+
+			fChanged = m_TestList.ResolveIdentities(DataFiles) ? true : fChanged;
+
+			return (fChanged);
 			}
 
 		//============================================================================*

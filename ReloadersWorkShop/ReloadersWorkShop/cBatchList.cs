@@ -28,6 +28,23 @@ namespace ReloadersWorkShop
 	public class cBatchList : List<cBatch>
 		{
 		//============================================================================*
+		// AddBatch()
+		//============================================================================*
+
+		public bool AddBatch(cBatch Batch)
+			{
+			foreach (cBatch CheckBatch in this)
+				{
+				if (CheckBatch.CompareTo(Batch) == 0)
+					return (false);
+				}
+
+			Add(Batch);
+
+			return (true);
+			}
+
+		//============================================================================*
 		// Export()
 		//============================================================================*
 
@@ -78,8 +95,48 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				return ("Batches");
+				return ("BatchList");
 				}
+			}
+
+
+		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public void Import(XmlDocument XMLDocument, XmlNode XMLThisNode,  cDataFiles  DataFiles)
+			{
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "Batch":
+						cBatch Batch = new cBatch();
+
+						if (Batch.Import(XMLDocument, XMLNode,DataFiles))
+							AddBatch(Batch);
+
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+			}
+
+		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public bool ResolveIdentities(cDataFiles Datafiles)
+			{
+			bool fChanged = false;
+
+			foreach (cBatch Batch in this)
+				fChanged = Batch.ResolveIdentities(Datafiles) ? true : fChanged;
+
+			return (fChanged);
 			}
 		}
 	}

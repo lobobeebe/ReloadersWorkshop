@@ -672,7 +672,7 @@ namespace ReloadersWorkShop
 					foreach (cBatch Batch in m_DataFiles.BatchList)
 						{
 						if ((m_DataFiles.Preferences.ShowArchivedBatches || !Batch.Archived) &&
-							Batch.Load.Caliber.CompareTo(CheckCaliber) == 0)
+							(Batch.Load != null && Batch.Load.Caliber != null && Batch.Load.Caliber.CompareTo(CheckCaliber) == 0))
 							{
 							fCaliberUsed = true;
 

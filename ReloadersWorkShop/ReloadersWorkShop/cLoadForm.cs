@@ -513,7 +513,7 @@ namespace ReloadersWorkShop
 
 					m_Load.ChargeList.Remove(OldCharge);
 
-					m_Load.ChargeList.Add(Charge);
+					m_Load.ChargeList.AddCharge(Charge);
 
 					m_fChanged = true;
 

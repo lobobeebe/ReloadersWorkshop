@@ -115,6 +115,20 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public bool ResolveIdentities(cDataFiles Datafiles)
+			{
+			bool fChanged = false;
+
+			foreach (cFirearm Firearm in this)
+				fChanged = Firearm.ResolveIdentities(Datafiles) ? true : fChanged;
+
+			return (fChanged);
+			}
+
+		//============================================================================*
 		// Validate()
 		//============================================================================*
 

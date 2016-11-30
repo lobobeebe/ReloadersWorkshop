@@ -116,6 +116,31 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public void Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "Case":
+						cCase Case = new cCase();
+
+						if (Case.Import(XMLDocument, XMLNode, DataFiles))
+							AddCase(Case);
+
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+			}
+
+		//============================================================================*
 		// RecalulateInventory()
 		//============================================================================*
 
@@ -123,6 +148,20 @@ namespace ReloadersWorkShop
 			{
 			foreach (cSupply Supply in this)
 				Supply.RecalculateInventory(DataFiles);
+			}
+
+		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public bool ResolveIdentities(cDataFiles Datafiles)
+			{
+			bool fChanged = false;
+
+			foreach (cCase Case in this)
+				fChanged = Case.ResolveIdentities(Datafiles) ? true : fChanged;
+
+			return (fChanged);
 			}
 
 		//============================================================================*

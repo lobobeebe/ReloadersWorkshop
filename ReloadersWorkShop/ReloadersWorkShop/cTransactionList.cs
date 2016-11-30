@@ -88,5 +88,19 @@ namespace ReloadersWorkShop
 					Transaction.Export(XMLDocument, XMLElement);
 				}
 			}
+
+		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public bool ResolveIdentities(cDataFiles Datafiles)
+			{
+			bool fChanged = false;
+
+			foreach (cTransaction Transaction in this)
+				fChanged = Transaction.ResolveIdentities(Datafiles) ? true : fChanged;
+
+			return (fChanged);
+			}
 		}
 	}

@@ -47,6 +47,23 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// AddBulletCaliber()
+		//============================================================================*
+
+		public bool AddBulletCaliber(cBulletCaliber BulletCaliber)
+			{
+			foreach (cBulletCaliber CheckBulletCaliber in this)
+				{
+				if (CheckBulletCaliber.CompareTo(BulletCaliber) == 0)
+					return (false);
+				}
+
+			Add(BulletCaliber);
+
+			return (true);
+			}
+
+		//============================================================================*
 		// Export()
 		//============================================================================*
 
@@ -97,8 +114,47 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				return ("BulletCalibers");
+				return ("BulletCaliberList");
 				}
+			}
+
+		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public void Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "BulletCaliber":
+						cBulletCaliber BulletCaliber = new cBulletCaliber();
+
+						if (BulletCaliber.Import(XMLDocument, XMLNode, DataFiles))
+							AddBulletCaliber(BulletCaliber);
+
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+			}
+
+		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public bool ResolveIdentities(cDataFiles Datafiles)
+			{
+			bool fChanged = false;
+
+			foreach (cBulletCaliber BulletCaliber in this)
+				fChanged = BulletCaliber.ResolveIdentities(Datafiles) ? true : fChanged;
+
+			return (fChanged);
 			}
 		}
 	}

@@ -80,5 +80,44 @@ namespace ReloadersWorkShop
 					Load.Export(XMLDocument, XMLElement, fIncludeCharges);
 				}
 			}
+
+		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public void Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "Load":
+						cLoad Load = new cLoad();
+
+						if (Load.Import(XMLDocument, XMLNode, DataFiles))
+							AddLoad(Load);
+
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+			}
+
+		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public bool ResolveIdentities(cDataFiles Datafiles)
+			{
+			bool fChanged = false;
+
+			foreach (cLoad Load in this)
+				fChanged = Load.ResolveIdentities(Datafiles) ? true : fChanged;
+
+			return (fChanged);
+			}
 		}
 	}

@@ -71,13 +71,16 @@ namespace ReloadersWorkShop
 
 		private cGear m_Parent = null;
 
+		private bool m_fIdentity = false;
+
 		//============================================================================*
 		// cGear() - Constructor
 		//============================================================================*
 
-		public cGear(eGearTypes eType)
+		public cGear(eGearTypes eType,  bool fIdentity = false)
 			{
 			m_eType = eType;
+			m_fIdentity = fIdentity;
 
 			SetDefaultDescription();
 			}
@@ -509,6 +512,18 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Identity Property
+		//============================================================================*
+
+		public bool Identity
+			{
+			get
+				{
+				return (m_fIdentity);
+				}
+			}
+
+		//============================================================================*
 		// Import()
 		//============================================================================*
 
@@ -656,6 +671,15 @@ namespace ReloadersWorkShop
 				{
 				m_dPrice = value;
 				}
+			}
+
+		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public virtual bool ResolveIdentities(cDataFiles Datafiles)
+			{
+			return (false);
 			}
 
 		//============================================================================*

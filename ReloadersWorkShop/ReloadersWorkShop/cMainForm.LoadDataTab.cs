@@ -104,7 +104,7 @@ namespace ReloadersWorkShop
 
 				if (Load != null)
 					{
-					foreach (cBulletCaliber BulletCaliber in Load.Bullet.CaliberList)
+					foreach (cBulletCaliber BulletCaliber in Load.Bullet.BulletCaliberList)
 						ShareCaliberList.AddCaliber(BulletCaliber.Caliber);
 
 					ShareManufacturerList.AddManufacturer(Load.Bullet.Manufacturer);

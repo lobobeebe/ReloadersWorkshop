@@ -72,13 +72,20 @@ namespace ReloadersWorkShop
 
 		private cTransactionList m_TransactionList = new cTransactionList();
 
+		//----------------------------------------------------------------------------*
+		// Temp Variables - No need to export or import
+		//----------------------------------------------------------------------------*
+
+		private bool m_fIdentity = false;
+
 		//============================================================================*
 		// cSupply() - Constructor
 		//============================================================================*
 
-		public cSupply(eSupplyTypes eType)
+		public cSupply(eSupplyTypes eType, bool fIdentity = false)
 			{
 			m_eType = eType;
+			m_fIdentity = fIdentity;
 
 			m_TransactionList = new cTransactionList();
 			}
@@ -214,6 +221,8 @@ namespace ReloadersWorkShop
 				m_TransactionList = new cTransactionList(Supply.m_TransactionList);
 			else
 				m_TransactionList = new cTransactionList();
+
+			m_fIdentity = Supply.m_fIdentity;
 			}
 
 		//============================================================================*
@@ -418,6 +427,18 @@ namespace ReloadersWorkShop
 			set
 				{
 				m_eFirearmType = value;
+				}
+			}
+
+		//============================================================================*
+		// Identity Property
+		//============================================================================*
+
+		public bool Identity
+			{
+			get
+				{
+				return (m_fIdentity);
 				}
 			}
 
@@ -898,6 +919,17 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public virtual bool ResolveIdentities(cDataFiles DataFiles)
+			{
+			bool fChanged = m_TransactionList.ResolveIdentities(DataFiles);
+
+			return(fChanged);
+			}
+
+		//============================================================================*
 		// SupplyType Property
 		//============================================================================*
 
@@ -1097,7 +1129,7 @@ namespace ReloadersWorkShop
 
 		public virtual bool Validate()
 			{
-			return (m_Manufacturer != null);
+			return(!m_fIdentity && m_Manufacturer != null);
 			}
 		}
 	}

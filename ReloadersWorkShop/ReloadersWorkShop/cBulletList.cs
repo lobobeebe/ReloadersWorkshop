@@ -56,7 +56,7 @@ namespace ReloadersWorkShop
 
 			string strLine = "";
 
-			Writer.WriteLine(cBullet.CSVHeader);
+			Writer.WriteLine(ExportName);
 			Writer.WriteLine();
 
 			Writer.WriteLine(cBullet.CSVLineHeader);
@@ -80,7 +80,7 @@ namespace ReloadersWorkShop
 			{
 			if (Count > 0)
 				{
-				XmlElement XMLElement = XMLDocument.CreateElement(string.Empty, "Bullets", string.Empty);
+				XmlElement XMLElement = XMLDocument.CreateElement(ExportName);
 				XMLParentElement.AppendChild(XMLElement);
 
 				foreach (cBullet Bullet in this)
@@ -90,6 +90,18 @@ namespace ReloadersWorkShop
 					if (fIncludeInventory)
 						Bullet.TransactionList.Export(XMLDocument, XMLElement);
 					}
+				}
+			}
+
+		//============================================================================*
+		// ExportName Property
+		//============================================================================*
+
+		public string ExportName
+			{
+			get
+				{
+				return ("BulletList");
 				}
 			}
 
@@ -114,6 +126,31 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public void Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "Bullet":
+						cBullet Bullet = new cBullet();
+
+						if (Bullet.Import(XMLDocument, XMLNode, DataFiles))
+							AddBullet(Bullet);
+
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+			}
+
+		//============================================================================*
 		// RecalulateInventory()
 		//============================================================================*
 
@@ -121,6 +158,20 @@ namespace ReloadersWorkShop
 			{
 			foreach (cSupply Supply in this)
 				Supply.RecalculateInventory(DataFiles);
+			}
+
+		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public bool ResolveIdentities(cDataFiles Datafiles)
+			{
+			bool fChanged = false;
+
+			foreach (cBullet Bullet in this)
+				fChanged = Bullet.ResolveIdentities(Datafiles) ? true : fChanged;
+
+			return (fChanged);
 			}
 
 		//============================================================================*

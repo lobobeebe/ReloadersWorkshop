@@ -40,8 +40,8 @@ namespace ReloadersWorkShop
 		// cCase() - Constructor
 		//============================================================================*
 
-		public cCase()
-			: base(cSupply.eSupplyTypes.Cases)
+		public cCase(bool fIdentity = false)
+			: base(cSupply.eSupplyTypes.Cases, fIdentity)
 			{
 			}
 
@@ -329,6 +329,48 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public override bool Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			base.Import(XMLDocument, XMLThisNode, DataFiles);
+
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "CaliberIdentity":
+						m_Caliber = cDataFiles.GetCaliberByIdentity(XMLDocument, XMLNode, DataFiles);
+						break;
+					case "PartNumber":
+						m_strPartNumber = XMLNode.FirstChild.Value;
+						break;
+					case "Match":
+						m_fMatch = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "Military":
+						m_fMilitary = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "LargePrimer":
+						m_fLargePrimer = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "SmallPrimer":
+						m_fSmallPrimer = XMLNode.FirstChild.Value == "Yes";
+						break;
+					default:
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+
+			return (Validate());
+			}
+
+		//============================================================================*
 		// LargePrimer Property
 		//============================================================================*
 
@@ -376,6 +418,32 @@ namespace ReloadersWorkShop
 				{
 				m_strPartNumber = value;
 				}
+			}
+
+		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public override bool ResolveIdentities(cDataFiles DataFiles)
+			{
+			bool fChanged = base.ResolveIdentities(DataFiles);
+
+			if (m_Caliber.Identity)
+				{
+				foreach (cCaliber Caliber in DataFiles.CaliberList)
+					{
+					if (!Caliber.Identity && Caliber.CompareTo(m_Caliber) == 0)
+						{
+						m_Caliber = Caliber;
+
+						fChanged = true;
+
+						break;
+						}
+					}
+				}
+
+			return (fChanged);
 			}
 
 		//============================================================================*
@@ -484,6 +552,20 @@ namespace ReloadersWorkShop
 			strString = ToCrossUseString(strString);
 
 			return (strString);
+			}
+
+		//============================================================================*
+		// Validate()
+		//============================================================================*
+
+		public override bool Validate()
+			{
+			bool fOK = base.Validate();
+
+			if (fOK)
+				fOK = m_Caliber != null && !String.IsNullOrEmpty(m_strPartNumber);
+
+			return (fOK);
 			}
 		}
 	}

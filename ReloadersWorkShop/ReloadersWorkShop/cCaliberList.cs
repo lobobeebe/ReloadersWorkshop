@@ -144,6 +144,20 @@ namespace ReloadersWorkShop
 				XMLNode = XMLNode.NextSibling;
 				}
 			}
+
+		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public bool ResolveIdentities(cDataFiles Datafiles)
+			{
+			bool fChanged = false;
+
+			foreach (cCaliber Caliber in this)
+				fChanged = Caliber.ResolveIdentities(Datafiles) ? true : fChanged;
+
+			return (fChanged);
+			}
 		}
 	}
 

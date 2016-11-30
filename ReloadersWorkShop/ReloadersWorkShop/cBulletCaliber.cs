@@ -60,8 +60,14 @@ namespace ReloadersWorkShop
 
 		public cCaliber Caliber
 			{
-			get { return (m_Caliber); }
-			set { m_Caliber = value; }
+			get
+				{
+				return (m_Caliber);
+				}
+			set
+				{
+				m_Caliber = value;
+				}
 			}
 
 		//============================================================================*
@@ -70,8 +76,14 @@ namespace ReloadersWorkShop
 
 		public double COL
 			{
-			get { return (m_dCOL); }
-			set { m_dCOL = value; }
+			get
+				{
+				return (m_dCOL);
+				}
+			set
+				{
+				m_dCOL = value;
+				}
 			}
 
 		//============================================================================*
@@ -128,8 +140,14 @@ namespace ReloadersWorkShop
 
 		public double CBTO
 			{
-			get { return (m_dCBTO); }
-			set { m_dCBTO = value; }
+			get
+				{
+				return (m_dCBTO);
+				}
+			set
+				{
+				m_dCBTO = value;
+				}
 			}
 
 		//============================================================================*
@@ -140,7 +158,8 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				string strLine = m_Caliber.ToString(); ;
+				string strLine = m_Caliber.ToString();
+				;
 				strLine += ",";
 
 				strLine += m_dCOL.ToString();
@@ -160,7 +179,7 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				return("Caliber,COAL,CBTO");
+				return ("Caliber,COAL,CBTO");
 				}
 			}
 
@@ -207,6 +226,63 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public bool Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "CaliberIdentity":
+						m_Caliber = cDataFiles.GetCaliberByIdentity(XMLDocument, XMLThisNode, DataFiles);
+						break;
+					case "COAL":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dCOL);
+						break;
+					case "CBTO":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dCBTO);
+						break;
+					default:
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+
+			return (Validate());
+			}
+
+		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public bool ResolveIdentities(cDataFiles Datafiles)
+			{
+			bool fChanged = false;
+
+			if (m_Caliber.Identity)
+				{
+				foreach (cCaliber Caliber in Datafiles.CaliberList)
+					{
+					if (!Caliber.Identity && Caliber.CompareTo(m_Caliber) == 0)
+						{
+						m_Caliber = Caliber;
+
+						fChanged = true;
+
+						break;
+						}
+					}
+				}
+
+			return (fChanged);
+			}
+
+		//============================================================================*
 		// Synch() - Caliber
 		//============================================================================*
 
@@ -229,6 +305,17 @@ namespace ReloadersWorkShop
 		public override string ToString()
 			{
 			return (m_Caliber.Name);
+			}
+
+		//============================================================================*
+		// Validate()
+		//============================================================================*
+
+		public bool Validate()
+			{
+			bool fOK = m_Caliber != null;
+
+			return (fOK);
 			}
 		}
 	}

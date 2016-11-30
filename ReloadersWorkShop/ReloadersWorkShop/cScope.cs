@@ -187,6 +187,45 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public override bool Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			base.Import(XMLDocument, XMLThisNode, DataFiles);
+
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "Power":
+						m_strPower = XMLNode.FirstChild.Value;
+						break;
+					case "Objective":
+						m_strObjective = XMLNode.FirstChild.Value;
+						break;
+					case "TubeSize":
+						m_eTubeSize = cScope.TubeSizeFromString(XMLNode.FirstChild.Value);
+						break;
+					case "TurretClick":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dTurretClick);
+						break;
+					case "TurretType":
+						m_eTurretType = cScope.TurretTypeFromString(XMLNode.FirstChild.Value);
+						break;
+					default:
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+
+			return (Validate());
+			}
+
+		//============================================================================*
 		// Objective Property
 		//============================================================================*
 
@@ -252,20 +291,21 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// TubeSizeFromString()
+		//============================================================================*
+
+		public static cScope.eTurretTubeSizes TubeSizeFromString(string strType)
+			{
+			return (strType == "1 in" ? eTurretTubeSizes.Small : eTurretTubeSizes.Large);
+			}
+
+		//============================================================================*
 		// TubeSizeString()
 		//============================================================================*
 
 		public static string TubeSizeString(eTurretTubeSizes eTubeSize)
 			{
-			switch (eTubeSize)
-				{
-				case eTurretTubeSizes.Small:
-					return ("1 in");
-				case eTurretTubeSizes.Large:
-					return ("30 mm");
-				}
-
-			return ("");
+			return (eTubeSize == eTurretTubeSizes.Small ? "1 in" : "30 mm");
 			}
 
 		//============================================================================*
@@ -308,15 +348,16 @@ namespace ReloadersWorkShop
 
 		public static string TurretTypeString(eTurretTypes eTurretType)
 			{
-			switch (eTurretType)
-				{
-				case eTurretTypes.MOA:
-					return ("MOA");
-				case eTurretTypes.Mils:
-					return ("Mils");
-				}
+			return (eTurretType == eTurretTypes.MOA ? "MOA" : "Mils");
+			}
 
-			return ("");
+		//============================================================================*
+		// TurretTypeFromString()
+		//============================================================================*
+
+		public static cScope.eTurretTypes TurretTypeFromString(string strType)
+			{
+			return (strType == "MOA" ? eTurretTypes.MOA : eTurretTypes.Mils);
 			}
 		}
 	}

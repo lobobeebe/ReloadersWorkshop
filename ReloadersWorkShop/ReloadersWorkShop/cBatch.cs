@@ -774,6 +774,32 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public bool Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+/*				switch (XMLNode.Name)
+					{
+					case "PartNumber":
+						m_strPartNumber = XMLNode.FirstChild.Value;
+						break;
+
+					default:
+						break;
+					}
+*/
+				XMLNode = XMLNode.NextSibling;
+				}
+
+			return (true);
+			}
+
+		//============================================================================*
 		// Jump Property
 		//============================================================================*
 
@@ -966,6 +992,47 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public bool ResolveIdentities(cDataFiles DataFiles)
+			{
+			bool fChanged = false;
+
+			if (m_Firearm != null && m_Firearm.Identity)
+				{
+				foreach (cFirearm Firearm in DataFiles.FirearmList)
+					{
+					if (!Firearm.Identity && m_Firearm.CompareTo(Firearm) == 0)
+						{
+						m_Firearm = Firearm;
+
+						fChanged = true;
+
+						break;
+						}
+					}
+				}
+
+			if (m_Load != null && m_Load.Identity)
+				{
+				foreach (cLoad Load in DataFiles.LoadList)
+					{
+					if (!Load.Identity && m_Load.CompareTo(Load) == 0)
+						{
+						m_Load = Load;
+
+						fChanged = true;
+
+						break;
+						}
+					}
+				}
+
+			return (fChanged);
+			}
+
+		//============================================================================*
 		// Synch() - Batch
 		//============================================================================*
 
@@ -1049,47 +1116,6 @@ namespace ReloadersWorkShop
 			set
 				{
 				m_strUserID = value;
-				}
-			}
-
-		//============================================================================*
-		// XMLHeader Property
-		//============================================================================*
-
-		public static string XMLHeader
-			{
-			get
-				{
-				return ("Batches");
-				}
-			}
-
-		//============================================================================*
-		// XMLLine Property
-		//============================================================================*
-
-		public string XMLLine
-			{
-			get
-				{
-				string strLine = "";
-
-
-				return (strLine);
-				}
-			}
-
-		//============================================================================*
-		// XMLLineHeader Property
-		//============================================================================*
-
-		public static string XMLLineHeader
-			{
-			get
-				{
-				string strLine = "Firearm Type,Name,Headstamp,Handgun Type,Small Primer,Large Primer,Magnum Primer,Min Bullet Dia.,Max Bullet Dia.,Min Bullet Weight,Max Bullet Weight,Case Trim Length,Max Case Length,Max COAL,Max Neck Dia";
-
-				return (strLine);
 				}
 			}
 		}

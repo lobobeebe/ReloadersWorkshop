@@ -485,6 +485,118 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public bool ResolveIdentities(cDataFiles Datafiles)
+			{
+			bool fChanged = false;
+
+			if (m_Supply.Identity)
+				{
+				switch (m_Supply.SupplyType)
+					{
+					//----------------------------------------------------------------------------*
+					// Ammo
+					//----------------------------------------------------------------------------*
+
+					case cSupply.eSupplyTypes.Ammo:
+						foreach (cAmmo Ammo in Datafiles.AmmoList)
+							{
+							if (!Ammo.Identity && (m_Supply as cAmmo).CompareTo(Ammo) == 0)
+								{
+								m_Supply = Ammo;
+
+								fChanged = true;
+
+								break;
+								}
+							}
+
+						break;
+
+					//----------------------------------------------------------------------------*
+					// Bullets
+					//----------------------------------------------------------------------------*
+
+					case cSupply.eSupplyTypes.Bullets:
+						foreach (cBullet Bullet in Datafiles.BulletList)
+							{
+							if (!Bullet.Identity && (m_Supply as cBullet).CompareTo(Bullet) == 0)
+								{
+								m_Supply = Bullet;
+
+								fChanged = true;
+
+								break;
+								}
+							}
+
+						break;
+
+					//----------------------------------------------------------------------------*
+					// Cases
+					//----------------------------------------------------------------------------*
+
+					case cSupply.eSupplyTypes.Cases:
+						foreach (cCase Case in Datafiles.CaseList)
+							{
+							if (!Case.Identity && (m_Supply as cCase).CompareTo(Case) == 0)
+								{
+								m_Supply = Case;
+
+								fChanged = true;
+
+								break;
+								}
+							}
+
+						break;
+
+					//----------------------------------------------------------------------------*
+					// Primers
+					//----------------------------------------------------------------------------*
+
+					case cSupply.eSupplyTypes.Primers:
+						foreach (cPrimer Primer in Datafiles.PrimerList)
+							{
+							if (!Primer.Identity && (m_Supply as cPrimer).CompareTo(Primer) == 0)
+								{
+								m_Supply = Primer;
+
+								fChanged = true;
+
+								break;
+								}
+							}
+
+						break;
+
+					//----------------------------------------------------------------------------*
+					// Powder
+					//----------------------------------------------------------------------------*
+
+					case cSupply.eSupplyTypes.Powder:
+						foreach (cPowder Powder in Datafiles.PowderList)
+							{
+							if (!Powder.Identity && (m_Supply as cPowder).CompareTo(Powder) == 0)
+								{
+								m_Supply = Powder;
+
+								fChanged = true;
+
+								break;
+								}
+							}
+
+						break;
+					}
+				}
+
+			return (fChanged);
+			}
+
+		//============================================================================*
 		// Shipping Property
 		//============================================================================*
 

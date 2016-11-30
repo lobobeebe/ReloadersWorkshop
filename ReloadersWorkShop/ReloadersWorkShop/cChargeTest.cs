@@ -535,6 +535,32 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public bool ResolveIdentities(cDataFiles DataFiles)
+			{
+			bool fChanged = false;
+
+			if (m_Firearm.Identity)
+				{
+				foreach (cFirearm Firearm in DataFiles.FirearmList)
+					{
+					if (!Firearm.Identity && Firearm.CompareTo(m_Firearm) == 0)
+						{
+						m_Firearm = Firearm;
+
+						fChanged = true;
+
+						break;
+						}
+					}
+				}
+
+			return (fChanged);
+			}
+
+		//============================================================================*
 		// Source Property
 		//============================================================================*
 

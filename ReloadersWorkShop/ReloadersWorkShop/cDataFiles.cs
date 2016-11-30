@@ -725,7 +725,7 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			if (!fCountOnly)
-				Bullet.CaliberList.Remove(BulletCaliber);
+				Bullet.BulletCaliberList.Remove(BulletCaliber);
 
 			return (strCount);
 			}
@@ -766,7 +766,7 @@ namespace ReloadersWorkShop
 					{
 					bool fBulletFound = false;
 
-					foreach (cBulletCaliber CheckBulletCaliber in CheckBullet.CaliberList)
+					foreach (cBulletCaliber CheckBulletCaliber in CheckBullet.BulletCaliberList)
 						{
 						if (CheckBulletCaliber.Caliber.CompareTo(Caliber) == 0)
 							{
@@ -1172,25 +1172,27 @@ namespace ReloadersWorkShop
 
 			Preferences.Export(XMLDocument, MainElement);
 
-			ManufacturerList.Export(XMLDocument, MainElement);
+			m_ManufacturerList.Export(XMLDocument, MainElement);
 
-			CaliberList.Export(XMLDocument, MainElement);
+			m_CaliberList.Export(XMLDocument, MainElement);
 
-			FirearmList.Export(XMLDocument, MainElement);
+			m_FirearmList.Export(XMLDocument, MainElement);
 
-			AmmoList.Export(XMLDocument, MainElement);
+			m_AmmoList.Export(XMLDocument, MainElement);
 
-			BulletList.Export(XMLDocument, MainElement);
+			m_BulletList.Export(XMLDocument, MainElement);
 
-			PowderList.Export(XMLDocument, MainElement);
+			m_PowderList.Export(XMLDocument, MainElement);
 
-			PrimerList.Export(XMLDocument, MainElement);
+			m_PrimerList.Export(XMLDocument, MainElement);
 
-			CaseList.Export(XMLDocument, MainElement);
+			m_CaseList.Export(XMLDocument, MainElement);
 
-			LoadList.Export(XMLDocument, MainElement);
+			m_LoadList.Export(XMLDocument, MainElement);
 
-			BatchList.Export(XMLDocument, MainElement);
+			m_BatchList.Export(XMLDocument, MainElement);
+
+			m_GearList.Export(XMLDocument, MainElement);
 
 			return (XMLDocument);
 			}
@@ -1359,12 +1361,76 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// GetBulletByIdentity()
+		//============================================================================*
+
+		public static cBullet GetBulletByIdentity(cBullet BulletIdentity, cDataFiles DataFiles)
+			{
+			if (!BulletIdentity.Identity || !BulletIdentity.Validate())
+				return (BulletIdentity);
+
+			foreach (cBullet Bullet in DataFiles.BulletList)
+				{
+				if (BulletIdentity.CompareTo(Bullet) == 0)
+					return (Bullet);
+				}
+
+			return (BulletIdentity);
+			}
+
+		//============================================================================*
+		// GetBulletByIdentity()
+		//============================================================================*
+
+		public static cBullet GetBulletByIdentity(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			cBullet BulletIdentity = new cBullet(true);
+
+			BulletIdentity.Import(XMLDocument, XMLThisNode, DataFiles);
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "PartNumber":
+						BulletIdentity.PartNumber = XMLNode.FirstChild.Value;
+						break;
+					default:
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+
+			return (GetBulletByIdentity(BulletIdentity, DataFiles));
+			}
+
+		//============================================================================*
+		// GetCaliberByIdentity()
+		//============================================================================*
+
+		public static cCaliber GetCaliberByIdentity(cCaliber CaliberIdentity, cDataFiles DataFiles)
+			{
+			if (!CaliberIdentity.Identity || !CaliberIdentity.Validate())
+				return (CaliberIdentity);
+
+			foreach (cCaliber Caliber in DataFiles.CaliberList)
+				{
+				if (CaliberIdentity.CompareTo(Caliber) == 0)
+					return (Caliber);
+				}
+
+			return (CaliberIdentity);
+			}
+
+		//============================================================================*
 		// GetCaliberByIdentity()
 		//============================================================================*
 
 		public static cCaliber GetCaliberByIdentity(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
 			{
-			cCaliber CaliberIdentity = new cCaliber();
+			cCaliber CaliberIdentity = new cCaliber(true);
 
 			XmlNode XMLNode = XMLThisNode.FirstChild;
 
@@ -1385,13 +1451,7 @@ namespace ReloadersWorkShop
 				XMLNode = XMLNode.NextSibling;
 				}
 
-			foreach (cCaliber Caliber in DataFiles.CaliberList)
-				{
-				if (CaliberIdentity.CompareTo(Caliber) == 0)
-					return (Caliber);
-				}
-
-			return (null);
+			return (GetCaliberByIdentity(CaliberIdentity, DataFiles));
 			}
 
 		//============================================================================*
@@ -1409,6 +1469,147 @@ namespace ReloadersWorkShop
 				}
 
 			return (null);
+			}
+
+		//============================================================================*
+		// GetCaseByIdentity()
+		//============================================================================*
+
+		public static cCase GetCaseByIdentity(cCase CaseIdentity, cDataFiles DataFiles)
+			{
+			if (!CaseIdentity.Identity || !CaseIdentity.Validate())
+				return (CaseIdentity);
+
+			foreach (cCase Case in DataFiles.CaseList)
+				{
+				if (CaseIdentity.CompareTo(Case) == 0)
+					return (Case);
+				}
+
+			return (CaseIdentity);
+			}
+
+		//============================================================================*
+		// GetCaseByIdentity()
+		//============================================================================*
+
+		public static cCase GetCaseByIdentity(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			cCase CaseIdentity = new cCase(true);
+
+			CaseIdentity.Import(XMLDocument, XMLThisNode, DataFiles);
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "PartNumber":
+						CaseIdentity.PartNumber = XMLNode.FirstChild.Value;
+						break;
+					case "CaliberIdentity":
+						CaseIdentity.Caliber = cDataFiles.GetCaliberByIdentity(XMLDocument, XMLNode, DataFiles);
+						break;
+					default:
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+
+			return (GetCaseByIdentity(CaseIdentity, DataFiles));
+			}
+
+		//============================================================================*
+		// GetPowderByIdentity()
+		//============================================================================*
+
+		public static cPowder GetPowderByIdentity(cPowder PowderIdentity, cDataFiles DataFiles)
+			{
+			if (!PowderIdentity.Identity || !PowderIdentity.Validate())
+				return (PowderIdentity);
+
+			foreach (cPowder Powder in DataFiles.PowderList)
+				{
+				if (PowderIdentity.CompareTo(Powder) == 0)
+					return (Powder);
+				}
+
+			return (PowderIdentity);
+			}
+
+		//============================================================================*
+		// GetPowderByIdentity()
+		//============================================================================*
+
+		public static cPowder GetPowderByIdentity(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			cPowder PowderIdentity = new cPowder(true);
+
+			PowderIdentity.Import(XMLDocument, XMLThisNode, DataFiles);
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "Type":
+						PowderIdentity.Type = XMLNode.FirstChild.Value;
+						break;
+					default:
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+
+			return (GetPowderByIdentity(PowderIdentity, DataFiles));
+			}
+
+		//============================================================================*
+		// GetPrimerByIdentity()
+		//============================================================================*
+
+		public static cPrimer GetPrimerByIdentity(cPrimer PrimerIdentity, cDataFiles DataFiles)
+			{
+			if (!PrimerIdentity.Identity || !PrimerIdentity.Validate())
+				return (PrimerIdentity);
+
+			foreach (cPrimer Primer in DataFiles.PrimerList)
+				{
+				if (PrimerIdentity.CompareTo(Primer) == 0)
+					return (Primer);
+				}
+
+			return (PrimerIdentity);
+			}
+
+		//============================================================================*
+		// GetPrimerByIdentity()
+		//============================================================================*
+
+		public static cPrimer GetPrimerByIdentity(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			cPrimer PrimerIdentity = new cPrimer(true);
+
+			PrimerIdentity.Import(XMLDocument, XMLThisNode, DataFiles);
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "Type":
+						PrimerIdentity.Model = XMLNode.FirstChild.Value;
+						break;
+					default:
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+
+			return (GetPrimerByIdentity(PrimerIdentity, DataFiles));
 			}
 
 		//============================================================================*
@@ -1779,6 +1980,7 @@ namespace ReloadersWorkShop
 				switch (XMLNode.Name)
 					{
 					case "Ammunition":
+					case "AmmoList":
 						m_AmmoList.Import(XMLDocument, XMLNode, this);
 
 						break;
@@ -1790,23 +1992,72 @@ namespace ReloadersWorkShop
 						break;
 
 					case "Manufacturers":
+					case "ManufacturerList":
 						m_ManufacturerList.Import(XMLDocument, XMLNode);
 
 						break;
 
 					case "Calibers":
+					case "CaliberList":
 						m_CaliberList.Import(XMLDocument, XMLNode);
 
 						break;
 
 					case "Firearms":
+					case "FirearmList":
 						m_FirearmList.Import(XMLDocument, XMLNode, this);
 
+						break;
+
+					case "Bullets":
+					case "BulletList":
+						m_BulletList.Import(XMLDocument, XMLNode, this);
+
+						break;
+
+					case "Cases":
+					case "CaseList":
+						m_CaseList.Import(XMLDocument, XMLNode, this);
+
+						break;
+
+					case "Powders":
+					case "PowderList":
+						m_PowderList.Import(XMLDocument, XMLNode, this);
+
+						break;
+
+					case "Primers":
+					case "PrimerList":
+						m_PrimerList.Import(XMLDocument, XMLNode, this);
+
+						break;
+
+					case "Loads":
+					case "LoadList":
+						m_LoadList.Import(XMLDocument, XMLNode, this);
+
+						break;
+
+					case "Batches":
+					case "BatchList":
+						m_BatchList.Import(XMLDocument, XMLNode, this);
+
+						break;
+
+					case "GearList":
+						m_GearList.Import(XMLDocument, XMLNode,  this);
+
+						break;
+
+					default:
 						break;
 					}
 
 				XMLNode = XMLNode.NextSibling;
 				}
+
+			ResolveIdentities();
 
 			return (true);
 			}
@@ -2556,11 +2807,11 @@ namespace ReloadersWorkShop
 						// Merge Bullet Calibers
 						//----------------------------------------------------------------------------*
 
-						foreach (cBulletCaliber BulletCaliber in Bullet.CaliberList)
+						foreach (cBulletCaliber BulletCaliber in Bullet.BulletCaliberList)
 							{
 							bool fFoundBulletCaliber = false;
 
-							foreach (cBulletCaliber CheckBulletCaliber in CheckBullet.CaliberList)
+							foreach (cBulletCaliber CheckBulletCaliber in CheckBullet.BulletCaliberList)
 								{
 								if (CheckBulletCaliber.CompareTo(BulletCaliber) == 0)
 									{
@@ -2573,7 +2824,7 @@ namespace ReloadersWorkShop
 							if (!fFoundBulletCaliber)
 								{
 								if (!fCountOnly)
-									CheckBullet.CaliberList.Add(BulletCaliber);
+									CheckBullet.BulletCaliberList.Add(BulletCaliber);
 
 								nUpdateCount++;
 								}
@@ -2963,7 +3214,7 @@ namespace ReloadersWorkShop
 								}
 
 							if (!fFoundCharge)
-								CheckLoad.ChargeList.Add(Charge);
+								CheckLoad.ChargeList.AddCharge(Charge);
 							}
 
 						break;
@@ -3722,6 +3973,41 @@ namespace ReloadersWorkShop
 				Ammo.ResetInventoryData();
 
 			Save();
+			}
+
+		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public bool ResolveIdentities()
+			{
+			bool fChanged = true;
+			int nCount = 0;
+
+			while (fChanged && nCount < 5)
+				{
+				fChanged = false;
+
+				fChanged = m_CaliberList.ResolveIdentities(this) ? true : fChanged;
+				fChanged = m_AmmoList.ResolveIdentities(this) ? true : fChanged;
+				fChanged = m_BulletList.ResolveIdentities(this) ? true : fChanged;
+				fChanged = m_CaseList.ResolveIdentities(this) ? true : fChanged;
+				fChanged = m_PowderList.ResolveIdentities(this) ? true : fChanged;
+				fChanged = m_PrimerList.ResolveIdentities(this) ? true : fChanged;
+				fChanged = m_FirearmList.ResolveIdentities(this) ? true : fChanged;
+				fChanged = m_LoadList.ResolveIdentities(this) ? true : fChanged;
+				fChanged = m_BatchList.ResolveIdentities(this) ? true : fChanged;
+				fChanged = m_GearList.ResolveIdentities(this) ? true : fChanged;
+
+				//				fChanged = Preferences.ResolveIdentities(this) ? true : fChanged;
+
+				if (fChanged)
+					nCount = 0;
+				else
+					nCount++;
+				}
+
+			return (fChanged);
 			}
 
 		//============================================================================*
