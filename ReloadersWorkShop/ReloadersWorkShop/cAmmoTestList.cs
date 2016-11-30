@@ -41,6 +41,23 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// AddAmmoTest()
+		//============================================================================*
+
+		public bool AddAmmoTest(cAmmoTest AmmoTest)
+			{
+			foreach (cAmmoTest CheckAmmoTest in this)
+				{
+				if (CheckAmmoTest.CompareTo(AmmoTest) == 0)
+					return (false);
+				}
+
+			Add(AmmoTest);
+
+			return (true);
+			}
+
+		//============================================================================*
 		// Export()
 		//============================================================================*
 
@@ -92,6 +109,31 @@ namespace ReloadersWorkShop
 			get
 				{
 				return ("AmmoTests");
+				}
+			}
+
+		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public void Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "AmmoTest":
+						cAmmoTest AmmoTest = new cAmmoTest();
+
+						if (AmmoTest.Import(XMLDocument, XMLNode, DataFiles))
+							AddAmmoTest(AmmoTest);
+
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
 				}
 			}
 		}

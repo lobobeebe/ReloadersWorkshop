@@ -395,10 +395,9 @@ namespace ReloadersWorkShop
 				switch (XMLNode.Name)
 					{
 					case "CaliberIdentity":
-						m_Caliber = cDataFiles.GetCaliberByIdentity(XMLDocument, XMLThisNode, DataFiles);
+						m_Caliber = cDataFiles.GetCaliberByIdentity(XMLDocument, XMLNode, DataFiles);
 						break;
 					case "Caliber":
-						m_Caliber = cDataFiles.GetCaliberByIdentity(XMLDocument, XMLThisNode, DataFiles);
 						break;
 					case "PartNumber":
 						m_strPartNumber = XMLNode.FirstChild.Value;
@@ -422,7 +421,7 @@ namespace ReloadersWorkShop
 						Double.TryParse(XMLNode.FirstChild.Value, out m_dBallisticCoefficient);
 						break;
 					case "AmmoTests":
-//						m_TestList.Import(XMLDocument, XMLThisNode, DataFiles);
+						m_TestList.Import(XMLDocument, XMLThisNode, DataFiles);
 						break;
 					default:
 						break;

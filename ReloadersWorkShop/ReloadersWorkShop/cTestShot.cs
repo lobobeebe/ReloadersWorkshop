@@ -195,6 +195,40 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public bool Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "MuzzleVelocity":
+						Int32.TryParse(XMLNode.FirstChild.Value, out m_nMuzzleVelocity);
+						break;
+					case "Pressure":
+						Int32.TryParse(XMLNode.FirstChild.Value, out m_nPressure);
+						break;
+					case "Misfire":
+						m_fMisfire = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "Squib":
+						m_fSquib = XMLNode.FirstChild.Value == "Yes";
+						break;
+					default:
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+
+			return (Validate());
+			}
+
+		//============================================================================*
 		// Misfire Property
 		//============================================================================*
 
@@ -247,22 +281,6 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// Synch() - Load
-		//============================================================================*
-
-		public bool Synch(cLoad Load)
-			{
-/*			if (m_Load != null && m_Load.CompareTo(Load) == 0)
-				{
-				m_Load = Load;
-
-				return (true);
-				}
-*/
-			return (false);
-			}
-
-		//============================================================================*
 		// ToString()
 		//============================================================================*
 
@@ -271,6 +289,15 @@ namespace ReloadersWorkShop
 			string strLoadString = String.Format("Muzzle Velocity: {0}, Pressure: {1}, Misfire: {2}, Squib: {3}", m_nMuzzleVelocity, m_nPressure, m_fMisfire ? "Yes" : "No", m_fSquib ? "Yes" : "No");
 
 			return (strLoadString);
+			}
+
+		//============================================================================*
+		// Validate()
+		//============================================================================*
+
+		public bool Validate()
+			{
+			return (true);
 			}
 		}
 	}

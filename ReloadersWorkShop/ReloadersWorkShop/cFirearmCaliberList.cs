@@ -55,6 +55,23 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// AddFirearmCaliber()
+		//============================================================================*
+
+		public bool AddFirearmCaliber(cFirearmCaliber FirearmCaliber)
+			{
+			foreach (cFirearmCaliber CheckFirearmCaliber in this)
+				{
+				if (CheckFirearmCaliber.CompareTo(FirearmCaliber) == 0)
+					return (false);
+				}
+
+			Add(FirearmCaliber);
+
+			return (true);
+			}
+
+		//============================================================================*
 		// Export()
 		//============================================================================*
 
@@ -106,6 +123,31 @@ namespace ReloadersWorkShop
 			get
 				{
 				return ("FirearmCalibers");
+				}
+			}
+
+		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public void Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "FirearmCaliber":
+						cFirearmCaliber FirearmCaliber = new cFirearmCaliber();
+
+						if (FirearmCaliber.Import(XMLDocument, XMLNode, DataFiles))
+							AddFirearmCaliber(FirearmCaliber);
+
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
 				}
 			}
 		}

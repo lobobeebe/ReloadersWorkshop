@@ -97,7 +97,7 @@ namespace ReloadersWorkShop
 			cFirearmCaliber FirearmCaliber = (cFirearmCaliber) obj;
 
 			//----------------------------------------------------------------------------*
-			// Compare Bullet
+			// Compare Caliber
 			//----------------------------------------------------------------------------*
 
 			return (m_Caliber.CompareTo(FirearmCaliber.m_Caliber));
@@ -161,6 +161,34 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public bool Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "Primary":
+						m_fPrimary = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "CaliberIdentity":
+						m_Caliber = cDataFiles.GetCaliberByIdentity(XMLDocument, XMLNode, DataFiles);
+						break;
+					default:
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+
+			return (Validate());
+			}
+
+		//============================================================================*
 		// Primary Property
 		//============================================================================*
 
@@ -204,6 +232,17 @@ namespace ReloadersWorkShop
 				strString += " - Primary";
 
 			return (strString);
+			}
+
+		//============================================================================*
+		// Validate()
+		//============================================================================*
+
+		public bool Validate()
+			{
+			bool fOK = m_Caliber != null;
+
+			return (fOK);
 			}
 		}
 	}

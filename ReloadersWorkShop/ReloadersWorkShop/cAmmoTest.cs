@@ -411,6 +411,58 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public bool Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "Date":
+						DateTime.TryParse(XMLNode.FirstChild.Value, out m_TestDate);
+						break;
+					case "FirearmIdentity":
+						m_Firearm = cDataFiles.GetFirearmByIdentity(XMLDocument, XMLThisNode, DataFiles);
+						break;
+					case "BarrelLength":
+						Double.TryParse(XMLNode.FirstChild.Value,  out m_dBarrelLength);
+						break;
+					case "Twist":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dTwist);
+						break;
+					case "NumRounds":
+						Int32.TryParse(XMLNode.FirstChild.Value, out m_nNumRounds);
+						break;
+					case "BestGroup":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dBestGroup);
+						break;
+					case "BestGroupRange":
+						Int32.TryParse(XMLNode.FirstChild.Value, out m_nBestGroupRange);
+						break;
+					case "MuzzleVelocity":
+						Int32.TryParse(XMLNode.FirstChild.Value, out m_nMuzzleVelocity);
+						break;
+					case "Notes":
+						m_strNotes = XMLNode.FirstChild.Value;
+						break;
+					case "TestShots":
+						m_TestShotList.Import(XMLDocument, XMLThisNode, DataFiles);
+						break;
+					default:
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+
+			return (Validate());
+			}
+
+		//============================================================================*
 		// MuzzleVelocity Property
 		//============================================================================*
 
@@ -556,6 +608,17 @@ namespace ReloadersWorkShop
 				{
 				m_dTwist = value;
 				}
+			}
+
+		//============================================================================*
+		// Validate()
+		//============================================================================*
+
+		public bool Validate()
+			{
+			bool fOK = true;
+
+			return (fOK);
 			}
 		}
 	}

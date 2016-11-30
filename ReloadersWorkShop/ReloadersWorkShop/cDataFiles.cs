@@ -1378,6 +1378,8 @@ namespace ReloadersWorkShop
 					case "Name":
 						CaliberIdentity.Name = XMLNode.FirstChild.Value;
 						break;
+					default:
+						break;
 					}
 
 				XMLNode = XMLNode.NextSibling;
@@ -1416,6 +1418,48 @@ namespace ReloadersWorkShop
 		public string GetDataPath()
 			{
 			return (@"c:\Users\Public\Reloader's WorkShop");
+			}
+
+		//============================================================================*
+		// GetFirearmByIdentity()
+		//============================================================================*
+
+		public static cFirearm GetFirearmByIdentity(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			cFirearm FirearmIdentity = new cFirearm();
+
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "Manufacturer":
+						FirearmIdentity.Manufacturer = DataFiles.GetManufacturerByName(XMLNode.FirstChild.Value);
+						break;
+					case "FirearmType":
+						FirearmIdentity.FirearmType = cFirearm.FirearmTypeFromString(XMLNode.FirstChild.Value);
+						break;
+					case "Model":
+						FirearmIdentity.PartNumber = XMLNode.FirstChild.Value;
+						break;
+					case "SerialNumber":
+						FirearmIdentity.SerialNumber = XMLNode.FirstChild.Value;
+						break;
+					default:
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+
+			foreach (cFirearm Firearm in DataFiles.FirearmList)
+				{
+				if (FirearmIdentity.CompareTo(Firearm) == 0)
+					return (Firearm);
+				}
+
+			return (null);
 			}
 
 		//============================================================================*

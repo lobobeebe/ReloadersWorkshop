@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cFirearm.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -956,10 +956,10 @@ namespace ReloadersWorkShop
 						m_fChecked = XMLNode.FirstChild.Value == "Yes";
 						break;
 					case "FirearmCalibers":
-//						m_FirearmCaliberList.Import(XMLDocument, XMLThisElement);
+						m_FirearmCaliberList.Import(XMLDocument, XMLThisNode,DataFiles);
 						break;
 					case "FirearmBullets":
-//						m_FirearmBulletList.Import(XMLDocument, XMLThisElement);
+//						m_FirearmBulletList.Import(XMLDocument, XMLThisNode);
 						break;
 					default:
 						break;

@@ -137,5 +137,30 @@ namespace ReloadersWorkShop
 
 			return (Statistics);
 			}
+
+		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public void Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "TestShot":
+						cTestShot TestShot = new cTestShot();
+
+						if (TestShot.Import(XMLDocument, XMLNode, DataFiles))
+							Add(TestShot);
+
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+			}
 		}
 	}
