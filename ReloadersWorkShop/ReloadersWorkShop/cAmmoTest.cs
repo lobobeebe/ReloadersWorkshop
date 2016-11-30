@@ -422,7 +422,7 @@ namespace ReloadersWorkShop
 				{
 				switch (XMLNode.Name)
 					{
-					case "Date":
+					case "TestDate":
 						DateTime.TryParse(XMLNode.FirstChild.Value, out m_TestDate);
 						break;
 					case "FirearmIdentity":
