@@ -1806,8 +1806,7 @@ namespace ReloadersWorkShop
 			m_Target.CalibrationStart = new Point(0, 0);
 			m_Target.CalibrationEnd = new Point(0, 0);
 
-			while (m_Target.ShotList.Count > 0)
-				m_Target.ShotList.RemoveAt(0);
+			m_Target.ShotList.Clear();
 
 			if (m_Target.Image == null)
 				SetMode(eMode.LoadTarget);
@@ -2563,13 +2562,7 @@ namespace ReloadersWorkShop
 		private bool VerifyDiscardChanges()
 			{
 			if (!m_fChanged || m_Target.ShotList.Count == 0)
-				{
-				Reset(true);
-
-				m_Target.Image = null;
-
 				return (true);
-				}
 
 			DialogResult rc = MessageBox.Show("You have made changes to this Target File that have not been saved.\n\nDo you wish to save changes?", "Discard Changes?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button3);
 
