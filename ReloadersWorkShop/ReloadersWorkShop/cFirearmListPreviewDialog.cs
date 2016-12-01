@@ -384,7 +384,7 @@ namespace ReloadersWorkShop
 					// Purchase Date
 
 					if (Firearm.PurchaseDate.Year < 1900)
-						strText = "Unknown";
+						strText = "-";
 					else
 						strText = Firearm.PurchaseDate.ToShortDateString();
 
@@ -396,7 +396,7 @@ namespace ReloadersWorkShop
 
 					// Purchase Price
 
-					strText = String.Format("{0:N2}", Firearm.PurchasePrice);
+					strText = Firearm.PurchasePrice > 0.0 ? String.Format("{0:N2}", Firearm.PurchasePrice) : "-";
 
 					TextSize = e.Graphics.MeasureString(strText, DataFont);
 
@@ -406,7 +406,7 @@ namespace ReloadersWorkShop
 
 					// Tax
 
-					strText = String.Format("{0:N2}", Firearm.Tax);
+					strText = Firearm.Tax > 0.0 ? String.Format("{0:N2}", Firearm.Tax) : "-";
 
 					TextSize = e.Graphics.MeasureString(strText, DataFont);
 
@@ -416,7 +416,7 @@ namespace ReloadersWorkShop
 
 					// Shipping
 
-					strText = String.Format("{0:N2}", Firearm.Shipping);
+					strText = Firearm.Shipping > 0.0 ? String.Format("{0:N2}", Firearm.Shipping) : "-";
 
 					TextSize = e.Graphics.MeasureString(strText, DataFont);
 
@@ -426,7 +426,9 @@ namespace ReloadersWorkShop
 
 					// Total Price
 
-					strText = String.Format("{0:N2}", Firearm.PurchasePrice + Firearm.Tax + Firearm.Shipping);
+					double dTotal = Firearm.PurchasePrice + Firearm.Tax + Firearm.Shipping;
+
+					strText = dTotal > 0.0 ? String.Format("{0:N2}", dTotal) : "-";
 
 					TextSize = e.Graphics.MeasureString(strText, DataFont);
 

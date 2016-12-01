@@ -292,6 +292,9 @@ namespace ReloadersWorkShop
 			{
 			bool fOK = m_Caliber != null && m_Bullet !=  null;
 
+			if (fOK)
+				fOK = m_dCBTO != 0.0 || m_dCOL != 0.0 || m_dJump != 0.0;
+
 			return (fOK);
 			}
 		}

@@ -549,9 +549,11 @@ namespace ReloadersWorkShop
 						m_strDescription = XMLNode.FirstChild.Value;
 						break;
 					case "AcquiredFrom":
+					case "Source":
 						m_strSource = XMLNode.FirstChild.Value;
 						break;
 					case "PurchaseDate":
+					case "DatePurchased":
 						DateTime.TryParse(XMLNode.FirstChild.Value, out m_Date);
 						break;
 					case "PurchasePrice":

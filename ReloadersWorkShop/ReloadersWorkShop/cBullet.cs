@@ -488,7 +488,7 @@ namespace ReloadersWorkShop
 				XMLNode = XMLNode.NextSibling;
 				}
 
-			return (true);
+			return (Validate());
 			}
 
 		//============================================================================*
