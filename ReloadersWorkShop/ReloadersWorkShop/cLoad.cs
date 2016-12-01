@@ -756,6 +756,9 @@ namespace ReloadersWorkShop
 						m_Case != null &&
 						m_Primer != null;
 
+			if (Identity)
+				return (fOK);
+
 			if (fOK)
 				fOK = m_ChargeList.Count > 0;
 

@@ -1467,9 +1467,10 @@ namespace ReloadersWorkShop
 			{
 			cCase CaseIdentity = new cCase(true);
 
-			CaseIdentity.Import(XMLDocument, XMLThisNode, DataFiles);
+			if(CaseIdentity.Import(XMLDocument, XMLThisNode, DataFiles))
+				return (GetCaseByIdentity(CaseIdentity, DataFiles));
 
-			return (GetCaseByIdentity(CaseIdentity, DataFiles));
+			return (null);
 			}
 
 		//============================================================================*

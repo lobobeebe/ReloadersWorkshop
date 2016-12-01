@@ -811,10 +811,10 @@ namespace ReloadersWorkShop
 						DateTime.TryParse(XMLNode.FirstChild.Value, out m_DateLoaded);
 						break;
 					case "LoadIdentity":
-						m_Load = cDataFiles.GetLoadByIdentity(XMLDocument, XMLThisNode, DataFiles);
+						m_Load = cDataFiles.GetLoadByIdentity(XMLDocument, XMLNode, DataFiles);
 						break;
 					case "FirearmIdentity":
-						m_Firearm = cDataFiles.GetFirearmByIdentity(XMLDocument, XMLThisNode, DataFiles);
+						m_Firearm = cDataFiles.GetFirearmByIdentity(XMLDocument, XMLNode, DataFiles);
 						break;
 					case "PowderWeight":
 						Double.TryParse(XMLNode.FirstChild.Value, out m_dPowderWeight);
