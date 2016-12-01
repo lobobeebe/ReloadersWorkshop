@@ -898,7 +898,24 @@ namespace ReloadersWorkShop
 
 		public bool Validate()
 			{
-			return (true);
+			bool fOK = !String.IsNullOrEmpty(m_strName) && !String.IsNullOrEmpty(m_strHeadStamp = "");
+
+			if (fOK)
+				fOK = m_fSmallPrimer || m_fLargePrimer || m_fMagnumPrimer;
+
+			if  (fOK)
+				fOK = m_dMinBulletDiameter <= m_dMaxBulletDiameter;
+
+			if (fOK)
+				fOK = m_dMinBulletWeight <= m_dMaxBulletWeight;
+
+			if (fOK)
+				fOK  = m_dCaseTrimLength <= m_dMaxCaseLength;
+
+			if (fOK)
+				fOK = m_dMaxCOL >= m_dCaseTrimLength;
+
+			return (fOK);
 			}
 		}
 	}

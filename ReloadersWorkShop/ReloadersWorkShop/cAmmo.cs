@@ -626,6 +626,9 @@ namespace ReloadersWorkShop
 			if (fOK)
 				fOK = m_Caliber != null && !String.IsNullOrEmpty(m_strPartNumber) && !String.IsNullOrEmpty(m_strType);
 
+			if (fOK)
+				fOK = m_dBulletDiameter > 0.0 && m_dBulletWeight > 0.0;
+
 			return (fOK);
 			}
 		}
