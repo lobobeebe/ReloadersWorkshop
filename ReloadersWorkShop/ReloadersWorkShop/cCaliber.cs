@@ -900,7 +900,13 @@ namespace ReloadersWorkShop
 
 		public bool Validate()
 			{
-			bool fOK = !String.IsNullOrEmpty(m_strName) && !String.IsNullOrEmpty(m_strHeadStamp);
+			bool fOK = m_eFirearmType != cFirearm.eFireArmType.None && !String.IsNullOrEmpty(m_strName);
+
+			if (Identity)
+				return (fOK);
+
+			if (fOK)
+				fOK = !String.IsNullOrEmpty(m_strHeadStamp);
 
 			if (fOK)
 				fOK = m_fSmallPrimer || m_fLargePrimer || m_fMagnumPrimer;

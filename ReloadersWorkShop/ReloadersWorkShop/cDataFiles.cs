@@ -2344,7 +2344,9 @@ namespace ReloadersWorkShop
 
 								string strMessage = "An error was encountered while reading the Reloader's WorkShop data file!  This can be caused by a recent update with an incompatible data format.";
 
-								strMessage += "\n\nFortunately, I've been saving a data recovery file every time you exit Reloader's WorkShop for just such an occurence.\n\nThis recovery file will now be used to restore your data.\n\nClick OK to continue...";
+								strMessage += "\n\nFortunately, I've been saving a data recovery file every time you exit Reloader's WorkShop for just such an occurence.\n\nThis recovery file will now be used to restore your data.";
+								
+								strMessage += "\n\nYou're welcome...\n\nClick OK to continue...";
 
 								MessageBox.Show(strMessage, "Data File Load Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
 
