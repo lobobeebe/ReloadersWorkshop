@@ -297,7 +297,7 @@ namespace ReloadersWorkShop
 
 		public bool Validate()
 			{
-			return (true);
+			return (m_nMuzzleVelocity != 0 || m_nPressure != 0 || m_fMisfire || m_fSquib);
 			}
 		}
 	}

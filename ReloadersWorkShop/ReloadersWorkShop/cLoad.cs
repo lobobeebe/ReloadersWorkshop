@@ -31,13 +31,9 @@ namespace ReloadersWorkShop
 
 		private cFirearm.eFireArmType m_eFirearmType = cFirearm.eFireArmType.Handgun;
 		private cCaliber m_Caliber;
-
 		private cBullet m_Bullet = null;
-
 		private cPowder m_Powder = null;
-
 		private cCase m_Case = null;
-
 		private cPrimer m_Primer = null;
 
 		private cChargeList m_ChargeList = new cChargeList();
@@ -329,7 +325,7 @@ namespace ReloadersWorkShop
 		// Export() - XML Document
 		//============================================================================*
 
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement, bool fIncludeCharges = true)
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
 			{
 			XmlElement XMLThisElement = XMLDocument.CreateElement("Load");
 			XMLParentElement.AppendChild(XMLThisElement);
@@ -338,53 +334,33 @@ namespace ReloadersWorkShop
 
 			// Caliber
 
-			XmlElement XMLElement = XMLDocument.CreateElement("Caliber");
-			XmlText XMLTextElement = XMLDocument.CreateTextNode(m_Caliber.Name);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
+			m_Caliber.ExportIdentity(XMLDocument, XMLThisElement);
 
 			// Firearm Type
 
-			XMLElement = XMLDocument.CreateElement("FirearmType");
-			XMLTextElement = XMLDocument.CreateTextNode(cFirearm.FirearmTypeString(FirearmType));
+			XmlElement XMLElement = XMLDocument.CreateElement("FirearmType");
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(cFirearm.FirearmTypeString(FirearmType));
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
 
 			// Bullet
 
-			XMLElement = XMLDocument.CreateElement("Bullet");
-			XMLTextElement = XMLDocument.CreateTextNode(m_Bullet.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
+			m_Bullet.ExportIdentity(XMLDocument, XMLThisElement);
 
 			// Powder
 
-			XMLElement = XMLDocument.CreateElement("Powder");
-			XMLTextElement = XMLDocument.CreateTextNode(m_Powder.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
+			m_Powder.ExportIdentity(XMLDocument, XMLThisElement);
 
 			// Primer
 
-			XMLElement = XMLDocument.CreateElement("Primer");
-			XMLTextElement = XMLDocument.CreateTextNode(m_Primer.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
+			m_Primer.ExportIdentity(XMLDocument, XMLThisElement);
 
 			// Case
 
-			XMLElement = XMLDocument.CreateElement("Case");
-			XMLTextElement = XMLDocument.CreateTextNode(m_Case.ToString());
-			XMLElement.AppendChild(XMLTextElement);
+			m_Case.ExportIdentity(XMLDocument, XMLThisElement);
 
-			XMLThisElement.AppendChild(XMLElement);
-
-			if (m_ChargeList.Count > 0 && fIncludeCharges)
+			if (m_ChargeList.Count > 0)
 				m_ChargeList.Export(XMLDocument, XMLThisElement);
 			}
 
@@ -486,7 +462,7 @@ namespace ReloadersWorkShop
 						break;
 					case "Charges":
 					case "ChargeList":
-						m_ChargeList.Import(XMLDocument, XMLThisNode, DataFiles);
+						m_ChargeList.Import(XMLDocument, XMLNode, DataFiles);
 						break;
 					default:
 						break;

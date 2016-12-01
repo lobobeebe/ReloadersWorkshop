@@ -1521,6 +1521,66 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// GetLoadByIdentity()
+		//============================================================================*
+
+		public static cLoad GetLoadByIdentity(cLoad LoadIdentity, cDataFiles DataFiles)
+			{
+			if (!LoadIdentity.Identity || !LoadIdentity.Validate())
+				return (LoadIdentity);
+
+			foreach (cLoad Load in DataFiles.LoadList)
+				{
+				if (LoadIdentity.CompareTo(Load) == 0)
+					return (Load);
+				}
+
+			return (LoadIdentity);
+			}
+
+		//============================================================================*
+		// GetLoadByIdentity()
+		//============================================================================*
+
+		public static cLoad GetLoadByIdentity(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			cLoad LoadIdentity = new cLoad(true);
+
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "FirearmType":
+						LoadIdentity.FirearmType = cFirearm.FirearmTypeFromString(XMLNode.FirstChild.Value);
+						break;
+					case "CaliberIdentity":
+						LoadIdentity.Caliber = cDataFiles.GetCaliberByIdentity(XMLDocument, XMLThisNode, DataFiles);
+						break;
+					case "BulletIdentity":
+						LoadIdentity.Bullet = cDataFiles.GetBulletByIdentity(XMLDocument, XMLThisNode, DataFiles);
+						break;
+					case "CaseIdentity":
+						LoadIdentity.Case = cDataFiles.GetCaseByIdentity(XMLDocument, XMLThisNode, DataFiles);
+						break;
+					case "PowderIdentity":
+						LoadIdentity.Powder = cDataFiles.GetPowderByIdentity(XMLDocument, XMLThisNode, DataFiles);
+						break;
+					case "PrimerIdentity":
+						LoadIdentity.Primer = cDataFiles.GetPrimerByIdentity(XMLDocument, XMLThisNode, DataFiles);
+						break;
+					default:
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+
+			return (GetLoadByIdentity(LoadIdentity, DataFiles));
+			}
+
+		//============================================================================*
 		// GetPowderByIdentity()
 		//============================================================================*
 

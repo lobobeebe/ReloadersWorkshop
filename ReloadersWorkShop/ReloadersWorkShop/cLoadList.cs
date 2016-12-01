@@ -69,7 +69,7 @@ namespace ReloadersWorkShop
 		// Export()
 		//============================================================================*
 
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement, bool fIncludeCharges = true)
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
 			{
 			if (Count > 0)
 				{
@@ -77,7 +77,7 @@ namespace ReloadersWorkShop
 				XMLParentElement.AppendChild(XMLElement);
 
 				foreach (cLoad Load in this)
-					Load.Export(XMLDocument, XMLElement, fIncludeCharges);
+					Load.Export(XMLDocument, XMLElement);
 				}
 			}
 

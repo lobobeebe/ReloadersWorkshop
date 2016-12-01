@@ -55,13 +55,13 @@ namespace ReloadersWorkShop
 			BrowseButton.Click += OnBrowseClicked;
 			ExportButton.Click += OnExportClicked;
 
-			LoadsCheckBox.Click += OnLoadsClicked;
-			BatchesCheckBox.Click += OnBatchesClicked;
+			LoadsCheckBox.Click += OnFilterClicked;
+			BatchesCheckBox.Click += OnFilterClicked;
 
 			ManufacturersCheckBox.Click += OnFilterClicked;
 			CalibersCheckBox.Click += OnFilterClicked;
 			FirearmsCheckBox.Click += OnFilterClicked;
-			FirearmPartsCheckBox.Click += OnFilterClicked;
+			PartsCheckBox.Click += OnFilterClicked;
 
 			AmmoCheckBox.Click += OnFilterClicked;
 			BulletsCheckBox.Click += OnFilterClicked;
@@ -69,9 +69,7 @@ namespace ReloadersWorkShop
 			PowdersCheckBox.Click += OnFilterClicked;
 			PrimersCheckBox.Click += OnFilterClicked;
 
-			InventoryCheckBox.Click += OnFilterClicked;
-			BatchTestsCheckBox.Click += OnFilterClicked;
-			ChargeDataCheckBox.Click += OnFilterClicked;
+			FullDataDumpCheckBox.Click += OnFullDataDumpClicked;
 
 			FileTypeCombo.SelectedIndexChanged += OnFileTypeSelected;
 
@@ -288,14 +286,14 @@ namespace ReloadersWorkShop
 			if (FirearmsCheckBox.Checked)
 				m_DataFiles.FirearmList.Export(XMLDocument, MainElement);
 
-			if (FirearmPartsCheckBox.Checked)
+			if (PartsCheckBox.Checked)
 				m_DataFiles.GearList.Export(XMLDocument, MainElement);
 
 			if (AmmoCheckBox.Checked)
 				m_DataFiles.AmmoList.Export(XMLDocument, MainElement);
 
 			if (BulletsCheckBox.Checked)
-				m_DataFiles.BulletList.Export(XMLDocument, MainElement, InventoryCheckBox.Checked);
+				m_DataFiles.BulletList.Export(XMLDocument, MainElement);
 
 			if (PowdersCheckBox.Checked)
 				m_DataFiles.PowderList.Export(XMLDocument, MainElement);
@@ -307,23 +305,15 @@ namespace ReloadersWorkShop
 				m_DataFiles.CaseList.Export(XMLDocument, MainElement);
 
 			if (LoadsCheckBox.Checked)
-				m_DataFiles.LoadList.Export(XMLDocument, MainElement, ChargeDataCheckBox.Checked);
+				m_DataFiles.LoadList.Export(XMLDocument, MainElement);
 
 			if (BatchesCheckBox.Checked)
-				m_DataFiles.BatchList.Export(XMLDocument, MainElement, BatchTestsCheckBox.Checked);
+				m_DataFiles.BatchList.Export(XMLDocument, MainElement);
+
+			if (PartsCheckBox.Checked)
+				m_DataFiles.GearList.Export(XMLDocument, MainElement);
 
 			return (XMLDocument);
-			}
-
-		//============================================================================*
-		// OnBatchesClicked()
-		//============================================================================*
-
-		private void OnBatchesClicked(Object sender, EventArgs e)
-			{
-			BatchTestsCheckBox.Enabled = BatchesCheckBox.Checked;
-
-			UpdateButtons();
 			}
 
 		//============================================================================*
@@ -400,13 +390,11 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// OnLoadsClicked()
+		// OnFullDataDumpClicked()
 		//============================================================================*
 
-		private void OnLoadsClicked(Object sender, EventArgs e)
+		private void OnFullDataDumpClicked(Object sender, EventArgs e)
 			{
-			ChargeDataCheckBox.Enabled = LoadsCheckBox.Checked;
-
 			UpdateButtons();
 			}
 
@@ -453,6 +441,51 @@ namespace ReloadersWorkShop
 				!BulletsCheckBox.Checked && !CasesCheckBox.Checked && !PowdersCheckBox.Checked && !PrimersCheckBox.Checked &&
 				!LoadsCheckBox.Checked && !BatchesCheckBox.Checked)
 				fOK = false;
+
+			//----------------------------------------------------------------------------*
+			// Set Checkbox States
+			//----------------------------------------------------------------------------*
+
+			if (FullDataDumpCheckBox.Checked)
+				{
+				ManufacturersCheckBox.Checked = true;
+				CalibersCheckBox.Checked = true;
+				FirearmsCheckBox.Checked = true;
+				PartsCheckBox.Checked = true;
+				BulletsCheckBox.Checked = true;
+				CasesCheckBox.Checked = true;
+				PowdersCheckBox.Checked = true;
+				PrimersCheckBox.Checked = true;
+				AmmoCheckBox.Checked = true;
+				LoadsCheckBox.Checked = true;
+				BatchesCheckBox.Checked = true;
+
+				ManufacturersCheckBox.Enabled = false;
+				CalibersCheckBox.Enabled = false;
+				FirearmsCheckBox.Enabled = false;
+				PartsCheckBox.Enabled = false;
+				BulletsCheckBox.Enabled = false;
+				CasesCheckBox.Enabled = false;
+				PowdersCheckBox.Enabled = false;
+				PrimersCheckBox.Enabled = false;
+				AmmoCheckBox.Enabled = false;
+				LoadsCheckBox.Enabled = false;
+				BatchesCheckBox.Enabled = false;
+				}
+			else
+				{
+				ManufacturersCheckBox.Enabled = true;
+				CalibersCheckBox.Enabled = true;
+				FirearmsCheckBox.Enabled = true;
+				PartsCheckBox.Enabled = true;
+				BulletsCheckBox.Enabled = true;
+				CasesCheckBox.Enabled = true;
+				PowdersCheckBox.Enabled = true;
+				PrimersCheckBox.Enabled = true;
+				AmmoCheckBox.Enabled = true;
+				LoadsCheckBox.Enabled = true;
+				BatchesCheckBox.Enabled = true;
+				}
 
 			//----------------------------------------------------------------------------*
 			// Set Button States

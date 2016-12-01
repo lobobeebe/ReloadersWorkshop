@@ -498,7 +498,7 @@ namespace ReloadersWorkShop
 		// Export() - XML Document
 		//============================================================================*
 
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement, bool fIncludeTests = true)
+		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
 			{
 			XmlElement XMLThisElement = XMLDocument.CreateElement(ExportName);
 			XMLParentElement.AppendChild(XMLThisElement);
@@ -709,7 +709,7 @@ namespace ReloadersWorkShop
 
 			// Batch Tests
 
-			if (m_BatchTest != null && fIncludeTests)
+			if (m_BatchTest != null)
 				m_BatchTest.Export(XMLDocument, XMLThisElement);
 			}
 
@@ -783,16 +783,94 @@ namespace ReloadersWorkShop
 
 			while (XMLNode != null)
 				{
-/*				switch (XMLNode.Name)
+				switch (XMLNode.Name)
 					{
-					case "PartNumber":
-						m_strPartNumber = XMLNode.FirstChild.Value;
+					case "BatchID":
+						Int32.TryParse(XMLNode.FirstChild.Value, out m_nBatchID);
 						break;
-
+					case "UserBatchID":
+						m_strUserID = XMLNode.FirstChild.Value;
+						break;
+					case "DateLoaded":
+						DateTime.TryParse(XMLNode.FirstChild.Value, out m_DateLoaded);
+						break;
+					case "Load":
+						m_Load = cDataFiles.GetLoadByIdentity(XMLDocument, XMLThisNode, DataFiles);
+						break;
+					case "Firearm":
+						m_Firearm = cDataFiles.GetFirearmByIdentity(XMLDocument, XMLThisNode, DataFiles);
+						break;
+					case "PowderWeight":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dPowderWeight);
+						break;
+					case "NumRounds":
+						Int32.TryParse(XMLNode.FirstChild.Value, out m_nNumRounds);
+						break;
+					case "CasesFired":
+						Int32.TryParse(XMLNode.FirstChild.Value, out m_nTimesFired);
+						break;
+					case "COAL":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dCOL);
+						break;
+					case "CBTO":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dCBTO);
+						break;
+					case "Headspace":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dHeadSpace);
+						break;
+					case "NeckSize":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dNeckSize);
+						break;
+					case "NeckWall":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dNeckWall);
+						break;
+					case "CaseTrimLength":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dCaseTrimLength);
+						break;
+					case "BulletDiameter":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dBulletDiameter);
+						break;
+					case "FullLengthSized":
+						m_fFullLengthSized = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "NeckSized":
+						m_fNeckSized = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "ExpandedNeck":
+						m_fExpandedNeck = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "NeckTurned":
+						m_fExpandedNeck = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "Annealed":
+						m_fAnnealed = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "ModifiedBullet":
+						m_fModifiedBullet = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "JumpSet":
+						m_fJumpSet = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "Jump":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dJump);
+						break;
+					case "Archived":
+						m_fArchive = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "TrackInventory":
+						m_fTrackInventory = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "Checked":
+						m_fTrackInventory = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "BatchTest":
+						m_BatchTest = new cBatchTest();
+						m_BatchTest.Import(XMLDocument, XMLNode, DataFiles);
+						break;
 					default:
 						break;
 					}
-*/
+
 				XMLNode = XMLNode.NextSibling;
 				}
 

@@ -577,6 +577,74 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public bool Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "TestDate":
+						DateTime.TryParse(XMLNode.FirstChild.Value, out m_TestDate);
+						break;
+					case "FirearmIdentity":
+						m_Firearm = cDataFiles.GetFirearmByIdentity(XMLDocument, XMLThisNode,  DataFiles);
+						break;
+					case "Suppressed":
+						m_fSuppressed = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "Location":
+						m_strLocation = XMLNode.FirstChild.Value;
+						break;
+					case "Altitude":
+						Int32.TryParse(XMLNode.FirstChild.Value, out m_nAltitude);
+						break;
+					case "Pressure":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dPressure);
+						break;
+					case "Temperature":
+						Int32.TryParse(XMLNode.FirstChild.Value, out m_nTemperature);
+						break;
+					case "Humidity":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dHumidity);
+						break;
+					case "WindSpeed":
+						Int32.TryParse(XMLNode.FirstChild.Value, out m_nWindSpeed);
+						break;
+					case "WindDirection":
+						Int32.TryParse(XMLNode.FirstChild.Value, out m_nWindDirection);
+						break;
+					case "NumRounds":
+						Int32.TryParse(XMLNode.FirstChild.Value, out m_nNumRounds);
+						break;
+					case "BestGroup":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dBestGroup);
+						break;
+					case "BestGroupRange":
+						Int32.TryParse(XMLNode.FirstChild.Value, out m_nBestGroupRange);
+						break;
+					case "Notes":
+						m_strNotes = XMLNode.FirstChild.Value;
+						break;
+					case "TestShots":
+					case "TestShotList":
+						m_TestShotList.Import(XMLDocument, XMLNode, DataFiles);
+						break;
+					default:
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+
+			return (true);
+			}
+
+		//============================================================================*
 		// Location Property
 		//============================================================================*
 

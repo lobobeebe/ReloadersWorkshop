@@ -83,7 +83,7 @@ namespace ReloadersWorkShop
 				XMLParentElement.AppendChild(XMLElement);
 
 				foreach (cBatch Batch in this)
-					Batch.Export(XMLDocument, XMLElement, fIncludeTests);
+					Batch.Export(XMLDocument, XMLElement);
 				}
 			}
 
