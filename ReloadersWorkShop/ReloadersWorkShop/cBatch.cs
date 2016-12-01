@@ -254,6 +254,22 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// CBTO Property
+		//============================================================================*
+
+		public double CBTO
+			{
+			get
+				{
+				return (m_dCBTO);
+				}
+			set
+				{
+				m_dCBTO = value;
+				}
+			}
+
+		//============================================================================*
 		// Checked Property
 		//============================================================================*
 
@@ -794,10 +810,10 @@ namespace ReloadersWorkShop
 					case "DateLoaded":
 						DateTime.TryParse(XMLNode.FirstChild.Value, out m_DateLoaded);
 						break;
-					case "Load":
+					case "LoadIdentity":
 						m_Load = cDataFiles.GetLoadByIdentity(XMLDocument, XMLThisNode, DataFiles);
 						break;
-					case "Firearm":
+					case "FirearmIdentity":
 						m_Firearm = cDataFiles.GetFirearmByIdentity(XMLDocument, XMLThisNode, DataFiles);
 						break;
 					case "PowderWeight":
@@ -1034,22 +1050,6 @@ namespace ReloadersWorkShop
 			set
 				{
 				m_nNumRounds = value;
-				}
-			}
-
-		//============================================================================*
-		// CBTO Property
-		//============================================================================*
-
-		public double CBTO
-			{
-			get
-				{
-				return (m_dCBTO);
-				}
-			set
-				{
-				m_dCBTO = value;
 				}
 			}
 
