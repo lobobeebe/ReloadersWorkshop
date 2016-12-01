@@ -557,7 +557,7 @@ namespace ReloadersWorkShop
 					case "Name":
 						m_strName = XMLNode.FirstChild.Value;
 						break;
-					case "Headstamp":
+					case "HeadStamp":
 						m_strHeadStamp = XMLNode.FirstChild.Value;
 						break;
 					case "HandgunType":
@@ -900,7 +900,7 @@ namespace ReloadersWorkShop
 
 		public bool Validate()
 			{
-			bool fOK = !String.IsNullOrEmpty(m_strName) && !String.IsNullOrEmpty(m_strHeadStamp = "");
+			bool fOK = !String.IsNullOrEmpty(m_strName) && !String.IsNullOrEmpty(m_strHeadStamp);
 
 			if (fOK)
 				fOK = m_fSmallPrimer || m_fLargePrimer || m_fMagnumPrimer;
