@@ -1999,7 +1999,7 @@ namespace ReloadersWorkShop
 						break;
 
 					case "GearList":
-						m_GearList.Import(XMLDocument, XMLNode,  this);
+						m_GearList.Import(XMLDocument, XMLNode, this);
 
 						break;
 
@@ -2334,13 +2334,29 @@ namespace ReloadersWorkShop
 							{
 							if (File.Exists(Path.Combine(GetDataPath(), "RWRecovery.xml")))
 								{
+								if (Stream != null)
+									{
+									Stream.Close();
+
+									Stream = null;
+									}
+
 								string strMessage = "An error was encountered while reading the Reloader's WorkShop data file!  This can be caused by a recent update with an incompatible data format.";
 
 								strMessage += "\n\nFortunately, I've been saving a data recovery file every time you exit Reloader's WorkShop for just such an occurence.\n\nThis recovery file will now be used to restore your data.\n\nClick OK to continue...";
 
 								MessageBox.Show(strMessage, "Data File Load Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
 
-								Import(Path.Combine(GetDataPath(), "RWRecovery.xml"), false);
+								try
+									{
+									Import(Path.Combine(GetDataPath(), "RWRecovery.xml"), false);
+									}
+								catch (Exception e)
+									{
+									strMessage = "Error importing XML file...";
+
+									MessageBox.Show(strMessage, "XML Load Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+									}
 								}
 							else
 								{

@@ -340,13 +340,23 @@ namespace ReloadersWorkShop
 
 			while (XMLNode != null)
 				{
+				if (XMLNode.FirstChild == null)
+					{
+					XMLNode = XMLNode.NextSibling;
+
+					continue;
+					}
+
 				switch (XMLNode.Name)
 					{
 					case "CaliberIdentity":
 						m_Caliber = cDataFiles.GetCaliberByIdentity(XMLDocument, XMLNode, DataFiles);
 						break;
 					case "PartNumber":
-						m_strPartNumber = XMLNode.FirstChild.Value;
+						if (!String.IsNullOrEmpty(XMLNode.FirstChild.Value))
+							m_strPartNumber = XMLNode.FirstChild.Value;
+						else
+							Console.WriteLine("cCase - Empty Part Number!");
 						break;
 					case "Match":
 						m_fMatch = XMLNode.FirstChild.Value == "Yes";
@@ -563,7 +573,7 @@ namespace ReloadersWorkShop
 			bool fOK = base.Validate();
 
 			if (fOK)
-				fOK = m_Caliber != null && !String.IsNullOrEmpty(m_strPartNumber);
+				fOK = m_Caliber != null;
 
 			return (fOK);
 			}
