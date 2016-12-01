@@ -641,6 +641,8 @@ namespace ReloadersWorkShop
 				XMLNode = XMLNode.NextSibling;
 				}
 
+			m_nNumRounds = m_TestShotList.Count;
+
 			return (true);
 			}
 

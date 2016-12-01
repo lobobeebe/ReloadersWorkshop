@@ -556,6 +556,7 @@ namespace ReloadersWorkShop
 						break;
 					case "PurchasePrice":
 					case "Price":
+					case "Cost":
 						Double.TryParse(XMLNode.FirstChild.Value, out m_dPrice);
 						break;
 					case "Notes":
