@@ -97,6 +97,9 @@ namespace ReloadersWorkShop
 
 		public cBulletCaliber BulletCaliber(cCaliber Caliber)
 			{
+			if (m_BulletCaliberList == null)
+				m_BulletCaliberList = new cBulletCaliberList();
+
 			cBulletCaliber BulletCaliber = null;
 
 			foreach (cBulletCaliber CheckBulletCaliber in m_BulletCaliberList)
@@ -418,6 +421,9 @@ namespace ReloadersWorkShop
 
 		public bool HasCaliber(cCaliber Caliber, bool fHideCalibers = false)
 			{
+			if (m_BulletCaliberList == null)
+				m_BulletCaliberList = new cBulletCaliberList();
+
 			foreach (cBulletCaliber CheckCaliber in m_BulletCaliberList)
 				{
 				if (CheckCaliber.CompareTo(Caliber) == 0)
@@ -594,6 +600,9 @@ namespace ReloadersWorkShop
 		public bool Synch(cCaliber Caliber)
 			{
 			bool fFound = false;
+
+			if (m_BulletCaliberList == null)
+				m_BulletCaliberList = new ReloadersWorkShop.cBulletCaliberList();
 
 			foreach (cBulletCaliber CheckBulletCaliber in m_BulletCaliberList)
 				fFound = CheckBulletCaliber.Synch(Caliber);
