@@ -187,6 +187,8 @@ namespace ReloadersWorkShop
 
 			cCaliber Caliber = (cCaliber) obj;
 
+			cCaliber.CurrentFirearmType = FirearmType;
+
 			int rc = FirearmType.CompareTo(Caliber.FirearmType);
 
 			if (rc == 0)
@@ -555,7 +557,7 @@ namespace ReloadersWorkShop
 					case "Name":
 						m_strName = XMLNode.FirstChild.Value;
 						break;
-					case "HeadStamp":
+					case "Headstamp":
 						m_strHeadStamp = XMLNode.FirstChild.Value;
 						break;
 					case "HandgunType":
