@@ -476,6 +476,8 @@ namespace ReloadersWorkShop
 						break;
 					case "Calibers":
 					case "CaliberList":
+					case "BulletCalibers":
+					case "BulletCaliberList":
 						m_BulletCaliberList.Import(XMLDocument, XMLNode, DataFiles);
 						break;
 

@@ -1386,24 +1386,10 @@ namespace ReloadersWorkShop
 			{
 			cBullet BulletIdentity = new cBullet(true);
 
-			BulletIdentity.Import(XMLDocument, XMLThisNode, DataFiles);
-			XmlNode XMLNode = XMLThisNode.FirstChild;
+			if (BulletIdentity.Import(XMLDocument, XMLThisNode, DataFiles))
+				return (GetBulletByIdentity(BulletIdentity, DataFiles));
 
-			while (XMLNode != null)
-				{
-				switch (XMLNode.Name)
-					{
-					case "PartNumber":
-						BulletIdentity.PartNumber = XMLNode.FirstChild.Value;
-						break;
-					default:
-						break;
-					}
-
-				XMLNode = XMLNode.NextSibling;
-				}
-
-			return (GetBulletByIdentity(BulletIdentity, DataFiles));
+			return (null);
 			}
 
 		//============================================================================*
@@ -1432,26 +1418,10 @@ namespace ReloadersWorkShop
 			{
 			cCaliber CaliberIdentity = new cCaliber(true);
 
-			XmlNode XMLNode = XMLThisNode.FirstChild;
+			if (CaliberIdentity.Import(XMLDocument, XMLThisNode))
+				return (GetCaliberByIdentity(CaliberIdentity, DataFiles));
 
-			while (XMLNode != null)
-				{
-				switch (XMLNode.Name)
-					{
-					case "FirearmType":
-						CaliberIdentity.FirearmType = cFirearm.FirearmTypeFromString(XMLNode.FirstChild.Value);
-						break;
-					case "Name":
-						CaliberIdentity.Name = XMLNode.FirstChild.Value;
-						break;
-					default:
-						break;
-					}
-
-				XMLNode = XMLNode.NextSibling;
-				}
-
-			return (GetCaliberByIdentity(CaliberIdentity, DataFiles));
+			return (null);
 			}
 
 		//============================================================================*
@@ -1498,24 +1468,6 @@ namespace ReloadersWorkShop
 			cCase CaseIdentity = new cCase(true);
 
 			CaseIdentity.Import(XMLDocument, XMLThisNode, DataFiles);
-			XmlNode XMLNode = XMLThisNode.FirstChild;
-
-			while (XMLNode != null)
-				{
-				switch (XMLNode.Name)
-					{
-					case "PartNumber":
-						CaseIdentity.PartNumber = XMLNode.FirstChild.Value;
-						break;
-					case "CaliberIdentity":
-						CaseIdentity.Caliber = cDataFiles.GetCaliberByIdentity(XMLDocument, XMLNode, DataFiles);
-						break;
-					default:
-						break;
-					}
-
-				XMLNode = XMLNode.NextSibling;
-				}
 
 			return (GetCaseByIdentity(CaseIdentity, DataFiles));
 			}
@@ -1546,36 +1498,7 @@ namespace ReloadersWorkShop
 			{
 			cLoad LoadIdentity = new cLoad(true);
 
-			XmlNode XMLNode = XMLThisNode.FirstChild;
-
-			while (XMLNode != null)
-				{
-				switch (XMLNode.Name)
-					{
-					case "FirearmType":
-						LoadIdentity.FirearmType = cFirearm.FirearmTypeFromString(XMLNode.FirstChild.Value);
-						break;
-					case "CaliberIdentity":
-						LoadIdentity.Caliber = cDataFiles.GetCaliberByIdentity(XMLDocument, XMLThisNode, DataFiles);
-						break;
-					case "BulletIdentity":
-						LoadIdentity.Bullet = cDataFiles.GetBulletByIdentity(XMLDocument, XMLThisNode, DataFiles);
-						break;
-					case "CaseIdentity":
-						LoadIdentity.Case = cDataFiles.GetCaseByIdentity(XMLDocument, XMLThisNode, DataFiles);
-						break;
-					case "PowderIdentity":
-						LoadIdentity.Powder = cDataFiles.GetPowderByIdentity(XMLDocument, XMLThisNode, DataFiles);
-						break;
-					case "PrimerIdentity":
-						LoadIdentity.Primer = cDataFiles.GetPrimerByIdentity(XMLDocument, XMLThisNode, DataFiles);
-						break;
-					default:
-						break;
-					}
-
-				XMLNode = XMLNode.NextSibling;
-				}
+			LoadIdentity.Import(XMLDocument, XMLThisNode, DataFiles);
 
 			return (GetLoadByIdentity(LoadIdentity, DataFiles));
 			}
@@ -1607,21 +1530,6 @@ namespace ReloadersWorkShop
 			cPowder PowderIdentity = new cPowder(true);
 
 			PowderIdentity.Import(XMLDocument, XMLThisNode, DataFiles);
-			XmlNode XMLNode = XMLThisNode.FirstChild;
-
-			while (XMLNode != null)
-				{
-				switch (XMLNode.Name)
-					{
-					case "Type":
-						PowderIdentity.Type = XMLNode.FirstChild.Value;
-						break;
-					default:
-						break;
-					}
-
-				XMLNode = XMLNode.NextSibling;
-				}
 
 			return (GetPowderByIdentity(PowderIdentity, DataFiles));
 			}
@@ -1653,21 +1561,6 @@ namespace ReloadersWorkShop
 			cPrimer PrimerIdentity = new cPrimer(true);
 
 			PrimerIdentity.Import(XMLDocument, XMLThisNode, DataFiles);
-			XmlNode XMLNode = XMLThisNode.FirstChild;
-
-			while (XMLNode != null)
-				{
-				switch (XMLNode.Name)
-					{
-					case "Type":
-						PrimerIdentity.Model = XMLNode.FirstChild.Value;
-						break;
-					default:
-						break;
-					}
-
-				XMLNode = XMLNode.NextSibling;
-				}
 
 			return (GetPrimerByIdentity(PrimerIdentity, DataFiles));
 			}

@@ -79,7 +79,7 @@ namespace ReloadersWorkShop
 			else
 				{
 				if (Powder2 == null)
-					return(1);
+					return (1);
 				}
 
 			return (Powder1.CompareTo(Powder2));
@@ -221,13 +221,49 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public override bool Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			base.Import(XMLDocument, XMLThisNode, DataFiles);
+
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "Type":
+						m_strType = XMLNode.FirstChild.Value;
+						break;
+					case "Shape":
+						m_ePowderType = cPowder.ShapeFromString(XMLNode.FirstChild.Value);
+						break;
+					default:
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+
+			return (Validate());
+			}
+
+		//============================================================================*
 		// Model Property
 		//============================================================================*
 
 		public string Model
 			{
-			get { return (m_strType); }
-			set { m_strType = value; }
+			get
+				{
+				return (m_strType);
+				}
+			set
+				{
+				m_strType = value;
+				}
 			}
 
 		//============================================================================*
@@ -245,8 +281,60 @@ namespace ReloadersWorkShop
 
 		public ePowderShapes Shape
 			{
-			get { return (m_ePowderType); }
-			set { m_ePowderType = value; }
+			get
+				{
+				return (m_ePowderType);
+				}
+			set
+				{
+				m_ePowderType = value;
+				}
+			}
+
+
+		//============================================================================*
+		// ShapeFromString()
+		//============================================================================*
+
+		public static ePowderShapes ShapeFromString(string strString)
+			{
+			switch (strString)
+				{
+				case "Spherical":
+					return (ePowderShapes.Spherical);
+
+				case "Extruded":
+					return (ePowderShapes.Extruded);
+
+				case "Flake":
+					return (ePowderShapes.Flake);
+				}
+
+			return (ePowderShapes.Other);
+			}
+
+		//============================================================================*
+		// ShapeString Property
+		//============================================================================*
+
+		public string ShapeString
+			{
+			get
+				{
+				switch (m_ePowderType)
+					{
+					case ePowderShapes.Spherical:
+						return ("Spherical");
+
+					case ePowderShapes.Extruded:
+						return ("Extruded");
+
+					case ePowderShapes.Flake:
+						return ("Flake");
+					}
+
+				return ("Other");
+				}
 			}
 
 		//============================================================================*
@@ -256,7 +344,7 @@ namespace ReloadersWorkShop
 		public override string ToString()
 			{
 			string strString = "";
-			
+
 			if (Manufacturer != null && m_strType != null)
 				strString = String.Format("{0} {1}", Manufacturer.Name, m_strType);
 
@@ -271,32 +359,28 @@ namespace ReloadersWorkShop
 
 		public string Type
 			{
-			get { return(m_strType); }
-			set { m_strType = value; }
+			get
+				{
+				return (m_strType);
+				}
+			set
+				{
+				m_strType = value;
+				}
 			}
 
 		//============================================================================*
-		// ShapeString Property
+		// Validate()
 		//============================================================================*
 
-		public string ShapeString
+		public override bool Validate()
 			{
-			get
-				{
-				switch(m_ePowderType)
-					{
-					case ePowderShapes.Spherical:
-						return("Spherical");
+			bool fOK = base.Validate();
 
-					case ePowderShapes.Extruded:
-						return ("Extruded");
+			if (fOK)
+				fOK = !String.IsNullOrEmpty(m_strType);
 
-					case ePowderShapes.Flake:
-						return ("Flake");
-					}
-
-				return ("Other");
-				}	
+			return (fOK);
 			}
 		}
 	}

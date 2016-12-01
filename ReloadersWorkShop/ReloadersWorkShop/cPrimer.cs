@@ -271,6 +271,48 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public override bool Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			base.Import(XMLDocument, XMLThisNode, DataFiles);
+
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "Model":
+						m_strModel = XMLNode.FirstChild.Value;
+						break;
+					case "Size":
+						m_eSize = XMLNode.FirstChild.Value == "Small" ? ePrimerSize.Small : ePrimerSize.Large;
+						break;
+					case "Standard":
+						m_fStandard = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "Magnum":
+						m_fMagnum = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "BenchRest":
+						m_fBenchRest = XMLNode.FirstChild.Value == "Yes";
+						break;
+					case "Military":
+						m_fMilitary = XMLNode.FirstChild.Value == "Yes";
+						break;
+					default:
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+
+			return (Validate());
+			}
+
+		//============================================================================*
 		// Magnum Property
 		//============================================================================*
 
@@ -438,6 +480,26 @@ namespace ReloadersWorkShop
 			strString = ToCrossUseString(strString);
 
 			return (strString);
+			}
+
+		//============================================================================*
+		// Validate()
+		//============================================================================*
+
+		public override bool Validate()
+			{
+			bool fOK = base.Validate();
+
+			if (fOK)
+				fOK = !String.IsNullOrEmpty(m_strModel);
+
+			if (Identity)
+				return (fOK);
+
+			if (fOK && !m_fStandard && !m_fMagnum && !m_fMilitary && !m_fBenchRest)
+				fOK = false;
+
+			return (fOK);
 			}
 		}
 	}

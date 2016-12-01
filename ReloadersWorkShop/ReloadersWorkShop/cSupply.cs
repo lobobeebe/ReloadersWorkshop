@@ -412,6 +412,38 @@ namespace ReloadersWorkShop
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLParentElement.AppendChild(XMLElement);
+
+			// Quantity
+
+			XMLElement = XMLDocument.CreateElement("Quantity");
+			XMLTextElement = XMLDocument.CreateTextNode(m_dQuantity.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLParentElement.AppendChild(XMLElement);
+
+			// Cost
+
+			XMLElement = XMLDocument.CreateElement("Cost");
+			XMLTextElement = XMLDocument.CreateTextNode(m_dCost.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLParentElement.AppendChild(XMLElement);
+
+			// MinStockLevel
+
+			XMLElement = XMLDocument.CreateElement("MinStockLevel");
+			XMLTextElement = XMLDocument.CreateTextNode(m_dMinimumStockLevel.ToString());
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLParentElement.AppendChild(XMLElement);
+
+			// Checked
+
+			XMLElement = XMLDocument.CreateElement("Checked");
+			XMLTextElement = XMLDocument.CreateTextNode(m_fChecked ? "Yes" : "-");
+			XMLElement.AppendChild(XMLTextElement);
+
+			XMLParentElement.AppendChild(XMLElement);
 			}
 
 		//============================================================================*
@@ -1129,7 +1161,7 @@ namespace ReloadersWorkShop
 
 		public virtual bool Validate()
 			{
-			return(!m_fIdentity && m_Manufacturer != null);
+			return(m_Manufacturer != null);
 			}
 		}
 	}
