@@ -599,7 +599,7 @@ namespace ReloadersWorkShop
 
 							nX += e.Graphics.MeasureString(strText, SpecsFont).Width;
 
-							strText = String.Format("{0:F3} {1}", Firearm.ScopeClick, Firearm.TurretTypeString);
+							strText = String.Format("{0:F3} {1}", Firearm.ScopeClick, cFirearm.TurretTypeString(Firearm.TurretType));
 
 							e.Graphics.DrawString(strText, SpecsFont, Brushes.Black, nX, nY);
 							}

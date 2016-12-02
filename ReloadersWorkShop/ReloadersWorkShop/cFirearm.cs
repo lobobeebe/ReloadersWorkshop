@@ -1370,24 +1370,9 @@ namespace ReloadersWorkShop
 		// TurretTypeString Property
 		//============================================================================*
 
-		public string TurretTypeString
+		public static string TurretTypeString(cFirearm.eTurretType eType)
 			{
-			get
-				{
-				if (m_fScoped)
-					{
-					switch (m_eTurretType)
-						{
-						case eTurretType.MOA:
-							return ("MOA");
-
-						case eTurretType.MilDot:
-							return ("Mil");
-						}
-					}
-
-				return ("-");
-				}
+			return (eType == cFirearm.eTurretType.MOA ? "MOA" : "Mil");
 			}
 
 		//============================================================================*

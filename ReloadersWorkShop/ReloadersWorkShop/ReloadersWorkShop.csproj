@@ -84,6 +84,7 @@
     <Compile Include="cAbout.Designer.cs">
       <DependentUpon>cAbout.cs</DependentUpon>
     </Compile>
+    <Compile Include="cAmmo.Export.cs" />
     <Compile Include="cAmmoListPreviewDialog.cs">
       <SubType>Form</SubType>
     </Compile>
