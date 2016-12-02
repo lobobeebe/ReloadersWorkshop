@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ReloadersWorkShop
 	{
-	class cRWXMLDocument
+	public class cRWXMLDocument : cXMLDocument
 		{
 		}
 	}

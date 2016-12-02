@@ -247,62 +247,24 @@ namespace ReloadersWorkShop
 		// ExportXML()
 		//============================================================================*
 
-		public XmlDocument ExportXML()
+		public cRWXMLDocument ExportXML()
 			{
-			XmlDocument XMLDocument = new XmlDocument();
-			XMLDocument.PreserveWhitespace = true;
+			cRWXMLDocument XMLDocument = new cRWXMLDocument(m_DataFiles);
 
-			//----------------------------------------------------------------------------*
-			// Create Declaration
-			//----------------------------------------------------------------------------*
+			XMLDocument.FullDataDump = FullDataDumpCheckBox.Checked;
 
-			XmlDeclaration xmlDeclaration = XMLDocument.CreateXmlDeclaration("1.0", "UTF-8", null);
-			XmlElement RootElement = XMLDocument.DocumentElement;
+			XMLDocument.IncludeAmmo = AmmoCheckBox.Checked;
+			XMLDocument.IncludeBatches = BatchesCheckBox.Checked;
+			XMLDocument.IncludeBullets = BulletsCheckBox.Checked;
+			XMLDocument.IncludeCalibers = CalibersCheckBox.Checked;
+			XMLDocument.IncludeCases = CasesCheckBox.Checked;
+			XMLDocument.IncludeFirearms = FirearmsCheckBox.Checked;
+			XMLDocument.IncludeLoads = LoadsCheckBox.Checked;
+			XMLDocument.IncludeManufacturers = ManufacturersCheckBox.Checked;
+			XMLDocument.IncludePowders = PowdersCheckBox.Checked;
+			XMLDocument.IncludePrimers = PrimersCheckBox.Checked;
 
-			XMLDocument.InsertBefore(xmlDeclaration, RootElement);
-
-			//----------------------------------------------------------------------------*
-			// Create the Main Element
-			//----------------------------------------------------------------------------*
-
-			XmlElement MainElement = XMLDocument.CreateElement("Body");
-			XMLDocument.AppendChild(MainElement);
-
-			XmlText XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0} Data File Export", Application.ProductName));
-			MainElement.AppendChild(XMLTextElement);
-
-			if (ManufacturersCheckBox.Checked)
-				m_DataFiles.ManufacturerList.Export(XMLDocument, MainElement);
-
-			if (CalibersCheckBox.Checked)
-				m_DataFiles.CaliberList.Export(XMLDocument, MainElement);
-
-			if (FirearmsCheckBox.Checked)
-				m_DataFiles.FirearmList.Export(XMLDocument, MainElement);
-
-			if (AmmoCheckBox.Checked)
-				m_DataFiles.AmmoList.Export(XMLDocument, MainElement);
-
-			if (BulletsCheckBox.Checked)
-				m_DataFiles.BulletList.Export(XMLDocument, MainElement);
-
-			if (PowdersCheckBox.Checked)
-				m_DataFiles.PowderList.Export(XMLDocument, MainElement);
-
-			if (PrimersCheckBox.Checked)
-				m_DataFiles.PrimerList.Export(XMLDocument, MainElement);
-
-			if (CasesCheckBox.Checked)
-				m_DataFiles.CaseList.Export(XMLDocument, MainElement);
-
-			if (LoadsCheckBox.Checked)
-				m_DataFiles.LoadList.Export(XMLDocument, MainElement);
-
-			if (BatchesCheckBox.Checked)
-				m_DataFiles.BatchList.Export(XMLDocument, MainElement);
-
-			if (PartsCheckBox.Checked)
-				m_DataFiles.GearList.Export(XMLDocument, MainElement);
+			XMLDocument.Export(FullDataDumpCheckBox.Checked);
 
 			return (XMLDocument);
 			}
