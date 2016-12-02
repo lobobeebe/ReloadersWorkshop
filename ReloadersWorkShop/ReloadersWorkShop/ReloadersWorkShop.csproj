@@ -93,6 +93,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="cBatch.cs" />
+    <Compile Include="cBatch.Export.cs" />
     <Compile Include="cBatchForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -113,6 +114,7 @@
       <DependentUpon>cBatchPrintForm.cs</DependentUpon>
     </Compile>
     <Compile Include="cBatchTest.cs" />
+    <Compile Include="cBatchTest.Export.cs" />
     <Compile Include="cBatchTestForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -115,8 +115,13 @@ namespace ReloadersWorkShop
 					case "Batch":
 						cBatch Batch = new cBatch();
 
-						if (Batch.Import(XMLDocument, XMLNode,DataFiles))
-							AddBatch(Batch);
+						if (Batch.Import(XMLDocument, XMLNode, DataFiles))
+							{
+							if (Batch.Validate())
+								AddBatch(Batch);
+							else
+								Console.WriteLine("Invalid Batch!");
+							}
 
 						break;
 					}

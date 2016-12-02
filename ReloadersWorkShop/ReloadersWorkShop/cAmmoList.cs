@@ -115,7 +115,12 @@ namespace ReloadersWorkShop
 						cAmmo Ammo = new cAmmo();
 
 						if (Ammo.Import(XMLDocument, XMLNode, DataFiles))
-							AddAmmo(Ammo);
+							{
+							if (Ammo.Validate())
+								AddAmmo(Ammo);
+							else
+								Console.WriteLine("Invalid Ammo!");
+							}
 
 						break;
 					}

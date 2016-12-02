@@ -144,6 +144,8 @@ namespace ReloadersWorkShop
 
 		public void Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
 			{
+			Clear();
+
 			XmlNode XMLNode = XMLThisNode.FirstChild;
 
 			while (XMLNode != null)
@@ -154,7 +156,12 @@ namespace ReloadersWorkShop
 						cTestShot TestShot = new cTestShot();
 
 						if (TestShot.Import(XMLDocument, XMLNode, DataFiles))
-							Add(TestShot);
+							{
+							if (TestShot.Validate())
+								Add(TestShot);
+							else
+								Console.WriteLine("Invalid TestShot!");
+							}
 
 						break;
 					}

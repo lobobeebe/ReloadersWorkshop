@@ -748,7 +748,7 @@ namespace ReloadersWorkShop
 		// Validate()
 		//============================================================================*
 
-		public bool Validate()
+		public bool Validate(bool fNonIdentity = false)
 			{
 			bool fOK = m_Caliber != null &&
 						m_Bullet != null &&
@@ -757,7 +757,7 @@ namespace ReloadersWorkShop
 						m_Primer != null;
 
 			if (Identity)
-				return (fOK);
+				return (fOK && !fNonIdentity);
 
 			if (fOK)
 				fOK = m_ChargeList.Count > 0;

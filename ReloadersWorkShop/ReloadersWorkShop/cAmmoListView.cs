@@ -324,7 +324,7 @@ namespace ReloadersWorkShop
 				}
 			else
 				{
-				Item.SubItems.Add(String.Format("{0:N0}", Ammo.Quantity));
+				Item.SubItems.Add(Ammo.Quantity != 0.0 ? String.Format("{0:N0}", Ammo.Quantity) : "-");
 
 				dCost = Ammo.Cost;
 				}
