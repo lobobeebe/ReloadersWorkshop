@@ -66,6 +66,7 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Registry\cRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XML\cXMLDocument.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

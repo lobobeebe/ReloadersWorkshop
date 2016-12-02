@@ -2354,11 +2354,11 @@ namespace ReloadersWorkShop
 									{
 									Import(Path.Combine(GetDataPath(), "RWRecovery.xml"), false);
 									}
-								catch (Exception e)
+								catch
 									{
-									strMessage = "Error importing XML file...";
+									strMessage = "Error importing XML Recovery file...";
 
-									MessageBox.Show(strMessage, "XML Load Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+									MessageBox.Show(strMessage, "File Import Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
 									fLoadOK = false;
 									}

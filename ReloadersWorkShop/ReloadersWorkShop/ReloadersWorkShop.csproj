@@ -254,6 +254,7 @@
     <Compile Include="cGearList.cs" />
     <Compile Include="cListViewFirearmAccessoryComparer.cs" />
     <Compile Include="cRedDot.cs" />
+    <Compile Include="cRWXMLDocument.cs" />
     <Compile Include="cScope.cs" />
     <Compile Include="cTarget.cs" />
     <Compile Include="cTargetCalibrationForm.cs">
