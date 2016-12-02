@@ -31,7 +31,7 @@ namespace ReloadersWorkShop
 		//============================================================================*
 
 		private cDataFiles m_DataFiles = null;
-		private string m_strFilePath = @"C:\Users\Public\Reloader's WorkShop\Exported Data\RWData.csv";
+		private string m_strFilePath = String.Format(@"C:\Users\Public\{0}\Exported Data\RWData.csv", Application.ProductName);
 
 		//============================================================================*
 		// cExportForm() - Constructor
@@ -175,7 +175,7 @@ namespace ReloadersWorkShop
 					// Store the header
 					//----------------------------------------------------------------------------*
 
-					Writer.WriteLine("Reloader's WorkShop Data File Export");
+					Writer.WriteLine(String.Format("{0} Data File Export", Application.ProductName));
 					Writer.WriteLine();
 
 					//----------------------------------------------------------------------------*
@@ -268,7 +268,7 @@ namespace ReloadersWorkShop
 			XmlElement MainElement = XMLDocument.CreateElement("Body");
 			XMLDocument.AppendChild(MainElement);
 
-			XmlText XMLTextElement = XMLDocument.CreateTextNode("Reloader's WorkShop Data File Export");
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0} Data File Export", Application.ProductName));
 			MainElement.AppendChild(XMLTextElement);
 
 			if (ManufacturersCheckBox.Checked)
@@ -319,7 +319,7 @@ namespace ReloadersWorkShop
 
 			SaveFileDialog FileDlg = new SaveFileDialog();
 
-			FileDlg.Title = "Export Reloader's WorkShop Data Files";
+			FileDlg.Title = String.Format("Export {0} Data Files", Application.ProductName);
 			FileDlg.AddExtension = true;
 			FileDlg.DefaultExt = Path.GetExtension(m_strFilePath);
 			FileDlg.InitialDirectory = Path.GetDirectoryName(m_strFilePath);

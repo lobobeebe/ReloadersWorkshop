@@ -133,7 +133,7 @@ namespace ReloadersWorkShop
 				{
 				SaveFileDialog FileDlg = new SaveFileDialog();
 
-				FileDlg.Title = "Save Reloader's WorkShop Share File";
+				FileDlg.Title = String.Format("Save {0} Share File", Application.ProductName);
 				FileDlg.AddExtension = true;
 				FileDlg.DefaultExt = "rws";
 
@@ -142,7 +142,7 @@ namespace ReloadersWorkShop
 				else
 					FileDlg.InitialDirectory = m_DataFiles.Preferences.ShareFilePath;
 
-				FileDlg.Filter = "Reloader's WorkShop Share Files (*.rws)|*.rws";
+				FileDlg.Filter = String.Format("{0} Share Files (*.rws)|*.rws", Application.ProductName);
 				FileDlg.CheckPathExists = true;
 
 				DialogResult rc = FileDlg.ShowDialog();
@@ -182,7 +182,7 @@ namespace ReloadersWorkShop
 
 				Stream = null;
 
-				MessageBox.Show("Your share file has been created successfully.  \n\nThis file can be emailed or otherwise sent to a friend who is also using Reloader's WorkShop.", "Share File Created", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				MessageBox.Show(String.Format("Your share file has been created successfully.  \n\nThis file can be emailed or otherwise sent to a friend who is also using {0}.", Application.ProductName), "Share File Created", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				}
 			catch (Exception e1)
 				{
@@ -220,7 +220,7 @@ namespace ReloadersWorkShop
 				{
 				OpenFileDialog FileDlg = new OpenFileDialog();
 
-				FileDlg.Title = "Import Reloader's WorkShop Share File";
+				FileDlg.Title = String.Format("Import {0} Share File", Application.ProductName);
 				FileDlg.AddExtension = true;
 				FileDlg.DefaultExt = "rws";
 
@@ -229,7 +229,7 @@ namespace ReloadersWorkShop
 				else
 					FileDlg.InitialDirectory = m_DataFiles.Preferences.ShareFilePath;
 
-				FileDlg.Filter = "Reloader's WorkShop Share Files (*.rws)|*.rws";
+				FileDlg.Filter = String.Format("{0} Share Files (*.rws)|*.rws", Application.ProductName);
 				FileDlg.CheckPathExists = true;
 
 				DialogResult rc = FileDlg.ShowDialog();
@@ -304,7 +304,7 @@ namespace ReloadersWorkShop
 				}
 			catch
 				{
-				MessageBox.Show("Unable to merge share file! The file may not be a valid Reloader's WorkShop Share File.  Check with the source of the file for more information on what version of Reloader's WorkShop was used to create the file.", "Share File Import Error", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Exclamation);
+				MessageBox.Show(String.Format("Unable to merge share file! The file may not be a valid {0} Share File.  Check with the source of the file for more information on what version of {0} was used to create the file.", Application.ProductName), "Share File Import Error", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Exclamation);
 				}
 			finally
 				{

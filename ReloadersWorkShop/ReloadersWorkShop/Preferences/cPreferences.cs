@@ -498,8 +498,8 @@ namespace ReloadersWorkShop.Preferences
 
 			ShareFilePath = BackupFolder;
 
-			BackupFolder = Path.Combine(BackupFolder, @"Reloader's WorkShop\Backup");
-			ShareFilePath = Path.Combine(ShareFilePath, @"Reloader's WorkShop\Share");
+			BackupFolder = Path.Combine(BackupFolder, String.Format(@"{0}\Backup", Application.ProductName));
+			ShareFilePath = Path.Combine(ShareFilePath, String.Format(@"{0}\Share", Application.ProductName));
 			}
 
 		//============================================================================*

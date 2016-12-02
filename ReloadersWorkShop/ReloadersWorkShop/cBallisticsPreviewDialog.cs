@@ -79,7 +79,7 @@ namespace ReloadersWorkShop
 				ClientSize = m_DataFiles.Preferences.BallisticsPreviewSize;
 				}
 
-			Text = "Reloader's WorkShop Ballistics Table - Print Preview";
+			Text = String.Format("{0} Ballistics Table - Print Preview", Application.ProductName);
 
 			PrintDocument BallisticsDocument = new PrintDocument();
 			BallisticsDocument.PrintPage += OnPrintPage;
@@ -194,22 +194,7 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			nY = cPrintObject.PrintReportTitle("Ballistics Table", e, PageRect);
-			/*
-			strText = "Reloader's WorkShop";
-			TextSize = e.Graphics.MeasureString(strText, TitleFont);
 
-			e.Graphics.DrawString(strText, TitleFont, Brushes.Black, (PageRect.Width / 2) - (TextSize.Width / 2), nY);
-
-			nY += TextSize.Height;
-
-			strText = "Ballistics Table";
-
-			TextSize = e.Graphics.MeasureString(strText, TitleFont);
-
-			e.Graphics.DrawString(strText, TitleFont, Brushes.Black, (PageRect.Width / 2) - (TextSize.Width / 2), nY);
-
-			nY += TextSize.Height;
-*/
 			//----------------------------------------------------------------------------*
 			// Draw the input data section header if needed
 			//----------------------------------------------------------------------------*

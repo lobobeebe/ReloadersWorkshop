@@ -597,7 +597,7 @@ namespace ReloadersWorkShop
 
 		private void OnRemoveImageClicked(object sender, EventArgs e)
 			{
-			DialogResult rc = MessageBox.Show("Warning: Image file will be deleted from the Reloader's WorkShop data folder\n\nAre you sure you wish to remove this photo?", "Image Deletion Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+			DialogResult rc = MessageBox.Show(String.Format("Warning: Image file will be deleted from the {0} data folder\n\nAre you sure you wish to remove this photo?", Application.ProductName), "Image Deletion Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
 
 			if (rc == DialogResult.No)
 				return;

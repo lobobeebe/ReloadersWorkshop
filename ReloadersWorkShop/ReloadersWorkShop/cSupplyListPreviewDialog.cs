@@ -97,9 +97,9 @@ namespace ReloadersWorkShop
 				}
 
 			if (m_DataFiles.Preferences.SupplyPrintBelowStock)
-				Text = "Reloader's WorkShop Supplies Shopping List - Print Preview";
+				Text = String.Format("{0} Supplies Shopping List - Print Preview", Application.ProductName);
 			else
-				Text = "Reloader's WorkShop Supplies List - Print Preview";
+				Text = String.Format("{0} Supplies List - Print Preview", Application.ProductName);
 
 			PrintDocument ShoppingListDocument = new PrintDocument();
 			ShoppingListDocument.PrintPage += OnPrintPage;

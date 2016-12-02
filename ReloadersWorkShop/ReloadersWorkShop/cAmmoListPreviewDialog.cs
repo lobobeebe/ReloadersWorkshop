@@ -68,7 +68,7 @@ namespace ReloadersWorkShop
 				ClientSize = m_DataFiles.Preferences.AmmoListPreviewSize;
 				}
 
-			Text = "Reloader's WorkShop Ammuniton List - Print Preview";
+			Text = String.Format("{0} Ammuniton List - Print Preview",  Application.ProductName);
 
 			PrintDocument AmmoListDocument = new PrintDocument();
 			AmmoListDocument.PrintPage += OnPrintPage;

@@ -68,7 +68,7 @@ namespace ReloadersWorkShop
 				ClientSize = m_DataFiles.Preferences.FirearmListPreviewSize;
 				}
 
-			Text = "Reloader's WorkShop Firearm List - Print Preview";
+			Text = String.Format("{0} Firearm List - Print Preview", Application.ProductName);
 
 			PrintDocument FirearmListDocument = new PrintDocument();
 			FirearmListDocument.PrintPage += OnPrintPage;

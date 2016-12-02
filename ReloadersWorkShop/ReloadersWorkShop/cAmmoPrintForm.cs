@@ -280,7 +280,13 @@ namespace ReloadersWorkShop
 
 			Graphics.DrawString(String.Format("{0}", m_Ammo.ToShortString()), LabelHeaderFont, Brushes.Black, dX, dY);
 
-			dY += ((float)LabelHeaderFont.Height * (float)2.0);
+			dY += (float) LabelHeaderFont.Height;
+
+			// Model
+
+			Graphics.DrawString(String.Format("{0}", m_Ammo.Type), LabelHeaderFont, Brushes.Black, dX, dY);
+
+			dY += ((float) LabelHeaderFont.Height * (float) 2.0);
 
 			// Caliber
 
@@ -751,11 +757,20 @@ namespace ReloadersWorkShop
 
 			Rectangle PrinterBounds = e.PageBounds;
 
-			int nXDPI = (int)((double)PrinterBounds.Width / 8.5);
-			int nYDPI = (int)((double)PrinterBounds.Height / 11);
+			double dPageWidth = 8.5;
+			double dPageHeight = 11.0;
 
-			PrinterBounds.Width -= (int)(e.PageSettings.HardMarginX * 2.0);
-			PrinterBounds.Height -= (int)(e.PageSettings.HardMarginY * 2.0);
+			if (PaperComboBox.SelectedIndex == 1 || PaperComboBox.SelectedIndex == 2)
+				{
+				dPageWidth = 4.0;
+				dPageHeight = 6.0;
+				}
+
+			int nXDPI = (int) ((double) PrinterBounds.Width / dPageWidth);
+			int nYDPI = (int) ((double) PrinterBounds.Height / dPageHeight);
+
+			PrinterBounds.Width -= (int) (e.PageSettings.HardMarginX * 2.0);
+			PrinterBounds.Height -= (int) (e.PageSettings.HardMarginY * 2.0);
 
 			while (nRepeat > 0)
 				{

@@ -12,6 +12,7 @@
 using System;
 using System.Drawing;
 using System.Drawing.Printing;
+using System.Windows.Forms;
 
 //============================================================================*
 // Namespace
@@ -89,7 +90,7 @@ namespace ReloadersWorkShop
 
 			e.Graphics.DrawString(strText, DataFont, Brushes.Black, PageRect.Right - TextSize.Width, nY);
 
-			strText = "Reloader's WorkShop";
+			strText = Application.ProductName;
 
 			TextSize = e.Graphics.MeasureString(strText, TitleFont);
 

@@ -116,7 +116,7 @@ namespace ReloadersWorkShop
 				ClientSize = m_DataFiles.Preferences.CostAnalysisPreviewSize;
 				}
 
-			Text = "Reloader's WorkShop Cost Analysis - Print Preview";
+			Text = String.Format("{0} Cost Analysis - Print Preview", Application.ProductName);
 
 			PrintDocument CostAnalysisDocument = new PrintDocument();
 			CostAnalysisDocument.PrintPage += OnPrintPage;

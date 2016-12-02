@@ -78,7 +78,7 @@ namespace ReloadersWorkShop
 				ClientSize = m_DataFiles.Preferences.FirearmListPreviewSize;
 				}
 
-			Text = "Reloader's WorkShop Firearm Accessory List - Print Preview";
+			Text = String.Format("{0} Firearm Accessory List - Print Preview", Application.ProductName);
 
 			sm_Columns[4].Name = String.Format("Price ({0})", m_DataFiles.Preferences.Currency);
 			sm_Columns[5].Name = String.Format("Tax ({0})", m_DataFiles.Preferences.Currency);

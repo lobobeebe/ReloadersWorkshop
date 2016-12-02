@@ -1167,7 +1167,7 @@ namespace ReloadersWorkShop
 			XmlElement MainElement = XMLDocument.CreateElement("Body");
 			XMLDocument.AppendChild(MainElement);
 
-			XmlText XMLTextElement = XMLDocument.CreateTextNode("Reloader's WorkShop Data File Export");
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0} Data File Export", Application.ProductName));
 			MainElement.AppendChild(XMLTextElement);
 
 			Preferences.Export(XMLDocument, MainElement);
@@ -1572,7 +1572,7 @@ namespace ReloadersWorkShop
 
 		public string GetDataPath()
 			{
-			return (@"c:\Users\Public\Reloader's WorkShop");
+			return (String.Format(@"c:\Users\Public\{0}", Application.ProductName));
 			}
 
 		//============================================================================*
@@ -1893,9 +1893,9 @@ namespace ReloadersWorkShop
 
 			XmlElement XMLRoot = XMLDocument.DocumentElement;
 
-			if (XMLRoot.FirstChild == null || !(XMLRoot.FirstChild is XmlText) || (XMLRoot.FirstChild as XmlText).Value != cDataFiles.XMLHeaderString)
+			if (XMLRoot.FirstChild == null || !(XMLRoot.FirstChild is XmlText) || (XMLRoot.FirstChild as XmlText).Value.IndexOf(Application.ProductName) < 0)
 				{
-				string strMessage = String.Format("{0} does not appear to contain Reloader's WorkShop data!", strFilePath);
+				string strMessage = String.Format("{0} does not appear to contain {1} data!", strFilePath,  Application.ProductName);
 
 				MessageBox.Show(strMessage, "XML Data Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
@@ -2342,9 +2342,9 @@ namespace ReloadersWorkShop
 									Stream = null;
 									}
 
-								string strMessage = "An error was encountered while reading the Reloader's WorkShop data file!  This can be caused by a recent update with an incompatible data format.";
+								string strMessage = String.Format("An error was encountered while reading the {0} data file!  This can be caused by a recent update with an incompatible data format.", Application.ProductName);
 
-								strMessage += "\n\nFortunately, I've been saving a data recovery file every time you exit Reloader's WorkShop for just such an occurence.\n\nThis recovery file will now be used to restore your data.";
+								strMessage += String.Format("\n\nFortunately, I've been saving a data recovery file every time you exit {0} for just such an occurence.\n\nThis recovery file will now be used to restore your data.", Application.ProductName);
 								
 								strMessage += "\n\nYou're welcome...\n\nClick OK to continue...";
 
@@ -2359,11 +2359,13 @@ namespace ReloadersWorkShop
 									strMessage = "Error importing XML file...";
 
 									MessageBox.Show(strMessage, "XML Load Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+									fLoadOK = false;
 									}
 								}
 							else
 								{
-								string strMessage = String.Format("An error was encountered while reading the file {0}.  This can be caused by a corrupted data file or by attempting to load an older data file from an earlier release of Reloader's WorkShop.  Some or all of your data may not have loaded properly.", Path.GetFileName(strFilePath));
+								string strMessage = String.Format("An error was encountered while reading the file {0}.  This can be caused by a corrupted data file or by attempting to load an older data file from an earlier release of {1}.  Some or all of your data may not have loaded properly.", Path.GetFileName(strFilePath), Application.ProductName);
 
 								if (fRestore)
 									strMessage += "\n\nDo you wish to continue?";
@@ -5137,18 +5139,6 @@ namespace ReloadersWorkShop
 				return (false);
 
 			return (true);
-			}
-
-		//============================================================================*
-		// XMLHeaderString Property
-		//============================================================================*
-
-		public static string XMLHeaderString
-			{
-			get
-				{
-				return ("Reloader's WorkShop Data File Export");
-				}
 			}
 		}
 	}

@@ -264,11 +264,11 @@ namespace ReloadersWorkShop
 
 			SaveFileDialog FileDlg = new SaveFileDialog();
 
-			FileDlg.Title = "Save Reloader's WorkShop Backup File";
+			FileDlg.Title = String.Format("Save {0} Backup File",Application.ProductName);
 			FileDlg.AddExtension = true;
 			FileDlg.DefaultExt = "rwb";
 			FileDlg.InitialDirectory = m_DataFiles.Preferences.BackupFolder;
-			FileDlg.Filter = "Reloader's WorkShop Backup Files (*.rwb)|*.rwb";
+			FileDlg.Filter = String.Format("{0} Backup Files (*.rwb)|*.rwb", Application.ProductName);
 			FileDlg.OverwritePrompt = true;
 			FileDlg.FileName = strDataFileName;
 
@@ -1042,7 +1042,7 @@ namespace ReloadersWorkShop
 
 			if (RWUpdater.UpdatesAvailable)
 				{
-				DialogResult rc = MessageBox.Show("A newer version of Reloader's WorkShop is available.\n\nUpdate now? (Reloader's WorkShop will restart)", "Update Available", MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+				DialogResult rc = MessageBox.Show(String.Format("A newer version of {0} is available.\n\nUpdate now? ({0} will restart)", Application.ProductName), "Update Available", MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
 
 				if (rc == DialogResult.No)
 					return;
@@ -1055,7 +1055,7 @@ namespace ReloadersWorkShop
 				}
 			else
 				{
-				MessageBox.Show("Reloader's WorkShop is up to date", "No Update Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				MessageBox.Show(String.Format("{0} is up to date", Application.ProductName), "No Update Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 				return;
 				}
@@ -1084,7 +1084,7 @@ namespace ReloadersWorkShop
 				}
 			catch
 				{
-				MessageBox.Show("Unable to navigate to the Reloader's WorkShop Support Forum at this time, try again later.  Please make sure you are connected to the Internet.", "Support Forum Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(String.Format("Unable to navigate to the {0} Support Forum at this time, try again later.  Please make sure you are connected to the Internet.", Application.ProductName), "Support Forum Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
 			}
 
@@ -2125,11 +2125,11 @@ namespace ReloadersWorkShop
 			{
 			OpenFileDialog FileDlg = new OpenFileDialog();
 
-			FileDlg.Title = "Restore Reloader's WorkShop Backup File";
+			FileDlg.Title = String.Format("Restore {0} Backup File", Application.ProductName);
 			FileDlg.AddExtension = true;
 			FileDlg.DefaultExt = "rwb";
 			FileDlg.InitialDirectory = m_DataFiles.Preferences.BackupFolder;
-			FileDlg.Filter = "Reloader's WorkShop Backup Files (*.rwb)|*.rwb";
+			FileDlg.Filter = String.Format("{0} Backup Files (*.rwb)|*.rwb",Application.ProductName);
 
 			DialogResult rc = FileDlg.ShowDialog();
 

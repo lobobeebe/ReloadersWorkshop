@@ -6,11 +6,11 @@ using System.Resources;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Reloader's WorkShop")]
-[assembly: AssemblyDescription("Comprehensive Tracking Software for Metallic Cartridge Reloaders")]
+[assembly: AssemblyDescription("Comprehensive Tracking Software for Shooters and Metallic Cartridge Reloaders")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Hornady Loader")]
 [assembly: AssemblyProduct("Reloader's WorkShop")]
-[assembly: AssemblyCopyright("Copyright © 2013-2016, Kevin S. Beebe")]
+[assembly: AssemblyCopyright("Copyright © 2013-2017, Kevin S. Beebe")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

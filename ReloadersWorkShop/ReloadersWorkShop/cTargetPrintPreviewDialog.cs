@@ -61,7 +61,7 @@ namespace ReloadersWorkShop
 				ClientSize = m_DataFiles.Preferences.TargetPrintSize;
 				}
 
-			Text = "Reloader's WorkShop Target Calculator - Print Preview";
+			Text = String.Format("{0} Target Calculator - Print Preview", Application.ProductName);
 
 			PrintDocument TargetPrintDocument = new PrintDocument();
 			TargetPrintDocument.PrintPage += OnPrintPage;

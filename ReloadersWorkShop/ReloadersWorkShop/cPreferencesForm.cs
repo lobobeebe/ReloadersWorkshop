@@ -1164,7 +1164,7 @@ namespace ReloadersWorkShop
 				}
 			else
 				{
-				string strMessage = "WARNING: Turning Inventory Tracking on will dramatically change the way Reloader's WorkShop operates.  You may want to view the Reloader's WorkShop Tutorial on Inventory Control before turning it on.";
+				string strMessage = String.Format("WARNING: Turning Inventory Tracking on will dramatically change the way {0} operates.  You may want to view the {0} Tutorial on Inventory Control before turning it on.", Application.ProductName);
 
 				if (m_DataFiles.BatchList.Count > 0)
 					{

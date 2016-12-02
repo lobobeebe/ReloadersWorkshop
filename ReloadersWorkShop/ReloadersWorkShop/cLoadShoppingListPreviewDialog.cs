@@ -92,7 +92,7 @@ namespace ReloadersWorkShop
 				ClientSize = m_DataFiles.Preferences.ShoppingListPreviewSize;
 				}
 
-			Text = "Reloader's WorkShop Load Shopping List - Print Preview";
+			Text = String.Format("{0} Load Shopping List - Print Preview", Application.ProductName);
 
 			PrintDocument ShoppingListDocument = new PrintDocument();
 			ShoppingListDocument.PrintPage += OnPrintPage;
@@ -320,21 +320,7 @@ namespace ReloadersWorkShop
 						//----------------------------------------------------------------------------*
 
 						nY = cPrintObject.PrintReportTitle("Load Shopping List", e,  PageRect);
-/*
-						strText = "Reloader's WorkShop";
-						TextSize = e.Graphics.MeasureString(strText, TitleFont);
 
-						e.Graphics.DrawString(strText, TitleFont, Brushes.Black, (PageRect.Width / 2) - (TextSize.Width / 2), nY);
-
-						nY += TextSize.Height;
-
-						strText = "Shopping List";
-						TextSize = e.Graphics.MeasureString(strText, TitleFont);
-
-						e.Graphics.DrawString(strText, TitleFont, Brushes.Black, (PageRect.Width / 2) - (TextSize.Width / 2), nY);
-
-						nY += TextSize.Height;
-*/
 						if (m_DataFiles.Preferences.TrackInventory)
 							{
 							strText = m_DataFiles.CostText;

@@ -30,7 +30,7 @@ namespace ReloadersWorkShop
 			{
 			string strMessage = "An internal error has occurred!\n\nSystem Message:\n\n";
 			strMessage += e.ToString();
-			strMessage += "\n\nPlease report the above message to the Lobo Specialties Reloader's WorkShop Support Team.\n\nThe program will continue normally.";
+			strMessage += String.Format("\n\nPlease report the above message to the {0} Support Team.\n\nThe program will continue normally.", Application.ProductName);
 
 			MessageBox.Show(strMessage, "Internal Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
