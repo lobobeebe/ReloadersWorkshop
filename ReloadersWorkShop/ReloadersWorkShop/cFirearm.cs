@@ -764,7 +764,7 @@ namespace ReloadersWorkShop
 
 		public override bool ResolveIdentities(cDataFiles Datafiles)
 			{
-			return(false);
+			return (false);
 			}
 
 		//============================================================================*
@@ -805,6 +805,15 @@ namespace ReloadersWorkShop
 
 		public override void SetDefaultDescription()
 			{
+			if (!String.IsNullOrEmpty(Description) &&
+				Description != "Handgun" &&
+				Description != "Pistol" &&
+				Description != "Revolver" &&
+				Description != "Rifle" &&
+				Description != "Shotgun" &&
+				Description != "Other Firearm Type")
+				return;
+
 			switch (m_eFirearmType)
 				{
 				case eFireArmType.Handgun:

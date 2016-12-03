@@ -68,7 +68,7 @@ namespace ReloadersWorkShop
 
 			// Firearm
 
-			m_Firearm.ExportIdentity(XMLDocument, XMLThisElement);
+			m_Firearm.Export(XMLDocument, XMLThisElement, true);
 
 			// Barrel Length
 

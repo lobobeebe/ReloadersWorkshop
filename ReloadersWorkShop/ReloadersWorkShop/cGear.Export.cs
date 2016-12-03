@@ -119,7 +119,7 @@ namespace ReloadersWorkShop
 			// Details - (Some inherited classes have additional data)
 			//----------------------------------------------------------------------------*
 
-			ExportDetails(XMLDocument, XMLThisElement);
+			Export(XMLDocument, XMLThisElement);
 
 			//----------------------------------------------------------------------------*
 			// Notes
@@ -134,6 +134,63 @@ namespace ReloadersWorkShop
 
 		public virtual void ExportDetails(XmlDocument XMLDocument, XmlNode XMLThisNode)
 			{
+			}
+
+		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public virtual bool Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "Manufacturer":
+						Manufacturer = DataFiles.GetManufacturerByName(XMLNode.FirstChild.Value);
+						break;
+					case "PartNumber":
+					case "Model":
+						m_strPartNumber = XMLNode.FirstChild.Value;
+						break;
+					case "SerialNumber":
+						m_strSerialNumber = XMLNode.FirstChild.Value;
+						break;
+					case "Description":
+						m_strDescription = XMLNode.FirstChild.Value;
+						break;
+					case "AcquiredFrom":
+					case "Source":
+						m_strSource = XMLNode.FirstChild.Value;
+						break;
+					case "PurchaseDate":
+					case "DatePurchased":
+						DateTime.TryParse(XMLNode.FirstChild.Value, out m_Date);
+						break;
+					case "PurchasePrice":
+					case "Price":
+					case "Cost":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dPrice);
+						break;
+					case "Notes":
+						m_strNotes = XMLNode.FirstChild.Value;
+						break;
+					default:
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+
+			//----------------------------------------------------------------------------*
+			//  Export Details if needed
+			//----------------------------------------------------------------------------*
+
+			ExportDetails(XMLDocument, XMLThisNode);
+
+			return (Validate());
 			}
 		}
 	}

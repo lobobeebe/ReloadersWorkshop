@@ -48,7 +48,7 @@ namespace ReloadersWorkShop
 			// Firearm
 
 			if (m_Firearm != null)
-				m_Firearm.ExportIdentity(XMLDocument, XMLThisElement);
+				m_Firearm.Export(XMLDocument, XMLThisElement, true);
 
 			// Powder Weight
 

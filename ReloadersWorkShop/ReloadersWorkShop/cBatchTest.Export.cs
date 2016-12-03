@@ -57,125 +57,25 @@ namespace ReloadersWorkShop
 
 		public void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement)
 			{
-			XmlElement XMLThisElement = XMLDocument.CreateElement(ExportName);
-			XMLParentElement.AppendChild(XMLThisElement);
+			XmlElement XMLThisElement = XMLDocument.CreateElement(ExportName, XMLParentElement);
 
-			// Test Date
-
-			XmlElement XMLElement = XMLDocument.CreateElement("TestDate");
-			XmlText XMLTextElement = XMLDocument.CreateTextNode(m_TestDate.ToShortDateString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Firearm
+			XMLDocument.CreateElement("TestDate", m_TestDate, XMLThisElement);
 
 			if (m_Firearm != null)
-				m_Firearm.ExportIdentity(XMLDocument, XMLThisElement);
+				m_Firearm.Export(XMLDocument, XMLThisElement, true);
 
-			// Suppressed
-
-			XMLElement = XMLDocument.CreateElement("Suppressed");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fSuppressed ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Location
-
-			if (!String.IsNullOrEmpty(m_strLocation))
-				{
-				XMLElement = XMLDocument.CreateElement("Location");
-				XMLTextElement = XMLDocument.CreateTextNode(m_strLocation);
-				XMLElement.AppendChild(XMLTextElement);
-
-				XMLThisElement.AppendChild(XMLElement);
-				}
-
-			// Altitude
-
-			XMLElement = XMLDocument.CreateElement("Altitude");
-			XMLTextElement = XMLDocument.CreateTextNode(m_nAltitude.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Pressure
-
-			XMLElement = XMLDocument.CreateElement("Pressure");
-			XMLTextElement = XMLDocument.CreateTextNode(m_dPressure.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Temperature
-
-			XMLElement = XMLDocument.CreateElement("Temperature");
-			XMLTextElement = XMLDocument.CreateTextNode(m_nTemperature.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Humidity
-
-			XMLElement = XMLDocument.CreateElement("Humidity");
-			XMLTextElement = XMLDocument.CreateTextNode(m_dHumidity.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Wind Speed
-
-			XMLElement = XMLDocument.CreateElement("WindSpeed");
-			XMLTextElement = XMLDocument.CreateTextNode(m_nWindSpeed.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Wind Direction
-
-			XMLElement = XMLDocument.CreateElement("WindDirection");
-			XMLTextElement = XMLDocument.CreateTextNode(m_nWindDirection.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Num Rounds
-
-			XMLElement = XMLDocument.CreateElement("NumRounds");
-			XMLTextElement = XMLDocument.CreateTextNode(m_nNumRounds.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Best Group
-
-			XMLElement = XMLDocument.CreateElement("BestGroup");
-			XMLTextElement = XMLDocument.CreateTextNode(m_dBestGroup.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Best Group Range
-
-			XMLElement = XMLDocument.CreateElement("BestGroupRange");
-			XMLTextElement = XMLDocument.CreateTextNode(m_nBestGroupRange.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Notes
-
-			if (!String.IsNullOrEmpty(m_strNotes))
-				{
-				XMLElement = XMLDocument.CreateElement("Notes");
-				XMLTextElement = XMLDocument.CreateTextNode(m_strNotes);
-				XMLElement.AppendChild(XMLTextElement);
-
-				XMLThisElement.AppendChild(XMLElement);
-				}
-
-			// Test Shots
+			XMLDocument.CreateElement("Suppressed", m_fSuppressed, XMLThisElement);
+			XMLDocument.CreateElement("Location", m_strLocation, XMLThisElement);
+			XMLDocument.CreateElement("Altitude", m_nAltitude, XMLThisElement);
+			XMLDocument.CreateElement("Pressure", m_dPressure, XMLThisElement);
+			XMLDocument.CreateElement("Temperature", m_nTemperature, XMLThisElement);
+			XMLDocument.CreateElement("Humidity", m_dHumidity, XMLThisElement);
+			XMLDocument.CreateElement("WindSpeed", m_nWindSpeed, XMLThisElement);
+			XMLDocument.CreateElement("WindDirection", m_nWindDirection, XMLThisElement);
+			XMLDocument.CreateElement("NumRounds", m_nNumRounds, XMLThisElement);
+			XMLDocument.CreateElement("BestGroup", m_dBestGroup, XMLThisElement);
+			XMLDocument.CreateElement("BestGroupRange", m_nBestGroupRange, XMLThisElement);
+			XMLDocument.CreateElement("Notes", m_strNotes, XMLThisElement);
 
 			m_TestShotList.Export(XMLDocument, XMLThisElement);
 			}

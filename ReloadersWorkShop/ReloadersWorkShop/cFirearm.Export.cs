@@ -168,6 +168,9 @@ namespace ReloadersWorkShop
 					{
 					case "FirearmType":
 						m_eFirearmType = cFirearm.FirearmTypeFromString(XMLNode.FirstChild.Value);
+
+						SetDefaultDescription();
+
 						break;
 					case "BarrelLength":
 						Double.TryParse(XMLNode.FirstChild.Value, out m_dBarrelLength);
@@ -229,6 +232,9 @@ namespace ReloadersWorkShop
 					case "FirearmCalibers":
 					case "FirearmCaliberList":
 						m_FirearmCaliberList.Import(XMLDocument, XMLNode, DataFiles);
+
+						SetDefaultDescription();
+
 						break;
 					case "FirearmBullets":
 					case "FirearmBulletList":
