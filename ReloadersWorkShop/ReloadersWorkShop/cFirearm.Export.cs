@@ -193,7 +193,7 @@ namespace ReloadersWorkShop
 					case "ZeroRange":
 						Int32.TryParse(XMLNode.FirstChild.Value, out m_nZeroRange);
 						break;
-					case "Headspace":
+					case "HeadSpace":
 						Double.TryParse(XMLNode.FirstChild.Value, out m_dHeadSpace);
 						break;
 					case "NeckSize":
