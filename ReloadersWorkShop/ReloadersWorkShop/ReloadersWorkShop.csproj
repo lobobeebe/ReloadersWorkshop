@@ -88,6 +88,7 @@
     <Compile Include="cAmmoListPreviewDialog.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="cAmmoTest.Export.cs" />
     <Compile Include="cAtmospherics.cs" />
     <Compile Include="cBallistics.cs" />
     <Compile Include="cBallisticsPreviewDialog.cs">
@@ -123,7 +124,9 @@
       <DependentUpon>cBatchTestForm.cs</DependentUpon>
     </Compile>
     <Compile Include="cBatchTestList.cs" />
+    <Compile Include="cBullet.Export.cs" />
     <Compile Include="cBulletCaliber.cs" />
+    <Compile Include="cBulletCaliber.Export.cs" />
     <Compile Include="cBulletCaliberForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -140,9 +143,11 @@
     <Compile Include="cBulletTypeForm.Designer.cs">
       <DependentUpon>cBulletTypeForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="cCaliber.Export.cs" />
     <Compile Include="cCaliberListView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="cCase.Export.cs" />
     <Compile Include="cCaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -239,6 +244,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="cEvaluationItem.cs" />
+    <Compile Include="cFirearm.Export.cs" />
     <Compile Include="cFirearmAccessoryForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -251,12 +257,18 @@
     <Compile Include="cFirearmAccessoryListView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="cFirearmCaliber.Export.cs" />
     <Compile Include="cGear.cs" />
+    <Compile Include="cGear.Export.cs" />
     <Compile Include="cGearList.cs" />
     <Compile Include="cListViewFirearmAccessoryComparer.cs" />
+    <Compile Include="cManufacturer.Export.cs" />
+    <Compile Include="cPowder.Export.cs" />
+    <Compile Include="cPrimer.Export.cs" />
     <Compile Include="cRedDot.cs" />
     <Compile Include="cRWXMLDocument.cs" />
     <Compile Include="cScope.cs" />
+    <Compile Include="cSupply.Export.cs" />
     <Compile Include="cTarget.cs" />
     <Compile Include="cTargetCalibrationForm.cs">
       <SubType>Form</SubType>

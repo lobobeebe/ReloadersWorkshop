@@ -23,7 +23,7 @@ namespace ReloadersWorkShop
 	//============================================================================*
 
 	[Serializable]
-	public class cPowder : cSupply
+	public partial class cPowder : cSupply
 		{
 		//----------------------------------------------------------------------------*
 		// Public Enumerations
@@ -42,7 +42,7 @@ namespace ReloadersWorkShop
 		//============================================================================*
 
 		private string m_strType = "";
-		private ePowderShapes m_ePowderType = ePowderShapes.Other;
+		private ePowderShapes m_eShape = ePowderShapes.Other;
 
 		//============================================================================*
 		// cPowder() - Constructor
@@ -126,128 +126,7 @@ namespace ReloadersWorkShop
 				base.Copy(Powder);
 
 			m_strType = Powder.m_strType;
-			m_ePowderType = Powder.m_ePowderType;
-			}
-
-		//============================================================================*
-		// CSVLine Property
-		//============================================================================*
-
-		public override string CSVLine
-			{
-			get
-				{
-				string strLine = base.CSVLine;
-
-				strLine += m_strType;
-				strLine += ",";
-				strLine += ShapeString;
-
-				return (strLine);
-				}
-			}
-
-		//============================================================================*
-		// CSVLineHeader Property
-		//============================================================================*
-
-		public static string CSVLineHeader
-			{
-			get
-				{
-				string strLine = cSupply.CSVSupplyLineHeader;
-
-				strLine += "Type,Shape";
-
-				return (strLine);
-				}
-			}
-
-		//============================================================================*
-		// Export() - XML Document
-		//============================================================================*
-
-		public override void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
-			{
-			XmlElement XMLThisElement = XMLDocument.CreateElement("Powder");
-			XMLParentElement.AppendChild(XMLThisElement);
-
-			base.Export(XMLDocument, XMLThisElement);
-
-			// Type
-
-			XmlElement XMLElement = XMLDocument.CreateElement("Type");
-			XmlText XMLTextElement = XMLDocument.CreateTextNode(m_strType);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Shape
-
-			XMLElement = XMLDocument.CreateElement("Shape");
-			XMLTextElement = XMLDocument.CreateTextNode(ShapeString);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-			}
-
-		//============================================================================*
-		// ExportIdentity() - XML Document
-		//============================================================================*
-
-		public override void ExportIdentity(XmlDocument XMLDocument, XmlElement XMLParentElement)
-			{
-			base.Export(XMLDocument, XMLParentElement);
-
-			// Type
-
-			XmlElement XMLElement = XMLDocument.CreateElement("Type");
-			XmlText XMLTextElement = XMLDocument.CreateTextNode(m_strType);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLParentElement.AppendChild(XMLElement);
-			}
-
-		//============================================================================*
-		// ExportName Property
-		//============================================================================*
-
-		public string ExportName
-			{
-			get
-				{
-				return ("Powder");
-				}
-			}
-
-		//============================================================================*
-		// Import()
-		//============================================================================*
-
-		public override bool Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
-			{
-			base.Import(XMLDocument, XMLThisNode, DataFiles);
-
-			XmlNode XMLNode = XMLThisNode.FirstChild;
-
-			while (XMLNode != null)
-				{
-				switch (XMLNode.Name)
-					{
-					case "Type":
-						m_strType = XMLNode.FirstChild.Value;
-						break;
-					case "Shape":
-						m_ePowderType = cPowder.ShapeFromString(XMLNode.FirstChild.Value);
-						break;
-					default:
-						break;
-					}
-
-				XMLNode = XMLNode.NextSibling;
-				}
-
-			return (Validate());
+			m_eShape = Powder.m_eShape;
 			}
 
 		//============================================================================*
@@ -283,11 +162,11 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				return (m_ePowderType);
+				return (m_eShape);
 				}
 			set
 				{
-				m_ePowderType = value;
+				m_eShape = value;
 				}
 			}
 
@@ -317,24 +196,21 @@ namespace ReloadersWorkShop
 		// ShapeString Property
 		//============================================================================*
 
-		public string ShapeString
+		public static string ShapeString(cPowder.ePowderShapes eShape)
 			{
-			get
+			switch (eShape)
 				{
-				switch (m_ePowderType)
-					{
-					case ePowderShapes.Spherical:
-						return ("Spherical");
+				case ePowderShapes.Spherical:
+					return ("Spherical");
 
-					case ePowderShapes.Extruded:
-						return ("Extruded");
+				case ePowderShapes.Extruded:
+					return ("Extruded");
 
-					case ePowderShapes.Flake:
-						return ("Flake");
-					}
-
-				return ("Other");
+				case ePowderShapes.Flake:
+					return ("Flake");
 				}
+
+			return ("Other");
 			}
 
 		//============================================================================*

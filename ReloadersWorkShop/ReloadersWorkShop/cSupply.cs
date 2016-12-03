@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cSupply.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -10,7 +10,6 @@
 //============================================================================*
 
 using System;
-using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -23,7 +22,7 @@ namespace ReloadersWorkShop
 	//============================================================================*
 
 	[Serializable]
-	public class cSupply : cPrintObject, IComparable
+	public partial class cSupply : cPrintObject, IComparable
 		{
 		//----------------------------------------------------------------------------*
 		// Public Enumerations
@@ -31,6 +30,7 @@ namespace ReloadersWorkShop
 
 		public enum eSupplyTypes
 			{
+			Unknown = -1,
 			Bullets = 0,
 			Cases,
 			Powder,
@@ -273,180 +273,6 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// CSVLine Property
-		//============================================================================*
-
-		public virtual string CSVLine
-			{
-			get
-				{
-				string strLine = "";
-
-				strLine += SupplyTypeString(m_eType);
-				strLine += ",";
-
-				strLine += cFirearm.FirearmTypeString(m_eFirearmType);
-				strLine += ",";
-				strLine += m_Manufacturer.Name;
-				strLine += ",";
-
-				strLine += m_dMinimumStockLevel;
-				strLine += ",";
-
-				strLine += m_fCrossUse ? "Yes" : "";
-				strLine += ",";
-
-				strLine += m_dQuantity;
-				strLine += ",";
-
-				strLine += m_dCost;
-				strLine += ",";
-
-				strLine += m_fChecked ? "Yes" : "";
-
-				return (strLine);
-				}
-			}
-
-		//============================================================================*
-		// CSVSupplyLineHeader Property
-		//============================================================================*
-
-		public static string CSVSupplyLineHeader
-			{
-			get
-				{
-				return ("Supply Type,Firearm Type,Manufacturer,Min Stock Level,Cross Use,Quantity,Cost,Checked");
-				}
-			}
-
-		//============================================================================*
-		// Export() - XML Document
-		//============================================================================*
-
-		public virtual void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
-			{
-			// Firearm Type
-
-			XmlElement XMLElement = XMLDocument.CreateElement("FirearmType");
-			XmlText XMLTextElement = XMLDocument.CreateTextNode(cFirearm.FirearmTypeString(m_eFirearmType));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLParentElement.AppendChild(XMLElement);
-
-			// Manufacturer
-
-			XMLElement = XMLDocument.CreateElement("Manufacturer");
-			XMLTextElement = XMLDocument.CreateTextNode(m_Manufacturer.Name);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLParentElement.AppendChild(XMLElement);
-
-			// Cross Use
-
-			XMLElement = XMLDocument.CreateElement("CrossUse");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fCrossUse ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLParentElement.AppendChild(XMLElement);
-
-			// Min Stock Level
-
-			XMLElement = XMLDocument.CreateElement("MinStockLevel");
-			XMLTextElement = XMLDocument.CreateTextNode(m_dMinimumStockLevel.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLParentElement.AppendChild(XMLElement);
-
-			// Quantity
-
-			XMLElement = XMLDocument.CreateElement("Quantity");
-			XMLTextElement = XMLDocument.CreateTextNode(m_dQuantity.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLParentElement.AppendChild(XMLElement);
-
-			// Cost
-
-			XMLElement = XMLDocument.CreateElement("Cost");
-			XMLTextElement = XMLDocument.CreateTextNode(m_dCost.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLParentElement.AppendChild(XMLElement);
-
-			// Checked
-
-			XMLElement = XMLDocument.CreateElement("Checked");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fChecked ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLParentElement.AppendChild(XMLElement);
-			}
-
-		//============================================================================*
-		// ExportIdentity() - XML Document
-		//============================================================================*
-
-		public virtual void ExportIdentity(XmlDocument XMLDocument, XmlElement XMLParentElement)
-			{
-			// Supply Type
-
-			XmlElement XMLElement = XMLDocument.CreateElement("SupplyType");
-			XmlText XMLTextElement = XMLDocument.CreateTextNode(cSupply.SupplyTypeString(m_eType));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLParentElement.AppendChild(XMLElement);
-
-			// Firearm Type
-
-			XMLElement = XMLDocument.CreateElement("FirearmType");
-			XMLTextElement = XMLDocument.CreateTextNode(cFirearm.FirearmTypeString(m_eFirearmType));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLParentElement.AppendChild(XMLElement);
-
-			// Manufacturer
-
-			XMLElement = XMLDocument.CreateElement("Manufacturer");
-			XMLTextElement = XMLDocument.CreateTextNode(m_Manufacturer.Name);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLParentElement.AppendChild(XMLElement);
-
-			// Quantity
-
-			XMLElement = XMLDocument.CreateElement("Quantity");
-			XMLTextElement = XMLDocument.CreateTextNode(m_dQuantity.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLParentElement.AppendChild(XMLElement);
-
-			// Cost
-
-			XMLElement = XMLDocument.CreateElement("Cost");
-			XMLTextElement = XMLDocument.CreateTextNode(m_dCost.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLParentElement.AppendChild(XMLElement);
-
-			// MinStockLevel
-
-			XMLElement = XMLDocument.CreateElement("MinStockLevel");
-			XMLTextElement = XMLDocument.CreateTextNode(m_dMinimumStockLevel.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLParentElement.AppendChild(XMLElement);
-
-			// Checked
-
-			XMLElement = XMLDocument.CreateElement("Checked");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fChecked ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLParentElement.AppendChild(XMLElement);
-			}
-
-		//============================================================================*
 		// FirearmType Property
 		//============================================================================*
 
@@ -472,49 +298,6 @@ namespace ReloadersWorkShop
 				{
 				return (m_fIdentity);
 				}
-			}
-
-		//============================================================================*
-		// Import()
-		//============================================================================*
-
-		public virtual bool Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
-			{
-			XmlNode XMLNode = XMLThisNode.FirstChild;
-
-			while (XMLNode != null)
-				{
-				switch (XMLNode.Name)
-					{
-					case "FirearmType":
-						m_eFirearmType = cFirearm.FirearmTypeFromString(XMLNode.FirstChild.Value);
-						break;
-					case "Manufacturer":
-						m_Manufacturer = DataFiles.GetManufacturerByName(XMLNode.FirstChild.Value);
-						break;
-					case "CrossUse":
-						m_fCrossUse = XMLNode.FirstChild.Value == "Yes";
-						break;
-					case "MinStockLevel":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dMinimumStockLevel);
-						break;
-					case "Quantity":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dQuantity);
-						break;
-					case "Cost":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dCost);
-						break;
-					case "Checked":
-						m_fChecked = XMLNode.FirstChild.Value == "Yes";
-						break;
-					default:
-						break;
-					}
-
-				XMLNode = XMLNode.NextSibling;
-				}
-
-			return (true);
 			}
 
 		//============================================================================*
@@ -984,6 +767,29 @@ namespace ReloadersWorkShop
 		public static string SupplyTypeString(cSupply Supply)
 			{
 			return (SupplyTypeString(Supply.FirearmType, Supply.SupplyType));
+			}
+
+		//============================================================================*
+		// SupplyTypeFromString()
+		//============================================================================*
+
+		public static cSupply.eSupplyTypes SupplyTypeFromString(string strType)
+			{
+			switch (strType)
+				{
+				case "Bullets":
+					return (cSupply.eSupplyTypes.Bullets);
+				case "Cases":
+					return (cSupply.eSupplyTypes.Cases);
+				case "Powder":
+					return (cSupply.eSupplyTypes.Powder);
+				case "Primers":
+					return (cSupply.eSupplyTypes.Primers);
+				case "Ammo":
+					return (cSupply.eSupplyTypes.Ammo);
+				}
+
+			return (cSupply.eSupplyTypes.Unknown);
 			}
 
 		//============================================================================*

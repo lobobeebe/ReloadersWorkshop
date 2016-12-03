@@ -23,7 +23,7 @@ namespace ReloadersWorkShop
 	//============================================================================*
 
 	[Serializable]
-	public class cGear : cPrintObject, IComparable
+	public partial class cGear : cPrintObject, IComparable
 		{
 		//============================================================================*
 		// Public Enumerations
@@ -203,95 +203,6 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// CSVLineHeaderExtension Property
-		//============================================================================*
-
-		public virtual string CSVLineHeaderExtension
-			{
-			get
-				{
-				return ("");
-				}
-			}
-
-		//============================================================================*
-		// CSVLine Property
-		//============================================================================*
-
-		public virtual string CSVLine
-			{
-			get
-				{
-				string strLine = cGear.GearTypeString(m_eType);
-				strLine += ",";
-				strLine += m_Manufacturer.ToString();
-				strLine += ",";
-				strLine += m_strPartNumber;
-				strLine += ",";
-				strLine += m_strSerialNumber;
-				strLine += ",";
-				strLine += m_strDescription;
-				strLine += ",";
-				strLine += m_strSource;
-				strLine += ",";
-				strLine += m_Date.ToShortDateString();
-				strLine += ",";
-				strLine += m_dPrice;
-				strLine += ",";
-				strLine += m_dTax;
-				strLine += ",";
-				strLine += m_dShipping;
-
-				switch (m_eType)
-					{
-					case eGearTypes.Scope:
-						strLine += (this as cScope).CSVLineExtension;
-						break;
-					}
-
-				strLine += ",";
-				strLine += m_strNotes;
-
-				return (strLine);
-				}
-			}
-
-		//============================================================================*
-		// CSVLineExtension Property
-		//============================================================================*
-
-		public virtual string CSVLineExtension
-			{
-			get
-				{
-				return ("");
-				}
-			}
-
-		//============================================================================*
-		// CSVGearLineHeader Property
-		//============================================================================*
-
-		public virtual string CSVGearLineHeader
-			{
-			get
-				{
-				string strLine = "Gear Type,Manufacturer,Part Number,Serial Number,Description,Acquired From,Purchase Date,Purchase Price,Tax,Shipping";
-
-				switch (m_eType)
-					{
-					case eGearTypes.Scope:
-						strLine += (this as cScope).CSVLineHeaderExtension;
-						break;
-					}
-
-				strLine += ",Notes";
-
-				return (strLine);
-				}
-			}
-
-		//============================================================================*
 		// Description Property
 		//============================================================================*
 
@@ -305,110 +216,6 @@ namespace ReloadersWorkShop
 				{
 				m_strDescription = value;
 				}
-			}
-
-		//============================================================================*
-		// Export() - XML Document
-		//============================================================================*
-
-		public virtual void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
-			{
-			XmlElement XMLThisElement = XMLDocument.CreateElement(cGear.GearTypeString(m_eType));
-			XMLParentElement.AppendChild(XMLThisElement);
-
-			//----------------------------------------------------------------------------*
-			// Manufacturer
-			//----------------------------------------------------------------------------*
-
-			XmlElement XMLElement = XMLDocument.CreateElement("Manufacturer");
-			XmlText XMLTextElement = XMLDocument.CreateTextNode(Manufacturer.Name);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			//----------------------------------------------------------------------------*
-			// Part Number
-			//----------------------------------------------------------------------------*
-
-			XMLElement = XMLDocument.CreateElement("PartNumber");
-			XMLTextElement = XMLDocument.CreateTextNode(m_strPartNumber);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			//----------------------------------------------------------------------------*
-			// Serial Number
-			//----------------------------------------------------------------------------*
-
-			XMLElement = XMLDocument.CreateElement("SerialNumber");
-			XMLTextElement = XMLDocument.CreateTextNode(m_strSerialNumber);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			//----------------------------------------------------------------------------*
-			// Description
-			//----------------------------------------------------------------------------*
-
-			XMLElement = XMLDocument.CreateElement("Description");
-			XMLTextElement = XMLDocument.CreateTextNode(m_strDescription);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			//----------------------------------------------------------------------------*
-			// Source
-			//----------------------------------------------------------------------------*
-
-			XMLElement = XMLDocument.CreateElement("AcquiredFrom");
-			XMLTextElement = XMLDocument.CreateTextNode(m_strSource);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			//----------------------------------------------------------------------------*
-			// Purchase Date
-			//----------------------------------------------------------------------------*
-
-			XMLElement = XMLDocument.CreateElement("PurchaseDate");
-			XMLTextElement = XMLDocument.CreateTextNode(m_Date.ToShortDateString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			//----------------------------------------------------------------------------*
-			// Purchase Price
-			//----------------------------------------------------------------------------*
-
-			XMLElement = XMLDocument.CreateElement("PurchasePrice");
-			XMLTextElement = XMLDocument.CreateTextNode(m_dPrice.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			//----------------------------------------------------------------------------*
-			//  Export Details if needed
-			//----------------------------------------------------------------------------*
-
-			ExportDetails(XMLDocument, XMLThisElement);
-
-			//----------------------------------------------------------------------------*
-			// Notes
-			//----------------------------------------------------------------------------*
-
-			XMLElement = XMLDocument.CreateElement("Notes");
-			XMLTextElement = XMLDocument.CreateTextNode(m_strNotes);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-			}
-
-		//============================================================================*
-		// ExportDetails() - XML Document
-		//============================================================================*
-
-		public virtual void ExportDetails(XmlDocument XMLDocument, XmlNode XMLThisNode)
-			{
 			}
 
 		//============================================================================*

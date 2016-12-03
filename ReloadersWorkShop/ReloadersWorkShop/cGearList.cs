@@ -55,7 +55,7 @@ namespace ReloadersWorkShop
 
 			string strLine = "";
 
-			Writer.WriteLine("Firearm Accessories");
+			Writer.WriteLine(ExportName);
 			Writer.WriteLine();
 
 			for (int i = 0; i < (int) cGear.eGearTypes.NumGearTypes; i++)
@@ -93,15 +93,27 @@ namespace ReloadersWorkShop
 		// Export()
 		//============================================================================*
 
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+		public void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement)
 			{
 			if (Count > 0)
 				{
-				XmlElement XMLElement = XMLDocument.CreateElement(string.Empty, "FirearmAccessories", string.Empty);
+				XmlElement XMLElement = XMLDocument.CreateElement(ExportName);
 				XMLParentElement.AppendChild(XMLElement);
 
 				foreach (cGear Gear in this)
 					Gear.Export(XMLDocument, XMLElement);
+				}
+			}
+
+		//============================================================================*
+		// ExportName()
+		//============================================================================*
+
+		public static string ExportName
+			{
+			get
+				{
+				return ("GearList");
 				}
 			}
 

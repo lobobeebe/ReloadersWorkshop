@@ -1,28 +1,9 @@
-﻿//============================================================================*
-// cAmmo.Export.cs
-//
-// Copyright © 2013-2014, Kevin S. Beebe
-// All Rights Reserved
-//============================================================================*
-
-//============================================================================*
-// .Net Using Statements
-//============================================================================*
-
-using System;
+﻿using System;
 using System.Xml;
-
-//============================================================================*
-// Namespace
-//============================================================================*
 
 namespace ReloadersWorkShop
 	{
-	//============================================================================*
-	// cAmmo Class
-	//============================================================================*
-
-	public partial class cAmmo
+	public partial class cBullet
 		{
 		//============================================================================*
 		// CSVLine Property
@@ -38,16 +19,16 @@ namespace ReloadersWorkShop
 				strLine += ",";
 				strLine += m_strType;
 				strLine += ",";
-				strLine += m_Caliber.Name;
+				strLine += m_fSelfCast ? "Yes" : "";
+				strLine += ",";
+				strLine += m_nTopPunch;
 				strLine += ",";
 
-				strLine += m_nBatchID;
+				strLine += m_dDiameter;
 				strLine += ",";
-				strLine += m_fReload ? "Yes," : "-,";
-
-				strLine += m_dBulletDiameter;
+				strLine += m_dLength;
 				strLine += ",";
-				strLine += m_dBulletWeight;
+				strLine += m_dWeight;
 				strLine += ",";
 				strLine += m_dBallisticCoefficient;
 
@@ -63,7 +44,11 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				return ("Manufacturer,Part Number,Type,Batch ID,Reload?,Caliber,Bullet Diameter,Bullet Weight,Ballistic Coefficient");
+				string strLine = cSupply.CSVSupplyLineHeader;
+
+				strLine += "Part Number,Type,Self Cast,Top Punch,Diameter,Length,Weight,Ballistic Coefficient";
+
+				return (strLine);
 				}
 			}
 
@@ -71,7 +56,7 @@ namespace ReloadersWorkShop
 		// Export() - XML Document
 		//============================================================================*
 
-		public override void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement, bool  fIdentityOnly = false)
+		public override void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement,  bool fIdentityOnly = false)
 			{
 			string strName = ExportName;
 
@@ -81,7 +66,7 @@ namespace ReloadersWorkShop
 			XmlElement XMLThisElement = XMLDocument.CreateElement(strName);
 			XMLParentElement.AppendChild(XMLThisElement);
 
-			base.Export(XMLDocument, XMLThisElement);
+			base.Export(XMLDocument, XMLThisElement, fIdentityOnly);
 
 			XMLDocument.CreateElement("PartNumber", m_strPartNumber, XMLThisElement);
 
@@ -89,27 +74,25 @@ namespace ReloadersWorkShop
 				return;
 
 			XMLDocument.CreateElement("Type", m_strType, XMLThisElement);
-
-			m_Caliber.Export(XMLDocument, XMLThisElement,true);
-
-			XMLDocument.CreateElement("BatchID", m_nBatchID, XMLThisElement);
-			XMLDocument.CreateElement("Reload", m_fReload, XMLThisElement);
-			XMLDocument.CreateElement("BulletDiameter", m_dBulletDiameter, XMLThisElement);
-			XMLDocument.CreateElement("BulletWeight", m_dBulletWeight, XMLThisElement);
+			XMLDocument.CreateElement("SelfCast", m_fSelfCast, XMLThisElement);
+			XMLDocument.CreateElement("TopPunch", m_nTopPunch, XMLThisElement);
+			XMLDocument.CreateElement("Diameter", m_dDiameter, XMLThisElement);
+			XMLDocument.CreateElement("Length", m_dLength, XMLThisElement);
+			XMLDocument.CreateElement("Weight", m_dWeight, XMLThisElement);
 			XMLDocument.CreateElement("BallisticCoefficient", m_dBallisticCoefficient, XMLThisElement);
 
-			m_TestList.Export(XMLDocument, XMLThisElement);
+			m_BulletCaliberList.Export(XMLDocument, XMLThisElement);
 			}
 
 		//============================================================================*
-		// ExportName()
+		// ExportName Property
 		//============================================================================*
 
 		public static string ExportName
 			{
 			get
 				{
-				return ("Ammo");
+				return ("Bullet");
 				}
 			}
 
@@ -119,44 +102,45 @@ namespace ReloadersWorkShop
 
 		public override bool Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
 			{
-			base.Import(XMLDocument, XMLThisNode, DataFiles);
-
 			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			base.Import(XMLDocument, XMLThisNode, DataFiles);
 
 			while (XMLNode != null)
 				{
 				switch (XMLNode.Name)
 					{
-					case "CaliberIdentity":
-						m_Caliber = cRWXMLDocument.GetCaliberByIdentity(XMLNode, DataFiles);
-						break;
-					case "Caliber":
-						break;
 					case "PartNumber":
 						m_strPartNumber = XMLNode.FirstChild.Value;
 						break;
 					case "Type":
 						m_strType = XMLNode.FirstChild.Value;
 						break;
-					case "BatchID":
-						Int32.TryParse(XMLNode.FirstChild.Value, out m_nBatchID);
+					case "SelfCast":
+						m_fSelfCast = XMLNode.FirstChild.Value == "Yes";
 						break;
-					case "Reload":
-						m_fReload = XMLNode.FirstChild.Value == "Yes";
+					case "TopPunch":
+						m_fSelfCast = XMLNode.FirstChild.Value == "Yes";
 						break;
-					case "BulletDiameter":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dBulletDiameter);
+					case "Diameter":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dDiameter);
 						break;
-					case "BulletWeight":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dBulletWeight);
+					case "Length":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dLength);
+						break;
+					case "Weight":
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dWeight);
 						break;
 					case "BallisticCoefficient":
 						Double.TryParse(XMLNode.FirstChild.Value, out m_dBallisticCoefficient);
 						break;
-					case "AmmoTests":
-					case "AmmoTestList":
-						m_TestList.Import(XMLDocument, XMLNode, DataFiles, this);
+					case "Calibers":
+					case "CaliberList":
+					case "BulletCalibers":
+					case "BulletCaliberList":
+						m_BulletCaliberList.Import(XMLDocument, XMLNode, DataFiles);
 						break;
+
 					default:
 						break;
 					}

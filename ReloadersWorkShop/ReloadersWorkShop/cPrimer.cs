@@ -23,7 +23,7 @@ namespace ReloadersWorkShop
 	//============================================================================*
 
 	[Serializable]
-	public class cPrimer : cSupply
+	public partial class cPrimer : cSupply
 		{
 		//============================================================================*
 		// Public Enumerations
@@ -158,161 +158,6 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// CSVLine Property
-		//============================================================================*
-
-		public override string CSVLine
-			{
-			get
-				{
-				string strLine = base.CSVLine;
-
-				strLine += m_strModel;
-				strLine += ",";
-
-				strLine += m_eSize == ePrimerSize.Small ? "Small" : "Large";
-				strLine += ",";
-
-				strLine += m_fStandard ? "Yes," : "-,";
-				strLine += m_fMagnum ? "Yes," : "-,";
-				strLine += m_fBenchRest ? "Yes," : "-,";
-				strLine += m_fMilitary ? "Yes," : "-";
-
-				return (strLine);
-				}
-			}
-
-		//============================================================================*
-		// CSVLineHeader Property
-		//============================================================================*
-
-		public static string CSVLineHeader
-			{
-			get
-				{
-				string strLine = cSupply.CSVSupplyLineHeader;
-
-				strLine += "Model,Size,Standard,Magnum,Bench Rest,Military";
-
-				return (strLine);
-				}
-			}
-
-		//============================================================================*
-		// Export() - XML Document
-		//============================================================================*
-
-		public override void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
-			{
-			XmlElement XMLThisElement = XMLDocument.CreateElement("Primer");
-			XMLParentElement.AppendChild(XMLThisElement);
-
-			base.Export(XMLDocument, XMLThisElement);
-
-			// Model
-
-			XmlElement XMLElement = XMLDocument.CreateElement("Model");
-			XmlText XMLTextElement = XMLDocument.CreateTextNode(m_strModel);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Size
-
-			XMLElement = XMLDocument.CreateElement("Size");
-			XMLTextElement = XMLDocument.CreateTextNode(m_eSize == ePrimerSize.Small ? "Small" : "Large");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Standard
-
-			XMLElement = XMLDocument.CreateElement("Standard");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fStandard ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Magnum
-
-			XMLElement = XMLDocument.CreateElement("Magnum");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fMagnum ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Bench Rest
-
-			XMLElement = XMLDocument.CreateElement("BenchRest");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fBenchRest ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Military
-
-			XMLElement = XMLDocument.CreateElement("Military");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fMilitary ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-			}
-
-		//============================================================================*
-		// ExportName Property
-		//============================================================================*
-
-		public string ExportName
-			{
-			get
-				{
-				return ("Primer");
-				}
-			}
-
-		//============================================================================*
-		// Import()
-		//============================================================================*
-
-		public override bool Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
-			{
-			base.Import(XMLDocument, XMLThisNode, DataFiles);
-
-			XmlNode XMLNode = XMLThisNode.FirstChild;
-
-			while (XMLNode != null)
-				{
-				switch (XMLNode.Name)
-					{
-					case "Model":
-						m_strModel = XMLNode.FirstChild.Value;
-						break;
-					case "Size":
-						m_eSize = XMLNode.FirstChild.Value == "Small" ? ePrimerSize.Small : ePrimerSize.Large;
-						break;
-					case "Standard":
-						m_fStandard = XMLNode.FirstChild.Value == "Yes";
-						break;
-					case "Magnum":
-						m_fMagnum = XMLNode.FirstChild.Value == "Yes";
-						break;
-					case "BenchRest":
-						m_fBenchRest = XMLNode.FirstChild.Value == "Yes";
-						break;
-					case "Military":
-						m_fMilitary = XMLNode.FirstChild.Value == "Yes";
-						break;
-					default:
-						break;
-					}
-
-				XMLNode = XMLNode.NextSibling;
-				}
-
-			return (Validate());
-			}
-
-		//============================================================================*
 		// Magnum Property
 		//============================================================================*
 
@@ -370,7 +215,7 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// SortSizeString Property
+		// ShortSizeString Property
 		//============================================================================*
 
 		public string ShortSizeString
@@ -455,6 +300,28 @@ namespace ReloadersWorkShop
 				{
 				m_fStandard = value;
 				}
+			}
+
+		//============================================================================*
+		// ToShortSizeString()
+		//============================================================================*
+
+		public static  string ToShortSizeString(cPrimer.ePrimerSize eSize)
+			{
+			string strSizeString = "";
+
+			switch (eSize)
+				{
+				case ePrimerSize.Small:
+					strSizeString = "Small";
+					break;
+
+				case ePrimerSize.Large:
+					strSizeString = "Large";
+					break;
+				}
+
+			return (strSizeString);
 			}
 
 		//============================================================================*

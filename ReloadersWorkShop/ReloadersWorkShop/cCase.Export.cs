@@ -1,7 +1,7 @@
 ﻿//============================================================================*
-// cAmmo.Export.cs
+// cCase.Export.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -19,10 +19,10 @@ using System.Xml;
 namespace ReloadersWorkShop
 	{
 	//============================================================================*
-	// cAmmo Class
+	// cCase Class - Partial
 	//============================================================================*
 
-	public partial class cAmmo
+	public partial class cCase
 		{
 		//============================================================================*
 		// CSVLine Property
@@ -36,20 +36,15 @@ namespace ReloadersWorkShop
 
 				strLine += m_strPartNumber;
 				strLine += ",";
-				strLine += m_strType;
-				strLine += ",";
 				strLine += m_Caliber.Name;
 				strLine += ",";
-
-				strLine += m_nBatchID;
+				strLine += m_fMatch ? "Yes," : "-,";
 				strLine += ",";
-				strLine += m_fReload ? "Yes," : "-,";
-
-				strLine += m_dBulletDiameter;
+				strLine += m_fMilitary ? "Yes," : "-,";
 				strLine += ",";
-				strLine += m_dBulletWeight;
+				strLine += m_fLargePrimer ? "Yes," : "-,";
 				strLine += ",";
-				strLine += m_dBallisticCoefficient;
+				strLine += m_fSmallPrimer ? "Yes," : "-,";
 
 				return (strLine);
 				}
@@ -63,7 +58,11 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				return ("Manufacturer,Part Number,Type,Batch ID,Reload?,Caliber,Bullet Diameter,Bullet Weight,Ballistic Coefficient");
+				string strLine = cSupply.CSVSupplyLineHeader;
+
+				strLine += "Part Number,Caliber,Match,Military,Large Primer,Small Primer";
+
+				return (strLine);
 				}
 			}
 
@@ -71,7 +70,7 @@ namespace ReloadersWorkShop
 		// Export() - XML Document
 		//============================================================================*
 
-		public override void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement, bool  fIdentityOnly = false)
+		public override void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement, bool fIdentityOnly = false)
 			{
 			string strName = ExportName;
 
@@ -81,35 +80,30 @@ namespace ReloadersWorkShop
 			XmlElement XMLThisElement = XMLDocument.CreateElement(strName);
 			XMLParentElement.AppendChild(XMLThisElement);
 
-			base.Export(XMLDocument, XMLThisElement);
+			base.Export(XMLDocument, XMLThisElement, fIdentityOnly);
 
 			XMLDocument.CreateElement("PartNumber", m_strPartNumber, XMLThisElement);
+
+			m_Caliber.Export(XMLDocument, XMLThisElement, true);
 
 			if (fIdentityOnly)
 				return;
 
-			XMLDocument.CreateElement("Type", m_strType, XMLThisElement);
-
-			m_Caliber.Export(XMLDocument, XMLThisElement,true);
-
-			XMLDocument.CreateElement("BatchID", m_nBatchID, XMLThisElement);
-			XMLDocument.CreateElement("Reload", m_fReload, XMLThisElement);
-			XMLDocument.CreateElement("BulletDiameter", m_dBulletDiameter, XMLThisElement);
-			XMLDocument.CreateElement("BulletWeight", m_dBulletWeight, XMLThisElement);
-			XMLDocument.CreateElement("BallisticCoefficient", m_dBallisticCoefficient, XMLThisElement);
-
-			m_TestList.Export(XMLDocument, XMLThisElement);
+			XMLDocument.CreateElement("Match", m_fMatch, XMLThisElement);
+			XMLDocument.CreateElement("Military", m_fMilitary, XMLThisElement);
+			XMLDocument.CreateElement("LargePrimer", m_fLargePrimer, XMLThisElement);
+			XMLDocument.CreateElement("SmallPrimer", m_fSmallPrimer, XMLThisElement);
 			}
 
 		//============================================================================*
-		// ExportName()
+		// ExportName Property
 		//============================================================================*
 
-		public static string ExportName
+		public string ExportName
 			{
 			get
 				{
-				return ("Ammo");
+				return ("Case");
 				}
 			}
 
@@ -125,37 +119,35 @@ namespace ReloadersWorkShop
 
 			while (XMLNode != null)
 				{
+				if (XMLNode.FirstChild == null)
+					{
+					XMLNode = XMLNode.NextSibling;
+
+					continue;
+					}
+
 				switch (XMLNode.Name)
 					{
 					case "CaliberIdentity":
 						m_Caliber = cRWXMLDocument.GetCaliberByIdentity(XMLNode, DataFiles);
 						break;
-					case "Caliber":
-						break;
 					case "PartNumber":
-						m_strPartNumber = XMLNode.FirstChild.Value;
+						if (!String.IsNullOrEmpty(XMLNode.FirstChild.Value))
+							m_strPartNumber = XMLNode.FirstChild.Value;
+						else
+							Console.WriteLine("cCase - Empty Part Number!");
 						break;
-					case "Type":
-						m_strType = XMLNode.FirstChild.Value;
+					case "Match":
+						m_fMatch = XMLNode.FirstChild.Value == "Yes";
 						break;
-					case "BatchID":
-						Int32.TryParse(XMLNode.FirstChild.Value, out m_nBatchID);
+					case "Military":
+						m_fMilitary = XMLNode.FirstChild.Value == "Yes";
 						break;
-					case "Reload":
-						m_fReload = XMLNode.FirstChild.Value == "Yes";
+					case "LargePrimer":
+						m_fLargePrimer = XMLNode.FirstChild.Value == "Yes";
 						break;
-					case "BulletDiameter":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dBulletDiameter);
-						break;
-					case "BulletWeight":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dBulletWeight);
-						break;
-					case "BallisticCoefficient":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dBallisticCoefficient);
-						break;
-					case "AmmoTests":
-					case "AmmoTestList":
-						m_TestList.Import(XMLDocument, XMLNode, DataFiles, this);
+					case "SmallPrimer":
+						m_fSmallPrimer = XMLNode.FirstChild.Value == "Yes";
 						break;
 					default:
 						break;

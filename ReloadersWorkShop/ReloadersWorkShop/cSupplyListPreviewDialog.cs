@@ -679,7 +679,7 @@ namespace ReloadersWorkShop
 							// Powder shape
 							//----------------------------------------------------------------------------*
 
-							strText = Powder.ShapeString;
+							strText = cPowder.ShapeString(Powder.Shape);
 
 							e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX, nY);
 

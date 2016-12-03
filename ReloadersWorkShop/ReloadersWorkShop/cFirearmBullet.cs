@@ -154,18 +154,18 @@ namespace ReloadersWorkShop
 		// Export() - XML Document
 		//============================================================================*
 
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+		public void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement)
 			{
 			XmlElement XMLThisElement = XMLDocument.CreateElement(ExportName);
 			XMLParentElement.AppendChild(XMLThisElement);
 
 			// Caliber
 
-			m_Caliber.ExportIdentity(XMLDocument, XMLThisElement);
+			m_Caliber.Export(XMLDocument, XMLThisElement,  true);
 
 			// Bullet
 
-			m_Bullet.ExportIdentity(XMLDocument, XMLThisElement);
+			m_Bullet.Export(XMLDocument, XMLThisElement,true);
 
 			// COAL
 
@@ -208,7 +208,7 @@ namespace ReloadersWorkShop
 		// Import()
 		//============================================================================*
 
-		public bool Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+		public bool Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
 			{
 			XmlNode XMLNode = XMLThisNode.FirstChild;
 
@@ -217,10 +217,10 @@ namespace ReloadersWorkShop
 				switch (XMLNode.Name)
 					{
 					case "CaliberIdentity":
-						m_Caliber = cDataFiles.GetCaliberByIdentity(XMLDocument, XMLNode, DataFiles);
+						m_Caliber = cRWXMLDocument.GetCaliberByIdentity(XMLNode, DataFiles);
 						break;
 					case "BulletIdentity":
-						m_Bullet = cDataFiles.GetBulletByIdentity(XMLDocument, XMLNode, DataFiles);
+						m_Bullet = cRWXMLDocument.GetBulletByIdentity(XMLDocument, XMLNode, DataFiles);
 						break;
 					case "COAL":
 						Double.TryParse(XMLNode.FirstChild.Value, out m_dCOL);

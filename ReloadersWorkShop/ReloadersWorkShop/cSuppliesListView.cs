@@ -819,7 +819,7 @@ namespace ReloadersWorkShop
 			Item.Tag = Powder;
 
 			Item.SubItems.Add(Powder.Model);
-			Item.SubItems.Add(Powder.ShapeString);
+			Item.SubItems.Add(cPowder.ShapeString(Powder.Shape));
 			Item.SubItems.Add(Powder.CrossUse ? "Y" : "");
 
 			double dQuantity = m_DataFiles.SupplyQuantity(Powder);

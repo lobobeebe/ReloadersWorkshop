@@ -23,7 +23,7 @@ namespace ReloadersWorkShop
 	//============================================================================*
 
 	[Serializable]
-	public class cCase : cSupply
+	public partial class cCase : cSupply
 		{
 		//============================================================================*
 		// Private Data Members
@@ -151,131 +151,6 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// CSVHeader Property
-		//============================================================================*
-
-		public static string CSVHeader
-			{
-			get
-				{
-				return ("Cases");
-				}
-			}
-
-		//============================================================================*
-		// CSVLine Property
-		//============================================================================*
-
-		public override string CSVLine
-			{
-			get
-				{
-				string strLine = base.CSVLine;
-
-				strLine += m_strPartNumber;
-				strLine += ",";
-				strLine += m_Caliber.Name;
-				strLine += ",";
-				strLine += m_fMatch ? "Yes," : "-,";
-				strLine += ",";
-				strLine += m_fMilitary ? "Yes," : "-,";
-				strLine += ",";
-				strLine += m_fLargePrimer ? "Yes," : "-,";
-				strLine += ",";
-				strLine += m_fSmallPrimer ? "Yes," : "-,";
-
-				return (strLine);
-				}
-			}
-
-		//============================================================================*
-		// CSVLineHeader Property
-		//============================================================================*
-
-		public static string CSVLineHeader
-			{
-			get
-				{
-				string strLine = cSupply.CSVSupplyLineHeader;
-
-				strLine += "Part Number,Caliber,Match,Military,Large Primer,Small Primer";
-
-				return (strLine);
-				}
-			}
-
-		//============================================================================*
-		// Export() - XML Document
-		//============================================================================*
-
-		public override void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
-			{
-			XmlElement XMLThisElement = XMLDocument.CreateElement(ExportName);
-			XMLParentElement.AppendChild(XMLThisElement);
-
-			base.Export(XMLDocument, XMLThisElement);
-
-			XmlElement XMLElement = null;
-			XmlText XMLTextElement = null;
-
-			// Part Number
-
-			XMLElement = XMLDocument.CreateElement("PartNumber");
-			XMLTextElement = XMLDocument.CreateTextNode(m_strPartNumber);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Caliber
-
-			m_Caliber.ExportIdentity(XMLDocument, XMLThisElement);
-
-			// Match
-
-			XMLElement = XMLDocument.CreateElement("Match");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fMatch ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Military
-
-			XMLElement = XMLDocument.CreateElement("Military");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fMilitary ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Large Primer
-
-			XMLElement = XMLDocument.CreateElement("LargePrimer");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fLargePrimer ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Small Primer
-
-			XMLElement = XMLDocument.CreateElement("SmallPrimer");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fSmallPrimer ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-			}
-
-		//============================================================================*
-		// ExportName Property
-		//============================================================================*
-
-		public string ExportName
-			{
-			get
-				{
-				return ("Case");
-				}
-			}
-
-		//============================================================================*
 		// HeadStamp Property
 		//============================================================================*
 
@@ -299,58 +174,6 @@ namespace ReloadersWorkShop
 
 				return (strHeadStamp);
 				}
-			}
-
-		//============================================================================*
-		// Import()
-		//============================================================================*
-
-		public override bool Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
-			{
-			base.Import(XMLDocument, XMLThisNode, DataFiles);
-
-			XmlNode XMLNode = XMLThisNode.FirstChild;
-
-			while (XMLNode != null)
-				{
-				if (XMLNode.FirstChild == null)
-					{
-					XMLNode = XMLNode.NextSibling;
-
-					continue;
-					}
-
-				switch (XMLNode.Name)
-					{
-					case "CaliberIdentity":
-						m_Caliber = cDataFiles.GetCaliberByIdentity(XMLDocument, XMLNode, DataFiles);
-						break;
-					case "PartNumber":
-						if (!String.IsNullOrEmpty(XMLNode.FirstChild.Value))
-							m_strPartNumber = XMLNode.FirstChild.Value;
-						else
-							Console.WriteLine("cCase - Empty Part Number!");
-						break;
-					case "Match":
-						m_fMatch = XMLNode.FirstChild.Value == "Yes";
-						break;
-					case "Military":
-						m_fMilitary = XMLNode.FirstChild.Value == "Yes";
-						break;
-					case "LargePrimer":
-						m_fLargePrimer = XMLNode.FirstChild.Value == "Yes";
-						break;
-					case "SmallPrimer":
-						m_fSmallPrimer = XMLNode.FirstChild.Value == "Yes";
-						break;
-					default:
-						break;
-					}
-
-				XMLNode = XMLNode.NextSibling;
-				}
-
-			return (Validate());
 			}
 
 		//============================================================================*

@@ -55,7 +55,7 @@ namespace ReloadersWorkShop
 		// Export() - XML Document
 		//============================================================================*
 
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+		public void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement)
 			{
 			XmlElement XMLThisElement = XMLDocument.CreateElement(ExportName);
 			XMLParentElement.AppendChild(XMLThisElement);
@@ -196,7 +196,7 @@ namespace ReloadersWorkShop
 		// Import()
 		//============================================================================*
 
-		public bool Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+		public bool Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
 			{
 			XmlNode XMLNode = XMLThisNode.FirstChild;
 
@@ -208,7 +208,7 @@ namespace ReloadersWorkShop
 						DateTime.TryParse(XMLNode.FirstChild.Value, out m_TestDate);
 						break;
 					case "FirearmIdentity":
-						m_Firearm = cDataFiles.GetFirearmByIdentity(XMLDocument, XMLThisNode, DataFiles);
+						m_Firearm = cRWXMLDocument.GetFirearmByIdentity(XMLDocument, XMLThisNode, DataFiles);
 						break;
 					case "Suppressed":
 						m_fSuppressed = XMLNode.FirstChild.Value == "Yes";

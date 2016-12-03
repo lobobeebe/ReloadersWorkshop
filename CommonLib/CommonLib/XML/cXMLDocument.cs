@@ -56,7 +56,7 @@ namespace ReloadersWorkShop
 		// CreateElement() - String - All other CreateElement() overloads lead here
 		//============================================================================*
 
-		public XmlElement CreateElement(string strName, string strData, XmlElement XMLParentElement)
+		public XmlElement CreateElement(string strName, string strData, XmlNode XMLParentMode)
 			{
 			if (String.IsNullOrEmpty(strName) || String.IsNullOrEmpty(strData))
 				return (null);
@@ -65,7 +65,7 @@ namespace ReloadersWorkShop
 			XmlText XMLTextNode = CreateTextNode(strData);
 			XMLElement.AppendChild(XMLTextNode);
 
-			XMLParentElement.AppendChild(XMLElement);
+			XMLParentMode.AppendChild(XMLElement);
 
 			return (XMLElement);
 			}
@@ -74,54 +74,54 @@ namespace ReloadersWorkShop
 		// CreateElement() - bool
 		//============================================================================*
 
-		public XmlElement CreateElement(string strName, bool fData, XmlElement XMLParentElement)
+		public XmlElement CreateElement(string strName, bool fData, XmlNode XMLParentNode)
 			{
-			return (CreateElement(strName, fData ? "Yes" : "-", XMLParentElement));
+			return (CreateElement(strName, fData ? "Yes" : "-", XMLParentNode));
 			}
 
 		//============================================================================*
 		// CreateElement() - DateTime
 		//============================================================================*
 
-		public XmlElement CreateElement(string strName, DateTime Date, XmlElement XMLParentElement)
+		public XmlElement CreateElement(string strName, DateTime Date, XmlNode XMLParentNode)
 			{
-			return (CreateElement(strName, Date.ToShortDateString(), XMLParentElement));
+			return (CreateElement(strName, Date.ToShortDateString(), XMLParentNode));
 			}
 
 		//============================================================================*
 		// CreateElement() - int
 		//============================================================================*
 
-		public XmlElement CreateElement(string strName, int nData, XmlElement XMLParentElement)
+		public XmlElement CreateElement(string strName, int nData, XmlNode XMLParentNode)
 			{
-			return (CreateElement(strName, nData.ToString(), XMLParentElement));
+			return (CreateElement(strName, nData.ToString(), XMLParentNode));
 			}
 
 		//============================================================================*
 		// CreateElement() - double
 		//============================================================================*
 
-		public XmlElement CreateElement(string strName, double dData, XmlElement XMLParentElement)
+		public XmlElement CreateElement(string strName, double dData, XmlNode XMLParentNode)
 			{
-			return (CreateElement(strName, dData.ToString(), XMLParentElement));
+			return (CreateElement(strName, dData.ToString(), XMLParentNode));
 			}
 
 		//============================================================================*
 		// CreateElement() - float
 		//============================================================================*
 
-		public XmlElement CreateElement(string strName, float flData, XmlElement XMLParentElement)
+		public XmlElement CreateElement(string strName, float flData, XmlNode XMLParentNode)
 			{
-			return (CreateElement(strName, flData.ToString(), XMLParentElement));
+			return (CreateElement(strName, flData.ToString(), XMLParentNode));
 			}
 
 		//============================================================================*
 		// CreateElement() - SortOrder
 		//============================================================================*
 
-		public XmlElement CreateElement(string strName, SortOrder Order, XmlElement XMLParentElement)
+		public XmlElement CreateElement(string strName, SortOrder Order, XmlNode XMLParentNode)
 			{
-			return (CreateElement(strName, Order.ToString(), XMLParentElement));
+			return (CreateElement(strName, Order.ToString(), XMLParentNode));
 			}
 
 		}

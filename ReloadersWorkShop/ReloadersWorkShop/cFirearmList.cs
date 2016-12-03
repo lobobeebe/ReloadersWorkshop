@@ -55,7 +55,7 @@ namespace ReloadersWorkShop
 
 			string strLine = "";
 
-			Writer.WriteLine("Firearms");
+			Writer.WriteLine(ExportName);
 			Writer.WriteLine();
 
 			Writer.WriteLine(cFirearm.CSVLineHeader);
@@ -75,17 +75,29 @@ namespace ReloadersWorkShop
 		// Export()
 		//============================================================================*
 
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+		public void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement)
 			{
 			if (Count > 0)
 				{
-				XmlElement XMLElement = XMLDocument.CreateElement("Firearms");
+				XmlElement XMLElement = XMLDocument.CreateElement(ExportName);
 				XMLParentElement.AppendChild(XMLElement);
 
 				foreach (cFirearm Firearm in this)
 					{
 					Firearm.Export(XMLDocument, XMLElement);
 					}
+				}
+			}
+
+		//============================================================================*
+		// ExportName()
+		//============================================================================*
+
+		public static string ExportName
+			{
+			get
+				{
+				return ("FirearmList");
 				}
 			}
 

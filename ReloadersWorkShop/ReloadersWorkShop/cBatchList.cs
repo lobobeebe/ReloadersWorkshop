@@ -75,7 +75,7 @@ namespace ReloadersWorkShop
 		// Export()
 		//============================================================================*
 
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement, bool fIncludeTests = true)
+		public void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement, bool fIncludeTests = true)
 			{
 			if (Count > 0)
 				{
@@ -104,7 +104,7 @@ namespace ReloadersWorkShop
 		// Import()
 		//============================================================================*
 
-		public void Import(XmlDocument XMLDocument, XmlNode XMLThisNode,  cDataFiles  DataFiles)
+		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode,  cDataFiles  DataFiles)
 			{
 			XmlNode XMLNode = XMLThisNode.FirstChild;
 

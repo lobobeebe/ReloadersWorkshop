@@ -31,7 +31,7 @@ namespace ReloadersWorkShop
 	//============================================================================*
 
 	[Serializable]
-	public class cBullet : cSupply
+	public partial class cBullet : cSupply
 		{
 		//============================================================================*
 		// Private Static Data Members
@@ -255,53 +255,6 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// CSVLine Property
-		//============================================================================*
-
-		public override string CSVLine
-			{
-			get
-				{
-				string strLine = base.CSVLine;
-
-				strLine += m_strPartNumber;
-				strLine += ",";
-				strLine += m_strType;
-				strLine += ",";
-				strLine += m_fSelfCast ? "Yes" : "";
-				strLine += ",";
-				strLine += m_nTopPunch;
-				strLine += ",";
-
-				strLine += m_dDiameter;
-				strLine += ",";
-				strLine += m_dLength;
-				strLine += ",";
-				strLine += m_dWeight;
-				strLine += ",";
-				strLine += m_dBallisticCoefficient;
-
-				return (strLine);
-				}
-			}
-
-		//============================================================================*
-		// CSVLineHeader Property
-		//============================================================================*
-
-		public static string CSVLineHeader
-			{
-			get
-				{
-				string strLine = cSupply.CSVSupplyLineHeader;
-
-				strLine += "Part Number,Type,Self Cast,Top Punch,Diameter,Length,Weight,Ballistic Coefficient";
-
-				return (strLine);
-				}
-			}
-
-		//============================================================================*
 		// Diameter Property
 		//============================================================================*
 
@@ -315,104 +268,6 @@ namespace ReloadersWorkShop
 				{
 				m_dDiameter = value;
 				}
-			}
-
-		//============================================================================*
-		// Export() - XML Document
-		//============================================================================*
-
-		public override void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
-			{
-			XmlElement XMLThisElement = XMLDocument.CreateElement("Bullet");
-			XMLParentElement.AppendChild(XMLThisElement);
-
-			base.Export(XMLDocument, XMLThisElement);
-
-			// Part Number
-
-			XmlElement XMLElement = XMLDocument.CreateElement("PartNumber");
-			XmlText XMLTextElement = XMLDocument.CreateTextNode(m_strPartNumber);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Type
-
-			XMLElement = XMLDocument.CreateElement("Type");
-			XMLTextElement = XMLDocument.CreateTextNode(m_strType);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Self Cast
-
-			XMLElement = XMLDocument.CreateElement("SelfCast");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fSelfCast ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Top Punch
-
-			XMLElement = XMLDocument.CreateElement("TopPunch");
-			XMLTextElement = XMLDocument.CreateTextNode(m_nTopPunch.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Diameter
-
-			XMLElement = XMLDocument.CreateElement("Diameter");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dDiameter));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Length
-
-			XMLElement = XMLDocument.CreateElement("Length");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dLength));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Weight
-
-			XMLElement = XMLDocument.CreateElement("Weight");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dWeight));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Ballistic Coefficient
-
-			XMLElement = XMLDocument.CreateElement("BallisticCoefficient");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dBallisticCoefficient));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			m_BulletCaliberList.Export(XMLDocument, XMLThisElement);
-			}
-
-		//============================================================================*
-		// ExportIdentity() - XML Document
-		//============================================================================*
-
-		public override void ExportIdentity(XmlDocument XMLDocument, XmlElement XMLParentElement)
-			{
-			XmlElement XMLThisElement = XMLDocument.CreateElement("BulletIdentity");
-			XMLParentElement.AppendChild(XMLThisElement);
-
-			base.Export(XMLDocument, XMLThisElement);
-
-			// Part Number
-
-			XmlElement XMLElement = XMLDocument.CreateElement("PartNumber");
-			XmlText XMLTextElement = XMLDocument.CreateTextNode(m_strPartNumber);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
 			}
 
 		//============================================================================*
@@ -434,61 +289,6 @@ namespace ReloadersWorkShop
 				}
 
 			return (false);
-			}
-
-		//============================================================================*
-		// Import()
-		//============================================================================*
-
-		public override bool Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
-			{
-			XmlNode XMLNode = XMLThisNode.FirstChild;
-
-			base.Import(XMLDocument, XMLThisNode, DataFiles);
-
-			while (XMLNode != null)
-				{
-				switch (XMLNode.Name)
-					{
-					case "PartNumber":
-						m_strPartNumber = XMLNode.FirstChild.Value;
-						break;
-					case "Type":
-						m_strType = XMLNode.FirstChild.Value;
-						break;
-					case "SelfCast":
-						m_fSelfCast = XMLNode.FirstChild.Value == "Yes";
-						break;
-					case "TopPunch":
-						m_fSelfCast = XMLNode.FirstChild.Value == "Yes";
-						break;
-					case "Diameter":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dDiameter);
-						break;
-					case "Length":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dLength);
-						break;
-					case "Weight":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dWeight);
-						break;
-					case "BallisticCoefficient":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dBallisticCoefficient);
-						break;
-					case "Calibers":
-					case "CaliberList":
-					case "BulletCalibers":
-					case "BulletCaliberList":
-						m_BulletCaliberList.Import(XMLDocument, XMLNode, DataFiles);
-						break;
-
-					default:
-						break;
-					}
-
-				XMLNode = XMLNode.NextSibling;
-				}
-
-			return (Validate());
 			}
 
 		//============================================================================*

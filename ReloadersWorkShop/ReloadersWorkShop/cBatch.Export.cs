@@ -9,7 +9,7 @@ namespace ReloadersWorkShop
 		// Export() - XML Document
 		//============================================================================*
 
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+		public void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement)
 			{
 			XmlElement XMLThisElement = XMLDocument.CreateElement(ExportName);
 			XMLParentElement.AppendChild(XMLThisElement);
@@ -240,7 +240,7 @@ namespace ReloadersWorkShop
 		// Import()
 		//============================================================================*
 
-		public bool Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+		public bool Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
 			{
 			XmlNode XMLNode = XMLThisNode.FirstChild;
 
@@ -258,10 +258,10 @@ namespace ReloadersWorkShop
 						DateTime.TryParse(XMLNode.FirstChild.Value, out m_DateLoaded);
 						break;
 					case "LoadIdentity":
-						m_Load = cDataFiles.GetLoadByIdentity(XMLDocument, XMLNode, DataFiles);
+						m_Load = cRWXMLDocument.GetLoadByIdentity(XMLDocument, XMLNode, DataFiles);
 						break;
 					case "FirearmIdentity":
-						m_Firearm = cDataFiles.GetFirearmByIdentity(XMLDocument, XMLNode, DataFiles);
+						m_Firearm = cRWXMLDocument.GetFirearmByIdentity(XMLDocument, XMLNode, DataFiles);
 						break;
 					case "PowderWeight":
 						Double.TryParse(XMLNode.FirstChild.Value, out m_dPowderWeight);

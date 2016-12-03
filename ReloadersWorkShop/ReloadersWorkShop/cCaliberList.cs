@@ -76,7 +76,7 @@ namespace ReloadersWorkShop
 
 			string strLine = "";
 
-			Writer.WriteLine(cCaliber.CSVHeader);
+			Writer.WriteLine(ExportName);
 			Writer.WriteLine();
 
 			Writer.WriteLine(cCaliber.CSVLineHeader);
@@ -96,7 +96,7 @@ namespace ReloadersWorkShop
 		// Export()
 		//============================================================================*
 
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+		public void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement)
 			{
 			if (Count > 0)
 				{
@@ -116,7 +116,7 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				return ("Calibers");
+				return ("CaliberList");
 				}
 			}
 
@@ -135,7 +135,7 @@ namespace ReloadersWorkShop
 					case "Caliber":
 						cCaliber Caliber = new cCaliber();
 
-						if (Caliber.Import(XMLDocument, XMLNode))
+						if (Caliber.Import(XMLNode))
 							AddCaliber(Caliber);
 
 						break;

@@ -325,7 +325,7 @@ namespace ReloadersWorkShop
 		// Export() - XML Document
 		//============================================================================*
 
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+		public void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement)
 			{
 			XmlElement XMLThisElement = XMLDocument.CreateElement("Load");
 			XMLParentElement.AppendChild(XMLThisElement);
@@ -334,7 +334,7 @@ namespace ReloadersWorkShop
 
 			// Caliber
 
-			m_Caliber.ExportIdentity(XMLDocument, XMLThisElement);
+			m_Caliber.Export(XMLDocument, XMLThisElement, true);
 
 			// Firearm Type
 
@@ -346,19 +346,19 @@ namespace ReloadersWorkShop
 
 			// Bullet
 
-			m_Bullet.ExportIdentity(XMLDocument, XMLThisElement);
+			m_Bullet.Export(XMLDocument, XMLThisElement, true);
 
 			// Powder
 
-			m_Powder.ExportIdentity(XMLDocument, XMLThisElement);
+			m_Powder.Export(XMLDocument, XMLThisElement, true);
 
 			// Primer
 
-			m_Primer.ExportIdentity(XMLDocument, XMLThisElement);
+			m_Primer.Export(XMLDocument, XMLThisElement, true);
 
 			// Case
 
-			m_Case.ExportIdentity(XMLDocument, XMLThisElement);
+			m_Case.Export(XMLDocument, XMLThisElement, true);
 
 			if (m_ChargeList.Count > 0)
 				m_ChargeList.Export(XMLDocument, XMLThisElement);
@@ -368,7 +368,7 @@ namespace ReloadersWorkShop
 		// ExportIdentity()
 		//============================================================================*
 
-		public void ExportIdentity(XmlDocument XMLDocument, XmlElement XMLParentElement)
+		public void ExportIdentity(cRWXMLDocument XMLDocument, XmlElement XMLParentElement)
 			{
 			XmlElement XMLThisElement = XMLDocument.CreateElement("FirearmIdentity");
 			XMLParentElement.AppendChild(XMLThisElement);
@@ -383,23 +383,23 @@ namespace ReloadersWorkShop
 
 			// Caliber
 
-			m_Caliber.ExportIdentity(XMLDocument, XMLThisElement);
+			m_Caliber.Export(XMLDocument, XMLThisElement, true);
 
 			// Bullet
 
-			m_Bullet.ExportIdentity(XMLDocument, XMLThisElement);
+			m_Bullet.Export(XMLDocument, XMLThisElement, true);
 
 			// Case
 
-			m_Case.ExportIdentity(XMLDocument, XMLThisElement);
+			m_Case.Export(XMLDocument, XMLThisElement, true);
 
 			// Powder
 
-			m_Powder.ExportIdentity(XMLDocument, XMLThisElement);
+			m_Powder.Export(XMLDocument, XMLThisElement, true);
 
 			// Primer
 
-			m_Primer.ExportIdentity(XMLDocument, XMLThisElement);
+			m_Primer.Export(XMLDocument, XMLThisElement, true);
 			}
 
 		//============================================================================*
@@ -434,7 +434,7 @@ namespace ReloadersWorkShop
 		// Import()
 		//============================================================================*
 
-		public bool Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+		public bool Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
 			{
 			XmlNode XMLNode = XMLThisNode.FirstChild;
 
@@ -443,22 +443,22 @@ namespace ReloadersWorkShop
 				switch (XMLNode.Name)
 					{
 					case "BulletIdentity":
-						m_Bullet = cDataFiles.GetBulletByIdentity(XMLDocument, XMLNode, DataFiles);
+						m_Bullet = cRWXMLDocument.GetBulletByIdentity(XMLDocument, XMLNode, DataFiles);
 						break;
 					case "PowderIdentity":
-						m_Powder = cDataFiles.GetPowderByIdentity(XMLDocument, XMLNode, DataFiles);
+						m_Powder = cRWXMLDocument.GetPowderByIdentity(XMLDocument, XMLNode, DataFiles);
 						break;
 					case "CaliberIdentity":
-						m_Caliber = cDataFiles.GetCaliberByIdentity(XMLDocument, XMLNode, DataFiles);
+						m_Caliber = cRWXMLDocument.GetCaliberByIdentity(XMLNode, DataFiles);
 						break;
 					case "FirearmType":
 						m_eFirearmType = cFirearm.FirearmTypeFromString(XMLNode.FirstChild.Value);
 						break;
 					case "PrimerIdentity":
-						m_Primer = cDataFiles.GetPrimerByIdentity(XMLDocument, XMLNode, DataFiles);
+						m_Primer = cRWXMLDocument.GetPrimerByIdentity(XMLDocument, XMLNode, DataFiles);
 						break;
 					case "CaseIdentity":
-						m_Case = cDataFiles.GetCaseByIdentity(XMLDocument, XMLNode, DataFiles);
+						m_Case = cRWXMLDocument.GetCaseByIdentity(XMLDocument, XMLNode, DataFiles);
 						break;
 					case "Charges":
 					case "ChargeList":

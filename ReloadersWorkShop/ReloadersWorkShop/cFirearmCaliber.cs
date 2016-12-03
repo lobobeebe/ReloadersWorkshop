@@ -10,7 +10,6 @@
 //============================================================================*
 
 using System;
-using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -23,7 +22,7 @@ namespace ReloadersWorkShop
 	//============================================================================*
 
 	[Serializable]
-	public class cFirearmCaliber
+	public partial class cFirearmCaliber
 		{
 		//----------------------------------------------------------------------------*
 		// Private Data Members
@@ -101,91 +100,6 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			return (m_Caliber.CompareTo(FirearmCaliber.m_Caliber));
-			}
-
-		//============================================================================*
-		// CSVLine Property
-		//============================================================================*
-
-		public string CSVLine
-			{
-			get
-				{
-				string strLine = "";
-
-				//----------------------------------------------------------------------------*
-				// General
-				//----------------------------------------------------------------------------*
-
-				strLine += m_Caliber.ToString();
-				strLine += ",";
-				strLine += m_fPrimary ? "Yes" : "";
-				strLine += ",";
-
-				return (strLine);
-				}
-			}
-
-		//============================================================================*
-		// CSVLineHeader Property
-		//============================================================================*
-
-		public static string CSVLineHeader
-			{
-			get
-				{
-				return ("Caliber,Primary");
-				}
-			}
-
-		//============================================================================*
-		// Export() - XML Document
-		//============================================================================*
-
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
-			{
-			XmlElement XMLThisElement = XMLDocument.CreateElement("FirearmCaliber");
-			XMLParentElement.AppendChild(XMLThisElement);
-
-			// Caliber
-
-			m_Caliber.ExportIdentity(XMLDocument,  XMLThisElement);
-
-			// Primary
-
-			XmlElement XMLElement = XMLDocument.CreateElement("Primary");
-			XmlText XMLTextElement = XMLDocument.CreateTextNode(m_fPrimary ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-			}
-
-		//============================================================================*
-		// Import()
-		//============================================================================*
-
-		public bool Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
-			{
-			XmlNode XMLNode = XMLThisNode.FirstChild;
-
-			while (XMLNode != null)
-				{
-				switch (XMLNode.Name)
-					{
-					case "Primary":
-						m_fPrimary = XMLNode.FirstChild.Value == "Yes";
-						break;
-					case "CaliberIdentity":
-						m_Caliber = cDataFiles.GetCaliberByIdentity(XMLDocument, XMLNode, DataFiles);
-						break;
-					default:
-						break;
-					}
-
-				XMLNode = XMLNode.NextSibling;
-				}
-
-			return (Validate());
 			}
 
 		//============================================================================*

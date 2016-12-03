@@ -10,7 +10,6 @@
 //============================================================================*
 
 using System;
-using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -23,7 +22,7 @@ namespace ReloadersWorkShop
 	//============================================================================*
 
 	[Serializable]
-	public class cBulletCaliber
+	public partial class cBulletCaliber
 		{
 		//============================================================================*
 		// Private Data Members
@@ -148,112 +147,6 @@ namespace ReloadersWorkShop
 				{
 				m_dCBTO = value;
 				}
-			}
-
-		//============================================================================*
-		// CSVLine Property
-		//============================================================================*
-
-		public string CSVLine
-			{
-			get
-				{
-				string strLine = m_Caliber.ToString();
-				;
-				strLine += ",";
-
-				strLine += m_dCOL.ToString();
-				strLine += ",";
-				strLine += m_dCBTO.ToString();
-				strLine += ",";
-
-				return (strLine);
-				}
-			}
-
-		//============================================================================*
-		// CSVLineHeader Property
-		//============================================================================*
-
-		public static string CSVLineHeader
-			{
-			get
-				{
-				return ("Caliber,COAL,CBTO");
-				}
-			}
-
-		//============================================================================*
-		// Export() - XML Document
-		//============================================================================*
-
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
-			{
-			XmlElement XMLThisElement = XMLDocument.CreateElement(ExportName);
-			XMLParentElement.AppendChild(XMLThisElement);
-
-			// Caliber
-
-			m_Caliber.ExportIdentity(XMLDocument, XMLThisElement);
-
-			// COAL
-
-			XmlElement XMLElement = XMLDocument.CreateElement("COAL");
-			XmlText XMLTextElement = XMLDocument.CreateTextNode(m_dCOL.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// CBTO
-
-			XMLElement = XMLDocument.CreateElement("CBTO");
-			XMLTextElement = XMLDocument.CreateTextNode(m_dCBTO.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-			}
-
-		//============================================================================*
-		// ExportName Property
-		//============================================================================*
-
-		public string ExportName
-			{
-			get
-				{
-				return ("BulletCaliber");
-				}
-			}
-
-		//============================================================================*
-		// Import()
-		//============================================================================*
-
-		public bool Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
-			{
-			XmlNode XMLNode = XMLThisNode.FirstChild;
-
-			while (XMLNode != null)
-				{
-				switch (XMLNode.Name)
-					{
-					case "CaliberIdentity":
-						m_Caliber = cDataFiles.GetCaliberByIdentity(XMLDocument, XMLThisNode, DataFiles);
-						break;
-					case "COAL":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dCOL);
-						break;
-					case "CBTO":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dCBTO);
-						break;
-					default:
-						break;
-					}
-
-				XMLNode = XMLNode.NextSibling;
-				}
-
-			return (Validate());
 			}
 
 		//============================================================================*
