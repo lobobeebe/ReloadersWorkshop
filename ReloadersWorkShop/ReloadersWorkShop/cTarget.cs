@@ -62,7 +62,7 @@ namespace ReloadersWorkShop
 		private bool m_fDisposed = false;
 
 		private int m_nBatchID = 0;
-		private int m_nRange = 100;
+		private double m_dRange = 100.0;
 
 		private double m_dBulletDiameter = 0.0;
 		private cCaliber m_Caliber = null;
@@ -132,7 +132,7 @@ namespace ReloadersWorkShop
 		public cTarget(cTarget Target)
 			{
 			m_nBatchID = Target.m_nBatchID;
-			m_nRange = Target.m_nRange;
+			m_dRange = Target.m_dRange;
 
 			m_nRotation = Target.m_nRotation;
 			m_dBulletDiameter = Target.m_dBulletDiameter;
@@ -776,8 +776,8 @@ namespace ReloadersWorkShop
 				{
 				double dMOA = 0.0;
 
-				if (m_nRange > 0)
-					dMOA = GroupSize / ((m_nRange / 100.0) * 1.047);
+				if (m_dRange > 0.0)
+					dMOA = GroupSize / ((m_dRange / 100.0) * 1.047);
 
 				return (dMOA);
 				}
@@ -1046,8 +1046,8 @@ namespace ReloadersWorkShop
 			{
             double dMOA = 0.0;
 
-            if (m_nRange > 0)
-                dMOA = OffsetLength(Shot) / ((m_nRange / 100.0) * 1.047);
+            if (m_dRange > 0)
+                dMOA = OffsetLength(Shot) / ((m_dRange / 100.0) * 1.047);
 
             return (dMOA);
 			}
@@ -1151,15 +1151,15 @@ namespace ReloadersWorkShop
 		// Range Property
 		//============================================================================*
 
-		public int Range
+		public double Range
 			{
 			get
 				{
-				return (m_nRange);
+				return (m_dRange);
 				}
 			set
 				{
-				m_nRange = value;
+				m_dRange = value;
 				}
 			}
 

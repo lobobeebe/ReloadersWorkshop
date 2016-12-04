@@ -73,14 +73,23 @@ namespace ReloadersWorkShop
 		// Export()
 		//============================================================================*
 
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+		public void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement)
 			{
-			XmlElement XMLElement = XMLDocument.CreateElement("Charges");
-			XMLParentElement.AppendChild(XMLElement);
+			XmlElement XMLElement = XMLDocument.CreateElement(ExportName, XMLParentElement);
 
 			foreach (cCharge Charge in this)
-				{
 				Charge.Export(XMLDocument, XMLElement);
+			}
+
+		//============================================================================*
+		// ExportName()
+		//============================================================================*
+
+		public static string ExportName
+			{
+			get
+				{
+				return ("ChargeList");
 				}
 			}
 
@@ -88,7 +97,7 @@ namespace ReloadersWorkShop
 		// Import()
 		//============================================================================*
 
-		public void Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
 			{
 			XmlNode XMLNode = XMLThisNode.FirstChild;
 
@@ -100,7 +109,12 @@ namespace ReloadersWorkShop
 						cCharge Charge = new cCharge();
 
 						if (Charge.Import(XMLDocument, XMLNode, DataFiles))
-							AddCharge(Charge);
+							{
+							if (Charge.Validate())
+								AddCharge(Charge);
+							else
+								Console.WriteLine("Invalid Charge!");
+							}
 
 						break;
 					}
@@ -108,6 +122,7 @@ namespace ReloadersWorkShop
 				XMLNode = XMLNode.NextSibling;
 				}
 			}
+
 		//============================================================================*
 		// ResolveIdentities()
 		//============================================================================*

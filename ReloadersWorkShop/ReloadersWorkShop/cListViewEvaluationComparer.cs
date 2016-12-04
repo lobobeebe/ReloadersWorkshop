@@ -321,17 +321,17 @@ namespace ReloadersWorkShop
 					Group1 = cDataFiles.MetricToStandard(Group1, cDataFiles.eDataType.GroupSize);
 					Group2 = cDataFiles.MetricToStandard(Group2, cDataFiles.eDataType.GroupSize);
 
-					int Range1 = Item1.ChargeTest.BestGroupRange;
-					int Range2 = Item2.ChargeTest.BestGroupRange;
+					double dRange1 = Item1.ChargeTest.BestGroupRange;
+					double dRange2 = Item2.ChargeTest.BestGroupRange;
 
 					if (cPreferences.StaticPreferences.MetricRanges)
 						{
-						Range1 = (int) cConversions.MetersToYards(Range1);
-						Range2 = (int) cConversions.MetersToYards(Range2);
+						dRange1 = cConversions.MetersToYards(dRange1);
+						dRange2 = cConversions.MetersToYards(dRange2);
 						}
 
-					double dMOA1 = (Range1 > 0) ? Group1 / ((double) ((double) Range1 / 100.0) * 1.047) : 0;
-					double dMOA2 = (Range2 > 0) ? Group2 / ((double) ((double) Range2 / 100.0) * 1.047) : 0;
+					double dMOA1 = (dRange1 > 0) ? Group1 / ((dRange1 / 100.0) * 1.047) : 0;
+					double dMOA2 = (dRange2 > 0) ? Group2 / ((dRange2 / 100.0) * 1.047) : 0;
 
 					rc = dMOA1.CompareTo(dMOA2);
 

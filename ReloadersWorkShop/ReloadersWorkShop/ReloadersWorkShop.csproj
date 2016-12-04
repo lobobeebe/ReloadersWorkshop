@@ -173,12 +173,14 @@
     <Compile Include="cCase.cs" />
     <Compile Include="cCaseList.cs" />
     <Compile Include="cCharge.cs" />
+    <Compile Include="cCharge.Export.cs" />
     <Compile Include="cChargeComparer.cs" />
     <Compile Include="cChargeList.cs" />
     <Compile Include="cChargeListView.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="cChargeTest.cs" />
+    <Compile Include="cChargeTest.Export.cs" />
     <Compile Include="cChargeTestComparer.cs" />
     <Compile Include="cChargeTestForm.cs">
       <SubType>Form</SubType>

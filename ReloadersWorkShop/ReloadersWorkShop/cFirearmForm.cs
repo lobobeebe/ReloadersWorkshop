@@ -837,7 +837,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_Firearm.ZeroRange = (int) cDataFiles.MetricToStandard(ZeroRangeTextBox.Value, cDataFiles.eDataType.Range);
+			m_Firearm.ZeroRange = cDataFiles.MetricToStandard(ZeroRangeTextBox.Value, cDataFiles.eDataType.Range);
 
 			m_fChanged = true;
 
@@ -944,7 +944,7 @@ namespace ReloadersWorkShop
 			NeckTextBox.Value = cDataFiles.StandardToMetric(m_Firearm.Neck, cDataFiles.eDataType.Dimension);
 			NeckTextBox.Enabled = FirearmTypeCombo.Value == cFirearm.eFireArmType.Rifle;
 
-			ZeroRangeTextBox.Value = (int) cDataFiles.StandardToMetric(m_Firearm.ZeroRange, cDataFiles.eDataType.Range);
+			ZeroRangeTextBox.Value = (int) Math.Round(cDataFiles.StandardToMetric(m_Firearm.ZeroRange, cDataFiles.eDataType.Range), 0);
 
 			m_BulletListView.Populate();
 

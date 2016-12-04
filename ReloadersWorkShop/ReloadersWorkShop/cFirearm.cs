@@ -64,7 +64,7 @@ namespace ReloadersWorkShop
 		// Specs
 		//----------------------------------------------------------------------------*
 
-		private int m_nZeroRange = 25;
+		private double m_dZeroRange = 25;
 		private double m_dBarrelLength = 0.0;
 		private double m_dTwist = 1.0;
 		private double m_dSightHeight = 0.8;
@@ -151,7 +151,7 @@ namespace ReloadersWorkShop
 			m_dSightHeight = Firearm.m_dSightHeight;
 			m_dScopeClick = Firearm.m_dScopeClick;
 
-			m_nZeroRange = Firearm.m_nZeroRange;
+			m_dZeroRange = Firearm.m_dZeroRange;
 
 			m_dHeadSpace = Firearm.m_dHeadSpace;
 			m_dNeck = Firearm.m_dNeck;
@@ -1029,15 +1029,15 @@ namespace ReloadersWorkShop
 		// ZeroRange Property
 		//============================================================================*
 
-		public int ZeroRange
+		public double ZeroRange
 			{
 			get
 				{
-				return (m_nZeroRange);
+				return (m_dZeroRange);
 				}
 			set
 				{
-				m_nZeroRange = value;
+				m_dZeroRange = value;
 				}
 			}
 		}

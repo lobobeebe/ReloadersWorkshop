@@ -1684,13 +1684,9 @@ namespace ReloadersWorkShop
 			else
 				{
 				if (nMinVelocity == nMaxVelocity)
-					{
 					MuzzleVelocityLabel.Text = String.Format("{0:N0} {1}", cDataFiles.StandardToMetric(nMinVelocity, cDataFiles.eDataType.Velocity), cDataFiles.MetricString(cDataFiles.eDataType.Velocity));
-					}
 				else
-					{
 					MuzzleVelocityLabel.Text = String.Format("{0:N0} to {1:N0} {2}", cDataFiles.StandardToMetric(nMinVelocity, cDataFiles.eDataType.Velocity), cDataFiles.StandardToMetric(nMaxVelocity, cDataFiles.eDataType.Velocity), cDataFiles.MetricString(cDataFiles.eDataType.Velocity));
-					}
 				}
 
 			//----------------------------------------------------------------------------*
@@ -1704,13 +1700,9 @@ namespace ReloadersWorkShop
 			else
 				{
 				if (nMinPressure == nMaxPressure)
-					{
-					PressureLabel.Text = String.Format("{0:N0} {1}", nMinPressure);
-					}
+					PressureLabel.Text = String.Format("{0:N0}", nMinPressure);
 				else
-					{
 					PressureLabel.Text = String.Format("{0:N0} to {1:N0}", nMinPressure, nMaxPressure);
-					}
 				}
 
 			m_fPopulating = false;

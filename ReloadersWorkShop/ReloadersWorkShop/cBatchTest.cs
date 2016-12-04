@@ -66,7 +66,7 @@ namespace ReloadersWorkShop
 
 		private int m_nNumRounds = 0;
 		private double m_dBestGroup = 0.0;
-		private int m_nBestGroupRange = 0;
+		private double m_dBestGroupRange = 0;
 		private string m_strNotes = "";
 
 		private cTestShotList m_TestShotList = new cTestShotList();
@@ -156,15 +156,15 @@ namespace ReloadersWorkShop
 		// BestGroupRange Property
 		//============================================================================*
 
-		public int BestGroupRange
+		public double BestGroupRange
 			{
 			get
 				{
-				return (m_nBestGroupRange);
+				return (m_dBestGroupRange);
 				}
 			set
 				{
-				m_nBestGroupRange = value;
+				m_dBestGroupRange = value;
 				}
 			}
 
@@ -241,7 +241,7 @@ namespace ReloadersWorkShop
 
 			m_nNumRounds = BatchTest.m_nNumRounds;
 			m_dBestGroup = BatchTest.m_dBestGroup;
-			m_nBestGroupRange = BatchTest.m_nBestGroupRange;
+			m_dBestGroupRange = BatchTest.m_dBestGroupRange;
 			m_strNotes = BatchTest.m_strNotes;
 
 			m_TestShotList = new cTestShotList(BatchTest.TestShotList);
@@ -313,7 +313,7 @@ namespace ReloadersWorkShop
 				strLine += ",";
 				strLine += m_dBestGroup;
 				strLine += ",";
-				strLine += m_nBestGroupRange;
+				strLine += m_dBestGroupRange;
 				strLine += ",";
 				strLine += m_strNotes;
 
@@ -622,7 +622,7 @@ namespace ReloadersWorkShop
 
 		public bool Validate()
 			{
-			bool fOK = m_nNumRounds == m_TestShotList.Count && m_dBestGroup > 0.0 && m_nBestGroupRange > 0;
+			bool fOK = m_nNumRounds == m_TestShotList.Count && m_dBestGroup > 0.0 && m_dBestGroupRange > 0.0;
 
 			return (fOK);
 			}

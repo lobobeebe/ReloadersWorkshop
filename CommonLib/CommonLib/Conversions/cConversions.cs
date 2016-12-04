@@ -549,18 +549,18 @@ namespace CommonLib.Conversions
 		// MetersToMiles()
 		//============================================================================*
 
-		static public double MetersToMiles(double dMeters, int nDecimals = 3)
+		static public double MetersToMiles(double dMeters)
 			{
-			return (Math.Round((dMeters * Math.Round(0.00062137, 8)), nDecimals));
+			return (dMeters * Math.Round(0.00062137, 8));
 			}
 
 		//============================================================================*
 		// MetersToMillimeters()
 		//============================================================================*
 
-		static public double MetersToMillimeters(double dMeters, int nDecimals = 3)
+		static public double MetersToMillimeters(double dMeters)
 			{
-			return (Math.Round((dMeters / Math.Round(0.001, 3)), nDecimals));
+			return (dMeters / Math.Round(0.001, 3));
 			}
 
 		//============================================================================*
@@ -569,7 +569,7 @@ namespace CommonLib.Conversions
 
 		static public double MetersToYards(double dMeters)
 			{
-			return ((dMeters * Math.Round(1.0936, 4)));
+			return (dMeters * Math.Round(1.0936, 4));
 			}
 
 		//============================================================================*

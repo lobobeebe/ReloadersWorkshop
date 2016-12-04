@@ -74,7 +74,7 @@ namespace ReloadersWorkShop
 			XMLDocument.CreateElement("WindDirection", m_nWindDirection, XMLThisElement);
 			XMLDocument.CreateElement("NumRounds", m_nNumRounds, XMLThisElement);
 			XMLDocument.CreateElement("BestGroup", m_dBestGroup, XMLThisElement);
-			XMLDocument.CreateElement("BestGroupRange", m_nBestGroupRange, XMLThisElement);
+			XMLDocument.CreateElement("BestGroupRange", m_dBestGroupRange, XMLThisElement);
 			XMLDocument.CreateElement("Notes", m_strNotes, XMLThisElement);
 
 			m_TestShotList.Export(XMLDocument, XMLThisElement);
@@ -141,7 +141,7 @@ namespace ReloadersWorkShop
 						Double.TryParse(XMLNode.FirstChild.Value, out m_dBestGroup);
 						break;
 					case "BestGroupRange":
-						Int32.TryParse(XMLNode.FirstChild.Value, out m_nBestGroupRange);
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dBestGroupRange);
 						break;
 					case "Notes":
 						m_strNotes = XMLNode.FirstChild.Value;

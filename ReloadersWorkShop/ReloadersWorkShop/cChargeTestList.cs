@@ -71,7 +71,7 @@ namespace ReloadersWorkShop
 		// Export()
 		//============================================================================*
 
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+		public void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement)
 			{
 			if (Count > 0)
 				{
@@ -84,6 +84,36 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "ChargeTest":
+						cChargeTest ChargeTest = new cChargeTest();
+
+						if (ChargeTest.Import(XMLDocument, XMLNode, DataFiles))
+							{
+							if (ChargeTest.Validate())
+								Add(ChargeTest);
+							else
+								Console.WriteLine("Invalid ChargeTest!");
+							}
+
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+			}
+
+		//============================================================================*
 		// ResolveIdentities()
 		//============================================================================*
 
@@ -92,11 +122,7 @@ namespace ReloadersWorkShop
 			bool fChanged = false;
 
 			foreach (cChargeTest ChargeTest in this)
-				{
-				ChargeTest.Charge = Charge;
-
 				fChanged = ChargeTest.ResolveIdentities(Datafiles) ? true : fChanged;
-				}
 
 			return (fChanged);
 			}

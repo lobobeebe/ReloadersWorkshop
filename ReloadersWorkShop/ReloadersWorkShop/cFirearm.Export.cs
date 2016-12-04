@@ -55,7 +55,7 @@ namespace ReloadersWorkShop
 				strLine += ",";
 				strLine += m_eTurretType == eTurretType.MOA ? "MOA," : "Mils,";
 
-				strLine += m_nZeroRange;
+				strLine += m_dZeroRange;
 				strLine += ",";
 				strLine += m_dHeadSpace;
 				strLine += ",";
@@ -121,7 +121,7 @@ namespace ReloadersWorkShop
 			XMLDocument.CreateElement("Scoped", m_fScoped, XMLThisElement);
 			XMLDocument.CreateElement("ScopeClick", m_dScopeClick, XMLThisElement);
 			XMLDocument.CreateElement("TurretType", m_eTurretType, XMLThisElement);
-			XMLDocument.CreateElement("ZeroRange", m_nZeroRange, XMLThisElement);
+			XMLDocument.CreateElement("ZeroRange", m_dZeroRange, XMLThisElement);
 			XMLDocument.CreateElement("HeadSpace", m_dHeadSpace, XMLThisElement);
 			XMLDocument.CreateElement("NeckSize", m_dNeck, XMLThisElement);
 			XMLDocument.CreateElement("ReceiverFinish", m_strReceiverFinish, XMLThisElement);
@@ -191,11 +191,13 @@ namespace ReloadersWorkShop
 						m_eTurretType = XMLNode.FirstChild.Value == "MOA" ? eTurretType.MOA : eTurretType.MilDot;
 						break;
 					case "ZeroRange":
-						Int32.TryParse(XMLNode.FirstChild.Value, out m_nZeroRange);
+						Double.TryParse(XMLNode.FirstChild.Value, out m_dZeroRange);
 						break;
 					case "HeadSpace":
+					case "Headspace":
 						Double.TryParse(XMLNode.FirstChild.Value, out m_dHeadSpace);
 						break;
+					case "Neck":
 					case "NeckSize":
 						Double.TryParse(XMLNode.FirstChild.Value, out m_dNeck);
 						break;

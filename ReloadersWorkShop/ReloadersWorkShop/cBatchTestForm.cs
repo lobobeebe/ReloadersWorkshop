@@ -316,7 +316,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_BatchTest.BestGroupRange = (int) cDataFiles.MetricToStandard(BestGroupRangeTextBox.Value, cDataFiles.eDataType.Range);
+			m_BatchTest.BestGroupRange = cDataFiles.MetricToStandard(BestGroupRangeTextBox.Value, cDataFiles.eDataType.Range);
 
 			m_fChanged = true;
 
