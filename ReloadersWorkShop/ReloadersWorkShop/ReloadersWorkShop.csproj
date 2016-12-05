@@ -453,6 +453,7 @@
     </Compile>
     <Compile Include="cTestShotList.cs" />
     <Compile Include="cTransaction.cs" />
+    <Compile Include="cTransaction.Export.cs" />
     <Compile Include="cTransactionList.cs" />
     <Compile Include="cTransactionListView.cs">
       <SubType>Component</SubType>

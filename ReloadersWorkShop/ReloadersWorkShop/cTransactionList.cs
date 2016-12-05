@@ -57,7 +57,7 @@ namespace ReloadersWorkShop
 
 			string strLine = "";
 
-			Writer.WriteLine(cTransaction.CSVHeader);
+			Writer.WriteLine("TransactionList");
 			Writer.WriteLine();
 
 			Writer.WriteLine(cTransaction.CSVLineHeader);
@@ -77,15 +77,27 @@ namespace ReloadersWorkShop
 		// Export()
 		//============================================================================*
 
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+		public void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement)
 			{
 			if (Count > 0)
 				{
-				XmlElement XMLElement = XMLDocument.CreateElement(string.Empty, "Bullets", string.Empty);
+				XmlElement XMLElement = XMLDocument.CreateElement(ExportName);
 				XMLParentElement.AppendChild(XMLElement);
 
 				foreach (cTransaction Transaction in this)
 					Transaction.Export(XMLDocument, XMLElement);
+				}
+			}
+
+		//============================================================================*
+		// ExportName()
+		//============================================================================*
+
+		public static string ExportName
+			{
+			get
+				{
+				return ("TransactionList");
 				}
 			}
 

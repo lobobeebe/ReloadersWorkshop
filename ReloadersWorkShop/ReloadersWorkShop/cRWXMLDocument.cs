@@ -104,6 +104,15 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// CreateElement() - TransactionType
+		//============================================================================*
+
+		public XmlElement CreateElement(string strName, cTransaction.eTransactionType eType, XmlNode XMLParentNode)
+			{
+			return (CreateElement(strName, cTransaction.TransactionTypeString(eType), XMLParentNode));
+			}
+
+		//============================================================================*
 		// CreateElement() - TurretType
 		//============================================================================*
 
