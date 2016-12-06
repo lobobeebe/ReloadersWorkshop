@@ -1945,9 +1945,9 @@ namespace ReloadersWorkShop
 
 								string strMessage = String.Format("An error was encountered while reading the {0} data file!  This can be caused by a recent update with an incompatible data format.", Application.ProductName);
 
-								strMessage += String.Format("\n\nFortunately, I've been saving a data recovery file every time you exit {0} for just such an occurence.\n\nThis recovery file will now be used to restore your data.", Application.ProductName);
+								strMessage += String.Format("\n\nFortunately, a data recovery file exists for just such an occurence.\n\nThis recovery file will now be used to restore your data.", Application.ProductName);
 								
-								strMessage += "\n\nYou're welcome...\n\nClick OK to continue...";
+								strMessage += "\n\nClick OK to continue...";
 
 								MessageBox.Show(strMessage, "Data File Load Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
 
