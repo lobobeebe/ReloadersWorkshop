@@ -1955,7 +1955,7 @@ namespace ReloadersWorkShop
 									{
 									cRWXMLDocument XMLDocument = new ReloadersWorkShop.cRWXMLDocument(this);
 
-									XMLDocument.Import(Path.Combine(GetDataPath(), "RWRecovery.xml"), false);
+									XMLDocument.Import(Path.Combine(GetDataPath(), "RWRecovery.xml"), true);
 									}
 								catch
 									{
