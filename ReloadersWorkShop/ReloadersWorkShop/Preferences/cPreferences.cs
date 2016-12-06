@@ -29,7 +29,7 @@ namespace ReloadersWorkShop.Preferences
 	//============================================================================*
 
 	[Serializable]
-	public class cPreferences
+	public partial class cPreferences
 		{
 		//============================================================================*
 		// Public Enumerations
@@ -1706,14 +1706,6 @@ namespace ReloadersWorkShop.Preferences
 			}
 
 		//============================================================================*
-		// Export() - XML Document
-		//============================================================================*
-
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
-			{
-			}
-
-		//============================================================================*
 		// FirearmBulletSortColumn Property
 		//============================================================================*
 
@@ -2174,16 +2166,6 @@ namespace ReloadersWorkShop.Preferences
 				{
 				m_fHideUncheckedSupplies = value;
 				}
-			}
-
-		//============================================================================*
-		// Import()
-		//============================================================================*
-
-		public bool Import(XmlDocument XMLDocument, XmlNode XMLThisNode)
-			{
-
-			return (true);
 			}
 
 		//============================================================================*

@@ -55,19 +55,6 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// CreateElement() - Parent Element
-		//============================================================================*
-
-		public XmlElement CreateElement(string strName, XmlNode XMLParentNode)
-			{
-			XmlElement XMLElement = CreateElement(strName);
-			XMLParentNode.AppendChild(XMLElement);
-
-			return (XMLElement);
-			}
-
-
-		//============================================================================*
 		// CreateElement() - FirearmType
 		//============================================================================*
 

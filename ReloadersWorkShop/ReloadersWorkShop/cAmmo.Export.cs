@@ -78,8 +78,7 @@ namespace ReloadersWorkShop
 			if (fIdentityOnly)
 				strName += "Identity";
 
-			XmlElement XMLThisElement = XMLDocument.CreateElement(strName);
-			XMLParentElement.AppendChild(XMLThisElement);
+			XmlElement XMLThisElement = XMLDocument.CreateElement(strName, XMLParentElement);
 
 			base.Export(XMLDocument, XMLThisElement);
 

@@ -509,6 +509,7 @@
     <Compile Include="cPrimerList.cs" />
     <Compile Include="cSupply.cs" />
     <Compile Include="Preferences\cColumn.cs" />
+    <Compile Include="Preferences\cPreferences.Export.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
