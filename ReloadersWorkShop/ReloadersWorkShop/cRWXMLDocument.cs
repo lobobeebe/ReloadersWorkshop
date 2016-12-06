@@ -517,8 +517,7 @@ namespace ReloadersWorkShop
 						break;
 
 					case "Preferences":
-						if (!fMerge)
-							m_DataFiles.Preferences.Import(this, XMLNode);
+						m_DataFiles.Preferences.Import(this, XMLNode);
 
 						break;
 
