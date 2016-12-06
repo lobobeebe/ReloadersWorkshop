@@ -199,12 +199,12 @@ namespace ReloadersWorkShop
 
 		public void Import(XmlNode XMLThisNode, out Color ElementColor)
 			{
-			int nA = 0;
+			int nA = 255;
 			int nR = 0;
 			int nG = 0;
 			int nB = 0;
 
-			if (XMLThisNode != null && XMLThisNode.FirstChild != null && XMLThisNode.FirstChild.Value != null)
+			if (XMLThisNode != null && XMLThisNode.FirstChild != null)
 				{
 				XmlNode XMLNode = XMLThisNode.FirstChild;
 
@@ -278,7 +278,7 @@ namespace ReloadersWorkShop
 			int nX = 0;
 			int nY = 0;
 
-			if (XMLThisNode != null && XMLThisNode.FirstChild != null && XMLThisNode.FirstChild.Value != null)
+			if (XMLThisNode != null && XMLThisNode.FirstChild != null)
 				{
 				XmlNode XMLNode = XMLThisNode.FirstChild;
 
@@ -310,7 +310,7 @@ namespace ReloadersWorkShop
 			int nWidth = 0;
 			int nHeight = 0;
 
-			if (XMLThisNode != null && XMLThisNode.FirstChild != null && XMLThisNode.FirstChild.Value != null)
+			if (XMLThisNode != null && XMLThisNode.FirstChild != null)
 				{
 				XmlNode XMLNode = XMLThisNode.FirstChild;
 

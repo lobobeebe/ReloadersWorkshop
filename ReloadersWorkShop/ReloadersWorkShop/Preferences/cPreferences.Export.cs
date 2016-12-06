@@ -437,7 +437,7 @@ namespace ReloadersWorkShop.Preferences
 						XMLDocument.Import(XMLNode, out m_MainFormSize);
 						break;
 					case "LastMainTabSelected":
-						m_strLastMainTabSelected = XMLNode.FirstChild.Value;
+						XMLDocument.Import(XMLNode, out m_strLastMainTabSelected);
 						break;
 
 					//----------------------------------------------------------------------------*
@@ -445,31 +445,31 @@ namespace ReloadersWorkShop.Preferences
 					//----------------------------------------------------------------------------*
 
 					case "AmmoPrintAll":
-						m_fAmmoPrintAll = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fAmmoPrintAll);
 						break;
 					case "AmmoPrintChecked":
-						m_fAmmoPrintChecked = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fAmmoPrintChecked);
 						break;
 					case "AmmoPrintNonZero":
-						m_fAmmoNonZeroFilter = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fAmmoNonZeroFilter);
 						break;
 					case "AmmoMinStockFilter":
-						m_fAmmoMinStockFilter = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fAmmoMinStockFilter);
 						break;
 					case "AmmoFactoryFilter":
-						m_fAmmoFactoryFilter = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fAmmoFactoryFilter);
 						break;
 					case "AmmoFactoryReloadFilter":
-						m_fAmmoFactoryReloadFilter = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fAmmoFactoryReloadFilter);
 						break;
 					case "AmmoMyReloadFilter":
-						m_fAmmoFactoryReloadFilter = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fAmmoFactoryReloadFilter);
 						break;
 					case "AmmoSortColumn":
-						Int32.TryParse(XMLNode.FirstChild.Value, out m_nAmmoSortColumn);
+						XMLDocument.Import(XMLNode, out m_nAmmoSortColumn);
 						break;
 					case "AmmoSortOrder":
-						System.Windows.Forms.SortOrder.TryParse(XMLNode.FirstChild.Value, out m_AmmoSortOrder);
+						XMLDocument.Import(XMLNode, out m_AmmoSortOrder);
 						break;
 
 					//----------------------------------------------------------------------------*
