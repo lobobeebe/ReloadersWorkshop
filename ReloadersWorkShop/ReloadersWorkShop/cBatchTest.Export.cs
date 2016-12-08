@@ -98,12 +98,18 @@ namespace ReloadersWorkShop
 
 		public bool Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
 			{
+			int nInt = 0;
+
 			XmlNode XMLNode = XMLThisNode.FirstChild;
 
 			while (XMLNode != null)
 				{
 				switch (XMLNode.Name)
 					{
+					case "BatchID":
+						Int32.TryParse(XMLNode.FirstChild.Value, out nInt);
+						m_Batch = DataFiles.GetBatchByID(nInt);
+						break;
 					case "TestDate":
 						DateTime.TryParse(XMLNode.FirstChild.Value, out m_TestDate);
 						break;

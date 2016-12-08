@@ -182,13 +182,16 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				if (m_BatchTestList.Count > 0)
+				if (m_BatchTestList != null && m_BatchTestList.Count > 0)
 					return (m_BatchTestList[0]);
 
 				return (null);
 				}
 			set
 				{
+				if (m_BatchTestList == null)
+					m_BatchTestList = new cBatchTestList();
+
 				m_BatchTestList.Clear();
 
 				if (value != null)
@@ -204,6 +207,9 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
+				if (m_BatchTestList == null)
+					m_BatchTestList = new cBatchTestList();
+
 				return (m_BatchTestList);
 				}
 			}

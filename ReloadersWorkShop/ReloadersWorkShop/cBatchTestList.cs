@@ -41,8 +41,11 @@ namespace ReloadersWorkShop
 
 		public cBatchTestList(cBatchTestList BatchTestList)
 			{
-			foreach (cBatchTest BatchTest in BatchTestList)
-				Add(new cBatchTest(BatchTest));
+			if (BatchTestList != null)
+				{
+				foreach (cBatchTest BatchTest in BatchTestList)
+					Add(new cBatchTest(BatchTest));
+				}
 			}
 
 		//============================================================================*
