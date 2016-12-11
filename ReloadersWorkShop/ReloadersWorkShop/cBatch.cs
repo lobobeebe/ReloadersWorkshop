@@ -805,7 +805,7 @@ namespace ReloadersWorkShop
 
 		public bool Synch()
 			{
-			if (BatchTest != null)
+			foreach(cBatchTest BatchTest in m_BatchTestList)
 				BatchTest.Batch = this;
 
 			return (true);

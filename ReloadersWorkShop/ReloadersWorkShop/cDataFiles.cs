@@ -4077,39 +4077,9 @@ namespace ReloadersWorkShop
 				return (0.0);
 
 			if (cPreferences.StaticPreferences.TrackInventory)
-				{
-				if (Supply.SupplyType != cSupply.eSupplyTypes.Bullets)
-					{
 					return (Supply.QuantityOnHand);
-					}
-				else
-					{
-					double dQuanity = 0.0;
-
-					foreach (cBullet Bullet in m_BulletList)
-						{
-						if (Supply.Manufacturer.CompareTo(Bullet.Manufacturer) == 0 &&
-							Bullet.PartNumber == (Supply as cBullet).PartNumber)
-							{
-							dQuanity += Bullet.QuantityOnHand;
-							}
-						}
-
-					return (dQuanity);
-					}
-				}
 
 			return (Supply.Quantity);
-			}
-
-		//============================================================================*
-		// Synch() - Batch
-		//============================================================================*
-
-		public void Synch()
-			{
-			foreach (cBatch CheckBatch in m_BatchList)
-				CheckBatch.Synch();
 			}
 
 		//============================================================================*
@@ -4581,7 +4551,7 @@ namespace ReloadersWorkShop
 				}
 
 			//----------------------------------------------------------------------------*
-			// Loads
+			// Loads & Batches
 			//----------------------------------------------------------------------------*
 
 			foreach (cLoad Load in m_LoadList)
