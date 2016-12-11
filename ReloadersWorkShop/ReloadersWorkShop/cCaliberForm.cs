@@ -1205,6 +1205,7 @@ namespace ReloadersWorkShop
 
 			if (!MinBulletDiameterTextBox.ValueOK)
 				fEnableOK = false;
+
 			//----------------------------------------------------------------------------*
 			// Check Max Bullet Diameter
 			//----------------------------------------------------------------------------*

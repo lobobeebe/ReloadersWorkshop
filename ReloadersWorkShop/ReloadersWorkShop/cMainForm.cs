@@ -179,6 +179,8 @@ namespace ReloadersWorkShop
 
 			ToolsConversionCalculatorMenuItem.Click += OnToolsConversionCalculatorClicked;
 
+			ToolsIntegrityCheckerMenuItem.Click += OnToolsIntegrityCheckerClicked;
+
 			ToolsSAAMIAmmoFiresMenuItem.Click += OnToolsSAAMIAmmoFiresClicked;
 			ToolsSAAMIFactsMenuItem.Click += OnToolsSAAMIFactsClicked;
 			ToolsSAAMIPistolSpecsMenuItem.Click += OnToolsSAAMIPistolSpecsClicked;
@@ -1598,6 +1600,15 @@ namespace ReloadersWorkShop
 			cConversionForm ConversionForm = new cConversionForm(m_DataFiles);
 
 			ConversionForm.ShowDialog();
+			}
+
+		//============================================================================*
+		// OnToolsIntegrityCheckerClicked()
+		//============================================================================*
+
+		private void OnToolsIntegrityCheckerClicked(Object sender, EventArgs e)
+			{
+			cDataIntegrity DataIntegrity = new cDataIntegrity(m_DataFiles);
 			}
 
 		//============================================================================*

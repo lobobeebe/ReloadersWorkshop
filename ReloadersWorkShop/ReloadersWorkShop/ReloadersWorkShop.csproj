@@ -245,6 +245,7 @@
     <Compile Include="cAmmoTestListView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="cDataIntegrity.cs" />
     <Compile Include="cEvaluationItem.cs" />
     <Compile Include="cFirearm.Export.cs" />
     <Compile Include="cFirearmAccessoryForm.cs">
