@@ -364,14 +364,15 @@ namespace ReloadersWorkShop
 		// Validate()
 		//============================================================================*
 
-		public override bool Validate()
+		public override bool Validate(bool fIdentityOK = false)
 			{
-			bool fOK = base.Validate();
+			if (!base.Validate(fIdentityOK))
+				return (false);
 
-			if (fOK)
-				fOK = m_Caliber != null;
+			if (m_Caliber == null)
+				return (false);
 
-			return (fOK);
+			return (true);
 			}
 		}
 	}

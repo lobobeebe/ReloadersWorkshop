@@ -550,32 +550,36 @@ namespace ReloadersWorkShop
 		// Validate()
 		//============================================================================*
 
-		public override bool Validate()
+		public override bool Validate(bool fIdentityOK = false)
 			{
 			//----------------------------------------------------------------------------*
 			// Check the basic identity info
 			//----------------------------------------------------------------------------*
 
-			bool fOK = base.Validate();
+			if (!base.Validate(fIdentityOK))
+				return (false);
 
-			if (fOK)
-				fOK = !String.IsNullOrEmpty(m_strPartNumber);
+			if (String.IsNullOrEmpty(m_strPartNumber))
+				return (false);
 
 			//----------------------------------------------------------------------------*
 			// If this is an identity, return now
 			//----------------------------------------------------------------------------*
 
+			if (fIdentityOK && Identity)
+				return (true);
+
 			if (Identity)
-				return (fOK);
+				return (false);
 
 			//----------------------------------------------------------------------------*
-			// Otherwise, check the full monte for this bullet
+			// Otherwise, check the full monte for this item
 			//----------------------------------------------------------------------------*
 
 			if (m_dDiameter == 0.0 || m_dWeight == 0.0)
-				fOK = false;
+				return(false);
 
-			return (fOK);
+			return (true);
 			}
 
 		//============================================================================*

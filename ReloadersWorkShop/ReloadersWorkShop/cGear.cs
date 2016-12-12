@@ -585,17 +585,25 @@ namespace ReloadersWorkShop
 		// Validate()
 		//============================================================================*
 
-		public virtual bool Validate()
+		public virtual bool Validate(bool  fIdentityOK = false)
 			{
-			bool fOK = Manufacturer != null;
+			if (Manufacturer == null)
+				return (false);
 
-			if (fOK)
-				fOK = !String.IsNullOrEmpty(m_strPartNumber);
+			if (String.IsNullOrEmpty(m_strPartNumber))
+				return (false);
 
-			if (fOK && m_eType == eGearTypes.Firearm)
-				fOK = !String.IsNullOrEmpty(m_strSerialNumber) && !String.IsNullOrEmpty(m_strDescription);
+			if (fIdentityOK && Identity)
+				return (true);
 
-			return (fOK);
+			if (Identity)
+				return (false);
+
+			if (m_eType == eGearTypes.Firearm &&
+				(String.IsNullOrEmpty(m_strSerialNumber) || String.IsNullOrEmpty(m_strDescription)))
+				return (false);
+
+			return (true);
 			}
 		}
 	}

@@ -249,14 +249,15 @@ namespace ReloadersWorkShop
 		// Validate()
 		//============================================================================*
 
-		public override bool Validate()
+		public override bool Validate(bool fIdentityOK = false)
 			{
-			bool fOK = base.Validate();
+			if (!base.Validate(fIdentityOK))
+				return (false);
 
-			if (fOK)
-				fOK = !String.IsNullOrEmpty(m_strType);
+			if (String.IsNullOrEmpty(m_strType))
+				return (false);
 
-			return (fOK);
+			return (true);
 			}
 		}
 	}

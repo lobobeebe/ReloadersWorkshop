@@ -353,20 +353,24 @@ namespace ReloadersWorkShop
 		// Validate()
 		//============================================================================*
 
-		public override bool Validate()
+		public override bool Validate(bool fIdentityOK = false)
 			{
-			bool fOK = base.Validate();
+			if (!base.Validate(fIdentityOK))
+				return (false);
 
-			if (fOK)
-				fOK = !String.IsNullOrEmpty(m_strModel);
+			if (String.IsNullOrEmpty(m_strModel))
+				return (false);
+
+			if (fIdentityOK && Identity)
+				return (true);
 
 			if (Identity)
-				return (fOK);
+				return (false);
 
-			if (fOK && !m_fStandard && !m_fMagnum && !m_fMilitary && !m_fBenchRest)
-				fOK = false;
+			if (!m_fStandard && !m_fMagnum && !m_fMilitary && !m_fBenchRest)
+				return (false);
 
-			return (fOK);
+			return (true);
 			}
 		}
 	}

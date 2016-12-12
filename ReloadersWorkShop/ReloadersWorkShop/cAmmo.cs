@@ -428,17 +428,24 @@ namespace ReloadersWorkShop
 		// Validate()
 		//============================================================================*
 
-		public override bool Validate()
+		public override bool Validate(bool fIdentityOK = false)
 			{
-			bool fOK = base.Validate();
+			if (!base.Validate(fIdentityOK))
+				return (false);
 
-			if (fOK)
-				fOK = m_Caliber != null && !String.IsNullOrEmpty(m_strPartNumber) && !String.IsNullOrEmpty(m_strType);
+			if (m_Caliber == null || String.IsNullOrEmpty(m_strPartNumber) || String.IsNullOrEmpty(m_strType))
+				return (false);
 
-			if (fOK)
-				fOK = m_dBulletDiameter > 0.0 && m_dBulletWeight > 0.0;
+			if (fIdentityOK && Identity)
+				return (true);
 
-			return (fOK);
+			if (Identity)
+				return (false);
+
+			if (m_dBulletDiameter <= 0.0 || m_dBulletWeight <= 0.0)
+				return (false);
+
+			return (true);
 			}
 		}
 	}

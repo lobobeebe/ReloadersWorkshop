@@ -1018,11 +1018,24 @@ namespace ReloadersWorkShop
 		// Validate()
 		//============================================================================*
 
-		public override bool Validate()
+		public override bool Validate(bool fIdentityOK = false)
 			{
-			bool fOK = base.Validate();
+			if (!base.Validate(fIdentityOK))
+				return (false);
 
-			return (fOK);
+			if (m_eFirearmType == cFirearm.eFireArmType.None)
+				return (false);
+
+			if (m_dBarrelLength <= 0.0)
+				return (false);
+
+			if (m_dTwist <= 0.0)
+				return (false);
+
+			if (m_FirearmCaliberList.Count == 0)
+				return (false);
+
+			return (true);
 			}
 
 		//============================================================================*

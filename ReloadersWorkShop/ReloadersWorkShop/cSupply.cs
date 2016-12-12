@@ -965,7 +965,7 @@ namespace ReloadersWorkShop
 		// Validate()
 		//============================================================================*
 
-		public virtual bool Validate()
+		public virtual bool Validate(bool fIdentityOK = false)
 			{
 			return(m_Manufacturer != null);
 			}
