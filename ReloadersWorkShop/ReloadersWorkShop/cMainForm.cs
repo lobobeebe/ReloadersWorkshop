@@ -1608,7 +1608,9 @@ namespace ReloadersWorkShop
 
 		private void OnToolsIntegrityCheckerClicked(Object sender, EventArgs e)
 			{
-			cDataIntegrity DataIntegrity = new cDataIntegrity(m_DataFiles);
+			cDataIntegrityForm DataIntegrityForm = new cDataIntegrityForm(m_DataFiles);
+
+			DataIntegrityForm.ShowDialog();
 			}
 
 		//============================================================================*

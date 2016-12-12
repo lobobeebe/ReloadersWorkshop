@@ -246,6 +246,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="cDataIntegrity.cs" />
+    <Compile Include="cDataIntegrityForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="cDataIntegrityForm.Designer.cs">
+      <DependentUpon>cDataIntegrityForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="cEvaluationItem.cs" />
     <Compile Include="cFirearm.Export.cs" />
     <Compile Include="cFirearmAccessoryForm.cs">
@@ -579,6 +585,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="cCostAnalysisForm.resx">
       <DependentUpon>cCostAnalysisForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="cDataIntegrityForm.resx">
+      <DependentUpon>cDataIntegrityForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="cExportForm.resx">
       <DependentUpon>cExportForm.cs</DependentUpon>
