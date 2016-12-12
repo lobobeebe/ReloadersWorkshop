@@ -10,8 +10,6 @@
 //============================================================================*
 
 using System;
-using System.IO;
-using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -24,7 +22,7 @@ namespace ReloadersWorkShop
 	//============================================================================*
 
 	[Serializable]
-	public class cTestShot
+	public partial class cTestShot
 		{
 		//============================================================================*
 		// Private Data Members
@@ -104,128 +102,6 @@ namespace ReloadersWorkShop
 				}
 
 			return (rc);
-			}
-
-		//============================================================================*
-		// CSVLine Property
-		//============================================================================*
-
-		public string CSVLine
-			{
-			get
-				{
-				string strLine = ",,";
-
-				strLine += m_nMuzzleVelocity;
-				strLine += ",";
-				strLine += m_nPressure;
-				strLine += ",";
-				strLine += m_fMisfire ? "Yes" : "-";
-				strLine += ",";
-				strLine += m_fSquib ? "Yes" : "-";
-
-				return (strLine);
-				}
-			}
-
-		//============================================================================*
-		// CSVLineHeader Property
-		//============================================================================*
-
-		public static string CSVLineHeader
-			{
-			get
-				{
-				return ("Muzzle Velocity,Pressure,Misfire,Squib");
-				}
-			}
-
-		//============================================================================*
-		// Export() - XML Document
-		//============================================================================*
-
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
-			{
-			XmlElement XMLThisElement = XMLDocument.CreateElement(ExportName);
-			XMLParentElement.AppendChild(XMLThisElement);
-
-			// Muzzle Velocity
-
-			XmlElement XMLElement = XMLDocument.CreateElement("MuzzleVelocity");
-			XmlText XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nMuzzleVelocity));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Pressure
-
-			XMLElement = XMLDocument.CreateElement("Pressure");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nPressure));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Misfire
-
-			XMLElement = XMLDocument.CreateElement("Misfire");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fMisfire ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Squib
-
-			XMLElement = XMLDocument.CreateElement("Squib");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fSquib ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-			}
-
-		//============================================================================*
-		// ExportName Property
-		//============================================================================*
-
-		public string ExportName
-			{
-			get
-				{
-				return ("TestShot");
-				}
-			}
-
-		//============================================================================*
-		// Import()
-		//============================================================================*
-
-		public bool Import(XmlDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
-			{
-			XmlNode XMLNode = XMLThisNode.FirstChild;
-
-			while (XMLNode != null)
-				{
-				switch (XMLNode.Name)
-					{
-					case "MuzzleVelocity":
-						Int32.TryParse(XMLNode.FirstChild.Value, out m_nMuzzleVelocity);
-						break;
-					case "Pressure":
-						Int32.TryParse(XMLNode.FirstChild.Value, out m_nPressure);
-						break;
-					case "Misfire":
-						m_fMisfire = XMLNode.FirstChild.Value == "Yes";
-						break;
-					case "Squib":
-						m_fSquib = XMLNode.FirstChild.Value == "Yes";
-						break;
-					default:
-						break;
-					}
-
-				XMLNode = XMLNode.NextSibling;
-				}
-
-			return (Validate());
 			}
 
 		//============================================================================*

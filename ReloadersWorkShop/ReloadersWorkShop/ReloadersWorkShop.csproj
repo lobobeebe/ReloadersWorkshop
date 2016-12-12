@@ -297,6 +297,7 @@
     <Compile Include="cTargetShotListView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="cTestShot.Export.cs" />
     <Compile Include="cTestStatistics.cs" />
     <Compile Include="cEvaluationListView.cs">
       <SubType>Component</SubType>
