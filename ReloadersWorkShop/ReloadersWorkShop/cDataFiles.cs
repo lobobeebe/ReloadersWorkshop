@@ -1965,7 +1965,7 @@ namespace ReloadersWorkShop
 								string strMessage = String.Format("An error was encountered while reading the {0} data file!  This can be caused by a recent update with an incompatible data format.", Application.ProductName);
 
 								strMessage += String.Format("\n\nFortunately, a data recovery file exists for just such an occurence.\n\nThis recovery file will now be used to restore your data.", Application.ProductName);
-								
+
 								strMessage += "\n\nClick OK to continue...";
 
 								MessageBox.Show(strMessage, "Data File Load Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
@@ -2069,6 +2069,15 @@ namespace ReloadersWorkShop
 				//----------------------------------------------------------------------------*
 				// Set up default preferences
 				//----------------------------------------------------------------------------*
+
+				if (!cPreferences.StaticPreferences.AmmoFactoryFilter &&
+					!cPreferences.StaticPreferences.AmmoFactoryReloadFilter &&
+					!cPreferences.StaticPreferences.AmmoMyReloadFilter)
+					{
+					cPreferences.StaticPreferences.AmmoFactoryFilter = true;
+					cPreferences.StaticPreferences.AmmoFactoryReloadFilter = true;
+					cPreferences.StaticPreferences.AmmoMyReloadFilter = true;
+					}
 
 				//----------------------------------------------------------------------------*
 				// Set up the next batch ID
@@ -4098,7 +4107,7 @@ namespace ReloadersWorkShop
 				return (0.0);
 
 			if (cPreferences.StaticPreferences.TrackInventory)
-					return (Supply.QuantityOnHand);
+				return (Supply.QuantityOnHand);
 
 			return (Supply.Quantity);
 			}

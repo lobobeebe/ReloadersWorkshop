@@ -234,6 +234,18 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Import() - DateTime
+		//============================================================================*
+
+		public void Import(XmlNode XMLThisNode, out DateTime Date)
+			{
+			Date = DateTime.Today;
+
+			if (XMLThisNode != null && XMLThisNode.FirstChild != null && XMLThisNode.FirstChild.Value != null)
+				DateTime.TryParse(XMLThisNode.FirstChild.Value, out Date);
+			}
+
+		//============================================================================*
 		// Import() - double
 		//============================================================================*
 

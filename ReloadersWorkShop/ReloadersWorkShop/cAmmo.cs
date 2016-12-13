@@ -83,7 +83,20 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// cAmmo() - Copy Constructor
+		// Append()
+		//============================================================================*
+
+		public void Append(cAmmo Ammo)
+			{
+			m_dBallisticCoefficient = m_dBallisticCoefficient == 0.0 ? Ammo.m_dBallisticCoefficient : m_dBallisticCoefficient;
+			m_dBulletDiameter = m_dBulletDiameter == 0.0 ? Ammo.m_dBulletDiameter : m_dBulletDiameter;
+			m_dBulletWeight = m_dBulletWeight == 0.0 ? Ammo.m_dBulletWeight : m_dBulletWeight;
+
+			m_TestList.Append(Ammo.m_TestList);
+			}
+
+		//============================================================================*
+		// Copy()
 		//============================================================================*
 
 		public void Copy(cAmmo Ammo)

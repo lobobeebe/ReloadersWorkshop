@@ -40,7 +40,7 @@ namespace ReloadersWorkShop
 		private double m_dTwist = 0;
 		private int m_nNumRounds = 0;
 		private double m_dBestGroup = 0.0;
-		private int m_nBestGroupRange = 0;
+		private double m_dBestGroupRange = 0.0;
 		private string m_strNotes;
 
 		private int m_nMuzzleVelocity = 0;
@@ -61,6 +61,32 @@ namespace ReloadersWorkShop
 
 		public cAmmoTest(cAmmoTest AmmoTest)
 			{
+			Copy(AmmoTest);
+			}
+
+		//============================================================================*
+		// Append()
+		//============================================================================*
+
+		public void Append(cAmmoTest AmmoTest)
+			{
+			m_dBarrelLength = m_dBarrelLength == 0.0 ? AmmoTest.m_dBarrelLength : m_dBarrelLength;
+			m_dTwist = m_dTwist == 0.0 ? AmmoTest.m_dTwist : m_dTwist;
+			m_nNumRounds = m_nNumRounds == 0 ? AmmoTest.m_nNumRounds : m_nNumRounds;
+			m_nMuzzleVelocity = m_nMuzzleVelocity == 0 ? AmmoTest.m_nMuzzleVelocity : m_nMuzzleVelocity;
+			m_dBestGroup = m_dBestGroup == 0.0 ? AmmoTest.m_dBestGroup : m_dBestGroup;
+			m_dBestGroupRange = m_dBestGroupRange == 0.0 ? AmmoTest.m_dBestGroupRange : m_dBestGroupRange;
+			m_strNotes = AmmoTest.m_strNotes;
+
+			m_TestShotList = new cTestShotList(AmmoTest.TestShotList);
+			}
+
+		//============================================================================*
+		// Copy()
+		//============================================================================*
+
+		public void Copy(cAmmoTest AmmoTest)
+			{
 			m_Ammo = AmmoTest.m_Ammo;
 			m_Firearm = AmmoTest.m_Firearm;
 
@@ -70,7 +96,7 @@ namespace ReloadersWorkShop
 			m_nNumRounds = AmmoTest.m_nNumRounds;
 			m_nMuzzleVelocity = AmmoTest.m_nMuzzleVelocity;
 			m_dBestGroup = AmmoTest.m_dBestGroup;
-			m_nBestGroupRange = AmmoTest.m_nBestGroupRange;
+			m_dBestGroupRange = AmmoTest.m_dBestGroupRange;
 			m_strNotes = AmmoTest.m_strNotes;
 
 			m_TestShotList = new cTestShotList(AmmoTest.TestShotList);
@@ -128,15 +154,15 @@ namespace ReloadersWorkShop
 		// BestGroupRange Property
 		//============================================================================*
 
-		public int BestGroupRange
+		public double BestGroupRange
 			{
 			get
 				{
-				return (m_nBestGroupRange);
+				return (m_dBestGroupRange);
 				}
 			set
 				{
-				m_nBestGroupRange = value;
+				m_dBestGroupRange = value;
 				}
 			}
 

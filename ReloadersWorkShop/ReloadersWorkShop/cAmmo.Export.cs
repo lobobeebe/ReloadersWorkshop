@@ -129,28 +129,26 @@ namespace ReloadersWorkShop
 					case "CaliberIdentity":
 						m_Caliber = cRWXMLDocument.GetCaliberByIdentity(XMLNode, DataFiles);
 						break;
-					case "Caliber":
-						break;
 					case "PartNumber":
-						m_strPartNumber = XMLNode.FirstChild.Value;
+						XMLDocument.Import(XMLNode, out m_strPartNumber);
 						break;
 					case "Type":
-						m_strType = XMLNode.FirstChild.Value;
+						XMLDocument.Import(XMLNode, out m_strType);
 						break;
 					case "BatchID":
-						Int32.TryParse(XMLNode.FirstChild.Value, out m_nBatchID);
+						XMLDocument.Import(XMLNode, out m_nBatchID);
 						break;
 					case "Reload":
-						m_fReload = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fReload);
 						break;
 					case "BulletDiameter":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dBulletDiameter);
+						XMLDocument.Import(XMLNode, out m_dBulletDiameter);
 						break;
 					case "BulletWeight":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dBulletWeight);
+						XMLDocument.Import(XMLNode, out m_dBulletWeight);
 						break;
 					case "BallisticCoefficient":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dBallisticCoefficient);
+						XMLDocument.Import(XMLNode, out m_dBallisticCoefficient);
 						break;
 					case "AmmoTests":
 					case "AmmoTestList":

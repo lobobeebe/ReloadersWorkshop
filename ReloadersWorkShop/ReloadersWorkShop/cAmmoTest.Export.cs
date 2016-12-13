@@ -27,7 +27,7 @@ namespace ReloadersWorkShop
 				strLine += ",";
 				strLine += m_dBestGroup;
 				strLine += ",";
-				strLine += m_nBestGroupRange;
+				strLine += m_dBestGroupRange;
 				strLine += ",";
 				strLine += m_nMuzzleVelocity;
 				strLine += ",";
@@ -105,7 +105,7 @@ namespace ReloadersWorkShop
 			// Best Group Range
 
 			XMLElement = XMLDocument.CreateElement("BestGroupRange");
-			XMLTextElement = XMLDocument.CreateTextNode(m_nBestGroupRange.ToString());
+			XMLTextElement = XMLDocument.CreateTextNode(m_dBestGroupRange.ToString());
 			XMLElement.AppendChild(XMLTextElement);
 
 			XMLThisElement.AppendChild(XMLElement);
@@ -159,31 +159,31 @@ namespace ReloadersWorkShop
 				switch (XMLNode.Name)
 					{
 					case "TestDate":
-						DateTime.TryParse(XMLNode.FirstChild.Value, out m_TestDate);
+						XMLDocument.Import(XMLNode, out m_TestDate);
 						break;
 					case "FirearmIdentity":
 						m_Firearm = cRWXMLDocument.GetFirearmByIdentity(XMLDocument, XMLNode, DataFiles);
 						break;
 					case "BarrelLength":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dBarrelLength);
+						XMLDocument.Import(XMLNode, out m_dBarrelLength);
 						break;
 					case "Twist":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dTwist);
+						XMLDocument.Import(XMLNode, out m_dTwist);
 						break;
 					case "NumRounds":
-						Int32.TryParse(XMLNode.FirstChild.Value, out m_nNumRounds);
+						XMLDocument.Import(XMLNode, out m_nNumRounds);
 						break;
 					case "BestGroup":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dBestGroup);
+						XMLDocument.Import(XMLNode, out m_dBestGroup);
 						break;
 					case "BestGroupRange":
-						Int32.TryParse(XMLNode.FirstChild.Value, out m_nBestGroupRange);
+						XMLDocument.Import(XMLNode, out m_dBestGroupRange);
 						break;
 					case "MuzzleVelocity":
-						Int32.TryParse(XMLNode.FirstChild.Value, out m_nMuzzleVelocity);
+						XMLDocument.Import(XMLNode, out m_nMuzzleVelocity);
 						break;
 					case "Notes":
-						m_strNotes = XMLNode.FirstChild.Value;
+						XMLDocument.Import(XMLNode, out m_strNotes);
 						break;
 					case "TestShots":
 						m_TestShotList.Import(XMLDocument, XMLNode, DataFiles);

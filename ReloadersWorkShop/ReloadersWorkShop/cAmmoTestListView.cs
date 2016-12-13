@@ -197,9 +197,9 @@ namespace ReloadersWorkShop
 			Item.SubItems.Add(String.Format(m_strGroupFormat, cDataFiles.StandardToMetric(AmmoTest.BestGroup, cDataFiles.eDataType.GroupSize)));
 
 			double dBestGroup = AmmoTest.BestGroup;
-			int nBestGroupRange = AmmoTest.BestGroupRange;
+			double  dBestGroupRange = AmmoTest.BestGroupRange;
 
-			double dMOA = (dBestGroup != 0.0 && nBestGroupRange != 0) ? dBestGroup / (((double) nBestGroupRange / 100.0) * 1.047) : 0.0;
+			double dMOA = (dBestGroup != 0.0 && dBestGroupRange != 0.0) ? dBestGroup / ((dBestGroupRange / 100.0) * 1.047) : 0.0;
 
 			Item.SubItems.Add(String.Format("{0:F3}", dMOA));
 

@@ -36,7 +36,11 @@ namespace ReloadersWorkShop
 			foreach (cAmmo CheckAmmo in this)
 				{
 				if (CheckAmmo.CompareTo(Ammo) == 0)
+					{
+					CheckAmmo.Append(Ammo);
+
 					return (false);
+					}
 				}
 
 			Add(Ammo);
@@ -79,8 +83,7 @@ namespace ReloadersWorkShop
 			{
 			if (Count > 0)
 				{
-				XmlElement XMLElement = XMLDocument.CreateElement(ExportName);
-				XMLParentElement.AppendChild(XMLElement);
+				XmlElement XMLElement = XMLDocument.CreateElement(ExportName, XMLParentElement);
 
 				foreach (cAmmo Ammo in this)
 					Ammo.Export(XMLDocument, XMLElement);
@@ -115,12 +118,7 @@ namespace ReloadersWorkShop
 						cAmmo Ammo = new cAmmo();
 
 						if (Ammo.Import(XMLDocument, XMLNode, DataFiles))
-							{
-							if (Ammo.Validate())
-								AddAmmo(Ammo);
-							else
-								Console.WriteLine("Invalid Ammo!");
-							}
+							AddAmmo(Ammo);
 
 						break;
 					}

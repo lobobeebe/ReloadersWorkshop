@@ -58,6 +58,33 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Append()
+		//============================================================================*
+
+		public bool Append(cAmmoTestList AmmoTestList)
+			{
+			foreach (cAmmoTest CheckAmmoTest in AmmoTestList)
+				{
+				bool fFound = false;
+
+				foreach (cAmmoTest AmmoTest in this)
+					{
+					if (CheckAmmoTest.CompareTo(AmmoTest) == 0)
+						{
+						AmmoTest.Append(CheckAmmoTest);
+
+						fFound = true;
+						}
+					}
+
+				if (!fFound)
+					Add(CheckAmmoTest);
+				}
+
+			return (true);
+			}
+
+		//============================================================================*
 		// Export()
 		//============================================================================*
 
