@@ -110,13 +110,9 @@ namespace ReloadersWorkShop
 					case "Manufacturer":
 						cManufacturer Manufacturer = new cManufacturer();
 
-						if (Manufacturer.Import(XMLDocument, XMLNode))
-							{
-							if (Manufacturer.Validate())
-								AddManufacturer(Manufacturer);
-							else
-								Console.WriteLine("Invalid Manufacturer!");
-							}
+						Manufacturer.Import(XMLDocument, XMLNode);
+
+						AddManufacturer(Manufacturer);
 
 						break;
 					}

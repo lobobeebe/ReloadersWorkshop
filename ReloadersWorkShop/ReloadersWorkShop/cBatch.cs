@@ -895,11 +895,16 @@ namespace ReloadersWorkShop
 
 		public bool Validate()
 			{
-			bool fOK = m_Load != null && m_Load.Validate();
+			if (m_nBatchID == 0)
+				return (false);
 
-			fOK = m_dPowderWeight > 0.0;
+			if (m_Load == null)
+				return (false);
 
-			return (fOK);
+			if (m_dPowderWeight == 0.0)
+				return (false);
+
+			return (true);
 			}
 		}
 	}

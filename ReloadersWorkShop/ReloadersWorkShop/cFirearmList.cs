@@ -116,8 +116,9 @@ namespace ReloadersWorkShop
 					case "Firearm":
 						cFirearm Firearm = new cFirearm();
 
-						if (Firearm.Import(XMLDocument, XMLNode, DataFiles))
-							AddFirearm(Firearm);
+						Firearm.Import(XMLDocument, XMLNode, DataFiles);
+
+						AddFirearm(Firearm);
 
 						break;
 					}

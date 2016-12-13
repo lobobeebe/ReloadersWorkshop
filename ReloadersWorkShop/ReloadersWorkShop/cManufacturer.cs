@@ -624,6 +624,18 @@ namespace ReloadersWorkShop
 
 		public bool Validate()
 			{
+			if (String.IsNullOrEmpty(m_strName))
+				return (false);
+
+			if (m_fCases && String.IsNullOrEmpty(m_strHeadStamp))
+				return (false);
+
+			if (!m_fAmmo && !m_fBipods && !m_fBulletMolds && !m_fBullets && !m_fCases &&
+				!m_fFurniture && !m_fHandguns && !m_fLasers && !m_fLights && !m_fMagnifiers &&
+				!m_fMisc && !m_fParts && !m_fPowder && !m_fPrimers && !m_fRedDots &&
+				!m_fRifles && !m_fScopes && !m_fShotguns && !m_fTriggers)
+				return (false);
+
 			return (true);
 			}
 
