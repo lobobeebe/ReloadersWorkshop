@@ -533,15 +533,15 @@ namespace ReloadersWorkShop
 
 						break;
 
-					case "Firearms":
-					case "FirearmList":
-						m_DataFiles.FirearmList.Import(this, XMLNode, m_DataFiles);
-
-						break;
-
 					case "Bullets":
 					case "BulletList":
 						m_DataFiles.BulletList.Import(this, XMLNode, m_DataFiles);
+
+						break;
+
+					case "Firearms":
+					case "FirearmList":
+						m_DataFiles.FirearmList.Import(this, XMLNode, m_DataFiles);
 
 						break;
 
