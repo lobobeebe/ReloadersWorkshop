@@ -137,9 +137,6 @@ namespace ReloadersWorkShop
 
 						Caliber.Import(XMLNode);
 
-						if (Caliber.Name.Substring(0, 3) == "275")
-							Console.WriteLine("275!");
-
 						AddCaliber(Caliber);
 
 						break;

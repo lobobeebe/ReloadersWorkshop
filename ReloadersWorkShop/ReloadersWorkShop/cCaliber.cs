@@ -560,16 +560,22 @@ namespace ReloadersWorkShop
 			if (!m_fSmallPrimer && !m_fLargePrimer && !m_fMagnumPrimer)
 				return (false);
 
-			if (m_dMinBulletDiameter > m_dMaxBulletDiameter)
-				return (false);
+			if (m_eFirearmType != cFirearm.eFireArmType.Shotgun)
+				{
+				if (m_dMinBulletDiameter <= 0.0)
+					return (false);
+
+				if (m_dMaxBulletDiameter < m_dMinBulletDiameter)
+					return (false);
+
+				if (m_dMaxCOL < m_dCaseTrimLength)
+					return (false);
+				}
 
 			if (m_dMinBulletWeight > m_dMaxBulletWeight)
 				return (false);
 
 			if (m_dCaseTrimLength > m_dMaxCaseLength)
-				return (false);
-
-			if (m_dMaxCOL < m_dCaseTrimLength)
 				return (false);
 
 			return (true);
