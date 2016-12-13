@@ -249,7 +249,7 @@ namespace ReloadersWorkShop
 				XMLNode = XMLNode.NextSibling;
 				}
 
-			return (Validate());
+			return (Validate(Identity));
 			}
 		}
 	}

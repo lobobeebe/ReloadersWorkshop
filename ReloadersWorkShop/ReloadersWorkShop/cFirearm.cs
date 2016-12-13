@@ -125,62 +125,6 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// Copy()
-		//============================================================================*
-
-		public void Copy(cFirearm Firearm)
-			{
-			base.Copy(Firearm);
-
-			//----------------------------------------------------------------------------*
-			// General
-			//----------------------------------------------------------------------------*
-
-			m_eFirearmType = Firearm.m_eFirearmType;
-
-			//----------------------------------------------------------------------------*
-			// Specs
-			//----------------------------------------------------------------------------*
-
-			m_dBarrelLength = Firearm.m_dBarrelLength;
-
-			m_fScoped = Firearm.m_fScoped;
-			m_dTwist = Firearm.m_dTwist;
-			m_eTurretType = Firearm.m_eTurretType;
-
-			m_dSightHeight = Firearm.m_dSightHeight;
-			m_dScopeClick = Firearm.m_dScopeClick;
-
-			m_dZeroRange = Firearm.m_dZeroRange;
-
-			m_dHeadSpace = Firearm.m_dHeadSpace;
-			m_dNeck = Firearm.m_dNeck;
-
-			m_FirearmCaliberList = new cFirearmCaliberList(Firearm.m_FirearmCaliberList);
-
-			m_FirearmBulletList = new cFirearmBulletList(Firearm.m_FirearmBulletList);
-
-			//----------------------------------------------------------------------------*
-			// Details
-			//----------------------------------------------------------------------------*
-
-			m_strImageFile = Firearm.m_strImageFile;
-
-			m_dTransferFees = Firearm.m_dTransferFees;
-			m_dOtherFees = Firearm.m_dOtherFees;
-
-			m_strReceiverFinish = Firearm.m_strReceiverFinish;
-			m_strBarrelFinish = Firearm.m_strBarrelFinish;
-
-			m_strType = Firearm.m_strType;
-			m_strAction = Firearm.m_strAction;
-			m_strHammer = Firearm.m_strHammer;
-
-			m_strMagazine = Firearm.m_strMagazine;
-			m_nCapacity = Firearm.m_nCapacity;
-			}
-
-		//============================================================================*
 		// Action Property
 		//============================================================================*
 
@@ -232,6 +176,71 @@ namespace ReloadersWorkShop
 				}
 
 			return (false);
+			}
+
+		//============================================================================*
+		// Append()
+		//============================================================================*
+
+		public void Append(cFirearm Firearm)
+			{
+			base.Append(Firearm);
+
+			m_dBarrelLength = m_dBarrelLength == 0.0 ? Firearm.m_dBarrelLength : m_dBarrelLength;
+
+			m_fScoped = m_fScoped ? true : Firearm.m_fScoped;
+
+			m_dTwist = m_dTwist == 0.0 ? Firearm.m_dTwist : m_dTwist;
+			m_eTurretType = Firearm.m_eTurretType;
+
+			m_dSightHeight = m_dSightHeight == 0.0 ? Firearm.m_dSightHeight : m_dSightHeight;
+			m_dScopeClick = m_dScopeClick == 0.0 ? Firearm.m_dScopeClick : m_dScopeClick;
+
+			m_dZeroRange = m_dZeroRange == 0.0 ? Firearm.m_dZeroRange : m_dZeroRange;
+
+			m_dHeadSpace = m_dHeadSpace == 0.0 ? Firearm.m_dHeadSpace : m_dHeadSpace;
+			m_dNeck = m_dNeck == 0.0 ? Firearm.m_dNeck : m_dNeck;
+
+			foreach (cFirearmBullet FirearmBullet in Firearm.m_FirearmBulletList)
+				{
+				bool fFound = false;
+
+				foreach (cFirearmBullet CheckFirearmBullet in m_FirearmBulletList)
+					{
+					if (CheckFirearmBullet.CompareTo(FirearmBullet) == 0)
+						{
+						CheckFirearmBullet.COL = CheckFirearmBullet.COL == 0.0 ? FirearmBullet.COL : CheckFirearmBullet.COL;
+						CheckFirearmBullet.CBTO = CheckFirearmBullet.CBTO == 0.0 ? FirearmBullet.CBTO : CheckFirearmBullet.CBTO;
+						CheckFirearmBullet.Jump = CheckFirearmBullet.Jump == 0.0 ? FirearmBullet.Jump : CheckFirearmBullet.Jump;
+
+						fFound = true;
+
+						break;
+						}
+					}
+
+				if (!fFound && FirearmBullet != null)
+					m_FirearmBulletList.AddFirearmBullet(FirearmBullet);
+				}
+
+			//----------------------------------------------------------------------------*
+			// Details
+			//----------------------------------------------------------------------------*
+
+			m_strImageFile = Firearm.m_strImageFile;
+
+			m_dTransferFees = Firearm.m_dTransferFees;
+			m_dOtherFees = Firearm.m_dOtherFees;
+
+			m_strReceiverFinish = Firearm.m_strReceiverFinish;
+			m_strBarrelFinish = Firearm.m_strBarrelFinish;
+
+			m_strType = Firearm.m_strType;
+			m_strAction = Firearm.m_strAction;
+			m_strHammer = Firearm.m_strHammer;
+
+			m_strMagazine = Firearm.m_strMagazine;
+			m_nCapacity = Firearm.m_nCapacity;
 			}
 
 		//============================================================================*
@@ -376,6 +385,62 @@ namespace ReloadersWorkShop
 				rc = m_eFirearmType.CompareTo(Firearm.m_eFirearmType);
 
 			return (rc);
+			}
+
+		//============================================================================*
+		// Copy()
+		//============================================================================*
+
+		public void Copy(cFirearm Firearm)
+			{
+			base.Copy(Firearm);
+
+			//----------------------------------------------------------------------------*
+			// General
+			//----------------------------------------------------------------------------*
+
+			m_eFirearmType = Firearm.m_eFirearmType;
+
+			//----------------------------------------------------------------------------*
+			// Specs
+			//----------------------------------------------------------------------------*
+
+			m_dBarrelLength = Firearm.m_dBarrelLength;
+
+			m_fScoped = Firearm.m_fScoped;
+			m_dTwist = Firearm.m_dTwist;
+			m_eTurretType = Firearm.m_eTurretType;
+
+			m_dSightHeight = Firearm.m_dSightHeight;
+			m_dScopeClick = Firearm.m_dScopeClick;
+
+			m_dZeroRange = Firearm.m_dZeroRange;
+
+			m_dHeadSpace = Firearm.m_dHeadSpace;
+			m_dNeck = Firearm.m_dNeck;
+
+			m_FirearmCaliberList = new cFirearmCaliberList(Firearm.m_FirearmCaliberList);
+
+			m_FirearmBulletList = new cFirearmBulletList(Firearm.m_FirearmBulletList);
+
+			//----------------------------------------------------------------------------*
+			// Details
+			//----------------------------------------------------------------------------*
+
+			m_strImageFile = Firearm.m_strImageFile;
+
+			m_dTransferFees = Firearm.m_dTransferFees;
+			m_dOtherFees = Firearm.m_dOtherFees;
+
+			m_strReceiverFinish = Firearm.m_strReceiverFinish;
+			m_strBarrelFinish = Firearm.m_strBarrelFinish;
+
+			m_strType = Firearm.m_strType;
+			m_strAction = Firearm.m_strAction;
+			m_strHammer = Firearm.m_strHammer;
+
+			m_strMagazine = Firearm.m_strMagazine;
+			m_nCapacity = Firearm.m_nCapacity;
 			}
 
 		//============================================================================*
@@ -1024,6 +1089,12 @@ namespace ReloadersWorkShop
 				return (false);
 
 			if (m_eFirearmType == cFirearm.eFireArmType.None)
+				return (false);
+
+			if (fIdentityOK && Identity)
+				return (true);
+
+			if (Identity)
 				return (false);
 
 			if (m_dBarrelLength <= 0.0)

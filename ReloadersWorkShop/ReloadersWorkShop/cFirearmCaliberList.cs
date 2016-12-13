@@ -141,13 +141,9 @@ namespace ReloadersWorkShop
 					case "FirearmCaliber":
 						cFirearmCaliber FirearmCaliber = new cFirearmCaliber();
 
-						if (FirearmCaliber.Import(XMLDocument, XMLNode, DataFiles))
-							{
-							if (FirearmCaliber.Validate())
-								AddFirearmCaliber(FirearmCaliber);
-							else
-								Console.WriteLine("Invalid FirearmCaliber!");
-							}
+						FirearmCaliber.Import(XMLDocument, XMLNode, DataFiles);
+
+						AddFirearmCaliber(FirearmCaliber);
 
 						break;
 					}

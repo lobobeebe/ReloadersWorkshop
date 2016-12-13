@@ -55,14 +55,25 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Append()
+		//============================================================================*
+
+		public void Append(cFirearmBullet FirearmBullet)
+			{
+			m_dCOL = m_dCOL == 0.0 ? FirearmBullet.m_dCOL : m_dCOL;
+			m_dCBTO = m_dCBTO == 0.0 ? FirearmBullet.m_dCBTO : m_dCBTO;
+			m_dJump = m_dJump == 0.0 ? FirearmBullet.m_dJump : m_dJump;
+			}
+
+		//============================================================================*
 		// Copy()
 		//============================================================================*
 
 		public void Copy(cFirearmBullet FirearmBullet)
 			{
 			m_Caliber = FirearmBullet.m_Caliber;
+			m_Bullet = FirearmBullet.m_Bullet;
 
-			m_Bullet = new cBullet(FirearmBullet.m_Bullet);
 			m_dCOL = FirearmBullet.m_dCOL;
 			m_dCBTO = FirearmBullet.m_dCBTO;
 			m_dJump = FirearmBullet.m_dJump;

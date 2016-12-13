@@ -36,7 +36,11 @@ namespace ReloadersWorkShop
 			foreach (cFirearm CheckFirearm in this)
 				{
 				if (CheckFirearm.CompareTo(Firearm) == 0)
+					{
+					CheckFirearm.Append(Firearm);
+
 					return (false);
+					}
 				}
 
 			Add(Firearm);

@@ -136,14 +136,14 @@ namespace ReloadersWorkShop
 			if (fComplete || m_fIncludeCalibers)
 				m_DataFiles.CaliberList.Export(this, MainElement);
 
+			if (fComplete || m_fIncludeBullets)
+				m_DataFiles.BulletList.Export(this, MainElement);
+
 			if (fComplete || m_fIncludeFirearms)
 				m_DataFiles.FirearmList.Export(this, MainElement);
 
 			if (fComplete || m_fIncludeAmmo)
 				m_DataFiles.AmmoList.Export(this, MainElement);
-
-			if (fComplete || m_fIncludeBullets)
-				m_DataFiles.BulletList.Export(this, MainElement);
 
 			if (fComplete || m_fIncludePowders)
 				m_DataFiles.PowderList.Export(this, MainElement);
@@ -186,7 +186,7 @@ namespace ReloadersWorkShop
 
 		public static cBullet GetBulletByIdentity(cBullet BulletIdentity, cDataFiles DataFiles)
 			{
-			if (!BulletIdentity.Identity || !BulletIdentity.Validate())
+			if (!BulletIdentity.Identity || !BulletIdentity.Validate(true))
 				return (BulletIdentity);
 
 			foreach (cBullet Bullet in DataFiles.BulletList)
@@ -218,7 +218,7 @@ namespace ReloadersWorkShop
 
 		public static cCaliber GetCaliberByIdentity(cCaliber CaliberIdentity, cDataFiles DataFiles)
 			{
-			if (!CaliberIdentity.Identity || !CaliberIdentity.Validate())
+			if (!CaliberIdentity.Identity || !CaliberIdentity.Validate(true))
 				return (CaliberIdentity);
 
 			foreach (cCaliber Caliber in DataFiles.CaliberList)

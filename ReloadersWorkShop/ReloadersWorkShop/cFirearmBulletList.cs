@@ -62,7 +62,11 @@ namespace ReloadersWorkShop
 			foreach (cFirearmBullet CheckFirearmBullet in this)
 				{
 				if (CheckFirearmBullet.CompareTo(FirearmBullet) == 0)
+					{
+					CheckFirearmBullet.Append(FirearmBullet);
+
 					return (false);
+					}
 				}
 
 			Add(FirearmBullet);
@@ -113,8 +117,9 @@ namespace ReloadersWorkShop
 					case "FirearmBullet":
 						cFirearmBullet FirearmBullet = new cFirearmBullet();
 
-						if (FirearmBullet.Import(XMLDocument, XMLNode, DataFiles))
-							AddFirearmBullet(FirearmBullet);
+						FirearmBullet.Import(XMLDocument, XMLNode, DataFiles);
+
+						AddFirearmBullet(FirearmBullet);
 
 						break;
 					}

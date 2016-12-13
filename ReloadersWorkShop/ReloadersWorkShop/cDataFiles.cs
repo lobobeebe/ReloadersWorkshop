@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cDataFiles.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -523,6 +523,25 @@ namespace ReloadersWorkShop
 				if (BackupAge.Days > Preferences.BackupKeepDays)
 					Backupfile.Delete();
 				}
+			}
+
+		//============================================================================*
+		// Clear()
+		//============================================================================*
+
+		public void Clear()
+			{
+			m_BatchList.Clear();
+			m_LoadList.Clear();
+			m_AmmoList.Clear();
+			m_BulletList.Clear();
+			m_PowderList.Clear();
+			m_PrimerList.Clear();
+			m_CaseList.Clear();
+			m_FirearmList.Clear();
+			m_CaliberList.Clear();
+			m_ManufacturerList.Clear();
+			m_GearList.Clear();
 			}
 
 		//============================================================================*
@@ -1950,6 +1969,8 @@ namespace ReloadersWorkShop
 								strMessage += "\n\nClick OK to continue...";
 
 								MessageBox.Show(strMessage, "Data File Load Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+
+								Clear();
 
 								try
 									{

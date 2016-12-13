@@ -135,8 +135,9 @@ namespace ReloadersWorkShop
 					case "Caliber":
 						cCaliber Caliber = new cCaliber();
 
-						if (Caliber.Import(XMLNode))
-							AddCaliber(Caliber);
+						Caliber.Import(XMLNode);
+
+						AddCaliber(Caliber);
 
 						break;
 					}

@@ -98,6 +98,31 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Append()
+		//============================================================================*
+
+		public void Append(cGear Gear)
+			{
+			if (String.IsNullOrEmpty(m_strDescription))
+				m_strDescription = Gear.m_strDescription;
+
+			if (String.IsNullOrEmpty(m_strNotes))
+				m_strNotes = Gear.m_strNotes;
+
+			if (String.IsNullOrEmpty(m_strSource))
+				m_strSource = Gear.m_strSource;
+
+			if (m_dPrice == 0.0)
+				m_dPrice = Gear.m_dPrice;
+
+			if (m_dTax == 0.0)
+				m_dTax = Gear.m_dTax;
+
+			if (m_dShipping == 0.0)
+				m_dShipping = Gear.m_dShipping;
+			}
+
+		//============================================================================*
 		// Comparer()
 		//============================================================================*
 
