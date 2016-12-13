@@ -32,7 +32,11 @@ namespace ReloadersWorkShop
 			foreach (cManufacturer CheckManufacturer in this)
 				{
 				if (CheckManufacturer.CompareTo(Manufacturer) == 0)
+					{
+					CheckManufacturer.Append(Manufacturer);
+
 					return (false);
+					}
 				}
 
 			Add(Manufacturer);

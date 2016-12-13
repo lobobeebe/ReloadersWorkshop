@@ -543,32 +543,36 @@ namespace ReloadersWorkShop
 		// Validate()
 		//============================================================================*
 
-		public bool Validate()
+		public bool Validate(bool fIdentityOK = false)
 			{
-			bool fOK = m_eFirearmType != cFirearm.eFireArmType.None && !String.IsNullOrEmpty(m_strName);
+			if (m_eFirearmType == cFirearm.eFireArmType.None || String.IsNullOrEmpty(m_strName))
+				return (false);
+
+			if (fIdentityOK && Identity)
+				return (true);
 
 			if (Identity)
-				return (fOK);
+				return (false);
 
-			if (fOK)
-				fOK = !String.IsNullOrEmpty(m_strHeadStamp);
+			if (String.IsNullOrEmpty(m_strHeadStamp) || m_strHeadStamp.Length > m_strName.Length)
+				return (false);
 
-			if (fOK)
-				fOK = m_fSmallPrimer || m_fLargePrimer || m_fMagnumPrimer;
+			if (!m_fSmallPrimer && !m_fLargePrimer && !m_fMagnumPrimer)
+				return (false);
 
-			if  (fOK)
-				fOK = m_dMinBulletDiameter <= m_dMaxBulletDiameter;
+			if (m_dMinBulletDiameter > m_dMaxBulletDiameter)
+				return (false);
 
-			if (fOK)
-				fOK = m_dMinBulletWeight <= m_dMaxBulletWeight;
+			if (m_dMinBulletWeight > m_dMaxBulletWeight)
+				return (false);
 
-			if (fOK)
-				fOK  = m_dCaseTrimLength <= m_dMaxCaseLength;
+			if (m_dCaseTrimLength > m_dMaxCaseLength)
+				return (false);
 
-			if (fOK)
-				fOK = m_dMaxCOL >= m_dCaseTrimLength;
+			if (m_dMaxCOL < m_dCaseTrimLength)
+				return (false);
 
-			return (fOK);
+			return (true);
 			}
 		}
 	}

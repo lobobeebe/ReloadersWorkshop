@@ -175,6 +175,9 @@ namespace ReloadersWorkShop
 						break;
 					case "Furniture":
 					case "Stocks":
+						if (XMLNode.FirstChild.Value == "Yes")
+							Console.WriteLine("Furniture!");
+
 						m_fFurniture = XMLNode.FirstChild.Value == "Yes";
 						break;
 					case "Bipods":

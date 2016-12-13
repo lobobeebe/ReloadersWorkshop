@@ -99,6 +99,43 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Append()
+		//============================================================================*
+
+		public void Append(cManufacturer Manufacturer)
+			{
+			if (m_strWebsite != Manufacturer.m_strWebsite)
+				{
+				m_strWebsite = Manufacturer.m_strWebsite;
+				m_fWebsiteVisited = false;
+				}
+
+			m_fAmmo = m_fAmmo ? true : Manufacturer.m_fAmmo;
+			m_fBullets = m_fBullets ? true : Manufacturer.m_fBullets;
+			m_fCases = m_fCases ? true : Manufacturer.m_fCases;
+			m_fPowder = m_fPowder ? true : Manufacturer.m_fPowder;
+			m_fPrimers = m_fPrimers ? true : Manufacturer.m_fPrimers;
+			m_fBulletMolds = m_fBulletMolds ? true : Manufacturer.m_fBulletMolds;
+
+			m_strHeadStamp = String.IsNullOrEmpty(Manufacturer.m_strHeadStamp) ? m_strHeadStamp : Manufacturer.m_strHeadStamp;
+
+			m_fHandguns = m_fHandguns ? true : Manufacturer.m_fHandguns;
+			m_fRifles = m_fRifles ? true : Manufacturer.m_fRifles;
+			m_fShotguns = m_fShotguns ? true : Manufacturer.m_fShotguns;
+
+			m_fScopes = m_fScopes ? true : Manufacturer.m_fScopes;
+			m_fLasers = m_fLasers ? true : Manufacturer.m_fLasers;
+			m_fRedDots = m_fRedDots ? true : Manufacturer.m_fRedDots;
+			m_fMagnifiers = m_fMagnifiers ? true : Manufacturer.m_fMagnifiers;
+			m_fLights = m_fLights ? true : Manufacturer.m_fLights;
+			m_fTriggers = m_fTriggers ? true : Manufacturer.m_fTriggers;
+			m_fFurniture = m_fFurniture ? true : Manufacturer.m_fFurniture;
+			m_fBipods = m_fBipods ? true : Manufacturer.m_fBipods;
+			m_fParts = m_fParts ? true : Manufacturer.m_fParts;
+			m_fMisc = m_fMisc ? true : Manufacturer.m_fMisc;
+			}
+
+		//============================================================================*
 		// Parts Property
 		//============================================================================*
 
