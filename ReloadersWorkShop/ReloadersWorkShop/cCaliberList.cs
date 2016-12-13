@@ -137,6 +137,9 @@ namespace ReloadersWorkShop
 
 						Caliber.Import(XMLNode);
 
+						if (!Caliber.Validate())
+							Console.WriteLine("Bad Caliber!");
+
 						AddCaliber(Caliber);
 
 						break;

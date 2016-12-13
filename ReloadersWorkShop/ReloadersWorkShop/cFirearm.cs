@@ -1100,7 +1100,7 @@ namespace ReloadersWorkShop
 			if (m_dBarrelLength <= 0.0)
 				return (false);
 
-			if (m_dTwist <= 0.0)
+			if (m_dTwist <= 0.0 && m_eFirearmType != eFireArmType.Shotgun)
 				return (false);
 
 			if (m_FirearmCaliberList.Count == 0)
