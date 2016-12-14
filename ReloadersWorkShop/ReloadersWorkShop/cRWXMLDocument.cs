@@ -587,7 +587,7 @@ namespace ReloadersWorkShop
 				XMLNode = XMLNode.NextSibling;
 				}
 
-//			ResolveIdentities();
+			//			ResolveIdentities();
 
 			return (true);
 			}
@@ -739,37 +739,37 @@ namespace ReloadersWorkShop
 		//============================================================================*
 		// ResolveIdentities()
 		//============================================================================*
-		/*
-				public bool ResolveIdentities()
-					{
-					bool fChanged = true;
-					int nCount = 0;
+/*
+		public bool ResolveIdentities()
+			{
+			bool fChanged = true;
+			int nCount = 0;
 
-					while (fChanged && nCount < 5)
-						{
-						fChanged = false;
+			while (fChanged && nCount < 5)
+				{
+				fChanged = false;
 
-						fChanged = m_DataFiles.CaliberList.ResolveIdentities() ? true : fChanged;
-						fChanged = m_DataFiles.AmmoList.ResolveIdentities() ? true : fChanged;
-						fChanged = m_DataFiles.BulletList.ResolveIdentities() ? true : fChanged;
-						fChanged = m_DataFiles.CaseList.ResolveIdentities() ? true : fChanged;
-						fChanged = m_DataFiles.PowderList.ResolveIdentities() ? true : fChanged;
-						fChanged = m_DataFiles.PrimerList.ResolveIdentities() ? true : fChanged;
-						fChanged = m_DataFiles.FirearmList.ResolveIdentities() ? true : fChanged;
-						fChanged = m_DataFiles.LoadList.ResolveIdentities() ? true : fChanged;
-						fChanged = m_DataFiles.BatchList.ResolveIdentities() ? true : fChanged;
-						fChanged = m_DataFiles.GearList.ResolveIdentities() ? true : fChanged;
+				fChanged = m_DataFiles.CaliberList.ResolveIdentities() ? true : fChanged;
+				fChanged = m_DataFiles.AmmoList.ResolveIdentities() ? true : fChanged;
+				fChanged = m_DataFiles.BulletList.ResolveIdentities() ? true : fChanged;
+				fChanged = m_DataFiles.CaseList.ResolveIdentities() ? true : fChanged;
+				fChanged = m_DataFiles.PowderList.ResolveIdentities() ? true : fChanged;
+				fChanged = m_DataFiles.PrimerList.ResolveIdentities() ? true : fChanged;
+				fChanged = m_DataFiles.FirearmList.ResolveIdentities() ? true : fChanged;
+				fChanged = m_DataFiles.LoadList.ResolveIdentities() ? true : fChanged;
+				fChanged = m_DataFiles.BatchList.ResolveIdentities() ? true : fChanged;
+				fChanged = m_DataFiles.GearList.ResolveIdentities() ? true : fChanged;
 
-						//				fChanged = Preferences.ResolveIdentities(this) ? true : fChanged;
+				//				fChanged = Preferences.ResolveIdentities(this) ? true : fChanged;
 
-						if (fChanged)
-							nCount = 0;
-						else
-							nCount++;
-						}
+				if (fChanged)
+					nCount = 0;
+				else
+					nCount++;
+				}
 
-					return (fChanged);
-					}
-		*/
+			return (fChanged);
+			}
+*/
 		}
 	}

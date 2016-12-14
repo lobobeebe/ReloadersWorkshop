@@ -207,4 +207,14 @@
   <metadata name="label26.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
   </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="ViewChargeButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAe
+        wgAAHsIBbtB1PgAAAAd0SU1FB+AMDg4kItGpplgAAACZSURBVDhPrYxREoMwCES9j5fwOu2H3v+LZolo
+        gytlisy8BF7ITiLyKFRWoLIClRWorMBl0xn8PzAO5+JR5qI3tMbZuGUU3LLIwN0eLm37nAszolCUCl/w
+        FjDP78YWBqLgk4GvxpoL7Pd14TvQc7evF44+50KjMG2t0aGN/oO56A2tcTSD3Bd/4f+Bi6hCZQUqK1BZ
+        gcr/kekDs5hg8fPaUkUAAAAASUVORK5CYII=
+</value>
+  </data>
 </root>

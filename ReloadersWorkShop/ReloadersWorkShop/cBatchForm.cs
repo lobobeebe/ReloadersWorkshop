@@ -331,8 +331,8 @@ namespace ReloadersWorkShop
 
 			m_BatchLoadListView = new cBatchLoadListView(m_DataFiles, m_Batch);
 
-			m_BatchLoadListView.Location = new Point(6, AlwaysShowBatchLoadLabel.Location.Y + AlwaysShowBatchLoadLabel.Height + 6);
-			m_BatchLoadListView.Size = new Size(LoadDataGroupBox.Width - 12, LoadDetailsGroup.Location.Y - AlwaysShowBatchLoadLabel.Location.Y - AlwaysShowBatchLoadLabel.Height - 12);
+			m_BatchLoadListView.Location = new Point(6, BatchLoadLabel.Location.Y + BatchLoadLabel.Height + 6);
+			m_BatchLoadListView.Size = new Size(LoadDataGroupBox.Width - 12, LoadDetailsGroup.Location.Y - BatchLoadLabel.Location.Y - BatchLoadLabel.Height - 12);
 
 			LoadDataGroupBox.Controls.Add(m_BatchLoadListView);
 
@@ -382,6 +382,8 @@ namespace ReloadersWorkShop
 
 				JumpSetCheckBox.Click += OnJumpSetClicked;
 				JumpTextBox.TextChanged += OnJumpChanged;
+
+				ViewChargeButton.Click += OnViewChargeClicked;
 
 				TimesFiredTextBox.TextChanged += OnTimesFiredTextChanged;
 				FullLengthSizedRadioButton.Click += OnFullLengthSizeClicked;
@@ -1145,6 +1147,33 @@ namespace ReloadersWorkShop
 			SetCosts();
 
 			UpdateButtons();
+			}
+
+		//============================================================================*
+		// OnViewChargeClicked()
+		//============================================================================*
+
+		private void OnViewChargeClicked(object sender, EventArgs e)
+			{
+			//----------------------------------------------------------------------------*
+			// Get the selected charge
+			//----------------------------------------------------------------------------*
+
+			cCharge Charge = null;
+
+			if (ChargeCombo.SelectedIndex >= 0)
+				Charge = (cCharge) ChargeCombo.SelectedItem;
+
+			//----------------------------------------------------------------------------*
+			// Start the dialog
+			//----------------------------------------------------------------------------*
+
+			if (Charge != null && m_Batch.Load != null)
+				{
+				cChargeForm ChargeForm = new cChargeForm(Charge, m_Batch.Load, m_DataFiles, true);
+
+				ChargeForm.ShowDialog();
+				}
 			}
 
 		//============================================================================*
@@ -2057,17 +2086,6 @@ namespace ReloadersWorkShop
 
 		private void UpdateButtons()
 			{
-			//----------------------------------------------------------------------------*
-			// Show BatchLoad Label
-			//----------------------------------------------------------------------------*
-
-			if (CaliberCombo.SelectedIndex > 0 ||
-				BulletCombo.SelectedIndex > 0 ||
-				PowderCombo.SelectedIndex > 0)
-				AlwaysShowBatchLoadLabel.Visible = true;
-			else
-				AlwaysShowBatchLoadLabel.Visible = false;
-
 			//----------------------------------------------------------------------------*
 			// Test Data Button
 			//----------------------------------------------------------------------------*

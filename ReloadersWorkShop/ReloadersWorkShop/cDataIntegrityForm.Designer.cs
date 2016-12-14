@@ -63,6 +63,7 @@
 			this.SummaryTextBox.Location = new System.Drawing.Point(6, 21);
 			this.SummaryTextBox.Multiline = true;
 			this.SummaryTextBox.Name = "SummaryTextBox";
+			this.SummaryTextBox.ReadOnly = true;
 			this.SummaryTextBox.Required = false;
 			this.SummaryTextBox.Size = new System.Drawing.Size(490, 396);
 			this.SummaryTextBox.TabIndex = 0;

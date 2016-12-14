@@ -58,6 +58,7 @@
 			System.Windows.Forms.Label label3;
 			System.Windows.Forms.Label label29;
 			System.Windows.Forms.Label label26;
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(cBatchForm));
 			this.PowderChargeMeasurementLabel = new System.Windows.Forms.Label();
 			this.BatchOKButton = new System.Windows.Forms.Button();
 			this.BatchCancelButton = new System.Windows.Forms.Button();
@@ -111,6 +112,7 @@
 			this.FirearmCOLLabel = new System.Windows.Forms.Label();
 			this.FirearmCombo = new System.Windows.Forms.ComboBox();
 			this.LoadDetailsGroup = new System.Windows.Forms.GroupBox();
+			this.ViewChargeButton = new RWCommonLib.cViewButton();
 			this.PressureLabel = new System.Windows.Forms.Label();
 			this.label35 = new System.Windows.Forms.Label();
 			this.LoadCOLMeasurementLabel = new System.Windows.Forms.Label();
@@ -119,7 +121,7 @@
 			this.LoadCOLLabel = new System.Windows.Forms.Label();
 			this.ChargeCombo = new System.Windows.Forms.ComboBox();
 			this.LoadDataGroupBox = new System.Windows.Forms.GroupBox();
-			this.AlwaysShowBatchLoadLabel = new System.Windows.Forms.Label();
+			this.BatchLoadLabel = new System.Windows.Forms.Label();
 			this.FirearmTypeCombo = new ReloadersWorkShop.Controls.cFirearmTypeCombo();
 			this.PowderCombo = new System.Windows.Forms.ComboBox();
 			this.BulletCombo = new System.Windows.Forms.ComboBox();
@@ -695,6 +697,7 @@
 			this.UserIDTextBox.Size = new System.Drawing.Size(105, 20);
 			this.UserIDTextBox.TabIndex = 0;
 			this.UserIDTextBox.ToolTip = "";
+			this.UserIDTextBox.ValidChars = "";
 			this.UserIDTextBox.Value = "";
 			// 
 			// AnnealedCheckBox
@@ -1263,6 +1266,7 @@
 			// 
 			// LoadDetailsGroup
 			// 
+			this.LoadDetailsGroup.Controls.Add(this.ViewChargeButton);
 			this.LoadDetailsGroup.Controls.Add(label26);
 			this.LoadDetailsGroup.Controls.Add(this.PressureLabel);
 			this.LoadDetailsGroup.Controls.Add(this.label35);
@@ -1286,6 +1290,19 @@
 			this.LoadDetailsGroup.TabIndex = 4;
 			this.LoadDetailsGroup.TabStop = false;
 			this.LoadDetailsGroup.Text = "Load Details";
+			// 
+			// ViewChargeButton
+			// 
+			this.ViewChargeButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+			this.ViewChargeButton.FlatAppearance.BorderSize = 0;
+			this.ViewChargeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.ViewChargeButton.Image = ((System.Drawing.Image)(resources.GetObject("ViewChargeButton.Image")));
+			this.ViewChargeButton.Location = new System.Drawing.Point(199, 23);
+			this.ViewChargeButton.Name = "ViewChargeButton";
+			this.ViewChargeButton.Size = new System.Drawing.Size(20, 20);
+			this.ViewChargeButton.TabIndex = 42;
+			this.ViewChargeButton.Text = "cViewButton1";
+			this.ViewChargeButton.UseVisualStyleBackColor = true;
 			// 
 			// PressureLabel
 			// 
@@ -1369,7 +1386,7 @@
 			// 
 			// LoadDataGroupBox
 			// 
-			this.LoadDataGroupBox.Controls.Add(this.AlwaysShowBatchLoadLabel);
+			this.LoadDataGroupBox.Controls.Add(this.BatchLoadLabel);
 			this.LoadDataGroupBox.Controls.Add(this.FirearmTypeCombo);
 			this.LoadDataGroupBox.Controls.Add(this.PowderCombo);
 			this.LoadDataGroupBox.Controls.Add(label36);
@@ -1380,6 +1397,7 @@
 			this.LoadDataGroupBox.Controls.Add(this.LoadDetailsGroup);
 			this.LoadDataGroupBox.Controls.Add(label19);
 			this.LoadDataGroupBox.Controls.Add(this.groupBox4);
+			this.LoadDataGroupBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.LoadDataGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.LoadDataGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
 			this.LoadDataGroupBox.Location = new System.Drawing.Point(10, 10);
@@ -1391,16 +1409,16 @@
 			this.LoadDataGroupBox.TabStop = false;
 			this.LoadDataGroupBox.Text = "Load Data";
 			// 
-			// AlwaysShowBatchLoadLabel
+			// BatchLoadLabel
 			// 
-			this.AlwaysShowBatchLoadLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.AlwaysShowBatchLoadLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.AlwaysShowBatchLoadLabel.Location = new System.Drawing.Point(5, 71);
-			this.AlwaysShowBatchLoadLabel.Name = "AlwaysShowBatchLoadLabel";
-			this.AlwaysShowBatchLoadLabel.Size = new System.Drawing.Size(630, 13);
-			this.AlwaysShowBatchLoadLabel.TabIndex = 31;
-			this.AlwaysShowBatchLoadLabel.Text = "The current batch load will always be displayed regardless of filters";
-			this.AlwaysShowBatchLoadLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+			this.BatchLoadLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BatchLoadLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.BatchLoadLabel.Location = new System.Drawing.Point(5, 71);
+			this.BatchLoadLabel.Name = "BatchLoadLabel";
+			this.BatchLoadLabel.Size = new System.Drawing.Size(630, 13);
+			this.BatchLoadLabel.TabIndex = 31;
+			this.BatchLoadLabel.Text = "Double-Click a Load below to view it.";
+			this.BatchLoadLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
 			// FirearmTypeCombo
 			// 
@@ -1409,71 +1427,6 @@
 			this.FirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmTypeCombo.FormattingEnabled = true;
 			this.FirearmTypeCombo.IncludeShotgun = false;
-			this.FirearmTypeCombo.Items.AddRange(new object[] {
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle"});
 			this.FirearmTypeCombo.Location = new System.Drawing.Point(91, 21);
 			this.FirearmTypeCombo.Name = "FirearmTypeCombo";
 			this.FirearmTypeCombo.Size = new System.Drawing.Size(100, 21);
@@ -1533,7 +1486,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.BatchCancelButton;
-			this.ClientSize = new System.Drawing.Size(658, 629);
+			this.ClientSize = new System.Drawing.Size(650, 621);
 			this.ControlBox = false;
 			this.Controls.Add(this.PrintButton);
 			this.Controls.Add(this.BatchCancelButton);
@@ -1612,7 +1565,7 @@
 		private System.Windows.Forms.Label NeckWallMeasurementLabel;
 		private CommonLib.Controls.cDoubleValueTextBox BulletDiameterTextBox;
 		private System.Windows.Forms.Label BulletDiameterMeasurementLabel;
-		private System.Windows.Forms.Label AlwaysShowBatchLoadLabel;
+		private System.Windows.Forms.Label BatchLoadLabel;
 		private System.Windows.Forms.Label NumRoundsRangeLabel;
 		private System.Windows.Forms.Label PowderChargeMeasurementLabel;
 		private System.Windows.Forms.RadioButton ExpandedNeckRadioButton;
@@ -1630,5 +1583,6 @@
 		private System.Windows.Forms.Button FirearmTransferButton;
 		private System.Windows.Forms.Label JumpMeasurementLabel;
 		private System.Windows.Forms.Label PressureLabel;
+		private RWCommonLib.cViewButton ViewChargeButton;
 		}
 	}

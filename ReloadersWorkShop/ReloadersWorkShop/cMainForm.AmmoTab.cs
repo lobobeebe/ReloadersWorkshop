@@ -624,6 +624,11 @@ namespace ReloadersWorkShop
 							fOK = true;
 						break;
 
+					case "Shotgun":
+						if (Ammo.FirearmType == cFirearm.eFireArmType.Shotgun)
+							fOK = true;
+						break;
+
 					default:
 						fOK = true;
 						break;
@@ -667,9 +672,11 @@ namespace ReloadersWorkShop
 			// Prune zero quantity reloads older than 30 days
 			//----------------------------------------------------------------------------*
 
-			while (true)
+			bool fRemoved = true;
+
+			while (fRemoved)
 				{
-				bool fRemoved = false;
+				fRemoved = false;
 
 				//----------------------------------------------------------------------------*
 				// Loop through the ammo list
@@ -681,9 +688,9 @@ namespace ReloadersWorkShop
 					// If the ammo is a reload, and has a zero quantity, look closer
 					//----------------------------------------------------------------------------*
 
-					if (Ammo.BatchID != 0 && m_DataFiles.SupplyQuantity(Ammo) == 0.0)
+					if ((Ammo.Reload || Ammo.BatchID != 0) && m_DataFiles.SupplyQuantity(Ammo) == 0.0)
 						{
-						bool fCurrent = false;
+						bool fCurrent = true;
 
 						//----------------------------------------------------------------------------*
 						// Loop through the transactions
@@ -691,6 +698,8 @@ namespace ReloadersWorkShop
 
 						foreach (cTransaction Transaction in Ammo.TransactionList)
 							{
+							fCurrent = false;
+
 							//----------------------------------------------------------------------------*
 							// If the transaction is less than 30 days old, mark it as current
 							//----------------------------------------------------------------------------*
@@ -719,9 +728,6 @@ namespace ReloadersWorkShop
 							}
 						}
 					}
-
-				if (!fRemoved)
-					break;
 				}
 			}
 

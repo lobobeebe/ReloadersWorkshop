@@ -238,6 +238,8 @@ namespace ReloadersWorkShop
 
 				SupplyTypeCombo.SelectedIndexChanged += OnSupplyTypeSelected;
 				SupplyFirearmTypeCombo.SelectedIndexChanged += OnSupplyFirearmTypeSelected;
+				SupplyFirearmTypeCombo.IncludeAny = true;
+				SupplyFirearmTypeCombo.IncludeShotgun = false;
 				SupplyManufacturerCombo.SelectedIndexChanged += OnSupplyManufacturerSelected;
 
 				m_SuppliesListView.SelectedIndexChanged += OnSupplySelected;
@@ -249,8 +251,8 @@ namespace ReloadersWorkShop
 
 				SuppliesPrintAllRadioButton.Click += OnSuppliesPrintAllClicked;
 				SuppliesPrintCheckedRadioButton.Click += OnSuppliesPrintCheckedClicked;
-				SuppliesNonZeroCheckBox.Click += OnSuppliesPrintNonZeroClicked;
-				SuppliesMinStockCheckBox.Click += OnSuppliesPrintBelowStockClicked;
+				SuppliesNonZeroCheckBox.Click += OnSuppliesNonZeroClicked;
+				SuppliesMinStockCheckBox.Click += OnSuppliesBelowStockClicked;
 				SupplyListPrintButton.Click += OnPrintSupplyListClicked;
 
 				EditInventoryButton.Click += OnEditInventoryActivity;
@@ -906,7 +908,7 @@ namespace ReloadersWorkShop
 		// OnSuppliesPrintBelowStockClicked()
 		//============================================================================*
 
-		protected void OnSuppliesPrintBelowStockClicked(object sender, EventArgs args)
+		protected void OnSuppliesBelowStockClicked(object sender, EventArgs args)
 			{
 			m_DataFiles.Preferences.SupplyPrintBelowStock = SuppliesMinStockCheckBox.Checked;
 
@@ -935,10 +937,10 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// OnSuppliesPrintNonZeroClicked()
+		// OnSuppliesNonZeroClicked()
 		//============================================================================*
 
-		protected void OnSuppliesPrintNonZeroClicked(object sender, EventArgs args)
+		protected void OnSuppliesNonZeroClicked(object sender, EventArgs args)
 			{
 			m_DataFiles.Preferences.SupplyPrintNonZero = SuppliesNonZeroCheckBox.Checked;
 
@@ -1014,13 +1016,17 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			cFirearm.eFireArmType eType = (cFirearm.eFireArmType) (SupplyFirearmTypeCombo.SelectedIndex - 1);
+			cFirearm.eFireArmType eType = SupplyFirearmTypeCombo.Value;
 
 			m_SuppliesListView.FirearmTypeFilter = eType;
 
 			m_SuppliesListView.Populate();
 
+			PopulateSupplyManufacturerCombo();
+
 			SetSupplyCount();
+
+			UpdateSuppliesTabButtons();
 			}
 
 		//============================================================================*
@@ -1042,6 +1048,8 @@ namespace ReloadersWorkShop
 			m_SuppliesListView.Populate();
 
 			SetSupplyCount();
+
+			UpdateSuppliesTabButtons();
 			}
 
 		//============================================================================*
@@ -1100,6 +1108,8 @@ namespace ReloadersWorkShop
 			m_SuppliesListView.SupplyType = (cSupply.eSupplyTypes) SupplyTypeCombo.SelectedIndex;
 
 			PopulateSupplyManufacturerCombo();
+
+			UpdateSuppliesTabButtons();
 			}
 
 		//============================================================================*
@@ -1245,23 +1255,6 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// PopulateSupplyFirearmTypeCombo()
-		//============================================================================*
-
-		public void PopulateSupplyFirearmTypeCombo()
-			{
-			SupplyFirearmTypeCombo.Items.Clear();
-
-			SupplyFirearmTypeCombo.Items.Add("Any Firearm Type");
-			SupplyFirearmTypeCombo.Items.Add("Handgun");
-			SupplyFirearmTypeCombo.Items.Add("Rifle");
-
-			SupplyFirearmTypeCombo.SelectedIndex = 0;
-
-			PopulateSupplyManufacturerCombo();
-			}
-
-		//============================================================================*
 		// PopulateSupplyManufacturerCombo()
 		//============================================================================*
 
@@ -1273,7 +1266,7 @@ namespace ReloadersWorkShop
 
 			List<cManufacturer> ManufacturerList = new List<cManufacturer>();
 
-			cFirearm.eFireArmType eType = (cFirearm.eFireArmType) SupplyFirearmTypeCombo.SelectedIndex - 1;
+			cFirearm.eFireArmType eType = SupplyFirearmTypeCombo.Value;
 
 			switch (SupplyTypeCombo.SelectedIndex)
 				{
@@ -1378,6 +1371,8 @@ namespace ReloadersWorkShop
 			if (SupplyTypeCombo.SelectedIndex < 0)
 				SupplyTypeCombo.SelectedIndex = 0;
 
+			PopulateSupplyManufacturerCombo();
+
 			HideUncheckedSuppliesCheckBox.Checked = m_DataFiles.Preferences.HideUncheckedSupplies;
 
 			SuppliesPrintAllRadioButton.Checked = m_DataFiles.Preferences.SupplyPrintAll;
@@ -1394,8 +1389,6 @@ namespace ReloadersWorkShop
 			m_SuppliesListView.PopulateColumns(true);
 
 			SetSupplyCount();
-
-			PopulateSupplyFirearmTypeCombo();
 
 			m_fPopulating = false;
 			}

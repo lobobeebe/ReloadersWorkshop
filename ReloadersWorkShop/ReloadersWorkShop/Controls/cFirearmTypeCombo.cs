@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cFirearmTypeCombo.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -31,6 +31,7 @@ namespace ReloadersWorkShop.Controls
 
 		private cFirearm.eFireArmType m_eValue = cFirearm.eFireArmType.Handgun;
 
+		private bool m_fIncludeAny = false;
 		private bool m_fIncludeShotgun = false;
 
 		private string m_strToolTip = "";
@@ -53,14 +54,34 @@ namespace ReloadersWorkShop.Controls
 		// cFirearmTypeCombo() - Constructor
 		//============================================================================*
 
-		public cFirearmTypeCombo(bool fIncludeShotgun = false)
+		public cFirearmTypeCombo(bool fIncludeShotgun = false, bool  fIncludeAny = false)
 			{
 			DropDownStyle = ComboBoxStyle.DropDownList;
 			DropDownWidth = 100;
 
 			m_fIncludeShotgun = fIncludeShotgun;
+			m_fIncludeAny = fIncludeAny;
 
 			Populate();
+			}
+
+		//============================================================================*
+		// IncludeAny Property
+		//============================================================================*
+
+		public bool IncludeAny
+			{
+			get
+				{
+				return (m_fIncludeAny);
+				}
+
+			set
+				{
+				m_fIncludeAny = value;
+
+				Populate();
+				}
 			}
 
 		//============================================================================*
@@ -69,26 +90,17 @@ namespace ReloadersWorkShop.Controls
 
 		public bool IncludeShotgun
 			{
-			get {  return(m_fIncludeShotgun); }
-			
+			get
+				{
+				return (m_fIncludeShotgun);
+				}
+
 			set
 				{
 				m_fIncludeShotgun = value;
 
 				Populate();
 				}
-			}
-
-		//============================================================================*
-		// OnDropDown()
-		//============================================================================*
-
-		protected override void OnDropDown(EventArgs e)
-			{
-			while (Items.Count > (m_fIncludeShotgun ? 3 : 2))
-				Items.RemoveAt(m_fIncludeShotgun ? 3 : 2);
-
-			base.OnDropDown(e);
 			}
 
 		//============================================================================*
@@ -100,7 +112,7 @@ namespace ReloadersWorkShop.Controls
 			if (m_fPopulating)
 				return;
 
-			m_eValue = (cFirearm.eFireArmType)SelectedIndex;
+			m_eValue = (cFirearm.eFireArmType) SelectedIndex;
 
 			base.OnSelectedIndexChanged(e);
 			}
@@ -115,13 +127,18 @@ namespace ReloadersWorkShop.Controls
 
 			Items.Clear();
 
+			if (m_fIncludeAny)
+				Items.Add("Any Firearm Type");
+
 			Items.Add("Handgun");
 			Items.Add("Rifle");
 
 			if (m_fIncludeShotgun)
 				Items.Add("Shotgun");
 
-			SelectedIndex = (int)m_eValue;
+			m_eValue = (cFirearm.eFireArmType) 0;
+
+			SelectedIndex = 0;
 
 			m_fPopulating = false;
 			}
@@ -132,8 +149,14 @@ namespace ReloadersWorkShop.Controls
 
 		public string ToolTip
 			{
-			get { return (m_strToolTip); }
-			set { m_strToolTip = value; }
+			get
+				{
+				return (m_strToolTip);
+				}
+			set
+				{
+				m_strToolTip = value;
+				}
 			}
 
 		//============================================================================*
@@ -142,13 +165,16 @@ namespace ReloadersWorkShop.Controls
 
 		public cFirearm.eFireArmType Value
 			{
-			get { return (m_eValue); }
+			get
+				{
+				return (m_eValue - (m_fIncludeAny ? 1 : 0));
+				}
 
 			set
 				{
 				m_eValue = value;
 
-				SelectedIndex = (int)m_eValue;
+				SelectedIndex = (int) m_eValue;
 				}
 			}
 		}
