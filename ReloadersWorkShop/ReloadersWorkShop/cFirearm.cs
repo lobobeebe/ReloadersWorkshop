@@ -64,7 +64,7 @@ namespace ReloadersWorkShop
 		// Specs
 		//----------------------------------------------------------------------------*
 
-		private double m_dZeroRange = 25;
+		private double m_dZeroRange = 25.0;
 		private double m_dBarrelLength = 0.0;
 		private double m_dTwist = 1.0;
 		private double m_dSightHeight = 0.8;
@@ -109,8 +109,8 @@ namespace ReloadersWorkShop
 		// cFirearm() - Constructor
 		//============================================================================*
 
-		public cFirearm()
-			: base(cGear.eGearTypes.Firearm)
+		public cFirearm(bool fIdentity = false)
+			: base(cGear.eGearTypes.Firearm, fIdentity)
 			{
 			}
 

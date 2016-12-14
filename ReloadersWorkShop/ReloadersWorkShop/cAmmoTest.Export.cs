@@ -55,81 +55,21 @@ namespace ReloadersWorkShop
 
 		public void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement)
 			{
-			XmlElement XMLThisElement = XMLDocument.CreateElement(ExportName);
-			XMLParentElement.AppendChild(XMLThisElement);
+			XmlElement XMLThisElement = XMLDocument.CreateElement(ExportName, XMLParentElement);
 
-			// Date
-
-			XmlElement XMLElement = XMLDocument.CreateElement("TestDate");
-			XmlText XMLTextElement = XMLDocument.CreateTextNode(m_TestDate.ToShortDateString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Firearm
+			XMLDocument.CreateElement("TestDate", m_TestDate, XMLThisElement);
 
 			m_Firearm.Export(XMLDocument, XMLThisElement, true);
 
-			// Barrel Length
-
-			XMLElement = XMLDocument.CreateElement("BarrelLength");
-			XMLTextElement = XMLDocument.CreateTextNode(m_dBarrelLength.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Twist
-
-			XMLElement = XMLDocument.CreateElement("Twist");
-			XMLTextElement = XMLDocument.CreateTextNode(m_dTwist.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// NumRounds
-
-			XMLElement = XMLDocument.CreateElement("NumRounds");
-			XMLTextElement = XMLDocument.CreateTextNode(m_nNumRounds.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Best Group
-
-			XMLElement = XMLDocument.CreateElement("BestGroup");
-			XMLTextElement = XMLDocument.CreateTextNode(m_dBestGroup.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Best Group Range
-
-			XMLElement = XMLDocument.CreateElement("BestGroupRange");
-			XMLTextElement = XMLDocument.CreateTextNode(m_dBestGroupRange.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Muzzle Velocity
-
-			XMLElement = XMLDocument.CreateElement("MuzzleVelocity");
-			XMLTextElement = XMLDocument.CreateTextNode(m_nMuzzleVelocity.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Notes
+			XMLDocument.CreateElement("BarrelLength", m_dBarrelLength, XMLThisElement);
+			XMLDocument.CreateElement("Twist", m_dTwist, XMLThisElement);
+			XMLDocument.CreateElement("NumRounds", m_nNumRounds, XMLThisElement);
+			XMLDocument.CreateElement("BestGroup", m_dBestGroup, XMLThisElement);
+			XMLDocument.CreateElement("BestGroupRange", m_dBestGroupRange, XMLThisElement);
+			XMLDocument.CreateElement("MuzzleVelocity", m_nMuzzleVelocity, XMLThisElement);
 
 			if (!String.IsNullOrEmpty(m_strNotes))
-				{
-				XMLElement = XMLDocument.CreateElement("Notes");
-				XMLTextElement = XMLDocument.CreateTextNode(m_strNotes);
-				XMLElement.AppendChild(XMLTextElement);
-
-				XMLThisElement.AppendChild(XMLElement);
-				}
-
-			// Test List
+				XMLDocument.CreateElement("Notes", m_strNotes, XMLThisElement);
 
 			m_TestShotList.Export(XMLDocument, XMLThisElement);
 			}
@@ -186,7 +126,12 @@ namespace ReloadersWorkShop
 						XMLDocument.Import(XMLNode, out m_strNotes);
 						break;
 					case "TestShots":
+					case "TestShotList":
 						m_TestShotList.Import(XMLDocument, XMLNode, DataFiles);
+
+						if (m_nNumRounds != m_TestShotList.Count)
+							m_nNumRounds = m_TestShotList.Count;
+
 						break;
 					default:
 						break;

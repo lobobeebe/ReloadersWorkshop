@@ -90,6 +90,8 @@ namespace ReloadersWorkShop
 			XMLDocument.CreateElement("Quantity", m_dQuantity, XMLParentElement);
 			XMLDocument.CreateElement("Cost", m_dCost, XMLParentElement);
 			XMLDocument.CreateElement("Checked", m_fChecked, XMLParentElement);
+
+			m_TransactionList.Export(XMLDocument, XMLParentElement);
 			}
 
 		//============================================================================*
@@ -104,26 +106,33 @@ namespace ReloadersWorkShop
 				{
 				switch (XMLNode.Name)
 					{
+					case "SupplyType":
+						XMLDocument.Import(XMLNode, out m_eType);
+						break;
 					case "FirearmType":
-						m_eFirearmType = cFirearm.FirearmTypeFromString(XMLNode.FirstChild.Value);
+						XMLDocument.Import(XMLNode, out m_eFirearmType);
 						break;
 					case "Manufacturer":
 						m_Manufacturer = DataFiles.GetManufacturerByName(XMLNode.FirstChild.Value);
 						break;
 					case "CrossUse":
-						m_fCrossUse = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fCrossUse);
 						break;
 					case "MinStockLevel":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dMinimumStockLevel);
+						XMLDocument.Import(XMLNode, out m_dMinimumStockLevel);
 						break;
 					case "Quantity":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dQuantity);
+						XMLDocument.Import(XMLNode, out m_dQuantity);
 						break;
 					case "Cost":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dCost);
+						XMLDocument.Import(XMLNode, out m_dCost);
 						break;
 					case "Checked":
-						m_fChecked = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fChecked);
+						break;
+					case "Transactions":
+					case "TransactionList":
+						m_TransactionList.Import(XMLDocument, XMLNode, DataFiles, this);
 						break;
 					default:
 						break;

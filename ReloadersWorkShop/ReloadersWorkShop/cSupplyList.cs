@@ -22,6 +22,7 @@ namespace ReloadersWorkShop
 	// cSupplyList Class
 	//============================================================================*
 
+	[Serializable]
 	public class cSupplyList : List<cSupply>
 		{
 		//============================================================================*
@@ -40,20 +41,22 @@ namespace ReloadersWorkShop
 		// Add()
 		//============================================================================*
 
-		public void AddSupply(cSupply Supply)
+		public virtual bool AddSupply(cSupply Supply)
 			{
 			Supply.Printed = false;
 
 			base.Add(Supply);
+
+			return (true);
 			}
 
 		//============================================================================*
 		// RecalulateInventory()
 		//============================================================================*
 
-		public void RecalulateInventory(cDataFiles DataFiles)
+		public virtual void RecalulateInventory(cDataFiles DataFiles)
 			{
-			foreach(cSupply Supply in this)
+			foreach (cSupply Supply in this)
 				Supply.RecalculateInventory(DataFiles);
 			}
 		}

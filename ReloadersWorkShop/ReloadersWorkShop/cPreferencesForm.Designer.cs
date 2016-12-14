@@ -121,6 +121,9 @@
 			this.RestoreBackupButton = new System.Windows.Forms.Button();
 			this.BackupButton = new System.Windows.Forms.Button();
 			this.CloseButton = new System.Windows.Forms.Button();
+			this.ReloadKeepDaysTextBox = new CommonLib.Controls.cIntegerValueTextBox();
+			this.ReloadKeepDaysLabel = new System.Windows.Forms.Label();
+			this.ReloadKeepDaysLabel1 = new System.Windows.Forms.Label();
 			label55 = new System.Windows.Forms.Label();
 			label52 = new System.Windows.Forms.Label();
 			label53 = new System.Windows.Forms.Label();
@@ -1178,6 +1181,9 @@
 			// InventoryGroupBox
 			// 
 			this.InventoryGroupBox.BackColor = System.Drawing.SystemColors.Control;
+			this.InventoryGroupBox.Controls.Add(this.ReloadKeepDaysLabel1);
+			this.InventoryGroupBox.Controls.Add(this.ReloadKeepDaysTextBox);
+			this.InventoryGroupBox.Controls.Add(this.ReloadKeepDaysLabel);
 			this.InventoryGroupBox.Controls.Add(this.IncludeTaxShippingCheckBox);
 			this.InventoryGroupBox.Controls.Add(this.TrackReloadsCheckBox);
 			this.InventoryGroupBox.Controls.Add(this.TrackInventoryCheckBox);
@@ -1193,7 +1199,7 @@
 			this.InventoryGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
 			this.InventoryGroupBox.Location = new System.Drawing.Point(599, 12);
 			this.InventoryGroupBox.Name = "InventoryGroupBox";
-			this.InventoryGroupBox.Size = new System.Drawing.Size(331, 179);
+			this.InventoryGroupBox.Size = new System.Drawing.Size(354, 179);
 			this.InventoryGroupBox.TabIndex = 1;
 			this.InventoryGroupBox.TabStop = false;
 			this.InventoryGroupBox.Text = "Inventory";
@@ -1313,7 +1319,7 @@
 			this.groupBox1.ForeColor = System.Drawing.SystemColors.HotTrack;
 			this.groupBox1.Location = new System.Drawing.Point(599, 197);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(331, 194);
+			this.groupBox1.Size = new System.Drawing.Size(354, 194);
 			this.groupBox1.TabIndex = 2;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Auto Save && Backup";
@@ -1362,7 +1368,7 @@
 			// 
 			this.BackupFolderButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BackupFolderButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.BackupFolderButton.Location = new System.Drawing.Point(301, 123);
+			this.BackupFolderButton.Location = new System.Drawing.Point(322, 123);
 			this.BackupFolderButton.Margin = new System.Windows.Forms.Padding(2);
 			this.BackupFolderButton.Name = "BackupFolderButton";
 			this.BackupFolderButton.Size = new System.Drawing.Size(27, 19);
@@ -1378,7 +1384,7 @@
 			this.BackupFolderTextBox.MaxLength = 240;
 			this.BackupFolderTextBox.Name = "BackupFolderTextBox";
 			this.BackupFolderTextBox.ReadOnly = true;
-			this.BackupFolderTextBox.Size = new System.Drawing.Size(287, 19);
+			this.BackupFolderTextBox.Size = new System.Drawing.Size(308, 19);
 			this.BackupFolderTextBox.TabIndex = 3;
 			// 
 			// label48
@@ -1427,12 +1433,52 @@
 			this.CloseButton.Text = "Close";
 			this.CloseButton.UseVisualStyleBackColor = true;
 			// 
+			// ReloadKeepDaysTextBox
+			// 
+			this.ReloadKeepDaysTextBox.BackColor = System.Drawing.Color.LightPink;
+			this.ReloadKeepDaysTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ReloadKeepDaysTextBox.Location = new System.Drawing.Point(271, 41);
+			this.ReloadKeepDaysTextBox.MaxLength = 3;
+			this.ReloadKeepDaysTextBox.MaxValue = 999;
+			this.ReloadKeepDaysTextBox.MinValue = 5;
+			this.ReloadKeepDaysTextBox.Name = "ReloadKeepDaysTextBox";
+			this.ReloadKeepDaysTextBox.Required = false;
+			this.ReloadKeepDaysTextBox.Size = new System.Drawing.Size(32, 20);
+			this.ReloadKeepDaysTextBox.TabIndex = 18;
+			this.ReloadKeepDaysTextBox.Text = "000";
+			this.ReloadKeepDaysTextBox.ToolTip = "";
+			this.ReloadKeepDaysTextBox.Value = 0;
+			// 
+			// ReloadKeepDaysLabel
+			// 
+			this.ReloadKeepDaysLabel.AutoSize = true;
+			this.ReloadKeepDaysLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ReloadKeepDaysLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.ReloadKeepDaysLabel.Location = new System.Drawing.Point(175, 44);
+			this.ReloadKeepDaysLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.ReloadKeepDaysLabel.Name = "ReloadKeepDaysLabel";
+			this.ReloadKeepDaysLabel.Size = new System.Drawing.Size(91, 13);
+			this.ReloadKeepDaysLabel.TabIndex = 19;
+			this.ReloadKeepDaysLabel.Text = "Keep Zero Qty for";
+			// 
+			// ReloadKeepDaysLabel1
+			// 
+			this.ReloadKeepDaysLabel1.AutoSize = true;
+			this.ReloadKeepDaysLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ReloadKeepDaysLabel1.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.ReloadKeepDaysLabel1.Location = new System.Drawing.Point(308, 44);
+			this.ReloadKeepDaysLabel1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.ReloadKeepDaysLabel1.Name = "ReloadKeepDaysLabel1";
+			this.ReloadKeepDaysLabel1.Size = new System.Drawing.Size(29, 13);
+			this.ReloadKeepDaysLabel1.TabIndex = 20;
+			this.ReloadKeepDaysLabel1.Text = "days";
+			// 
 			// cPreferencesForm
 			// 
 			this.AcceptButton = this.CloseButton;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(969, 501);
+			this.ClientSize = new System.Drawing.Size(965, 497);
 			this.ControlBox = false;
 			this.Controls.Add(this.CloseButton);
 			this.Controls.Add(this.groupBox1);
@@ -1549,5 +1595,8 @@
 		private System.Windows.Forms.RadioButton ShotWeightOneDecimalRadioButton;
 		private System.Windows.Forms.RadioButton ShotWeightThreeDecimalsRadioButton;
 		private System.Windows.Forms.CheckBox AutoCheckNonZeroCheckBox;
+		private CommonLib.Controls.cIntegerValueTextBox ReloadKeepDaysTextBox;
+		private System.Windows.Forms.Label ReloadKeepDaysLabel1;
+		private System.Windows.Forms.Label ReloadKeepDaysLabel;
 		}
 	}

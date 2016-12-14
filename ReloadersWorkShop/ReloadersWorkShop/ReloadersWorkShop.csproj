@@ -271,6 +271,7 @@
     <Compile Include="cGear.Export.cs" />
     <Compile Include="cGearList.cs" />
     <Compile Include="cListViewFirearmAccessoryComparer.cs" />
+    <Compile Include="cLoad.Export.cs" />
     <Compile Include="cManufacturer.Export.cs" />
     <Compile Include="cPowder.Export.cs" />
     <Compile Include="cPrimer.Export.cs" />

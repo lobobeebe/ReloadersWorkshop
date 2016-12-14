@@ -47,7 +47,7 @@ namespace ReloadersWorkShop
 
 			string strLine = "";
 
-			Writer.WriteLine(cLoad.CSVHeader);
+			Writer.WriteLine(ExportName);
 			Writer.WriteLine();
 
 			Writer.WriteLine(cLoad.CSVLineHeader);
@@ -73,11 +73,23 @@ namespace ReloadersWorkShop
 			{
 			if (Count > 0)
 				{
-				XmlElement XMLElement = XMLDocument.CreateElement("Loads");
+				XmlElement XMLElement = XMLDocument.CreateElement(ExportName);
 				XMLParentElement.AppendChild(XMLElement);
 
 				foreach (cLoad Load in this)
 					Load.Export(XMLDocument, XMLElement);
+				}
+			}
+
+		//============================================================================*
+		// ExportName()
+		//============================================================================*
+
+		public static string ExportName
+			{
+			get
+				{
+				return ("LoadList");
 				}
 			}
 

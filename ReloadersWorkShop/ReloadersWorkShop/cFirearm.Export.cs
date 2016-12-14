@@ -167,7 +167,7 @@ namespace ReloadersWorkShop
 				switch (XMLNode.Name)
 					{
 					case "FirearmType":
-						m_eFirearmType = cFirearm.FirearmTypeFromString(XMLNode.FirstChild.Value);
+						XMLDocument.Import(XMLNode, out m_eFirearmType);
 
 						SetDefaultDescription();
 

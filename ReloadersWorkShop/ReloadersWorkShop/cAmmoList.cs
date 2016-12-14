@@ -25,14 +25,19 @@ namespace ReloadersWorkShop
 	//============================================================================*
 
 	[Serializable]
-	public class cAmmoList : List<cAmmo>
+	public class cAmmoList : cSupplyList
 		{
 		//============================================================================*
 		// AddAmmo()
 		//============================================================================*
 
-		public bool AddAmmo(cAmmo Ammo)
+		public override bool AddSupply(cSupply Supply)
 			{
+			if (Supply.SupplyType != cSupply.eSupplyTypes.Ammo)
+				return (false);
+
+			cAmmo Ammo = (cAmmo) Supply;
+
 			foreach (cAmmo CheckAmmo in this)
 				{
 				if (CheckAmmo.CompareTo(Ammo) == 0)
@@ -43,7 +48,7 @@ namespace ReloadersWorkShop
 					}
 				}
 
-			Add(Ammo);
+			base.AddSupply(Ammo);
 
 			return (true);
 			}
@@ -106,7 +111,7 @@ namespace ReloadersWorkShop
 		// Import()
 		//============================================================================*
 
-		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode,  cDataFiles DataFiles)
+		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
 			{
 			XmlNode XMLNode = XMLThisNode.FirstChild;
 
@@ -118,37 +123,13 @@ namespace ReloadersWorkShop
 						cAmmo Ammo = new cAmmo();
 
 						if (Ammo.Import(XMLDocument, XMLNode, DataFiles))
-							AddAmmo(Ammo);
+							AddSupply(Ammo);
 
 						break;
 					}
 
 				XMLNode = XMLNode.NextSibling;
 				}
-			}
-
-		//============================================================================*
-		// RecalculateInventory()
-		//============================================================================*
-
-		public void RecalulateInventory(cDataFiles DataFiles)
-			{
-			foreach (cSupply Supply in this)
-				Supply.RecalculateInventory(DataFiles);
-			}
-
-		//============================================================================*
-		// ResolveIdentities()
-		//============================================================================*
-
-		public bool ResolveIdentities(cDataFiles Datafiles)
-			{
-			bool fChanged = false;
-
-			foreach (cAmmo Ammo in this)
-				fChanged = Ammo.ResolveIdentities(Datafiles) ? true : fChanged;
-				
-			return (fChanged);
 			}
 		}
 	}

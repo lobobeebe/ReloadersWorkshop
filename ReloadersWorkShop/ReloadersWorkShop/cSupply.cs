@@ -821,6 +821,10 @@ namespace ReloadersWorkShop
 				case cSupply.eSupplyTypes.Ammo:
 					strTypeString = "Ammo";
 					break;
+
+				default:
+					strTypeString = "Unknown!";
+					break;
 				}
 
 			return (strTypeString);
@@ -967,7 +971,10 @@ namespace ReloadersWorkShop
 
 		public virtual bool Validate(bool fIdentityOK = false)
 			{
-			return(m_Manufacturer != null);
+			if (m_Manufacturer == null)
+				return (false);
+
+			return (true);
 			}
 		}
 	}

@@ -126,7 +126,20 @@ namespace ReloadersWorkShop
 
 				if (rc == 0)
 					{
-					rc = m_Caliber.CompareTo(Case.m_Caliber);
+					if (m_Caliber == null)
+						{
+						if (Case.m_Caliber == null)
+							rc = 0;
+						else
+							rc = -1;
+						}
+					else
+						{
+						if (Case.m_Caliber == null)
+							rc = 1;
+						else
+							rc = m_Caliber.CompareTo(Case.m_Caliber);
+						}
 					}
 				}
 

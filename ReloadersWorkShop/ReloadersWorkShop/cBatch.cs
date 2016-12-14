@@ -895,10 +895,16 @@ namespace ReloadersWorkShop
 
 		public bool Validate()
 			{
+			if (m_fArchive)
+				return (true);
+
 			if (m_nBatchID == 0)
 				return (false);
 
 			if (m_Load == null)
+				return (false);
+
+			if (!m_Load.Validate())
 				return (false);
 
 			if (m_dPowderWeight == 0.0)

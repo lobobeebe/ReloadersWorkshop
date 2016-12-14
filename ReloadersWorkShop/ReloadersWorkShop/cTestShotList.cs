@@ -90,7 +90,7 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				return ("TestShots");
+				return ("TestShotList");
 				}
 			}
 

@@ -77,6 +77,34 @@ namespace ReloadersWorkShop
 
 		public cTransaction(cTransaction Transaction)
 			{
+			Copy(Transaction);
+			}
+
+		//============================================================================*
+		// Append()
+		//============================================================================*
+
+		public void Append(cTransaction Transaction)
+			{
+			m_strSource = String.IsNullOrEmpty(m_strSource) ? Transaction.m_strSource : m_strSource;
+
+			m_Supply = m_Supply == null ? Transaction.m_Supply : m_Supply;
+
+			m_dQuantity = m_dQuantity == 0.0 ? Transaction.m_dQuantity : m_dQuantity;
+			m_dCost = m_dCost == 0.0 ? Transaction.m_dCost : m_dCost;
+			m_dTax = m_dTax == 0.0 ? Transaction.m_dTax : m_dTax;
+			m_dShipping = m_dShipping == 0.0 ? Transaction.m_dShipping : m_dShipping;
+			m_fApplyTax = !m_fApplyTax ? Transaction.m_fApplyTax : false;
+
+			m_fChecked = !m_fChecked ? Transaction.m_fChecked : false;
+			}
+
+		//============================================================================*
+		// Copy()
+		//============================================================================*
+
+		public void Copy(cTransaction Transaction)
+			{
 			m_fAutoTrans = Transaction.m_fAutoTrans;
 
 			m_Date = Transaction.m_Date;
@@ -262,24 +290,24 @@ namespace ReloadersWorkShop
 								{
 								switch (m_Supply.SupplyType)
 									{
+									case cSupply.eSupplyTypes.Ammo:
+										rc = (m_Supply as cAmmo).CompareTo(Transaction.m_Supply as cAmmo);
+										break;
+
 									case cSupply.eSupplyTypes.Bullets:
-										rc = (m_Supply as cBullet).CompareTo((Transaction.m_Supply as cBullet));
+										rc = (m_Supply as cBullet).CompareTo(Transaction.m_Supply as cBullet);
 										break;
 
 									case cSupply.eSupplyTypes.Cases:
-										rc = (m_Supply as cCase).CompareTo((Transaction.m_Supply as cCase));
+										rc = (m_Supply as cCase).CompareTo(Transaction.m_Supply as cCase);
 										break;
 
 									case cSupply.eSupplyTypes.Powder:
-										rc = (m_Supply as cPowder).CompareTo((Transaction.m_Supply as cPowder));
+										rc = (m_Supply as cPowder).CompareTo(Transaction.m_Supply as cPowder);
 										break;
 
 									case cSupply.eSupplyTypes.Primers:
-										rc = (m_Supply as cPrimer).CompareTo((Transaction.m_Supply as cPrimer));
-										break;
-
-									case cSupply.eSupplyTypes.Ammo:
-										rc = (m_Supply as cAmmo).CompareTo((Transaction.m_Supply as cAmmo));
+										rc = (m_Supply as cPrimer).CompareTo(Transaction.m_Supply as cPrimer);
 										break;
 									}
 								}
@@ -681,11 +709,18 @@ namespace ReloadersWorkShop
 		// Validate()
 		//============================================================================*
 
-		public bool Validate()
+		public bool Validate(bool fIdentityOK = false)
 			{
-			bool fOK = true;
+			if (m_Supply == null)
+				return (false);
 
-			return (fOK);
+			if (!m_Supply.Validate(fIdentityOK))
+				return (false);
+
+			if (m_dQuantity == 0.0)
+				return (false);
+
+			return (true);
 			}
 		}
 	}

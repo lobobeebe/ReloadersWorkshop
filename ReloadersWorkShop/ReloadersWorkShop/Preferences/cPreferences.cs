@@ -126,6 +126,8 @@ namespace ReloadersWorkShop.Preferences
 		private bool m_fAmmoFactoryReloadFilter = false;
 		private bool m_fAmmoMyReloadFilter = false;
 
+		private int m_nReloadKeepDays = 30;
+
 		// Ammo List Settings
 
 		private cAmmo m_LastAmmo = null;
@@ -3461,6 +3463,22 @@ namespace ReloadersWorkShop.Preferences
 			set
 				{
 				m_PrimerSortOrder = value;
+				}
+			}
+
+		//============================================================================*
+		// ReloadKeepDays Property
+		//============================================================================*
+
+		public int ReloadKeepDays
+			{
+			get
+				{
+				return (m_nReloadKeepDays);
+				}
+			set
+				{
+				m_nReloadKeepDays = value;
 				}
 			}
 

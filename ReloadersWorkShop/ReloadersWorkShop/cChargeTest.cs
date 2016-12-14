@@ -523,9 +523,7 @@ namespace ReloadersWorkShop
 
 		public bool Validate()
 			{
-			bool fOK = !String.IsNullOrEmpty(m_strSource);
-
-			return (fOK);
+			return (true);
 			}
 		}
 	}

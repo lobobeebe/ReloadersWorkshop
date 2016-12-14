@@ -181,6 +181,52 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// GetAmmoByIdentity()
+		//============================================================================*
+
+		public static cAmmo GetAmmoByIdentity(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			cAmmo AmmoIdentity = new cAmmo(true);
+
+			if (AmmoIdentity.Import(XMLDocument, XMLThisNode, DataFiles))
+				return (GetAmmoByIdentity(AmmoIdentity, DataFiles));
+
+			return (AmmoIdentity);
+			}
+
+		//============================================================================*
+		// GetAmmoByIdentity()
+		//============================================================================*
+
+		public static cAmmo GetAmmoByIdentity(cAmmo AmmoIdentity, cDataFiles DataFiles)
+			{
+			if (!AmmoIdentity.Identity || !AmmoIdentity.Validate(true))
+				return (AmmoIdentity);
+
+			foreach (cAmmo Ammo in DataFiles.AmmoList)
+				{
+				if (AmmoIdentity.CompareTo(Ammo) == 0)
+					return (Ammo);
+				}
+
+			return (AmmoIdentity);
+			}
+
+		//============================================================================*
+		// GetBulletByIdentity()
+		//============================================================================*
+
+		public static cBullet GetBulletByIdentity(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			cBullet BulletIdentity = new cBullet(true);
+
+			if (BulletIdentity.Import(XMLDocument, XMLThisNode, DataFiles))
+				return (GetBulletByIdentity(BulletIdentity, DataFiles));
+
+			return (null);
+			}
+
+		//============================================================================*
 		// GetBulletByIdentity()
 		//============================================================================*
 
@@ -196,20 +242,6 @@ namespace ReloadersWorkShop
 				}
 
 			return (BulletIdentity);
-			}
-
-		//============================================================================*
-		// GetBulletByIdentity()
-		//============================================================================*
-
-		public static cBullet GetBulletByIdentity(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
-			{
-			cBullet BulletIdentity = new cBullet(true);
-
-			if (BulletIdentity.Import(XMLDocument, XMLThisNode, DataFiles))
-				return (GetBulletByIdentity(BulletIdentity, DataFiles));
-
-			return (null);
 			}
 
 		//============================================================================*
@@ -241,7 +273,7 @@ namespace ReloadersWorkShop
 			if (CaliberIdentity.Import(XMLThisNode))
 				return (GetCaliberByIdentity(CaliberIdentity, DataFiles));
 
-			return (null);
+			return (CaliberIdentity);
 			}
 
 		//============================================================================*
@@ -273,7 +305,7 @@ namespace ReloadersWorkShop
 			if (CaseIdentity.Import(XMLDocument, XMLThisNode, DataFiles))
 				return (GetCaseByIdentity(CaseIdentity, DataFiles));
 
-			return (null);
+			return (CaseIdentity);
 			}
 
 		//============================================================================*
@@ -282,7 +314,7 @@ namespace ReloadersWorkShop
 
 		public static cFirearm GetFirearmByIdentity(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
 			{
-			cFirearm FirearmIdentity = new cFirearm();
+			cFirearm FirearmIdentity = new cFirearm(true);
 
 			XmlNode XMLNode = XMLThisNode.FirstChild;
 
@@ -324,7 +356,7 @@ namespace ReloadersWorkShop
 
 		public static cLoad GetLoadByIdentity(cLoad LoadIdentity, cDataFiles DataFiles)
 			{
-			if (!LoadIdentity.Identity || !LoadIdentity.Validate())
+			if (!LoadIdentity.Identity || !LoadIdentity.Validate(true))
 				return (LoadIdentity);
 
 			foreach (cLoad Load in DataFiles.LoadList)
@@ -386,7 +418,7 @@ namespace ReloadersWorkShop
 
 		public static cPrimer GetPrimerByIdentity(cPrimer PrimerIdentity, cDataFiles DataFiles)
 			{
-			if (!PrimerIdentity.Identity || !PrimerIdentity.Validate())
+			if (!PrimerIdentity.Identity || !PrimerIdentity.Validate(true))
 				return (PrimerIdentity);
 
 			foreach (cPrimer Primer in DataFiles.PrimerList)
@@ -409,6 +441,118 @@ namespace ReloadersWorkShop
 			PrimerIdentity.Import(XMLDocument, XMLThisNode, DataFiles);
 
 			return (GetPrimerByIdentity(PrimerIdentity, DataFiles));
+			}
+
+		//============================================================================*
+		// GetSupplyByIdentity()
+		//============================================================================*
+
+		public static cSupply GetSupplyByIdentity(cSupply SupplyIdentity, cDataFiles DataFiles)
+			{
+			if (SupplyIdentity == null || !SupplyIdentity.Identity || !SupplyIdentity.Validate(true))
+				return (SupplyIdentity);
+
+			switch (SupplyIdentity.SupplyType)
+				{
+				case cSupply.eSupplyTypes.Ammo:
+					foreach (cSupply Supply in DataFiles.AmmoList)
+						{
+						if (SupplyIdentity.CompareTo(Supply) == 0)
+							return (Supply);
+						}
+
+					break;
+
+				case cSupply.eSupplyTypes.Bullets:
+					foreach (cSupply Supply in DataFiles.BulletList)
+						{
+						if (SupplyIdentity.CompareTo(Supply) == 0)
+							return (Supply);
+						}
+
+					break;
+
+				case cSupply.eSupplyTypes.Cases:
+					foreach (cSupply Supply in DataFiles.CaseList)
+						{
+						if (SupplyIdentity.CompareTo(Supply) == 0)
+							return (Supply);
+						}
+
+					break;
+
+				case cSupply.eSupplyTypes.Powder:
+					foreach (cSupply Supply in DataFiles.PowderList)
+						{
+						if (SupplyIdentity.CompareTo(Supply) == 0)
+							return (Supply);
+						}
+
+					break;
+
+				case cSupply.eSupplyTypes.Primers:
+					foreach (cSupply Supply in DataFiles.PrimerList)
+						{
+						if (SupplyIdentity.CompareTo(Supply) == 0)
+							return (Supply);
+						}
+
+					break;
+				}
+
+			return (SupplyIdentity);
+			}
+
+		//============================================================================*
+		// GetSupplyByIdentity()
+		//============================================================================*
+
+		public static cSupply GetSupplyByIdentity(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles, cSupply.eSupplyTypes eType)
+			{
+			switch (eType)
+				{
+				case cSupply.eSupplyTypes.Ammo:
+					cAmmo AmmoIdentity = new cAmmo(true);
+
+					if (AmmoIdentity.Import(XMLDocument, XMLThisNode, DataFiles))
+						return (GetAmmoByIdentity(AmmoIdentity, DataFiles));
+
+					return (AmmoIdentity);
+
+				case cSupply.eSupplyTypes.Bullets:
+					cBullet BulletIdentity = new cBullet(true);
+
+					if (BulletIdentity.Import(XMLDocument, XMLThisNode, DataFiles))
+						return (GetBulletByIdentity(BulletIdentity, DataFiles));
+
+					return (BulletIdentity);
+
+				case cSupply.eSupplyTypes.Cases:
+					cCase CaseIdentity = new cCase(true);
+
+					if (CaseIdentity.Import(XMLDocument, XMLThisNode, DataFiles))
+						return (GetCaseByIdentity(CaseIdentity, DataFiles));
+
+					return (CaseIdentity);
+
+				case cSupply.eSupplyTypes.Powder:
+					cPowder PowderIdentity = new cPowder(true);
+
+					if (PowderIdentity.Import(XMLDocument, XMLThisNode, DataFiles))
+						return (GetPowderByIdentity(PowderIdentity, DataFiles));
+
+					return (PowderIdentity);
+
+				case cSupply.eSupplyTypes.Primers:
+					cPrimer PrimerIdentity = new cPrimer(true);
+
+					if (PrimerIdentity.Import(XMLDocument, XMLThisNode, DataFiles))
+						return (GetPrimerByIdentity(PrimerIdentity, DataFiles));
+
+					return (PrimerIdentity);
+				}
+
+			return (null);
 			}
 
 		//============================================================================*
@@ -587,9 +731,31 @@ namespace ReloadersWorkShop
 				XMLNode = XMLNode.NextSibling;
 				}
 
-			//			ResolveIdentities();
-
 			return (true);
+			}
+
+		//============================================================================*
+		// Import() - FirearmType
+		//============================================================================*
+
+		public void Import(XmlNode XMLThisNode, out cFirearm.eFireArmType eType)
+			{
+			eType = cFirearm.eFireArmType.None;
+
+			if (XMLThisNode != null && XMLThisNode.FirstChild != null && XMLThisNode.FirstChild.Value != null)
+				eType = cFirearm.FirearmTypeFromString(XMLThisNode.FirstChild.Value);
+			}
+
+		//============================================================================*
+		// Import() - SupplyType
+		//============================================================================*
+
+		public void Import(XmlNode XMLThisNode, out cSupply.eSupplyTypes eType)
+			{
+			eType = cSupply.eSupplyTypes.Unknown;
+
+			if (XMLThisNode != null && XMLThisNode.FirstChild != null && XMLThisNode.FirstChild.Value != null)
+				eType = cSupply.SupplyTypeFromString(XMLThisNode.FirstChild.Value);
 			}
 
 		//============================================================================*
@@ -739,37 +905,37 @@ namespace ReloadersWorkShop
 		//============================================================================*
 		// ResolveIdentities()
 		//============================================================================*
-/*
-		public bool ResolveIdentities()
-			{
-			bool fChanged = true;
-			int nCount = 0;
+		/*
+				public bool ResolveIdentities()
+					{
+					bool fChanged = true;
+					int nCount = 0;
 
-			while (fChanged && nCount < 5)
-				{
-				fChanged = false;
+					while (fChanged && nCount < 5)
+						{
+						fChanged = false;
 
-				fChanged = m_DataFiles.CaliberList.ResolveIdentities() ? true : fChanged;
-				fChanged = m_DataFiles.AmmoList.ResolveIdentities() ? true : fChanged;
-				fChanged = m_DataFiles.BulletList.ResolveIdentities() ? true : fChanged;
-				fChanged = m_DataFiles.CaseList.ResolveIdentities() ? true : fChanged;
-				fChanged = m_DataFiles.PowderList.ResolveIdentities() ? true : fChanged;
-				fChanged = m_DataFiles.PrimerList.ResolveIdentities() ? true : fChanged;
-				fChanged = m_DataFiles.FirearmList.ResolveIdentities() ? true : fChanged;
-				fChanged = m_DataFiles.LoadList.ResolveIdentities() ? true : fChanged;
-				fChanged = m_DataFiles.BatchList.ResolveIdentities() ? true : fChanged;
-				fChanged = m_DataFiles.GearList.ResolveIdentities() ? true : fChanged;
+						fChanged = m_DataFiles.CaliberList.ResolveIdentities() ? true : fChanged;
+						fChanged = m_DataFiles.AmmoList.ResolveIdentities() ? true : fChanged;
+						fChanged = m_DataFiles.BulletList.ResolveIdentities() ? true : fChanged;
+						fChanged = m_DataFiles.CaseList.ResolveIdentities() ? true : fChanged;
+						fChanged = m_DataFiles.PowderList.ResolveIdentities() ? true : fChanged;
+						fChanged = m_DataFiles.PrimerList.ResolveIdentities() ? true : fChanged;
+						fChanged = m_DataFiles.FirearmList.ResolveIdentities() ? true : fChanged;
+						fChanged = m_DataFiles.LoadList.ResolveIdentities() ? true : fChanged;
+						fChanged = m_DataFiles.BatchList.ResolveIdentities() ? true : fChanged;
+						fChanged = m_DataFiles.GearList.ResolveIdentities() ? true : fChanged;
 
-				//				fChanged = Preferences.ResolveIdentities(this) ? true : fChanged;
+						//				fChanged = Preferences.ResolveIdentities(this) ? true : fChanged;
 
-				if (fChanged)
-					nCount = 0;
-				else
-					nCount++;
-				}
+						if (fChanged)
+							nCount = 0;
+						else
+							nCount++;
+						}
 
-			return (fChanged);
-			}
-*/
+					return (fChanged);
+					}
+		*/
 		}
 	}

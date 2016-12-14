@@ -47,6 +47,27 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// AddTransaction()
+		//============================================================================*
+
+		public bool AddTransaction(cTransaction Transaction)
+			{
+			foreach (cTransaction CheckTransaction in this)
+				{
+				if (CheckTransaction.CompareTo(Transaction) == 0)
+					{
+					CheckTransaction.Append(Transaction);
+
+					return (false);
+					}
+				}
+
+			Add(Transaction);
+
+			return (true);
+			}
+
+		//============================================================================*
 		// Export()
 		//============================================================================*
 
@@ -98,6 +119,33 @@ namespace ReloadersWorkShop
 			get
 				{
 				return ("TransactionList");
+				}
+			}
+
+		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles, cSupply Supply)
+			{
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "Transaction":
+						cTransaction Transaction = new cTransaction();
+
+						Transaction.Import(XMLDocument, XMLNode, DataFiles);
+						Transaction.Supply = Supply;
+
+						AddTransaction(Transaction);
+
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
 				}
 			}
 

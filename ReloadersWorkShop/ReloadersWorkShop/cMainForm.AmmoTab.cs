@@ -706,7 +706,7 @@ namespace ReloadersWorkShop
 
 							TimeSpan Time = DateTime.Today - Transaction.Date;
 
-							if (Time.Days < 30)
+							if (Time.Days <= m_DataFiles.Preferences.ReloadKeepDays)
 								{
 								fCurrent = true;
 

@@ -488,7 +488,10 @@ namespace ReloadersWorkShop
 
 		public bool Validate()
 			{
-			return (m_Firearm != null && m_Ammo != null);
+			if (m_Ammo == null)
+				return (false);
+
+			return (true);
 			}
 		}
 	}

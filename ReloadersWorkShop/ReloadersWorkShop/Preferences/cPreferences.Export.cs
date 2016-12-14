@@ -86,6 +86,8 @@ namespace ReloadersWorkShop.Preferences
 			XMLDocument.CreateElement("AmmoSortColumn", m_nAmmoSortColumn, XMLThisElement);
 			XMLDocument.CreateElement("AmmoSortOrder", m_AmmoSortOrder, XMLThisElement);
 
+			XMLDocument.CreateElement("ReloadKeepDays", m_nReloadKeepDays, XMLThisElement);
+
 			//----------------------------------------------------------------------------*
 			// Backup Settings
 			//----------------------------------------------------------------------------*
@@ -372,6 +374,9 @@ namespace ReloadersWorkShop.Preferences
 						break;
 					case "TrackReloads":
 						XMLDocument.Import(XMLNode, out m_fTrackReloads);
+						break;
+					case "ReloadKeepDays":
+						XMLDocument.Import(XMLNode, out m_nReloadKeepDays);
 						break;
 					case "UseLastPurchase":
 						XMLDocument.Import(XMLNode, out m_fUseLastPurchase);

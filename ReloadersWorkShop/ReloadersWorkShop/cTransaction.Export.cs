@@ -121,9 +121,6 @@ namespace ReloadersWorkShop
 					case "TransactionType":
 						m_eTransactionType = cTransaction.TransactionTypeFromString(XMLNode.FirstChild.Value);
 						break;
-					case "SupplyIdentity":
-						m_Supply.Import(XMLDocument, XMLThisNode, DataFiles);
-						break;
 					case "Source":
 						m_strSource = XMLNode.FirstChild.Value;
 						break;
