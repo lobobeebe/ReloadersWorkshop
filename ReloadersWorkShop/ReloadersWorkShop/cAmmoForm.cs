@@ -13,6 +13,8 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
+using ReloadersWorkShop.Controls;
+
 //============================================================================*
 // NameSpace
 //============================================================================*
@@ -29,16 +31,16 @@ namespace ReloadersWorkShop
 		// Private Constant Data Members
 		//----------------------------------------------------------------------------*
 
-		private const string cm_strFirearmTypeToolTip = "Type of firearm for which this ammo is used.";
-		private const string cm_strManufacturerToolTip = "Manufacturer of this ammo.";
-		private const string cm_strCaliberToolTip = "Caliber of this ammo.";
-		private const string cm_strBulletWeightToolTip = "Bullet weight in grains.";
-		private const string cm_strBulletDiameterToolTip = "Bullet diameter in inches.";
+		private const string cm_strFirearmTypeToolTip = "Type of firearm for which this ammunition is used.";
+		private const string cm_strManufacturerToolTip = "Manufacturer of this ammunition.";
+		private const string cm_strCaliberToolTip = "Caliber of this ammunition.";
+		private const string cm_strBulletWeightToolTip = "Bullet weight (should be listed on the box).";
+		private const string cm_strBulletDiameterToolTip = "Bullet diameter (should be listed on the box).";
 		private const string cm_strPartNumberToolTip = "Manufacturer's part number.";
-		private const string cm_strBulletTypeToolTip = "Manufacturer's Brand name for the ammo.";
-		private const string cm_strBallisticCoefficientToolTip = "Ballistic Coefficient for this ammo.";
-		private const string cm_strTestListToolTip = "List of tests for this ammo.";
-		private const string cm_strOKButtonToolTip = "Click to add or update the ammo with the above data.";
+		private const string cm_strBulletTypeToolTip = "Manufacturer's Brand name for the ammunition.";
+		private const string cm_strBallisticCoefficientToolTip = "Ballistic Coefficient for the bullet used in this ammunition.";
+		private const string cm_strTestListToolTip = "List of tests performed for this ammunition.";
+		private const string cm_strOKButtonToolTip = "Click to add or update the ammunition with the above data.";
 		private const string cm_strCancelButtonToolTip = "Click to cancel changes and return to the main window.";
 
 		private const string cm_strAddTestButtonToolTip = "Click to add a test for this ammo.";
@@ -66,11 +68,8 @@ namespace ReloadersWorkShop
 		private bool m_fInitialized = false;
 		private bool m_fPopulating = false;
 
-		//		private cBulletCaliberListView m_BulletCalibersListView = null;
-
 		private ToolTip m_FirearmTypeToolTip = new ToolTip();
 		private ToolTip m_ManufacturerToolTip = new ToolTip();
-		private ToolTip m_TestListToolTip = new ToolTip();
 		private ToolTip m_OKButtonToolTip = new ToolTip();
 		private ToolTip m_CancelButtonToolTip = new ToolTip();
 
@@ -124,7 +123,7 @@ namespace ReloadersWorkShop
 				m_Ammo = new cAmmo(Ammo);
 				}
 
-			SetClientSizeCore(GeneralGroupBox.Location.X + GeneralGroupBox.Width + 10, CancelAmmoButton.Location.Y + CancelAmmoButton.Height + 20);
+			SetClientSizeCore(GeneralGroupBox.Location.X + GeneralGroupBox.Width + 10, FormCancelButton.Location.Y + FormCancelButton.Height + 20);
 
 			//----------------------------------------------------------------------------*
 			// Record Original Data
@@ -196,7 +195,7 @@ namespace ReloadersWorkShop
 				else
 					OKButton.Text = "Update";
 
-				int nButtonX = (this.Size.Width / 2) - ((OKButton.Width + PrintButton.Width + CancelAmmoButton.Width + 40) / 2);
+				int nButtonX = (this.Size.Width / 2) - ((OKButton.Width + PrintButton.Width + FormCancelButton.Width + 40) / 2);
 
 				OKButton.Location = new Point(nButtonX, OKButton.Location.Y);
 				nButtonX += OKButton.Width + 20;
@@ -204,22 +203,22 @@ namespace ReloadersWorkShop
 				PrintButton.Location = new Point(nButtonX, PrintButton.Location.Y);
 				nButtonX += PrintButton.Width + 20;
 
-				CancelAmmoButton.Location = new Point(nButtonX, CancelAmmoButton.Location.Y);
+				FormCancelButton.Location = new Point(nButtonX, FormCancelButton.Location.Y);
 
-				CancelAmmoButton.Text = "Cancel";
+				FormCancelButton.Text = "Cancel";
 				}
 			else
 				{
 				OKButton.Visible = false;
 
-				int nButtonX = (this.Size.Width / 2) - ((PrintButton.Width + CancelAmmoButton.Width + 20) / 2);
+				int nButtonX = (this.Size.Width / 2) - ((PrintButton.Width + FormCancelButton.Width + 20) / 2);
 
 				PrintButton.Location = new Point(nButtonX, PrintButton.Location.Y);
 				nButtonX += PrintButton.Width + 20;
 
-				CancelAmmoButton.Location = new Point(nButtonX, CancelAmmoButton.Location.Y);
+				FormCancelButton.Location = new Point(nButtonX, FormCancelButton.Location.Y);
 
-				CancelAmmoButton.Text = "Close";
+				FormCancelButton.Text = "Close";
 				}
 
 			//----------------------------------------------------------------------------*
@@ -1010,9 +1009,7 @@ namespace ReloadersWorkShop
 
 			BallisticCoefficientTextBox.ToolTip = cm_strBallisticCoefficientToolTip;
 
-			m_TestListToolTip.ShowAlways = true;
-			m_TestListToolTip.RemoveAll();
-			m_TestListToolTip.SetToolTip(m_TestListView, cm_strTestListToolTip);
+			m_TestListView.ToolTip = cm_strTestListToolTip;
 
 			m_OKButtonToolTip.ShowAlways = true;
 			m_OKButtonToolTip.RemoveAll();
@@ -1020,7 +1017,7 @@ namespace ReloadersWorkShop
 
 			m_CancelButtonToolTip.ShowAlways = true;
 			m_CancelButtonToolTip.RemoveAll();
-			m_CancelButtonToolTip.SetToolTip(CancelAmmoButton, cm_strCancelButtonToolTip);
+//			m_CancelButtonToolTip.SetToolTip(FormCancelButton, cm_strCancelButtonToolTip);
 
 			m_AddTestToolTip.ShowAlways = true;
 			m_AddTestToolTip.RemoveAll();

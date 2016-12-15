@@ -52,12 +52,10 @@
 			this.DuplicateLabel = new System.Windows.Forms.Label();
 			this.TypeTextBox = new CommonLib.Controls.cTextBox();
 			this.PartNumberTextBox = new CommonLib.Controls.cTextBox();
+			this.FirearmTypeCombo = new ReloadersWorkShop.Controls.cFirearmTypeCombo();
 			this.CaliberCombo = new System.Windows.Forms.ComboBox();
 			this.ManufacturerCombo = new System.Windows.Forms.ComboBox();
-			this.BallisticCoefficientTextBox = new CommonLib.Controls.cDoubleValueTextBox();
-			this.BulletDiameterTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			this.OKButton = new System.Windows.Forms.Button();
-			this.CancelAmmoButton = new System.Windows.Forms.Button();
 			this.TestDataGroupBox = new System.Windows.Forms.GroupBox();
 			this.RemoveTestButton = new System.Windows.Forms.Button();
 			this.EditTestButton = new System.Windows.Forms.Button();
@@ -66,7 +64,9 @@
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.SectionalDensityLabel = new System.Windows.Forms.Label();
 			this.BulletWeightTextBox = new CommonLib.Controls.cDoubleValueTextBox();
-			this.FirearmTypeCombo = new ReloadersWorkShop.Controls.cFirearmTypeCombo();
+			this.BallisticCoefficientTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.BulletDiameterTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.FormCancelButton = new CommonLib.Controls.cCancelButton();
 			label1 = new System.Windows.Forms.Label();
 			label2 = new System.Windows.Forms.Label();
 			label3 = new System.Windows.Forms.Label();
@@ -86,7 +86,7 @@
 			// label1
 			// 
 			label1.AutoSize = true;
-			label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			label1.ForeColor = System.Drawing.SystemColors.ControlText;
 			label1.Location = new System.Drawing.Point(6, 85);
 			label1.Name = "label1";
@@ -97,7 +97,7 @@
 			// label2
 			// 
 			label2.AutoSize = true;
-			label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			label2.ForeColor = System.Drawing.SystemColors.ControlText;
 			label2.Location = new System.Drawing.Point(8, 25);
 			label2.Name = "label2";
@@ -108,7 +108,7 @@
 			// label3
 			// 
 			label3.AutoSize = true;
-			label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			label3.ForeColor = System.Drawing.SystemColors.ControlText;
 			label3.Location = new System.Drawing.Point(10, 115);
 			label3.Name = "label3";
@@ -119,7 +119,7 @@
 			// label4
 			// 
 			label4.AutoSize = true;
-			label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			label4.ForeColor = System.Drawing.SystemColors.ControlText;
 			label4.Location = new System.Drawing.Point(37, 55);
 			label4.Name = "label4";
@@ -130,7 +130,7 @@
 			// label5
 			// 
 			label5.AutoSize = true;
-			label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			label5.ForeColor = System.Drawing.SystemColors.ControlText;
 			label5.Location = new System.Drawing.Point(194, 115);
 			label5.Name = "label5";
@@ -141,7 +141,7 @@
 			// label6
 			// 
 			label6.AutoSize = true;
-			label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			label6.ForeColor = System.Drawing.SystemColors.ControlText;
 			label6.Location = new System.Drawing.Point(21, 30);
 			label6.Name = "label6";
@@ -152,7 +152,7 @@
 			// label7
 			// 
 			label7.AutoSize = true;
-			label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			label7.ForeColor = System.Drawing.SystemColors.ControlText;
 			label7.Location = new System.Drawing.Point(197, 30);
 			label7.Name = "label7";
@@ -163,7 +163,7 @@
 			// label12
 			// 
 			label12.AutoSize = true;
-			label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			label12.ForeColor = System.Drawing.SystemColors.ControlText;
 			label12.Location = new System.Drawing.Point(14, 56);
 			label12.Name = "label12";
@@ -173,7 +173,7 @@
 			// 
 			// label16
 			// 
-			label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			label16.ForeColor = System.Drawing.SystemColors.ControlText;
 			label16.Location = new System.Drawing.Point(359, 32);
 			label16.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
@@ -186,7 +186,7 @@
 			// label8
 			// 
 			label8.AutoSize = true;
-			label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			label8.ForeColor = System.Drawing.SystemColors.ControlText;
 			label8.Location = new System.Drawing.Point(203, 56);
 			label8.Name = "label8";
@@ -197,7 +197,7 @@
 			// BulletWeightMeasurementLabel
 			// 
 			this.BulletWeightMeasurementLabel.AutoSize = true;
-			this.BulletWeightMeasurementLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BulletWeightMeasurementLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.BulletWeightMeasurementLabel.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.BulletWeightMeasurementLabel.Location = new System.Drawing.Point(144, 30);
 			this.BulletWeightMeasurementLabel.Name = "BulletWeightMeasurementLabel";
@@ -208,7 +208,7 @@
 			// BulletDiameterMeasurementLabel
 			// 
 			this.BulletDiameterMeasurementLabel.AutoSize = true;
-			this.BulletDiameterMeasurementLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BulletDiameterMeasurementLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.BulletDiameterMeasurementLabel.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.BulletDiameterMeasurementLabel.Location = new System.Drawing.Point(144, 56);
 			this.BulletDiameterMeasurementLabel.Name = "BulletDiameterMeasurementLabel";
@@ -225,7 +225,7 @@
 			this.InventoryGroupBox.Controls.Add(label16);
 			this.InventoryGroupBox.Controls.Add(this.CostLabel);
 			this.InventoryGroupBox.Controls.Add(this.QuantityLabel);
-			this.InventoryGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.InventoryGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.InventoryGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
 			this.InventoryGroupBox.Location = new System.Drawing.Point(10, 430);
 			this.InventoryGroupBox.Margin = new System.Windows.Forms.Padding(2);
@@ -238,7 +238,7 @@
 			// 
 			// InventoryButton
 			// 
-			this.InventoryButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.InventoryButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.InventoryButton.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.InventoryButton.Location = new System.Drawing.Point(168, 58);
 			this.InventoryButton.Margin = new System.Windows.Forms.Padding(2);
@@ -251,7 +251,7 @@
 			// CostTextBox
 			// 
 			this.CostTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.CostTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.CostTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.CostTextBox.Location = new System.Drawing.Point(271, 29);
 			this.CostTextBox.MaxLength = 7;
 			this.CostTextBox.MaxValue = 0D;
@@ -269,7 +269,7 @@
 			// QuantityTextBox
 			// 
 			this.QuantityTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.QuantityTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.QuantityTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.QuantityTextBox.Location = new System.Drawing.Point(130, 29);
 			this.QuantityTextBox.MaxLength = 5;
 			this.QuantityTextBox.MaxValue = 0;
@@ -285,7 +285,7 @@
 			// CostEachLabel
 			// 
 			this.CostEachLabel.AutoSize = true;
-			this.CostEachLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.CostEachLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.CostEachLabel.ForeColor = System.Drawing.SystemColors.WindowText;
 			this.CostEachLabel.Location = new System.Drawing.Point(430, 32);
 			this.CostEachLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
@@ -297,7 +297,7 @@
 			// 
 			// CostLabel
 			// 
-			this.CostLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.CostLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.CostLabel.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.CostLabel.Location = new System.Drawing.Point(202, 32);
 			this.CostLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
@@ -309,7 +309,7 @@
 			// 
 			// QuantityLabel
 			// 
-			this.QuantityLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.QuantityLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.QuantityLabel.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.QuantityLabel.Location = new System.Drawing.Point(28, 32);
 			this.QuantityLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
@@ -333,7 +333,7 @@
 			this.GeneralGroupBox.Controls.Add(label2);
 			this.GeneralGroupBox.Controls.Add(this.ManufacturerCombo);
 			this.GeneralGroupBox.Controls.Add(label1);
-			this.GeneralGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.GeneralGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.GeneralGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
 			this.GeneralGroupBox.Location = new System.Drawing.Point(10, 12);
 			this.GeneralGroupBox.Name = "GeneralGroupBox";
@@ -345,7 +345,7 @@
 			// ReloadCheckBox
 			// 
 			this.ReloadCheckBox.AutoSize = true;
-			this.ReloadCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ReloadCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.ReloadCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.ReloadCheckBox.Location = new System.Drawing.Point(388, 114);
 			this.ReloadCheckBox.Name = "ReloadCheckBox";
@@ -357,7 +357,7 @@
 			// DuplicateLabel
 			// 
 			this.DuplicateLabel.AutoSize = true;
-			this.DuplicateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.DuplicateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.DuplicateLabel.ForeColor = System.Drawing.Color.Red;
 			this.DuplicateLabel.Location = new System.Drawing.Point(260, 85);
 			this.DuplicateLabel.Name = "DuplicateLabel";
@@ -369,19 +369,20 @@
 			// TypeTextBox
 			// 
 			this.TypeTextBox.BackColor = System.Drawing.Color.LightPink;
-			this.TypeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TypeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.TypeTextBox.Location = new System.Drawing.Point(234, 112);
 			this.TypeTextBox.Name = "TypeTextBox";
 			this.TypeTextBox.Required = true;
 			this.TypeTextBox.Size = new System.Drawing.Size(139, 20);
 			this.TypeTextBox.TabIndex = 4;
 			this.TypeTextBox.ToolTip = "";
+			this.TypeTextBox.ValidChars = "";
 			this.TypeTextBox.Value = "";
 			// 
 			// PartNumberTextBox
 			// 
 			this.PartNumberTextBox.BackColor = System.Drawing.Color.LightPink;
-			this.PartNumberTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.PartNumberTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.PartNumberTextBox.Location = new System.Drawing.Point(85, 112);
 			this.PartNumberTextBox.MaxLength = 50;
 			this.PartNumberTextBox.Name = "PartNumberTextBox";
@@ -389,12 +390,65 @@
 			this.PartNumberTextBox.Size = new System.Drawing.Size(100, 20);
 			this.PartNumberTextBox.TabIndex = 3;
 			this.PartNumberTextBox.ToolTip = "";
+			this.PartNumberTextBox.ValidChars = "";
 			this.PartNumberTextBox.Value = "";
+			// 
+			// FirearmTypeCombo
+			// 
+			this.FirearmTypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.FirearmTypeCombo.DropDownWidth = 115;
+			this.FirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+			this.FirearmTypeCombo.FormattingEnabled = true;
+			this.FirearmTypeCombo.IncludeAny = false;
+			this.FirearmTypeCombo.IncludeShotgun = false;
+			this.FirearmTypeCombo.Items.AddRange(new object[] {
+			"Handgun",
+			"Rifle",
+			"Handgun",
+			"Rifle",
+			"Handgun",
+			"Rifle",
+			"Handgun",
+			"Rifle",
+			"Handgun",
+			"Rifle",
+			"Handgun",
+			"Rifle",
+			"Handgun",
+			"Rifle",
+			"Handgun",
+			"Rifle",
+			"Handgun",
+			"Rifle",
+			"Handgun",
+			"Rifle",
+			"Handgun",
+			"Rifle",
+			"Handgun",
+			"Rifle",
+			"Handgun",
+			"Rifle",
+			"Handgun",
+			"Rifle",
+			"Handgun",
+			"Rifle",
+			"Handgun",
+			"Rifle",
+			"Handgun",
+			"Rifle",
+			"Handgun",
+			"Rifle"});
+			this.FirearmTypeCombo.Location = new System.Drawing.Point(85, 22);
+			this.FirearmTypeCombo.Name = "FirearmTypeCombo";
+			this.FirearmTypeCombo.Size = new System.Drawing.Size(100, 21);
+			this.FirearmTypeCombo.TabIndex = 0;
+			this.FirearmTypeCombo.ToolTip = "";
+			this.FirearmTypeCombo.Value = ReloadersWorkShop.cFirearm.eFireArmType.Handgun;
 			// 
 			// CaliberCombo
 			// 
 			this.CaliberCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.CaliberCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.CaliberCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.CaliberCombo.FormattingEnabled = true;
 			this.CaliberCombo.Location = new System.Drawing.Point(85, 52);
 			this.CaliberCombo.Name = "CaliberCombo";
@@ -404,74 +458,29 @@
 			// ManufacturerCombo
 			// 
 			this.ManufacturerCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.ManufacturerCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ManufacturerCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.ManufacturerCombo.FormattingEnabled = true;
 			this.ManufacturerCombo.Location = new System.Drawing.Point(85, 82);
 			this.ManufacturerCombo.Name = "ManufacturerCombo";
 			this.ManufacturerCombo.Size = new System.Drawing.Size(150, 21);
 			this.ManufacturerCombo.TabIndex = 2;
 			// 
-			// BallisticCoefficientTextBox
-			// 
-			this.BallisticCoefficientTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.BallisticCoefficientTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BallisticCoefficientTextBox.Location = new System.Drawing.Point(301, 27);
-			this.BallisticCoefficientTextBox.MaxLength = 5;
-			this.BallisticCoefficientTextBox.MaxValue = 0D;
-			this.BallisticCoefficientTextBox.MinValue = 0D;
-			this.BallisticCoefficientTextBox.Name = "BallisticCoefficientTextBox";
-			this.BallisticCoefficientTextBox.NumDecimals = 3;
-			this.BallisticCoefficientTextBox.Size = new System.Drawing.Size(38, 20);
-			this.BallisticCoefficientTextBox.TabIndex = 2;
-			this.BallisticCoefficientTextBox.Text = "0.000";
-			this.BallisticCoefficientTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.BallisticCoefficientTextBox.ToolTip = "";
-			this.BallisticCoefficientTextBox.Value = 0D;
-			this.BallisticCoefficientTextBox.ZeroAllowed = true;
-			// 
-			// BulletDiameterTextBox
-			// 
-			this.BulletDiameterTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.BulletDiameterTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BulletDiameterTextBox.Location = new System.Drawing.Point(100, 53);
-			this.BulletDiameterTextBox.MaxLength = 5;
-			this.BulletDiameterTextBox.MaxValue = 0D;
-			this.BulletDiameterTextBox.MinValue = 0D;
-			this.BulletDiameterTextBox.Name = "BulletDiameterTextBox";
-			this.BulletDiameterTextBox.NumDecimals = 3;
-			this.BulletDiameterTextBox.Size = new System.Drawing.Size(38, 20);
-			this.BulletDiameterTextBox.TabIndex = 1;
-			this.BulletDiameterTextBox.Text = "0.000";
-			this.BulletDiameterTextBox.ToolTip = "";
-			this.BulletDiameterTextBox.Value = 0D;
-			this.BulletDiameterTextBox.ZeroAllowed = true;
-			// 
 			// OKButton
 			// 
 			this.OKButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.OKButton.Location = new System.Drawing.Point(162, 547);
+			this.OKButton.Location = new System.Drawing.Point(143, 547);
 			this.OKButton.Name = "OKButton";
 			this.OKButton.Size = new System.Drawing.Size(75, 23);
 			this.OKButton.TabIndex = 4;
 			this.OKButton.Text = "OK";
 			this.OKButton.UseVisualStyleBackColor = true;
 			// 
-			// CancelAmmoButton
-			// 
-			this.CancelAmmoButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.CancelAmmoButton.Location = new System.Drawing.Point(343, 546);
-			this.CancelAmmoButton.Name = "CancelAmmoButton";
-			this.CancelAmmoButton.Size = new System.Drawing.Size(75, 23);
-			this.CancelAmmoButton.TabIndex = 6;
-			this.CancelAmmoButton.Text = "Cancel";
-			this.CancelAmmoButton.UseVisualStyleBackColor = true;
-			// 
 			// TestDataGroupBox
 			// 
 			this.TestDataGroupBox.Controls.Add(this.RemoveTestButton);
 			this.TestDataGroupBox.Controls.Add(this.EditTestButton);
 			this.TestDataGroupBox.Controls.Add(this.AddTestButton);
-			this.TestDataGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TestDataGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.TestDataGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
 			this.TestDataGroupBox.Location = new System.Drawing.Point(10, 257);
 			this.TestDataGroupBox.Name = "TestDataGroupBox";
@@ -482,7 +491,7 @@
 			// 
 			// RemoveTestButton
 			// 
-			this.RemoveTestButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.RemoveTestButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.RemoveTestButton.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.RemoveTestButton.Location = new System.Drawing.Point(309, 137);
 			this.RemoveTestButton.Name = "RemoveTestButton";
@@ -493,7 +502,7 @@
 			// 
 			// EditTestButton
 			// 
-			this.EditTestButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.EditTestButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.EditTestButton.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.EditTestButton.Location = new System.Drawing.Point(220, 137);
 			this.EditTestButton.Name = "EditTestButton";
@@ -504,7 +513,7 @@
 			// 
 			// AddTestButton
 			// 
-			this.AddTestButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.AddTestButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.AddTestButton.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.AddTestButton.Location = new System.Drawing.Point(131, 137);
 			this.AddTestButton.Name = "AddTestButton";
@@ -515,7 +524,7 @@
 			// 
 			// PrintButton
 			// 
-			this.PrintButton.Location = new System.Drawing.Point(252, 546);
+			this.PrintButton.Location = new System.Drawing.Point(233, 546);
 			this.PrintButton.Name = "PrintButton";
 			this.PrintButton.Size = new System.Drawing.Size(75, 23);
 			this.PrintButton.TabIndex = 5;
@@ -534,7 +543,7 @@
 			this.groupBox2.Controls.Add(label6);
 			this.groupBox2.Controls.Add(this.BulletWeightMeasurementLabel);
 			this.groupBox2.Controls.Add(label12);
-			this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.groupBox2.ForeColor = System.Drawing.SystemColors.HotTrack;
 			this.groupBox2.Location = new System.Drawing.Point(10, 168);
 			this.groupBox2.Name = "groupBox2";
@@ -546,7 +555,7 @@
 			// SectionalDensityLabel
 			// 
 			this.SectionalDensityLabel.AutoSize = true;
-			this.SectionalDensityLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.SectionalDensityLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.SectionalDensityLabel.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.SectionalDensityLabel.Location = new System.Drawing.Point(298, 56);
 			this.SectionalDensityLabel.Name = "SectionalDensityLabel";
@@ -557,7 +566,7 @@
 			// BulletWeightTextBox
 			// 
 			this.BulletWeightTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.BulletWeightTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BulletWeightTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.BulletWeightTextBox.Location = new System.Drawing.Point(100, 27);
 			this.BulletWeightTextBox.MaxLength = 5;
 			this.BulletWeightTextBox.MaxValue = 0D;
@@ -572,66 +581,63 @@
 			this.BulletWeightTextBox.Value = 0D;
 			this.BulletWeightTextBox.ZeroAllowed = true;
 			// 
-			// FirearmTypeCombo
+			// BallisticCoefficientTextBox
 			// 
-			this.FirearmTypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.FirearmTypeCombo.DropDownWidth = 115;
-			this.FirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.FirearmTypeCombo.FormattingEnabled = true;
-			this.FirearmTypeCombo.IncludeShotgun = false;
-			this.FirearmTypeCombo.Items.AddRange(new object[] {
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle"});
-			this.FirearmTypeCombo.Location = new System.Drawing.Point(85, 22);
-			this.FirearmTypeCombo.Name = "FirearmTypeCombo";
-			this.FirearmTypeCombo.Size = new System.Drawing.Size(100, 21);
-			this.FirearmTypeCombo.TabIndex = 0;
-			this.FirearmTypeCombo.ToolTip = "";
-			this.FirearmTypeCombo.Value = ReloadersWorkShop.cFirearm.eFireArmType.Handgun;
+			this.BallisticCoefficientTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.BallisticCoefficientTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+			this.BallisticCoefficientTextBox.Location = new System.Drawing.Point(301, 27);
+			this.BallisticCoefficientTextBox.MaxLength = 5;
+			this.BallisticCoefficientTextBox.MaxValue = 0D;
+			this.BallisticCoefficientTextBox.MinValue = 0D;
+			this.BallisticCoefficientTextBox.Name = "BallisticCoefficientTextBox";
+			this.BallisticCoefficientTextBox.NumDecimals = 3;
+			this.BallisticCoefficientTextBox.Size = new System.Drawing.Size(38, 20);
+			this.BallisticCoefficientTextBox.TabIndex = 2;
+			this.BallisticCoefficientTextBox.Text = "0.000";
+			this.BallisticCoefficientTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.BallisticCoefficientTextBox.ToolTip = "";
+			this.BallisticCoefficientTextBox.Value = 0D;
+			this.BallisticCoefficientTextBox.ZeroAllowed = true;
+			// 
+			// BulletDiameterTextBox
+			// 
+			this.BulletDiameterTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.BulletDiameterTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+			this.BulletDiameterTextBox.Location = new System.Drawing.Point(100, 53);
+			this.BulletDiameterTextBox.MaxLength = 5;
+			this.BulletDiameterTextBox.MaxValue = 0D;
+			this.BulletDiameterTextBox.MinValue = 0D;
+			this.BulletDiameterTextBox.Name = "BulletDiameterTextBox";
+			this.BulletDiameterTextBox.NumDecimals = 3;
+			this.BulletDiameterTextBox.Size = new System.Drawing.Size(38, 20);
+			this.BulletDiameterTextBox.TabIndex = 1;
+			this.BulletDiameterTextBox.Text = "0.000";
+			this.BulletDiameterTextBox.ToolTip = "";
+			this.BulletDiameterTextBox.Value = 0D;
+			this.BulletDiameterTextBox.ZeroAllowed = true;
+			// 
+			// FormCancelButton
+			// 
+			this.FormCancelButton.Location = new System.Drawing.Point(323, 547);
+			this.FormCancelButton.Name = "FormCancelButton";
+			this.FormCancelButton.Size = new System.Drawing.Size(75, 23);
+			this.FormCancelButton.TabIndex = 6;
+			this.FormCancelButton.Text = "Cancel";
+			this.FormCancelButton.ToolTip = "Click to cancel changes and exit.";
+			this.FormCancelButton.UseVisualStyleBackColor = true;
 			// 
 			// cAmmoForm
 			// 
 			this.AcceptButton = this.OKButton;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.CancelButton = this.CancelAmmoButton;
-			this.ClientSize = new System.Drawing.Size(516, 569);
+			this.ClientSize = new System.Drawing.Size(541, 586);
 			this.ControlBox = false;
+			this.Controls.Add(this.FormCancelButton);
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.PrintButton);
 			this.Controls.Add(this.InventoryGroupBox);
 			this.Controls.Add(this.TestDataGroupBox);
-			this.Controls.Add(this.CancelAmmoButton);
 			this.Controls.Add(this.OKButton);
 			this.Controls.Add(this.GeneralGroupBox);
 			this.DoubleBuffered = true;
@@ -659,7 +665,6 @@
 		private System.Windows.Forms.ComboBox ManufacturerCombo;
 		private System.Windows.Forms.ComboBox CaliberCombo;
 		private System.Windows.Forms.Button OKButton;
-		private System.Windows.Forms.Button CancelAmmoButton;
 		private System.Windows.Forms.GroupBox TestDataGroupBox;
 		private System.Windows.Forms.Button RemoveTestButton;
 		private System.Windows.Forms.Button EditTestButton;
@@ -685,5 +690,6 @@
 		private System.Windows.Forms.Label BulletWeightMeasurementLabel;
 		private System.Windows.Forms.Label BulletDiameterMeasurementLabel;
 		private System.Windows.Forms.CheckBox ReloadCheckBox;
+		private CommonLib.Controls.cCancelButton FormCancelButton;
 		}
 	}

@@ -50,6 +50,9 @@ namespace ReloadersWorkShop
 		private int m_nSortColumn = 0;
 		private SortOrder m_SortOrder = SortOrder.Ascending;
 
+		private string m_strToolTip = "";
+		private ToolTip m_ToolTip = null;
+
 		private bool m_fInitialized = false;
 		private bool m_fCheckFromDoubleClick = false;
 
@@ -100,27 +103,27 @@ namespace ReloadersWorkShop
 
 			if (sm_CheckMarkImage == null)
 				{
-				sm_CheckMarkImage = (Bitmap)Properties.Resources.ResourceManager.GetObject("CheckMark");
+				sm_CheckMarkImage = (Bitmap) Properties.Resources.ResourceManager.GetObject("CheckMark");
 
 				sm_CheckMarkImage.MakeTransparent(Color.White);
 				}
 
 			if (sm_CheckMarkSelectedImage == null)
 				{
-				sm_CheckMarkSelectedImage = (Bitmap)Properties.Resources.ResourceManager.GetObject("CheckMarkSelected");
+				sm_CheckMarkSelectedImage = (Bitmap) Properties.Resources.ResourceManager.GetObject("CheckMarkSelected");
 				sm_CheckMarkSelectedImage.MakeTransparent(Color.Black);
 				}
 
 			if (sm_SortAscendingImage == null)
 				{
-				sm_SortAscendingImage = (Bitmap)Properties.Resources.ResourceManager.GetObject("SortAscending");
+				sm_SortAscendingImage = (Bitmap) Properties.Resources.ResourceManager.GetObject("SortAscending");
 
 				sm_SortAscendingImage.MakeTransparent(Color.White);
 				}
 
 			if (sm_SortDescendingImage == null)
 				{
-				sm_SortDescendingImage = (Bitmap)Properties.Resources.ResourceManager.GetObject("SortDescending");
+				sm_SortDescendingImage = (Bitmap) Properties.Resources.ResourceManager.GetObject("SortDescending");
 
 				sm_SortDescendingImage.MakeTransparent(Color.White);
 				}
@@ -163,7 +166,10 @@ namespace ReloadersWorkShop
 
 		protected cDataFiles DataFiles
 			{
-			get { return (m_DataFiles); }
+			get
+				{
+				return (m_DataFiles);
+				}
 			}
 
 		//============================================================================*
@@ -175,7 +181,7 @@ namespace ReloadersWorkShop
 			cCaliber Caliber = null;
 
 			if (Item.Tag is cCaliber)
-				Caliber = (cCaliber)Item.Tag;
+				Caliber = (cCaliber) Item.Tag;
 
 			if (Caliber == null)
 				{
@@ -222,8 +228,14 @@ namespace ReloadersWorkShop
 
 		protected bool Initialized
 			{
-			get { return (m_fInitialized); }
-			set { m_fInitialized = value; }
+			get
+				{
+				return (m_fInitialized);
+				}
+			set
+				{
+				m_fInitialized = value;
+				}
 			}
 
 		//============================================================================*
@@ -232,8 +244,14 @@ namespace ReloadersWorkShop
 
 		protected cPreferences.eApplicationListView ListViewType
 			{
-			get { return (m_eListViewType); }
-			set { m_eListViewType = value; }
+			get
+				{
+				return (m_eListViewType);
+				}
+			set
+				{
+				m_eListViewType = value;
+				}
 			}
 
 		//============================================================================*
@@ -315,27 +333,27 @@ namespace ReloadersWorkShop
 			switch (Columns[args.ColumnIndex].TextAlign)
 				{
 				case HorizontalAlignment.Center:
-					nX += (int)((args.Bounds.Width / 2) - ((TextSize.Width + nImageWidth + 5) / 2));
+					nX += (int) ((args.Bounds.Width / 2) - ((TextSize.Width + nImageWidth + 5) / 2));
 
 					args.Graphics.DrawString(strText, HeaderFont, Brushes.Black, nX, nY);
 
-					nX += (int)TextSize.Width + 5;
+					nX += (int) TextSize.Width + 5;
 
 					break;
 
 				case HorizontalAlignment.Right:
-					nX += (args.Bounds.Width - (int)TextSize.Width);
+					nX += (args.Bounds.Width - (int) TextSize.Width);
 
 					args.Graphics.DrawString(strText, HeaderFont, Brushes.Black, nX, nY);
 
-					nX -= (int)(5 + nImageWidth);
+					nX -= (int) (5 + nImageWidth);
 
 					break;
 
 				case HorizontalAlignment.Left:
 					args.Graphics.DrawString(strText, HeaderFont, Brushes.Black, nX, nY);
 
-					nX += (int)TextSize.Width + 5;
+					nX += (int) TextSize.Width + 5;
 
 					break;
 				}
@@ -358,7 +376,7 @@ namespace ReloadersWorkShop
 				{
 				Brush WebsiteBrush = Brushes.Blue;
 
-				cManufacturer Manufacturer = (cManufacturer)args.Item.Tag;
+				cManufacturer Manufacturer = (cManufacturer) args.Item.Tag;
 
 				if (Manufacturer.WebSiteVisited)
 					WebsiteBrush = Brushes.Maroon;
@@ -430,7 +448,7 @@ namespace ReloadersWorkShop
 
 					Rectangle Rect = args.Bounds;
 
-					Rect.Y += (Rect.Height / 2) - (int)(TextSize.Height / 2);
+					Rect.Y += (Rect.Height / 2) - (int) (TextSize.Height / 2);
 
 					if (args.ColumnIndex == 0 && CheckBoxes)
 						{
@@ -578,7 +596,7 @@ namespace ReloadersWorkShop
 					{
 					if (Item.SubItems[nColumn].Text.Length > 0)
 						{
-						if (nX - nColumnX < (int)TextSize.Width)
+						if (nX - nColumnX < (int) TextSize.Width)
 							{
 							try
 								{
@@ -608,9 +626,9 @@ namespace ReloadersWorkShop
 						{
 						Size BoxSize = CheckBoxRenderer.GetGlyphSize(g, (Item.Checked ? CheckBoxState.CheckedNormal : CheckBoxState.UncheckedNormal));
 
-						if ((nColumn == 0 && CheckBoxes && nX > 4 + BoxSize.Width && nX - 4 - BoxSize.Width - nColumnX < (int)TextSize.Width) ||
-							(nColumn == 0 && !CheckBoxes && nX > 4 && nX - nColumnX < (int)TextSize.Width) ||
-							(nColumn != 0 && nX > 4 && nX - nColumnX < (int)TextSize.Width))
+						if ((nColumn == 0 && CheckBoxes && nX > 4 + BoxSize.Width && nX - 4 - BoxSize.Width - nColumnX < (int) TextSize.Width) ||
+							(nColumn == 0 && !CheckBoxes && nX > 4 && nX - nColumnX < (int) TextSize.Width) ||
+							(nColumn != 0 && nX > 4 && nX - nColumnX < (int) TextSize.Width))
 							cCaliber.ShowSAAMIPDF(m_DataFiles, Caliber);
 						}
 					}
@@ -639,7 +657,7 @@ namespace ReloadersWorkShop
 			{
 			int nX = args.X;
 			int nY = args.Y;
-			
+
 			ListViewItem Item = GetItemAt(nX, nY);
 
 			//----------------------------------------------------------------------------*
@@ -685,7 +703,7 @@ namespace ReloadersWorkShop
 					{
 					if (Item.SubItems[nColumn].Text.Length > 0)
 						{
-						if (nX - nColumnX < (int)TextSize.Width)
+						if (nX - nColumnX < (int) TextSize.Width)
 							this.Cursor = Cursors.Hand;
 						}
 					}
@@ -702,9 +720,9 @@ namespace ReloadersWorkShop
 						{
 						Size BoxSize = CheckBoxRenderer.GetGlyphSize(g, (Item.Checked ? CheckBoxState.CheckedNormal : CheckBoxState.UncheckedNormal));
 
-						if ((nColumn == 0 && CheckBoxes && nX > 4 + BoxSize.Width && nX - 4 - BoxSize.Width - nColumnX < (int)TextSize.Width) ||
-							(nColumn == 0 && !CheckBoxes && nX > 4 && nX - nColumnX < (int)TextSize.Width) ||
-							(nColumn != 0 && nX > 4 && nX - nColumnX < (int)TextSize.Width))
+						if ((nColumn == 0 && CheckBoxes && nX > 4 + BoxSize.Width && nX - 4 - BoxSize.Width - nColumnX < (int) TextSize.Width) ||
+							(nColumn == 0 && !CheckBoxes && nX > 4 && nX - nColumnX < (int) TextSize.Width) ||
+							(nColumn != 0 && nX > 4 && nX - nColumnX < (int) TextSize.Width))
 							this.Cursor = Cursors.Hand;
 						}
 					}
@@ -777,8 +795,14 @@ namespace ReloadersWorkShop
 
 		public bool Populating
 			{
-			get { return (m_fPopulating); }
-			protected set { m_fPopulating = value; }
+			get
+				{
+				return (m_fPopulating);
+				}
+			protected set
+				{
+				m_fPopulating = value;
+				}
 			}
 
 		//============================================================================*
@@ -787,8 +811,14 @@ namespace ReloadersWorkShop
 
 		public int SortingColumn
 			{
-			get { return (m_nSortColumn); }
-			set { m_nSortColumn = value; }
+			get
+				{
+				return (m_nSortColumn);
+				}
+			set
+				{
+				m_nSortColumn = value;
+				}
 			}
 
 		//============================================================================*
@@ -797,8 +827,37 @@ namespace ReloadersWorkShop
 
 		public SortOrder SortingOrder
 			{
-			get { return (m_SortOrder); }
-			set { m_SortOrder = value; }
+			get
+				{
+				return (m_SortOrder);
+				}
+			set
+				{
+				m_SortOrder = value;
+				}
+			}
+
+		//============================================================================*
+		// ToolTip Property
+		//============================================================================*
+
+		public string ToolTip
+			{
+			get
+				{
+				return (m_strToolTip);
+				}
+			set
+				{
+				m_strToolTip = value;
+
+				if (m_ToolTip == null)
+					m_ToolTip = new ToolTip();
+
+				m_ToolTip.ShowAlways = true;
+				m_ToolTip.RemoveAll();
+				m_ToolTip.SetToolTip(this, m_strToolTip);
+				}
 			}
 
 		//============================================================================*

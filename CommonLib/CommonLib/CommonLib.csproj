@@ -43,6 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\cButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\cCancelButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\cDateTimePicker.cs">
       <SubType>Component</SubType>
     </Compile>
