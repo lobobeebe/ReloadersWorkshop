@@ -56,6 +56,20 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Append()
+		//============================================================================*
+
+		public void Append(cCase Case)
+			{
+			m_strPartNumber = String.IsNullOrEmpty(m_strPartNumber) ? Case.m_strPartNumber : m_strPartNumber;
+			m_Caliber = m_Caliber == null ? Case.m_Caliber : m_Caliber;
+			m_fMatch = !m_fMatch ? Case.m_fMatch : true;
+			m_fMilitary = !m_fMilitary ? Case.m_fMilitary : true;
+			m_fLargePrimer = !m_fLargePrimer ? Case.m_fLargePrimer : true;
+			m_fSmallPrimer = !m_fSmallPrimer ? Case.m_fSmallPrimer : true;
+			}
+
+		//============================================================================*
 		// Caliber Property
 		//============================================================================*
 

@@ -32,7 +32,11 @@ namespace ReloadersWorkShop
 			foreach (cCase CheckCase in this)
 				{
 				if (CheckCase.CompareTo(Case) == 0)
+					{
+					CheckCase.Append(Case);
+
 					return (false);
+					}
 				}
 
 			Add(Case);
