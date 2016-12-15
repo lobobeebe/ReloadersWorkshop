@@ -52,16 +52,6 @@ namespace ReloadersWorkShop
 
 		public bool AddTransaction(cTransaction Transaction)
 			{
-			foreach (cTransaction CheckTransaction in this)
-				{
-				if (CheckTransaction.CompareTo(Transaction) == 0)
-					{
-					CheckTransaction.Append(Transaction);
-
-					return (false);
-					}
-				}
-
 			Add(Transaction);
 
 			return (true);
