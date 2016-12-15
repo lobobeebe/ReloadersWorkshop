@@ -12,6 +12,7 @@ namespace CommonLib.Controls
 			ToolTip = "Click to cancel changes and exit.";
 
 			Text = "Cancel";
+			DialogResult = DialogResult.Cancel;
 			}
 		}
 	}
