@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace RWCommonLib
+namespace ReloadersWorkShop
 	{
 	public class cViewButton : Button
 		{

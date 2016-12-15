@@ -45,9 +45,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="cViewButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Forms\cPurchaseKeyForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -84,12 +81,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\BuyNowButton.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ViewButton.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ViewButton.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

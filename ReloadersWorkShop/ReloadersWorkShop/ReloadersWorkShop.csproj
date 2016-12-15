@@ -273,6 +273,9 @@
     <Compile Include="cListViewFirearmAccessoryComparer.cs" />
     <Compile Include="cLoad.Export.cs" />
     <Compile Include="cManufacturer.Export.cs" />
+    <Compile Include="Controls\cViewButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="cPowder.Export.cs" />
     <Compile Include="cPrimer.Export.cs" />
     <Compile Include="cRedDot.cs" />
@@ -697,6 +700,7 @@
     <None Include="Resources\Images\DriftChartShooter.png" />
     <None Include="Resources\BuyNowButton.gif" />
     <None Include="Resources\OpenTarget.bmp" />
+    <None Include="Resources\ViewButton.png" />
     <Content Include="SAAMI_README.txt" />
     <Content Include="Share_README.TXT.txt" />
     <None Include="Resources\Images\SortDescending.bmp" />

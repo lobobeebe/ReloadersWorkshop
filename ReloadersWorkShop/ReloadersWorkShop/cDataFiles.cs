@@ -1978,9 +1978,9 @@ namespace ReloadersWorkShop
 
 									XMLDocument.Import(Path.Combine(GetDataPath(), "RWRecovery.xml"), true);
 									}
-								catch
+								catch(Exception e)
 									{
-									strMessage = "Error importing XML Recovery file...";
+									strMessage = "Error importing XML Recovery file...\n\nSystem Message:\n\n" + e.Message;
 
 									MessageBox.Show(strMessage, "File Import Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 

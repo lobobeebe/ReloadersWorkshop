@@ -155,9 +155,6 @@ namespace ReloadersWorkShop
 						break;
 					case "Name":
 						m_strName = XMLNode.FirstChild.Value;
-
-						if (m_strName.Substring(0, 3) == "275")
-							Console.WriteLine("275!");
 						break;
 					case "HeadStamp":
 						m_strHeadStamp = XMLNode.FirstChild.Value;

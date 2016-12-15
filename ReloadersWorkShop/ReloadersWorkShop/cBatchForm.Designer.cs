@@ -112,7 +112,7 @@
 			this.FirearmCOLLabel = new System.Windows.Forms.Label();
 			this.FirearmCombo = new System.Windows.Forms.ComboBox();
 			this.LoadDetailsGroup = new System.Windows.Forms.GroupBox();
-			this.ViewChargeButton = new RWCommonLib.cViewButton();
+			this.ViewChargeButton = new ReloadersWorkShop.cViewButton();
 			this.PressureLabel = new System.Windows.Forms.Label();
 			this.label35 = new System.Windows.Forms.Label();
 			this.LoadCOLMeasurementLabel = new System.Windows.Forms.Label();
@@ -1583,6 +1583,6 @@
 		private System.Windows.Forms.Button FirearmTransferButton;
 		private System.Windows.Forms.Label JumpMeasurementLabel;
 		private System.Windows.Forms.Label PressureLabel;
-		private RWCommonLib.cViewButton ViewChargeButton;
+		private ReloadersWorkShop.cViewButton ViewChargeButton;
 		}
 	}
