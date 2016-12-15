@@ -198,33 +198,74 @@ namespace ReloadersWorkShop
 				return (1);
 
 			//----------------------------------------------------------------------------*
+			// Date
+			//----------------------------------------------------------------------------*
+
+			int rc = m_TestDate.CompareTo(AmmoTest.m_TestDate);
+
+			//----------------------------------------------------------------------------*
 			// Firearm
-			//----------------------------------------------------------------------------*
-
-			int rc = 0;
-
-			if (m_Firearm == null)
-				{
-				if (AmmoTest.Firearm != null)
-					return (-1);
-				else
-					return (0);
-				}
-			else
-				{
-				if (AmmoTest.Firearm == null)
-					return (1);
-				else
-					rc = m_Firearm.CompareTo(AmmoTest.m_Firearm);
-				}
-
-			//----------------------------------------------------------------------------*
-			// NumRounds
 			//----------------------------------------------------------------------------*
 
 			if (rc == 0)
 				{
-				rc = m_nNumRounds.CompareTo(AmmoTest.m_nNumRounds);
+				if (m_Firearm == null)
+					{
+					if (AmmoTest.m_Firearm != null)
+						rc = -1;
+					else
+						rc = 0;
+					}
+				else
+					{
+					if (AmmoTest.m_Firearm == null)
+						rc = 1;
+					else
+						rc = m_Firearm.CompareTo(AmmoTest.m_Firearm);
+					}
+
+				//----------------------------------------------------------------------------*
+				// NumRounds
+				//----------------------------------------------------------------------------*
+
+				if (rc == 0)
+					{
+					rc = m_nNumRounds.CompareTo(AmmoTest.m_nNumRounds);
+
+					//----------------------------------------------------------------------------*
+					// Detail Data
+					//----------------------------------------------------------------------------*
+
+					if (rc == 0)
+						{
+						rc = m_nMuzzleVelocity.CompareTo(AmmoTest.m_nMuzzleVelocity);
+
+						if (rc == 0)
+							{
+							rc = m_dBarrelLength.CompareTo(AmmoTest.m_dBarrelLength);
+
+							if (rc == 0)
+								{
+								rc = m_dTwist.CompareTo(AmmoTest.m_dTwist);
+
+								if (rc == 0)
+									{
+									rc = m_dBestGroup.CompareTo(AmmoTest.m_dBestGroup);
+
+									if (rc == 0)
+										{
+										rc = m_dBestGroupRange.CompareTo(AmmoTest.m_dBestGroupRange);
+
+										if (rc == 0)
+											{
+											rc = m_strNotes.CompareTo(AmmoTest.m_strNotes);
+											}
+										}
+									}
+								}
+							}
+						}
+					}
 				}
 
 			return (rc);
