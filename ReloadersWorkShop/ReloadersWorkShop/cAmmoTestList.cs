@@ -155,13 +155,12 @@ namespace ReloadersWorkShop
 						cAmmoTest AmmoTest = new cAmmoTest();
 						AmmoTest.Ammo = Ammo;
 
-						if (AmmoTest.Import(XMLDocument, XMLNode, DataFiles))
-							{
-							if (AmmoTest.Validate())
-								AddAmmoTest(AmmoTest);
-							else
-								Console.WriteLine("Invalid AmmoTest!");
-							}
+						AmmoTest.Import(XMLDocument, XMLNode, DataFiles);
+
+						if (AmmoTest.Validate())
+							AddAmmoTest(AmmoTest);
+						else
+							Console.WriteLine("Invalid AmmoTest!");
 
 						break;
 					}
