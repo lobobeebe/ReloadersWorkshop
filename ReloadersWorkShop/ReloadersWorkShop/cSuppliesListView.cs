@@ -777,7 +777,10 @@ namespace ReloadersWorkShop
 			Item.Group = Groups[(int) Case.FirearmType];
 
 			Item.SubItems.Add(Case.PartNumber);
+
+			cCaliber.CurrentFirearmType = Case.Caliber.FirearmType;
 			Item.SubItems.Add(Case.Caliber.ToString());
+
 			Item.SubItems.Add(Case.SmallPrimer ? "Small" : "Large");
 			Item.SubItems.Add(Case.HeadStamp);
 			Item.SubItems.Add(Case.CrossUse ? "Y" : "");
