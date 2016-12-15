@@ -3,69 +3,34 @@ using System.Xml;
 
 namespace ReloadersWorkShop
 	{
-	public partial class cBulletCaliber
+	public partial class cFirearmBullet
 		{
-		//============================================================================*
-		// CSVLine Property
-		//============================================================================*
-
-		public string CSVLine
-			{
-			get
-				{
-				string strLine = m_Caliber.ToString();
-				;
-				strLine += ",";
-
-				strLine += m_dCOL.ToString();
-				strLine += ",";
-				strLine += m_dCBTO.ToString();
-				strLine += ",";
-
-				return (strLine);
-				}
-			}
-
-		//============================================================================*
-		// CSVLineHeader Property
-		//============================================================================*
-
-		public static string CSVLineHeader
-			{
-			get
-				{
-				return ("Caliber,COAL,CBTO");
-				}
-			}
-
 		//============================================================================*
 		// Export() - XML Document
 		//============================================================================*
 
-		public void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement, bool fIdentityOnly = false)
+		public void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement)
 			{
-			string strName = ExportName;
-
-			if (fIdentityOnly)
-				strName += "Identity";
-
-			XmlElement XMLThisElement = XMLDocument.CreateElement(strName, XMLParentElement);
+			XmlElement XMLThisElement = XMLDocument.CreateElement(ExportName, XMLParentElement);
 
 			m_Caliber.Export(XMLDocument, XMLThisElement, true);
 
+			m_Bullet.Export(XMLDocument, XMLThisElement, true);
+
 			XMLDocument.CreateElement("COAL", m_dCOL, XMLThisElement);
 			XMLDocument.CreateElement("CBTO", m_dCBTO, XMLThisElement);
+			XMLDocument.CreateElement("Jump", m_dJump, XMLThisElement);
 			}
 
 		//============================================================================*
 		// ExportName Property
 		//============================================================================*
 
-		public string ExportName
+		public static string ExportName
 			{
 			get
 				{
-				return ("BulletCaliber");
+				return ("FirearmBullet");
 				}
 			}
 
@@ -84,11 +49,17 @@ namespace ReloadersWorkShop
 					case "CaliberIdentity":
 						m_Caliber = cRWXMLDocument.GetCaliberByIdentity(XMLDocument, XMLNode, DataFiles);
 						break;
+					case "BulletIdentity":
+						m_Bullet = cRWXMLDocument.GetBulletByIdentity(XMLDocument, XMLNode, DataFiles);
+						break;
 					case "COAL":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dCOL);
+						XMLDocument.Import(XMLNode, out m_dCOL);
 						break;
 					case "CBTO":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dCBTO);
+						XMLDocument.Import(XMLNode, out m_dCBTO);
+						break;
+					case "Jump":
+						XMLDocument.Import(XMLNode, out m_dJump);
 						break;
 					default:
 						break;
@@ -99,5 +70,6 @@ namespace ReloadersWorkShop
 
 			return (Validate());
 			}
+
 		}
 	}

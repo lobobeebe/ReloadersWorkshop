@@ -134,14 +134,8 @@ namespace ReloadersWorkShop
 					case "Case":
 						cCase Case = new cCase();
 
-						try
-							{
-							if (Case.Import(XMLDocument, XMLNode, DataFiles))
-								AddCase(Case);
-							}
-						catch (Exception e)
-							{
-							}
+						if (Case.Import(XMLDocument, XMLNode, DataFiles))
+							AddCase(Case);
 
 						break;
 					}

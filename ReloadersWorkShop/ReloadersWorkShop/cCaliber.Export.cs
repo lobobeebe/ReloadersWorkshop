@@ -142,7 +142,7 @@ namespace ReloadersWorkShop
 		// Import()
 		//============================================================================*
 
-		public bool Import(XmlNode XMLThisNode)
+		public bool Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode)
 			{
 			XmlNode XMLNode = XMLThisNode.FirstChild;
 

@@ -124,7 +124,7 @@ namespace ReloadersWorkShop
 		// Import()
 		//============================================================================*
 
-		public void Import(XmlDocument XMLDocument, XmlNode XMLThisNode)
+		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode)
 			{
 			XmlNode XMLNode = XMLThisNode.FirstChild;
 
@@ -135,7 +135,7 @@ namespace ReloadersWorkShop
 					case "Caliber":
 						cCaliber Caliber = new cCaliber();
 
-						Caliber.Import(XMLNode);
+						Caliber.Import(XMLDocument, XMLNode);
 
 						if (!Caliber.Validate())
 							Console.WriteLine("Bad Caliber!");

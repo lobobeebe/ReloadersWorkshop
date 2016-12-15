@@ -23,7 +23,7 @@ namespace ReloadersWorkShop
 	//============================================================================*
 
 	[Serializable]
-	public class cFirearmBullet
+	public partial class cFirearmBullet
 		{
 		//============================================================================*
 		// Private Data Members
@@ -159,97 +159,6 @@ namespace ReloadersWorkShop
 			{
 			get { return (m_dCBTO); }
 			set { m_dCBTO = value; }
-			}
-
-		//============================================================================*
-		// Export() - XML Document
-		//============================================================================*
-
-		public void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement)
-			{
-			XmlElement XMLThisElement = XMLDocument.CreateElement(ExportName);
-			XMLParentElement.AppendChild(XMLThisElement);
-
-			// Caliber
-
-			m_Caliber.Export(XMLDocument, XMLThisElement,  true);
-
-			// Bullet
-
-			m_Bullet.Export(XMLDocument, XMLThisElement,true);
-
-			// COAL
-
-			XmlElement XMLElement = XMLDocument.CreateElement("COAL");
-			XmlText XMLTextElement = XMLDocument.CreateTextNode(m_dCOL.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// CBTO
-
-			XMLElement = XMLDocument.CreateElement("CBTO");
-			XMLTextElement = XMLDocument.CreateTextNode(m_dCBTO.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Jump
-
-			XMLElement = XMLDocument.CreateElement("Jump");
-			XMLTextElement = XMLDocument.CreateTextNode(m_dJump.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-			}
-
-		//============================================================================*
-		// ExportName Property
-		//============================================================================*
-
-		public string ExportName
-			{
-			get
-				{
-				return ("FirearmBullet");
-				}
-			}
-
-		//============================================================================*
-		// Import()
-		//============================================================================*
-
-		public bool Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
-			{
-			XmlNode XMLNode = XMLThisNode.FirstChild;
-
-			while (XMLNode != null)
-				{
-				switch (XMLNode.Name)
-					{
-					case "CaliberIdentity":
-						m_Caliber = cRWXMLDocument.GetCaliberByIdentity(XMLNode, DataFiles);
-						break;
-					case "BulletIdentity":
-						m_Bullet = cRWXMLDocument.GetBulletByIdentity(XMLDocument, XMLNode, DataFiles);
-						break;
-					case "COAL":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dCOL);
-						break;
-					case "CBTO":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dCBTO);
-						break;
-					case "Jump":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dJump);
-						break;
-					default:
-						break;
-					}
-
-				XMLNode = XMLNode.NextSibling;
-				}
-
-			return (Validate());
 			}
 
 		//============================================================================*

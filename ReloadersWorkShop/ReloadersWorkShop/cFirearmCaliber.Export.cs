@@ -84,7 +84,7 @@ namespace ReloadersWorkShop
 						m_fPrimary = XMLNode.FirstChild.Value == "Yes";
 						break;
 					case "CaliberIdentity":
-						m_Caliber = cRWXMLDocument.GetCaliberByIdentity(XMLNode, DataFiles);
+						m_Caliber = cRWXMLDocument.GetCaliberByIdentity(XMLDocument, XMLNode, DataFiles);
 						break;
 					default:
 						break;

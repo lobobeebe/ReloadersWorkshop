@@ -266,6 +266,7 @@
     <Compile Include="cFirearmAccessoryListView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="cFirearmBullet.Export.cs" />
     <Compile Include="cFirearmCaliber.Export.cs" />
     <Compile Include="cGear.cs" />
     <Compile Include="cGear.Export.cs" />

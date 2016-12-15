@@ -127,7 +127,7 @@ namespace ReloadersWorkShop
 						m_Powder = cRWXMLDocument.GetPowderByIdentity(XMLDocument, XMLNode, DataFiles);
 						break;
 					case "CaliberIdentity":
-						m_Caliber = cRWXMLDocument.GetCaliberByIdentity(XMLNode, DataFiles);
+						m_Caliber = cRWXMLDocument.GetCaliberByIdentity(XMLDocument, XMLNode, DataFiles);
 						break;
 					case "FirearmType":
 						XMLDocument.Import(XMLNode, out m_eFirearmType);

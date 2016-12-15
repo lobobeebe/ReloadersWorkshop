@@ -223,7 +223,7 @@ namespace ReloadersWorkShop
 			if (BulletIdentity.Import(XMLDocument, XMLThisNode, DataFiles))
 				return (GetBulletByIdentity(BulletIdentity, DataFiles));
 
-			return (null);
+			return (BulletIdentity);
 			}
 
 		//============================================================================*
@@ -266,11 +266,11 @@ namespace ReloadersWorkShop
 		// GetCaliberByIdentity()
 		//============================================================================*
 
-		public static cCaliber GetCaliberByIdentity(XmlNode XMLThisNode, cDataFiles DataFiles)
+		public static cCaliber GetCaliberByIdentity(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
 			{
 			cCaliber CaliberIdentity = new cCaliber(true);
 
-			if (CaliberIdentity.Import(XMLThisNode))
+			if (CaliberIdentity.Import(XMLDocument, XMLThisNode))
 				return (GetCaliberByIdentity(CaliberIdentity, DataFiles));
 
 			return (CaliberIdentity);

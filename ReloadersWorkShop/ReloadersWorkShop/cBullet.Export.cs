@@ -111,28 +111,28 @@ namespace ReloadersWorkShop
 				switch (XMLNode.Name)
 					{
 					case "PartNumber":
-						m_strPartNumber = XMLNode.FirstChild.Value;
+						XMLDocument.Import(XMLNode, out m_strPartNumber);
 						break;
 					case "Type":
-						m_strType = XMLNode.FirstChild.Value;
+						XMLDocument.Import(XMLNode, out m_strType);
 						break;
 					case "SelfCast":
-						m_fSelfCast = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fSelfCast);
 						break;
 					case "TopPunch":
-						m_fSelfCast = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fSelfCast);
 						break;
 					case "Diameter":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dDiameter);
+						XMLDocument.Import(XMLNode, out m_dDiameter);
 						break;
 					case "Length":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dLength);
+						XMLDocument.Import(XMLNode, out m_dLength);
 						break;
 					case "Weight":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dWeight);
+						XMLDocument.Import(XMLNode, out m_dWeight);
 						break;
 					case "BallisticCoefficient":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dBallisticCoefficient);
+						XMLDocument.Import(XMLNode, out m_dBallisticCoefficient);
 						break;
 					case "Calibers":
 					case "CaliberList":

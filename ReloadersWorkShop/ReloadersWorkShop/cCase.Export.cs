@@ -129,7 +129,7 @@ namespace ReloadersWorkShop
 				switch (XMLNode.Name)
 					{
 					case "CaliberIdentity":
-						m_Caliber = cRWXMLDocument.GetCaliberByIdentity(XMLNode, DataFiles);
+						m_Caliber = cRWXMLDocument.GetCaliberByIdentity(XMLDocument, XMLNode, DataFiles);
 						break;
 					case "PartNumber":
 						if (!String.IsNullOrEmpty(XMLNode.FirstChild.Value))
