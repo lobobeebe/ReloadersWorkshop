@@ -1081,6 +1081,13 @@ namespace ReloadersWorkShop
 			// Check Part Number
 			//----------------------------------------------------------------------------*
 
+			if (!PartNumberTextBox.ValueOK)
+				fEnableOK = false;
+
+			//----------------------------------------------------------------------------*
+			// Check Part Number
+			//----------------------------------------------------------------------------*
+
 			cManufacturer Manufacturer = (cManufacturer)ManufacturerCombo.SelectedItem;
 
 			strToolTip = cm_strPartNumberToolTip;

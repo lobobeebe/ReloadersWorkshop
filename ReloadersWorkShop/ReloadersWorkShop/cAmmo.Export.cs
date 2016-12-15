@@ -82,6 +82,9 @@ namespace ReloadersWorkShop
 
 			base.Export(XMLDocument, XMLThisElement);
 
+			if (String.IsNullOrEmpty(m_strPartNumber))
+				m_strPartNumber = m_strType;
+
 			XMLDocument.CreateElement("PartNumber", m_strPartNumber, XMLThisElement);
 
 			if (fIdentityOnly)
