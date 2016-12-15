@@ -306,7 +306,10 @@ namespace ReloadersWorkShop
 			Item.SubItems.Add(Ammo.Type);
 			Item.SubItems.Add(Ammo.Reload ? "Y" : "");
 			Item.SubItems.Add(Ammo.TestList.Count > 0 ? "Y" : "");
+
+			cCaliber.CurrentFirearmType = Ammo.Caliber.FirearmType;
 			Item.SubItems.Add(Ammo.Caliber.ToString());
+
 			Item.SubItems.Add(String.Format(m_strBulletWeightFormat, cDataFiles.StandardToMetric(Ammo.BulletWeight, cDataFiles.eDataType.BulletWeight)));
 			Item.SubItems.Add(String.Format(m_strDimensionFormat, cDataFiles.StandardToMetric(Ammo.BulletDiameter, cDataFiles.eDataType.Dimension)));
 			Item.SubItems.Add(Ammo.BallisticCoefficient > 0.0 ? String.Format("{0:F3}", Ammo.BallisticCoefficient) : "-");
