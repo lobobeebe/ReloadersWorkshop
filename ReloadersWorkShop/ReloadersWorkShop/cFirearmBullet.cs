@@ -301,12 +301,16 @@ namespace ReloadersWorkShop
 
 		public bool Validate()
 			{
-			bool fOK = m_Caliber != null && m_Bullet !=  null;
+			if (m_Caliber == null)
+				return (false);
 
-			if (fOK)
-				fOK = m_dCBTO != 0.0 || m_dCOL != 0.0 || m_dJump != 0.0;
+			if (m_Bullet == null)
+				return (false);
 
-			return (fOK);
+			if (m_dCBTO == 0.0 && m_dCOL == 0.0)
+				return (false);
+
+			return (true);
 			}
 		}
 	}
