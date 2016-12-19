@@ -140,28 +140,6 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// AddToSourceList()
-		//============================================================================*
-
-		public void AddToSourceList(ref List<string> SourceList, string strSource)
-			{
-			bool fFound = false;
-
-			for (int i = 0; i < SourceList.Count; i++)
-				{
-				if (SourceList[i].ToUpper() == strSource.ToUpper())
-					{
-					fFound = true;
-
-					break;
-					}
-				}
-
-			if (!fFound)
-				SourceList.Add(strSource);
-			}
-
-		//============================================================================*
 		// AmmoList Property
 		//============================================================================*
 
@@ -1133,87 +1111,33 @@ namespace ReloadersWorkShop
 
 		public void ExportRecoveryFile()
 			{
-			string strFilePath = Path.Combine(GetDataPath(), "RWRecovery.xml");
-
-			XmlDocument XMLDocument = ExportXML();
-
-			if (XMLDocument != null)
-				{
-				try
-					{
-					XmlTextWriter XMLTextWriter = new XmlTextWriter(strFilePath, System.Text.Encoding.ASCII);
-					XMLTextWriter.Formatting = Formatting.Indented;
-					XMLTextWriter.Indentation = 4;
-					XMLTextWriter.IndentChar = '\t';
-
-					XMLDocument.PreserveWhitespace = true;
-
-					XMLDocument.Save(XMLTextWriter);
-
-					XMLTextWriter.Close();
-					}
-				catch
-					{
-					MessageBox.Show("Unable to export XML file!  Make sure  you have the appropriate permissions for the destination folder.", "XML Export Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-					return;
-					}
-				}
-			}
-
-		//============================================================================*
-		// ExportXML()
-		//============================================================================*
-
-		public cRWXMLDocument ExportXML()
-			{
 			cRWXMLDocument XMLDocument = new cRWXMLDocument(this);
-			XMLDocument.PreserveWhitespace = true;
 
-			//----------------------------------------------------------------------------*
-			// Create Declaration
-			//----------------------------------------------------------------------------*
+			XMLDocument.Export(true);
 
-			XmlDeclaration xmlDeclaration = XMLDocument.CreateXmlDeclaration("1.0", "UTF-8", null);
-			XmlElement RootElement = XMLDocument.DocumentElement;
+			try
+				{
+				string strFilePath = Path.Combine(GetDataPath(), "RWDataRecovery.xml");
 
-			XMLDocument.InsertBefore(xmlDeclaration, RootElement);
+				XmlTextWriter XMLTextWriter = new XmlTextWriter(strFilePath, System.Text.Encoding.ASCII);
+				XMLTextWriter.Formatting = Formatting.Indented;
+				XMLTextWriter.Indentation = 4;
+				XMLTextWriter.IndentChar = '\t';
 
-			//----------------------------------------------------------------------------*
-			// Create the Main Element
-			//----------------------------------------------------------------------------*
+				XMLDocument.PreserveWhitespace = true;
 
-			XmlElement MainElement = XMLDocument.CreateElement("Body");
-			XMLDocument.AppendChild(MainElement);
+				XMLDocument.Save(XMLTextWriter);
 
-			XmlText XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0} Data File Export", Application.ProductName));
-			MainElement.AppendChild(XMLTextElement);
+				XMLTextWriter.Close();
+				}
+			catch (Exception e)
+				{
+				string strText = String.Format("Unable to export XML recovery file!\n\nSystem Error Message:\n\n{0}", e.Message);
 
-			Preferences.Export(XMLDocument, MainElement);
+				MessageBox.Show(strText, "XML Export Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-			m_ManufacturerList.Export(XMLDocument, MainElement);
-
-			m_CaliberList.Export(XMLDocument, MainElement);
-
-			m_FirearmList.Export(XMLDocument, MainElement);
-
-			m_AmmoList.Export(XMLDocument, MainElement);
-
-			m_BulletList.Export(XMLDocument, MainElement);
-
-			m_PowderList.Export(XMLDocument, MainElement);
-
-			m_PrimerList.Export(XMLDocument, MainElement);
-
-			m_CaseList.Export(XMLDocument, MainElement);
-
-			m_LoadList.Export(XMLDocument, MainElement);
-
-			m_BatchList.Export(XMLDocument, MainElement);
-
-			m_GearList.Export(XMLDocument, MainElement);
-
-			return (XMLDocument);
+				return;
+				}
 			}
 
 		//============================================================================*
@@ -1550,8 +1474,13 @@ namespace ReloadersWorkShop
 				{
 				foreach (cTransaction Transaction in Supply.TransactionList)
 					{
-					if (Transaction.TransactionType == eTransactionType)
-						AddToSourceList(ref LocationList, Transaction.Source);
+					if (Transaction.BatchID == 0 &&
+						Transaction.TransactionType == eTransactionType &&
+						!String.IsNullOrEmpty(Transaction.Source.Trim()))
+						{
+						if (LocationList.IndexOf(Transaction.Source.Trim()) < 0)
+							LocationList.Add(Transaction.Source.Trim());
+						}
 					}
 				}
 
@@ -1563,8 +1492,13 @@ namespace ReloadersWorkShop
 				{
 				foreach (cTransaction Transaction in Supply.TransactionList)
 					{
-					if (Transaction.TransactionType == eTransactionType)
-						AddToSourceList(ref LocationList, Transaction.Source);
+					if (Transaction.BatchID == 0 &&
+						Transaction.TransactionType == eTransactionType &&
+						!String.IsNullOrEmpty(Transaction.Source.Trim()))
+						{
+						if (LocationList.IndexOf(Transaction.Source.Trim()) < 0)
+							LocationList.Add(Transaction.Source.Trim());
+						}
 					}
 				}
 
@@ -1576,8 +1510,13 @@ namespace ReloadersWorkShop
 				{
 				foreach (cTransaction Transaction in Supply.TransactionList)
 					{
-					if (Transaction.TransactionType == eTransactionType)
-						AddToSourceList(ref LocationList, Transaction.Source);
+					if (Transaction.BatchID == 0 &&
+						Transaction.TransactionType == eTransactionType &&
+						!String.IsNullOrEmpty(Transaction.Source.Trim()))
+						{
+						if (LocationList.IndexOf(Transaction.Source.Trim()) < 0)
+							LocationList.Add(Transaction.Source.Trim());
+						}
 					}
 				}
 
@@ -1589,8 +1528,13 @@ namespace ReloadersWorkShop
 				{
 				foreach (cTransaction Transaction in Supply.TransactionList)
 					{
-					if (Transaction.TransactionType == eTransactionType)
-						AddToSourceList(ref LocationList, Transaction.Source);
+					if (Transaction.BatchID == 0 &&
+						Transaction.TransactionType == eTransactionType &&
+						!String.IsNullOrEmpty(Transaction.Source.Trim()))
+						{
+						if (LocationList.IndexOf(Transaction.Source.Trim()) < 0)
+							LocationList.Add(Transaction.Source.Trim());
+						}
 					}
 				}
 
@@ -1602,8 +1546,13 @@ namespace ReloadersWorkShop
 				{
 				foreach (cTransaction Transaction in Supply.TransactionList)
 					{
-					if (Transaction.TransactionType == eTransactionType)
-						AddToSourceList(ref LocationList, Transaction.Source);
+					if (Transaction.BatchID == 0 &&
+						Transaction.TransactionType == eTransactionType &&
+						!String.IsNullOrEmpty(Transaction.Source.Trim()))
+						{
+						if (LocationList.IndexOf(Transaction.Source.Trim()) < 0)
+							LocationList.Add(Transaction.Source.Trim());
+						}
 					}
 				}
 
@@ -1953,7 +1902,7 @@ namespace ReloadersWorkShop
 							}
 						else
 							{
-							if (File.Exists(Path.Combine(GetDataPath(), "RWRecovery.xml")))
+							if (File.Exists(Path.Combine(GetDataPath(), "RWDataRecovery.xml")))
 								{
 								if (Stream != null)
 									{
@@ -1976,9 +1925,9 @@ namespace ReloadersWorkShop
 									{
 									cRWXMLDocument XMLDocument = new ReloadersWorkShop.cRWXMLDocument(this);
 
-									XMLDocument.Import(Path.Combine(GetDataPath(), "RWRecovery.xml"), true);
+									XMLDocument.Import(Path.Combine(GetDataPath(), "RWDataRecovery.xml"), true);
 									}
-								catch(Exception e)
+								catch (Exception e)
 									{
 									strMessage = "Error importing XML Recovery file...\n\nSystem Message:\n\n" + e.Message;
 
@@ -2079,6 +2028,35 @@ namespace ReloadersWorkShop
 					cPreferences.StaticPreferences.AmmoMyReloadFilter = true;
 					}
 
+				if (!cPreferences.StaticPreferences.FirearmAccessoryBipodFilter &&
+					!cPreferences.StaticPreferences.FirearmAccessoryFurnitureFilter &&
+					!cPreferences.StaticPreferences.FirearmAccessoryLaserFilter &&
+					!cPreferences.StaticPreferences.FirearmAccessoryLightFilter &&
+					!cPreferences.StaticPreferences.FirearmAccessoryMagnifierFilter &&
+					!cPreferences.StaticPreferences.FirearmAccessoryOtherFilter &&
+					!cPreferences.StaticPreferences.FirearmAccessoryPartsFilter &&
+					!cPreferences.StaticPreferences.FirearmAccessoryRedDotFilter &&
+					!cPreferences.StaticPreferences.FirearmAccessoryScopeFilter &&
+					!cPreferences.StaticPreferences.FirearmAccessoryTriggerFilter)
+					{
+					cPreferences.StaticPreferences.FirearmAccessoryBipodFilter = true;
+					cPreferences.StaticPreferences.FirearmAccessoryFurnitureFilter = true;
+					cPreferences.StaticPreferences.FirearmAccessoryLaserFilter = true;
+					cPreferences.StaticPreferences.FirearmAccessoryLightFilter = true;
+					cPreferences.StaticPreferences.FirearmAccessoryMagnifierFilter = true;
+					cPreferences.StaticPreferences.FirearmAccessoryOtherFilter = true;
+					cPreferences.StaticPreferences.FirearmAccessoryPartsFilter = true;
+					cPreferences.StaticPreferences.FirearmAccessoryRedDotFilter = true;
+					cPreferences.StaticPreferences.FirearmAccessoryScopeFilter = true;
+					cPreferences.StaticPreferences.FirearmAccessoryTriggerFilter = true;
+					}
+
+				if (cPreferences.StaticPreferences.ReloadKeepDays == 0)
+					cPreferences.StaticPreferences.ReloadKeepDays = 30;
+
+				if (cPreferences.StaticPreferences.BackupKeepDays == 0)
+					cPreferences.StaticPreferences.BackupKeepDays = 30;
+
 				//----------------------------------------------------------------------------*
 				// Set up the next batch ID
 				//----------------------------------------------------------------------------*
@@ -2114,1112 +2092,12 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// Merge()
+		// MetricLabel()
 		//============================================================================*
 
-		public bool Merge(cDataFiles Datafiles, bool fCountOnly = false)
+		public static void MetricLabel(Label Label, eDataType eLabelType)
 			{
-			bool fDataMerged = false;
-
-			//----------------------------------------------------------------------------*
-			// Start the merge operation
-			//----------------------------------------------------------------------------*
-
-			bool fLoop = true;
-
-			while (fLoop)
-				{
-				m_MainForm.Cursor = Cursors.WaitCursor;
-
-				string strMerge = MergeManufacturers(Datafiles.ManufacturerList, fCountOnly);
-				strMerge += MergeCalibers(Datafiles.CaliberList, fCountOnly);
-				strMerge += MergeFirearms(Datafiles.FirearmList, fCountOnly);
-				strMerge += MergeBullets(Datafiles.BulletList, fCountOnly);
-				strMerge += MergeCases(Datafiles.CaseList, fCountOnly);
-				strMerge += MergePowders(Datafiles.PowderList, fCountOnly);
-				strMerge += MergePrimers(Datafiles.PrimerList, fCountOnly);
-				strMerge += MergeLoads(Datafiles.LoadList, fCountOnly);
-				strMerge += MergeBatches(Datafiles.BatchList, fCountOnly);
-				strMerge += MergeAmmo(Datafiles.AmmoList, fCountOnly);
-
-				if (!fCountOnly)
-					{
-					SortDataLists();
-
-					SynchDataLists();
-
-					SetNextBatchID();
-
-					RecalculateInventory();
-
-					string strMessage = "The following items have been merged with the current data:\n\n";
-
-					if (strMerge.Length == 0)
-						strMessage += "No new data has been merged.";
-					else
-						strMessage += strMerge;
-
-					MessageBox.Show(strMessage, "Merge Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-					fLoop = false;
-					fDataMerged = true;
-					}
-				else
-					{
-					if (strMerge.Length == 0)
-						{
-						MessageBox.Show("No new data updates are available.", "No Update Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-						fLoop = false;
-						}
-					else
-						{
-						string strMessage = "The following new items will be merged with the current data:\n\n";
-
-						strMessage += strMerge;
-
-						strMessage += "\nDo you wish to continue?";
-
-						DialogResult rc = MessageBox.Show(strMessage, "Continue with Merge?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-
-						if (rc == DialogResult.No)
-							fLoop = false;
-						else
-							fCountOnly = false;
-						}
-					}
-
-				m_MainForm.Cursor = Cursors.Default;
-				}
-
-			return (fDataMerged);
-			}
-
-		//============================================================================*
-		// MergeAmmo()
-		//============================================================================*
-
-		public string MergeAmmo(cAmmoList AmmoList, bool fCountOnly = false)
-			{
-			//----------------------------------------------------------------------------*
-			// Merge Ammo
-			//----------------------------------------------------------------------------*
-
-			int nCount = 0;
-			int nTransactionCount = 0;
-
-			foreach (cAmmo Ammo in AmmoList)
-				{
-				bool fFound = false;
-
-				foreach (cAmmo CheckAmmo in m_AmmoList)
-					{
-					if (CheckAmmo.CompareTo(Ammo) == 0)
-						{
-						nTransactionCount += MergeTransactions(CheckAmmo, Ammo, fCountOnly);
-
-						fFound = true;
-
-						//----------------------------------------------------------------------------*
-						// Merge Ammo Tests
-						//----------------------------------------------------------------------------*
-
-						if (!fCountOnly)
-							{
-							foreach (cAmmoTest AmmoTest in Ammo.TestList)
-								{
-								bool fFoundTest = false;
-
-								foreach (cAmmoTest CheckAmmoTest in CheckAmmo.TestList)
-									{
-									if (CheckAmmoTest.CompareTo(AmmoTest) == 0)
-										{
-										fFoundTest = true;
-
-										break;
-										}
-									}
-
-								if (!fCountOnly && !fFoundTest)
-									CheckAmmo.TestList.Add(AmmoTest);
-								}
-							}
-
-						break;
-						}
-					}
-
-				if (!fFound)
-					{
-					if (!fCountOnly)
-						m_AmmoList.Add(Ammo);
-
-					nCount++;
-					}
-				}
-
-			//----------------------------------------------------------------------------*
-			// Create the return string
-			//----------------------------------------------------------------------------*
-
-			if (nCount == 0 && nTransactionCount == 0)
-				return ("");
-
-			string strText = String.Format("Ammo: {0:N0}", nCount);
-
-			if (nTransactionCount > 0)
-				strText += String.Format(" (plus a total of {0:N0} inventory activities)", nTransactionCount);
-
-			strText += "\n";
-
-			return (strText);
-			}
-
-		//============================================================================*
-		// MergeBatches()
-		//============================================================================*
-
-		public string MergeBatches(cBatchList BatchList, bool fCountOnly = false)
-			{
-			if (fCountOnly)
-				return ("");
-
-			//----------------------------------------------------------------------------*
-			// Merge Batches
-			//----------------------------------------------------------------------------*
-
-			int nCount = 0;
-			int nTestCount = 0;
-			int nTestShotCount = 0;
-
-			foreach (cBatch Batch in BatchList)
-				{
-				bool fFound = false;
-
-				foreach (cBatch CheckBatch in m_BatchList)
-					{
-					if (CheckBatch.CompareTo(Batch) == 0)
-						{
-						fFound = true;
-
-						if ((Batch.BatchTest != null && CheckBatch.BatchTest == null) &&
-							Batch.Load.CompareTo(CheckBatch.Load) == 0 &&
-							Batch.PowderWeight == CheckBatch.PowderWeight &&
-							Batch.Firearm.CompareTo(CheckBatch.Firearm) == 0 &&
-							Batch.DateLoaded == CheckBatch.DateLoaded &&
-							Batch.NumRounds == CheckBatch.NumRounds)
-							{
-							CheckBatch.BatchTest = Batch.BatchTest;
-
-							nTestCount++;
-							}
-
-						//----------------------------------------------------------------------------*
-						// Merge Batch Tests
-						//----------------------------------------------------------------------------*
-
-						if (Batch.BatchTest != null)
-							{
-							foreach (cTestShot TestShot in Batch.BatchTest.TestShotList)
-								{
-								bool fFoundTestShot = false;
-
-								if (CheckBatch.BatchTest != null)
-									{
-									foreach (cTestShot CheckTestShot in CheckBatch.BatchTest.TestShotList)
-										{
-										if (CheckTestShot.CompareTo(TestShot) == 0)
-											{
-											fFoundTestShot = true;
-
-											break;
-											}
-										}
-
-									if (!fFoundTestShot)
-										{
-										CheckBatch.BatchTest.TestShotList.Add(TestShot);
-
-										CheckBatch.BatchTest.NumRounds = CheckBatch.BatchTest.TestShotList.Count;
-
-										nTestShotCount++;
-										}
-									}
-								}
-							}
-
-						break;
-						}
-					}
-
-				if (!fFound)
-					{
-					m_BatchList.Add(Batch);
-
-					nCount++;
-					}
-				}
-
-			//----------------------------------------------------------------------------*
-			// Create the return string
-			//----------------------------------------------------------------------------*
-
-			if (nCount == 0 && nTestCount == 0 && nTestShotCount == 0)
-				return ("");
-
-			string strText = "";
-
-			if (nCount > 0)
-				strText += String.Format("New Batches: {0:N0}\n", nCount);
-
-			if (nTestCount > 0)
-				strText += String.Format("Batch Tests: {0:N0}\n", nTestCount);
-
-			if (nTestShotCount > 0)
-				strText += String.Format("Batch Test Shots: {0:N0}\n", nTestShotCount);
-
-			return (strText);
-			}
-
-		//============================================================================*
-		// MergeBullets()
-		//============================================================================*
-
-		public string MergeBullets(cBulletList BulletList, bool fCountOnly = false)
-			{
-			//----------------------------------------------------------------------------*
-			// Merge Bullets
-			//----------------------------------------------------------------------------*
-
-			int nCount = 0;
-			int nUpdateCount = 0;
-			int nTransactionCount = 0;
-
-			foreach (cBullet Bullet in BulletList)
-				{
-				bool fFound = false;
-
-				foreach (cBullet CheckBullet in m_BulletList)
-					{
-					if (CheckBullet.CompareTo(Bullet) == 0)
-						{
-						nTransactionCount += MergeTransactions(CheckBullet, Bullet, fCountOnly);
-
-						fFound = true;
-
-						if (!fCountOnly)
-							CheckBullet.Checked = CheckBullet.Checked || Bullet.Checked;
-
-						//----------------------------------------------------------------------------*
-						// Merge Bullet Calibers
-						//----------------------------------------------------------------------------*
-
-						foreach (cBulletCaliber BulletCaliber in Bullet.BulletCaliberList)
-							{
-							bool fFoundBulletCaliber = false;
-
-							foreach (cBulletCaliber CheckBulletCaliber in CheckBullet.BulletCaliberList)
-								{
-								if (CheckBulletCaliber.CompareTo(BulletCaliber) == 0)
-									{
-									fFoundBulletCaliber = true;
-
-									break;
-									}
-								}
-
-							if (!fFoundBulletCaliber)
-								{
-								if (!fCountOnly)
-									CheckBullet.BulletCaliberList.Add(BulletCaliber);
-
-								nUpdateCount++;
-								}
-							}
-
-						break;
-						}
-					}
-
-				if (!fFound)
-					{
-					if (!fCountOnly)
-						m_BulletList.Add(Bullet);
-
-					nCount++;
-					}
-				}
-
-			//----------------------------------------------------------------------------*
-			// Create the return string
-			//----------------------------------------------------------------------------*
-
-			if (nCount == 0 && nTransactionCount == 0 && nUpdateCount == 0)
-				return ("");
-
-			string strText = "";
-
-			strText = String.Format("New Bullets: {0:N0}", nCount);
-
-			if (nTransactionCount > 0)
-				strText += String.Format(" (plus a total of {0:N0} inventory activities)", nTransactionCount);
-
-			strText += "\n";
-
-			if (nUpdateCount > 0)
-				strText += String.Format("Updates to existing bullets: {0:N0}\n", nUpdateCount);
-
-			return (strText);
-			}
-
-		//============================================================================*
-		// MergeCalibers()
-		//============================================================================*
-
-		public string MergeCalibers(cCaliberList CaliberList, bool fCountOnly = false)
-			{
-			int nCount = 0;
-			int nUpdateCount = 0;
-
-			//----------------------------------------------------------------------------*
-			// Loop through the calibers
-			//----------------------------------------------------------------------------*
-
-			foreach (cCaliber Caliber in CaliberList)
-				{
-				bool fFound = false;
-
-				foreach (cCaliber CheckCaliber in m_CaliberList)
-					{
-					//----------------------------------------------------------------------------*
-					// See if this is an existing caliber
-					//----------------------------------------------------------------------------*
-
-					if (CheckCaliber.CompareTo(Caliber) == 0)
-						{
-						fFound = true;
-
-						if (!fCountOnly)
-							{
-							CheckCaliber.Checked = CheckCaliber.Checked || Caliber.Checked;
-
-							//----------------------------------------------------------------------------*
-							// Update the exiting caliber data
-							//----------------------------------------------------------------------------*
-
-							if (CheckCaliber.MinBulletDiameter > Caliber.MinBulletDiameter)
-								{
-								if (!fCountOnly)
-									CheckCaliber.MinBulletDiameter = Caliber.MinBulletDiameter;
-
-								nUpdateCount++;
-								}
-
-							if (CheckCaliber.MaxBulletDiameter < Caliber.MaxBulletDiameter)
-								{
-								if (!fCountOnly)
-									CheckCaliber.MaxBulletDiameter = Caliber.MaxBulletDiameter;
-
-								nUpdateCount++;
-								}
-
-							if (CheckCaliber.MinBulletWeight == 0.0 || CheckCaliber.MinBulletWeight > Caliber.MinBulletWeight)
-								{
-								if (!fCountOnly)
-									CheckCaliber.MinBulletWeight = Caliber.MinBulletWeight;
-
-								nUpdateCount++;
-								}
-
-							if (CheckCaliber.MaxBulletWeight == 0.0 || CheckCaliber.MaxBulletWeight < Caliber.MaxBulletWeight)
-								{
-								if (!fCountOnly)
-									CheckCaliber.MaxBulletWeight = Caliber.MaxBulletWeight;
-
-								nUpdateCount++;
-								}
-
-							if (CheckCaliber.MaxCaseLength < Caliber.MaxCaseLength)
-								{
-								if (!fCountOnly)
-									CheckCaliber.MaxCaseLength = Caliber.MaxCaseLength;
-
-								nUpdateCount++;
-								}
-
-							if (CheckCaliber.MaxCOL < Caliber.MaxCOL)
-								{
-								if (!fCountOnly)
-									CheckCaliber.MaxCOL = Caliber.MaxCOL;
-
-								nUpdateCount++;
-								}
-
-							if (CheckCaliber.MaxNeckDiameter == 0.0 && Caliber.MaxNeckDiameter != 0.0)
-								{
-								if (!fCountOnly)
-									CheckCaliber.MaxNeckDiameter = Caliber.MaxNeckDiameter;
-
-								nUpdateCount++;
-								}
-
-							if (string.IsNullOrEmpty(CheckCaliber.SAAMIPDF) && string.IsNullOrEmpty(Caliber.SAAMIPDF))
-								{
-								if (!fCountOnly)
-									CheckCaliber.SAAMIPDF = Caliber.SAAMIPDF;
-
-								nUpdateCount++;
-								}
-							}
-
-						break;
-						}
-					}
-
-				//----------------------------------------------------------------------------*
-				// If it's new, add it to the list
-				//----------------------------------------------------------------------------*
-
-				if (!fFound)
-					{
-					if (!fCountOnly)
-						m_CaliberList.Add(Caliber);
-
-					nCount++;
-					}
-				}
-
-			//----------------------------------------------------------------------------*
-			// Create the return string
-			//----------------------------------------------------------------------------*
-
-			if (nCount == 0 && nUpdateCount == 0)
-				return ("");
-
-			string strText = "";
-
-			if (nCount != 0)
-				strText = String.Format("New Calibers: {0:N0}\n", nCount);
-
-			if (nUpdateCount != 0)
-				strText += String.Format("Updates to existing calibers: {0:N0}\n", nUpdateCount);
-
-			return (strText);
-			}
-
-		//============================================================================*
-		// MergeCases()
-		//============================================================================*
-
-		public string MergeCases(cCaseList CaseList, bool fCountOnly = false)
-			{
-			int nCount = 0;
-			int nTransactionCount = 0;
-
-			//----------------------------------------------------------------------------*
-			// Loop through the cases
-			//----------------------------------------------------------------------------*
-
-			foreach (cCase Case in CaseList)
-				{
-				bool fFound = false;
-
-				foreach (cCase CheckCase in m_CaseList)
-					{
-					if (CheckCase.CompareTo(Case) == 0)
-						{
-						nTransactionCount += MergeTransactions(CheckCase, Case);
-
-						fFound = true;
-
-						if (!fCountOnly)
-							CheckCase.Checked = CheckCase.Checked || Case.Checked;
-
-						break;
-						}
-					}
-
-				if (!fFound)
-					{
-					m_CaseList.Add(Case);
-
-					nCount++;
-					}
-				}
-
-			//----------------------------------------------------------------------------*
-			// Create the return string
-			//----------------------------------------------------------------------------*
-
-			if (nCount == 0 && nTransactionCount == 0)
-				return ("");
-
-			string strText = String.Format("New Cases: {0:N0}", nCount);
-
-			if (nTransactionCount > 0)
-				strText += String.Format(" (plus a total of {0:N0} inventory activities)", nTransactionCount);
-
-			strText += "\n";
-
-			return (strText);
-			}
-
-		//============================================================================*
-		// MergeFirearms()
-		//============================================================================*
-
-		public string MergeFirearms(cFirearmList FirearmList, bool fCountOnly = false)
-			{
-			//----------------------------------------------------------------------------*
-			// Merge Firearms
-			//----------------------------------------------------------------------------*
-
-			int nCount = 0;
-
-			foreach (cFirearm Firearm in FirearmList)
-				{
-				bool fFound = false;
-
-				foreach (cFirearm CheckFirearm in m_FirearmList)
-					{
-					if (CheckFirearm.CompareTo(Firearm) == 0)
-						{
-						fFound = true;
-
-						if (!fCountOnly)
-							CheckFirearm.Checked = CheckFirearm.Checked || Firearm.Checked;
-
-						//----------------------------------------------------------------------------*
-						// Merge Firearm Calibers
-						//----------------------------------------------------------------------------*
-
-						if (!fCountOnly)
-							{
-							foreach (cFirearmCaliber FirearmCaliber in Firearm.CaliberList)
-								{
-								if (!CheckFirearm.HasCaliber(FirearmCaliber.Caliber))
-									{
-									cFirearmCaliber CheckFirearmCaliber = new cFirearmCaliber(FirearmCaliber);
-
-									CheckFirearm.CaliberList.Add(CheckFirearmCaliber);
-									}
-								}
-							}
-
-						//----------------------------------------------------------------------------*
-						// Merge Firearm Bullets
-						//----------------------------------------------------------------------------*
-
-						if (!fCountOnly)
-							{
-							foreach (cFirearmBullet FirearmBullet in Firearm.FirearmBulletList)
-								{
-								bool fFoundBullet = false;
-
-								foreach (cFirearmBullet CheckFirearmBullet in CheckFirearm.FirearmBulletList)
-									{
-									if (CheckFirearmBullet.CompareTo(FirearmBullet) == 0)
-										fFound = true;
-									}
-
-								if (!fFoundBullet)
-									CheckFirearm.FirearmBulletList.Add(FirearmBullet);
-								}
-							}
-
-						break;
-						}
-					}
-
-				if (!fFound)
-					{
-					if (!fCountOnly)
-						m_FirearmList.Add(Firearm);
-
-					nCount++;
-					}
-				}
-
-			//----------------------------------------------------------------------------*
-			// Create the return string
-			//----------------------------------------------------------------------------*
-
-			if (nCount == 0)
-				return ("");
-
-			string strText = String.Format("Firearms: {0:N0}\n", nCount);
-
-			return (strText);
-			}
-
-		//============================================================================*
-		// MergeLoads()
-		//============================================================================*
-
-		public string MergeLoads(cLoadList LoadList, bool fCountOnly = false)
-			{
-			if (fCountOnly)
-				return ("");
-
-			//----------------------------------------------------------------------------*
-			// Merge Loads
-			//----------------------------------------------------------------------------*
-
-			int nCount = 0;
-
-			foreach (cLoad Load in LoadList)
-				{
-				bool fFound = false;
-
-				foreach (cLoad CheckLoad in m_LoadList)
-					{
-					if (CheckLoad.CompareTo(Load) == 0)
-						{
-						fFound = true;
-
-						if (!fCountOnly)
-							CheckLoad.Checked = CheckLoad.Checked || Load.Checked;
-
-						//----------------------------------------------------------------------------*
-						// Merge Load Charges
-						//----------------------------------------------------------------------------*
-
-						foreach (cCharge Charge in Load.ChargeList)
-							{
-							bool fFoundCharge = false;
-
-							foreach (cCharge CheckCharge in CheckLoad.ChargeList)
-								{
-								if (CheckCharge.CompareTo(Charge) == 0)
-									{
-									fFoundCharge = true;
-
-									//----------------------------------------------------------------------------*
-									// Merge ChargeTests
-									//----------------------------------------------------------------------------*
-
-									foreach (cChargeTest ChargeTest in Charge.TestList)
-										{
-										bool fFoundChargeTest = false;
-
-										foreach (cChargeTest CheckChargeTest in CheckCharge.TestList)
-											{
-											if (CheckChargeTest.CompareTo(ChargeTest) == 0)
-												{
-												fFoundChargeTest = true;
-
-												break;
-												}
-											}
-
-										if (!fFoundChargeTest)
-											CheckCharge.TestList.Add(ChargeTest);
-										}
-
-									break;
-									}
-								}
-
-							if (!fFoundCharge)
-								CheckLoad.ChargeList.AddCharge(Charge);
-							}
-
-						break;
-						}
-					}
-
-				if (!fFound)
-					{
-					m_LoadList.Add(Load);
-
-					nCount++;
-					}
-				}
-
-			//----------------------------------------------------------------------------*
-			// Create the return string
-			//----------------------------------------------------------------------------*
-
-			if (nCount == 0)
-				return ("");
-
-			return (String.Format("Loads: {0:N0}\n", nCount));
-			}
-
-		//============================================================================*
-		// MergeManufacturers()
-		//============================================================================*
-
-		public string MergeManufacturers(cManufacturerList ManufacturerList, bool fCountOnly = false)
-			{
-			int nCount = 0;
-			int nUpdateCount = 0;
-
-			//----------------------------------------------------------------------------*
-			// Loop through the Manufacturers
-			//----------------------------------------------------------------------------*
-
-			foreach (cManufacturer Manufacturer in ManufacturerList)
-				{
-				bool fFound = false;
-
-				//----------------------------------------------------------------------------*
-				// Loop through the existing Manufacturers
-				//----------------------------------------------------------------------------*
-
-				foreach (cManufacturer CheckManufacturer in m_ManufacturerList)
-					{
-					//----------------------------------------------------------------------------*
-					// Manufacturer already exists
-					//----------------------------------------------------------------------------*
-
-					if (CheckManufacturer.CompareTo(Manufacturer) == 0)
-						{
-						fFound = true;
-
-						//----------------------------------------------------------------------------*
-						// Update the existing Manufacturer
-						//----------------------------------------------------------------------------*
-
-						if (string.IsNullOrEmpty(CheckManufacturer.Website) && !string.IsNullOrEmpty(Manufacturer.Website))
-							{
-							if (!fCountOnly)
-								CheckManufacturer.Website = Manufacturer.Website;
-
-							nUpdateCount++;
-							}
-
-						if (string.IsNullOrEmpty(CheckManufacturer.HeadStamp) && !string.IsNullOrEmpty(Manufacturer.HeadStamp))
-							{
-							if (!fCountOnly)
-								CheckManufacturer.HeadStamp = Manufacturer.HeadStamp;
-
-							nUpdateCount++;
-							}
-
-						if (!CheckManufacturer.Ammo && Manufacturer.Ammo)
-							{
-							if (!fCountOnly)
-								CheckManufacturer.Ammo = true;
-
-							nUpdateCount++;
-							}
-
-						if (!CheckManufacturer.Bullets && Manufacturer.Bullets)
-							{
-							if (!fCountOnly)
-								CheckManufacturer.Bullets = true;
-
-							nUpdateCount++;
-							}
-
-						if (!CheckManufacturer.BulletMolds && Manufacturer.BulletMolds)
-							{
-							if (!fCountOnly)
-								CheckManufacturer.BulletMolds = true;
-
-							nUpdateCount++;
-							}
-
-						if (!CheckManufacturer.Cases && Manufacturer.Cases)
-							{
-							if (!fCountOnly)
-								CheckManufacturer.Cases = true;
-
-							nUpdateCount++;
-							}
-
-						if (!CheckManufacturer.Primers && Manufacturer.Primers)
-							{
-							if (!fCountOnly)
-								CheckManufacturer.Primers = true;
-
-							nUpdateCount++;
-							}
-
-						if (!CheckManufacturer.Powder && Manufacturer.Powder)
-							{
-							if (!fCountOnly)
-								CheckManufacturer.Powder = true;
-
-							nUpdateCount++;
-							}
-
-						if (!CheckManufacturer.Handguns && Manufacturer.Handguns)
-							{
-							if (!fCountOnly)
-								CheckManufacturer.Handguns = true;
-
-							nUpdateCount++;
-							}
-
-						if (!CheckManufacturer.Rifles && Manufacturer.Rifles)
-							{
-							if (!fCountOnly)
-								CheckManufacturer.Rifles = true;
-
-							nUpdateCount++;
-							}
-
-						if (!CheckManufacturer.Shotguns && Manufacturer.Shotguns)
-							{
-							if (!fCountOnly)
-								CheckManufacturer.Shotguns = true;
-
-							nUpdateCount++;
-							}
-
-						if (!CheckManufacturer.Scopes && Manufacturer.Scopes)
-							{
-							if (!fCountOnly)
-								CheckManufacturer.Scopes = true;
-
-							nUpdateCount++;
-							}
-
-						if (!CheckManufacturer.Triggers && Manufacturer.Triggers)
-							{
-							if (!fCountOnly)
-								CheckManufacturer.Triggers = true;
-
-							nUpdateCount++;
-							}
-
-						if (!CheckManufacturer.Furniture && Manufacturer.Furniture)
-							{
-							if (!fCountOnly)
-								CheckManufacturer.Furniture = true;
-
-							nUpdateCount++;
-							}
-
-						break;
-						}
-					}
-
-				if (!fFound)
-					{
-					if (!fCountOnly)
-						m_ManufacturerList.Add(Manufacturer);
-
-					nCount++;
-					}
-				}
-
-			//----------------------------------------------------------------------------*
-			// Create the return string
-			//----------------------------------------------------------------------------*
-
-			if (nCount == 0 && nUpdateCount == 0)
-				return ("");
-
-			string strText = "";
-
-			if (nCount > 0)
-				strText += String.Format("Manufacturers: {0:N0}\n", nCount);
-
-			if (nUpdateCount > 0)
-				strText += String.Format("Updates to existing manufacturers: {0:N0}\n", nUpdateCount);
-
-			return (strText);
-			}
-
-		//============================================================================*
-		// MergePrimers()
-		//============================================================================*
-
-		public string MergePrimers(cPrimerList PrimerList, bool fCountOnly = false)
-			{
-			int nCount = 0;
-			int nTransactionCount = 0;
-
-			//----------------------------------------------------------------------------*
-			// Loop through the Primers
-			//----------------------------------------------------------------------------*
-
-			foreach (cPrimer Primer in PrimerList)
-				{
-				bool fFound = false;
-
-				foreach (cPrimer CheckPrimer in m_PrimerList)
-					{
-					if (CheckPrimer.CompareTo(Primer) == 0)
-						{
-						nTransactionCount += MergeTransactions(CheckPrimer, Primer, fCountOnly);
-
-						fFound = true;
-
-						CheckPrimer.Checked = CheckPrimer.Checked || Primer.Checked;
-
-						break;
-						}
-					}
-
-				if (!fFound)
-					{
-					if (!fCountOnly)
-						m_PrimerList.Add(Primer);
-
-					nCount++;
-					}
-				}
-
-			//----------------------------------------------------------------------------*
-			// Create the return string
-			//----------------------------------------------------------------------------*
-
-			if (nCount == 0 && nTransactionCount == 0)
-				return ("");
-
-			string strText = String.Format("New Primers: {0:N0}", nCount);
-
-			if (nTransactionCount > 0)
-				strText += String.Format(" (plus a total of {0:N0} inventory activities)", nTransactionCount);
-
-			strText += "\n";
-
-			return (strText);
-			}
-
-		//============================================================================*
-		// MergePowders()
-		//============================================================================*
-
-		public string MergePowders(cPowderList PowderList, bool fCountOnly = false)
-			{
-			int nCount = 0;
-			int nUpdateCount = 0;
-			int nTransactionCount = 0;
-
-			//----------------------------------------------------------------------------*
-			// Loop through the Powders
-			//----------------------------------------------------------------------------*
-
-			foreach (cPowder Powder in PowderList)
-				{
-				bool fFound = false;
-
-				foreach (cPowder CheckPowder in m_PowderList)
-					{
-					if (CheckPowder.CompareTo(Powder) == 0)
-						{
-						nTransactionCount += MergeTransactions(CheckPowder, Powder, fCountOnly);
-
-						fFound = true;
-
-						if (Powder.Shape != cPowder.ePowderShapes.Other && Powder.Shape != CheckPowder.Shape)
-							{
-							if (!fCountOnly)
-								CheckPowder.Shape = Powder.Shape;
-
-							nUpdateCount++;
-							}
-
-						CheckPowder.Checked = CheckPowder.Checked || Powder.Checked;
-
-						break;
-						}
-					}
-
-				if (!fFound)
-					{
-					if (!fCountOnly)
-						m_PowderList.Add(Powder);
-
-					nCount++;
-					}
-				}
-
-			//----------------------------------------------------------------------------*
-			// Create the return string
-			//----------------------------------------------------------------------------*
-
-			if (nCount == 0 && nUpdateCount == 0 && nTransactionCount == 0)
-				return ("");
-
-			string strText = String.Format("New Powders: {0:N0}", nCount);
-
-			if (nTransactionCount > 0)
-				strText += String.Format(" (plus a total of {0:N0} inventory activities)", nTransactionCount);
-
-			strText += "\n";
-
-			if (nUpdateCount > 0)
-				strText += String.Format("Updates to existing powders: {0:N0}\n", nUpdateCount);
-
-			return (strText);
-			}
-
-		//============================================================================*
-		// MergeTransactions()
-		//============================================================================*
-
-		public int MergeTransactions(cSupply Supply, cSupply NewSupply, bool fCountOnly = false)
-			{
-			//----------------------------------------------------------------------------*
-			// Check the input data
-			//----------------------------------------------------------------------------*
-
-			if (Supply == null || NewSupply == null)
-				return (0);
-
-			if (Supply.TransactionList == null)
-				Supply.TransactionList = new cTransactionList();
-
-			if (NewSupply.TransactionList == null)
-				NewSupply.TransactionList = new cTransactionList();
-
-			//----------------------------------------------------------------------------*
-			// Make sure Inventory Tracking is turned on
-			//----------------------------------------------------------------------------*
-
-			if (!cPreferences.StaticPreferences.TrackInventory)
-				return (0);
-
-			//----------------------------------------------------------------------------*
-			// Initialize
-			//----------------------------------------------------------------------------*
-
-			int nTransactionCount = 0;
-
-			bool fRecalc = false;
-
-			//----------------------------------------------------------------------------*
-			// Merge Transactions
-			//----------------------------------------------------------------------------*
-
-			foreach (cTransaction Transaction in NewSupply.TransactionList)
-				{
-				bool fFound = false;
-
-				foreach (cTransaction CheckTransaction in Supply.TransactionList)
-					{
-					if (CheckTransaction.CompareTo(Transaction) == 0)
-						{
-						fFound = true;
-
-						break;
-						}
-					}
-
-				if (!fFound)
-					{
-					if (!fCountOnly)
-						{
-						if (!fCountOnly)
-							Supply.TransactionList.Add(Transaction);
-
-						fRecalc = true;
-						}
-
-					nTransactionCount++;
-					}
-				}
-
-			if (fRecalc)
-				Supply.RecalculateInventory(this);
-
-			return (nTransactionCount);
+			Label.Text = MetricString(eLabelType);
 			}
 
 		//============================================================================*
@@ -3309,7 +2187,7 @@ namespace ReloadersWorkShop
 					return (cPreferences.StaticPreferences.MetricRanges ? "m" : "yds");
 
 				case eDataType.ShotWeight:
-					return (cPreferences.StaticPreferences.MetricShotWeights ? "g" : "gr");
+					return (cPreferences.StaticPreferences.MetricShotWeights ? "g" : "oz");
 
 				case eDataType.Speed:
 					return (cPreferences.StaticPreferences.MetricVelocities ? "kph" : "mph");

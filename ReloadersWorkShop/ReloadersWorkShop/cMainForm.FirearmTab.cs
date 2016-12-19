@@ -274,8 +274,6 @@ namespace ReloadersWorkShop
 
 				cGear NewGear = FirearmAccessoryForm.Gear;
 
-				//				m_FirearmAccessoriesListView.Focus();
-
 				//----------------------------------------------------------------------------*
 				// See if the Firearm Accessory already exists
 				//----------------------------------------------------------------------------*
@@ -290,8 +288,6 @@ namespace ReloadersWorkShop
 				}
 
 			UpdateFirearmTabButtons();
-
-			//			m_FirearmAccessoriesListView.Focus();
 			}
 
 		//============================================================================*
@@ -382,8 +378,6 @@ namespace ReloadersWorkShop
 				}
 
 			UpdateFirearmTabButtons();
-
-			//			m_FirearmAccessoriesListView.Focus();
 			}
 
 		//============================================================================*
@@ -936,6 +930,8 @@ namespace ReloadersWorkShop
 
 				strText += strFirearm;
 				}
+			else
+				strText = "All " + strText;
 
 			FirearmAccessoriesGroupBox.Text = strText;
 			}
@@ -948,12 +944,29 @@ namespace ReloadersWorkShop
 			{
 			string strText = "Attach";
 
+			FirearmAccessoryAttachButton.Enabled = false;
+
+			cGear Gear = null;
+
 			if (m_FirearmAccessoriesListView.SelectedItems.Count > 0)
 				{
-				cGear Gear = (cGear) m_FirearmAccessoriesListView.SelectedItems[0].Tag;
+				Gear = (cGear) m_FirearmAccessoriesListView.SelectedItems[0].Tag;
 
-				if (Gear != null && Gear.Parent != null)
-					strText = "Detach";
+				if (Gear != null)
+					{
+					if (Gear.Parent != null)
+						{
+						strText = "Detach";
+						FirearmAccessoryAttachButton.Enabled = true;
+
+						RemoveFirearmAccessoryButton.Enabled = false;
+						}
+					else
+						{
+						strText = "Attach";
+						FirearmAccessoryAttachButton.Enabled = m_FirearmsListView.SelectedItems.Count > 0;
+						}
+					}
 				}
 
 			FirearmAccessoryAttachButton.Text = strText;
@@ -1290,30 +1303,7 @@ namespace ReloadersWorkShop
 			ViewFirearmAccessoryButton.Enabled = m_FirearmAccessoriesListView.SelectedItems.Count > 0;
 			RemoveFirearmAccessoryButton.Enabled = m_FirearmAccessoriesListView.SelectedItems.Count > 0;
 
-			FirearmAccessoryAttachButton.Enabled = false;
-
-			cGear Gear = null;
-
-			if (m_FirearmAccessoriesListView.SelectedItems.Count > 0)
-				{
-				Gear = (cGear) m_FirearmAccessoriesListView.SelectedItems[0].Tag;
-
-				if (Gear != null)
-					{
-					if (Gear.Parent != null)
-						{
-						FirearmAccessoryAttachButton.Text = "Detach";
-						FirearmAccessoryAttachButton.Enabled = true;
-
-						RemoveFirearmAccessoryButton.Enabled = false;
-						}
-					else
-						{
-						FirearmAccessoryAttachButton.Text = "Attach";
-						FirearmAccessoryAttachButton.Enabled = m_FirearmsListView.SelectedItems.Count > 0;
-						}
-					}
-				}
+			SetFirearmAttachButton();
 			}
 		}
 	}

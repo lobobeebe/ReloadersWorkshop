@@ -195,6 +195,23 @@ namespace ReloadersWorkShop.Preferences
 			XMLDocument.CreateElement("EvaluationSortOrder", m_EvaluationSortOrder, XMLThisElement);
 
 			//----------------------------------------------------------------------------*
+			// Firearm Tab Settings
+			//----------------------------------------------------------------------------*
+
+			XMLDocument.CreateElement("FirearmAccessoryBipodFilter", m_fFirearmAccessoryBipodFilter, XMLThisElement);
+			XMLDocument.CreateElement("FirearmAccessoryFurnitureFilter", m_fFirearmAccessoryFurnitureFilter, XMLThisElement);
+			XMLDocument.CreateElement("FirearmAccessoryLaserFilter", m_fFirearmAccessoryLaserFilter, XMLThisElement);
+			XMLDocument.CreateElement("FirearmAccessoryLightFilter", m_fFirearmAccessoryLightFilter, XMLThisElement);
+			XMLDocument.CreateElement("FirearmAccessoryMagnifierFilter", m_fFirearmAccessoryMagnifierFilter, XMLThisElement);
+			XMLDocument.CreateElement("FirearmAccessoryOtherFilter", m_fFirearmAccessoryOtherFilter, XMLThisElement);
+			XMLDocument.CreateElement("FirearmAccessoryPartsFilter", m_fFirearmAccessoryPartsFilter, XMLThisElement);
+			XMLDocument.CreateElement("FirearmAccessoryRedDotFilter", m_fFirearmAccessoryRedDotFilter, XMLThisElement);
+			XMLDocument.CreateElement("FirearmAccessoryScopeFilter", m_fFirearmAccessoryScopeFilter, XMLThisElement);
+			XMLDocument.CreateElement("FirearmAccessoryShowAll", m_fFirearmAccessoryShowAll, XMLThisElement);
+			XMLDocument.CreateElement("FirearmAccessoryShowGroups", m_fFirearmAccessoryShowGroups, XMLThisElement);
+			XMLDocument.CreateElement("FirearmAccessoryTriggerFilter", m_fFirearmAccessoryTriggerFilter, XMLThisElement);
+
+			//----------------------------------------------------------------------------*
 			// Firearm Form Settings
 			//----------------------------------------------------------------------------*
 
@@ -482,19 +499,19 @@ namespace ReloadersWorkShop.Preferences
 					//----------------------------------------------------------------------------*
 
 					case "BackupOK":
-						m_fBackupOK = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fBackupOK);
 						break;
 					case "AutoBackup":
-						m_fAutoBackup = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fAutoBackup);
 						break;
 					case "BackupFolder":
-						m_strBackupFolder = XMLNode.FirstChild.Value;
+						XMLDocument.Import(XMLNode, out m_strBackupFolder);
 						break;
 					case "AutoSaveTime":
-						Int32.TryParse(XMLNode.FirstChild.Value, out m_nAutoSaveTime);
+						XMLDocument.Import(XMLNode, out m_nAutoSaveTime);
 						break;
 					case "BackupKeepDays":
-						Int32.TryParse(XMLNode.FirstChild.Value, out m_nBackupKeepDays);
+						XMLDocument.Import(XMLNode, out m_nBackupKeepDays);
 						break;
 
 					//----------------------------------------------------------------------------*
@@ -502,22 +519,22 @@ namespace ReloadersWorkShop.Preferences
 					//----------------------------------------------------------------------------*
 
 					case "ShowApexMarker":
-						m_fShowApexMarker = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fShowApexMarker);
 						break;
 					case "ShowDropChartRangeMarkers":
-						m_fShowDropChartRangeMarkers = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fShowDropChartRangeMarkers);
 						break;
 					case "ShowGroundStrikeMarkers":
-						m_fShowGroundStrikeMarkers = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fShowGroundStrikeMarkers);
 						break;
 					case "ShowTransonicMarkers":
-						m_fShowTransonicMarkers = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fShowTransonicMarkers);
 						break;
 					case "ShowWindDriftRangeMarkers":
-						m_fShowWindDriftRangeMarkers = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fShowWindDriftRangeMarkers);
 						break;
 					case "BallisticsUseSF":
-						m_fBallisticsUseSF = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fBallisticsUseSF);
 						break;
 
 					//----------------------------------------------------------------------------*
@@ -525,10 +542,10 @@ namespace ReloadersWorkShop.Preferences
 					//----------------------------------------------------------------------------*
 
 					case "BatchLoadSortColumn":
-						Int32.TryParse(XMLNode.FirstChild.Value, out m_nBatchLoadSortColumn);
+						XMLDocument.Import(XMLNode, out m_nBatchLoadSortColumn);
 						break;
 					case "BatchLoadSortOrder":
-						SortOrder.TryParse(XMLNode.FirstChild.Value, out m_BatchLoadSortOrder);
+						XMLDocument.Import(XMLNode, out m_BatchLoadSortOrder);
 						break;
 
 					//----------------------------------------------------------------------------*
@@ -536,10 +553,10 @@ namespace ReloadersWorkShop.Preferences
 					//----------------------------------------------------------------------------*
 
 					case "BatchPrintPaper":
-						Int32.TryParse(XMLNode.FirstChild.Value, out m_nBatchPrintPaper);
+						XMLDocument.Import(XMLNode, out m_nBatchPrintPaper);
 						break;
 					case "BatchPrintStartLabel":
-						Int32.TryParse(XMLNode.FirstChild.Value, out m_nBatchPrintStartLabel);
+						XMLDocument.Import(XMLNode, out m_nBatchPrintStartLabel);
 						break;
 
 					//----------------------------------------------------------------------------*
@@ -547,10 +564,10 @@ namespace ReloadersWorkShop.Preferences
 					//----------------------------------------------------------------------------*
 
 					case "BulletCaliberSortColumn":
-						Int32.TryParse(XMLNode.FirstChild.Value, out m_nBulletCaliberSortColumn);
+						XMLDocument.Import(XMLNode, out m_nBulletCaliberSortColumn);
 						break;
 					case "BulletCaliberSortOrder":
-						SortOrder.TryParse(XMLNode.FirstChild.Value, out m_BulletCaliberSortOrder);
+						XMLDocument.Import(XMLNode, out m_BulletCaliberSortOrder);
 						break;
 
 					//----------------------------------------------------------------------------*
@@ -558,10 +575,10 @@ namespace ReloadersWorkShop.Preferences
 					//----------------------------------------------------------------------------*
 
 					case "BulletSortColumn":
-						Int32.TryParse(XMLNode.FirstChild.Value, out m_nBulletSortColumn);
+						XMLDocument.Import(XMLNode, out m_nBulletSortColumn);
 						break;
 					case "BulletSortOrder":
-						SortOrder.TryParse(XMLNode.FirstChild.Value, out m_BulletSortOrder);
+						XMLDocument.Import(XMLNode, out m_BulletSortOrder);
 						break;
 
 					//----------------------------------------------------------------------------*
@@ -569,10 +586,10 @@ namespace ReloadersWorkShop.Preferences
 					//----------------------------------------------------------------------------*
 
 					case "CaliberSortColumn":
-						Int32.TryParse(XMLNode.FirstChild.Value, out m_nCaliberSortColumn);
+						XMLDocument.Import(XMLNode, out m_nCaliberSortColumn);
 						break;
 					case "CaliberSortOrder":
-						SortOrder.TryParse(XMLNode.FirstChild.Value, out m_CaliberSortOrder);
+						XMLDocument.Import(XMLNode, out m_CaliberSortOrder);
 						break;
 
 					//----------------------------------------------------------------------------*
@@ -580,10 +597,10 @@ namespace ReloadersWorkShop.Preferences
 					//----------------------------------------------------------------------------*
 
 					case "CaseSortColumn":
-						Int32.TryParse(XMLNode.FirstChild.Value, out m_nCaseSortColumn);
+						XMLDocument.Import(XMLNode, out m_nCaseSortColumn);
 						break;
 					case "CaseSortOrder":
-						SortOrder.TryParse(XMLNode.FirstChild.Value, out m_CaseSortOrder);
+						XMLDocument.Import(XMLNode, out m_CaseSortOrder);
 						break;
 
 					//----------------------------------------------------------------------------*
@@ -591,10 +608,10 @@ namespace ReloadersWorkShop.Preferences
 					//----------------------------------------------------------------------------*
 
 					case "ChargeSortColumn":
-						Int32.TryParse(XMLNode.FirstChild.Value, out m_nChargeSortColumn);
+						XMLDocument.Import(XMLNode, out m_nChargeSortColumn);
 						break;
 					case "ChargeSortOrder":
-						SortOrder.TryParse(XMLNode.FirstChild.Value, out m_ChargeSortOrder);
+						XMLDocument.Import(XMLNode, out m_ChargeSortOrder);
 						break;
 
 					//----------------------------------------------------------------------------*
@@ -602,10 +619,10 @@ namespace ReloadersWorkShop.Preferences
 					//----------------------------------------------------------------------------*
 
 					case "ChargeTestSortColumn":
-						Int32.TryParse(XMLNode.FirstChild.Value, out m_nChargeTestSortColumn);
+						XMLDocument.Import(XMLNode, out m_nChargeTestSortColumn);
 						break;
 					case "ChargeTestSortOrder":
-						SortOrder.TryParse(XMLNode.FirstChild.Value, out m_ChargeTestSortOrder);
+						XMLDocument.Import(XMLNode, out m_ChargeTestSortOrder);
 						break;
 
 					//----------------------------------------------------------------------------*
@@ -613,7 +630,7 @@ namespace ReloadersWorkShop.Preferences
 					//----------------------------------------------------------------------------*
 
 					case "ConversionDecimals":
-						Int32.TryParse(XMLNode.FirstChild.Value, out m_nConversionDecimals);
+						XMLDocument.Import(XMLNode, out m_nConversionDecimals);
 						break;
 
 					//----------------------------------------------------------------------------*
@@ -621,10 +638,10 @@ namespace ReloadersWorkShop.Preferences
 					//----------------------------------------------------------------------------*
 
 					case "CopyChargeSortColumn":
-						Int32.TryParse(XMLNode.FirstChild.Value, out m_nCopyChargeSortColumn);
+						XMLDocument.Import(XMLNode, out m_nCopyChargeSortColumn);
 						break;
 					case "CopyChargeSortOrder":
-						SortOrder.TryParse(XMLNode.FirstChild.Value, out m_CopyChargeSortOrder);
+						XMLDocument.Import(XMLNode, out m_CopyChargeSortOrder);
 						break;
 
 					//----------------------------------------------------------------------------*
@@ -632,16 +649,16 @@ namespace ReloadersWorkShop.Preferences
 					//----------------------------------------------------------------------------*
 
 					case "AutoCheck":
-						m_fAutoCheck = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fAutoCheck);
 						break;
 					case "AutoCheckNonZero":
-						m_fAutoCheckNonZero = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fAutoCheckNonZero);
 						break;
 					case "ToolTips":
-						m_fToolTips = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fToolTips);
 						break;
 					case "ShowArchivedBatches":
-						m_fShowArchivedBatches = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fShowArchivedBatches);
 						break;
 
 					//----------------------------------------------------------------------------*
@@ -649,10 +666,51 @@ namespace ReloadersWorkShop.Preferences
 					//----------------------------------------------------------------------------*
 
 					case "EvaluationSortColumn":
-						Int32.TryParse(XMLNode.FirstChild.Value, out m_nEvaluationSortColumn);
+						XMLDocument.Import(XMLNode, out m_nEvaluationSortColumn);
 						break;
 					case "EvaluationSortOrder":
-						SortOrder.TryParse(XMLNode.FirstChild.Value, out m_EvaluationSortOrder);
+						XMLDocument.Import(XMLNode, out m_EvaluationSortOrder);
+						break;
+
+					//----------------------------------------------------------------------------*
+					// Firearm Tab Settings
+					//----------------------------------------------------------------------------*
+
+					case "FirearmAccessoryBipodFilter":
+						XMLDocument.Import(XMLNode, out m_fFirearmAccessoryBipodFilter);
+						break;
+					case "FirearmAccessoryFurnitureFilter":
+						XMLDocument.Import(XMLNode, out m_fFirearmAccessoryFurnitureFilter);
+						break;
+					case "FirearmAccessoryLaserFilter":
+						XMLDocument.Import(XMLNode, out m_fFirearmAccessoryLaserFilter);
+						break;
+					case "FirearmAccessoryLightFilter":
+						XMLDocument.Import(XMLNode, out m_fFirearmAccessoryLightFilter);
+						break;
+					case "FirearmAccessoryMagnifierFilter":
+						XMLDocument.Import(XMLNode, out m_fFirearmAccessoryMagnifierFilter);
+						break;
+					case "FirearmAccessoryOtherFilter":
+						XMLDocument.Import(XMLNode, out m_fFirearmAccessoryOtherFilter);
+						break;
+					case "FirearmAccessoryPartsFilter":
+						XMLDocument.Import(XMLNode, out m_fFirearmAccessoryPartsFilter);
+						break;
+					case "FirearmAccessoryRedDotFilter":
+						XMLDocument.Import(XMLNode, out m_fFirearmAccessoryRedDotFilter);
+						break;
+					case "FirearmAccessoryScopeFilter":
+						XMLDocument.Import(XMLNode, out m_fFirearmAccessoryScopeFilter);
+						break;
+					case "FirearmAccessoryShowAll":
+						XMLDocument.Import(XMLNode, out m_fFirearmAccessoryShowAll);
+						break;
+					case "FirearmAccessoryShowGroups":
+						XMLDocument.Import(XMLNode, out m_fFirearmAccessoryShowGroups);
+						break;
+					case "FirearmAccessoryTriggerFilter":
+						XMLDocument.Import(XMLNode, out m_fFirearmAccessoryTriggerFilter);
 						break;
 
 					//----------------------------------------------------------------------------*
@@ -660,10 +718,10 @@ namespace ReloadersWorkShop.Preferences
 					//----------------------------------------------------------------------------*
 
 					case "FirearmBulletSortColumn":
-						Int32.TryParse(XMLNode.FirstChild.Value, out m_nFirearmBulletSortColumn);
+						XMLDocument.Import(XMLNode, out m_nFirearmBulletSortColumn);
 						break;
 					case "FirearmBulletSortOrder":
-						SortOrder.TryParse(XMLNode.FirstChild.Value, out m_FirearmBulletSortOrder);
+						XMLDocument.Import(XMLNode, out m_FirearmBulletSortOrder);
 						break;
 
 					//----------------------------------------------------------------------------*
@@ -671,7 +729,7 @@ namespace ReloadersWorkShop.Preferences
 					//----------------------------------------------------------------------------*
 
 					case "FirearmImagePath":
-						m_strFirearmImagePath = XMLNode.FirstChild.Value;
+						XMLDocument.Import(XMLNode, out m_strFirearmImagePath);
 						break;
 
 					//----------------------------------------------------------------------------*
@@ -679,19 +737,19 @@ namespace ReloadersWorkShop.Preferences
 					//----------------------------------------------------------------------------*
 
 					case "FirearmPrintAll":
-						m_fFirearmPrintAll = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fFirearmPrintAll);
 						break;
 					case "FirearmPrintDetail":
-						m_fFirearmPrintDetail = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fFirearmPrintDetail);
 						break;
 					case "FirearmPrintSpecs":
-						m_fFirearmPrintSpecs = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fFirearmPrintSpecs);
 						break;
 					case "FirearmSortColumn":
-						Int32.TryParse(XMLNode.FirstChild.Value, out m_nFirearmSortColumn);
+						XMLDocument.Import(XMLNode, out m_nFirearmSortColumn);
 						break;
 					case "FirearmSortOrder":
-						SortOrder.TryParse(XMLNode.FirstChild.Value, out m_FirearmSortOrder);
+						XMLDocument.Import(XMLNode, out m_FirearmSortOrder);
 						break;
 
 					//----------------------------------------------------------------------------*
@@ -699,10 +757,10 @@ namespace ReloadersWorkShop.Preferences
 					//----------------------------------------------------------------------------*
 
 					case "HideUncheckedCalibers":
-						m_fHideUncheckedCalibers = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fHideUncheckedCalibers);
 						break;
 					case "HideUncheckedSupplies":
-						m_fHideUncheckedSupplies = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fHideUncheckedSupplies);
 						break;
 
 					//----------------------------------------------------------------------------*
@@ -710,25 +768,25 @@ namespace ReloadersWorkShop.Preferences
 					//----------------------------------------------------------------------------*
 
 					case "LastActivityType":
-						m_eLastActivityType = cTransaction.TransactionTypeFromString(XMLNode.FirstChild.Value);
+						XMLDocument.Import(XMLNode, out m_eLastActivityType);
 						break;
 					case "LastPurchaseSource":
-						m_strLastPurchaseSource = XMLNode.FirstChild.Value;
+						XMLDocument.Import(XMLNode, out m_strLastPurchaseSource);
 						break;
 					case "LastAddStockReason":
-						m_strLastAddStockReason = XMLNode.FirstChild.Value;
+						XMLDocument.Import(XMLNode, out m_strLastAddStockReason);
 						break;
 					case "LastReduceStockReason":
-						m_strLastReduceStockReason = XMLNode.FirstChild.Value;
+						XMLDocument.Import(XMLNode, out m_strLastReduceStockReason);
 						break;
 					case "LastFiredLocation":
-						m_strLastFiredLocation = XMLNode.FirstChild.Value;
+						XMLDocument.Import(XMLNode, out m_strLastFiredLocation);
 						break;
 					case "ShowBatchTransactions":
-						m_fShowBatchTransactions = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fShowBatchTransactions);
 						break;
 					case "ShowArchivedTransactions":
-						m_fShowArchivedTransactions = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fShowArchivedTransactions);
 						break;
 
 					//----------------------------------------------------------------------------*
@@ -780,19 +838,19 @@ namespace ReloadersWorkShop.Preferences
 					//----------------------------------------------------------------------------*
 
 					case "LastSupplyTypeSelected":
-						m_eLastSupplyTypeSelected = cSupply.SupplyTypeFromString(XMLNode.FirstChild.Value);
+						XMLDocument.Import(XMLNode, out m_eLastSupplyTypeSelected);
 						break;
 					case "SupplyPrintAll":
-						m_fSupplyPrintAll = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fSupplyPrintAll);
 						break;
 					case "SupplyPrintChecked":
-						m_fSupplyPrintChecked = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fSupplyPrintChecked);
 						break;
 					case "SupplyPrintNonZero":
-						m_fSupplyPrintNonZero = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fSupplyPrintNonZero);
 						break;
 					case "SupplyPrintBelowStock":
-						m_fSupplyPrintBelowStock = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fSupplyPrintBelowStock);
 						break;
 
 					//----------------------------------------------------------------------------*

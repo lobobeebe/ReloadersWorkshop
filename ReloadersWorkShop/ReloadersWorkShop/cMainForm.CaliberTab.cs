@@ -92,6 +92,7 @@ namespace ReloadersWorkShop
 				//----------------------------------------------------------------------------*
 
 				m_CalibersListView = new cCaliberListView(m_DataFiles);
+				m_CalibersListView.ToolTip = "List of calibers in the database.";
 
 				CalibersTab.Controls.Add(m_CalibersListView);
 
@@ -112,6 +113,8 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 			// Operations that are always performed
 			//----------------------------------------------------------------------------*
+
+			m_CalibersListView.ShowToolTips = m_DataFiles.Preferences.ToolTips;
 
 			HideUncheckedCalibersCheckBox.Checked = m_DataFiles.Preferences.HideUncheckedCalibers;
 
@@ -436,32 +439,13 @@ namespace ReloadersWorkShop
 				// See if this is the same Caliber
 				//----------------------------------------------------------------------------*
 
-				if (CheckCaliber.Equals(OldCaliber))
+				if (CheckCaliber.CompareTo(OldCaliber) == 0)
 					{
 					//----------------------------------------------------------------------------*
 					// Update the current Caliber record
 					//----------------------------------------------------------------------------*
 
-					CheckCaliber.FirearmType = NewCaliber.FirearmType;
-					CheckCaliber.Name = NewCaliber.Name;
-					CheckCaliber.HeadStamp = NewCaliber.HeadStamp;
-
-					CheckCaliber.Pistol = NewCaliber.Pistol;
-
-					CheckCaliber.SmallPrimer = NewCaliber.SmallPrimer;
-					CheckCaliber.LargePrimer = NewCaliber.LargePrimer;
-					CheckCaliber.MagnumPrimer = NewCaliber.MagnumPrimer;
-
-					CheckCaliber.MinBulletDiameter = NewCaliber.MinBulletDiameter;
-					CheckCaliber.MaxBulletDiameter = NewCaliber.MaxBulletDiameter;
-					CheckCaliber.MinBulletWeight = NewCaliber.MinBulletWeight;
-					CheckCaliber.MaxBulletWeight = NewCaliber.MaxBulletWeight;
-					CheckCaliber.CaseTrimLength = NewCaliber.CaseTrimLength;
-					CheckCaliber.MaxCaseLength = NewCaliber.MaxCaseLength;
-					CheckCaliber.MaxCOL = NewCaliber.MaxCOL;
-					CheckCaliber.MaxNeckDiameter = NewCaliber.MaxNeckDiameter;
-					CheckCaliber.SAAMIPDF = NewCaliber.SAAMIPDF;
-					CheckCaliber.Checked = NewCaliber.Checked;
+					CheckCaliber.Copy(NewCaliber);
 
 					//----------------------------------------------------------------------------*
 					// Update the Caliber on the Caliber tab

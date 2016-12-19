@@ -56,6 +56,21 @@ namespace ReloadersWorkShop
 			new cListViewColumn(12, "CostHeader", "Costs", HorizontalAlignment.Right, 80),
 			};
 
+		private cListViewColumn[] m_arShotgunColumns = new cListViewColumn[]
+			{
+			new cListViewColumn(0, "ManufacturerHeader","Manufacturer", HorizontalAlignment.Left, 140),
+			new cListViewColumn(1, "PartNumHeader", "Part Number", HorizontalAlignment.Left, 140),
+			new cListViewColumn(2, "TypeHeader", "Model/Type", HorizontalAlignment.Left, 160),
+			new cListViewColumn(3, "ReloadHeader", "Reloads?", HorizontalAlignment.Center, 100),
+			new cListViewColumn(4, "CaliberHeader", "Caliber", HorizontalAlignment.Left, 160),
+			new cListViewColumn(5, "ShotWeightHeader", "Shot Weight", HorizontalAlignment.Center, 115),
+			new cListViewColumn(6, "ShotSizeHeader", "Shot Size", HorizontalAlignment.Center, 115),
+			new cListViewColumn(7, "ShellLengthHeader", "Shell Length", HorizontalAlignment.Center, 115),
+			new cListViewColumn(8, "MinStockHeader", "Min Stock Lvl", HorizontalAlignment.Center, 80),
+			new cListViewColumn(9, "QuantityHeader", "Box of", HorizontalAlignment.Center, 80),
+			new cListViewColumn(10, "CostHeader", "Costs", HorizontalAlignment.Right, 80),
+			};
+
 		//============================================================================*
 		// cAmmoListView() - Constructor
 		//============================================================================*
@@ -80,7 +95,7 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			PopulateGroups();
-			PopulateColumns(m_arColumns);
+			PopulateColumns();
 
 			SortingOrder = m_DataFiles.Preferences.AmmoSortOrder;
 
@@ -151,7 +166,12 @@ namespace ReloadersWorkShop
 				}
 			set
 				{
-				m_eFirearmType = value;
+				if (m_eFirearmType != value)
+					{
+					m_eFirearmType = value;
+
+					PopulateColumns();
+					}
 				}
 			}
 
@@ -208,6 +228,8 @@ namespace ReloadersWorkShop
 			{
 			Populating = true;
 
+			PopulateColumns();
+
 			//----------------------------------------------------------------------------*
 			// Create the format strings
 			//----------------------------------------------------------------------------*
@@ -217,7 +239,7 @@ namespace ReloadersWorkShop
 			m_strDimensionFormat += "}";
 
 			m_strBulletWeightFormat = "{0:F";
-			m_strBulletWeightFormat += String.Format("{0:G0}", m_DataFiles.Preferences.BulletWeightDecimals);
+			m_strBulletWeightFormat += String.Format("{0:G0}", m_eFirearmType != cFirearm.eFireArmType.Shotgun ? m_DataFiles.Preferences.BulletWeightDecimals : m_DataFiles.Preferences.ShotWeightDecimals);
 			m_strBulletWeightFormat += "}";
 
 			//----------------------------------------------------------------------------*
@@ -246,7 +268,7 @@ namespace ReloadersWorkShop
 					{
 					Items[0].Selected = true;
 
-					m_DataFiles.Preferences.LastAmmoSelected = (cAmmo)Items[0].Tag;
+					m_DataFiles.Preferences.LastAmmoSelected = (cAmmo) Items[0].Tag;
 					}
 				}
 
@@ -262,7 +284,10 @@ namespace ReloadersWorkShop
 
 		public void PopulateColumns()
 			{
-			PopulateColumns(m_arColumns);
+			if (m_eFirearmType == cFirearm.eFireArmType.Shotgun)
+				PopulateColumns(m_arShotgunColumns);
+			else
+				PopulateColumns(m_arColumns);
 			}
 
 		//============================================================================*
@@ -273,18 +298,29 @@ namespace ReloadersWorkShop
 			{
 			base.PopulateColumns(arColumns);
 
-			Columns[6].Text += String.Format(" ({0})", cDataFiles.MetricString(cDataFiles.eDataType.BulletWeight));
-			Columns[7].Text += String.Format(" ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
-
-			if (m_DataFiles.Preferences.TrackInventory)
+			if (m_eFirearmType == cFirearm.eFireArmType.Shotgun)
 				{
-				Columns[11].Text = "Qty on Hand";
-				Columns[12].Text = String.Format("Value ({0})", m_DataFiles.Preferences.Currency);
+				Columns[5].Text += String.Format(" ({0})", cDataFiles.MetricString(cDataFiles.eDataType.ShotWeight));
+				Columns[7].Text += String.Format(" ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
+
+				if (m_DataFiles.Preferences.TrackInventory)
+					Columns[9].Text = "Qty on Hand";
+				else
+					Columns[9].Text = "Box of";
+
+				Columns[10].Text = String.Format("Value ({0})", m_DataFiles.Preferences.Currency);
 				}
 			else
 				{
-				Columns[11].Text = "Box of";
-				Columns[12].Text = String.Format("Costs ({0})", m_DataFiles.Preferences.Currency);
+				Columns[6].Text += String.Format(" ({0})", cDataFiles.MetricString(cDataFiles.eDataType.BulletWeight));
+				Columns[7].Text += String.Format(" ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
+
+				if (m_DataFiles.Preferences.TrackInventory)
+					Columns[11].Text = "Qty on Hand";
+				else
+					Columns[11].Text = "Box of";
+
+				Columns[12].Text = String.Format("Value ({0})", m_DataFiles.Preferences.Currency);
 				}
 			}
 
@@ -298,22 +334,26 @@ namespace ReloadersWorkShop
 
 			Item.Text = Ammo.Manufacturer != null ? Ammo.Manufacturer.ToString() : "Reloads";
 
-			Item.Group = Groups[(int)Ammo.FirearmType];
+			Item.Group = Groups[(int) Ammo.FirearmType];
 			Item.Tag = Ammo;
 			Item.Checked = Ammo.Checked;
 
 			Item.SubItems.Add(Ammo.PartNumber);
 			Item.SubItems.Add(Ammo.Type);
 			Item.SubItems.Add(Ammo.Reload ? "Y" : "");
-			Item.SubItems.Add(Ammo.TestList.Count > 0 ? "Y" : "");
+
+			if (Ammo.FirearmType != cFirearm.eFireArmType.Shotgun)
+				Item.SubItems.Add(Ammo.TestList.Count > 0 ? "Y" : "");
 
 			cCaliber.CurrentFirearmType = Ammo.Caliber.FirearmType;
 			Item.SubItems.Add(Ammo.Caliber.ToString());
 
-			Item.SubItems.Add(String.Format(m_strBulletWeightFormat, cDataFiles.StandardToMetric(Ammo.BulletWeight, cDataFiles.eDataType.BulletWeight)));
+			Item.SubItems.Add(String.Format(m_strBulletWeightFormat, cDataFiles.StandardToMetric(Ammo.BulletWeight, m_eFirearmType != cFirearm.eFireArmType.Shotgun ? cDataFiles.eDataType.BulletWeight : cDataFiles.eDataType.ShotWeight)));
 			Item.SubItems.Add(String.Format(m_strDimensionFormat, cDataFiles.StandardToMetric(Ammo.BulletDiameter, cDataFiles.eDataType.Dimension)));
 			Item.SubItems.Add(Ammo.BallisticCoefficient > 0.0 ? String.Format("{0:F3}", Ammo.BallisticCoefficient) : "-");
-			Item.SubItems.Add(String.Format("{0:F3}", cBullet.CalculateSectionalDensity(Ammo.BulletDiameter, Ammo.BulletWeight)));
+
+			if (Ammo.FirearmType != cFirearm.eFireArmType.Shotgun)
+				Item.SubItems.Add(String.Format("{0:F3}", cBullet.CalculateSectionalDensity(Ammo.BulletDiameter, Ammo.BulletWeight)));
 
 			Item.SubItems.Add(Ammo.MinimumStockLevel != 0 ? String.Format("{0:N0}", Ammo.MinimumStockLevel) : "-");
 

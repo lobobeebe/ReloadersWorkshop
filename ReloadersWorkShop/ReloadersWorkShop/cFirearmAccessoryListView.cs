@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cFirearmAccessoryListView.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -44,7 +44,7 @@ namespace ReloadersWorkShop
 			new cListViewColumn(3, "DecriptionHeader", "Description", HorizontalAlignment.Left, 200),
 			new cListViewColumn(4, "FirearmHeader", "Firearm", HorizontalAlignment.Left, 200),
 			new cListViewColumn(5, "SourceHeader", "Acquired from", HorizontalAlignment.Left, 200),
-			new cListViewColumn(6, "DateHeader", "Date", HorizontalAlignment.Center, 100),
+			new cListViewColumn(6, "DateHeader", "Date", HorizontalAlignment.Center, 80),
 			new cListViewColumn(7, "PriceHeader", "Price", HorizontalAlignment.Right, 80),
 			new cListViewColumn(8, "TaxHeader", "Tax", HorizontalAlignment.Right, 80),
 			new cListViewColumn(9, "ShippingHeader", "Shipping", HorizontalAlignment.Right, 80),

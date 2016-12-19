@@ -57,8 +57,6 @@ namespace ReloadersWorkShop
 		private const string cm_strMaxCOLToolTip = "Maximum Cartridge Overall Length (COAL) of cartridges in this caliber.";
 		private const string cm_strMaxNeckDiameterToolTip = "Maximum neck diameter of cartridges of this caliber.";
 
-		private const string cm_strCaliberOKButtonToolTip = "Click to add or update the caliber with the above data.";
-		private const string cm_strCaliberCancelButtonToolTip = "Click to cancel changes and return to the main window.";
 		private const string cm_strSAAMIPDFToolTip = "Name of the SAAMI PDF file containg the drawing for cartridges of this caliber.\nYou do not need to specify the full URL, just the PDf file name.  You may leave the .pdf extension off as well.";
 
 		//----------------------------------------------------------------------------*
@@ -78,9 +76,6 @@ namespace ReloadersWorkShop
 
 		private ToolTip m_PrimerSizeToolTip = new ToolTip();
 		private ToolTip m_MagnumToolTip = new ToolTip();
-
-		private ToolTip m_CaliberOKButtonToolTip = new ToolTip();
-		private ToolTip m_CaliberCancelButtonToolTip = new ToolTip();
 
 		private cDataFiles m_DataFiles = null;
 
@@ -102,19 +97,19 @@ namespace ReloadersWorkShop
 
 				m_Caliber = new cCaliber();
 
-				CaliberOKButton.Text = "Add";
+				OKButton.ButtonType = CommonLib.Controls.cOKButton.eButtonTypes.Add;
 				}
 			else
 				{
 				m_Caliber = new cCaliber(Caliber);
 
 				if (!m_fViewOnly)
-					CaliberOKButton.Text = "Update";
+					OKButton.ButtonType = CommonLib.Controls.cOKButton.eButtonTypes.Update;
 				else
-					CaliberCancelButton.Text = "Close";
+					FormCancelButton.ButtonType = CommonLib.Controls.cCancelButton.eButtonTypes.Close;
 				}
 
-			SetClientSizeCore(GeneralGroupBox.Location.X + GeneralGroupBox.Width + 10, CaliberCancelButton.Location.Y + CaliberCancelButton.Height + 20);
+			SetClientSizeCore(GeneralGroupBox.Location.X + GeneralGroupBox.Width + 10, FormCancelButton.Location.Y + FormCancelButton.Height + 20);
 
 			//----------------------------------------------------------------------------*
 			// Set Control Event Handlers
@@ -163,7 +158,7 @@ namespace ReloadersWorkShop
 				MaxNeckDiameterTextBox.ReadOnly = true;
 				SAAMIPDFTextBox.ReadOnly = true;
 
-				CaliberOKButton.Visible = false;
+				OKButton.Visible = false;
 				}
 
 			SetInputParameters();
@@ -201,11 +196,11 @@ namespace ReloadersWorkShop
 					{
 					strTitle = "View";
 
-					int nButtonX = (this.Size.Width / 2) - (CaliberCancelButton.Width / 2);
+					int nButtonX = (this.Size.Width / 2) - (FormCancelButton.Width / 2);
 
-					CaliberCancelButton.Location = new Point(nButtonX, CaliberCancelButton.Location.Y);
+					FormCancelButton.Location = new Point(nButtonX, FormCancelButton.Location.Y);
 
-					CaliberCancelButton.Text = "Close";
+					FormCancelButton.Text = "Close";
 					}
 				}
 
@@ -222,7 +217,7 @@ namespace ReloadersWorkShop
 				FirearmTypeCombo.Focus();
 				}
 			else
-				CaliberCancelButton.Focus();
+				FormCancelButton.Focus();
 
 			m_fInitialized = true;
 
@@ -926,6 +921,9 @@ namespace ReloadersWorkShop
 
 		private void SetStaticToolTips()
 			{
+			OKButton.ShowToolTips = m_DataFiles.Preferences.ToolTips;
+			FormCancelButton.ShowToolTips = m_DataFiles.Preferences.ToolTips;
+
 			if (!m_DataFiles.Preferences.ToolTips)
 				return;
 
@@ -962,14 +960,6 @@ namespace ReloadersWorkShop
 			MaxNeckDiameterTextBox.ToolTip = cm_strMaxNeckDiameterToolTip;
 
 			SAAMIPDFTextBox.ToolTip = cm_strSAAMIPDFToolTip;
-
-			m_CaliberOKButtonToolTip.ShowAlways = true;
-			m_CaliberOKButtonToolTip.RemoveAll();
-			m_CaliberOKButtonToolTip.SetToolTip(CaliberOKButton, cm_strCaliberOKButtonToolTip);
-
-			m_CaliberCancelButtonToolTip.ShowAlways = true;
-			m_CaliberCancelButtonToolTip.RemoveAll();
-			m_CaliberCancelButtonToolTip.SetToolTip(CaliberCancelButton, cm_strCaliberCancelButtonToolTip);
 			}
 
 		//============================================================================*
@@ -1252,7 +1242,7 @@ namespace ReloadersWorkShop
 			// Set Caliber OK Button
 			//----------------------------------------------------------------------------*
 
-			CaliberOKButton.Enabled = fEnableOK;
+			OKButton.Enabled = fEnableOK;
 			}
 		}
 	}

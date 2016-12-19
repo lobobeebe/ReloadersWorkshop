@@ -164,50 +164,39 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// ExportDetails() - XML Document
+		// Export() - XML Document
 		//============================================================================*
 
-		public override void ExportDetails(XmlDocument XMLDocument, XmlNode XMLThisElement)
+		public override void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement, bool fIdentityOnly = false)
 			{
-			//----------------------------------------------------------------------------*
-			// Dot  MOA
-			//----------------------------------------------------------------------------*
+			string strName = ExportName;
 
-			XmlElement XMLElement = XMLDocument.CreateElement("DotMOA");
-			XmlText XMLTextElement = XMLDocument.CreateTextNode(m_dDotMOA.ToString());
-			XMLElement.AppendChild(XMLTextElement);
+			if (fIdentityOnly)
+				strName += "Identity";
 
-			XMLThisElement.AppendChild(XMLElement);
+			XmlElement XMLThisElement = XMLDocument.CreateElement(ExportName, XMLParentElement);
 
-			//----------------------------------------------------------------------------*
-			// Co-Witness  Height
-			//----------------------------------------------------------------------------*
+			base.Export(XMLDocument, XMLThisElement, fIdentityOnly);
 
-			XMLElement = XMLDocument.CreateElement("CowitnessHeight");
-			XMLTextElement = XMLDocument.CreateTextNode(m_dCowitnessHeight.ToString());
-			XMLElement.AppendChild(XMLTextElement);
+			if (fIdentityOnly)
+				return;
 
-			XMLThisElement.AppendChild(XMLElement);
+			XMLDocument.CreateElement("DotMOA", m_dDotMOA, XMLThisElement);
+			XMLDocument.CreateElement("CowitnessHeight", m_dCowitnessHeight, XMLThisElement);
+			XMLDocument.CreateElement("TubeDiameter", m_dTubeDiameter, XMLThisElement);
+			XMLDocument.CreateElement("Battery", m_strBattery, XMLThisElement);
+			}
 
-			//----------------------------------------------------------------------------*
-			// Tube Diameter
-			//----------------------------------------------------------------------------*
+		//============================================================================*
+		// ExportName()
+		//============================================================================*
 
-			XMLElement = XMLDocument.CreateElement("TubeDiameter");
-			XMLTextElement = XMLDocument.CreateTextNode(m_dTubeDiameter.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			//----------------------------------------------------------------------------*
-			// Battery
-			//----------------------------------------------------------------------------*
-
-			XMLElement = XMLDocument.CreateElement("Battery");
-			XMLTextElement = XMLDocument.CreateTextNode(m_strBattery);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
+		public static string ExportName
+			{
+			get
+				{
+				return ("RedDot");
+				}
 			}
 
 		//============================================================================*

@@ -20,7 +20,7 @@ namespace ReloadersWorkShop
 
 			XMLDocument.CreateElement("DateLoaded", m_DateLoaded, XMLThisElement);
 
-			m_Load.ExportIdentity(XMLDocument, XMLThisElement);
+			m_Load.Export(XMLDocument, XMLThisElement, true);
 
 			if (m_Firearm != null)
 				m_Firearm.Export(XMLDocument, XMLThisElement, true);
@@ -46,8 +46,7 @@ namespace ReloadersWorkShop
 			XMLDocument.CreateElement("TrackInventory", m_fTrackInventory, XMLThisElement);
 			XMLDocument.CreateElement("Checked", m_fChecked, XMLThisElement);
 
-			if (BatchTestList.Count > 0)
-				m_BatchTestList.Export(XMLDocument, XMLThisElement);
+			m_BatchTestList.Export(XMLDocument, XMLThisElement);
 			}
 
 		//============================================================================*

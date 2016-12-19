@@ -97,8 +97,7 @@ namespace ReloadersWorkShop
 			{
 			if (Count > 0)
 				{
-				XmlElement XMLElement = XMLDocument.CreateElement(ExportName);
-				XMLParentElement.AppendChild(XMLElement);
+				XmlElement XMLElement = XMLDocument.CreateElement(ExportName, XMLParentElement);
 
 				foreach (cGear Gear in this)
 					Gear.Export(XMLDocument, XMLElement);

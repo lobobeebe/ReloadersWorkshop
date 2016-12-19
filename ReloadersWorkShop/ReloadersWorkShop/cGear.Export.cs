@@ -116,24 +116,10 @@ namespace ReloadersWorkShop
 			XMLDocument.CreateElement("Shipping", m_dTax, XMLThisElement);
 
 			//----------------------------------------------------------------------------*
-			// Details - (Some inherited classes have additional data)
-			//----------------------------------------------------------------------------*
-
-			Export(XMLDocument, XMLThisElement);
-
-			//----------------------------------------------------------------------------*
 			// Notes
 			//----------------------------------------------------------------------------*
 
 			XMLDocument.CreateElement("Notes", m_strNotes, XMLThisElement);
-			}
-
-		//============================================================================*
-		// ExportDetails() - XML Document
-		//============================================================================*
-
-		public virtual void ExportDetails(XmlDocument XMLDocument, XmlNode XMLThisNode)
-			{
 			}
 
 		//============================================================================*
@@ -183,12 +169,6 @@ namespace ReloadersWorkShop
 
 				XMLNode = XMLNode.NextSibling;
 				}
-
-			//----------------------------------------------------------------------------*
-			//  Export Details if needed
-			//----------------------------------------------------------------------------*
-
-			ExportDetails(XMLDocument, XMLThisNode);
 
 			return (Validate());
 			}

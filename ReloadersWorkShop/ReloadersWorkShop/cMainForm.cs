@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cMainForm.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -19,8 +19,6 @@ using System.Windows.Forms;
 //============================================================================*
 // Application Specific Using Statements
 //============================================================================*
-
-using ReloadersWorkShop.Preferences;
 
 using RWCommonLib.Registry;
 using RWCommonLib.Updates;
@@ -220,7 +218,7 @@ namespace ReloadersWorkShop
 			HelpVideoRWLoadDataMenuItem.Click += OnHelpVideoClicked;
 			HelpVideoRWSettingJumpMenuItem.Click += OnHelpVideoClicked;
 			HelpVideoRWTargetCalculatorMenuItem.Click += OnHelpVideoClicked;
-            HelpVideoRWOperationMenuItem.Click += OnHelpVideoClicked;
+			HelpVideoRWOperationMenuItem.Click += OnHelpVideoClicked;
 			HelpVideoSDBCMenuItem.Click += OnHelpVideoClicked;
 
 			//----------------------------------------------------------------------------*
@@ -266,7 +264,7 @@ namespace ReloadersWorkShop
 
 			SaveFileDialog FileDlg = new SaveFileDialog();
 
-			FileDlg.Title = String.Format("Save {0} Backup File",Application.ProductName);
+			FileDlg.Title = String.Format("Save {0} Backup File", Application.ProductName);
 			FileDlg.AddExtension = true;
 			FileDlg.DefaultExt = "rwb";
 			FileDlg.InitialDirectory = m_DataFiles.Preferences.BackupFolder;
@@ -929,7 +927,7 @@ namespace ReloadersWorkShop
 			m_DataFiles.Preferences.Maximized = WindowState == FormWindowState.Maximized;
 
 			m_DataFiles.Save();
-//			m_DataFiles.ExportRecoveryFile();		TODO: Put this back in
+			m_DataFiles.ExportRecoveryFile();
 
 			if (m_DataFiles.Preferences.BackupOK && m_DataFiles.Preferences.AutoBackup)
 				{
@@ -979,7 +977,14 @@ namespace ReloadersWorkShop
 
 		protected void OnHelpDataUpdateClicked(object sender, EventArgs args)
 			{
+			bool fUpdate = true;
+			bool fUpdateAvailable = false;
+
 			this.Cursor = Cursors.WaitCursor;
+
+			//----------------------------------------------------------------------------*
+			// See if there's a new update file
+			//----------------------------------------------------------------------------*
 
 			cRWUpdater RWUpdater = new cRWUpdater();
 
@@ -987,36 +992,63 @@ namespace ReloadersWorkShop
 				{
 				string strOutputPath = m_DataFiles.GetDataPath();
 
-				bool fSuccess = RWUpdater.UpdateFile("ReloadersWorkShop.rtf", strOutputPath);
+				bool fSuccess = true;
+			//	bool fSuccess = RWUpdater.UpdateFile("RWDataUpdate.xml", strOutputPath);
 
 				if (fSuccess)
 					{
-					cDataFiles Datafiles = new cDataFiles();
+					fUpdateAvailable = true;
 
-					fSuccess = Datafiles.LoadDataFile("ReloadersWorkShop.rtf");
+					string strText = "There is a data update file available. Data update files contain new manufacturers, calibers, reloading components, etc.  Everything except firearms, loads, and batches.\n\n";
+					strText += "Missing data can also be filled in.  For example, if the Ballistic Coefficient for a particular bullet is set to 0.000 and the update file has a valid value, it will update your current data.\n\n";
+					strText += "You should BACKUP YOUR DATA before continuing.\n\n";
+					strText += "Would you like to merge the data update file with your data?";
 
-					m_DataFiles.Merge(Datafiles, true);
+					DialogResult rc = MessageBox.Show(strText, "Data Update Verification", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
 
-					InitializeAllTabs();
+					if (rc == DialogResult.Yes)
+						{
+						cRWXMLDocument XMLDocument = new cRWXMLDocument(m_DataFiles);
+
+						XMLDocument.Load("RWDataUpdate.xml");
+
+						XMLDocument.Import(false);
+
+						InitializeAllTabs();
+						}
+					else
+						fUpdate = false;
 					}
 				else
 					{
-					this.Cursor = Cursors.Default;
-
-					MessageBox.Show("No new data updates are available", "No Update Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-					return;
+					fUpdate = false;
 					}
-
 				}
 			catch
 				{
-				this.Cursor = Cursors.Default;
-
-				MessageBox.Show("No new data updates are available", "No Update Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				fUpdate = false;
 				}
 
 			this.Cursor = Cursors.Default;
+
+			//----------------------------------------------------------------------------*
+			// If a problem was encountered, or no new data is available, display it
+			//----------------------------------------------------------------------------*
+
+			if (!fUpdate)
+				{
+				if (!fUpdateAvailable)
+					MessageBox.Show("No new data updates are available", "No Update Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				else
+					MessageBox.Show("A problem was encountered while merging the data update file!  Verify that it is a valid Reloader's WorkShop XML File.", "Data Update Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+				return;
+				}
+
+			//----------------------------------------------------------------------------*
+			// OK, if we get to here, an update happened
+			//----------------------------------------------------------------------------*
+
 			}
 
 		//============================================================================*
@@ -1098,23 +1130,23 @@ namespace ReloadersWorkShop
 			{
 			try
 				{
-                switch ((sender as ToolStripDropDownItem).Name)
-                    {
-                    case "HelpVideoBulletSelectionMenuItem":
-                        System.Diagnostics.Process.Start("https://www.youtube.com/v/bBy36tpgfTI?autoplay=1&rel=0&showinfo=0");
-                        break;
-                    case "HelpVideoCrimpingMenuItem":
-                        System.Diagnostics.Process.Start("https://www.youtube.com/v/MXWEfLE-tJg?autoplay=1&rel=0&showinfo=0");
-                        break;
-                    case "HelpVideoHeadspaceMenuItem":
-                        System.Diagnostics.Process.Start("https://www.youtube.com/v/OS5bfJ_2HNQ?autoplay=1&rel=0&showinfo=0");
-                        break;
-                    case "HelpVideoRWBallisticsCalculatorMenuItem":
-                        System.Diagnostics.Process.Start("https://www.youtube.com/v/6syoP-_TvZI?autoplay=1&rel=0&showinfo=0");
-                        break;
-                    case "HelpVideoRWBatchEditorMenuItem":
-                        System.Diagnostics.Process.Start("https://www.youtube.com/v/FO5z6Qvo-Lg?autoplay=1&rel=0&showinfo=0");
-                        break;
+				switch ((sender as ToolStripDropDownItem).Name)
+					{
+					case "HelpVideoBulletSelectionMenuItem":
+						System.Diagnostics.Process.Start("https://www.youtube.com/v/bBy36tpgfTI?autoplay=1&rel=0&showinfo=0");
+						break;
+					case "HelpVideoCrimpingMenuItem":
+						System.Diagnostics.Process.Start("https://www.youtube.com/v/MXWEfLE-tJg?autoplay=1&rel=0&showinfo=0");
+						break;
+					case "HelpVideoHeadspaceMenuItem":
+						System.Diagnostics.Process.Start("https://www.youtube.com/v/OS5bfJ_2HNQ?autoplay=1&rel=0&showinfo=0");
+						break;
+					case "HelpVideoRWBallisticsCalculatorMenuItem":
+						System.Diagnostics.Process.Start("https://www.youtube.com/v/6syoP-_TvZI?autoplay=1&rel=0&showinfo=0");
+						break;
+					case "HelpVideoRWBatchEditorMenuItem":
+						System.Diagnostics.Process.Start("https://www.youtube.com/v/FO5z6Qvo-Lg?autoplay=1&rel=0&showinfo=0");
+						break;
 					case "HelpVideoRWCrossUseMenuItem":
 						System.Diagnostics.Process.Start("https://www.youtube.com/v/xiSWuVINOf8?autoplay=1&rel=0&showinfo=0");
 						break;
@@ -1122,25 +1154,25 @@ namespace ReloadersWorkShop
 						System.Diagnostics.Process.Start("https://www.youtube.com/v/kO0X6nvIiCg?autoplay=1&rel=0&showinfo=0");
 						break;
 					case "HelpVideoRWInventoryMenuItem":
-                        System.Diagnostics.Process.Start("https://www.youtube.com/v/xrkLTBP9jZs?autoplay=1&rel=0&showinfo=0");
-                        break;
-                    case "HelpVideoRWLoadDataMenuItem":
-                        System.Diagnostics.Process.Start("https://www.youtube.com/v/w2v_E3GaTbE?autoplay=1&rel=0&showinfo=0");
-                        break;
-                    case "HelpVideoRWOperationMenuItem":
-                        System.Diagnostics.Process.Start("https://www.youtube.com/v/MOWC-ljqo6s?autoplay=1&rel=0&showinfo=0");
-                        break;
+						System.Diagnostics.Process.Start("https://www.youtube.com/v/xrkLTBP9jZs?autoplay=1&rel=0&showinfo=0");
+						break;
+					case "HelpVideoRWLoadDataMenuItem":
+						System.Diagnostics.Process.Start("https://www.youtube.com/v/w2v_E3GaTbE?autoplay=1&rel=0&showinfo=0");
+						break;
+					case "HelpVideoRWOperationMenuItem":
+						System.Diagnostics.Process.Start("https://www.youtube.com/v/MOWC-ljqo6s?autoplay=1&rel=0&showinfo=0");
+						break;
 					case "HelpVideoRWSettingJumpMenuItem":
 						System.Diagnostics.Process.Start("https://www.youtube.com/v/qxTpO5z-Vto?autoplay=1&rel=0&showinfo=0");
 						break;
 					case "HelpVideoRWTargetCalculatorMenuItem":
-                        System.Diagnostics.Process.Start("https://www.youtube.com/v/WgaOR49oU-c?autoplay=1&rel=0&showinfo=0");
-                        break;
-                    case "HelpVideoSDBCMenuItem":
-                        System.Diagnostics.Process.Start("https://www.youtube.com/v/r5JdL_7saWg?autoplay=1&rel=0&showinfo=0");
-                        break;
-                    }
-                }
+						System.Diagnostics.Process.Start("https://www.youtube.com/v/WgaOR49oU-c?autoplay=1&rel=0&showinfo=0");
+						break;
+					case "HelpVideoSDBCMenuItem":
+						System.Diagnostics.Process.Start("https://www.youtube.com/v/r5JdL_7saWg?autoplay=1&rel=0&showinfo=0");
+						break;
+					}
+				}
 			catch
 				{
 				MessageBox.Show("Unable to navigate to YouTube at this time, try again later.  Please make sure you are connected to the Internet.", "YouTube Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -1523,7 +1555,7 @@ namespace ReloadersWorkShop
 			LoadDataListViewInfoLabel.Size = new Size(ClientRectangle.Width, LoadDataListViewInfoLabel.Height);
 
 			m_LoadDataListView.Location = new Point(6, LoadDataListViewInfoLabel.Location.Y + LoadDataListViewInfoLabel.Height + 6);
-			m_LoadDataListView.Size = new Size(MainTabControl.Width - 26, nButtonY - m_LoadDataListView.Location.Y -20);
+			m_LoadDataListView.Size = new Size(MainTabControl.Width - 26, nButtonY - m_LoadDataListView.Location.Y - 20);
 
 			//----------------------------------------------------------------------------*
 			// Batch Editor Tab
@@ -2142,49 +2174,19 @@ namespace ReloadersWorkShop
 			FileDlg.AddExtension = true;
 			FileDlg.DefaultExt = "rwb";
 			FileDlg.InitialDirectory = m_DataFiles.Preferences.BackupFolder;
-			FileDlg.Filter = String.Format("{0} Backup Files (*.rwb)|*.rwb",Application.ProductName);
+			FileDlg.Filter = String.Format("{0} Backup Files (*.rwb)|*.rwb", Application.ProductName);
 
 			DialogResult rc = FileDlg.ShowDialog();
 
 			if (rc == DialogResult.Cancel)
 				return;
 
-			rc = MessageBox.Show("Merge this backup file with your current data?\n\nNote: When merging, your current preferences will not be modified.", "Merge Data?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button3);
-
-			if (rc == DialogResult.Cancel)
-				return;
-
 			string strPath = FileDlg.FileName;
 
-			bool fLoadOK = true;
-			bool fReinitialize = true;
+			bool fLoadOK = m_DataFiles.Load(strPath, true);
 
-			if (rc == DialogResult.Yes)
-				{
-				cDataFiles DataFiles = new cDataFiles();
-
-				fLoadOK = DataFiles.LoadDataFile(strPath, true);
-
-				if (fLoadOK)
-					{
-					if (!m_DataFiles.Merge(DataFiles))
-						fReinitialize = false;
-					}
-				}
-			else
-				fLoadOK = m_DataFiles.Load(strPath, true);
-
-			if (fLoadOK && fReinitialize)
-				{
-				InitializeManufacturerTab();
-				InitializeCaliberTab();
-				InitializeFirearmTab();
-				InitializeSuppliesTab();
-				InitializeLoadDataTab();
-				InitializeBatchTab();
-				InitializeAmmoTab();
-				InitializeBallisticsTab();
-				}
+			if (fLoadOK)
+				InitializeAllTabs();
 
 			UpdateButtons();
 			}

@@ -82,8 +82,7 @@ namespace ReloadersWorkShop
 			{
 			if (Count > 0)
 				{
-				XmlElement XMLElement = XMLDocument.CreateElement(ExportName);
-				XMLParentElement.AppendChild(XMLElement);
+				XmlElement XMLElement = XMLDocument.CreateElement(ExportName, XMLParentElement);
 
 				foreach (cFirearmBullet FirearmBullet in this)
 					FirearmBullet.Export(XMLDocument, XMLElement);

@@ -49,6 +49,9 @@
     <Compile Include="Controls\cCancelButton.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\cComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\cDateTimePicker.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -59,6 +62,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\cIntegerValueTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\cOKButton.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\cTextBox.cs">

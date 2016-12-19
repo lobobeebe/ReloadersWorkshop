@@ -53,8 +53,6 @@
 			this.PriceLabel = new System.Windows.Forms.Label();
 			this.label9 = new System.Windows.Forms.Label();
 			this.label10 = new System.Windows.Forms.Label();
-			this.OKButton = new System.Windows.Forms.Button();
-			this.FormCancelButton = new System.Windows.Forms.Button();
 			this.ScopeDetailsGroupBox = new System.Windows.Forms.GroupBox();
 			this.ScopeTurretTypeCombo = new System.Windows.Forms.ComboBox();
 			this.ScopeClickTextBox = new CommonLib.Controls.cDoubleValueTextBox();
@@ -79,12 +77,25 @@
 			this.label19 = new System.Windows.Forms.Label();
 			this.NotesTextBox = new CommonLib.Controls.cTextBox();
 			this.NotesGroup = new System.Windows.Forms.GroupBox();
+			this.OKButton = new CommonLib.Controls.cOKButton();
+			this.FormCancelButton = new CommonLib.Controls.cCancelButton();
+			this.label24 = new System.Windows.Forms.Label();
+			this.MagnifierPowerTextBox = new CommonLib.Controls.cTextBox();
+			this.label23 = new System.Windows.Forms.Label();
+			this.label22 = new System.Windows.Forms.Label();
+			this.MagnifierDetailsGroupBox = new System.Windows.Forms.GroupBox();
+			this.MagnifierEyeReliefTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.MagnifierEyeReliefMeasurementLabel = new System.Windows.Forms.Label();
+			this.MagnifierFoVTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.label15 = new System.Windows.Forms.Label();
+			this.label20 = new System.Windows.Forms.Label();
 			label18 = new System.Windows.Forms.Label();
 			this.GeneralGroup.SuspendLayout();
 			this.AcquisitionGroupBox.SuspendLayout();
 			this.ScopeDetailsGroupBox.SuspendLayout();
 			this.RedDotDetailsGroupBox.SuspendLayout();
 			this.NotesGroup.SuspendLayout();
+			this.MagnifierDetailsGroupBox.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// label18
@@ -224,7 +235,9 @@
 			this.TypeCombo.Items.AddRange(new object[] {
             "Scope",
             "Red Dot",
-            "Laser / Light",
+            "Laser",
+            "Magnifier",
+            "Light",
             "Trigger",
             "Furniture",
             "Bipod / Monopod",
@@ -417,26 +430,6 @@
 			this.label10.TabIndex = 0;
 			this.label10.Text = "Acquired From:";
 			// 
-			// OKButton
-			// 
-			this.OKButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.OKButton.Location = new System.Drawing.Point(85, 460);
-			this.OKButton.Name = "OKButton";
-			this.OKButton.Size = new System.Drawing.Size(75, 23);
-			this.OKButton.TabIndex = 4;
-			this.OKButton.Text = "OK";
-			this.OKButton.UseVisualStyleBackColor = true;
-			// 
-			// FormCancelButton
-			// 
-			this.FormCancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.FormCancelButton.Location = new System.Drawing.Point(201, 460);
-			this.FormCancelButton.Name = "FormCancelButton";
-			this.FormCancelButton.Size = new System.Drawing.Size(75, 23);
-			this.FormCancelButton.TabIndex = 5;
-			this.FormCancelButton.Text = "Cancel";
-			this.FormCancelButton.UseVisualStyleBackColor = true;
-			// 
 			// ScopeDetailsGroupBox
 			// 
 			this.ScopeDetailsGroupBox.Controls.Add(this.ScopeTurretTypeCombo);
@@ -546,10 +539,11 @@
 			this.ScopeObjectiveTextBox.MaxLength = 2;
 			this.ScopeObjectiveTextBox.Name = "ScopeObjectiveTextBox";
 			this.ScopeObjectiveTextBox.Required = false;
+			this.ScopeObjectiveTextBox.ShortcutsEnabled = false;
 			this.ScopeObjectiveTextBox.Size = new System.Drawing.Size(46, 20);
 			this.ScopeObjectiveTextBox.TabIndex = 1;
 			this.ScopeObjectiveTextBox.ToolTip = "";
-			this.ScopeObjectiveTextBox.ValidChars = "";
+			this.ScopeObjectiveTextBox.ValidChars = "0123456789";
 			this.ScopeObjectiveTextBox.Value = "";
 			// 
 			// label12
@@ -655,9 +649,9 @@
 			this.label8.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.label8.Location = new System.Drawing.Point(17, 53);
 			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(56, 13);
+			this.label8.Size = new System.Drawing.Size(58, 13);
 			this.label8.TabIndex = 34;
-			this.label8.Text = "Tube size:";
+			this.label8.Text = "Tube Size:";
 			// 
 			// RedDotCowitnessTextBox
 			// 
@@ -767,19 +761,179 @@
 			this.NotesGroup.TabStop = false;
 			this.NotesGroup.Text = "Notes";
 			// 
+			// OKButton
+			// 
+			this.OKButton.ButtonType = CommonLib.Controls.cOKButton.eButtonTypes.OK;
+			this.OKButton.DialogResult = System.Windows.Forms.DialogResult.OK;
+			this.OKButton.Location = new System.Drawing.Point(95, 453);
+			this.OKButton.Name = "OKButton";
+			this.OKButton.ShowToolTips = true;
+			this.OKButton.Size = new System.Drawing.Size(75, 23);
+			this.OKButton.TabIndex = 7;
+			this.OKButton.Text = "OK";
+			this.OKButton.ToolTip = "Click to accept changes and exit.";
+			this.OKButton.UseVisualStyleBackColor = true;
+			// 
+			// FormCancelButton
+			// 
+			this.FormCancelButton.ButtonType = CommonLib.Controls.cCancelButton.eButtonTypes.Cancel;
+			this.FormCancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.FormCancelButton.Location = new System.Drawing.Point(192, 453);
+			this.FormCancelButton.Name = "FormCancelButton";
+			this.FormCancelButton.ShowToolTips = true;
+			this.FormCancelButton.Size = new System.Drawing.Size(75, 23);
+			this.FormCancelButton.TabIndex = 8;
+			this.FormCancelButton.Text = "Cancel";
+			this.FormCancelButton.ToolTip = "Click to cancel changes and exit.";
+			this.FormCancelButton.UseVisualStyleBackColor = true;
+			// 
+			// label24
+			// 
+			this.label24.AutoSize = true;
+			this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label24.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label24.Location = new System.Drawing.Point(42, 26);
+			this.label24.Name = "label24";
+			this.label24.Size = new System.Drawing.Size(40, 13);
+			this.label24.TabIndex = 0;
+			this.label24.Text = "Power:";
+			// 
+			// MagnifierPowerTextBox
+			// 
+			this.MagnifierPowerTextBox.BackColor = System.Drawing.Color.LightPink;
+			this.MagnifierPowerTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.MagnifierPowerTextBox.Location = new System.Drawing.Point(88, 23);
+			this.MagnifierPowerTextBox.MaxLength = 10;
+			this.MagnifierPowerTextBox.Name = "MagnifierPowerTextBox";
+			this.MagnifierPowerTextBox.Required = true;
+			this.MagnifierPowerTextBox.Size = new System.Drawing.Size(55, 20);
+			this.MagnifierPowerTextBox.TabIndex = 0;
+			this.MagnifierPowerTextBox.ToolTip = "";
+			this.MagnifierPowerTextBox.ValidChars = "0123456789.-";
+			this.MagnifierPowerTextBox.Value = "";
+			// 
+			// label23
+			// 
+			this.label23.AutoSize = true;
+			this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label23.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label23.Location = new System.Drawing.Point(178, 26);
+			this.label23.Name = "label23";
+			this.label23.Size = new System.Drawing.Size(58, 13);
+			this.label23.TabIndex = 6;
+			this.label23.Text = "Eye Relief:";
+			// 
+			// label22
+			// 
+			this.label22.AutoSize = true;
+			this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label22.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label22.Location = new System.Drawing.Point(149, 26);
+			this.label22.Name = "label22";
+			this.label22.Size = new System.Drawing.Size(12, 13);
+			this.label22.TabIndex = 8;
+			this.label22.Text = "x";
+			// 
+			// MagnifierDetailsGroupBox
+			// 
+			this.MagnifierDetailsGroupBox.Controls.Add(this.label20);
+			this.MagnifierDetailsGroupBox.Controls.Add(this.MagnifierEyeReliefMeasurementLabel);
+			this.MagnifierDetailsGroupBox.Controls.Add(this.MagnifierFoVTextBox);
+			this.MagnifierDetailsGroupBox.Controls.Add(this.label15);
+			this.MagnifierDetailsGroupBox.Controls.Add(this.MagnifierEyeReliefTextBox);
+			this.MagnifierDetailsGroupBox.Controls.Add(this.label22);
+			this.MagnifierDetailsGroupBox.Controls.Add(this.label23);
+			this.MagnifierDetailsGroupBox.Controls.Add(this.MagnifierPowerTextBox);
+			this.MagnifierDetailsGroupBox.Controls.Add(this.label24);
+			this.MagnifierDetailsGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.MagnifierDetailsGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
+			this.MagnifierDetailsGroupBox.Location = new System.Drawing.Point(392, 194);
+			this.MagnifierDetailsGroupBox.Name = "MagnifierDetailsGroupBox";
+			this.MagnifierDetailsGroupBox.Size = new System.Drawing.Size(339, 85);
+			this.MagnifierDetailsGroupBox.TabIndex = 2;
+			this.MagnifierDetailsGroupBox.TabStop = false;
+			this.MagnifierDetailsGroupBox.Text = "Magnifier Details";
+			this.MagnifierDetailsGroupBox.Visible = false;
+			// 
+			// MagnifierEyeReliefTextBox
+			// 
+			this.MagnifierEyeReliefTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.MagnifierEyeReliefTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.MagnifierEyeReliefTextBox.Location = new System.Drawing.Point(242, 23);
+			this.MagnifierEyeReliefTextBox.MaxLength = 4;
+			this.MagnifierEyeReliefTextBox.MaxValue = 0D;
+			this.MagnifierEyeReliefTextBox.MinValue = 0D;
+			this.MagnifierEyeReliefTextBox.Name = "MagnifierEyeReliefTextBox";
+			this.MagnifierEyeReliefTextBox.NumDecimals = 1;
+			this.MagnifierEyeReliefTextBox.Size = new System.Drawing.Size(50, 20);
+			this.MagnifierEyeReliefTextBox.TabIndex = 1;
+			this.MagnifierEyeReliefTextBox.Text = "0.0";
+			this.MagnifierEyeReliefTextBox.ToolTip = "";
+			this.MagnifierEyeReliefTextBox.Value = 0D;
+			this.MagnifierEyeReliefTextBox.ZeroAllowed = true;
+			// 
+			// MagnifierEyeReliefMeasurementLabel
+			// 
+			this.MagnifierEyeReliefMeasurementLabel.AutoSize = true;
+			this.MagnifierEyeReliefMeasurementLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.MagnifierEyeReliefMeasurementLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.MagnifierEyeReliefMeasurementLabel.Location = new System.Drawing.Point(298, 26);
+			this.MagnifierEyeReliefMeasurementLabel.Name = "MagnifierEyeReliefMeasurementLabel";
+			this.MagnifierEyeReliefMeasurementLabel.Size = new System.Drawing.Size(15, 13);
+			this.MagnifierEyeReliefMeasurementLabel.TabIndex = 34;
+			this.MagnifierEyeReliefMeasurementLabel.Text = "in";
+			// 
+			// MagnifierFoVTextBox
+			// 
+			this.MagnifierFoVTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.MagnifierFoVTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.MagnifierFoVTextBox.Location = new System.Drawing.Point(88, 49);
+			this.MagnifierFoVTextBox.MaxLength = 5;
+			this.MagnifierFoVTextBox.MaxValue = 0D;
+			this.MagnifierFoVTextBox.MinValue = 0D;
+			this.MagnifierFoVTextBox.Name = "MagnifierFoVTextBox";
+			this.MagnifierFoVTextBox.NumDecimals = 1;
+			this.MagnifierFoVTextBox.Size = new System.Drawing.Size(50, 20);
+			this.MagnifierFoVTextBox.TabIndex = 2;
+			this.MagnifierFoVTextBox.Text = "0.0";
+			this.MagnifierFoVTextBox.ToolTip = "";
+			this.MagnifierFoVTextBox.Value = 0D;
+			this.MagnifierFoVTextBox.ZeroAllowed = true;
+			// 
+			// label15
+			// 
+			this.label15.AutoSize = true;
+			this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label15.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label15.Location = new System.Drawing.Point(12, 52);
+			this.label15.Name = "label15";
+			this.label15.Size = new System.Drawing.Size(70, 13);
+			this.label15.TabIndex = 34;
+			this.label15.Text = "Field of View:";
+			// 
+			// label20
+			// 
+			this.label20.AutoSize = true;
+			this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label20.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label20.Location = new System.Drawing.Point(144, 52);
+			this.label20.Name = "label20";
+			this.label20.Size = new System.Drawing.Size(25, 13);
+			this.label20.TabIndex = 36;
+			this.label20.Text = "deg";
+			// 
 			// cFirearmAccessoryForm
 			// 
-			this.AcceptButton = this.OKButton;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.CancelButton = this.FormCancelButton;
-			this.ClientSize = new System.Drawing.Size(726, 496);
+			this.ClientSize = new System.Drawing.Size(745, 488);
 			this.ControlBox = false;
+			this.Controls.Add(this.FormCancelButton);
+			this.Controls.Add(this.OKButton);
+			this.Controls.Add(this.MagnifierDetailsGroupBox);
 			this.Controls.Add(this.NotesGroup);
 			this.Controls.Add(this.RedDotDetailsGroupBox);
 			this.Controls.Add(this.ScopeDetailsGroupBox);
-			this.Controls.Add(this.FormCancelButton);
-			this.Controls.Add(this.OKButton);
 			this.Controls.Add(this.AcquisitionGroupBox);
 			this.Controls.Add(this.GeneralGroup);
 			this.DoubleBuffered = true;
@@ -801,6 +955,8 @@
 			this.RedDotDetailsGroupBox.PerformLayout();
 			this.NotesGroup.ResumeLayout(false);
 			this.NotesGroup.PerformLayout();
+			this.MagnifierDetailsGroupBox.ResumeLayout(false);
+			this.MagnifierDetailsGroupBox.PerformLayout();
 			this.ResumeLayout(false);
 
 			}
@@ -821,8 +977,6 @@
 		private System.Windows.Forms.Label PriceLabel;
 		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.Label label10;
-		private System.Windows.Forms.Button OKButton;
-		private System.Windows.Forms.Button FormCancelButton;
 		private CommonLib.Controls.cTextBox DescriptionTextBox;
 		private CommonLib.Controls.cTextBox SerialNumberTextBox;
 		private CommonLib.Controls.cTextBox PartNumberTextBox;
@@ -857,5 +1011,17 @@
 		private System.Windows.Forms.Label RedDotCowitnessMeasurementLabel;
 		private CommonLib.Controls.cTextBox NotesTextBox;
 		private System.Windows.Forms.GroupBox NotesGroup;
+		private CommonLib.Controls.cOKButton OKButton;
+		private CommonLib.Controls.cCancelButton FormCancelButton;
+		private System.Windows.Forms.Label label24;
+		private CommonLib.Controls.cTextBox MagnifierPowerTextBox;
+		private System.Windows.Forms.Label label23;
+		private System.Windows.Forms.Label label22;
+		private System.Windows.Forms.GroupBox MagnifierDetailsGroupBox;
+		private System.Windows.Forms.Label label20;
+		private System.Windows.Forms.Label MagnifierEyeReliefMeasurementLabel;
+		private CommonLib.Controls.cDoubleValueTextBox MagnifierFoVTextBox;
+		private System.Windows.Forms.Label label15;
+		private CommonLib.Controls.cDoubleValueTextBox MagnifierEyeReliefTextBox;
 		}
 	}

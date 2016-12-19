@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cMainForm.ManufacturerTab.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -45,6 +45,7 @@ namespace ReloadersWorkShop
 			if (!m_fManufacturerTabInitialized)
 				{
 				m_ManufacturersListView = new cManufacturerListView(m_DataFiles);
+				m_ManufacturersListView.ToolTip = "List of Manufacturers in the database.";
 
 				ManufacturersTab.Controls.Add(m_ManufacturersListView);
 
@@ -62,6 +63,8 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 			// Operations that are always performed
 			//----------------------------------------------------------------------------*
+
+			m_ManufacturersListView.ShowToolTips = m_DataFiles.Preferences.ToolTips;
 
 			PopulateManufacturersListView();
 

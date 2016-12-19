@@ -581,7 +581,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_BallisticsData.MaxRange = (int) cDataFiles.MetricToStandard(BallisticsMaxRangeTextBox.Value, cDataFiles.eDataType.Range);
+			m_BallisticsData.MaxRange = cDataFiles.MetricToStandard(BallisticsMaxRangeTextBox.Value, cDataFiles.eDataType.Range);
 			m_DataFiles.Preferences.BallisticsData.MaxRange = (int) cDataFiles.MetricToStandard(BallisticsMaxRangeTextBox.Value, cDataFiles.eDataType.Range);
 
 			SetBallisticsMinMax();

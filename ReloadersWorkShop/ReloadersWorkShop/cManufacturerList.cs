@@ -79,8 +79,7 @@ namespace ReloadersWorkShop
 			{
 			if (Count > 0)
 				{
-				XmlElement XMLElement = XMLDocument.CreateElement(ExportName);
-				XMLParentElement.AppendChild(XMLElement);
+				XmlElement XMLElement = XMLDocument.CreateElement(ExportName, XMLParentElement);
 
 				foreach (cManufacturer Manufacturer in this)
 					Manufacturer.Export(XMLDocument, XMLElement);
@@ -103,7 +102,7 @@ namespace ReloadersWorkShop
 		// Import()
 		//============================================================================*
 
-		public void Import(XmlDocument XMLDocument, XmlNode XMLThisNode)
+		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode)
 			{
 			XmlNode XMLNode = XMLThisNode.FirstChild;
 

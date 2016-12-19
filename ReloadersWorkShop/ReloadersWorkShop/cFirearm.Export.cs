@@ -106,7 +106,7 @@ namespace ReloadersWorkShop
 			if (fIdentityOnly)
 				strName += "Identity";
 
-			XmlElement XMLThisElement = XMLDocument.CreateElement(ExportName, XMLParentElement);
+			XmlElement XMLThisElement = XMLDocument.CreateElement(strName, XMLParentElement);
 
 			base.Export(XMLDocument, XMLThisElement, fIdentityOnly);
 
@@ -173,63 +173,63 @@ namespace ReloadersWorkShop
 
 						break;
 					case "BarrelLength":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dBarrelLength);
+						XMLDocument.Import(XMLNode, out m_dBarrelLength);
 						break;
 					case "Twist":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dTwist);
+						XMLDocument.Import(XMLNode, out m_dTwist);
 						break;
 					case "SightHeight":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dSightHeight);
+						XMLDocument.Import(XMLNode, out m_dSightHeight);
 						break;
 					case "Scoped":
-						m_fScoped = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fScoped);
 						break;
 					case "ScopeClick":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dScopeClick);
+						XMLDocument.Import(XMLNode, out m_dScopeClick);
 						break;
 					case "TurretType":
-						m_eTurretType = XMLNode.FirstChild.Value == "MOA" ? eTurretType.MOA : eTurretType.MilDot;
+						XMLDocument.Import(XMLNode, out m_eTurretType);
 						break;
 					case "ZeroRange":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dZeroRange);
+						XMLDocument.Import(XMLNode, out m_dZeroRange);
 						break;
 					case "HeadSpace":
 					case "Headspace":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dHeadSpace);
+						XMLDocument.Import(XMLNode, out m_dHeadSpace);
 						break;
 					case "Neck":
 					case "NeckSize":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dNeck);
+						XMLDocument.Import(XMLNode, out m_dNeck);
 						break;
 					case "ReceiverFinish":
-						m_strReceiverFinish = XMLNode.FirstChild.Value;
+						XMLDocument.Import(XMLNode, out m_strReceiverFinish);
 						break;
 					case "BarrelFinish":
-						m_strBarrelFinish = XMLNode.FirstChild.Value;
+						XMLDocument.Import(XMLNode, out m_strBarrelFinish);
 						break;
 					case "Type":
-						m_strType = XMLNode.FirstChild.Value;
+						XMLDocument.Import(XMLNode, out m_strType);
 						break;
 					case "Action":
-						m_strAction = XMLNode.FirstChild.Value;
+						XMLDocument.Import(XMLNode, out m_strAction);
 						break;
 					case "Hammer":
-						m_strHammer = XMLNode.FirstChild.Value;
+						XMLDocument.Import(XMLNode, out m_strHammer);
 						break;
 					case "Magazine":
-						m_strMagazine = XMLNode.FirstChild.Value;
+						XMLDocument.Import(XMLNode, out m_strMagazine);
 						break;
 					case "Capacity":
-						Int32.TryParse(XMLNode.FirstChild.Value, out m_nCapacity);
+						XMLDocument.Import(XMLNode, out m_nCapacity);
 						break;
 					case "TransferFees":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dTransferFees);
+						XMLDocument.Import(XMLNode, out m_dTransferFees);
 						break;
 					case "OtherFees":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dOtherFees);
+						XMLDocument.Import(XMLNode, out m_dOtherFees);
 						break;
 					case "Checked":
-						m_fChecked = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fChecked);
 						break;
 					case "FirearmCalibers":
 					case "FirearmCaliberList":

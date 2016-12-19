@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cListView.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -44,6 +44,8 @@ namespace ReloadersWorkShop
 
 		private cDataFiles m_DataFiles = null;
 		private bool m_fPopulating = false;
+
+		private bool m_fShowToolTips = true;
 
 		private cPreferences.eApplicationListView m_eListViewType;
 
@@ -838,6 +840,24 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// ShowToolTips Property
+		//============================================================================*
+
+		public bool ShowToolTips
+			{
+			get
+				{
+				return (m_fShowToolTips);
+				}
+			set
+				{
+				m_fShowToolTips = value;
+
+				ToolTip = m_strToolTip;
+				}
+			}
+
+		//============================================================================*
 		// ToolTip Property
 		//============================================================================*
 
@@ -851,12 +871,23 @@ namespace ReloadersWorkShop
 				{
 				m_strToolTip = value;
 
-				if (m_ToolTip == null)
-					m_ToolTip = new ToolTip();
+				if (m_fShowToolTips && !String.IsNullOrEmpty(m_strToolTip))
+					{
+					if (m_ToolTip == null)
+						m_ToolTip = new ToolTip();
 
-				m_ToolTip.ShowAlways = true;
-				m_ToolTip.RemoveAll();
-				m_ToolTip.SetToolTip(this, m_strToolTip);
+					m_ToolTip.ShowAlways = true;
+					m_ToolTip.RemoveAll();
+					m_ToolTip.SetToolTip(this, m_strToolTip);
+					}
+				else
+					{
+					if (m_ToolTip != null)
+						{
+						m_ToolTip.ShowAlways = false;
+						m_ToolTip.RemoveAll();
+						}
+					}
 				}
 			}
 

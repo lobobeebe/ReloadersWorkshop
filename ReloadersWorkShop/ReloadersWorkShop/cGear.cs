@@ -77,7 +77,7 @@ namespace ReloadersWorkShop
 		// cGear() - Constructor
 		//============================================================================*
 
-		public cGear(eGearTypes eType,  bool fIdentity = false)
+		public cGear(eGearTypes eType, bool fIdentity = false)
 			{
 			m_eType = eType;
 			m_fIdentity = fIdentity;
@@ -101,25 +101,53 @@ namespace ReloadersWorkShop
 		// Append()
 		//============================================================================*
 
-		public void Append(cGear Gear)
+		public int Append(cGear Gear)
 			{
-			if (String.IsNullOrEmpty(m_strDescription))
+			int nUpdateCount = 0;
+
+			if (String.IsNullOrEmpty(m_strDescription) && !String.IsNullOrEmpty(Gear.m_strDescription))
+				{
 				m_strDescription = Gear.m_strDescription;
 
-			if (String.IsNullOrEmpty(m_strNotes))
+				nUpdateCount++;
+				}
+
+			if (String.IsNullOrEmpty(m_strNotes) && !String.IsNullOrEmpty(Gear.m_strNotes))
+				{
 				m_strNotes = Gear.m_strNotes;
 
-			if (String.IsNullOrEmpty(m_strSource))
+				nUpdateCount++;
+				}
+
+			if (String.IsNullOrEmpty(m_strSource) && !String.IsNullOrEmpty(Gear.m_strSource))
+				{
 				m_strSource = Gear.m_strSource;
 
-			if (m_dPrice == 0.0)
+				nUpdateCount++;
+				}
+
+			if (m_dPrice == 0.0 && Gear.m_dPrice != 0.0)
+				{
 				m_dPrice = Gear.m_dPrice;
 
-			if (m_dTax == 0.0)
+				nUpdateCount++;
+				}
+
+			if (m_dTax == 0.0 && Gear.m_dTax != 0.0)
+				{
 				m_dTax = Gear.m_dTax;
 
-			if (m_dShipping == 0.0)
+				nUpdateCount++;
+				}
+
+			if (m_dShipping == 0.0 && Gear.m_dShipping != 0.0)
+				{
 				m_dShipping = Gear.m_dShipping;
+
+				nUpdateCount++;
+				}
+
+			return (nUpdateCount);
 			}
 
 		//============================================================================*
@@ -310,7 +338,7 @@ namespace ReloadersWorkShop
 			switch (eGearType)
 				{
 				case cGear.eGearTypes.Firearm:
-					return("Firearm");
+					return ("Firearm");
 
 				case cGear.eGearTypes.Scope:
 					return ("Scope");
@@ -325,7 +353,7 @@ namespace ReloadersWorkShop
 					return ("Magnifier");
 
 				case cGear.eGearTypes.Light:
-					return("Light");
+					return ("Light");
 
 				case cGear.eGearTypes.Trigger:
 					return ("Trigger");
@@ -334,7 +362,7 @@ namespace ReloadersWorkShop
 					return ("Furniture");
 
 				case cGear.eGearTypes.Bipod:
-					return("Bipod/Monopod");
+					return ("Bipod/Monopod");
 
 				case cGear.eGearTypes.Parts:
 					return ("Firearm Parts");
@@ -610,7 +638,7 @@ namespace ReloadersWorkShop
 		// Validate()
 		//============================================================================*
 
-		public virtual bool Validate(bool  fIdentityOK = false)
+		public virtual bool Validate(bool fIdentityOK = false)
 			{
 			if (Manufacturer == null)
 				return (false);

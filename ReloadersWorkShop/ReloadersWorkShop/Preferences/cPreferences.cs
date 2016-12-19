@@ -128,6 +128,8 @@ namespace ReloadersWorkShop.Preferences
 
 		private int m_nReloadKeepDays = 30;
 
+		private cFirearm.eFireArmType m_eLastAmmoFirearmType = cFirearm.eFireArmType.Handgun;
+
 		// Ammo List Settings
 
 		private cAmmo m_LastAmmo = null;
@@ -2263,6 +2265,22 @@ namespace ReloadersWorkShop.Preferences
 			set
 				{
 				m_LastAmmoCaliber = value;
+				}
+			}
+
+		//============================================================================*
+		// LastAmmoFirearmType Property
+		//============================================================================*
+
+		public cFirearm.eFireArmType LastAmmoFirearmType
+			{
+			get
+				{
+				return (m_eLastAmmoFirearmType);
+				}
+			set
+				{
+				m_eLastAmmoFirearmType = value;
 				}
 			}
 

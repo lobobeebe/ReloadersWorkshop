@@ -49,8 +49,6 @@ namespace ReloadersWorkShop
 			{
 			System.Windows.Forms.Label label1;
 			System.Windows.Forms.Label label3;
-			this.ManufacturerCancelButton = new System.Windows.Forms.Button();
-			this.ManufacturerOKButton = new System.Windows.Forms.Button();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.BulletMoldsCheckBox = new System.Windows.Forms.CheckBox();
 			this.PrimersCheckBox = new System.Windows.Forms.CheckBox();
@@ -69,6 +67,8 @@ namespace ReloadersWorkShop
 			this.NameTextBox = new CommonLib.Controls.cTextBox();
 			this.ProductUseLabel = new System.Windows.Forms.Label();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.LightsCheckBox = new System.Windows.Forms.CheckBox();
+			this.MagnifiersCheckBox = new System.Windows.Forms.CheckBox();
 			this.LasersCheckBox = new System.Windows.Forms.CheckBox();
 			this.OtherCheckBox = new System.Windows.Forms.CheckBox();
 			this.PartsCheckBox = new System.Windows.Forms.CheckBox();
@@ -77,8 +77,8 @@ namespace ReloadersWorkShop
 			this.FurnitureCheckBox = new System.Windows.Forms.CheckBox();
 			this.TriggersCheckBox = new System.Windows.Forms.CheckBox();
 			this.ScopesCheckBox = new System.Windows.Forms.CheckBox();
-			this.MagnifiersCheckBox = new System.Windows.Forms.CheckBox();
-			this.LightsCheckBox = new System.Windows.Forms.CheckBox();
+			this.FormCancelButton = new CommonLib.Controls.cCancelButton();
+			this.OKButton = new CommonLib.Controls.cOKButton();
 			label1 = new System.Windows.Forms.Label();
 			label3 = new System.Windows.Forms.Label();
 			this.groupBox1.SuspendLayout();
@@ -110,28 +110,6 @@ namespace ReloadersWorkShop
 			label3.Size = new System.Drawing.Size(49, 13);
 			label3.TabIndex = 7;
 			label3.Text = "Website:";
-			// 
-			// ManufacturerCancelButton
-			// 
-			this.ManufacturerCancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.ManufacturerCancelButton.Location = new System.Drawing.Point(170, 457);
-			this.ManufacturerCancelButton.Margin = new System.Windows.Forms.Padding(2);
-			this.ManufacturerCancelButton.Name = "ManufacturerCancelButton";
-			this.ManufacturerCancelButton.Size = new System.Drawing.Size(56, 19);
-			this.ManufacturerCancelButton.TabIndex = 5;
-			this.ManufacturerCancelButton.Text = "Cancel";
-			this.ManufacturerCancelButton.UseVisualStyleBackColor = true;
-			// 
-			// ManufacturerOKButton
-			// 
-			this.ManufacturerOKButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.ManufacturerOKButton.Location = new System.Drawing.Point(96, 457);
-			this.ManufacturerOKButton.Margin = new System.Windows.Forms.Padding(2);
-			this.ManufacturerOKButton.Name = "ManufacturerOKButton";
-			this.ManufacturerOKButton.Size = new System.Drawing.Size(56, 19);
-			this.ManufacturerOKButton.TabIndex = 4;
-			this.ManufacturerOKButton.Text = "OK";
-			this.ManufacturerOKButton.UseVisualStyleBackColor = true;
 			// 
 			// groupBox1
 			// 
@@ -383,6 +361,30 @@ namespace ReloadersWorkShop
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Parts && Accessories";
 			// 
+			// LightsCheckBox
+			// 
+			this.LightsCheckBox.AutoSize = true;
+			this.LightsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.LightsCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.LightsCheckBox.Location = new System.Drawing.Point(111, 48);
+			this.LightsCheckBox.Name = "LightsCheckBox";
+			this.LightsCheckBox.Size = new System.Drawing.Size(54, 17);
+			this.LightsCheckBox.TabIndex = 9;
+			this.LightsCheckBox.Text = "Lights";
+			this.LightsCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// MagnifiersCheckBox
+			// 
+			this.MagnifiersCheckBox.AutoSize = true;
+			this.MagnifiersCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.MagnifiersCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.MagnifiersCheckBox.Location = new System.Drawing.Point(18, 48);
+			this.MagnifiersCheckBox.Name = "MagnifiersCheckBox";
+			this.MagnifiersCheckBox.Size = new System.Drawing.Size(74, 17);
+			this.MagnifiersCheckBox.TabIndex = 8;
+			this.MagnifiersCheckBox.Text = "Magnifiers";
+			this.MagnifiersCheckBox.UseVisualStyleBackColor = true;
+			// 
 			// LasersCheckBox
 			// 
 			this.LasersCheckBox.AutoSize = true;
@@ -479,43 +481,43 @@ namespace ReloadersWorkShop
 			this.ScopesCheckBox.Text = "Scopes";
 			this.ScopesCheckBox.UseVisualStyleBackColor = true;
 			// 
-			// MagnifiersCheckBox
+			// FormCancelButton
 			// 
-			this.MagnifiersCheckBox.AutoSize = true;
-			this.MagnifiersCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.MagnifiersCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.MagnifiersCheckBox.Location = new System.Drawing.Point(18, 48);
-			this.MagnifiersCheckBox.Name = "MagnifiersCheckBox";
-			this.MagnifiersCheckBox.Size = new System.Drawing.Size(74, 17);
-			this.MagnifiersCheckBox.TabIndex = 8;
-			this.MagnifiersCheckBox.Text = "Magnifiers";
-			this.MagnifiersCheckBox.UseVisualStyleBackColor = true;
+			this.FormCancelButton.ButtonType = CommonLib.Controls.cCancelButton.eButtonTypes.Cancel;
+			this.FormCancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.FormCancelButton.Location = new System.Drawing.Point(174, 453);
+			this.FormCancelButton.Name = "FormCancelButton";
+			this.FormCancelButton.Size = new System.Drawing.Size(75, 23);
+			this.FormCancelButton.TabIndex = 5;
+			this.FormCancelButton.Text = "Cancel";
+			this.FormCancelButton.ToolTip = "Click to cancel changes and exit.";
+			this.FormCancelButton.UseVisualStyleBackColor = true;
 			// 
-			// LightsCheckBox
+			// OKButton
 			// 
-			this.LightsCheckBox.AutoSize = true;
-			this.LightsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.LightsCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.LightsCheckBox.Location = new System.Drawing.Point(111, 48);
-			this.LightsCheckBox.Name = "LightsCheckBox";
-			this.LightsCheckBox.Size = new System.Drawing.Size(54, 17);
-			this.LightsCheckBox.TabIndex = 9;
-			this.LightsCheckBox.Text = "Lights";
-			this.LightsCheckBox.UseVisualStyleBackColor = true;
+			this.OKButton.ButtonType = CommonLib.Controls.cOKButton.eButtonTypes.OK;
+			this.OKButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.OKButton.Location = new System.Drawing.Point(81, 453);
+			this.OKButton.Name = "OKButton";
+			this.OKButton.Size = new System.Drawing.Size(75, 23);
+			this.OKButton.TabIndex = 6;
+			this.OKButton.Text = "OK";
+			this.OKButton.ToolTip = "Click to accept changes and exit.";
+			this.OKButton.UseVisualStyleBackColor = true;
 			// 
 			// cManufacturerForm
 			// 
-			this.AcceptButton = this.ManufacturerOKButton;
+			this.AcceptButton = this.OKButton;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.CancelButton = this.ManufacturerCancelButton;
-			this.ClientSize = new System.Drawing.Size(322, 488);
+			this.CancelButton = this.FormCancelButton;
+			this.ClientSize = new System.Drawing.Size(330, 490);
 			this.ControlBox = false;
+			this.Controls.Add(this.OKButton);
+			this.Controls.Add(this.FormCancelButton);
 			this.Controls.Add(this.groupBox3);
 			this.Controls.Add(this.ProductUseLabel);
 			this.Controls.Add(this.groupBox1);
-			this.Controls.Add(this.ManufacturerCancelButton);
-			this.Controls.Add(this.ManufacturerOKButton);
 			this.Controls.Add(this.FirearmsGroup);
 			this.Controls.Add(this.groupBox2);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
@@ -540,9 +542,6 @@ namespace ReloadersWorkShop
 			}
 
 		#endregion
-
-		private System.Windows.Forms.Button ManufacturerCancelButton;
-		private System.Windows.Forms.Button ManufacturerOKButton;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.GroupBox FirearmsGroup;
 		private System.Windows.Forms.GroupBox groupBox2;
@@ -571,5 +570,7 @@ namespace ReloadersWorkShop
 		private System.Windows.Forms.CheckBox LasersCheckBox;
 		private System.Windows.Forms.CheckBox MagnifiersCheckBox;
 		private System.Windows.Forms.CheckBox LightsCheckBox;
+		private CommonLib.Controls.cCancelButton FormCancelButton;
+		private CommonLib.Controls.cOKButton OKButton;
 		}
 	}

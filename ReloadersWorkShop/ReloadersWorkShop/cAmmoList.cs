@@ -11,7 +11,6 @@
 
 using System;
 using System.IO;
-using System.Collections.Generic;
 using System.Xml;
 
 //============================================================================*
@@ -28,7 +27,14 @@ namespace ReloadersWorkShop
 	public class cAmmoList : cSupplyList
 		{
 		//============================================================================*
-		// AddAmmo()
+		// Private Data Members
+		//============================================================================*
+
+		private int m_nNewCount = 0;
+		private int m_nUpdateCount = 0;
+
+		//============================================================================*
+		// AddSupply()
 		//============================================================================*
 
 		public override bool AddSupply(cSupply Supply)
@@ -42,13 +48,15 @@ namespace ReloadersWorkShop
 				{
 				if (CheckAmmo.CompareTo(Ammo) == 0)
 					{
-					CheckAmmo.Append(Ammo);
+					m_nUpdateCount += CheckAmmo.Append(Ammo);
 
 					return (false);
 					}
 				}
 
 			base.AddSupply(Ammo);
+
+			m_nNewCount++;
 
 			return (true);
 			}
@@ -113,6 +121,9 @@ namespace ReloadersWorkShop
 
 		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
 			{
+			m_nNewCount = 0;
+			m_nUpdateCount = 0;
+
 			XmlNode XMLNode = XMLThisNode.FirstChild;
 
 			while (XMLNode != null)
@@ -129,6 +140,30 @@ namespace ReloadersWorkShop
 					}
 
 				XMLNode = XMLNode.NextSibling;
+				}
+			}
+
+		//============================================================================*
+		// NewCount Property
+		//============================================================================*
+
+		public int NewCount
+			{
+			get
+				{
+				return (m_nNewCount);
+				}
+			}
+
+		//============================================================================*
+		// UpdateCount Property
+		//============================================================================*
+
+		public int UpdateCount
+			{
+			get
+				{
+				return (m_nUpdateCount);
 				}
 			}
 		}

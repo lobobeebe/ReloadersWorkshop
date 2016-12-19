@@ -273,8 +273,12 @@
     <Compile Include="cGearList.cs" />
     <Compile Include="cListViewFirearmAccessoryComparer.cs" />
     <Compile Include="cLoad.Export.cs" />
+    <Compile Include="cMagnifier.cs" />
     <Compile Include="cManufacturer.Export.cs" />
     <Compile Include="Controls\cViewButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\cTurretTypeCombo.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="cPowder.Export.cs" />
@@ -282,6 +286,7 @@
     <Compile Include="cRedDot.cs" />
     <Compile Include="cRWXMLDocument.cs" />
     <Compile Include="cScope.cs" />
+    <Compile Include="cScope.Export.cs" />
     <Compile Include="cSupply.Export.cs" />
     <Compile Include="cTarget.cs" />
     <Compile Include="cTargetCalibrationForm.cs">
@@ -668,7 +673,6 @@
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="app.manifest" />
-    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

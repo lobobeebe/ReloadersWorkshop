@@ -49,8 +49,8 @@
 			this.FirearmsCheckBox = new System.Windows.Forms.CheckBox();
 			this.CalibersCheckBox = new System.Windows.Forms.CheckBox();
 			this.ManufacturersCheckBox = new System.Windows.Forms.CheckBox();
-			this.ExportButton = new System.Windows.Forms.Button();
 			this.CancelFormButton = new System.Windows.Forms.Button();
+			this.ExportButton = new CommonLib.Controls.cButton();
 			this.ExportFileGroupBox.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.SuspendLayout();
@@ -172,7 +172,7 @@
 			this.XMLPreferencesLabel.AutoSize = true;
 			this.XMLPreferencesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.XMLPreferencesLabel.ForeColor = System.Drawing.Color.Blue;
-			this.XMLPreferencesLabel.Location = new System.Drawing.Point(15, 68);
+			this.XMLPreferencesLabel.Location = new System.Drawing.Point(26, 68);
 			this.XMLPreferencesLabel.Name = "XMLPreferencesLabel";
 			this.XMLPreferencesLabel.Size = new System.Drawing.Size(162, 13);
 			this.XMLPreferencesLabel.TabIndex = 14;
@@ -346,39 +346,39 @@
 			this.ManufacturersCheckBox.Text = "Manufacturers";
 			this.ManufacturersCheckBox.UseVisualStyleBackColor = true;
 			// 
-			// ExportButton
-			// 
-			this.ExportButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.ExportButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.ExportButton.Location = new System.Drawing.Point(180, 241);
-			this.ExportButton.Name = "ExportButton";
-			this.ExportButton.Size = new System.Drawing.Size(75, 23);
-			this.ExportButton.TabIndex = 12;
-			this.ExportButton.Text = "Export";
-			this.ExportButton.UseVisualStyleBackColor = true;
-			// 
 			// CancelFormButton
 			// 
 			this.CancelFormButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.CancelFormButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.CancelFormButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.CancelFormButton.Location = new System.Drawing.Point(298, 241);
+			this.CancelFormButton.Location = new System.Drawing.Point(291, 241);
 			this.CancelFormButton.Name = "CancelFormButton";
 			this.CancelFormButton.Size = new System.Drawing.Size(75, 23);
 			this.CancelFormButton.TabIndex = 13;
 			this.CancelFormButton.Text = "Done";
 			this.CancelFormButton.UseVisualStyleBackColor = true;
 			// 
+			// ExportButton
+			// 
+			this.ExportButton.Location = new System.Drawing.Point(182, 241);
+			this.ExportButton.Name = "ExportButton";
+			this.ExportButton.ShowToolTips = true;
+			this.ExportButton.Size = new System.Drawing.Size(75, 23);
+			this.ExportButton.TabIndex = 14;
+			this.ExportButton.Text = "Export";
+			this.ExportButton.ToolTip = "";
+			this.ExportButton.UseVisualStyleBackColor = true;
+			// 
 			// cExportForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.CancelFormButton;
-			this.ClientSize = new System.Drawing.Size(553, 275);
+			this.ClientSize = new System.Drawing.Size(549, 271);
 			this.ControlBox = false;
+			this.Controls.Add(this.ExportButton);
 			this.Controls.Add(this.CancelFormButton);
 			this.Controls.Add(this.groupBox2);
-			this.Controls.Add(this.ExportButton);
 			this.Controls.Add(this.ExportFileGroupBox);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
 			this.MaximizeBox = false;
@@ -415,11 +415,11 @@
 		private System.Windows.Forms.CheckBox FirearmsCheckBox;
 		private System.Windows.Forms.CheckBox CalibersCheckBox;
 		private System.Windows.Forms.Label FileNameLabel;
-		private System.Windows.Forms.Button ExportButton;
 		private System.Windows.Forms.Button CancelFormButton;
 		private System.Windows.Forms.Button BrowseButton;
 		private System.Windows.Forms.CheckBox PartsCheckBox;
 		private System.Windows.Forms.CheckBox FullDataDumpCheckBox;
 		private System.Windows.Forms.Label XMLPreferencesLabel;
+		private CommonLib.Controls.cButton ExportButton;
 		}
 	}

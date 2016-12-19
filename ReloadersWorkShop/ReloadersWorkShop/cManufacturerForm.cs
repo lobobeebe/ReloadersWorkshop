@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cManuacturerForm.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -12,6 +12,12 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+
+//============================================================================*
+// Application Specific Using Statements
+//============================================================================*
+
+using CommonLib.Controls;
 
 //============================================================================*
 // NameSpace
@@ -34,9 +40,6 @@ namespace ReloadersWorkShop
 		private const string cm_strHeadStampToolTip = "Manufacturer's name as found on case heads.";
 		private const string cm_strProductsToolTip = "Check if this manufacturer supplies this product.";
 
-		private const string cm_strManufacturerOKButtonToolTip = "Click to add or update the manufacturer with the above data.";
-		private const string cm_strManufacturerCancelButtonToolTip = "Click to cancel changes and return to the main window.";
-
 		//============================================================================*
 		// Private Data Members
 		//============================================================================*
@@ -55,9 +58,6 @@ namespace ReloadersWorkShop
 		private ToolTip m_WebsiteToolTip = new ToolTip();
 		private ToolTip m_HeadStampToolTip = new ToolTip();
 		private ToolTip m_ProductsToolTip = new ToolTip();
-
-		private ToolTip m_ManufacturerOKButtonToolTip = new ToolTip();
-		private ToolTip m_ManufacturerCancelButtonToolTip = new ToolTip();
 
 		private cDataFiles m_DataFiles = null;
 
@@ -81,7 +81,7 @@ namespace ReloadersWorkShop
 
 				m_fAdd = true;
 
-				ManufacturerOKButton.Text = "Add";
+				OKButton.ButtonType = cOKButton.eButtonTypes.Add;
 				}
 			else
 				{
@@ -90,18 +90,18 @@ namespace ReloadersWorkShop
 
 				if (m_fViewOnly)
 					{
-					ManufacturerOKButton.Visible = false;
-					ManufacturerCancelButton.Text = "Close";
+					OKButton.Visible = false;
+					FormCancelButton.ButtonType = cCancelButton.eButtonTypes.Close;
 
-					int nButtonX = (this.Size.Width / 2) - (ManufacturerCancelButton.Width / 2);
+					int nButtonX = (this.Size.Width / 2) - (FormCancelButton.Width / 2);
 
-					ManufacturerCancelButton.Location = new Point(nButtonX, ManufacturerCancelButton.Location.Y);
+					FormCancelButton.Location = new Point(nButtonX, FormCancelButton.Location.Y);
 					}
 				else
-					ManufacturerOKButton.Text = "Update";
+					OKButton.ButtonType = cOKButton.eButtonTypes.Update;
 				}
 
-			SetClientSizeCore(FirearmsGroup.Location.X + FirearmsGroup.Width + 10, ManufacturerCancelButton.Location.Y + ManufacturerCancelButton.Height + 20);
+			SetClientSizeCore(FirearmsGroup.Location.X + FirearmsGroup.Width + 10, FormCancelButton.Location.Y + FormCancelButton.Height + 20);
 
 			//----------------------------------------------------------------------------*
 			// Set Control Event Handlers
@@ -160,7 +160,7 @@ namespace ReloadersWorkShop
 				OtherCheckBox.AutoCheck = false;
 				}
 
-			ManufacturerOKButton.Click += OnOKClicked;
+			OKButton.Click += OnOKClicked;
 
 			//----------------------------------------------------------------------------*
 			// Populate the data fields
@@ -725,6 +725,9 @@ namespace ReloadersWorkShop
 
 		private void SetStaticToolTips()
 			{
+			OKButton.ShowToolTips = m_DataFiles.Preferences.ToolTips;
+			FormCancelButton.ShowToolTips = m_DataFiles.Preferences.ToolTips;
+
 			if (!m_DataFiles.Preferences.ToolTips)
 				return;
 
@@ -757,14 +760,6 @@ namespace ReloadersWorkShop
 			m_ProductsToolTip.SetToolTip(BipodsCheckBox, cm_strProductsToolTip);
 			m_ProductsToolTip.SetToolTip(PartsCheckBox, cm_strProductsToolTip);
 			m_ProductsToolTip.SetToolTip(OtherCheckBox, cm_strProductsToolTip);
-
-			m_ManufacturerOKButtonToolTip.ShowAlways = true;
-			m_ManufacturerOKButtonToolTip.RemoveAll();
-			m_ManufacturerOKButtonToolTip.SetToolTip(ManufacturerOKButton, cm_strManufacturerOKButtonToolTip);
-
-			m_ManufacturerCancelButtonToolTip.ShowAlways = true;
-			m_ManufacturerCancelButtonToolTip.RemoveAll();
-			m_ManufacturerCancelButtonToolTip.SetToolTip(ManufacturerCancelButton, cm_strManufacturerCancelButtonToolTip);
 			}
 
 		//============================================================================*
@@ -961,7 +956,7 @@ namespace ReloadersWorkShop
 			// Enable or disable the Ok button
 			//----------------------------------------------------------------------------*
 
-			ManufacturerOKButton.Enabled = fEnableOK;
+			OKButton.Enabled = fEnableOK;
 			}
 
 		//============================================================================*

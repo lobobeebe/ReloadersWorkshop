@@ -1528,13 +1528,13 @@ namespace ReloadersWorkShop
             // Add, Edit, and Remove Caliber Buttons
             //----------------------------------------------------------------------------*
 
-            int fCaliberCount = 0;
+            int nCaliberCount = 0;
 
             if (ManufacturerCombo.SelectedIndex != -1)
                 {
                 foreach (cCaliber CheckCaliber in m_DataFiles.CaliberList)
                     {
-                    if (CheckCaliber.FirearmType != FirearmTypeCombo.Value)
+                    if (CheckCaliber.FirearmType != m_Bullet.FirearmType)
                         continue;
 
                     bool fAdd = true;
@@ -1555,14 +1555,14 @@ namespace ReloadersWorkShop
                             }
 
                         if (fAdd)
-                            fCaliberCount++;
+                            nCaliberCount++;
                         }
                     }
                 }
 
             strToolTip = cm_strAddCaliberButtonToolTip;
 
-            if (fCaliberCount == 0)
+            if (nCaliberCount == 0)
                 {
                 string strCaliberToolTip = cm_strCaliberListToolTip;
                 strCaliberToolTip += "\n\nThere are no calibers that can accomodate a bullet with this firearm Type, Diameter, and Weight.";

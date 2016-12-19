@@ -46,7 +46,6 @@ namespace ReloadersWorkShop
 
 		private const string cm_strScopedToolTip = "Check if this firearm has a scope.";
 		private const string cm_strScopeClickToolTip = "The distance, in MOA or Mils, that each click of the scope turrets will move the impact point.";
-		private const string cm_strTurretTypeToolTip = "The type of adjustment of the turrets on this firearm's scope.";
 
 		private const string cm_strHeadSpaceToolTip = "The headspace to which ammo for this firearm should be sized.";
 		private const string cm_strNeckToolTip = "The neck size to which ammo for this firearm should be sized.";
@@ -56,9 +55,6 @@ namespace ReloadersWorkShop
 		private const string cm_strAddBulletButtonToolTip = "Click to add new bullet specific data for this firearm.";
 		private const string cm_strRemoveBulletButtonToolTip = "Click to remove bullet specific data from the list.";
 		private const string cm_strEditBulletButtonToolTip = "Click to edit the selected bullet specific data.";
-
-		private const string cm_strFirearmOKButtonToolTip = "Click to add or update the firearm with the above data.";
-		private const string cm_strFirearmCancelButtonToolTip = "Click to cancel changes and return to the main window.";
 
 		//----------------------------------------------------------------------------*
 		// Private Data Members
@@ -169,7 +165,7 @@ namespace ReloadersWorkShop
 				SightHeightTextBox.TextChanged += OnSightHeightChanged;
 
 				ScopedCheckBox.Click += OnScopedClicked;
-				TurretTypeComboBox.SelectedIndexChanged += OnTurretTypeSelected;
+				TurretTypeCombo.SelectedIndexChanged += OnTurretTypeSelected;
 				ScopeClickTextBox.TextChanged += OnScopeClickChanged;
 
 				HeadSpaceTextBox.TextChanged += OnHeadSpaceChanged;
@@ -197,7 +193,7 @@ namespace ReloadersWorkShop
 				ZeroRangeTextBox.ReadOnly = true;
 				SightHeightTextBox.ReadOnly = true;
 				ScopeClickTextBox.ReadOnly = true;
-				TurretTypeComboBox.Enabled = false;
+				TurretTypeCombo.Enabled = false;
 				HeadSpaceTextBox.ReadOnly = true;
 				NeckTextBox.ReadOnly = true;
 
@@ -739,7 +735,7 @@ namespace ReloadersWorkShop
 			ScopedCheckBox.Checked = ScopedCheckBox.Checked ? false : true;
 
 			ScopeClickTextBox.Enabled = ScopedCheckBox.Checked;
-			TurretTypeComboBox.Enabled = ScopedCheckBox.Checked;
+			TurretTypeCombo.Enabled = ScopedCheckBox.Checked;
 
 			m_Firearm.Scoped = ScopedCheckBox.Checked;
 
@@ -805,7 +801,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_Firearm.TurretType = (cFirearm.eTurretType) TurretTypeComboBox.SelectedIndex;
+			m_Firearm.TurretType = TurretTypeCombo.Value;
 
 			m_fChanged = true;
 
@@ -935,8 +931,8 @@ namespace ReloadersWorkShop
 			ScopeClickTextBox.Value = m_Firearm.ScopeClick;
 			ScopeClickTextBox.Enabled = m_Firearm.Scoped;
 
-			TurretTypeComboBox.SelectedIndex = (int) m_Firearm.TurretType;
-			TurretTypeComboBox.Enabled = m_Firearm.Scoped;
+			TurretTypeCombo.Value = m_Firearm.TurretType;
+			TurretTypeCombo.Enabled = m_Firearm.Scoped;
 
 			HeadSpaceTextBox.Value = cDataFiles.StandardToMetric(m_Firearm.HeadSpace, cDataFiles.eDataType.Dimension);
 			HeadSpaceTextBox.Enabled = FirearmTypeCombo.Value == cFirearm.eFireArmType.Rifle;
@@ -1094,10 +1090,6 @@ namespace ReloadersWorkShop
 
 			ScopeClickTextBox.ToolTip = cm_strScopeClickToolTip;
 
-			m_TurretTypeToolTip.ShowAlways = true;
-			m_TurretTypeToolTip.RemoveAll();
-			m_TurretTypeToolTip.SetToolTip(TurretTypeComboBox, cm_strTurretTypeToolTip);
-
 			HeadSpaceTextBox.ToolTip = cm_strHeadSpaceToolTip;
 			NeckTextBox.ToolTip = cm_strNeckToolTip;
 
@@ -1116,14 +1108,6 @@ namespace ReloadersWorkShop
 			m_RemoveBulletButtonToolTip.ShowAlways = true;
 			m_RemoveBulletButtonToolTip.RemoveAll();
 			m_RemoveBulletButtonToolTip.SetToolTip(RemoveBulletButton, cm_strRemoveBulletButtonToolTip);
-
-			m_FirearmOKButtonToolTip.ShowAlways = true;
-			m_FirearmOKButtonToolTip.RemoveAll();
-			m_FirearmOKButtonToolTip.SetToolTip(OKButton, cm_strFirearmOKButtonToolTip);
-
-			m_FirearmCancelButtonToolTip.ShowAlways = true;
-			m_FirearmCancelButtonToolTip.RemoveAll();
-			m_FirearmCancelButtonToolTip.SetToolTip(FirearmCancelButton, cm_strFirearmCancelButtonToolTip);
 			}
 
 		//============================================================================*

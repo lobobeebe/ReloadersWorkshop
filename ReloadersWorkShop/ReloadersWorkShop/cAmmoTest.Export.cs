@@ -59,7 +59,8 @@ namespace ReloadersWorkShop
 
 			XMLDocument.CreateElement("TestDate", m_TestDate, XMLThisElement);
 
-			m_Firearm.Export(XMLDocument, XMLThisElement, true);
+			if (m_Firearm != null)
+				m_Firearm.Export(XMLDocument, XMLThisElement, true);
 
 			XMLDocument.CreateElement("BarrelLength", m_dBarrelLength, XMLThisElement);
 			XMLDocument.CreateElement("Twist", m_dTwist, XMLThisElement);

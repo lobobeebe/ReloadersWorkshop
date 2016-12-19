@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cAmmo.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -10,7 +10,6 @@
 //============================================================================*
 
 using System;
-using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -86,13 +85,34 @@ namespace ReloadersWorkShop
 		// Append()
 		//============================================================================*
 
-		public void Append(cAmmo Ammo)
+		public int Append(cAmmo Ammo)
 			{
-			m_dBallisticCoefficient = m_dBallisticCoefficient == 0.0 ? Ammo.m_dBallisticCoefficient : m_dBallisticCoefficient;
-			m_dBulletDiameter = m_dBulletDiameter == 0.0 ? Ammo.m_dBulletDiameter : m_dBulletDiameter;
-			m_dBulletWeight = m_dBulletWeight == 0.0 ? Ammo.m_dBulletWeight : m_dBulletWeight;
+			int nUpdateCount = 0;
+
+			if (m_dBallisticCoefficient == 0.0)
+				{
+				m_dBallisticCoefficient = Ammo.m_dBallisticCoefficient;
+
+				nUpdateCount++;
+				}
+
+			if (m_dBulletDiameter == 0.0)
+				{
+				m_dBulletDiameter = Ammo.m_dBulletDiameter;
+
+				nUpdateCount++;
+				}
+
+			if (m_dBulletWeight == 0.0)
+				{
+				m_dBulletWeight = Ammo.m_dBulletWeight;
+
+				nUpdateCount++;
+				}
 
 			m_TestList.Append(Ammo.m_TestList);
+
+			return (nUpdateCount);
 			}
 
 		//============================================================================*

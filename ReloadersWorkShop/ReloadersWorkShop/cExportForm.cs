@@ -263,6 +263,7 @@ namespace ReloadersWorkShop
 			XMLDocument.IncludeManufacturers = ManufacturersCheckBox.Checked;
 			XMLDocument.IncludePowders = PowdersCheckBox.Checked;
 			XMLDocument.IncludePrimers = PrimersCheckBox.Checked;
+			XMLDocument.IncludeParts = PartsCheckBox.Checked;
 
 			XMLDocument.Export(FullDataDumpCheckBox.Checked);
 
@@ -440,7 +441,7 @@ namespace ReloadersWorkShop
 
 			if (!ManufacturersCheckBox.Checked && !CalibersCheckBox.Checked && !FirearmsCheckBox.Checked && !AmmoCheckBox.Checked &&
 				!BulletsCheckBox.Checked && !CasesCheckBox.Checked && !PowdersCheckBox.Checked && !PrimersCheckBox.Checked &&
-				!LoadsCheckBox.Checked && !BatchesCheckBox.Checked)
+				!LoadsCheckBox.Checked && !BatchesCheckBox.Checked && !PartsCheckBox.Checked)
 				fOK = false;
 
 			//----------------------------------------------------------------------------*

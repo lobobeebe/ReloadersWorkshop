@@ -40,7 +40,7 @@ namespace ReloadersWorkShop
 			new cListViewColumn(3, "DescriptionHeader", "Description", HorizontalAlignment.Left, 160),
 			new cListViewColumn(4, "CaliberHeader", "Primary Caliber", HorizontalAlignment.Left, 160),
 			new cListViewColumn(5, "SourceHeader", "Acquired from", HorizontalAlignment.Left, 200),
-			new cListViewColumn(6, "DateHeader", "Date", HorizontalAlignment.Left, 100),
+			new cListViewColumn(6, "DateHeader", "Date", HorizontalAlignment.Center, 80),
 			new cListViewColumn(7, "PriceHeader", "Price", HorizontalAlignment.Right, 80),
 			new cListViewColumn(8, "TaxHeader", "Tax", HorizontalAlignment.Right, 80),
 			new cListViewColumn(9, "ShippingHeader", "Shipping", HorizontalAlignment.Right, 80),

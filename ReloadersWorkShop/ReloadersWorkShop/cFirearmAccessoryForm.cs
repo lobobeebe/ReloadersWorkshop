@@ -40,6 +40,10 @@ namespace ReloadersWorkShop
 		private const string cm_strPriceToolTip = "Enter what you paid for this part or accessory.";
 		private const string cm_strPurchaseDateToolTip = "Enter the date when you obtained this part or accessory.";
 
+		private const string cm_strMagnifierPowerToolTip = "Enter this Magnifier's magnification, leaving off the trailing 'x'. Example: 6, 3-9, 6-24, etc.";
+		private const string cm_strMagnifierEyeReliefToolTip = "Enter this Magnifier's eye relief distance.";
+		private const string cm_strMagnifierFoVToolTip = "Enter this Magnifier's Field of View in Degrees.";
+
 		private const string cm_strScopePowerToolTip = "Enter this scope's power, leaving off the trailing 'x'. Example: 6, 3-9, 6-24, etc.";
 		private const string cm_strScopeObjectiveToolTip = "Enter this scope's Objective in millimeters.";
 		private const string cm_strScopeTubeToolTip = "Select this scope's tube diameter.";
@@ -110,6 +114,10 @@ namespace ReloadersWorkShop
 						m_Gear = new cRedDot((Gear as cRedDot));
 						break;
 
+					case cGear.eGearTypes.Magnifier:
+						m_Gear = new cMagnifier((Gear as cMagnifier));
+						break;
+
 					default:
 						m_Gear = new cGear(Gear);
 						break;
@@ -140,6 +148,15 @@ namespace ReloadersWorkShop
 				PriceTextBox.TextChanged += OnPriceChanged;
 				TaxTextBox.TextChanged += OnTaxChanged;
 				ShippingTextBox.TextChanged += OnShippingChanged;
+
+				// Magnifier Details
+
+				MagnifierPowerTextBox.TextChanged += OnMagnifierPowerChanged;
+				MagnifierEyeReliefTextBox.TextChanged += OnMagnifierEyeReliefChanged;
+				MagnifierFoVTextBox.TextChanged += OnMagnifierFoVChanged;
+
+				ScopeClickTextBox.TextChanged += OnScopeClickChanged;
+				ScopeTurretTypeCombo.SelectedIndexChanged += OnScopeTurretTypeChanged;
 
 				// Scope Details
 
@@ -260,6 +277,9 @@ namespace ReloadersWorkShop
 
 				case cGear.eGearTypes.RedDot:
 					return (new cRedDot());
+
+				case cGear.eGearTypes.Magnifier:
+					return (new cMagnifier());
 				}
 
 			return (new cGear(eType));
@@ -287,6 +307,54 @@ namespace ReloadersWorkShop
 				return;
 
 			m_Gear.Description = @DescriptionTextBox.Value;
+
+			m_fChanged = true;
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
+		// OnMagnifierFoVChanged()
+		//============================================================================*
+
+		public void OnMagnifierFoVChanged(Object sender, EventArgs args)
+			{
+			if (!m_fInitialized || m_fPopulating)
+				return;
+
+			(m_Gear as cMagnifier).FoV = MagnifierFoVTextBox.Value;
+
+			m_fChanged = true;
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
+		// OnMagnifierPowerChanged()
+		//============================================================================*
+
+		public void OnMagnifierPowerChanged(Object sender, EventArgs args)
+			{
+			if (!m_fInitialized || m_fPopulating)
+				return;
+
+			(m_Gear as cMagnifier).Magnification = MagnifierPowerTextBox.Value;
+
+			m_fChanged = true;
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
+		// OnMagnifierEyeReliefChanged()
+		//============================================================================*
+
+		public void OnMagnifierEyeReliefChanged(Object sender, EventArgs args)
+			{
+			if (!m_fInitialized || m_fPopulating)
+				return;
+
+			(m_Gear as cMagnifier).EyeRelief = MagnifierEyeReliefTextBox.Value;
 
 			m_fChanged = true;
 
@@ -526,7 +594,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			(m_Gear as cScope).TurretType = (cScope.eTurretTypes) ScopeTurretTypeCombo.SelectedIndex;
+			(m_Gear as cScope).TurretType = (cFirearm.eTurretType) ScopeTurretTypeCombo.SelectedIndex;
 
 			m_fChanged = true;
 
@@ -749,7 +817,7 @@ namespace ReloadersWorkShop
 						{
 						ScopeTurretTypeCombo.Items.Clear();
 
-						ScopeTurretTypeCombo.Items.Add(cScope.TurretTypeString((m_Gear as cScope).TurretType));
+						ScopeTurretTypeCombo.Items.Add(cFirearm.TurretTypeString((m_Gear as cScope).TurretType));
 
 						ScopeTurretTypeCombo.SelectedIndex = 0;
 						}
@@ -761,10 +829,20 @@ namespace ReloadersWorkShop
 							{
 							ScopeTurretTypeCombo.SelectedIndex = 0;
 
-							(m_Gear as cScope).TurretType = (cScope.eTurretTypes) ScopeTurretTypeCombo.SelectedIndex;
+							(m_Gear as cScope).TurretType = (cFirearm.eTurretType) ScopeTurretTypeCombo.SelectedIndex;
 							}
 						}
 
+					break;
+
+				//----------------------------------------------------------------------------*
+				// Magnifier Details
+				//----------------------------------------------------------------------------*
+
+				case cGear.eGearTypes.Magnifier:
+					MagnifierPowerTextBox.Value = (m_Gear as cMagnifier).Magnification;
+					MagnifierEyeReliefTextBox.Value = (m_Gear as cMagnifier).EyeRelief;
+					MagnifierFoVTextBox.Value = (m_Gear as cMagnifier).FoV;
 					break;
 
 				//----------------------------------------------------------------------------*
@@ -940,6 +1018,7 @@ namespace ReloadersWorkShop
 			{
 			ScopeDetailsGroupBox.Visible = m_Gear.GearType == cGear.eGearTypes.Scope;
 			RedDotDetailsGroupBox.Visible = m_Gear.GearType == cGear.eGearTypes.RedDot;
+			MagnifierDetailsGroupBox.Visible = m_Gear.GearType == cGear.eGearTypes.Magnifier;
 
 			GroupBox DetailsGroup = null;
 
@@ -951,6 +1030,10 @@ namespace ReloadersWorkShop
 
 				case cGear.eGearTypes.RedDot:
 					DetailsGroup = RedDotDetailsGroupBox;
+					break;
+
+				case cGear.eGearTypes.Magnifier:
+					DetailsGroup = MagnifierDetailsGroupBox;
 					break;
 				}
 
@@ -965,10 +1048,6 @@ namespace ReloadersWorkShop
 
 			OKButton.Location = new Point(OKButton.Location.X, NotesGroup.Location.Y + NotesGroup.Size.Height + 10);
 			FormCancelButton.Location = new Point(FormCancelButton.Location.X, NotesGroup.Location.Y + NotesGroup.Size.Height + 10);
-
-			ScopePowerTextBox.Required = m_Gear.GearType == cGear.eGearTypes.Scope;
-			ScopeObjectiveTextBox.Required = m_Gear.GearType == cGear.eGearTypes.Scope;
-			ScopeClickTextBox.MinValue = m_Gear.GearType == cGear.eGearTypes.Scope ? 0.001 : 0.000;
 
 			SetClientSizeCore(GeneralGroup.Location.X + GeneralGroup.Width + 10, FormCancelButton.Location.Y + FormCancelButton.Height + 20);
 			}
@@ -992,10 +1071,19 @@ namespace ReloadersWorkShop
 
 			SourceCombo.MaxLength = 35;
 
+			MagnifierPowerTextBox.MaxLength = 10;
+			MagnifierPowerTextBox.ValidChars = "0123456789-.";
+
+			MagnifierEyeReliefTextBox.NumDecimals = m_DataFiles.Preferences.FirearmDecimals;
+			MagnifierEyeReliefTextBox.MaxLength = m_DataFiles.Preferences.FirearmDecimals + 3;
+
+			MagnifierFoVTextBox.NumDecimals = m_DataFiles.Preferences.FirearmDecimals;
+			MagnifierFoVTextBox.MaxLength = m_DataFiles.Preferences.FirearmDecimals + 4;
+
 			ScopePowerTextBox.MaxLength = 10;
 			ScopePowerTextBox.ValidChars = "0123456789-.";
 
-			ScopeObjectiveTextBox.MaxLength = 5;
+			ScopeObjectiveTextBox.MaxLength = 3;
 			ScopeObjectiveTextBox.ValidChars = "0123456789.";
 
 			RedDotMOATextBox.NumDecimals = m_DataFiles.Preferences.FirearmDecimals;
@@ -1057,6 +1145,12 @@ namespace ReloadersWorkShop
 			m_PurchaseDateToolTip.ShowAlways = true;
 			m_PurchaseDateToolTip.RemoveAll();
 			m_PurchaseDateToolTip.SetToolTip(PurchaseDatePicker, cm_strPurchaseDateToolTip);
+			
+			// Magnifier
+
+			MagnifierPowerTextBox.ToolTip = cm_strMagnifierPowerToolTip;
+			MagnifierEyeReliefTextBox.ToolTip = cm_strMagnifierEyeReliefToolTip;
+			MagnifierFoVTextBox.ToolTip = cm_strMagnifierFoVToolTip;
 
 			// Scope
 
@@ -1079,16 +1173,6 @@ namespace ReloadersWorkShop
 			RedDotCowitnessTextBox.ToolTip = cm_strRedDotCowitnessHeightToolTip;
 			RedDotTubeDiameterTextBox.ToolTip = cm_strRedDotTubeDiameterToolTip;
 			RedDotBatteryTextBox.ToolTip = cm_strRedDotBatteryToolTip;
-
-			// Buttons
-
-			m_OKButtonToolTip.ShowAlways = true;
-			m_OKButtonToolTip.RemoveAll();
-			m_OKButtonToolTip.SetToolTip(OKButton, cm_strOKButtonToolTip);
-
-			m_CancelButtonToolTip.ShowAlways = true;
-			m_CancelButtonToolTip.RemoveAll();
-			m_CancelButtonToolTip.SetToolTip(FormCancelButton, m_fViewOnly ? cm_strCloseButtonToolTip : cm_strCancelButtonToolTip);
 			}
 
 		//============================================================================*
@@ -1150,11 +1234,16 @@ namespace ReloadersWorkShop
 			ShippingTextBox.ReadOnly = String.IsNullOrEmpty(SourceCombo.Text);
 
 			//----------------------------------------------------------------------------*
-			// Check Scope Details
+			// Check Gear Details
 			//----------------------------------------------------------------------------*
 
 			switch (m_Gear.GearType)
 				{
+				case cGear.eGearTypes.Magnifier:
+					if (!MagnifierPowerTextBox.ValueOK || !MagnifierEyeReliefTextBox.ValueOK || !MagnifierFoVTextBox.ValueOK)
+						fEnableOK = false;
+					break;
+
 				case cGear.eGearTypes.Scope:
 					if (!ScopePowerTextBox.ValueOK || !ScopeObjectiveTextBox.ValueOK || !ScopeClickTextBox.ValueOK)
 						fEnableOK = false;

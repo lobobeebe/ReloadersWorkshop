@@ -10,10 +10,7 @@
 //============================================================================*
 
 using System;
-using System.Drawing;
-using System.Drawing.Printing;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml;
 using System.Windows.Forms;
 
 //============================================================================*
@@ -89,6 +86,10 @@ namespace ReloadersWorkShop
 
 		private void CreateShareFile()
 			{
+			//----------------------------------------------------------------------------*
+			// Gather all the needed info to store the loads to be shared
+			//----------------------------------------------------------------------------*
+
 			cManufacturerList ShareManufacturerList = new cManufacturerList();
 			cCaliberList ShareCaliberList = new cCaliberList();
 			cBulletList ShareBulletList = new cBulletList();
@@ -102,7 +103,7 @@ namespace ReloadersWorkShop
 				{
 				cLoad Load = (cLoad)Item.Tag;
 
-				if (Load != null)
+				if (Load != null && Load.Bullet != null && Load.Case != null && Load.Powder != null && Load.Primer != null)
 					{
 					foreach (cBulletCaliber BulletCaliber in Load.Bullet.BulletCaliberList)
 						ShareCaliberList.AddCaliber(BulletCaliber.Caliber);
@@ -123,198 +124,28 @@ namespace ReloadersWorkShop
 					}
 				}
 
-			Stream Stream = null;
-
 			//----------------------------------------------------------------------------*
-			// Save Data
+			// Now create a cRWXMLDocument and export the load data to it
 			//----------------------------------------------------------------------------*
 
-			try
-				{
-				SaveFileDialog FileDlg = new SaveFileDialog();
+			cRWXMLDocument XMLDocument = new cRWXMLDocument(m_DataFiles);
 
-				FileDlg.Title = String.Format("Save {0} Share File", Application.ProductName);
-				FileDlg.AddExtension = true;
-				FileDlg.DefaultExt = "rws";
+			XmlElement MainElement = XMLDocument.CreateElement("Body");
+			XMLDocument.AppendChild(MainElement);
 
-				if (m_DataFiles.Preferences.ShareFilePath == null)
-					FileDlg.InitialDirectory = Environment.SpecialFolder.MyDocuments.ToString();
-				else
-					FileDlg.InitialDirectory = m_DataFiles.Preferences.ShareFilePath;
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0} Load Data Share File Export", Application.ProductName));
+			MainElement.AppendChild(XMLTextElement);
 
-				FileDlg.Filter = String.Format("{0} Share Files (*.rws)|*.rws", Application.ProductName);
-				FileDlg.CheckPathExists = true;
+			ShareManufacturerList.Export(XMLDocument, MainElement);
+			ShareBulletList.Export(XMLDocument, MainElement);
+			ShareCaliberList.Export(XMLDocument, MainElement);
+			ShareCaseList.Export(XMLDocument, MainElement);
+			SharePowderList.Export(XMLDocument, MainElement);
+			SharePrimerList.Export(XMLDocument, MainElement);
 
-				DialogResult rc = FileDlg.ShowDialog();
+			ShareLoadList.Export(XMLDocument, MainElement);
 
-				if (rc == DialogResult.Cancel)
-					return;
-
-				string strPath = FileDlg.FileName;
-
-				m_DataFiles.Preferences.ShareFilePath = Path.GetDirectoryName(strPath);
-
-				//----------------------------------------------------------------------------*
-				// Open data file and create formatter
-				//----------------------------------------------------------------------------*
-
-				Stream = File.Open(strPath, FileMode.Create);
-
-				BinaryFormatter Formatter = new BinaryFormatter();
-
-				//----------------------------------------------------------------------------*
-				// Serialize the data members
-				//----------------------------------------------------------------------------*
-
-				Formatter.Serialize(Stream, ShareManufacturerList);
-				Formatter.Serialize(Stream, ShareCaliberList);
-				Formatter.Serialize(Stream, ShareBulletList);
-				Formatter.Serialize(Stream, ShareCaseList);
-				Formatter.Serialize(Stream, SharePowderList);
-				Formatter.Serialize(Stream, SharePrimerList);
-				Formatter.Serialize(Stream, ShareLoadList);
-
-				//----------------------------------------------------------------------------*
-				// Close the stream
-				//----------------------------------------------------------------------------*
-
-				Stream.Close();
-
-				Stream = null;
-
-				MessageBox.Show(String.Format("Your share file has been created successfully.  \n\nThis file can be emailed or otherwise sent to a friend who is also using {0}.", Application.ProductName), "Share File Created", MessageBoxButtons.OK, MessageBoxIcon.Information);
-				}
-			catch (Exception e1)
-				{
-				MessageBox.Show(e1.Message);
-				}
-			finally
-				{
-				if (Stream != null)
-					Stream.Close();
-				}
-			}
-
-		//============================================================================*
-		// ImportShareFile()
-		//============================================================================*
-
-		private void ImportShareFile()
-			{
-			cManufacturerList ShareManufacturerList = new cManufacturerList();
-			cCaliberList ShareCaliberList = new cCaliberList();
-			cBulletList ShareBulletList = new cBulletList();
-			cCaseList ShareCaseList = new cCaseList();
-			cPowderList SharePowderList = new cPowderList();
-			cPrimerList SharePrimerList = new cPrimerList();
-
-			cLoadList ShareLoadList = new cLoadList();
-
-			Stream Stream = null;
-
-			//----------------------------------------------------------------------------*
-			// Load Data
-			//----------------------------------------------------------------------------*
-
-			try
-				{
-				OpenFileDialog FileDlg = new OpenFileDialog();
-
-				FileDlg.Title = String.Format("Import {0} Share File", Application.ProductName);
-				FileDlg.AddExtension = true;
-				FileDlg.DefaultExt = "rws";
-
-				if (m_DataFiles.Preferences.ShareFilePath == null)
-					FileDlg.InitialDirectory = Environment.SpecialFolder.MyDocuments.ToString();
-				else
-					FileDlg.InitialDirectory = m_DataFiles.Preferences.ShareFilePath;
-
-				FileDlg.Filter = String.Format("{0} Share Files (*.rws)|*.rws", Application.ProductName);
-				FileDlg.CheckPathExists = true;
-
-				DialogResult rc = FileDlg.ShowDialog();
-
-				if (rc == DialogResult.Cancel)
-					return;
-
-				string strPath = FileDlg.FileName;
-
-				m_DataFiles.Preferences.ShareFilePath = Path.GetDirectoryName(strPath);
-
-				//----------------------------------------------------------------------------*
-				// Open data file and create formatter
-				//----------------------------------------------------------------------------*
-
-				Stream = File.Open(strPath, FileMode.Open);
-
-				BinaryFormatter Formatter = new BinaryFormatter();
-
-				//----------------------------------------------------------------------------*
-				// Deserialize the data members
-				//----------------------------------------------------------------------------*
-
-				ShareManufacturerList = (cManufacturerList)Formatter.Deserialize(Stream);
-				ShareCaliberList = (cCaliberList)Formatter.Deserialize(Stream);
-				ShareBulletList = (cBulletList)Formatter.Deserialize(Stream);
-				ShareCaseList = (cCaseList)Formatter.Deserialize(Stream);
-				SharePowderList = (cPowderList)Formatter.Deserialize(Stream);
-				SharePrimerList = (cPrimerList)Formatter.Deserialize(Stream);
-				ShareLoadList = (cLoadList)Formatter.Deserialize(Stream);
-
-				//----------------------------------------------------------------------------*
-				// Add the imported data to the database
-				//----------------------------------------------------------------------------*
-
-				string strMerge = "";
-
-				strMerge += m_DataFiles.MergeManufacturers(ShareManufacturerList);
-
-				strMerge += m_DataFiles.MergeCalibers(ShareCaliberList);
-
-				strMerge += m_DataFiles.MergeBullets(ShareBulletList);
-
-				strMerge += m_DataFiles.MergeCases(ShareCaseList);
-
-				strMerge += m_DataFiles.MergePowders(SharePowderList);
-
-				strMerge += m_DataFiles.MergePrimers(SharePrimerList);
-
-				strMerge += m_DataFiles.MergeLoads(ShareLoadList);
-
-				m_DataFiles.SynchDataLists();
-
-				//----------------------------------------------------------------------------*
-				// Update the Listviews
-				//----------------------------------------------------------------------------*
-
-				InitializeAllTabs();
-
-				//----------------------------------------------------------------------------*
-				// Show the import results
-				//----------------------------------------------------------------------------*
-
-				string strMessage = "The share file has been imported successfully.\n\n";
-
-				if (strMerge.Length == 0)
-					strMerge = "No new data was imported.  The share file was either empty or your data file already contained the data contained in the share file.";
-
-				strMessage += strMerge;
-
-				MessageBox.Show(strMessage, "Share File Imported", MessageBoxButtons.OK, MessageBoxIcon.Information);
-				}
-			catch
-				{
-				MessageBox.Show(String.Format("Unable to merge share file! The file may not be a valid {0} Share File.  Check with the source of the file for more information on what version of {0} was used to create the file.", Application.ProductName), "Share File Import Error", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Exclamation);
-				}
-			finally
-				{
-				//----------------------------------------------------------------------------*
-				// Close the stream
-				//----------------------------------------------------------------------------*
-
-				if (Stream != null)
-					Stream.Close();
-				}
+			// TODO: Save the XMLDocument
 			}
 
 		//============================================================================*
@@ -351,7 +182,6 @@ namespace ReloadersWorkShop
 				EvaluateLoadButton.Click += OnEvaluateLoad;
 
 				ShareFileButton.Click += OnCreateShareFile;
-				ImportShareFileButton.Click += OnImportShareFile;
 				LoadShoppingListButton.Click += OnShoppingListClicked;
 
 				LoadDataSelectAllButton.Click += OnLoadDataSelectAllClicked;
@@ -467,15 +297,6 @@ namespace ReloadersWorkShop
 
 			DialogResult rc = Form.ShowDialog();
 
-			}
-
-		//============================================================================*
-		// OnImportSharefile()
-		//============================================================================*
-
-		protected void OnImportShareFile(object sender, EventArgs args)
-			{
-			ImportShareFile();
 			}
 
 		//============================================================================*

@@ -1132,9 +1132,11 @@ namespace ReloadersWorkShop
 
 				m_DataFiles.ResetTransactions();
 
-				while (true)
+				bool fRemoved = true;
+
+				while (fRemoved)
 					{
-					bool fRemoved = false;
+					fRemoved = false;
 
 					foreach (cAmmo Ammo in m_DataFiles.AmmoList)
 						{
@@ -1147,9 +1149,6 @@ namespace ReloadersWorkShop
 							break;
 							}
 						}
-
-					if (!fRemoved)
-						break;
 					}
 
 				//----------------------------------------------------------------------------*

@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cTransactionForm.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -47,9 +47,6 @@ namespace ReloadersWorkShop
 		private const string cm_strTaxToolTip = "Taxes paid for this purchase or stock.";
 		private const string cm_strShippingToolTip = "Shipping paid for this purchase or stock.";
 
-		private const string cm_strOKButtonToolTip = "Create or upddate the activity and exit.";
-		private const string cm_strCancelButtonToolTip = "Cancel all changes and exit.";
-
 		//----------------------------------------------------------------------------*
 		// Private Data Members
 		//----------------------------------------------------------------------------*
@@ -72,9 +69,6 @@ namespace ReloadersWorkShop
 		private ToolTip m_DateToolTip = new ToolTip();
 		private ToolTip m_TypeToolTip = new ToolTip();
 		private ToolTip m_SourceToolTip = new ToolTip();
-
-		private ToolTip m_OKButtonToolTip = new ToolTip();
-		private ToolTip m_CancelButtonToolTip = new ToolTip();
 
 		//============================================================================*
 		// cTransactionForm() - Constructor - Supply
@@ -122,7 +116,7 @@ namespace ReloadersWorkShop
 
 			m_fAdd = true;
 
-			TransactionOKButton.Text = "Add";
+			OKButton.ButtonType = CommonLib.Controls.cOKButton.eButtonTypes.Add;
 
 			Initialize();
 			}
@@ -148,7 +142,7 @@ namespace ReloadersWorkShop
 
 			m_dRefQuantity = m_Transaction.Quantity;
 
-			TransactionOKButton.Text = "Update";
+			OKButton.ButtonType = CommonLib.Controls.cOKButton.eButtonTypes.Update;
 
 			Initialize();
 			}
@@ -159,7 +153,7 @@ namespace ReloadersWorkShop
 
 		private void Initialize()
 			{
-			SetClientSizeCore(TransactionGroupBox.Location.X + TransactionGroupBox.Width + 10, TransactionCancelButton.Location.Y + TransactionCancelButton.Height + 20);
+			SetClientSizeCore(TransactionGroupBox.Location.X + TransactionGroupBox.Width + 10, FormCancelButton.Location.Y + FormCancelButton.Height + 20);
 
 			//----------------------------------------------------------------------------*
 			// Set Control Event Handlers
@@ -175,7 +169,7 @@ namespace ReloadersWorkShop
 			TaxTextBox.TextChanged += OnTaxChanged;
 			ShippingTextBox.TextChanged += OnShippingChanged;
 
-			TransactionOKButton.Click += OnOKClicked;
+			OKButton.Click += OnOKClicked;
 
 			//----------------------------------------------------------------------------*
 			// Populate Combo Boxes and Data
@@ -715,14 +709,6 @@ namespace ReloadersWorkShop
 			CostTextBox.ToolTip = cm_strCostToolTip;
 			TaxTextBox.ToolTip = cm_strTaxToolTip;
 			ShippingTextBox.ToolTip = cm_strShippingToolTip;
-
-			m_OKButtonToolTip.ShowAlways = true;
-			m_OKButtonToolTip.RemoveAll();
-			m_OKButtonToolTip.SetToolTip(TransactionOKButton, cm_strOKButtonToolTip);
-
-			m_CancelButtonToolTip.ShowAlways = true;
-			m_CancelButtonToolTip.RemoveAll();
-			m_CancelButtonToolTip.SetToolTip(TransactionCancelButton, cm_strCancelButtonToolTip);
 			}
 
 		//============================================================================*
@@ -938,7 +924,7 @@ namespace ReloadersWorkShop
 			// OK Button
 			//----------------------------------------------------------------------------*
 
-			TransactionOKButton.Enabled = fEnableOK;
+			OKButton.Enabled = fEnableOK;
 			}
 		}
 	}

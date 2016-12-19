@@ -128,6 +128,10 @@ namespace ReloadersWorkShop
 			// Operations that are always performed
 			//----------------------------------------------------------------------------*
 
+			AmmunitionFirearmTypeCombo.Value = m_DataFiles.Preferences.LastAmmoFirearmType;
+
+			m_AmmoListView.FirearmType = AmmunitionFirearmTypeCombo.Value;
+
 			AmmunitionCaliberCombo.SelectedIndex = 0;
 			AmmunitionManufacturerCombo.SelectedIndex = 0;
 
@@ -138,8 +142,6 @@ namespace ReloadersWorkShop
 			AmmoMinStockCheckBox.Checked = false;
 
 			AmmoInventoryGroup.Visible = m_DataFiles.Preferences.TrackInventory;
-
-			AmmunitionFirearmTypeCombo.SelectedIndex = 0;
 
 			PopulateAmmoCaliberCombo();
 
@@ -212,7 +214,11 @@ namespace ReloadersWorkShop
 			if (m_fAmmoPopulating)
 				return;
 
+			m_AmmoListView.FirearmType = AmmunitionFirearmTypeCombo.Value;
+
 			PopulateAmmoCaliberCombo();
+
+			m_DataFiles.Preferences.LastAmmoFirearmType = AmmunitionFirearmTypeCombo.Value;
 
 			UpdateAmmoTabButtons();
 			}
@@ -244,8 +250,6 @@ namespace ReloadersWorkShop
 				return;
 
 			PopulateAmmoListView();
-
-			UpdateAmmoTabButtons();
 			}
 
 		//============================================================================*
@@ -272,8 +276,6 @@ namespace ReloadersWorkShop
 			m_DataFiles.Preferences.AmmoMinStockFilter = AmmoMinStockCheckBox.Checked;
 
 			PopulateAmmoListView();
-
-			UpdateAmmoTabButtons();
 			}
 
 		//============================================================================*
@@ -300,8 +302,6 @@ namespace ReloadersWorkShop
 			m_DataFiles.Preferences.AmmoFactoryFilter = AmmoFactoryCheckBox.Checked;
 
 			PopulateAmmoListView();
-
-			UpdateAmmoTabButtons();
 			}
 
 		//============================================================================*
@@ -313,8 +313,6 @@ namespace ReloadersWorkShop
 			m_DataFiles.Preferences.AmmoFactoryReloadFilter = AmmoFactoryReloadsCheckBox.Checked;
 
 			PopulateAmmoListView();
-
-			UpdateAmmoTabButtons();
 			}
 
 		//============================================================================*
@@ -326,8 +324,6 @@ namespace ReloadersWorkShop
 			m_DataFiles.Preferences.AmmoNonZeroFilter = AmmoNonZeroCheckBox.Checked;
 
 			PopulateAmmoListView();
-
-			UpdateAmmoTabButtons();
 			}
 
 		//============================================================================*
@@ -348,6 +344,19 @@ namespace ReloadersWorkShop
 			OnEditAmmo(sender, args);
 
 			UpdateButtons();
+			}
+
+		//============================================================================*
+		// OnAmmoMyReloadsFilterClicked()
+		//============================================================================*
+
+		protected void OnAmmoMyReloadsFilterClicked(object sender, EventArgs args)
+			{
+			m_DataFiles.Preferences.AmmoMyReloadFilter = AmmoMyReloadsCheckBox.Checked;
+
+			PopulateAmmoManufacturerCombo();
+
+			UpdateAmmoTabButtons();
 			}
 
 		//============================================================================*
@@ -408,19 +417,6 @@ namespace ReloadersWorkShop
 				}
 
 			m_AmmoListView.Focus();
-			}
-
-		//============================================================================*
-		// OnAmmoMyReloadsFilterClicked()
-		//============================================================================*
-
-		protected void OnAmmoMyReloadsFilterClicked(object sender, EventArgs args)
-			{
-			m_DataFiles.Preferences.AmmoMyReloadFilter = AmmoMyReloadsCheckBox.Checked;
-
-			PopulateAmmoListView();
-
-			UpdateAmmoTabButtons();
 			}
 
 		//============================================================================*
@@ -515,36 +511,17 @@ namespace ReloadersWorkShop
 
 		public void PopulateAmmoCaliberCombo()
 			{
-			List<string> StringList = new List<string>();
+			List < cCaliber> CaliberList = new List<cCaliber>();
 
 			foreach (cAmmo Ammo in m_DataFiles.AmmoList)
 				{
 				cCaliber.CurrentFirearmType = Ammo.FirearmType;
 
-				if (StringList.IndexOf(Ammo.Caliber.ToString()) >= 0)
+				if (CaliberList.IndexOf(Ammo.Caliber) >= 0)
 					continue;
 
-				bool fOK = false;
-
-				switch (AmmunitionFirearmTypeCombo.Text)
-					{
-					case "Handgun":
-						if (Ammo.FirearmType == cFirearm.eFireArmType.Handgun)
-							fOK = true;
-						break;
-
-					case "Rifle":
-						if (Ammo.FirearmType == cFirearm.eFireArmType.Rifle)
-							fOK = true;
-						break;
-
-					default:
-						fOK = true;
-						break;
-					}
-
-				if (fOK)
-					StringList.Add(Ammo.Caliber.ToString());
+				if (AmmunitionFirearmTypeCombo.Value == Ammo.FirearmType)
+					CaliberList.Add(Ammo.Caliber);
 				}
 
 			m_fAmmoPopulating = true;
@@ -553,10 +530,10 @@ namespace ReloadersWorkShop
 
 			AmmunitionCaliberCombo.Items.Add("Any Caliber");
 
-			StringList.Sort();
+			CaliberList.Sort();
 
-			foreach (string strString in StringList)
-				AmmunitionCaliberCombo.Items.Add(strString);
+			foreach (cCaliber Caliber in CaliberList)
+				AmmunitionCaliberCombo.Items.Add(Caliber);
 
 			AmmunitionCaliberCombo.SelectedIndex = 0;
 
@@ -573,9 +550,8 @@ namespace ReloadersWorkShop
 			{
 			m_fAmmoPopulating = true;
 
-			m_AmmoListView.FirearmType = (cFirearm.eFireArmType) AmmunitionFirearmTypeCombo.SelectedIndex - 1;
-			m_AmmoListView.Caliber = AmmunitionCaliberCombo.SelectedIndex > 0 ? m_DataFiles.GetCaliberByName(AmmunitionCaliberCombo.SelectedItem.ToString()) : null;
-			m_AmmoListView.Manufacturer = AmmunitionManufacturerCombo.SelectedIndex > 0 ? m_DataFiles.GetManufacturerByName(AmmunitionManufacturerCombo.SelectedItem.ToString()) : null;
+			m_AmmoListView.Caliber = AmmunitionCaliberCombo.SelectedIndex > 0 ? (cCaliber) AmmunitionCaliberCombo.SelectedItem : null;
+			m_AmmoListView.Manufacturer = AmmunitionManufacturerCombo.SelectedIndex > 0 ? (cManufacturer) AmmunitionManufacturerCombo.SelectedItem : null;
 
 			m_AmmoListView.Populate();
 
@@ -601,47 +577,28 @@ namespace ReloadersWorkShop
 
 		public void PopulateAmmoManufacturerCombo()
 			{
-			List<string> StringList = new List<string>();
+			List<cManufacturer> ManufacturerList = new List<cManufacturer>();
 
 			foreach (cAmmo Ammo in m_DataFiles.AmmoList)
 				{
-				cCaliber.CurrentFirearmType = Ammo.FirearmType;
-
-				if (StringList.IndexOf(Ammo.Manufacturer.ToString()) >= 0)
+				if (Ammo.BatchID != 0 && !AmmoMyReloadsCheckBox.Checked)
 					continue;
 
-				bool fOK = false;
+				cCaliber.CurrentFirearmType = Ammo.FirearmType;
 
-				switch (AmmunitionFirearmTypeCombo.Text)
+				if (ManufacturerList.IndexOf(Ammo.Manufacturer) >= 0)
+					continue;
+
+				if (AmmunitionFirearmTypeCombo.Value == Ammo.FirearmType)
 					{
-					case "Handgun":
-						if (Ammo.FirearmType == cFirearm.eFireArmType.Handgun)
-							fOK = true;
-						break;
+					cCaliber Caliber = null;
 
-					case "Rifle":
-						if (Ammo.FirearmType == cFirearm.eFireArmType.Rifle)
-							fOK = true;
-						break;
+					if (AmmunitionCaliberCombo.SelectedIndex >  0)
+						Caliber = (cCaliber) AmmunitionCaliberCombo.SelectedItem;
 
-					case "Shotgun":
-						if (Ammo.FirearmType == cFirearm.eFireArmType.Shotgun)
-							fOK = true;
-						break;
-
-					default:
-						fOK = true;
-						break;
+					if (Caliber == null || Ammo.Caliber.CompareTo(Caliber) == 0)
+						ManufacturerList.Add(Ammo.Manufacturer);
 					}
-
-				if (fOK)
-					{
-					if (AmmunitionCaliberCombo.Text != "Any Caliber")
-						fOK = AmmunitionCaliberCombo.Text == Ammo.Caliber.ToString();
-					}
-
-				if (fOK)
-					StringList.Add(Ammo.Manufacturer.ToString());
 				}
 
 			m_fAmmoPopulating = true;
@@ -650,10 +607,10 @@ namespace ReloadersWorkShop
 
 			AmmunitionManufacturerCombo.Items.Add("Any Manufacturer");
 
-			StringList.Sort();
+			ManufacturerList.Sort();
 
-			foreach (string strString in StringList)
-				AmmunitionManufacturerCombo.Items.Add(strString);
+			foreach (cManufacturer Manufacturer in ManufacturerList)
+				AmmunitionManufacturerCombo.Items.Add(Manufacturer);
 
 			AmmunitionManufacturerCombo.SelectedIndex = 0;
 
@@ -827,7 +784,7 @@ namespace ReloadersWorkShop
 
 				EditAmmoButton.Enabled = Ammo.Manufacturer != null && Ammo.BatchID == 0;
 				ViewAmmoButton.Enabled = true;
-				RemoveAmmoButton.Enabled = Ammo.Manufacturer != null && Ammo.BatchID == 0;
+				RemoveAmmoButton.Enabled = Ammo.Manufacturer != null && (Ammo.BatchID == 0 || (m_DataFiles.Preferences.TrackInventory && m_DataFiles.SupplyQuantity(Ammo) == 0.0));
 				}
 			else
 				{

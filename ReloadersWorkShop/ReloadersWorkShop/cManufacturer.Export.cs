@@ -111,7 +111,7 @@ namespace ReloadersWorkShop
 		// Import()
 		//============================================================================*
 
-		public bool Import(XmlDocument XMLDocument, XmlNode XMLThisNode)
+		public bool Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode)
 			{
 			XmlNode XMLNode = XMLThisNode.FirstChild;
 
@@ -120,74 +120,71 @@ namespace ReloadersWorkShop
 				switch (XMLNode.Name)
 					{
 					case "Name":
-						m_strName = XMLNode.FirstChild.Value;
+						XMLDocument.Import(XMLNode, out m_strName);
 						break;
 					case "Website":
-						m_strWebsite = XMLNode.FirstChild.Value;
+						XMLDocument.Import(XMLNode, out m_strWebsite);
 						break;
 					case "Bullets":
-						m_fBullets = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fBullets);
 						break;
 					case "Powders":
-						m_fPowder = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fPowder);
 						break;
 					case "Primers":
-						m_fPrimers = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fPrimers);
 						break;
 					case "Cases":
-						m_fCases = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fCases);
 						break;
 					case "BulletMolds":
-						m_fBulletMolds = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fBulletMolds);
 						break;
 					case "HeadStamp":
-						m_strHeadStamp = XMLNode.FirstChild.Value;
+						XMLDocument.Import(XMLNode, out m_strHeadStamp);
 						break;
 					case "Ammo":
-						m_fAmmo = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fAmmo);
 						break;
 					case "Handguns":
-						m_fHandguns = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fHandguns);
 						break;
 					case "Rifles":
-						m_fRifles = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fRifles);
 						break;
 					case "Shotguns":
-						m_fShotguns = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fShotguns);
 						break;
 					case "Scopes":
-						m_fScopes = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fScopes);
 						break;
 					case "Lasers":
-						m_fLasers = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fLasers);
 						break;
 					case "RedDots":
-						m_fRedDots = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fRedDots);
 						break;
 					case "Magnifiers":
-						m_fMagnifiers = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fMagnifiers);
 						break;
 					case "Lights":
-						m_fLights = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fLights);
 						break;
 					case "Triggers":
-						m_fTriggers = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fTriggers);
 						break;
 					case "Furniture":
 					case "Stocks":
-						if (XMLNode.FirstChild.Value == "Yes")
-							Console.WriteLine("Furniture!");
-
-						m_fFurniture = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fFurniture);
 						break;
 					case "Bipods":
-						m_fBipods = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fBipods);
 						break;
 					case "FirearmParts":
-						m_fParts = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fParts);
 						break;
 					case "Other":
-						m_fMisc = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fMisc);
 						break;
 					default:
 						break;

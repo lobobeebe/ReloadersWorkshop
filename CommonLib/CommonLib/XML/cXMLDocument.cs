@@ -89,7 +89,12 @@ namespace ReloadersWorkShop
 
 		public XmlElement CreateElement(string strName, bool fData, XmlNode XMLParentNode)
 			{
-			return (CreateElement(strName, fData ? "Yes" : "-", XMLParentNode));
+			XmlElement XMLElement = null;
+
+			if (fData)
+				XMLElement = CreateElement(strName, "Yes", XMLParentNode);
+
+			return (XMLElement);
 			}
 
 		//============================================================================*

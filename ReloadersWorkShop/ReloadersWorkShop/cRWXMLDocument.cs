@@ -44,6 +44,12 @@ namespace ReloadersWorkShop
 		private bool m_fIncludePrimers = true;
 		private bool m_fIncludeLoads = true;
 		private bool m_fIncludeBatches = true;
+		private bool m_fIncludeParts = true;
+
+		// Counters
+
+		private int m_nAmmoCount = 0;
+		private int m_nAmmoUpdateCount = 0;
 
 		//============================================================================*
 		// cRWXMLDocument() - Constructor
@@ -52,6 +58,38 @@ namespace ReloadersWorkShop
 		public cRWXMLDocument(cDataFiles DataFiles)
 			{
 			m_DataFiles = DataFiles;
+			}
+
+		//============================================================================*
+		// AmmoCount Property
+		//============================================================================*
+
+		public int AmmoCount
+			{
+			get
+				{
+				return (m_nAmmoCount);
+				}
+			set
+				{
+				m_nAmmoCount = value;
+				}
+			}
+
+		//============================================================================*
+		// AmmoUpdateCount Property
+		//============================================================================*
+
+		public int AmmoUpdateCount
+			{
+			get
+				{
+				return (m_nAmmoUpdateCount);
+				}
+			set
+				{
+				m_nAmmoUpdateCount = value;
+				}
 			}
 
 		//============================================================================*
@@ -100,7 +138,16 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// CreateElement() - TurretType
+		// CreateElement() - TubeSize
+		//============================================================================*
+
+		public XmlElement CreateElement(string strName, cScope.eTurretTubeSizes  eSize, XmlNode XMLParentNode)
+			{
+			return (CreateElement(strName, cScope.TubeSizeString(eSize), XMLParentNode));
+			}
+
+		//============================================================================*
+		// CreateElement() - Firearm TurretType
 		//============================================================================*
 
 		public XmlElement CreateElement(string strName, cFirearm.eTurretType eType, XmlNode XMLParentNode)
@@ -141,6 +188,9 @@ namespace ReloadersWorkShop
 
 			if (fComplete || m_fIncludeFirearms)
 				m_DataFiles.FirearmList.Export(this, MainElement);
+
+			if (fComplete || m_fIncludeParts)
+				m_DataFiles.GearList.Export(this, MainElement);
 
 			if (fComplete || m_fIncludeAmmo)
 				m_DataFiles.AmmoList.Export(this, MainElement);
@@ -556,22 +606,6 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// IncludeAmmo Property
-		//============================================================================*
-
-		public bool IncludeAmmo
-			{
-			get
-				{
-				return (m_fIncludeAmmo);
-				}
-			set
-				{
-				m_fIncludeAmmo = value;
-				}
-			}
-
-		//============================================================================*
 		// Import() - XML
 		//============================================================================*
 
@@ -624,16 +658,34 @@ namespace ReloadersWorkShop
 				}
 
 			//----------------------------------------------------------------------------*
+			// Check to see if it's a complete data dump
+			//----------------------------------------------------------------------------*
+
+			if (XMLRoot.FirstChild.Value.IndexOf("Complete") >= 0)
+				{
+
+				}
+
+			//----------------------------------------------------------------------------*
 			// OK, if we get to here, go for it...
 			//----------------------------------------------------------------------------*
 
-			Import();
+			bool fOK = true;
+
+			try
+				{
+				Import();
+				}
+			catch (Exception e)
+				{
+				fOK = false;
+				}
 
 			//----------------------------------------------------------------------------*
 			// Return success!
 			//----------------------------------------------------------------------------*
 
-			return (true);
+			return (fOK);
 			}
 
 		//============================================================================*
@@ -657,6 +709,9 @@ namespace ReloadersWorkShop
 					case "Ammunition":
 					case "AmmoList":
 						m_DataFiles.AmmoList.Import(this, XMLNode, m_DataFiles);
+
+						m_nAmmoCount += m_DataFiles.AmmoList.NewCount;
+						m_nAmmoUpdateCount += m_DataFiles.AmmoList.UpdateCount;
 
 						break;
 
@@ -756,6 +811,58 @@ namespace ReloadersWorkShop
 
 			if (XMLThisNode != null && XMLThisNode.FirstChild != null && XMLThisNode.FirstChild.Value != null)
 				eType = cSupply.SupplyTypeFromString(XMLThisNode.FirstChild.Value);
+			}
+
+		//============================================================================*
+		// Import() - TransactionType
+		//============================================================================*
+
+		public void Import(XmlNode XMLThisNode, out cTransaction.eTransactionType eType)
+			{
+			eType = cTransaction.eTransactionType.SetStockLevel;
+
+			if (XMLThisNode != null && XMLThisNode.FirstChild != null && XMLThisNode.FirstChild.Value != null)
+				eType = cTransaction.TransactionTypeFromString(XMLThisNode.FirstChild.Value);
+			}
+
+		//============================================================================*
+		// Import() - Turret Size
+		//============================================================================*
+
+		public void Import(XmlNode XMLThisNode, out cScope.eTurretTubeSizes eSize)
+			{
+			eSize = cScope.eTurretTubeSizes.Small;
+
+			if (XMLThisNode != null && XMLThisNode.FirstChild != null && XMLThisNode.FirstChild.Value != null)
+				eSize = cScope.TubeSizeFromString(XMLThisNode.FirstChild.Value);
+			}
+
+		//============================================================================*
+		// Import() - TurretType
+		//============================================================================*
+
+		public void Import(XmlNode XMLThisNode, out cFirearm.eTurretType eType)
+			{
+			eType = cFirearm.eTurretType.MOA;
+
+			if (XMLThisNode != null && XMLThisNode.FirstChild != null && XMLThisNode.FirstChild.Value != null)
+				eType = cFirearm.TurretTypeFromString(XMLThisNode.FirstChild.Value);
+			}
+
+		//============================================================================*
+		// IncludeAmmo Property
+		//============================================================================*
+
+		public bool IncludeAmmo
+			{
+			get
+				{
+				return (m_fIncludeAmmo);
+				}
+			set
+				{
+				m_fIncludeAmmo = value;
+				}
 			}
 
 		//============================================================================*
@@ -867,6 +974,22 @@ namespace ReloadersWorkShop
 			set
 				{
 				m_fIncludeManufacturers = value;
+				}
+			}
+
+		//============================================================================*
+		// IncludeParts Property
+		//============================================================================*
+
+		public bool IncludeParts
+			{
+			get
+				{
+				return (m_fIncludeParts);
+				}
+			set
+				{
+				m_fIncludeParts = value;
 				}
 			}
 

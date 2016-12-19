@@ -51,7 +51,7 @@ namespace ReloadersWorkShop
 		//----------------------------------------------------------------------------*
 
 		private bool m_fSmallPrimer = false;
-		private bool m_fLargePrimer = true;
+		private bool m_fLargePrimer = false;
 		private bool m_fMagnumPrimer = false;
 
 		//----------------------------------------------------------------------------*
@@ -99,6 +99,15 @@ namespace ReloadersWorkShop
 		//============================================================================*
 
 		public cCaliber(cCaliber Caliber)
+			{
+			Copy(Caliber);
+			}
+
+		//============================================================================*
+		// Copy()
+		//============================================================================*
+
+		public void Copy(cCaliber Caliber)
 			{
 			m_eFirearmType = Caliber.m_eFirearmType;
 			m_strName = Caliber.m_strName;

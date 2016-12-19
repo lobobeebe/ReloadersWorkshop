@@ -66,7 +66,7 @@ namespace ReloadersWorkShop
 
 		private int m_nNumRounds = 0;
 		private double m_dBestGroup = 0.0;
-		private double m_dBestGroupRange = 0;
+		private double m_dBestGroupRange = 0.0;
 		private string m_strNotes = "";
 
 		private cTestShotList m_TestShotList = new cTestShotList();

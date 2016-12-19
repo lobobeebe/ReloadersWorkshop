@@ -77,8 +77,7 @@ namespace ReloadersWorkShop
 			{
 			if (Count > 0)
 				{
-				XmlElement XMLElement = XMLDocument.CreateElement(ExportName);
-				XMLParentElement.AppendChild(XMLElement);
+				XmlElement XMLElement = XMLDocument.CreateElement(ExportName, XMLParentElement);
 
 				foreach (cBatchTest BatchTest in this)
 					BatchTest.Export(XMLDocument, XMLElement);
@@ -93,7 +92,7 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				return ("TestShotList");
+				return ("BatchTestList");
 				}
 			}
 

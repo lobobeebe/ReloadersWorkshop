@@ -51,61 +51,43 @@ namespace ReloadersWorkShop
 		// Export() - XML Document
 		//============================================================================*
 
-		public void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement)
+		public void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement, bool fIdentityOnly = false)
 			{
-			XmlElement XMLThisElement = XMLDocument.CreateElement("Load", XMLParentElement);
+			string strElement = ExportName;
+
+			if (fIdentityOnly)
+				strElement += "Identity";
+
+			XmlElement XMLThisElement = XMLDocument.CreateElement(strElement, XMLParentElement);
+
+			XMLDocument.CreateElement("FirearmType", m_eFirearmType, XMLThisElement);
 
 			cCaliber.CurrentFirearmType = m_eFirearmType;
 
 			m_Caliber.Export(XMLDocument, XMLThisElement, true);
 
-			XMLDocument.CreateElement("FirearmType", m_eFirearmType, XMLThisElement);
-
 			m_Bullet.Export(XMLDocument, XMLThisElement, true);
 			m_Powder.Export(XMLDocument, XMLThisElement, true);
 			m_Primer.Export(XMLDocument, XMLThisElement, true);
 			m_Case.Export(XMLDocument, XMLThisElement, true);
+
+			if (fIdentityOnly)
+				return;
 
 			if (m_ChargeList.Count > 0)
 				m_ChargeList.Export(XMLDocument, XMLThisElement);
 			}
 
 		//============================================================================*
-		// ExportIdentity()
+		// ExportName()
 		//============================================================================*
 
-		public void ExportIdentity(cRWXMLDocument XMLDocument, XmlElement XMLParentElement)
+		public static string ExportName
 			{
-			XmlElement XMLThisElement = XMLDocument.CreateElement("FirearmIdentity");
-			XMLParentElement.AppendChild(XMLThisElement);
-
-			// Firearm Type
-
-			XmlElement XMLElement = XMLDocument.CreateElement("FirearmType");
-			XmlText XMLTextElement = XMLDocument.CreateTextNode(cFirearm.FirearmTypeString(m_eFirearmType));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Caliber
-
-			m_Caliber.Export(XMLDocument, XMLThisElement, true);
-
-			// Bullet
-
-			m_Bullet.Export(XMLDocument, XMLThisElement, true);
-
-			// Case
-
-			m_Case.Export(XMLDocument, XMLThisElement, true);
-
-			// Powder
-
-			m_Powder.Export(XMLDocument, XMLThisElement, true);
-
-			// Primer
-
-			m_Primer.Export(XMLDocument, XMLThisElement, true);
+			get
+				{
+				return ("Load");
+				}
 			}
 
 		//============================================================================*

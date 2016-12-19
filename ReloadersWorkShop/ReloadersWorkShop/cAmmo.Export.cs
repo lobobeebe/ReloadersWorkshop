@@ -80,7 +80,7 @@ namespace ReloadersWorkShop
 
 			XmlElement XMLThisElement = XMLDocument.CreateElement(strName, XMLParentElement);
 
-			base.Export(XMLDocument, XMLThisElement);
+			base.Export(XMLDocument, XMLThisElement, fIdentityOnly);
 
 			if (String.IsNullOrEmpty(m_strPartNumber))
 				m_strPartNumber = m_strType;

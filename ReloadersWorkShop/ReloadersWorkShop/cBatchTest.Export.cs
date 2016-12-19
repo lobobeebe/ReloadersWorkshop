@@ -84,7 +84,7 @@ namespace ReloadersWorkShop
 		// ExportName Property
 		//============================================================================*
 
-		public string ExportName
+		public static string ExportName
 			{
 			get
 				{

@@ -182,65 +182,173 @@ namespace ReloadersWorkShop
 		// Append()
 		//============================================================================*
 
-		public void Append(cFirearm Firearm)
+		public int Append(cFirearm Firearm)
 			{
-			base.Append(Firearm);
+			int nUpdateCount = base.Append(Firearm);
 
-			m_dBarrelLength = m_dBarrelLength == 0.0 ? Firearm.m_dBarrelLength : m_dBarrelLength;
+			if (m_dBarrelLength == 0.0 && Firearm.m_dBarrelLength != 0.0)
+				{
+				m_dBarrelLength = Firearm.m_dBarrelLength;
 
-			m_fScoped = m_fScoped ? true : Firearm.m_fScoped;
+				nUpdateCount++;
+				}
 
-			m_dTwist = m_dTwist == 0.0 ? Firearm.m_dTwist : m_dTwist;
-			m_eTurretType = Firearm.m_eTurretType;
+			if (!m_fScoped)
+				{
+				m_fScoped = Firearm.m_fScoped;
 
-			m_dSightHeight = m_dSightHeight == 0.0 ? Firearm.m_dSightHeight : m_dSightHeight;
-			m_dScopeClick = m_dScopeClick == 0.0 ? Firearm.m_dScopeClick : m_dScopeClick;
+				nUpdateCount++;
+				}
 
-			m_dZeroRange = m_dZeroRange == 0.0 ? Firearm.m_dZeroRange : m_dZeroRange;
+			if (m_dTwist == 0.0 && Firearm.m_dTwist != 0.0)
+				{
+				m_dTwist = Firearm.m_dTwist;
 
-			m_dHeadSpace = m_dHeadSpace == 0.0 ? Firearm.m_dHeadSpace : m_dHeadSpace;
-			m_dNeck = m_dNeck == 0.0 ? Firearm.m_dNeck : m_dNeck;
+				nUpdateCount++;
+				}
+
+			if (m_dSightHeight == 0.0 && Firearm.m_dSightHeight != 0.0)
+				{
+				m_dSightHeight = Firearm.m_dSightHeight;
+
+				nUpdateCount++;
+				}
+
+			if (m_dScopeClick == 0.0 && Firearm.m_dScopeClick != 0.0)
+				{
+				m_dScopeClick = Firearm.m_dScopeClick;
+
+				nUpdateCount++;
+				}
+
+			if (m_dZeroRange == 0.0 && Firearm.m_dZeroRange != 0.0)
+				{
+				m_dZeroRange = Firearm.m_dZeroRange;
+
+				nUpdateCount++;
+				}
+
+			if (m_dHeadSpace == 0.0 && Firearm.m_dHeadSpace != 0.0)
+				{
+				m_dHeadSpace = Firearm.m_dHeadSpace;
+
+				nUpdateCount++;
+				}
+
+			if (m_dNeck == 0.0 && Firearm.m_dNeck != 0.0)
+				{
+				m_dNeck = Firearm.m_dNeck;
+
+				nUpdateCount++;
+				}
 
 			foreach (cFirearmBullet FirearmBullet in Firearm.m_FirearmBulletList)
 				{
-				bool fFound = false;
-
 				foreach (cFirearmBullet CheckFirearmBullet in m_FirearmBulletList)
 					{
 					if (CheckFirearmBullet.CompareTo(FirearmBullet) == 0)
 						{
-						CheckFirearmBullet.COL = CheckFirearmBullet.COL == 0.0 ? FirearmBullet.COL : CheckFirearmBullet.COL;
-						CheckFirearmBullet.CBTO = CheckFirearmBullet.CBTO == 0.0 ? FirearmBullet.CBTO : CheckFirearmBullet.CBTO;
-						CheckFirearmBullet.Jump = CheckFirearmBullet.Jump == 0.0 ? FirearmBullet.Jump : CheckFirearmBullet.Jump;
+						if (CheckFirearmBullet.COL == 0.0 && FirearmBullet.COL != 0.0)
+							{
+							CheckFirearmBullet.COL = FirearmBullet.COL;
 
-						fFound = true;
+							nUpdateCount++;
+							}
+
+						if (CheckFirearmBullet.CBTO == 0.0 && FirearmBullet.CBTO != 0.0)
+							{
+							CheckFirearmBullet.CBTO = FirearmBullet.CBTO;
+
+							nUpdateCount++;
+							}
+
+						if (CheckFirearmBullet.Jump == 0.0 && FirearmBullet.Jump != 0.0)
+							{
+							CheckFirearmBullet.Jump = FirearmBullet.Jump;
+
+							nUpdateCount++;
+							}
 
 						break;
 						}
 					}
-
-				if (!fFound && FirearmBullet != null)
-					m_FirearmBulletList.AddFirearmBullet(FirearmBullet);
 				}
 
 			//----------------------------------------------------------------------------*
 			// Details
 			//----------------------------------------------------------------------------*
 
-			m_strImageFile = Firearm.m_strImageFile;
+			if (String.IsNullOrEmpty(m_strImageFile) && !String.IsNullOrEmpty(Firearm.m_strImageFile))
+				{
+				m_strImageFile = Firearm.m_strImageFile;
 
-			m_dTransferFees = Firearm.m_dTransferFees;
-			m_dOtherFees = Firearm.m_dOtherFees;
+				nUpdateCount++;
+				}
 
-			m_strReceiverFinish = Firearm.m_strReceiverFinish;
-			m_strBarrelFinish = Firearm.m_strBarrelFinish;
+			if (m_dTransferFees == 0.0 && Firearm.m_dTransferFees != 0.0)
+				{
+				m_dTransferFees = Firearm.m_dTransferFees;
 
-			m_strType = Firearm.m_strType;
-			m_strAction = Firearm.m_strAction;
-			m_strHammer = Firearm.m_strHammer;
+				nUpdateCount++;
+				}
 
-			m_strMagazine = Firearm.m_strMagazine;
-			m_nCapacity = Firearm.m_nCapacity;
+			if (m_dOtherFees == 0.0 && Firearm.m_dOtherFees != 0.0)
+				{
+				m_dOtherFees = Firearm.m_dOtherFees;
+
+				nUpdateCount++;
+				}
+
+			if (String.IsNullOrEmpty(m_strReceiverFinish) && !String.IsNullOrEmpty(Firearm.m_strReceiverFinish))
+				{
+				m_strReceiverFinish = Firearm.m_strReceiverFinish;
+
+				nUpdateCount++;
+				}
+
+			if (String.IsNullOrEmpty(m_strBarrelFinish) && !String.IsNullOrEmpty(Firearm.m_strBarrelFinish))
+				{
+				m_strBarrelFinish = Firearm.m_strBarrelFinish;
+
+				nUpdateCount++;
+				}
+
+			if (String.IsNullOrEmpty(m_strType) && !String.IsNullOrEmpty(Firearm.m_strType))
+				{
+				m_strType = Firearm.m_strType;
+
+				nUpdateCount++;
+				}
+
+			if (String.IsNullOrEmpty(m_strAction) && !String.IsNullOrEmpty(Firearm.m_strAction))
+				{
+				m_strAction = Firearm.m_strAction;
+
+				nUpdateCount++;
+				}
+
+			if (String.IsNullOrEmpty(m_strHammer) && !String.IsNullOrEmpty(Firearm.m_strHammer))
+				{
+				m_strHammer = Firearm.m_strHammer;
+
+				nUpdateCount++;
+				}
+
+			if (String.IsNullOrEmpty(m_strMagazine) && !String.IsNullOrEmpty(Firearm.m_strMagazine))
+				{
+				m_strMagazine = Firearm.m_strMagazine;
+
+				nUpdateCount++;
+				}
+
+			if (m_nCapacity == 0 && Firearm.m_nCapacity != 0)
+				{
+				m_nCapacity = Firearm.m_nCapacity;
+
+				nUpdateCount++;
+				}
+
+			return (nUpdateCount);
 			}
 
 		//============================================================================*
@@ -1036,6 +1144,15 @@ namespace ReloadersWorkShop
 				{
 				m_eTurretType = value;
 				}
+			}
+
+		//============================================================================*
+		// TurretTypeFromString Property
+		//============================================================================*
+
+		public static cFirearm.eTurretType TurretTypeFromString(string strType)
+			{
+			return ((strType == "MOA" ? cFirearm.eTurretType.MOA : cFirearm.eTurretType.MilDot));
 			}
 
 		//============================================================================*
