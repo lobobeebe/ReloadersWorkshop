@@ -1469,14 +1469,17 @@ namespace ReloadersWorkShop
 						}
 					else
 						{
+						if (m_Load.ChargeList.Count > 0)
+							ErrorMessageLabel.Text = String.Format("This load has {0:N0} charge{1}.  Load components may not be modified once charge data has been entered.", m_Load.ChargeList.Count, m_Load.ChargeList.Count != 1 ? "s" : "");
+						else
+							ErrorMessageLabel.Text = "";
+
 						FirearmTypeCombo.Enabled = m_Load.ChargeList.Count == 0;
 						CaliberCombo.Enabled = m_Load.ChargeList.Count == 0;
 						BulletCombo.Enabled = m_Load.ChargeList.Count == 0;
 						PowderCombo.Enabled = m_Load.ChargeList.Count == 0;
 						PrimerCombo.Enabled = m_Load.ChargeList.Count == 0;
 						CaseCombo.Enabled = m_Load.ChargeList.Count == 0;
-
-						ErrorMessageLabel.Text = "";
 						}
 					}
 				}

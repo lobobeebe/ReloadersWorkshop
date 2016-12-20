@@ -593,6 +593,8 @@ namespace ReloadersWorkShop
 
 		private void PopulateBatchBulletCombo()
 			{
+			cCaliber.CurrentFirearmType = BatchFirearmTypeCombo.Value;
+
 			m_fPopulating = true;
 
 			BatchBulletCombo.Items.Clear();
@@ -608,9 +610,7 @@ namespace ReloadersWorkShop
 
 			foreach (cBullet CheckBullet in m_DataFiles.BulletList)
 				{
-				cCaliber.CurrentFirearmType = CheckBullet.FirearmType;
-
-				if (CheckBullet.FirearmType == BatchFirearmTypeCombo.Value)
+				if (CheckBullet.CrossUse || CheckBullet.FirearmType == BatchFirearmTypeCombo.Value)
 					{
 					bool fBulletUsed = false;
 
@@ -729,6 +729,8 @@ namespace ReloadersWorkShop
 
 		private void PopulateBatchPowderCombo()
 			{
+			cCaliber.CurrentFirearmType = BatchFirearmTypeCombo.Value;
+
 			m_fPopulating = true;
 
 			BatchPowderCombo.Items.Clear();
@@ -739,7 +741,7 @@ namespace ReloadersWorkShop
 
 			foreach (cPowder CheckPowder in m_DataFiles.PowderList)
 				{
-				if (CheckPowder.FirearmType == BatchFirearmTypeCombo.Value)
+				if (CheckPowder.CrossUse || CheckPowder.FirearmType == BatchFirearmTypeCombo.Value)
 					{
 					bool fPowderUsed = false;
 
@@ -758,8 +760,6 @@ namespace ReloadersWorkShop
 
 					if (fPowderUsed)
 						{
-						cCaliber.CurrentFirearmType = CheckPowder.FirearmType;
-
 						BatchPowderCombo.Items.Add(CheckPowder);
 
 						if (CheckPowder.CompareTo(m_DataFiles.Preferences.LastBatchPowderSelected) == 0)
