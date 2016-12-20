@@ -308,20 +308,20 @@ namespace ReloadersWorkShop
 
 		public static  string ToShortSizeString(cPrimer.ePrimerSize eSize)
 			{
-			string strSizeString = "";
+			string strString = "";
 
 			switch (eSize)
 				{
 				case ePrimerSize.Small:
-					strSizeString = "Small";
+					strString = "Small";
 					break;
 
 				case ePrimerSize.Large:
-					strSizeString = "Large";
+					strString = "Large";
 					break;
 				}
 
-			return (strSizeString);
+			return (strString);
 			}
 
 		//============================================================================*
@@ -330,7 +330,11 @@ namespace ReloadersWorkShop
 
 		public string ToShortString()
 			{
-			return (String.Format("{0} {1}", (Manufacturer != null ? Manufacturer.ToString() : ""), (m_strModel != null ? m_strModel : "")));
+			string strString = String.Format("{0} {1}", (Manufacturer != null ? Manufacturer.ToString() : ""), (m_strModel != null ? m_strModel : ""));
+
+			strString = ToCrossUseString(strString);
+
+			return (strString);
 			}
 
 		//============================================================================*

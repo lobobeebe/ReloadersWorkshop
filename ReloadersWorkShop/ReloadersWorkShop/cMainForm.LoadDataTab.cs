@@ -566,6 +566,8 @@ namespace ReloadersWorkShop
 
 		private void PopulateLoadDataBulletCombo()
 			{
+			cCaliber.CurrentFirearmType = LoadDataFirearmTypeCombo.Value;
+
 			m_fPopulating = true;
 
 			LoadDataBulletCombo.Items.Clear();
@@ -581,14 +583,14 @@ namespace ReloadersWorkShop
 
 			foreach (cBullet CheckBullet in m_DataFiles.BulletList)
 				{
-				if (CheckBullet.FirearmType == LoadDataFirearmTypeCombo.Value &&
+				if ((CheckBullet.CrossUse || CheckBullet.FirearmType == LoadDataFirearmTypeCombo.Value) &&
 					(Caliber == null || CheckBullet.HasCaliber(Caliber)))
 					{
 					bool fOK = false;
 
 					foreach (cLoad CheckLoad in m_DataFiles.LoadList)
 						{
-						if (CheckLoad.Bullet.Equals(CheckBullet))
+						if (CheckLoad.Bullet.CompareTo(CheckBullet) == 0)
 							{
 							fOK = true;
 
@@ -615,8 +617,6 @@ namespace ReloadersWorkShop
 
 					if (fOK)
 						{
-						cCaliber.CurrentFirearmType = CheckBullet.FirearmType;
-
 						LoadDataBulletCombo.Items.Add(CheckBullet);
 
 						if (CheckBullet.CompareTo(m_DataFiles.Preferences.LastLoadDataBulletSelected) == 0)
@@ -660,7 +660,7 @@ namespace ReloadersWorkShop
 
 					foreach (cLoad Load in m_DataFiles.LoadList)
 						{
-						if (CheckCaliber.Equals(Load.Caliber))
+						if (CheckCaliber.CompareTo(Load.Caliber) == 0)
 							{
 							fCaliberUsed = true;
 
@@ -725,6 +725,8 @@ namespace ReloadersWorkShop
 
 		private void PopulateLoadDataPowderCombo()
 			{
+			cCaliber.CurrentFirearmType = LoadDataFirearmTypeCombo.Value;
+
 			m_fPopulating = true;
 
 			LoadDataPowderCombo.Items.Clear();
@@ -745,13 +747,13 @@ namespace ReloadersWorkShop
 
 			foreach (cPowder CheckPowder in m_DataFiles.PowderList)
 				{
-				if ((LoadDataFirearmTypeCombo.Value == cFirearm.eFireArmType.None || CheckPowder.FirearmType == LoadDataFirearmTypeCombo.Value))
+				if ((LoadDataFirearmTypeCombo.Value == cFirearm.eFireArmType.None || CheckPowder.CrossUse || CheckPowder.FirearmType == LoadDataFirearmTypeCombo.Value))
 					{
 					bool fPowderUsed = false;
 
 					foreach (cLoad Load in m_DataFiles.LoadList)
 						{
-						if (Load.Powder.Equals(CheckPowder) &&
+						if (Load.Powder.CompareTo(CheckPowder) == 0 &&
 							(Bullet == null || Load.Bullet.CompareTo(Bullet) == 0) &&
 							(Caliber == null || Load.Caliber.CompareTo(Caliber) == 0))
 							{
@@ -763,8 +765,6 @@ namespace ReloadersWorkShop
 
 					if (fPowderUsed)
 						{
-						cCaliber.CurrentFirearmType = CheckPowder.FirearmType;
-
 						LoadDataPowderCombo.Items.Add(CheckPowder);
 
 						if (CheckPowder.CompareTo(m_DataFiles.Preferences.LastLoadDataPowderSelected) == 0)

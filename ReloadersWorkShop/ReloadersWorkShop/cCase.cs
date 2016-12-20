@@ -343,6 +343,8 @@ namespace ReloadersWorkShop
 			if (m_fMatch)
 				strString += " Match";
 
+			strString = ToCrossUseString(strString);
+
 			return (strString);
 			}
 

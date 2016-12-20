@@ -32,6 +32,7 @@
 			this.ExitButton = new System.Windows.Forms.Button();
 			this.ActivateButton = new System.Windows.Forms.Button();
 			this.RegistrationLabel = new System.Windows.Forms.Label();
+			this.CopyrightLabel = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// ContinueButton
@@ -89,6 +90,18 @@
 			this.RegistrationLabel.TabIndex = 3;
 			this.RegistrationLabel.Text = "label1";
 			// 
+			// CopyrightLabel
+			// 
+			this.CopyrightLabel.AutoSize = true;
+			this.CopyrightLabel.BackColor = System.Drawing.Color.White;
+			this.CopyrightLabel.Font = new System.Drawing.Font("Stencil", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.CopyrightLabel.ForeColor = System.Drawing.Color.Black;
+			this.CopyrightLabel.Location = new System.Drawing.Point(218, 220);
+			this.CopyrightLabel.Name = "CopyrightLabel";
+			this.CopyrightLabel.Size = new System.Drawing.Size(332, 19);
+			this.CopyrightLabel.TabIndex = 4;
+			this.CopyrightLabel.Text = "Copyright (c) 2013-2017, Kevin S. Beebe";
+			// 
 			// cMainForm
 			// 
 			this.AcceptButton = this.ContinueButton;
@@ -97,6 +110,7 @@
 			this.CancelButton = this.ExitButton;
 			this.ClientSize = new System.Drawing.Size(683, 468);
 			this.ControlBox = false;
+			this.Controls.Add(this.CopyrightLabel);
 			this.Controls.Add(this.RegistrationLabel);
 			this.Controls.Add(this.ActivateButton);
 			this.Controls.Add(this.ExitButton);
@@ -118,6 +132,7 @@
 		private System.Windows.Forms.Button ExitButton;
 		private System.Windows.Forms.Button ActivateButton;
 		private System.Windows.Forms.Label RegistrationLabel;
+		private System.Windows.Forms.Label CopyrightLabel;
 		}
 	}
 

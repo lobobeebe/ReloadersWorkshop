@@ -444,6 +444,8 @@ namespace ReloadersWorkShop
 			else
 				strString += String.Format(", {0}", m_strType);
 
+			strString = ToCrossUseString(strString);
+
 			return (strString);
 			}
 
@@ -526,6 +528,8 @@ namespace ReloadersWorkShop
 
 			if (!fType)
 				strString += String.Format(", {0}", m_strType);
+
+			strString = ToCrossUseString(strString);
 
 			return (strString);
 			}

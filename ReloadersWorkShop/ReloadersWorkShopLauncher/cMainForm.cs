@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cMainForm.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -113,10 +113,6 @@ namespace ReloadersWorkShopLauncher
 			Bitmap Title = Properties.Resources.Title;
 
 			e.Graphics.DrawImage(Title, new Rectangle((ClientSize.Width / 2) - 450, 50, 900, 150));
-
-			Bitmap Copyright = Properties.Resources.Copyright;
-
-			e.Graphics.DrawImage(Copyright, new Rectangle((ClientSize.Width / 2) - 350, 100, 700, 150));
 			}
 
 		//============================================================================*
@@ -127,7 +123,7 @@ namespace ReloadersWorkShopLauncher
 			{
 			string strArgs = "/GUID=" + m_strGUID;
 
-            Process.Start(@"ReloadersWorkShop.exe", strArgs);
+			Process.Start(@"ReloadersWorkShop.exe", strArgs);
 
 			Close();
 			}
@@ -154,6 +150,8 @@ namespace ReloadersWorkShopLauncher
 
 			RegistrationLabel.Location = new Point(400 - (RegistrationLabel.Width / 2), 350);
 
+			CopyrightLabel.Location = new Point(400 - (CopyrightLabel.Width / 2), 150);
+
 			//----------------------------------------------------------------------------*
 			// If it's not a trial version, hide the Activate button
 			//----------------------------------------------------------------------------*
@@ -174,7 +172,6 @@ namespace ReloadersWorkShopLauncher
 
 			if (m_RWRegistry.Trial)
 				Text += " - Trial";
-
 			}
 		}
 	}
