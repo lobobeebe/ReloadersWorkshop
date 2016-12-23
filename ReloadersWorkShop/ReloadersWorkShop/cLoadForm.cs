@@ -1447,6 +1447,7 @@ namespace ReloadersWorkShop
 				if (!m_fUserViewOnly)
 					{
 					int nNumBatches = 0;
+					bool fEnableComponents = true;
 
 					foreach (cBatch CheckBatch in m_DataFiles.BatchList)
 						{
@@ -1460,12 +1461,7 @@ namespace ReloadersWorkShop
 
 						m_fViewOnly = true;
 
-						FirearmTypeCombo.Enabled = false;
-						CaliberCombo.Enabled = false;
-						BulletCombo.Enabled = false;
-						PowderCombo.Enabled = false;
-						PrimerCombo.Enabled = false;
-						CaseCombo.Enabled = false;
+						fEnableComponents = false;
 						}
 					else
 						{
@@ -1474,13 +1470,21 @@ namespace ReloadersWorkShop
 						else
 							ErrorMessageLabel.Text = "";
 
-						FirearmTypeCombo.Enabled = m_Load.ChargeList.Count == 0;
-						CaliberCombo.Enabled = m_Load.ChargeList.Count == 0;
-						BulletCombo.Enabled = m_Load.ChargeList.Count == 0;
-						PowderCombo.Enabled = m_Load.ChargeList.Count == 0;
-						PrimerCombo.Enabled = m_Load.ChargeList.Count == 0;
-						CaseCombo.Enabled = m_Load.ChargeList.Count == 0;
+						fEnableComponents = m_Load.ChargeList.Count == 0;
 						}
+
+					FirearmTypeCombo.Enabled = fEnableComponents;
+					CaliberCombo.Enabled = fEnableComponents;
+					BulletCombo.Enabled = fEnableComponents;
+					PowderCombo.Enabled = fEnableComponents;
+					PrimerCombo.Enabled = fEnableComponents;
+					CaseCombo.Enabled = fEnableComponents;
+					}
+				else
+					{
+					ErrorMessageLabel.Visible = false;
+
+					FirearmTypeCombo.Enabled = false;
 					}
 				}
 

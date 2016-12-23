@@ -415,7 +415,7 @@ namespace ReloadersWorkShop
 				case cSupply.eSupplyTypes.Bullets:
 					foreach (cSupply Supply in m_DataFiles.BulletList)
 						{
-						if ((m_eFirearmTypeFilter == cFirearm.eFireArmType.None || Supply.FirearmType == m_eFirearmTypeFilter) &&
+						if ((Supply.CrossUse || m_eFirearmTypeFilter == cFirearm.eFireArmType.None || Supply.FirearmType == m_eFirearmTypeFilter) &&
 							(m_ManufacturerFilter == null || Supply.Manufacturer.CompareTo(m_ManufacturerFilter) == 0) &&
 							(!m_fNonZeroFilter || m_DataFiles.SupplyQuantity(Supply) > 0.0) &&
 							(!m_fMinStockFilter || m_DataFiles.SupplyQuantity(Supply) < Supply.MinimumStockLevel) &&
@@ -440,7 +440,7 @@ namespace ReloadersWorkShop
 				case cSupply.eSupplyTypes.Cases:
 					foreach (cSupply Supply in m_DataFiles.CaseList)
 						{
-						if ((m_eFirearmTypeFilter == cFirearm.eFireArmType.None || Supply.FirearmType == m_eFirearmTypeFilter) &&
+						if ((Supply.CrossUse || m_eFirearmTypeFilter == cFirearm.eFireArmType.None || Supply.FirearmType == m_eFirearmTypeFilter) &&
 							(m_ManufacturerFilter == null || Supply.Manufacturer.CompareTo(m_ManufacturerFilter) == 0) &&
 							(!m_fNonZeroFilter || m_DataFiles.SupplyQuantity(Supply) > 0.0) &&
 							(!m_fMinStockFilter || m_DataFiles.SupplyQuantity(Supply) < Supply.MinimumStockLevel) &&
@@ -465,7 +465,7 @@ namespace ReloadersWorkShop
 				case cSupply.eSupplyTypes.Powder:
 					foreach (cSupply Supply in m_DataFiles.PowderList)
 						{
-						if ((m_eFirearmTypeFilter == cFirearm.eFireArmType.None || Supply.FirearmType == m_eFirearmTypeFilter) &&
+						if ((Supply.CrossUse || m_eFirearmTypeFilter == cFirearm.eFireArmType.None || Supply.FirearmType == m_eFirearmTypeFilter) &&
 							(m_ManufacturerFilter == null || Supply.Manufacturer.CompareTo(m_ManufacturerFilter) == 0) &&
 							(!m_fNonZeroFilter || m_DataFiles.SupplyQuantity(Supply) > 0.0) &&
 							(!m_fMinStockFilter || m_DataFiles.SupplyQuantity(Supply) < Supply.MinimumStockLevel) &&
@@ -490,7 +490,7 @@ namespace ReloadersWorkShop
 				case cSupply.eSupplyTypes.Primers:
 					foreach (cSupply Supply in m_DataFiles.PrimerList)
 						{
-						if ((m_eFirearmTypeFilter == cFirearm.eFireArmType.None || Supply.FirearmType == m_eFirearmTypeFilter) &&
+						if ((Supply.CrossUse || m_eFirearmTypeFilter == cFirearm.eFireArmType.None || Supply.FirearmType == m_eFirearmTypeFilter) &&
 							(m_ManufacturerFilter == null || Supply.Manufacturer.CompareTo(m_ManufacturerFilter) == 0) &&
 							(!m_fNonZeroFilter || m_DataFiles.SupplyQuantity(Supply) > 0.0) &&
 							(!m_fMinStockFilter || m_DataFiles.SupplyQuantity(Supply) < Supply.MinimumStockLevel) &&
