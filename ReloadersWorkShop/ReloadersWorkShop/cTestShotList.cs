@@ -159,8 +159,6 @@ namespace ReloadersWorkShop
 							{
 							if (TestShot.Validate())
 								Add(TestShot);
-							else
-								Console.WriteLine("Invalid TestShot!");
 							}
 
 						break;

@@ -69,7 +69,7 @@ namespace ReloadersWorkShop
 			else
 				{
 				if (TestShot2 == null)
-					return(1);
+					return (1);
 				}
 
 			return (TestShot1.CompareTo(TestShot2));
@@ -110,8 +110,11 @@ namespace ReloadersWorkShop
 
 		public bool Misfire
 			{
-			get { return (m_fMisfire); }
-			set 
+			get
+				{
+				return (m_fMisfire);
+				}
+			set
 				{
 				m_fMisfire = value;
 
@@ -126,8 +129,14 @@ namespace ReloadersWorkShop
 
 		public int MuzzleVelocity
 			{
-			get { return (m_nMuzzleVelocity); }
-			set { m_nMuzzleVelocity = value; }
+			get
+				{
+				return (m_nMuzzleVelocity);
+				}
+			set
+				{
+				m_nMuzzleVelocity = value;
+				}
 			}
 
 		//============================================================================*
@@ -136,8 +145,14 @@ namespace ReloadersWorkShop
 
 		public int Pressure
 			{
-			get { return (m_nPressure); }
-			set { m_nPressure = value; }
+			get
+				{
+				return (m_nPressure);
+				}
+			set
+				{
+				m_nPressure = value;
+				}
 			}
 
 		//============================================================================*
@@ -146,7 +161,10 @@ namespace ReloadersWorkShop
 
 		public bool Squib
 			{
-			get { return (m_fSquib); }
+			get
+				{
+				return (m_fSquib);
+				}
 			set
 				{
 				m_fSquib = value;
@@ -173,6 +191,12 @@ namespace ReloadersWorkShop
 
 		public bool Validate()
 			{
+			if (m_nMuzzleVelocity < 0)
+				return (false);
+
+			if (m_nPressure < 0)
+				return (false);
+
 			return (true);
 			}
 		}
