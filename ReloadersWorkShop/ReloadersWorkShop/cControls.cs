@@ -23,19 +23,6 @@ namespace ReloadersWorkShop
 	public static class cControls
 		{
 		//============================================================================*
-		// InternalErrorMessageBox()
-		//============================================================================*
-
-		public static void InternalErrorMessageBox(Exception e)
-			{
-			string strMessage = "An internal error has occurred!\n\nSystem Message:\n\n";
-			strMessage += e.ToString();
-			strMessage += String.Format("\n\nPlease report the above message to the {0} Support Team.\n\nThe program will continue normally.", Application.ProductName);
-
-			MessageBox.Show(strMessage, "Internal Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
-
-		//============================================================================*
 		// OnColumnWidthChanged()
 		//============================================================================*
 
@@ -246,20 +233,6 @@ namespace ReloadersWorkShop
 				if (ManufacturerCombo.Items.Count > 0)
 					ManufacturerCombo.SelectedIndex = 0;
 				}
-			}
-
-		//============================================================================*
-		// PopulatePrimerSizeCombo()
-		//============================================================================*
-
-		public static void PopulatePrimerSizeCombo(ComboBox SizeCombo, cPrimer Primer)
-			{
-			SizeCombo.Items.Clear();
-
-			SizeCombo.Items.Add("Small");
-			SizeCombo.Items.Add("Large");
-
-			SizeCombo.SelectedIndex = (int)Primer.Size;
 			}
 		}
 	}

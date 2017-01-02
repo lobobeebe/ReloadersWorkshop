@@ -50,7 +50,7 @@ namespace ReloadersWorkShop
 		// Export() - XML Document
 		//============================================================================*
 
-		public override void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement, bool fIdentityOnly = false)
+		public override void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement, bool fIdentityOnly = false, bool fIncludeTransactions = true)
 			{
 			string strName = ExportName;
 
@@ -59,7 +59,7 @@ namespace ReloadersWorkShop
 
 			XmlElement XMLThisElement = XMLDocument.CreateElement(strName, XMLParentElement);
 
-			base.Export(XMLDocument, XMLThisElement, fIdentityOnly);
+			base.Export(XMLDocument, XMLThisElement, fIdentityOnly, fIncludeTransactions);
 
 			XMLDocument.CreateElement("Model", m_strModel, XMLThisElement);
 
@@ -77,7 +77,7 @@ namespace ReloadersWorkShop
 		// ExportName Property
 		//============================================================================*
 
-		public string ExportName
+		public static string ExportName
 			{
 			get
 				{
@@ -100,22 +100,22 @@ namespace ReloadersWorkShop
 				switch (XMLNode.Name)
 					{
 					case "Model":
-						m_strModel = XMLNode.FirstChild.Value;
+						XMLDocument.Import(XMLNode, out m_strModel);
 						break;
 					case "Size":
-						m_eSize = XMLNode.FirstChild.Value == "Small" ? ePrimerSize.Small : ePrimerSize.Large;
+						XMLDocument.Import(XMLNode, out m_eSize);
 						break;
 					case "Standard":
-						m_fStandard = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fStandard);
 						break;
 					case "Magnum":
-						m_fMagnum = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fMagnum);
 						break;
 					case "BenchRest":
-						m_fBenchRest = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fBenchRest);
 						break;
 					case "Military":
-						m_fMilitary = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fMilitary);
 						break;
 					default:
 						break;

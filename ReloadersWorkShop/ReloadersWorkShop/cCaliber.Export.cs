@@ -151,55 +151,55 @@ namespace ReloadersWorkShop
 				switch (XMLNode.Name)
 					{
 					case "FirearmType":
-						m_eFirearmType = cFirearm.FirearmTypeFromString(XMLNode.FirstChild.Value);
+						XMLDocument.Import(XMLNode, out m_eFirearmType);
 						break;
 					case "Name":
-						m_strName = XMLNode.FirstChild.Value;
+						XMLDocument.Import(XMLNode, out m_strName);
 						break;
 					case "HeadStamp":
-						m_strHeadStamp = XMLNode.FirstChild.Value;
+						XMLDocument.Import(XMLNode, out m_strHeadStamp);
 						break;
 					case "HandgunType":
-						m_fPistol = XMLNode.FirstChild.Value == "Pistol";
+						XMLDocument.Import(XMLNode, out m_fPistol);
 						break;
 					case "SmallPrimer":
-						m_fSmallPrimer = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fSmallPrimer);
 						break;
 					case "LargePrimer":
-						m_fLargePrimer = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fLargePrimer);
 						break;
 					case "MagnumPrimer":
-						m_fMagnumPrimer = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fMagnumPrimer);
 						break;
 					case "MinBulletDiameter":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dMinBulletDiameter);
+						XMLDocument.Import(XMLNode, out m_dMinBulletDiameter);
 						break;
 					case "MaxBulletDiameter":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dMaxBulletDiameter);
+						XMLDocument.Import(XMLNode, out m_dMaxBulletDiameter);
 						break;
 					case "MinBulletWeight":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dMinBulletWeight);
+						XMLDocument.Import(XMLNode, out m_dMinBulletWeight);
 						break;
 					case "MaxBulletWeight":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dMaxBulletWeight);
+						XMLDocument.Import(XMLNode, out m_dMaxBulletWeight);
 						break;
 					case "CaseTrimLength":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dCaseTrimLength);
+						XMLDocument.Import(XMLNode, out m_dCaseTrimLength);
 						break;
 					case "MaxCaseLength":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dMaxCaseLength);
+						XMLDocument.Import(XMLNode, out m_dMaxCaseLength);
 						break;
 					case "MaxCOAL":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dMaxCOL);
+						XMLDocument.Import(XMLNode, out m_dMaxCOL);
 						break;
 					case "MaxNeckDiameter":
-						Double.TryParse(XMLNode.FirstChild.Value, out m_dMaxNeckDiameter);
+						XMLDocument.Import(XMLNode, out m_dMaxNeckDiameter);
 						break;
 					case "SAAMIPDF":
-						m_strSAAMIPDF = XMLNode.FirstChild.Value;
+						XMLDocument.Import(XMLNode, out m_strSAAMIPDF);
 						break;
 					case "Checked":
-						m_fChecked = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fChecked);
 						break;
 					default:
 						break;

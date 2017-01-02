@@ -131,6 +131,7 @@ namespace ReloadersWorkShop
 			FileBackupMenuItem.Click += OnFileBackupClicked;
 			FileExitMenuItem.Click += OnFileExitClicked;
 			FileExportMenuItem.Click += OnFileExportClicked;
+			FileImportMenuItem.Click += OnFileImportClicked;
 			FilePreferencesMenuItem.Click += OnFilePreferencesClicked;
 			FilePrintAmmoListMenuItem.Click += OnPrintAmmoListClicked;
 			FilePrintCostAnalysisMenuItem.Click += OnPrintCostAnalysisClicked;
@@ -843,6 +844,55 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// OnFileImportClicked()
+		//============================================================================*
+
+		public void OnFileImportClicked(Object sender, EventArgs args)
+			{
+			//----------------------------------------------------------------------------*
+			// Get the file to import
+			//----------------------------------------------------------------------------*
+
+			OpenFileDialog FileDlg = new OpenFileDialog();
+
+			FileDlg.Title = String.Format("Import {0} XML File", Application.ProductName);
+			FileDlg.AddExtension = true;
+			FileDlg.DefaultExt = "xml";
+			FileDlg.InitialDirectory = m_DataFiles.GetDataPath();
+			FileDlg.Filter = "XML Files (*.xml)|*.xml";
+
+			DialogResult rc = FileDlg.ShowDialog();
+
+			if (rc == DialogResult.Cancel)
+				return;
+
+			//----------------------------------------------------------------------------*
+			// Load the XML document
+			//----------------------------------------------------------------------------*
+
+			string strPath = FileDlg.FileName;
+
+			cRWXMLDocument XMLDocument = new cRWXMLDocument(m_DataFiles);
+
+			try
+				{
+				XMLDocument.Load(strPath);
+				}
+			catch (Exception e)
+				{
+				MessageBox.Show(e.Message, "XML Import Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+				return;
+				}
+
+			//----------------------------------------------------------------------------*
+			// Show the XML Document stats and data differences
+			//----------------------------------------------------------------------------*
+
+			XMLDocument.Import(true, true);
+			}
+
+		//============================================================================*
 		// OnFilePreferencesClicked()
 		//============================================================================*
 
@@ -993,7 +1043,7 @@ namespace ReloadersWorkShop
 				string strOutputPath = m_DataFiles.GetDataPath();
 
 				bool fSuccess = true;
-			//	bool fSuccess = RWUpdater.UpdateFile("RWDataUpdate.xml", strOutputPath);
+				//	bool fSuccess = RWUpdater.UpdateFile("RWDataUpdate.xml", strOutputPath);
 
 				if (fSuccess)
 					{
@@ -1430,20 +1480,16 @@ namespace ReloadersWorkShop
 
 			Rectangle GroupRect = MainTabControl.ClientRectangle;
 
-			GroupRect.X = 8;
+			GroupRect.X = 6;
 			GroupRect.Y = 6;
-			GroupRect.Height -= (MainMenu.Height + MainTabControl.ItemSize.Height + 18);
 			GroupRect.Height /= 2;
-			GroupRect.Width -= 16;
-
-			if (GroupRect.X + GroupRect.Width < FirearmCollectionGroupBox.Location.X + FirearmCollectionGroupBox.Width)
-				GroupRect.Width = FirearmCollectionGroupBox.Location.X + FirearmCollectionGroupBox.Width + 8;
+			GroupRect.Width = GroupRect.Width > FirearmCollectionGroupBox.Location.X + FirearmCollectionGroupBox.Width ? GroupRect.Width - 24 : FirearmCollectionGroupBox.Location.X + FirearmCollectionGroupBox.Width + 6;
 
 			FirearmsGroupBox.Location = GroupRect.Location;
 			FirearmsGroupBox.Size = GroupRect.Size;
 
 			m_FirearmsListView.Location = new Point(10, FirearmCollectionGroupBox.Location.Y + FirearmCollectionGroupBox.Height + 10);
-			m_FirearmsListView.Size = new Size(FirearmsGroupBox.Width - 20, FirearmsGroupBox.Height - AddFirearmButton.Height - FirearmCollectionGroupBox.Location.Y - FirearmCollectionGroupBox.Height - 30);
+			m_FirearmsListView.Size = new Size(FirearmsGroupBox.Width - 18, FirearmsGroupBox.Height - AddFirearmButton.Height - FirearmCollectionGroupBox.Location.Y - FirearmCollectionGroupBox.Height - 30);
 
 			nButtonY = FirearmsGroupBox.Height - AddFirearmAccessoryButton.Height - 10;
 
@@ -1468,6 +1514,7 @@ namespace ReloadersWorkShop
 			// Firearms Accessories Group
 
 			GroupRect.Y += (GroupRect.Height + 6);
+			GroupRect.Height = MainTabControl.Height - GroupRect.Y - MainTabControl.ItemSize.Height - 12;
 
 			FirearmAccessoriesGroupBox.Location = GroupRect.Location;
 			FirearmAccessoriesGroupBox.Size = GroupRect.Size;
@@ -1521,7 +1568,7 @@ namespace ReloadersWorkShop
 			nButtonX += ViewSupplyButton.Width + nButtonSpacing;
 
 			m_SuppliesListView.Location = new Point(6, SupplyCountLabel.Location.Y + SupplyCountLabel.Height + 6);
-			m_SuppliesListView.Size = new Size(MainTabControl.Width - 20, nButtonY - m_SuppliesListView.Location.Y - 30);
+			m_SuppliesListView.Size = new Size(MainTabControl.Width - 20, nButtonY - m_SuppliesListView.Location.Y - 20);
 
 			//----------------------------------------------------------------------------*
 			// Load Data Tab
@@ -1546,11 +1593,6 @@ namespace ReloadersWorkShop
 			nButtonX += ViewLoadButton.Width + nButtonSpacing;
 
 			RemoveLoadButton.Location = new Point(nButtonX, nButtonY);
-
-			nButtonY -= 20;
-
-			LoadDataSelectAllButton.Location = new Point(10, nButtonY);
-			LoadDataDeselectAllButton.Location = new Point(10, LoadDataSelectAllButton.Location.Y + LoadDataSelectAllButton.Height + 6);
 
 			LoadDataListViewInfoLabel.Size = new Size(ClientRectangle.Width, LoadDataListViewInfoLabel.Height);
 
@@ -1584,7 +1626,7 @@ namespace ReloadersWorkShop
 			BatchNotTrackedLabel.Location = new Point(10, nButtonY);
 
 			m_BatchListView.Location = new Point(6, BatchFiltersGroupBox.Location.Y + BatchFiltersGroupBox.Height + 6);
-			m_BatchListView.Size = new Size(MainTabControl.Width - 20, nButtonY - m_BatchListView.Location.Y - 12);
+			m_BatchListView.Size = new Size(MainTabControl.Width - 20, nButtonY - m_BatchListView.Location.Y - 20);
 
 			//----------------------------------------------------------------------------*
 			// Ammo Tab
@@ -1611,7 +1653,7 @@ namespace ReloadersWorkShop
 			RemoveAmmoButton.Location = new Point(nButtonX, nButtonY);
 
 			m_AmmoListView.Location = new Point(7, AmmoPrintOptionsGroupBox.Location.Y + AmmoPrintOptionsGroupBox.Height + 6);
-			m_AmmoListView.Size = new Size(ClientRectangle.Width - 24, nButtonY - m_AmmoListView.Location.Y - 12);
+			m_AmmoListView.Size = new Size(ClientRectangle.Width - 24, nButtonY - m_AmmoListView.Location.Y - 20);
 			}
 
 		//============================================================================*

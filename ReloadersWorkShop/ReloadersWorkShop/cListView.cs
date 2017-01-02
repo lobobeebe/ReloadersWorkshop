@@ -154,9 +154,8 @@ namespace ReloadersWorkShop
 					Item.EnsureVisible();
 					}
 				}
-			catch (Exception e)
+			catch
 				{
-				cControls.InternalErrorMessageBox(e);
 				}
 
 			Focus();

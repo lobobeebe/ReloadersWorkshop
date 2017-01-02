@@ -141,7 +141,7 @@ namespace ReloadersWorkShop
 		// CreateElement() - TubeSize
 		//============================================================================*
 
-		public XmlElement CreateElement(string strName, cScope.eTurretTubeSizes  eSize, XmlNode XMLParentNode)
+		public XmlElement CreateElement(string strName, cScope.eTurretTubeSizes eSize, XmlNode XMLParentNode)
 			{
 			return (CreateElement(strName, cScope.TubeSizeString(eSize), XMLParentNode));
 			}
@@ -676,7 +676,7 @@ namespace ReloadersWorkShop
 				{
 				Import();
 				}
-			catch (Exception e)
+			catch
 				{
 				fOK = false;
 				}
@@ -692,7 +692,7 @@ namespace ReloadersWorkShop
 		// Import() - XML Document
 		//============================================================================*
 
-		public bool Import(bool fMerge = true)
+		public bool Import(bool fMerge = true, bool fCountOnly = false)
 			{
 			XmlElement XMLRoot = DocumentElement;
 
@@ -708,7 +708,7 @@ namespace ReloadersWorkShop
 					{
 					case "Ammunition":
 					case "AmmoList":
-						m_DataFiles.AmmoList.Import(this, XMLNode, m_DataFiles);
+						m_DataFiles.AmmoList.Import(this, XMLNode, m_DataFiles, fCountOnly);
 
 						m_nAmmoCount += m_DataFiles.AmmoList.NewCount;
 						m_nAmmoUpdateCount += m_DataFiles.AmmoList.UpdateCount;
@@ -716,7 +716,8 @@ namespace ReloadersWorkShop
 						break;
 
 					case "Preferences":
-						m_DataFiles.Preferences.Import(this, XMLNode);
+						if (!fMerge)
+							m_DataFiles.Preferences.Import(this, XMLNode);
 
 						break;
 
@@ -799,6 +800,18 @@ namespace ReloadersWorkShop
 
 			if (XMLThisNode != null && XMLThisNode.FirstChild != null && XMLThisNode.FirstChild.Value != null)
 				eType = cFirearm.FirearmTypeFromString(XMLThisNode.FirstChild.Value);
+			}
+
+		//============================================================================*
+		// Import() - PrimerSize
+		//============================================================================*
+
+		public void Import(XmlNode XMLThisNode, out cPrimer.ePrimerSize eSize)
+			{
+			eSize = cPrimer.ePrimerSize.Small;
+
+			if (XMLThisNode != null && XMLThisNode.FirstChild != null && XMLThisNode.FirstChild.Value != null)
+				eSize = cPrimer.PrimerSizeFromString(XMLThisNode.FirstChild.Value);
 			}
 
 		//============================================================================*
@@ -1026,39 +1039,39 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// ResolveIdentities()
+		// Load()
 		//============================================================================*
-		/*
-				public bool ResolveIdentities()
+
+		public override void Load(string strFilePath)
+			{
+			base.Load(strFilePath);
+
+			if (!Validate())
+				throw (new Exception(String.Format("{0} is not a valid {1} XML Data File!", strFilePath, Application.ProductName)));
+			}
+
+		//============================================================================*
+		// Validate()
+		//============================================================================*
+
+		public bool Validate()
+			{
+			XmlNode XMLNode = FirstChild;
+
+			while (XMLNode != null)
+				{
+				if (XMLNode.Name == "Body")
 					{
-					bool fChanged = true;
-					int nCount = 0;
+					XMLNode = XMLNode.FirstChild;
 
-					while (fChanged && nCount < 5)
-						{
-						fChanged = false;
-
-						fChanged = m_DataFiles.CaliberList.ResolveIdentities() ? true : fChanged;
-						fChanged = m_DataFiles.AmmoList.ResolveIdentities() ? true : fChanged;
-						fChanged = m_DataFiles.BulletList.ResolveIdentities() ? true : fChanged;
-						fChanged = m_DataFiles.CaseList.ResolveIdentities() ? true : fChanged;
-						fChanged = m_DataFiles.PowderList.ResolveIdentities() ? true : fChanged;
-						fChanged = m_DataFiles.PrimerList.ResolveIdentities() ? true : fChanged;
-						fChanged = m_DataFiles.FirearmList.ResolveIdentities() ? true : fChanged;
-						fChanged = m_DataFiles.LoadList.ResolveIdentities() ? true : fChanged;
-						fChanged = m_DataFiles.BatchList.ResolveIdentities() ? true : fChanged;
-						fChanged = m_DataFiles.GearList.ResolveIdentities() ? true : fChanged;
-
-						//				fChanged = Preferences.ResolveIdentities(this) ? true : fChanged;
-
-						if (fChanged)
-							nCount = 0;
-						else
-							nCount++;
-						}
-
-					return (fChanged);
+					if (XMLNode != null && XMLNode.InnerText.Contains(Application.ProductName))
+						return(true);
 					}
-		*/
+
+				XMLNode = XMLNode.NextSibling;
+				}
+
+			return (false);
+			}
 		}
 	}

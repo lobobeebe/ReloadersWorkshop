@@ -42,7 +42,7 @@ namespace ReloadersWorkShop
 		// Export() - XML Document
 		//============================================================================*
 
-		public override void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement, bool fIdentityOnly = false)
+		public override void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement, bool fIdentityOnly = false, bool fIncludeTransactions = true)
 			{
 			string strName = ExportName;
 
@@ -51,7 +51,7 @@ namespace ReloadersWorkShop
 
 			XmlElement XMLThisElement = XMLDocument.CreateElement(strName, XMLParentElement);
 
-			base.Export(XMLDocument, XMLThisElement, fIdentityOnly);
+			base.Export(XMLDocument, XMLThisElement, fIdentityOnly, fIncludeTransactions);
 
 			XMLDocument.CreateElement("Type", m_strType, XMLThisElement);
 
@@ -65,7 +65,7 @@ namespace ReloadersWorkShop
 		// ExportName Property
 		//============================================================================*
 
-		public string ExportName
+		public static string ExportName
 			{
 			get
 				{

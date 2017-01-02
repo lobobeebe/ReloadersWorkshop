@@ -329,7 +329,7 @@ namespace ReloadersWorkShop
 			// Create the Batch Load List View
 			//----------------------------------------------------------------------------*
 
-			m_BatchLoadListView = new cBatchLoadListView(m_DataFiles, m_Batch);
+			m_BatchLoadListView = new cBatchLoadListView(m_DataFiles, m_Batch, !m_fAdd);
 
 			m_BatchLoadListView.Location = new Point(6, BatchLoadLabel.Location.Y + BatchLoadLabel.Height + 6);
 			m_BatchLoadListView.Size = new Size(LoadDataGroupBox.Width - 12, LoadDetailsGroup.Location.Y - BatchLoadLabel.Location.Y - BatchLoadLabel.Height - 12);
@@ -1300,39 +1300,28 @@ namespace ReloadersWorkShop
 
 			BulletCombo.Items.Clear();
 
+			cCaliber Caliber = null;
+
+			if (CaliberCombo.SelectedIndex > 0)
+				Caliber = (cCaliber) CaliberCombo.SelectedItem;
+
 			if (!m_fViewOnly && m_Batch.BatchTest == null)
 				{
 				BulletCombo.Items.Add("Any Bullet");
 
-				foreach (cBullet Bullet in m_DataFiles.BulletList)
+				foreach (cLoad Load in m_DataFiles.LoadList)
 					{
-					if ((!m_DataFiles.Preferences.HideUncheckedSupplies || Bullet.Checked) &&
-						(Bullet.CrossUse || Bullet.FirearmType == FirearmTypeCombo.Value) &&
-						(CaliberCombo.SelectedIndex == 0 || Bullet.HasCaliber((cCaliber) CaliberCombo.SelectedItem)))
-						{
-						bool fLoadFound = false;
+					if (Load.FirearmType != FirearmTypeCombo.Value)
+						continue;
 
-						foreach (cLoad Load in m_DataFiles.LoadList)
-							{
-							if (Load.FirearmType != FirearmTypeCombo.Value)
-								continue;
+					if (Caliber != null && Load.Caliber.CompareTo(Caliber) != 0)
+						continue;
 
-							if (Load.Bullet.CompareTo(Bullet) == 0)
-								{
-								if (CaliberCombo.SelectedIndex == 0 || Load.Caliber.CompareTo((cCaliber) CaliberCombo.SelectedItem) == 0)
-									{
-									fLoadFound = true;
+					if (Caliber != null && !Load.Bullet.HasCaliber(Caliber))
+						continue;
 
-									break;
-									}
-								}
-							}
-
-						if (fLoadFound)
-							{
-							BulletCombo.Items.Add(Bullet);
-							}
-						}
+					if (BulletCombo.Items.IndexOf(Load.Bullet) < 0)
+						BulletCombo.Items.Add(Load.Bullet);
 					}
 
 				BulletCombo.SelectedIndex = 0;
@@ -1365,31 +1354,13 @@ namespace ReloadersWorkShop
 				{
 				CaliberCombo.Items.Add("Any Caliber");
 
-				foreach (cCaliber Caliber in m_DataFiles.CaliberList)
+				foreach (cLoad Load in m_DataFiles.LoadList)
 					{
-					if ((!m_DataFiles.Preferences.HideUncheckedCalibers || Caliber.Checked) &&
-						Caliber.FirearmType == FirearmTypeCombo.Value)
-						{
-						bool fLoadFound = false;
+					if (Load.FirearmType != FirearmTypeCombo.Value)
+						continue;
 
-						foreach (cLoad Load in m_DataFiles.LoadList)
-							{
-							if (Load.FirearmType != FirearmTypeCombo.Value)
-								continue;
-
-							if (Load.Caliber.CompareTo(Caliber) == 0)
-								{
-								fLoadFound = true;
-
-								break;
-								}
-							}
-
-						if (fLoadFound)
-							{
-							CaliberCombo.Items.Add(Caliber);
-							}
-						}
+					if (CaliberCombo.Items.IndexOf(Load.Caliber) < 0)
+						CaliberCombo.Items.Add(Load.Caliber);
 					}
 
 				CaliberCombo.SelectedIndex = 0;
@@ -1416,11 +1387,16 @@ namespace ReloadersWorkShop
 			{
 			m_fPopulating = true;
 
+			cLoad Load = null;
+
+			if (m_BatchLoadListView.SelectedItems.Count > 0)
+				Load = (cLoad) m_BatchLoadListView.SelectedItems[0].Tag;
+
 			ChargeCombo.Items.Clear();
 
 			cCharge SelectCharge = null;
 
-			if (m_Batch.Load != null)
+			if (Load != null)
 				{
 				foreach (cCharge CheckCharge in m_Batch.Load.ChargeList)
 					{
@@ -1544,6 +1520,11 @@ namespace ReloadersWorkShop
 			else
 				FirearmCombo.SelectedItem = 0;
 
+			cLoad Load = null;
+
+			if (m_BatchLoadListView.SelectedItems.Count > 0)
+				Load = (cLoad) m_BatchLoadListView.SelectedItems[0].Tag;
+
 			cFirearm Firearm = null;
 
 			if (FirearmCombo.SelectedIndex > 0)
@@ -1551,11 +1532,11 @@ namespace ReloadersWorkShop
 
 			cFirearmBullet FirearmBullet = null;
 
-			if (m_Batch != null && m_Batch.Load != null && Firearm != null)
+			if (Load != null && Firearm != null)
 				{
 				foreach (cFirearmBullet CheckFirearmBullet in Firearm.FirearmBulletList)
 					{
-					if (CheckFirearmBullet.Bullet.CompareTo(m_Batch.Load.Bullet) == 0)
+					if (CheckFirearmBullet.Bullet.CompareTo(Load.Bullet) == 0)
 						{
 						FirearmBullet = CheckFirearmBullet;
 
@@ -1774,7 +1755,7 @@ namespace ReloadersWorkShop
 				// Populate Load List
 				//----------------------------------------------------------------------------*
 
-				m_BatchLoadListView.Populate(FirearmTypeCombo.Value, Caliber, Bullet, Powder, !m_fAdd);
+				m_BatchLoadListView.Populate(FirearmTypeCombo.Value, Caliber, Bullet, Powder);
 				}
 
 			m_fPopulating = false;
@@ -1798,41 +1779,36 @@ namespace ReloadersWorkShop
 
 			PowderCombo.Items.Clear();
 
-			if (!m_fViewOnly && !m_fUserViewOnly && m_Batch.BatchTest == null)
+			cCaliber Caliber = null;
+
+			if (CaliberCombo.SelectedIndex > 0)
+				Caliber = (cCaliber) CaliberCombo.SelectedItem;
+
+			cBullet Bullet = null;
+
+			if (BulletCombo.SelectedIndex > 0)
+				Bullet = (cBullet) BulletCombo.SelectedItem;
+
+			if (!m_fViewOnly && m_Batch.BatchTest == null)
 				{
 				PowderCombo.Items.Add("Any Powder");
 
-				foreach (cPowder Powder in m_DataFiles.PowderList)
+				foreach (cLoad Load in m_DataFiles.LoadList)
 					{
-					if (Powder.CrossUse || Powder.FirearmType == FirearmTypeCombo.Value)
-						{
-						if (!m_DataFiles.Preferences.HideUncheckedSupplies || Powder.Checked)
-							{
-							bool fLoadFound = false;
+					if (Load.FirearmType != FirearmTypeCombo.Value)
+						continue;
 
-							foreach (cLoad Load in m_DataFiles.LoadList)
-								{
-								if (Load.Powder.CompareTo(Powder) == 0)
-									{
-									if (CaliberCombo.SelectedIndex == 0 || Load.Caliber.CompareTo((cCaliber) CaliberCombo.SelectedItem) == 0)
-										{
-										if (BulletCombo.SelectedIndex == 0 || Load.Bullet.CompareTo((cBullet) BulletCombo.SelectedItem) == 0)
-											{
-											fLoadFound = true;
+					if (Caliber != null && Load.Caliber.CompareTo(Caliber) != 0)
+						continue;
 
-											break;
-											}
-										}
-									}
-								}
+					if (Bullet != null && Load.Bullet.CompareTo(Bullet) != 0)
+						continue;
 
-							if (fLoadFound)
-								PowderCombo.Items.Add(Powder);
-							}
-						}
-
-					PowderCombo.SelectedIndex = 0;
+					if (PowderCombo.Items.IndexOf(Load.Powder) < 0)
+						PowderCombo.Items.Add(Load.Powder);
 					}
+
+				PowderCombo.SelectedIndex = 0;
 				}
 			else
 				{

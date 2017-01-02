@@ -156,9 +156,8 @@ namespace ReloadersWorkShop
 					Item.Selected = true;
 					}
 				}
-			catch (Exception e)
+			catch
 				{
-				cControls.InternalErrorMessageBox(e);
 				}
 
 			return (Item);

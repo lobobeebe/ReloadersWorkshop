@@ -67,7 +67,7 @@ namespace ReloadersWorkShop
 		// Export()
 		//============================================================================*
 
-		public void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement)
+		public void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement, bool fIncludeTransactions = true)
 			{
 			if (Count > 0)
 				{
@@ -75,7 +75,7 @@ namespace ReloadersWorkShop
 				XMLParentElement.AppendChild(XMLElement);
 
 				foreach (cPowder Powder in this)
-					Powder.Export(XMLDocument, XMLElement);
+					Powder.Export(XMLDocument, XMLElement, false, fIncludeTransactions);
 				}
 			}
 

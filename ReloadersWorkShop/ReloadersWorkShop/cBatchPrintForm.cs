@@ -712,7 +712,7 @@ namespace ReloadersWorkShop
 
 				dY += ((float) LabelFont.Height * (float) 1.5);
 
-				cTestStatistics Statistics = Batch.BatchTest.TestShotList.GetStatistics(Batch.NumRounds);
+				cTestStatistics Statistics = new cTestStatistics(Batch.BatchTest.TestShotList);
 
 				// Num Shots
 

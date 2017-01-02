@@ -71,7 +71,7 @@ namespace ReloadersWorkShop
 		// Export()
 		//============================================================================*
 
-		public void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement)
+		public void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement, bool fIncludeTransactions = true)
 			{
 			if (Count > 0)
 				{
@@ -79,7 +79,7 @@ namespace ReloadersWorkShop
 				XMLParentElement.AppendChild(XMLElement);
 
 				foreach (cPrimer Primer in this)
-					Primer.Export(XMLDocument, XMLElement);
+					Primer.Export(XMLDocument, XMLElement, false, fIncludeTransactions);
 				}
 			}
 

@@ -71,7 +71,7 @@ namespace ReloadersWorkShop
 		// Export() - XML Document
 		//============================================================================*
 
-		public override void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement, bool  fIdentityOnly = false)
+		public override void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement, bool fIdentityOnly = false, bool fIncludeTransactions = true)
 			{
 			string strName = ExportName;
 
@@ -80,7 +80,7 @@ namespace ReloadersWorkShop
 
 			XmlElement XMLThisElement = XMLDocument.CreateElement(strName, XMLParentElement);
 
-			base.Export(XMLDocument, XMLThisElement, fIdentityOnly);
+			base.Export(XMLDocument, XMLThisElement, fIdentityOnly, fIncludeTransactions);
 
 			if (String.IsNullOrEmpty(m_strPartNumber))
 				m_strPartNumber = m_strType;

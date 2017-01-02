@@ -76,19 +76,15 @@ namespace ReloadersWorkShop
 		// Export()
 		//============================================================================*
 
-		public void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement, bool fIncludeInventory = true)
+		public void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement, bool fIncludeTransactions = true)
 			{
 			if (Count > 0)
 				{
-				XmlElement XMLElement = XMLDocument.CreateElement(ExportName);
-				XMLParentElement.AppendChild(XMLElement);
+				XmlElement XMLElement = XMLDocument.CreateElement(ExportName, XMLParentElement);
 
 				foreach (cBullet Bullet in this)
 					{
-					Bullet.Export(XMLDocument, XMLElement);
-
-					if (fIncludeInventory)
-						Bullet.TransactionList.Export(XMLDocument, XMLElement);
+					Bullet.Export(XMLDocument, XMLElement, false, fIncludeTransactions);
 					}
 				}
 			}
@@ -97,7 +93,7 @@ namespace ReloadersWorkShop
 		// ExportName Property
 		//============================================================================*
 
-		public string ExportName
+		public static string ExportName
 			{
 			get
 				{

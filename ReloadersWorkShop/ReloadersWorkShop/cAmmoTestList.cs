@@ -20,6 +20,13 @@ namespace ReloadersWorkShop
 	public class cAmmoTestList : List<cAmmoTest>
 		{
 		//============================================================================*
+		// Private Data Members
+		//============================================================================*
+
+		private int m_nNewCount = 0;
+		private int m_nUpdateCount = 0;
+
+		//============================================================================*
 		// cFactoryAmmoTestList() - Default Constructor
 		//============================================================================*
 
@@ -44,15 +51,22 @@ namespace ReloadersWorkShop
 		// AddAmmoTest()
 		//============================================================================*
 
-		public bool AddAmmoTest(cAmmoTest AmmoTest)
+		public bool AddAmmoTest(cAmmoTest AmmoTest, bool fCountOnly = false)
 			{
 			foreach (cAmmoTest CheckAmmoTest in this)
 				{
 				if (CheckAmmoTest.CompareTo(AmmoTest) == 0)
+					{
+					m_nUpdateCount += CheckAmmoTest.Append(AmmoTest, fCountOnly);
+
 					return (false);
+					}
 				}
 
-			Add(AmmoTest);
+			if (!fCountOnly)
+				Add(AmmoTest);
+
+			m_nNewCount++;
 
 			return (true);
 			}
@@ -61,7 +75,7 @@ namespace ReloadersWorkShop
 		// Append()
 		//============================================================================*
 
-		public bool Append(cAmmoTestList AmmoTestList)
+		public bool Append(cAmmoTestList AmmoTestList, bool fCountOnly = false)
 			{
 			foreach (cAmmoTest CheckAmmoTest in AmmoTestList)
 				{
@@ -71,13 +85,13 @@ namespace ReloadersWorkShop
 					{
 					if (CheckAmmoTest.CompareTo(AmmoTest) == 0)
 						{
-						AmmoTest.Append(CheckAmmoTest);
+						AmmoTest.Append(CheckAmmoTest, fCountOnly);
 
 						fFound = true;
 						}
 					}
 
-				if (!fFound)
+				if (!fFound && !fCountOnly)
 					Add(CheckAmmoTest);
 				}
 
@@ -143,8 +157,11 @@ namespace ReloadersWorkShop
 		// Import()
 		//============================================================================*
 
-		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles, cAmmo Ammo)
+		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles, cAmmo Ammo, bool fCountOnly = false)
 			{
+			m_nNewCount = 0;
+			m_nUpdateCount = 0;
+
 			XmlNode XMLNode = XMLThisNode.FirstChild;
 
 			while (XMLNode != null)
@@ -155,17 +172,25 @@ namespace ReloadersWorkShop
 						cAmmoTest AmmoTest = new cAmmoTest();
 						AmmoTest.Ammo = Ammo;
 
-						AmmoTest.Import(XMLDocument, XMLNode, DataFiles);
-
-						if (AmmoTest.Validate())
+						if (AmmoTest.Import(XMLDocument, XMLNode, DataFiles))
 							AddAmmoTest(AmmoTest);
-						else
-							Console.WriteLine("Invalid AmmoTest!");
 
 						break;
 					}
 
 				XMLNode = XMLNode.NextSibling;
+				}
+			}
+
+		//============================================================================*
+		// NewCount Property
+		//============================================================================*
+
+		public int NewCount
+			{
+			get
+				{
+				return (m_nNewCount);
 				}
 			}
 
@@ -181,6 +206,18 @@ namespace ReloadersWorkShop
 				fChanged = AmmoTest.ResolveIdentities(DataFiles) ? true : fChanged;
 
 			return (fChanged);
+			}
+
+		//============================================================================*
+		// UpdateCount Property
+		//============================================================================*
+
+		public int UpdateCount
+			{
+			get
+				{
+				return (m_nUpdateCount);
+				}
 			}
 		}
 	}

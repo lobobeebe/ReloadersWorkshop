@@ -1,7 +1,7 @@
-﻿
+﻿//============================================================================*
 // cPrimerForm.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -169,7 +169,14 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			if (!m_fViewOnly)
-				cControls.PopulatePrimerSizeCombo(SizeCombo, m_Primer);
+				{
+				SizeCombo.Items.Clear();
+
+				SizeCombo.Items.Add("Small");
+				SizeCombo.Items.Add("Large");
+
+				SizeCombo.SelectedIndex = (int) Primer.Size;
+				}
 			else
 				{
 				SizeCombo.Items.Clear();

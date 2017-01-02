@@ -559,9 +559,8 @@ namespace ReloadersWorkShop
 					{
 					ChargeTestListView.Items.Add(Item);
 					}
-				catch (Exception e)
+				catch
 					{
-					cControls.InternalErrorMessageBox(e);
 					}
 
 				UpdateButtons();

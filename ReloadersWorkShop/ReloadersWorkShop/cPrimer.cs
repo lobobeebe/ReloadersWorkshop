@@ -206,12 +206,30 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// PrimerSizeFromString Property
+		//============================================================================*
+
+		public static cPrimer.ePrimerSize PrimerSizeFromString(string strString)
+			{
+			switch (strString.Substring(0,5))
+				{
+				case "Small":
+					return (cPrimer.ePrimerSize.Small);
+
+				case "Large":
+					return (cPrimer.ePrimerSize.Large);
+				}
+
+			return (cPrimer.ePrimerSize.Small);
+			}
+
+		//============================================================================*
 		// ResolveIdentities()
 		//============================================================================*
 
 		public override bool ResolveIdentities(cDataFiles DataFiles)
 			{
-			return(base.ResolveIdentities(DataFiles));
+			return (base.ResolveIdentities(DataFiles));
 			}
 
 		//============================================================================*
@@ -306,7 +324,7 @@ namespace ReloadersWorkShop
 		// ToShortSizeString()
 		//============================================================================*
 
-		public static  string ToShortSizeString(cPrimer.ePrimerSize eSize)
+		public static string ToShortSizeString(cPrimer.ePrimerSize eSize)
 			{
 			string strString = "";
 

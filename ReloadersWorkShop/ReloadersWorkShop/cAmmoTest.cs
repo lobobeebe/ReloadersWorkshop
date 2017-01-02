@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cAmmoTest.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -68,17 +68,67 @@ namespace ReloadersWorkShop
 		// Append()
 		//============================================================================*
 
-		public void Append(cAmmoTest AmmoTest)
+		public int Append(cAmmoTest AmmoTest, bool fCountOnly = false)
 			{
-			m_dBarrelLength = m_dBarrelLength == 0.0 ? AmmoTest.m_dBarrelLength : m_dBarrelLength;
-			m_dTwist = m_dTwist == 0.0 ? AmmoTest.m_dTwist : m_dTwist;
-			m_nNumRounds = m_nNumRounds == 0 ? AmmoTest.m_nNumRounds : m_nNumRounds;
-			m_nMuzzleVelocity = m_nMuzzleVelocity == 0 ? AmmoTest.m_nMuzzleVelocity : m_nMuzzleVelocity;
-			m_dBestGroup = m_dBestGroup == 0.0 ? AmmoTest.m_dBestGroup : m_dBestGroup;
-			m_dBestGroupRange = m_dBestGroupRange == 0.0 ? AmmoTest.m_dBestGroupRange : m_dBestGroupRange;
-			m_strNotes = AmmoTest.m_strNotes;
+			int nUpdateCount = 0;
 
-			m_TestShotList = new cTestShotList(AmmoTest.TestShotList);
+			if (m_dBarrelLength == 0.0 && AmmoTest.m_dBarrelLength != 0.0)
+				{
+				if (!fCountOnly)
+					m_dBarrelLength =  AmmoTest.m_dBarrelLength;
+
+				nUpdateCount++;
+				}
+
+			if (m_dTwist == 0.0 && AmmoTest.m_dTwist != 0.0)
+				{
+				if (!fCountOnly)
+					m_dTwist = AmmoTest.m_dTwist;
+
+				nUpdateCount++;
+				}
+
+			if (m_nNumRounds == 0 && AmmoTest.m_nNumRounds != 0)
+				{
+				if (!fCountOnly)
+					m_nNumRounds = AmmoTest.m_nNumRounds;
+
+				nUpdateCount++;
+				}
+
+			if (m_nMuzzleVelocity == 0 && AmmoTest.m_nMuzzleVelocity != 0)
+				{
+				if (!fCountOnly)
+					m_nMuzzleVelocity = AmmoTest.m_nMuzzleVelocity;
+
+				nUpdateCount++;
+				}
+
+			if (m_dBestGroup == 0.0 && AmmoTest.m_dBestGroup != 0.0)
+				{
+				if (!fCountOnly)
+					m_dBestGroup = AmmoTest.m_dBestGroup;
+
+				nUpdateCount++;
+				}
+
+			if (m_dBestGroupRange == 0.0 && AmmoTest.m_dBestGroupRange != 0.0)
+				{
+				if (!fCountOnly)
+					m_dBestGroupRange = AmmoTest.m_dBestGroupRange;
+
+				nUpdateCount++;
+				}
+
+			if (String.IsNullOrEmpty(m_strNotes) && !String.IsNullOrEmpty(AmmoTest.m_strNotes))
+				{
+				if (!fCountOnly)
+					m_strNotes = AmmoTest.m_strNotes;
+
+				nUpdateCount++;
+				}
+
+			return (nUpdateCount);
 			}
 
 		//============================================================================*
@@ -285,53 +335,6 @@ namespace ReloadersWorkShop
 				{
 				m_Firearm = value;
 				}
-			}
-
-		//============================================================================*
-		// GetStatistics()
-		//============================================================================*
-
-		static public cTestStatistics GetStatistics(cTestShotList TestShotList)
-			{
-			cTestStatistics Statistics = new cTestStatistics();
-
-			if (TestShotList == null)
-				return (Statistics);
-
-			int nTotalVelocity = 0;
-
-			foreach (cTestShot TestShot in TestShotList)
-				{
-				if (TestShot.MuzzleVelocity > 0 && !TestShot.Misfire && !TestShot.Squib)
-					{
-					Statistics.NumShots++;
-					nTotalVelocity += TestShot.MuzzleVelocity;
-
-					if (Statistics.MinVelocity == 0 || TestShot.MuzzleVelocity < Statistics.MinVelocity)
-						Statistics.MinVelocity = TestShot.MuzzleVelocity;
-
-					if (Statistics.MaxVelocity == 0 || TestShot.MuzzleVelocity > Statistics.MaxVelocity)
-						Statistics.MaxVelocity = TestShot.MuzzleVelocity;
-					}
-				}
-
-
-			if (Statistics.NumShots > 0 && nTotalVelocity > 0)
-				{
-				Statistics.AverageVelocity = (double) nTotalVelocity / (double) Statistics.NumShots;
-
-				foreach (cTestShot TestShot in TestShotList)
-					{
-					if (TestShot.MuzzleVelocity > 0 && !TestShot.Misfire && !TestShot.Squib)
-						Statistics.Variance += (((double) TestShot.MuzzleVelocity - Statistics.AverageVelocity) * ((double) TestShot.MuzzleVelocity - Statistics.AverageVelocity));
-					}
-
-				Statistics.Variance /= (double) Statistics.NumShots;
-
-				Statistics.StdDev = Math.Sqrt(Statistics.Variance);
-				}
-
-			return (Statistics);
 			}
 
 		//============================================================================*

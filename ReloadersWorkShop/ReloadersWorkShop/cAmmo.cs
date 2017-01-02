@@ -85,32 +85,35 @@ namespace ReloadersWorkShop
 		// Append()
 		//============================================================================*
 
-		public int Append(cAmmo Ammo)
+		public int Append(cAmmo Ammo, bool fCountOnly = false)
 			{
 			int nUpdateCount = 0;
 
 			if (m_dBallisticCoefficient == 0.0)
 				{
-				m_dBallisticCoefficient = Ammo.m_dBallisticCoefficient;
+				if (!fCountOnly)
+					m_dBallisticCoefficient = Ammo.m_dBallisticCoefficient;
 
 				nUpdateCount++;
 				}
 
 			if (m_dBulletDiameter == 0.0)
 				{
-				m_dBulletDiameter = Ammo.m_dBulletDiameter;
+				if (!fCountOnly)
+					m_dBulletDiameter = Ammo.m_dBulletDiameter;
 
 				nUpdateCount++;
 				}
 
 			if (m_dBulletWeight == 0.0)
 				{
-				m_dBulletWeight = Ammo.m_dBulletWeight;
+				if (!fCountOnly)
+					m_dBulletWeight = Ammo.m_dBulletWeight;
 
 				nUpdateCount++;
 				}
 
-			m_TestList.Append(Ammo.m_TestList);
+			m_TestList.Append(Ammo.m_TestList, fCountOnly);
 
 			return (nUpdateCount);
 			}

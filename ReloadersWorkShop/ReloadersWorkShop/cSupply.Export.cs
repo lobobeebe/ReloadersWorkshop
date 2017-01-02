@@ -76,7 +76,7 @@ namespace ReloadersWorkShop
 		// Export() - XML Document
 		//============================================================================*
 
-		public virtual void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement, bool fIdentityOnly = false)
+		public virtual void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement, bool fIdentityOnly = false, bool fIncludeTransactions = true)
 			{
 			XMLDocument.CreateElement("SupplyType", m_eType, XMLParentElement);
 			XMLDocument.CreateElement("FirearmType", m_eFirearmType, XMLParentElement);
@@ -91,7 +91,8 @@ namespace ReloadersWorkShop
 			XMLDocument.CreateElement("Cost", m_dCost, XMLParentElement);
 			XMLDocument.CreateElement("Checked", m_fChecked, XMLParentElement);
 
-			m_TransactionList.Export(XMLDocument, XMLParentElement);
+			if (fIncludeTransactions)
+				TransactionList.Export(XMLDocument, XMLParentElement);
 			}
 
 		//============================================================================*

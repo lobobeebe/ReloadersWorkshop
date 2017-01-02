@@ -41,11 +41,14 @@ namespace ReloadersWorkShop
 		// AddSuply()
 		//============================================================================*
 
-		public virtual bool AddSupply(cSupply Supply)
+		public virtual bool AddSupply(cSupply Supply, bool fCountOnly = false)
 			{
-			Supply.Printed = false;
+			if (!fCountOnly)
+				{
+				Supply.Printed = false;
 
-			base.Add(Supply);
+				base.Add(Supply);
+				}
 
 			return (true);
 			}

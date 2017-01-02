@@ -104,9 +104,8 @@ namespace ReloadersWorkShop
 				{
 				Items.Add(Item);
 				}
-			catch (Exception e)
+			catch
 				{
-				cControls.InternalErrorMessageBox(e);
 				}
 
 			if (Charge.Favorite)

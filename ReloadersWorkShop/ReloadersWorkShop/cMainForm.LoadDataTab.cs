@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cMainForm.LoadDataTab.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -10,8 +10,9 @@
 //============================================================================*
 
 using System;
-using System.Xml;
+using System.IO;
 using System.Windows.Forms;
+using System.Xml;
 
 //============================================================================*
 // Application Specific Using Statements
@@ -137,15 +138,34 @@ namespace ReloadersWorkShop
 			MainElement.AppendChild(XMLTextElement);
 
 			ShareManufacturerList.Export(XMLDocument, MainElement);
-			ShareBulletList.Export(XMLDocument, MainElement);
+			ShareBulletList.Export(XMLDocument, MainElement, false);
 			ShareCaliberList.Export(XMLDocument, MainElement);
-			ShareCaseList.Export(XMLDocument, MainElement);
-			SharePowderList.Export(XMLDocument, MainElement);
-			SharePrimerList.Export(XMLDocument, MainElement);
+			ShareCaseList.Export(XMLDocument, MainElement, false);
+			SharePowderList.Export(XMLDocument, MainElement, false);
+			SharePrimerList.Export(XMLDocument, MainElement, false);
 
 			ShareLoadList.Export(XMLDocument, MainElement);
 
-			// TODO: Save the XMLDocument
+			//----------------------------------------------------------------------------*
+			// Save the Exported XML Share File
+			//----------------------------------------------------------------------------*
+
+			SaveFileDialog SaveDialog = new SaveFileDialog();
+
+			SaveDialog.AddExtension = true;
+			SaveDialog.CheckPathExists = true;
+			SaveDialog.DefaultExt = "xml";
+			SaveDialog.FileName = String.Format("{0} Load Data Share File - {1}{2}{3}", Application.ProductName, DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+			SaveDialog.Filter = "XML Files {*.xml)|*.xml";
+			SaveDialog.InitialDirectory = Path.Combine(m_DataFiles.GetDataPath(), "Share");
+			SaveDialog.OverwritePrompt = true;
+			SaveDialog.Title = String.Format("Export Load Data");
+			SaveDialog.ValidateNames = true;
+
+			if (SaveDialog.ShowDialog() == DialogResult.OK)
+				{
+				XMLDocument.Save(SaveDialog.OpenFile());
+				}
 			}
 
 		//============================================================================*

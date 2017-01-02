@@ -70,7 +70,7 @@ namespace ReloadersWorkShop
 		// Export() - XML Document
 		//============================================================================*
 
-		public override void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement, bool fIdentityOnly = false)
+		public override void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement, bool fIdentityOnly = false, bool fIncludeTransactions = true)
 			{
 			string strName = ExportName;
 
@@ -80,7 +80,7 @@ namespace ReloadersWorkShop
 			XmlElement XMLThisElement = XMLDocument.CreateElement(strName);
 			XMLParentElement.AppendChild(XMLThisElement);
 
-			base.Export(XMLDocument, XMLThisElement, fIdentityOnly);
+			base.Export(XMLDocument, XMLThisElement, fIdentityOnly, fIncludeTransactions);
 
 			XMLDocument.CreateElement("PartNumber", m_strPartNumber, XMLThisElement);
 
@@ -99,7 +99,7 @@ namespace ReloadersWorkShop
 		// ExportName Property
 		//============================================================================*
 
-		public string ExportName
+		public static string ExportName
 			{
 			get
 				{
@@ -132,24 +132,19 @@ namespace ReloadersWorkShop
 						m_Caliber = cRWXMLDocument.GetCaliberByIdentity(XMLDocument, XMLNode, DataFiles);
 						break;
 					case "PartNumber":
-						if (!String.IsNullOrEmpty(XMLNode.FirstChild.Value))
-							m_strPartNumber = XMLNode.FirstChild.Value;
-						else
-							Console.WriteLine("cCase - Empty Part Number!");
+						XMLDocument.Import(XMLNode, out m_strPartNumber);
 						break;
 					case "Match":
-						m_fMatch = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fMatch);
 						break;
 					case "Military":
-						m_fMilitary = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fMilitary);
 						break;
 					case "LargePrimer":
-						m_fLargePrimer = XMLNode.FirstChild.Value == "Yes";
+						XMLDocument.Import(XMLNode, out m_fLargePrimer);
 						break;
 					case "SmallPrimer":
-						m_fSmallPrimer = XMLNode.FirstChild.Value == "Yes";
-						break;
-					default:
+						XMLDocument.Import(XMLNode, out m_fSmallPrimer);
 						break;
 					}
 

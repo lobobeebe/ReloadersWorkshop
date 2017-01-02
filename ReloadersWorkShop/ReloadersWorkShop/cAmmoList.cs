@@ -1,7 +1,7 @@
 ﻿//============================================================================*
-// cFactoryAmmoList.cs
+// cAmmoList.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -37,7 +37,7 @@ namespace ReloadersWorkShop
 		// AddSupply()
 		//============================================================================*
 
-		public override bool AddSupply(cSupply Supply)
+		public override bool AddSupply(cSupply Supply, bool fCountOnly = false)
 			{
 			if (Supply.SupplyType != cSupply.eSupplyTypes.Ammo)
 				return (false);
@@ -48,13 +48,13 @@ namespace ReloadersWorkShop
 				{
 				if (CheckAmmo.CompareTo(Ammo) == 0)
 					{
-					m_nUpdateCount += CheckAmmo.Append(Ammo);
+					m_nUpdateCount += CheckAmmo.Append(Ammo, fCountOnly);
 
 					return (false);
 					}
 				}
 
-			base.AddSupply(Ammo);
+			base.AddSupply(Ammo, fCountOnly);
 
 			m_nNewCount++;
 
@@ -119,7 +119,7 @@ namespace ReloadersWorkShop
 		// Import()
 		//============================================================================*
 
-		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles, bool fCountOnly = false)
 			{
 			m_nNewCount = 0;
 			m_nUpdateCount = 0;
@@ -134,12 +134,29 @@ namespace ReloadersWorkShop
 						cAmmo Ammo = new cAmmo();
 
 						if (Ammo.Import(XMLDocument, XMLNode, DataFiles))
-							AddSupply(Ammo);
+							AddSupply(Ammo, fCountOnly);
 
 						break;
 					}
 
 				XMLNode = XMLNode.NextSibling;
+				}
+			}
+
+		//============================================================================*
+		// NewAmmoTestCount Property
+		//============================================================================*
+
+		public int NewAmmoTestCount
+			{
+			get
+				{
+				int nNewAmmoTestCount = 0;
+
+				foreach (cAmmo Ammo in this)
+					nNewAmmoTestCount += Ammo.TestList.NewCount;
+
+				return (nNewAmmoTestCount);
 				}
 			}
 
@@ -164,6 +181,23 @@ namespace ReloadersWorkShop
 			get
 				{
 				return (m_nUpdateCount);
+				}
+			}
+
+		//============================================================================*
+		// UpdatedAmmoTestCount Property
+		//============================================================================*
+
+		public int UpdatedAmmoTestCount
+			{
+			get
+				{
+				int nUpdatedAmmoTestCount = 0;
+
+				foreach (cAmmo Ammo in this)
+					nUpdatedAmmoTestCount += Ammo.TestList.UpdateCount;
+
+				return (nUpdatedAmmoTestCount);
 				}
 			}
 		}

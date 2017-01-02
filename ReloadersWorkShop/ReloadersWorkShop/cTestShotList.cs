@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cTestShotList.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -86,56 +86,12 @@ namespace ReloadersWorkShop
 		// ExportName Property
 		//============================================================================*
 
-		public string ExportName
+		public static string ExportName
 			{
 			get
 				{
 				return ("TestShotList");
 				}
-			}
-
-		//============================================================================*
-		// GetStatistics()
-		//============================================================================*
-
-		public cTestStatistics GetStatistics(int nNumRounds)
-			{
-			cTestStatistics Statistics = new cTestStatistics();
-			Statistics.NumRounds = nNumRounds;
-
-			int nTotalVelocity = 0;
-
-			foreach (cTestShot TestShot in this)
-				{
-				if (TestShot.MuzzleVelocity > 0 && !TestShot.Misfire && !TestShot.Squib)
-					{
-					Statistics.NumShots++;
-					nTotalVelocity += TestShot.MuzzleVelocity;
-
-					if (Statistics.MinVelocity == 0 || TestShot.MuzzleVelocity < Statistics.MinVelocity)
-						Statistics.MinVelocity = TestShot.MuzzleVelocity;
-
-					if (Statistics.MaxVelocity == 0 || TestShot.MuzzleVelocity > Statistics.MaxVelocity)
-						Statistics.MaxVelocity = TestShot.MuzzleVelocity;
-					}
-				}
-
-			if (Statistics.NumShots > 0 && nTotalVelocity > 0)
-				{
-				Statistics.AverageVelocity = (double) nTotalVelocity / (double) Statistics.NumShots;
-
-				foreach (cTestShot TestShot in this)
-					{
-					if (TestShot.MuzzleVelocity > 0 && !TestShot.Misfire && !TestShot.Squib)
-						Statistics.Variance += (((double) TestShot.MuzzleVelocity - Statistics.AverageVelocity) * ((double) TestShot.MuzzleVelocity - Statistics.AverageVelocity));
-					}
-
-				Statistics.Variance /= (double) (Statistics.NumShots - 1);
-
-				Statistics.StdDev = Math.Sqrt(Statistics.Variance);
-				}
-
-			return (Statistics);
 			}
 
 		//============================================================================*
@@ -165,6 +121,18 @@ namespace ReloadersWorkShop
 					}
 
 				XMLNode = XMLNode.NextSibling;
+				}
+			}
+
+		//============================================================================*
+		// Statistics Property
+		//============================================================================*
+
+		public cTestStatistics Statistics
+			{
+			get
+				{
+				return (new cTestStatistics(this));
 				}
 			}
 		}
