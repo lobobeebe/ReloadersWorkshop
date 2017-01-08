@@ -308,6 +308,9 @@ namespace ReloadersWorkShop
 
 										if (rc == 0)
 											{
+											if (m_strNotes == null)
+												m_strNotes = "";
+
 											rc = m_strNotes.CompareTo(AmmoTest.m_strNotes);
 											}
 										}

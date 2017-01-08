@@ -30,9 +30,13 @@ namespace ReloadersWorkShop
 		// Private Data Members
 		//============================================================================*
 
+		private string m_strFilePath = null;
+
 		private cDataFiles m_DataFiles = null;
 
 		private bool m_fFullDataDump = true;
+		private bool m_fContainsPreferences = false;
+		private bool m_fTrackInventory = false;
 
 		private bool m_fIncludeManufacturers = true;
 		private bool m_fIncludeCalibers = true;
@@ -48,8 +52,57 @@ namespace ReloadersWorkShop
 
 		// Counters
 
+		private int m_nAccessoryCount = 0;
+		private int m_nAccessoryNewCount = 0;
+		private int m_nAccessoryUpdateCount = 0;
+
 		private int m_nAmmoCount = 0;
+		private int m_nAmmoNewCount = 0;
 		private int m_nAmmoUpdateCount = 0;
+
+		private int m_nAmmoTestCount = 0;
+		private int m_nAmmoTestNewCount = 0;
+		private int m_nAmmoTestUpdateCount = 0;
+
+		private int m_nBulletCount = 0;
+		private int m_nBulletNewCount = 0;
+		private int m_nBulletUpdateCount = 0;
+
+		private int m_nBulletCaliberCount = 0;
+		private int m_nBulletCaliberNewCount = 0;
+		private int m_nBulletCaliberUpdateCount = 0;
+
+		private int m_nCaliberCount = 0;
+		private int m_nCaliberNewCount = 0;
+		private int m_nCaliberUpdateCount = 0;
+
+		private int m_nCaseCount = 0;
+		private int m_nCaseNewCount = 0;
+		private int m_nCaseUpdateCount = 0;
+
+		private int m_nFirearmCount = 0;
+		private int m_nFirearmNewCount = 0;
+		private int m_nFirearmUpdateCount = 0;
+
+		private int m_nFirearmCaliberCount = 0;
+		private int m_nFirearmCaliberNewCount = 0;
+		private int m_nFirearmCaliberUpdateCount = 0;
+
+		private int m_nFirearmBulletCount = 0;
+		private int m_nFirearmBulletNewCount = 0;
+		private int m_nFirearmBulletUpdateCount = 0;
+
+		private int m_nManufacturerCount = 0;
+		private int m_nManufacturerNewCount = 0;
+		private int m_nManufacturerUpdateCount = 0;
+
+		private int m_nPowderCount = 0;
+		private int m_nPowderNewCount = 0;
+		private int m_nPowderUpdateCount = 0;
+
+		private int m_nPrimerCount = 0;
+		private int m_nPrimerNewCount = 0;
+		private int m_nPrimerUpdateCount = 0;
 
 		//============================================================================*
 		// cRWXMLDocument() - Constructor
@@ -58,6 +111,42 @@ namespace ReloadersWorkShop
 		public cRWXMLDocument(cDataFiles DataFiles)
 			{
 			m_DataFiles = DataFiles;
+			}
+
+		//============================================================================*
+		// AccessoryCount Property
+		//============================================================================*
+
+		public int AccessoryCount
+			{
+			get
+				{
+				return (m_nAccessoryCount);
+				}
+			}
+
+		//============================================================================*
+		// AccessoryNewCount Property
+		//============================================================================*
+
+		public int AccessoryNewCount
+			{
+			get
+				{
+				return (m_nAccessoryNewCount);
+				}
+			}
+
+		//============================================================================*
+		// AccessoryUpdateCount Property
+		//============================================================================*
+
+		public int AccessoryUpdateCount
+			{
+			get
+				{
+				return (m_nAccessoryUpdateCount);
+				}
 			}
 
 		//============================================================================*
@@ -70,9 +159,53 @@ namespace ReloadersWorkShop
 				{
 				return (m_nAmmoCount);
 				}
-			set
+			}
+
+		//============================================================================*
+		// AmmoNewCount Property
+		//============================================================================*
+
+		public int AmmoNewCount
+			{
+			get
 				{
-				m_nAmmoCount = value;
+				return (m_nAmmoNewCount);
+				}
+			}
+
+		//============================================================================*
+		// AmmoTestCount Property
+		//============================================================================*
+
+		public int AmmoTestCount
+			{
+			get
+				{
+				return (m_nAmmoTestCount);
+				}
+			}
+
+		//============================================================================*
+		// AmmoTestNewCount Property
+		//============================================================================*
+
+		public int AmmoTestNewCount
+			{
+			get
+				{
+				return (m_nAmmoTestNewCount);
+				}
+			}
+
+		//============================================================================*
+		// AmmoTestUpdateCount Property
+		//============================================================================*
+
+		public int AmmoTestUpdateCount
+			{
+			get
+				{
+				return (m_nAmmoTestUpdateCount);
 				}
 			}
 
@@ -86,9 +219,125 @@ namespace ReloadersWorkShop
 				{
 				return (m_nAmmoUpdateCount);
 				}
-			set
+			}
+
+		//============================================================================*
+		// BulletCount Property
+		//============================================================================*
+
+		public int BulletCount
+			{
+			get
 				{
-				m_nAmmoUpdateCount = value;
+				return (m_nBulletCount);
+				}
+			}
+
+		//============================================================================*
+		// BulletNewCount Property
+		//============================================================================*
+
+		public int BulletNewCount
+			{
+			get
+				{
+				return (m_nBulletNewCount);
+				}
+			}
+
+		//============================================================================*
+		// BulletUpdateCount Property
+		//============================================================================*
+
+		public int BulletUpdateCount
+			{
+			get
+				{
+				return (m_nBulletUpdateCount);
+				}
+			}
+
+		//============================================================================*
+		// BulletCaliberCount Property
+		//============================================================================*
+
+		public int BulletCaliberCount
+			{
+			get
+				{
+				return (m_nBulletCaliberCount);
+				}
+			}
+
+		//============================================================================*
+		// BulletCaliberNewCount Property
+		//============================================================================*
+
+		public int BulletCaliberNewCount
+			{
+			get
+				{
+				return (m_nBulletCaliberNewCount);
+				}
+			}
+
+		//============================================================================*
+		// BulletCaliberUpdateCount Property
+		//============================================================================*
+
+		public int BulletCaliberUpdateCount
+			{
+			get
+				{
+				return (m_nBulletCaliberUpdateCount);
+				}
+			}
+
+		//============================================================================*
+		// CaliberCount Property
+		//============================================================================*
+
+		public int CaliberCount
+			{
+			get
+				{
+				return (m_nCaliberCount);
+				}
+			}
+
+		//============================================================================*
+		// CaliberNewCount Property
+		//============================================================================*
+
+		public int CaliberNewCount
+			{
+			get
+				{
+				return (m_nCaliberNewCount);
+				}
+			}
+
+		//============================================================================*
+		// CaliberUpdateCount Property
+		//============================================================================*
+
+		public int CaliberUpdateCount
+			{
+			get
+				{
+				return (m_nCaliberUpdateCount);
+				}
+			}
+
+		//============================================================================*
+		// ContainsPreferences Property
+		//============================================================================*
+
+		public bool ContainsPreferences
+			{
+			get
+				{
+				return (m_fContainsPreferences);
 				}
 			}
 
@@ -212,6 +461,157 @@ namespace ReloadersWorkShop
 
 			if (fComplete)
 				m_DataFiles.Preferences.Export(this, MainElement);
+			}
+
+		//============================================================================*
+		// FileDescription Property
+		//============================================================================*
+
+		public string FileDescription
+			{
+			get
+				{
+				XmlNode XMLNode = FirstChild;
+
+				string strDescription = "";
+
+				while (XMLNode != null)
+					{
+					if (XMLNode.Name == "Body")
+						{
+						XMLNode = XMLNode.FirstChild;
+
+						if (XMLNode != null)
+							strDescription = XMLNode.Value;
+
+						break;
+						}
+
+					XMLNode = XMLNode.NextSibling;
+					}
+
+				return (strDescription);
+				}
+			}
+
+		//============================================================================*
+		// FilePath Property
+		//============================================================================*
+
+		public string FilePath
+			{
+			get
+				{
+				return (m_strFilePath);
+				}
+			}
+
+		//============================================================================*
+		// FirearmCount Property
+		//============================================================================*
+
+		public int FirearmCount
+			{
+			get
+				{
+				return (m_nFirearmCount);
+				}
+			}
+
+		//============================================================================*
+		// FirearmNewCount Property
+		//============================================================================*
+
+		public int FirearmNewCount
+			{
+			get
+				{
+				return (m_nFirearmNewCount);
+				}
+			}
+
+		//============================================================================*
+		// FirearmUpdateCount Property
+		//============================================================================*
+
+		public int FirearmUpdateCount
+			{
+			get
+				{
+				return (m_nFirearmUpdateCount);
+				}
+			}
+
+		//============================================================================*
+		// FirearmBulletCount Property
+		//============================================================================*
+
+		public int FirearmBulletCount
+			{
+			get
+				{
+				return (m_nFirearmBulletCount);
+				}
+			}
+
+		//============================================================================*
+		// FirearmBulletNewCount Property
+		//============================================================================*
+
+		public int FirearmBulletNewCount
+			{
+			get
+				{
+				return (m_nFirearmBulletNewCount);
+				}
+			}
+
+		//============================================================================*
+		// FirearmBulletUpdateCount Property
+		//============================================================================*
+
+		public int FirearmBulletUpdateCount
+			{
+			get
+				{
+				return (m_nFirearmBulletUpdateCount);
+				}
+			}
+
+		//============================================================================*
+		// FirearmCaliberCount Property
+		//============================================================================*
+
+		public int FirearmCaliberCount
+			{
+			get
+				{
+				return (m_nFirearmCaliberCount);
+				}
+			}
+
+		//============================================================================*
+		// FirearmCaliberNewCount Property
+		//============================================================================*
+
+		public int FirearmCaliberNewCount
+			{
+			get
+				{
+				return (m_nFirearmCaliberNewCount);
+				}
+			}
+
+		//============================================================================*
+		// FirearmCaliberUpdateCount Property
+		//============================================================================*
+
+		public int FirearmCaliberUpdateCount
+			{
+			get
+				{
+				return (m_nFirearmCaliberUpdateCount);
+				}
 			}
 
 		//============================================================================*
@@ -643,30 +1043,6 @@ namespace ReloadersWorkShop
 				}
 
 			//----------------------------------------------------------------------------*
-			// Make sure it's an RW XML file
-			//----------------------------------------------------------------------------*
-
-			XmlElement XMLRoot = DocumentElement;
-
-			if (XMLRoot.FirstChild == null || !(XMLRoot.FirstChild is XmlText) || (XMLRoot.FirstChild as XmlText).Value.IndexOf(Application.ProductName) < 0)
-				{
-				string strMessage = String.Format("{0} does not appear to contain {1} data!", strFilePath, Application.ProductName);
-
-				MessageBox.Show(strMessage, "XML Data Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-
-				return (false);
-				}
-
-			//----------------------------------------------------------------------------*
-			// Check to see if it's a complete data dump
-			//----------------------------------------------------------------------------*
-
-			if (XMLRoot.FirstChild.Value.IndexOf("Complete") >= 0)
-				{
-
-				}
-
-			//----------------------------------------------------------------------------*
 			// OK, if we get to here, go for it...
 			//----------------------------------------------------------------------------*
 
@@ -694,6 +1070,8 @@ namespace ReloadersWorkShop
 
 		public bool Import(bool fMerge = true, bool fCountOnly = false)
 			{
+			ResetCounts();
+
 			XmlElement XMLRoot = DocumentElement;
 
 			//----------------------------------------------------------------------------*
@@ -710,14 +1088,17 @@ namespace ReloadersWorkShop
 					case "AmmoList":
 						m_DataFiles.AmmoList.Import(this, XMLNode, m_DataFiles, fCountOnly);
 
-						m_nAmmoCount += m_DataFiles.AmmoList.NewCount;
+						m_nAmmoCount += m_DataFiles.AmmoList.ImportCount;
+						m_nAmmoNewCount += m_DataFiles.AmmoList.NewCount;
 						m_nAmmoUpdateCount += m_DataFiles.AmmoList.UpdateCount;
 
 						break;
 
 					case "Preferences":
 						if (!fMerge)
-							m_DataFiles.Preferences.Import(this, XMLNode);
+							m_DataFiles.Preferences.Import(this, XMLNode, fCountOnly);
+
+						m_fContainsPreferences = true;
 
 						break;
 
@@ -725,41 +1106,81 @@ namespace ReloadersWorkShop
 					case "ManufacturerList":
 						m_DataFiles.ManufacturerList.Import(this, XMLNode);
 
+						m_nManufacturerCount += m_DataFiles.ManufacturerList.ImportCount;
+						m_nManufacturerNewCount += m_DataFiles.ManufacturerList.NewCount;
+						m_nManufacturerUpdateCount += m_DataFiles.ManufacturerList.UpdateCount;
+
 						break;
 
 					case "Calibers":
 					case "CaliberList":
-						m_DataFiles.CaliberList.Import(this, XMLNode);
+						m_DataFiles.CaliberList.Import(this, XMLNode, fCountOnly);
+
+						m_nCaliberCount += m_DataFiles.CaliberList.ImportCount;
+						m_nCaliberNewCount += m_DataFiles.CaliberList.NewCount;
+						m_nCaliberUpdateCount += m_DataFiles.CaliberList.UpdateCount;
 
 						break;
 
 					case "Bullets":
 					case "BulletList":
-						m_DataFiles.BulletList.Import(this, XMLNode, m_DataFiles);
+						m_DataFiles.BulletList.Import(this, XMLNode, m_DataFiles, fCountOnly);
+
+						m_nBulletCount += m_DataFiles.BulletList.ImportCount;
+						m_nBulletNewCount += m_DataFiles.BulletList.NewCount;
+						m_nBulletUpdateCount += m_DataFiles.BulletList.UpdateCount;
+
+						m_nBulletCaliberCount += m_DataFiles.BulletList.BulletCaliberImportCount;
+						m_nBulletCaliberNewCount += m_DataFiles.BulletList.BulletCaliberNewCount;
+						m_nBulletCaliberUpdateCount += m_DataFiles.BulletList.BulletCaliberUpdateCount;
 
 						break;
 
 					case "Firearms":
 					case "FirearmList":
-						m_DataFiles.FirearmList.Import(this, XMLNode, m_DataFiles);
+						m_DataFiles.FirearmList.Import(this, XMLNode, m_DataFiles, fCountOnly);
+
+						m_nFirearmCount += m_DataFiles.FirearmList.ImportCount;
+						m_nFirearmNewCount += m_DataFiles.FirearmList.NewCount;
+						m_nFirearmUpdateCount += m_DataFiles.FirearmList.UpdateCount;
+
+						m_nFirearmCaliberCount += m_DataFiles.FirearmList.FirearmCaliberImportCount;
+						m_nFirearmCaliberNewCount += m_DataFiles.FirearmList.FirearmCaliberNewCount;
+						m_nFirearmCaliberUpdateCount += m_DataFiles.FirearmList.FirearmCaliberUpdateCount;
+
+						m_nFirearmBulletCount += m_DataFiles.FirearmList.FirearmBulletImportCount;
+						m_nFirearmBulletNewCount += m_DataFiles.FirearmList.FirearmBulletNewCount;
+						m_nFirearmBulletUpdateCount += m_DataFiles.FirearmList.FirearmBulletUpdateCount;
 
 						break;
 
 					case "Cases":
 					case "CaseList":
-						m_DataFiles.CaseList.Import(this, XMLNode, m_DataFiles);
+						m_DataFiles.CaseList.Import(this, XMLNode, m_DataFiles, fCountOnly);
+
+						m_nCaseCount += m_DataFiles.CaseList.ImportCount;
+						m_nCaseNewCount += m_DataFiles.CaseList.NewCount;
+						m_nCaseUpdateCount += m_DataFiles.CaseList.UpdateCount;
 
 						break;
 
 					case "Powders":
 					case "PowderList":
-						m_DataFiles.PowderList.Import(this, XMLNode, m_DataFiles);
+						m_DataFiles.PowderList.Import(this, XMLNode, m_DataFiles, fCountOnly);
+
+						m_nPowderCount += m_DataFiles.PowderList.ImportCount;
+						m_nPowderNewCount += m_DataFiles.PowderList.NewCount;
+						m_nPowderUpdateCount += m_DataFiles.PowderList.UpdateCount;
 
 						break;
 
 					case "Primers":
 					case "PrimerList":
-						m_DataFiles.PrimerList.Import(this, XMLNode, m_DataFiles);
+						m_DataFiles.PrimerList.Import(this, XMLNode, m_DataFiles, fCountOnly);
+
+						m_nPrimerCount += m_DataFiles.PrimerList.ImportCount;
+						m_nPrimerNewCount += m_DataFiles.PrimerList.NewCount;
+						m_nPrimerUpdateCount += m_DataFiles.PrimerList.UpdateCount;
 
 						break;
 
@@ -776,7 +1197,11 @@ namespace ReloadersWorkShop
 						break;
 
 					case "GearList":
-						m_DataFiles.GearList.Import(this, XMLNode, m_DataFiles);
+						m_DataFiles.GearList.Import(this, XMLNode, m_DataFiles, fCountOnly);
+
+						m_nAccessoryCount += m_DataFiles.GearList.ImportCount;
+						m_nAccessoryNewCount += m_DataFiles.GearList.NewCount;
+						m_nAccessoryUpdateCount += m_DataFiles.GearList.UpdateCount;
 
 						break;
 
@@ -1044,10 +1469,87 @@ namespace ReloadersWorkShop
 
 		public override void Load(string strFilePath)
 			{
+			m_strFilePath = strFilePath;
+
 			base.Load(strFilePath);
 
 			if (!Validate())
 				throw (new Exception(String.Format("{0} is not a valid {1} XML Data File!", strFilePath, Application.ProductName)));
+			}
+
+		//============================================================================*
+		// ManufacturerCount Property
+		//============================================================================*
+
+		public int ManufacturerCount
+			{
+			get
+				{
+				return (m_nManufacturerCount);
+				}
+			}
+
+		//============================================================================*
+		// ManufacturerNewCount Property
+		//============================================================================*
+
+		public int ManufacturerNewCount
+			{
+			get
+				{
+				return (m_nManufacturerNewCount);
+				}
+			}
+
+		//============================================================================*
+		// ManufacturerUpdateCount Property
+		//============================================================================*
+
+		public int ManufacturerUpdateCount
+			{
+			get
+				{
+				return (m_nManufacturerUpdateCount);
+				}
+			}
+
+		//============================================================================*
+		// ResetCounts()
+		//============================================================================*
+
+		public void ResetCounts()
+			{
+			m_nAmmoCount = 0;
+			m_nAmmoNewCount = 0;
+			m_nAmmoUpdateCount = 0;
+
+			m_nAmmoTestCount = 0;
+			m_nAmmoTestNewCount = 0;
+			m_nAmmoTestUpdateCount = 0;
+
+			m_nManufacturerCount = 0;
+			m_nManufacturerNewCount = 0;
+			m_nManufacturerUpdateCount = 0;
+
+			m_nCaliberCount = 0;
+			m_nCaliberNewCount = 0;
+			m_nCaliberUpdateCount = 0;
+			}
+
+		//============================================================================*
+		// TrackInventory Property
+		//============================================================================*
+
+		public bool TrackInventory
+			{
+			get
+				{
+				return (m_fTrackInventory);
+				}
+			set
+				{
+				m_fTrackInventory = value;
+				}
 			}
 
 		//============================================================================*
@@ -1065,7 +1567,7 @@ namespace ReloadersWorkShop
 					XMLNode = XMLNode.FirstChild;
 
 					if (XMLNode != null && XMLNode.InnerText.Contains(Application.ProductName))
-						return(true);
+						return (true);
 					}
 
 				XMLNode = XMLNode.NextSibling;

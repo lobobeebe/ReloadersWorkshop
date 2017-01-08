@@ -338,8 +338,6 @@ namespace ReloadersWorkShop
 			this.BatchPowderCombo = new System.Windows.Forms.ComboBox();
 			this.LoadDataTab = new System.Windows.Forms.TabPage();
 			this.LoadDataListViewInfoLabel = new System.Windows.Forms.Label();
-			this.LoadDataDeselectAllButton = new System.Windows.Forms.Button();
-			this.LoadDataSelectAllButton = new System.Windows.Forms.Button();
 			this.ViewLoadButton = new System.Windows.Forms.Button();
 			this.RemoveLoadButton = new System.Windows.Forms.Button();
 			this.EditLoadButton = new System.Windows.Forms.Button();
@@ -351,7 +349,9 @@ namespace ReloadersWorkShop
 			this.LoadDataPowderCombo = new System.Windows.Forms.ComboBox();
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
 			this.ShareFileButton = new System.Windows.Forms.Button();
+			this.LoadDataDeselectAllButton = new System.Windows.Forms.Button();
 			this.LoadShoppingListButton = new System.Windows.Forms.Button();
+			this.LoadDataSelectAllButton = new System.Windows.Forms.Button();
 			this.EvaluateLoadButton = new System.Windows.Forms.Button();
 			this.SuppliesTab = new System.Windows.Forms.TabPage();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -754,14 +754,19 @@ namespace ReloadersWorkShop
 			// FileExportMenuItem
 			// 
 			this.FileExportMenuItem.Name = "FileExportMenuItem";
+			this.FileExportMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.X)));
 			this.FileExportMenuItem.Size = new System.Drawing.Size(208, 22);
 			this.FileExportMenuItem.Text = "&Export";
+			this.FileExportMenuItem.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// FileImportMenuItem
 			// 
 			this.FileImportMenuItem.Name = "FileImportMenuItem";
+			this.FileImportMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.I)));
 			this.FileImportMenuItem.Size = new System.Drawing.Size(208, 22);
-			this.FileImportMenuItem.Text = "Import";
+			this.FileImportMenuItem.Text = "&Import";
 			// 
 			// toolStripSeparator1
 			// 
@@ -874,7 +879,7 @@ namespace ReloadersWorkShop
 			// FileExitMenuItem
 			// 
 			this.FileExitMenuItem.Name = "FileExitMenuItem";
-			this.FileExitMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
+			this.FileExitMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
 			this.FileExitMenuItem.Size = new System.Drawing.Size(208, 22);
 			this.FileExitMenuItem.Text = "E&xit";
 			// 
@@ -1999,6 +2004,8 @@ namespace ReloadersWorkShop
 			this.BallisticsFirearmTypeCombo.IncludeAny = false;
 			this.BallisticsFirearmTypeCombo.IncludeShotgun = false;
 			this.BallisticsFirearmTypeCombo.Items.AddRange(new object[] {
+            "Handgun",
+            "Rifle",
             "Handgun",
             "Rifle",
             "Handgun",
@@ -3535,6 +3542,9 @@ namespace ReloadersWorkShop
             "Shotgun",
             "Handgun",
             "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
             "Shotgun"});
 			this.AmmunitionFirearmTypeCombo.Location = new System.Drawing.Point(81, 23);
 			this.AmmunitionFirearmTypeCombo.Name = "AmmunitionFirearmTypeCombo";
@@ -4294,6 +4304,8 @@ namespace ReloadersWorkShop
             "Handgun",
             "Rifle",
             "Handgun",
+            "Rifle",
+            "Handgun",
             "Rifle"});
 			this.BatchFirearmTypeCombo.Location = new System.Drawing.Point(83, 22);
 			this.BatchFirearmTypeCombo.Name = "BatchFirearmTypeCombo";
@@ -4372,32 +4384,6 @@ namespace ReloadersWorkShop
 			this.LoadDataListViewInfoLabel.Text = "NOTE: Charge weights listed in bold have been used in one or more batches.";
 			this.LoadDataListViewInfoLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// LoadDataDeselectAllButton
-			// 
-			this.LoadDataDeselectAllButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.LoadDataDeselectAllButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.LoadDataDeselectAllButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.LoadDataDeselectAllButton.Location = new System.Drawing.Point(14, 45);
-			this.LoadDataDeselectAllButton.Margin = new System.Windows.Forms.Padding(2);
-			this.LoadDataDeselectAllButton.Name = "LoadDataDeselectAllButton";
-			this.LoadDataDeselectAllButton.Size = new System.Drawing.Size(80, 20);
-			this.LoadDataDeselectAllButton.TabIndex = 12;
-			this.LoadDataDeselectAllButton.Text = "Uncheck All";
-			this.LoadDataDeselectAllButton.UseVisualStyleBackColor = true;
-			// 
-			// LoadDataSelectAllButton
-			// 
-			this.LoadDataSelectAllButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.LoadDataSelectAllButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.LoadDataSelectAllButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.LoadDataSelectAllButton.Location = new System.Drawing.Point(14, 21);
-			this.LoadDataSelectAllButton.Margin = new System.Windows.Forms.Padding(2);
-			this.LoadDataSelectAllButton.Name = "LoadDataSelectAllButton";
-			this.LoadDataSelectAllButton.Size = new System.Drawing.Size(80, 20);
-			this.LoadDataSelectAllButton.TabIndex = 10;
-			this.LoadDataSelectAllButton.Text = "Check All";
-			this.LoadDataSelectAllButton.UseVisualStyleBackColor = true;
-			// 
 			// ViewLoadButton
 			// 
 			this.ViewLoadButton.Location = new System.Drawing.Point(519, 352);
@@ -4469,6 +4455,8 @@ namespace ReloadersWorkShop
 			this.LoadDataFirearmTypeCombo.IncludeAny = false;
 			this.LoadDataFirearmTypeCombo.IncludeShotgun = false;
 			this.LoadDataFirearmTypeCombo.Items.AddRange(new object[] {
+            "Handgun",
+            "Rifle",
             "Handgun",
             "Rifle",
             "Handgun",
@@ -4874,6 +4862,19 @@ namespace ReloadersWorkShop
 			this.ShareFileButton.Text = "Export Share File";
 			this.ShareFileButton.UseVisualStyleBackColor = true;
 			// 
+			// LoadDataDeselectAllButton
+			// 
+			this.LoadDataDeselectAllButton.DialogResult = System.Windows.Forms.DialogResult.OK;
+			this.LoadDataDeselectAllButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.LoadDataDeselectAllButton.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.LoadDataDeselectAllButton.Location = new System.Drawing.Point(14, 45);
+			this.LoadDataDeselectAllButton.Margin = new System.Windows.Forms.Padding(2);
+			this.LoadDataDeselectAllButton.Name = "LoadDataDeselectAllButton";
+			this.LoadDataDeselectAllButton.Size = new System.Drawing.Size(80, 20);
+			this.LoadDataDeselectAllButton.TabIndex = 12;
+			this.LoadDataDeselectAllButton.Text = "Uncheck All";
+			this.LoadDataDeselectAllButton.UseVisualStyleBackColor = true;
+			// 
 			// LoadShoppingListButton
 			// 
 			this.LoadShoppingListButton.DialogResult = System.Windows.Forms.DialogResult.OK;
@@ -4886,6 +4887,19 @@ namespace ReloadersWorkShop
 			this.LoadShoppingListButton.TabIndex = 8;
 			this.LoadShoppingListButton.Text = "Shopping List";
 			this.LoadShoppingListButton.UseVisualStyleBackColor = true;
+			// 
+			// LoadDataSelectAllButton
+			// 
+			this.LoadDataSelectAllButton.DialogResult = System.Windows.Forms.DialogResult.OK;
+			this.LoadDataSelectAllButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.LoadDataSelectAllButton.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.LoadDataSelectAllButton.Location = new System.Drawing.Point(14, 21);
+			this.LoadDataSelectAllButton.Margin = new System.Windows.Forms.Padding(2);
+			this.LoadDataSelectAllButton.Name = "LoadDataSelectAllButton";
+			this.LoadDataSelectAllButton.Size = new System.Drawing.Size(80, 20);
+			this.LoadDataSelectAllButton.TabIndex = 10;
+			this.LoadDataSelectAllButton.Text = "Check All";
+			this.LoadDataSelectAllButton.UseVisualStyleBackColor = true;
 			// 
 			// EvaluateLoadButton
 			// 
@@ -4968,6 +4982,10 @@ namespace ReloadersWorkShop
             "Any Firearm Type",
             "Handgun",
             "Rifle",
+            "Shotgun",
+            "Any Firearm Type",
+            "Handgun",
+            "Rifle",
             "Shotgun"});
 			this.SupplyFirearmTypeCombo.Location = new System.Drawing.Point(99, 48);
 			this.SupplyFirearmTypeCombo.Name = "SupplyFirearmTypeCombo";
@@ -4975,7 +4993,6 @@ namespace ReloadersWorkShop
 			this.SupplyFirearmTypeCombo.Size = new System.Drawing.Size(127, 21);
 			this.SupplyFirearmTypeCombo.TabIndex = 21;
 			this.SupplyFirearmTypeCombo.ToolTip = "";
-			this.SupplyFirearmTypeCombo.Value = ReloadersWorkShop.cFirearm.eFireArmType.None;
 			// 
 			// SupplyManufacturerCombo
 			// 

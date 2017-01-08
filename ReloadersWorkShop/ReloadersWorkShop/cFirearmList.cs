@@ -28,22 +28,36 @@ namespace ReloadersWorkShop
 	public class cFirearmList : List<cFirearm>
 		{
 		//============================================================================*
+		// Private Data Members
+		//============================================================================*
+
+		private int m_nImportCount = 0;
+		private int m_nNewCount = 0;
+		private int m_nUpdateCount = 0;
+
+		//============================================================================*
 		// AddFirearm()
 		//============================================================================*
 
-		public bool AddFirearm(cFirearm Firearm)
+		public bool AddFirearm(cFirearm Firearm, bool fCountOnly = false)
 			{
+			m_nImportCount++;
+
 			foreach (cFirearm CheckFirearm in this)
 				{
 				if (CheckFirearm.CompareTo(Firearm) == 0)
 					{
-					CheckFirearm.Append(Firearm);
+					m_nUpdateCount += CheckFirearm.Append(Firearm, fCountOnly);
 
 					return (false);
 					}
 				}
 
-			Add(Firearm);
+
+			if (!fCountOnly)
+				Add(Firearm);
+
+			m_nNewCount++;
 
 			return (true);
 			}
@@ -106,11 +120,117 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// FirearmBulletImportCount Property
+		//============================================================================*
+
+		public int FirearmBulletImportCount
+			{
+			get
+				{
+				int nFireBulletImportCount = 0;
+
+				foreach (cFirearm Firearm in this)
+					nFireBulletImportCount += Firearm.FirearmBulletList.ImportCount;
+
+				return (nFireBulletImportCount);
+				}
+			}
+
+		//============================================================================*
+		// FirearmBulletNewCount Property
+		//============================================================================*
+
+		public int FirearmBulletNewCount
+			{
+			get
+				{
+				int nFirearmBulletNewCount = 0;
+
+				foreach (cFirearm Firearm in this)
+					nFirearmBulletNewCount += Firearm.FirearmBulletList.NewCount;
+
+				return (nFirearmBulletNewCount);
+				}
+			}
+
+		//============================================================================*
+		// FirearmBulletUpdateCount Property
+		//============================================================================*
+
+		public int FirearmBulletUpdateCount
+			{
+			get
+				{
+				int nFireBulletUpdateCount = 0;
+
+				foreach (cFirearm Firearm in this)
+					nFireBulletUpdateCount += Firearm.FirearmBulletList.UpdateCount;
+
+				return (nFireBulletUpdateCount);
+				}
+			}
+
+		//============================================================================*
+		// FirearmCaliberImportCount Property
+		//============================================================================*
+
+		public int FirearmCaliberImportCount
+			{
+			get
+				{
+				int nFirearmCaliberImportCount = 0;
+
+				foreach (cFirearm Firearm in this)
+					nFirearmCaliberImportCount += Firearm.CaliberList.ImportCount;
+
+				return (nFirearmCaliberImportCount);
+				}
+			}
+
+		//============================================================================*
+		// FirearmCaliberNewCount Property
+		//============================================================================*
+
+		public int FirearmCaliberNewCount
+			{
+			get
+				{
+				int nFireCalibertNewCount = 0;
+
+				foreach (cFirearm Firearm in this)
+					nFireCalibertNewCount += Firearm.CaliberList.NewCount;
+
+				return (nFireCalibertNewCount);
+				}
+			}
+
+		//============================================================================*
+		// FirearmCaliberUpdateCount Property
+		//============================================================================*
+
+		public int FirearmCaliberUpdateCount
+			{
+			get
+				{
+				int nFirearmCaliberUpdateCount = 0;
+
+				foreach (cFirearm Firearm in this)
+					nFirearmCaliberUpdateCount += Firearm.CaliberList.UpdateCount;
+
+				return (nFirearmCaliberUpdateCount);
+				}
+			}
+
+		//============================================================================*
 		// Import()
 		//============================================================================*
 
-		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles, bool fCountOnly = false)
 			{
+			m_nImportCount = 0;
+			m_nNewCount = 0;
+			m_nUpdateCount = 0;
+
 			XmlNode XMLNode = XMLThisNode.FirstChild;
 
 			while (XMLNode != null)
@@ -120,14 +240,37 @@ namespace ReloadersWorkShop
 					case "Firearm":
 						cFirearm Firearm = new cFirearm();
 
-						Firearm.Import(XMLDocument, XMLNode, DataFiles);
-
-						AddFirearm(Firearm);
+						if (Firearm.Import(XMLDocument, XMLNode, DataFiles))
+							AddFirearm(Firearm, fCountOnly);
 
 						break;
 					}
 
 				XMLNode = XMLNode.NextSibling;
+				}
+			}
+
+		//============================================================================*
+		// ImportCount Property
+		//============================================================================*
+
+		public int ImportCount
+			{
+			get
+				{
+				return (m_nImportCount);
+				}
+			}
+
+		//============================================================================*
+		// NewCount Property
+		//============================================================================*
+
+		public int NewCount
+			{
+			get
+				{
+				return (m_nNewCount);
 				}
 			}
 
@@ -143,6 +286,18 @@ namespace ReloadersWorkShop
 				fChanged = Firearm.ResolveIdentities(Datafiles) ? true : fChanged;
 
 			return (fChanged);
+			}
+
+		//============================================================================*
+		// UpdateCount Property
+		//============================================================================*
+
+		public int UpdateCount
+			{
+			get
+				{
+				return (m_nUpdateCount);
+				}
 			}
 
 		//============================================================================*

@@ -28,18 +28,35 @@ namespace ReloadersWorkShop
 	public class cGearList : List<cGear>
 		{
 		//============================================================================*
+		// Private Data Members
+		//============================================================================*
+
+		private int m_nImportCount = 0;
+		private int m_nNewCount = 0;
+		private int m_nUpdateCount = 0;
+
+		//============================================================================*
 		// AddGear()
 		//============================================================================*
 
-		public bool AddGear(cGear Gear)
+		public bool AddGear(cGear Gear, bool fCountOnly = false)
 			{
+			m_nImportCount++;
+
 			foreach (cGear CheckGear in this)
 				{
 				if (CheckGear.CompareTo(Gear) == 0)
+					{
+					m_nUpdateCount += CheckGear.Append(Gear, fCountOnly);
+
 					return (false);
+					}
 				}
 
-			Add(Gear);
+			if (!fCountOnly)
+				Add(Gear);
+
+			m_nNewCount++;
 
 			return (true);
 			}
@@ -120,8 +137,12 @@ namespace ReloadersWorkShop
 		// Import()
 		//============================================================================*
 
-		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles, bool fCountOnly = false)
 			{
+			m_nImportCount = 0;
+			m_nNewCount = 0;
+			m_nUpdateCount = 0;
+
 			XmlNode XMLNode = XMLThisNode.FirstChild;
 
 			while (XMLNode != null)
@@ -132,12 +153,36 @@ namespace ReloadersWorkShop
 						cGear Gear = new cGear(cGear.eGearTypes.Misc);
 
 						if (Gear.Import(XMLDocument, XMLNode, DataFiles))
-							AddGear(Gear);
+							AddGear(Gear, fCountOnly);
 
 						break;
 					}
 
 				XMLNode = XMLNode.NextSibling;
+				}
+			}
+
+		//============================================================================*
+		// ImportCount Property
+		//============================================================================*
+
+		public virtual int ImportCount
+			{
+			get
+				{
+				return (m_nImportCount);
+				}
+			}
+
+		//============================================================================*
+		// NewCount Property
+		//============================================================================*
+
+		public virtual int NewCount
+			{
+			get
+				{
+				return (m_nNewCount);
 				}
 			}
 
@@ -164,6 +209,18 @@ namespace ReloadersWorkShop
 			cGear.SortByType = fSortByType;
 
 			Sort(cGear.Comparer);
+			}
+
+		//============================================================================*
+		// UpdateCount Property
+		//============================================================================*
+
+		public virtual int UpdateCount
+			{
+			get
+				{
+				return (m_nUpdateCount);
+				}
 			}
 		}
 	}

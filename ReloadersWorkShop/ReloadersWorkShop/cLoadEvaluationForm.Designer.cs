@@ -71,11 +71,11 @@
 			this.label5.AutoSize = true;
 			this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label5.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label5.Location = new System.Drawing.Point(641, 57);
+			this.label5.Location = new System.Drawing.Point(649, 57);
 			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(42, 13);
+			this.label5.Size = new System.Drawing.Size(34, 13);
 			this.label5.TabIndex = 3;
-			this.label5.Text = "Caliber:";
+			this.label5.Text = "Case:";
 			// 
 			// label4
 			// 

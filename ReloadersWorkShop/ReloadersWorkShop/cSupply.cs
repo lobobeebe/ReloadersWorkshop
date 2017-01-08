@@ -100,6 +100,113 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Append()
+		//============================================================================*
+
+		public int Append(cSupply Supply, bool fCountOnly = false)
+			{
+			int nUpdateCount = 0;
+
+			if (m_dQuantity == 0.0 && Supply.m_dQuantity != 0.0)
+				{
+				m_dQuantity = Supply.m_dQuantity;
+
+				nUpdateCount++;
+				}
+
+			if (m_dCost == 0.0 && Supply.m_dCost != 0.0)
+				{
+				m_dCost = Supply.m_dCost;
+
+				nUpdateCount++;
+				}
+
+			if (m_dQuantityOnHand == 0.0 && Supply.m_dQuantityOnHand != 0.0)
+				{
+				m_dQuantityOnHand = Supply.m_dQuantityOnHand;
+
+				nUpdateCount++;
+				}
+
+			if (m_dCostEach == 0.0 && Supply.m_dCostEach != 0.0)
+				{
+				m_dCostEach = Supply.m_dCostEach;
+
+				nUpdateCount++;
+				}
+
+			if (m_dTotalPurchaseQty == 0.0 && Supply.m_dTotalPurchaseQty != 0.0)
+				{
+				m_dTotalPurchaseQty = Supply.m_dTotalPurchaseQty;
+
+				nUpdateCount++;
+				}
+
+			if (m_dTotalPurchaseCost == 0.0 && Supply.m_dTotalPurchaseCost != 0.0)
+				{
+				m_dTotalPurchaseCost = Supply.m_dTotalPurchaseCost;
+
+				nUpdateCount++;
+				}
+
+			if (m_dTotalAdjustQty == 0.0 && Supply.m_dTotalAdjustQty != 0.0)
+				{
+				m_dTotalAdjustQty = Supply.m_dTotalAdjustQty;
+
+				nUpdateCount++;
+				}
+
+			if (m_dTotalUsedQty == 0.0 && Supply.m_dTotalUsedQty != 0.0)
+				{
+				m_dTotalUsedQty = Supply.m_dTotalUsedQty;
+
+				nUpdateCount++;
+				}
+
+			if (m_dLastPurchaseQty == 0.0 && Supply.m_dLastPurchaseQty != 0.0)
+				{
+				m_dLastPurchaseQty = Supply.m_dLastPurchaseQty;
+
+				nUpdateCount++;
+				}
+
+			if (m_dLastPurchaseCost == 0.0 && Supply.m_dLastPurchaseCost != 0.0)
+				{
+				m_dLastPurchaseCost = Supply.m_dLastPurchaseCost;
+
+				nUpdateCount++;
+				}
+
+			if (m_dMinimumStockLevel == 0.0 && Supply.m_dMinimumStockLevel != 0.0)
+				{
+				m_dMinimumStockLevel = Supply.m_dMinimumStockLevel;
+
+				nUpdateCount++;
+				}
+
+			if (!m_fCrossUse && Supply.m_fCrossUse)
+				{
+				m_fCrossUse = Supply.m_fCrossUse;
+
+				nUpdateCount++;
+				}
+
+			if (!m_fChecked && Supply.m_fChecked)
+				{
+				m_fChecked = Supply.m_fChecked;
+
+				nUpdateCount++;
+				}
+
+			if (Supply.m_TransactionList != null)
+				m_TransactionList = new cTransactionList(Supply.m_TransactionList);
+			else
+				m_TransactionList = new cTransactionList();
+
+			return (nUpdateCount);
+			}
+
+		//============================================================================*
 		// Checked Property
 		//============================================================================*
 

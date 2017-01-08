@@ -28,6 +28,14 @@ namespace ReloadersWorkShop
 	public class cCaliberList : List<cCaliber>
 		{
 		//============================================================================*
+		// Private Data Members
+		//============================================================================*
+
+		private int m_nImportCount = 0;
+		private int m_nNewCount = 0;
+		private int m_nUpdateCount = 0;
+
+		//============================================================================*
 		// CaliberList() - Default Constructor
 		//============================================================================*
 
@@ -52,15 +60,24 @@ namespace ReloadersWorkShop
 		// AddCaliber()
 		//============================================================================*
 
-		public bool AddCaliber(cCaliber Caliber)
+		public bool AddCaliber(cCaliber Caliber, bool fCountOnly = false)
 			{
+			m_nImportCount++;
+
 			foreach (cCaliber CheckCaliber in this)
 				{
 				if (CheckCaliber.CompareTo(Caliber) == 0)
+					{
+					m_nUpdateCount += CheckCaliber.Append(Caliber, fCountOnly);
+
 					return (false);
+					}
 				}
 
-			Add(Caliber);
+			if (!fCountOnly)
+				Add(Caliber);
+
+			m_nNewCount++;
 
 			return (true);
 			}
@@ -124,8 +141,12 @@ namespace ReloadersWorkShop
 		// Import()
 		//============================================================================*
 
-		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode)
+		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, bool fCountOnly = false)
 			{
+			m_nImportCount = 0;
+			m_nNewCount = 0;
+			m_nUpdateCount = 0;
+
 			XmlNode XMLNode = XMLThisNode.FirstChild;
 
 			while (XMLNode != null)
@@ -135,17 +156,49 @@ namespace ReloadersWorkShop
 					case "Caliber":
 						cCaliber Caliber = new cCaliber();
 
-						Caliber.Import(XMLDocument, XMLNode);
-
-						if (!Caliber.Validate())
-							Console.WriteLine("Bad Caliber!");
-
-						AddCaliber(Caliber);
+						if (Caliber.Import(XMLDocument, XMLNode))
+							AddCaliber(Caliber, fCountOnly);
 
 						break;
 					}
 
 				XMLNode = XMLNode.NextSibling;
+				}
+			}
+
+		//============================================================================*
+		// ImportCount Property
+		//============================================================================*
+
+		public int ImportCount
+			{
+			get
+				{
+				return (m_nImportCount);
+				}
+			}
+
+		//============================================================================*
+		// NewCount Property
+		//============================================================================*
+
+		public int NewCount
+			{
+			get
+				{
+				return (m_nNewCount);
+				}
+			}
+
+		//============================================================================*
+		// UpdateCount Property
+		//============================================================================*
+
+		public int UpdateCount
+			{
+			get
+				{
+				return (m_nUpdateCount);
 				}
 			}
 

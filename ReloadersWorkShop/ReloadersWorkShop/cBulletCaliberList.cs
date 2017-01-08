@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cBulletCaliberList.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -14,11 +14,27 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 
+//============================================================================*
+// Namespace
+//============================================================================*
+
 namespace ReloadersWorkShop
 	{
 	[Serializable]
+	//============================================================================*
+	// cBulletCaliberList Class
+	//============================================================================*
+
 	public class cBulletCaliberList : List<cBulletCaliber>
 		{
+		//============================================================================*
+		// Private Data Members
+		//============================================================================*
+
+		private int m_nImportCount = 0;
+		private int m_nNewCount = 0;
+		private int m_nUpdateCount = 0;
+
 		//============================================================================*
 		// cBulletCaliberList() - Constructor
 		//============================================================================*
@@ -50,15 +66,22 @@ namespace ReloadersWorkShop
 		// AddBulletCaliber()
 		//============================================================================*
 
-		public bool AddBulletCaliber(cBulletCaliber BulletCaliber)
+		public bool AddBulletCaliber(cBulletCaliber BulletCaliber, bool fCountOnly = false)
 			{
+			m_nImportCount++;
+
 			foreach (cBulletCaliber CheckBulletCaliber in this)
 				{
-				if (CheckBulletCaliber.CompareTo(BulletCaliber) == 0)
+					{
+					m_nUpdateCount += CheckBulletCaliber.Append(BulletCaliber, fCountOnly);
+
 					return (false);
+					}
 				}
 
 			Add(BulletCaliber);
+
+			m_nNewCount++;
 
 			return (true);
 			}
@@ -124,6 +147,10 @@ namespace ReloadersWorkShop
 
 		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
 			{
+			m_nImportCount = 0;
+			m_nNewCount = 0;
+			m_nUpdateCount = 0;
+
 			XmlNode XMLNode = XMLThisNode.FirstChild;
 
 			while (XMLNode != null)
@@ -140,6 +167,42 @@ namespace ReloadersWorkShop
 					}
 
 				XMLNode = XMLNode.NextSibling;
+				}
+			}
+
+		//============================================================================*
+		// ImportCount Property
+		//============================================================================*
+
+		public int ImportCount
+			{
+			get
+				{
+				return (m_nImportCount);
+				}
+			}
+
+		//============================================================================*
+		// NewCount Property
+		//============================================================================*
+
+		public int NewCount
+			{
+			get
+				{
+				return (m_nNewCount);
+				}
+			}
+
+		//============================================================================*
+		// UpdateCount Property
+		//============================================================================*
+
+		public int UpdateCount
+			{
+			get
+				{
+				return (m_nUpdateCount);
 				}
 			}
 

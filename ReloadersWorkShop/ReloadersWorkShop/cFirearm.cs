@@ -182,96 +182,72 @@ namespace ReloadersWorkShop
 		// Append()
 		//============================================================================*
 
-		public int Append(cFirearm Firearm)
+		public int Append(cFirearm Firearm, bool fCountOnly = false)
 			{
 			int nUpdateCount = base.Append(Firearm);
 
 			if (m_dBarrelLength == 0.0 && Firearm.m_dBarrelLength != 0.0)
 				{
-				m_dBarrelLength = Firearm.m_dBarrelLength;
+				if (!fCountOnly)
+					m_dBarrelLength = Firearm.m_dBarrelLength;
 
 				nUpdateCount++;
 				}
 
-			if (!m_fScoped)
+			if (!m_fScoped && Firearm.m_fScoped)
 				{
-				m_fScoped = Firearm.m_fScoped;
+				if (!fCountOnly)
+					m_fScoped = Firearm.m_fScoped;
 
 				nUpdateCount++;
 				}
 
 			if (m_dTwist == 0.0 && Firearm.m_dTwist != 0.0)
 				{
-				m_dTwist = Firearm.m_dTwist;
+				if (!fCountOnly)
+					m_dTwist = Firearm.m_dTwist;
 
 				nUpdateCount++;
 				}
 
 			if (m_dSightHeight == 0.0 && Firearm.m_dSightHeight != 0.0)
 				{
-				m_dSightHeight = Firearm.m_dSightHeight;
+				if (!fCountOnly)
+					m_dSightHeight = Firearm.m_dSightHeight;
 
 				nUpdateCount++;
 				}
 
 			if (m_dScopeClick == 0.0 && Firearm.m_dScopeClick != 0.0)
 				{
-				m_dScopeClick = Firearm.m_dScopeClick;
+				if (!fCountOnly)
+					m_dScopeClick = Firearm.m_dScopeClick;
 
 				nUpdateCount++;
 				}
 
 			if (m_dZeroRange == 0.0 && Firearm.m_dZeroRange != 0.0)
 				{
-				m_dZeroRange = Firearm.m_dZeroRange;
+				if (!fCountOnly)
+					m_dZeroRange = Firearm.m_dZeroRange;
 
 				nUpdateCount++;
 				}
 
 			if (m_dHeadSpace == 0.0 && Firearm.m_dHeadSpace != 0.0)
 				{
-				m_dHeadSpace = Firearm.m_dHeadSpace;
+				if (!fCountOnly)
+					m_dHeadSpace = Firearm.m_dHeadSpace;
 
 				nUpdateCount++;
 				}
 
 			if (m_dNeck == 0.0 && Firearm.m_dNeck != 0.0)
 				{
-				m_dNeck = Firearm.m_dNeck;
+				if (!fCountOnly)
+					m_dNeck = Firearm.m_dNeck;
 
 				nUpdateCount++;
-				}
-
-			foreach (cFirearmBullet FirearmBullet in Firearm.m_FirearmBulletList)
-				{
-				foreach (cFirearmBullet CheckFirearmBullet in m_FirearmBulletList)
-					{
-					if (CheckFirearmBullet.CompareTo(FirearmBullet) == 0)
-						{
-						if (CheckFirearmBullet.COL == 0.0 && FirearmBullet.COL != 0.0)
-							{
-							CheckFirearmBullet.COL = FirearmBullet.COL;
-
-							nUpdateCount++;
-							}
-
-						if (CheckFirearmBullet.CBTO == 0.0 && FirearmBullet.CBTO != 0.0)
-							{
-							CheckFirearmBullet.CBTO = FirearmBullet.CBTO;
-
-							nUpdateCount++;
-							}
-
-						if (CheckFirearmBullet.Jump == 0.0 && FirearmBullet.Jump != 0.0)
-							{
-							CheckFirearmBullet.Jump = FirearmBullet.Jump;
-
-							nUpdateCount++;
-							}
-
-						break;
-						}
-					}
 				}
 
 			//----------------------------------------------------------------------------*
@@ -280,77 +256,87 @@ namespace ReloadersWorkShop
 
 			if (String.IsNullOrEmpty(m_strImageFile) && !String.IsNullOrEmpty(Firearm.m_strImageFile))
 				{
-				m_strImageFile = Firearm.m_strImageFile;
+				if (!fCountOnly)
+					m_strImageFile = Firearm.m_strImageFile;
 
 				nUpdateCount++;
 				}
 
 			if (m_dTransferFees == 0.0 && Firearm.m_dTransferFees != 0.0)
 				{
-				m_dTransferFees = Firearm.m_dTransferFees;
+				if (!fCountOnly)
+					m_dTransferFees = Firearm.m_dTransferFees;
 
 				nUpdateCount++;
 				}
 
 			if (m_dOtherFees == 0.0 && Firearm.m_dOtherFees != 0.0)
 				{
-				m_dOtherFees = Firearm.m_dOtherFees;
+				if (!fCountOnly)
+					m_dOtherFees = Firearm.m_dOtherFees;
 
 				nUpdateCount++;
 				}
 
 			if (String.IsNullOrEmpty(m_strReceiverFinish) && !String.IsNullOrEmpty(Firearm.m_strReceiverFinish))
 				{
-				m_strReceiverFinish = Firearm.m_strReceiverFinish;
+				if (!fCountOnly)
+					m_strReceiverFinish = Firearm.m_strReceiverFinish;
 
 				nUpdateCount++;
 				}
 
 			if (String.IsNullOrEmpty(m_strBarrelFinish) && !String.IsNullOrEmpty(Firearm.m_strBarrelFinish))
 				{
-				m_strBarrelFinish = Firearm.m_strBarrelFinish;
+				if (!fCountOnly)
+					m_strBarrelFinish = Firearm.m_strBarrelFinish;
 
 				nUpdateCount++;
 				}
 
 			if (String.IsNullOrEmpty(m_strType) && !String.IsNullOrEmpty(Firearm.m_strType))
 				{
-				m_strType = Firearm.m_strType;
+				if (!fCountOnly)
+					m_strType = Firearm.m_strType;
 
 				nUpdateCount++;
 				}
 
 			if (String.IsNullOrEmpty(m_strAction) && !String.IsNullOrEmpty(Firearm.m_strAction))
 				{
-				m_strAction = Firearm.m_strAction;
+				if (!fCountOnly)
+					m_strAction = Firearm.m_strAction;
 
 				nUpdateCount++;
 				}
 
 			if (String.IsNullOrEmpty(m_strHammer) && !String.IsNullOrEmpty(Firearm.m_strHammer))
 				{
-				m_strHammer = Firearm.m_strHammer;
+				if (!fCountOnly)
+					m_strHammer = Firearm.m_strHammer;
 
 				nUpdateCount++;
 				}
 
 			if (String.IsNullOrEmpty(m_strMagazine) && !String.IsNullOrEmpty(Firearm.m_strMagazine))
 				{
-				m_strMagazine = Firearm.m_strMagazine;
+				if (!fCountOnly)
+					m_strMagazine = Firearm.m_strMagazine;
 
 				nUpdateCount++;
 				}
 
 			if (m_nCapacity == 0 && Firearm.m_nCapacity != 0)
 				{
-				m_nCapacity = Firearm.m_nCapacity;
+				if (!fCountOnly)
+					m_nCapacity = Firearm.m_nCapacity;
 
 				nUpdateCount++;
 				}
 
 			return (nUpdateCount);
 			}
-
+	
 		//============================================================================*
 		// BarrelFinish Property
 		//============================================================================*

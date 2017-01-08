@@ -104,6 +104,130 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Append()
+		//============================================================================*
+
+		public int Append(cCaliber Caliber, bool fCountOnly = false)
+			{
+			int nUpdateCount = 0;
+
+			if (String.IsNullOrEmpty(m_strHeadStamp) && !String.IsNullOrEmpty(Caliber.m_strHeadStamp))
+				{
+				if (!fCountOnly)
+					m_strHeadStamp = Caliber.m_strHeadStamp;
+
+				nUpdateCount++;
+				}
+
+			if (!m_fPistol && Caliber.m_fPistol)
+				{
+				if (!fCountOnly)
+					m_fPistol = Caliber.m_fPistol;
+
+				nUpdateCount++;
+				}
+
+			if (!m_fSmallPrimer && Caliber.m_fSmallPrimer)
+				{
+				if (!fCountOnly)
+					m_fSmallPrimer = Caliber.m_fSmallPrimer;
+
+				nUpdateCount++;
+				}
+
+			if (!m_fLargePrimer && Caliber.m_fLargePrimer)
+				{
+				if (!fCountOnly)
+					m_fLargePrimer = Caliber.m_fLargePrimer;
+
+				nUpdateCount++;
+				}
+
+			if (!m_fMagnumPrimer && Caliber.m_fMagnumPrimer)
+				{
+				if (!fCountOnly)
+					m_fMagnumPrimer = Caliber.m_fMagnumPrimer;
+
+				nUpdateCount++;
+				}
+
+			if (m_dMinBulletDiameter == 0.0 && Caliber.m_dMinBulletDiameter != 0.0)
+				{
+				if (!fCountOnly)
+					m_dMinBulletDiameter = Caliber.m_dMinBulletDiameter;
+
+				nUpdateCount++;
+				}
+
+			if (m_dMaxBulletDiameter == 0.0 && Caliber.m_dMaxBulletDiameter != 0.0)
+				{
+				if (!fCountOnly)
+					m_dMaxBulletDiameter = Caliber.m_dMaxBulletDiameter;
+
+				nUpdateCount++;
+				}
+
+			if (m_dMinBulletWeight == 0.0 && Caliber.m_dMinBulletWeight != 0.0)
+				{
+				if (!fCountOnly)
+					m_dMinBulletWeight = Caliber.m_dMinBulletWeight;
+
+				nUpdateCount++;
+				}
+
+			if (m_dMaxBulletWeight == 0.0 && Caliber.m_dMaxBulletWeight != 0.0)
+				{
+				if (!fCountOnly)
+					m_dMaxBulletWeight = Caliber.m_dMaxBulletWeight;
+
+				nUpdateCount++;
+				}
+
+			if (m_dCaseTrimLength == 0.0 && Caliber.m_dCaseTrimLength != 0.0)
+				{
+				if (!fCountOnly)
+					m_dCaseTrimLength = Caliber.m_dCaseTrimLength;
+
+				nUpdateCount++;
+				}
+
+			if (m_dMaxCaseLength == 0.0 && Caliber.m_dMaxCaseLength != 0.0)
+				{
+				if (!fCountOnly)
+					m_dMaxCaseLength = Caliber.m_dMaxCaseLength;
+
+				nUpdateCount++;
+				}
+
+			if (m_dMaxCOL == 0.0 && Caliber.m_dMaxCOL != 0.0)
+				{
+				if (!fCountOnly)
+					m_dMaxCOL = Caliber.m_dMaxCOL;
+
+				nUpdateCount++;
+				}
+
+			if (m_dMaxNeckDiameter == 0.0 && Caliber.m_dMaxNeckDiameter != 0.0)
+				{
+				if (!fCountOnly)
+					m_dMaxNeckDiameter = Caliber.m_dMaxNeckDiameter;
+
+				nUpdateCount++;
+				}
+
+			if (String.IsNullOrEmpty(m_strSAAMIPDF) && !String.IsNullOrEmpty(Caliber.m_strSAAMIPDF))
+				{
+				if (!fCountOnly)
+					m_strSAAMIPDF = Caliber.m_strSAAMIPDF;
+
+				nUpdateCount++;
+				}
+
+			return (nUpdateCount);
+			}
+
+
+		//============================================================================*
 		// Copy()
 		//============================================================================*
 

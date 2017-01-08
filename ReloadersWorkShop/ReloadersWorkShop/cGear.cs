@@ -101,48 +101,54 @@ namespace ReloadersWorkShop
 		// Append()
 		//============================================================================*
 
-		public int Append(cGear Gear)
+		public int Append(cGear Gear, bool fCountOnly = false)
 			{
 			int nUpdateCount = 0;
 
 			if (String.IsNullOrEmpty(m_strDescription) && !String.IsNullOrEmpty(Gear.m_strDescription))
 				{
-				m_strDescription = Gear.m_strDescription;
+				if (!fCountOnly)
+					m_strDescription = Gear.m_strDescription;
 
 				nUpdateCount++;
 				}
 
 			if (String.IsNullOrEmpty(m_strNotes) && !String.IsNullOrEmpty(Gear.m_strNotes))
 				{
-				m_strNotes = Gear.m_strNotes;
+				if (!fCountOnly)
+					m_strNotes = Gear.m_strNotes;
 
 				nUpdateCount++;
 				}
 
 			if (String.IsNullOrEmpty(m_strSource) && !String.IsNullOrEmpty(Gear.m_strSource))
 				{
-				m_strSource = Gear.m_strSource;
+				if (!fCountOnly)
+					m_strSource = Gear.m_strSource;
 
 				nUpdateCount++;
 				}
 
 			if (m_dPrice == 0.0 && Gear.m_dPrice != 0.0)
 				{
-				m_dPrice = Gear.m_dPrice;
+				if (!fCountOnly)
+					m_dPrice = Gear.m_dPrice;
 
 				nUpdateCount++;
 				}
 
 			if (m_dTax == 0.0 && Gear.m_dTax != 0.0)
 				{
-				m_dTax = Gear.m_dTax;
+				if (!fCountOnly)
+					m_dTax = Gear.m_dTax;
 
 				nUpdateCount++;
 				}
 
 			if (m_dShipping == 0.0 && Gear.m_dShipping != 0.0)
 				{
-				m_dShipping = Gear.m_dShipping;
+				if (!fCountOnly)
+					m_dShipping = Gear.m_dShipping;
 
 				nUpdateCount++;
 				}

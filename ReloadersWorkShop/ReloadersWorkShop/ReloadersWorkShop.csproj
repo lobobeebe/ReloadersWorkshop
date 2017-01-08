@@ -271,6 +271,12 @@
     <Compile Include="cGear.cs" />
     <Compile Include="cGear.Export.cs" />
     <Compile Include="cGearList.cs" />
+    <Compile Include="cImportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="cImportForm.Designer.cs">
+      <DependentUpon>cImportForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="cListViewFirearmAccessoryComparer.cs" />
     <Compile Include="cLoad.Export.cs" />
     <Compile Include="cMagnifier.cs" />
@@ -613,6 +619,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="cFirearmForm.resx">
       <DependentUpon>cFirearmForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="cImportForm.resx">
+      <DependentUpon>cImportForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="cInventoryForm.resx">
       <DependentUpon>cInventoryForm.cs</DependentUpon>

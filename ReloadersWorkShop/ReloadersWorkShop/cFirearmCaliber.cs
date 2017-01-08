@@ -46,9 +46,26 @@ namespace ReloadersWorkShop
 
 		public cFirearmCaliber(cFirearmCaliber FirearmCaliber)
 			{
-			m_Caliber = FirearmCaliber.m_Caliber;
+			Copy(FirearmCaliber);
+			}
 
-			m_fPrimary = FirearmCaliber.m_fPrimary;
+		//============================================================================*
+		// Append()
+		//============================================================================*
+
+		public int Append(cFirearmCaliber FirearmCaliber, bool fCountOnly = false)
+			{
+			int nUpdateCount = 0;
+
+			if (!m_fPrimary && FirearmCaliber.m_fPrimary)
+				{
+				if (!fCountOnly)
+					m_fPrimary = FirearmCaliber.m_fPrimary;
+
+				nUpdateCount++;
+				}
+
+			return (nUpdateCount);
 			}
 
 		//============================================================================*
@@ -100,6 +117,17 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			return (m_Caliber.CompareTo(FirearmCaliber.m_Caliber));
+			}
+
+		//============================================================================*
+		// Copy()
+		//============================================================================*
+
+		public void Copy(cFirearmCaliber FirearmCaliber)
+			{
+			m_Caliber = FirearmCaliber.m_Caliber;
+
+			m_fPrimary = FirearmCaliber.m_fPrimary;
 			}
 
 		//============================================================================*

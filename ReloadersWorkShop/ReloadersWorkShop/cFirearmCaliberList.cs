@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cFirearmCaliberList.cs
 //
-// Copyright © 2013-2015, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -27,6 +27,14 @@ namespace ReloadersWorkShop
 	[Serializable]
 	public class cFirearmCaliberList : List<cFirearmCaliber>
 		{
+		//============================================================================*
+		// Private Data Members
+		//============================================================================*
+
+		private int m_nImportCount = 0;
+		private int m_nNewCount = 0;
+		private int m_nUpdateCount = 0;
+
 		//============================================================================*
 		// cFirearmCaliberList() - Constructor
 		//============================================================================*
@@ -58,15 +66,24 @@ namespace ReloadersWorkShop
 		// AddFirearmCaliber()
 		//============================================================================*
 
-		public bool AddFirearmCaliber(cFirearmCaliber FirearmCaliber)
+		public bool AddFirearmCaliber(cFirearmCaliber FirearmCaliber, bool fCountOnly = false)
 			{
+			m_nImportCount++;
+
 			foreach (cFirearmCaliber CheckFirearmCaliber in this)
 				{
 				if (CheckFirearmCaliber.CompareTo(FirearmCaliber) == 0)
+					{
+					m_nUpdateCount += CheckFirearmCaliber.Append(FirearmCaliber, fCountOnly);
+
 					return (false);
+					}
 				}
 
-			Add(FirearmCaliber);
+			if (!fCountOnly)
+				Add(FirearmCaliber);
+
+			m_nNewCount++;
 
 			return (true);
 			}
@@ -130,8 +147,12 @@ namespace ReloadersWorkShop
 		// Import()
 		//============================================================================*
 
-		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles, bool fCountOnly = false)
 			{
+			m_nImportCount = 0;
+			m_nNewCount = 0;
+			m_nUpdateCount = 0;
+
 			XmlNode XMLNode = XMLThisNode.FirstChild;
 
 			while (XMLNode != null)
@@ -141,14 +162,37 @@ namespace ReloadersWorkShop
 					case "FirearmCaliber":
 						cFirearmCaliber FirearmCaliber = new cFirearmCaliber();
 
-						FirearmCaliber.Import(XMLDocument, XMLNode, DataFiles);
-
-						AddFirearmCaliber(FirearmCaliber);
+						if (FirearmCaliber.Import(XMLDocument, XMLNode, DataFiles))
+							AddFirearmCaliber(FirearmCaliber, fCountOnly);
 
 						break;
 					}
 
 				XMLNode = XMLNode.NextSibling;
+				}
+			}
+
+		//============================================================================*
+		// ImportCount Property
+		//============================================================================*
+
+		public int ImportCount
+			{
+			get
+				{
+				return (m_nImportCount);
+				}
+			}
+
+		//============================================================================*
+		// NewCount Property
+		//============================================================================*
+
+		public int NewCount
+			{
+			get
+				{
+				return (m_nNewCount);
 				}
 			}
 
@@ -164,6 +208,18 @@ namespace ReloadersWorkShop
 				fChanged = FirearmCaliber.ResolveIdentities(Datafiles) ? true : fChanged;
 
 			return (fChanged);
+			}
+
+		//============================================================================*
+		// UpdateCount Property
+		//============================================================================*
+
+		public int UpdateCount
+			{
+			get
+				{
+				return (m_nUpdateCount);
+				}
 			}
 		}
 	}

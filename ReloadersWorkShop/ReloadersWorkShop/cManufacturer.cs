@@ -102,37 +102,183 @@ namespace ReloadersWorkShop
 		// Append()
 		//============================================================================*
 
-		public void Append(cManufacturer Manufacturer)
+		public int Append(cManufacturer Manufacturer, bool fCountOnly = false)
 			{
-			if (m_strWebsite != Manufacturer.m_strWebsite)
+			int nUpdateCount = 0;
+
+			if (String.IsNullOrEmpty(m_strWebsite) && !String.IsNullOrEmpty(Manufacturer.m_strWebsite))
 				{
-				m_strWebsite = Manufacturer.m_strWebsite;
-				m_fWebsiteVisited = false;
+				if (!fCountOnly)
+					{
+					m_strWebsite = Manufacturer.m_strWebsite;
+
+					m_fWebsiteVisited = false;
+					}
+
+				nUpdateCount++;
 				}
 
-			m_fAmmo = m_fAmmo ? true : Manufacturer.m_fAmmo;
-			m_fBullets = m_fBullets ? true : Manufacturer.m_fBullets;
-			m_fCases = m_fCases ? true : Manufacturer.m_fCases;
-			m_fPowder = m_fPowder ? true : Manufacturer.m_fPowder;
-			m_fPrimers = m_fPrimers ? true : Manufacturer.m_fPrimers;
-			m_fBulletMolds = m_fBulletMolds ? true : Manufacturer.m_fBulletMolds;
+			if (!m_fAmmo && Manufacturer.m_fAmmo)
+				{
+				if (!fCountOnly)
+					m_fAmmo = Manufacturer.m_fAmmo;
 
-			m_strHeadStamp = String.IsNullOrEmpty(Manufacturer.m_strHeadStamp) ? m_strHeadStamp : Manufacturer.m_strHeadStamp;
+				nUpdateCount++;
+				}
 
-			m_fHandguns = m_fHandguns ? true : Manufacturer.m_fHandguns;
-			m_fRifles = m_fRifles ? true : Manufacturer.m_fRifles;
-			m_fShotguns = m_fShotguns ? true : Manufacturer.m_fShotguns;
+			if (!m_fBullets && Manufacturer.m_fBullets)
+				{
+				if (!fCountOnly)
+					m_fBullets = Manufacturer.m_fBullets;
 
-			m_fScopes = m_fScopes ? true : Manufacturer.m_fScopes;
-			m_fLasers = m_fLasers ? true : Manufacturer.m_fLasers;
-			m_fRedDots = m_fRedDots ? true : Manufacturer.m_fRedDots;
-			m_fMagnifiers = m_fMagnifiers ? true : Manufacturer.m_fMagnifiers;
-			m_fLights = m_fLights ? true : Manufacturer.m_fLights;
-			m_fTriggers = m_fTriggers ? true : Manufacturer.m_fTriggers;
-			m_fFurniture = m_fFurniture ? true : Manufacturer.m_fFurniture;
-			m_fBipods = m_fBipods ? true : Manufacturer.m_fBipods;
-			m_fParts = m_fParts ? true : Manufacturer.m_fParts;
-			m_fMisc = m_fMisc ? true : Manufacturer.m_fMisc;
+				nUpdateCount++;
+				}
+
+			if (!m_fCases && Manufacturer.m_fCases)
+				{
+				if (!fCountOnly)
+					m_fCases = Manufacturer.m_fCases;
+
+				nUpdateCount++;
+				}
+
+			if (!m_fPowder && Manufacturer.m_fPowder)
+				{
+				if (!fCountOnly)
+					m_fPowder = Manufacturer.m_fPowder;
+
+				nUpdateCount++;
+				}
+
+			if (!m_fPrimers && Manufacturer.m_fPrimers)
+				{
+				if (!fCountOnly)
+					m_fPrimers = Manufacturer.m_fPrimers;
+
+				nUpdateCount++;
+				}
+
+			if (!m_fBulletMolds && Manufacturer.m_fBulletMolds)
+				{
+				if (!fCountOnly)
+					m_fBulletMolds = Manufacturer.m_fBulletMolds;
+
+				nUpdateCount++;
+				}
+
+			if (String.IsNullOrEmpty(m_strHeadStamp) && !String.IsNullOrEmpty(Manufacturer.m_strHeadStamp))
+				{
+				if (!fCountOnly)
+					m_strHeadStamp = Manufacturer.m_strHeadStamp;
+
+				nUpdateCount++;
+				}
+
+			if (!m_fHandguns && Manufacturer.m_fHandguns)
+				{
+				if (!fCountOnly)
+					m_fHandguns = Manufacturer.m_fHandguns;
+
+				nUpdateCount++;
+				}
+
+			if (!m_fRifles && Manufacturer.m_fRifles)
+				{
+				if (!fCountOnly)
+					m_fRifles = Manufacturer.m_fRifles;
+
+				nUpdateCount++;
+				}
+
+			if (!m_fShotguns && Manufacturer.m_fShotguns)
+				{
+				if (!fCountOnly)
+					m_fShotguns = Manufacturer.m_fShotguns;
+
+				nUpdateCount++;
+				}
+
+			if (!m_fScopes && Manufacturer.m_fScopes)
+				{
+				if (!fCountOnly)
+					m_fScopes = Manufacturer.m_fScopes;
+
+				nUpdateCount++;
+				}
+
+			if (!m_fLasers && Manufacturer.m_fLasers)
+				{
+				if (!fCountOnly)
+					m_fLasers = Manufacturer.m_fLasers;
+
+				nUpdateCount++;
+				}
+
+			if (!m_fRedDots && Manufacturer.m_fRedDots)
+				{
+				if (!fCountOnly)
+					m_fRedDots = Manufacturer.m_fRedDots;
+
+				nUpdateCount++;
+				}
+
+			if (!m_fMagnifiers && Manufacturer.m_fMagnifiers)
+				{
+				if (!fCountOnly)
+					m_fMagnifiers = Manufacturer.m_fMagnifiers;
+
+				nUpdateCount++;
+				}
+
+			if (!m_fLights && Manufacturer.m_fLights)
+				{
+				if (!fCountOnly)
+					m_fLights = Manufacturer.m_fLights;
+
+				nUpdateCount++;
+				}
+
+			if (!m_fTriggers && Manufacturer.m_fTriggers)
+				{
+				if (!fCountOnly)
+					m_fTriggers = Manufacturer.m_fTriggers;
+
+				nUpdateCount++;
+				}
+
+			if (!m_fFurniture && Manufacturer.m_fFurniture)
+				{
+				if (!fCountOnly)
+					m_fFurniture = Manufacturer.m_fFurniture;
+
+				nUpdateCount++;
+				}
+
+			if (!m_fBipods && Manufacturer.m_fBipods)
+				{
+				if (!fCountOnly)
+					m_fBipods = Manufacturer.m_fBipods;
+
+				nUpdateCount++;
+				}
+
+			if (!m_fParts && Manufacturer.m_fParts)
+				{
+				if (!fCountOnly)
+					m_fParts = Manufacturer.m_fParts;
+
+				nUpdateCount++;
+				}
+
+			if (!m_fMisc && Manufacturer.m_fMisc)
+				{
+				if (!fCountOnly)
+					m_fMisc = Manufacturer.m_fMisc;
+
+				nUpdateCount++;
+				}
+
+			return (nUpdateCount);
 			}
 
 		//============================================================================*

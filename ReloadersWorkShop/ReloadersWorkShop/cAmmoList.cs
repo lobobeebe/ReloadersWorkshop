@@ -30,6 +30,7 @@ namespace ReloadersWorkShop
 		// Private Data Members
 		//============================================================================*
 
+		private int m_nImportCount = 0;
 		private int m_nNewCount = 0;
 		private int m_nUpdateCount = 0;
 
@@ -41,6 +42,8 @@ namespace ReloadersWorkShop
 			{
 			if (Supply.SupplyType != cSupply.eSupplyTypes.Ammo)
 				return (false);
+
+			m_nImportCount++;
 
 			cAmmo Ammo = (cAmmo) Supply;
 
@@ -121,6 +124,7 @@ namespace ReloadersWorkShop
 
 		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles, bool fCountOnly = false)
 			{
+			m_nImportCount = 0;
 			m_nNewCount = 0;
 			m_nUpdateCount = 0;
 
@@ -140,6 +144,18 @@ namespace ReloadersWorkShop
 					}
 
 				XMLNode = XMLNode.NextSibling;
+				}
+			}
+
+		//============================================================================*
+		// ImportCount Property
+		//============================================================================*
+
+		public int ImportCount
+			{
+			get
+				{
+				return (m_nImportCount);
 				}
 			}
 

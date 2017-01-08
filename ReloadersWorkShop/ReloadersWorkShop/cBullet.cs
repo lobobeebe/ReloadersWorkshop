@@ -76,6 +76,66 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Append()
+		//============================================================================*
+
+		public int Append(cBullet Bullet, bool fCountOnly = false)
+			{
+			int nUpdateCount = base.Append(Bullet, fCountOnly);
+
+			if (String.IsNullOrEmpty(m_strType) && !String.IsNullOrEmpty(Bullet.m_strType))
+				{
+				m_strType = Bullet.m_strType;
+
+				nUpdateCount++;
+				}
+
+			if (m_dDiameter == 0.0 && m_dDiameter != 0.0)
+				{
+				m_dDiameter = Bullet.m_dDiameter;
+
+				nUpdateCount++;
+				}
+
+			if (m_dLength == 0.0 && Bullet.m_dLength != 0.0)
+				{
+				m_dLength = Bullet.m_dLength;
+
+				nUpdateCount++;
+				}
+
+			if (m_dWeight == 0.0 && Bullet.m_dWeight != 0.0)
+				{
+				m_dWeight = Bullet.m_dWeight;
+
+				nUpdateCount++;
+				}
+
+			if (m_dBallisticCoefficient == 0.0 && Bullet.m_dBallisticCoefficient != 0.0)
+				{
+				m_dBallisticCoefficient = Bullet.m_dBallisticCoefficient;
+
+				nUpdateCount++;
+				}
+
+			if (!m_fSelfCast && Bullet.m_fSelfCast)
+				{
+				m_fSelfCast = Bullet.m_fSelfCast;
+
+				nUpdateCount++;
+				}
+
+			if (m_nTopPunch == 0 && Bullet.m_nTopPunch != 0)
+				{
+				m_nTopPunch = Bullet.m_nTopPunch;
+
+				nUpdateCount++;
+				}
+
+			return (nUpdateCount);
+			}
+
+		//============================================================================*
 		// BallisticCoefficient Property
 		//============================================================================*
 

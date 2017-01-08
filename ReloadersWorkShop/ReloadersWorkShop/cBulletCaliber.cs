@@ -47,10 +47,48 @@ namespace ReloadersWorkShop
 
 		public cBulletCaliber(cBulletCaliber BulletCaliber)
 			{
-			m_Caliber = BulletCaliber.m_Caliber;
+			Copy(BulletCaliber);
+			}
 
-			m_dCOL = BulletCaliber.m_dCOL;
-			m_dCBTO = BulletCaliber.m_dCBTO;
+		//============================================================================*
+		// Append()
+		//============================================================================*
+
+		public int Append(cBulletCaliber BulletCaliber, bool fCountOnly = false)
+			{
+			int nUpdateCount = 0;
+
+			if (m_dCOL == 0.0 && BulletCaliber.m_dCOL != 0.0)
+				{
+				m_dCOL = BulletCaliber.m_dCOL;
+
+				nUpdateCount++;
+				}
+
+			if (m_dCBTO == 0.0 && BulletCaliber.m_dCBTO != 0.0)
+				{
+				m_dCBTO = BulletCaliber.m_dCBTO;
+
+				nUpdateCount++;
+				}
+
+			return (nUpdateCount);
+			}
+
+		//============================================================================*
+		// CBTO Property
+		//============================================================================*
+
+		public double CBTO
+			{
+			get
+				{
+				return (m_dCBTO);
+				}
+			set
+				{
+				m_dCBTO = value;
+				}
 			}
 
 		//============================================================================*
@@ -134,19 +172,15 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// CBTO Property
+		// Copy()
 		//============================================================================*
 
-		public double CBTO
+		public void Copy(cBulletCaliber BulletCaliber)
 			{
-			get
-				{
-				return (m_dCBTO);
-				}
-			set
-				{
-				m_dCBTO = value;
-				}
+			m_Caliber = BulletCaliber.m_Caliber;
+
+			m_dCOL = BulletCaliber.m_dCOL;
+			m_dCBTO = BulletCaliber.m_dCBTO;
 			}
 
 		//============================================================================*
