@@ -79,7 +79,8 @@ namespace ReloadersWorkShop
 					}
 				}
 
-			Add(BulletCaliber);
+			if(!fCountOnly)
+				Add(BulletCaliber);
 
 			m_nNewCount++;
 
@@ -145,7 +146,7 @@ namespace ReloadersWorkShop
 		// Import()
 		//============================================================================*
 
-		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles, bool fCountOnly = false)
 			{
 			m_nImportCount = 0;
 			m_nNewCount = 0;
@@ -161,7 +162,7 @@ namespace ReloadersWorkShop
 						cBulletCaliber BulletCaliber = new cBulletCaliber();
 
 						if (BulletCaliber.Import(XMLDocument, XMLNode, DataFiles))
-							AddBulletCaliber(BulletCaliber);
+							AddBulletCaliber(BulletCaliber, fCountOnly);
 
 						break;
 					}

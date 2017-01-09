@@ -91,6 +91,9 @@ namespace ReloadersWorkShop
 
 			SetContentLabel(BulletCountCheckBox, "Bullet", m_XMLDocument.BulletCount, m_XMLDocument.BulletNewCount, m_XMLDocument.BulletUpdateCount);
 			SetContentLabel(BulletCaliberCountCheckBox, "Bullet Caliber", m_XMLDocument.BulletCaliberCount, m_XMLDocument.BulletCaliberNewCount, m_XMLDocument.BulletCaliberUpdateCount);
+			SetContentLabel(CaseCountCheckBox, "Case", m_XMLDocument.CaseCount, m_XMLDocument.CaseNewCount, m_XMLDocument.CaseUpdateCount);
+			SetContentLabel(PowderCountCheckBox, "Powder", m_XMLDocument.PowderCount, m_XMLDocument.PowderNewCount, m_XMLDocument.PowderUpdateCount);
+			SetContentLabel(PrimerCountCheckBox, "Primer", m_XMLDocument.PrimerCount, m_XMLDocument.PrimerNewCount, m_XMLDocument.PrimerUpdateCount);
 
 			SetContentLabel(FirearmCountCheckBox, "Firearm", m_XMLDocument.FirearmCount, m_XMLDocument.FirearmNewCount, m_XMLDocument.FirearmUpdateCount);
 			SetContentLabel(FirearmCaliberCountCheckBox, "Firearm Caliber", m_XMLDocument.FirearmCaliberCount, m_XMLDocument.FirearmCaliberNewCount, m_XMLDocument.FirearmCaliberUpdateCount);
@@ -177,6 +180,11 @@ namespace ReloadersWorkShop
 				AmmoTestCountCheckBox.Checked = m_XMLDocument.AmmoTestUpdateCount > 0 || m_XMLDocument.AmmoTestNewCount > 0;
 				AmmoTestCountCheckBox.Enabled = false;
 				}
+			else
+				{
+				AmmoCountCheckBox.Enabled = m_XMLDocument.AmmoUpdateCount > 0 || m_XMLDocument.AmmoNewCount > 0;
+				AmmoTestCountCheckBox.Enabled = m_XMLDocument.AmmoTestUpdateCount > 0 || m_XMLDocument.AmmoTestNewCount > 0;
+				}
 
 			//----------------------------------------------------------------------------*
 			// Firearms Group
@@ -191,6 +199,12 @@ namespace ReloadersWorkShop
 				FirearmBulletCountCheckBox.Checked = m_XMLDocument.FirearmBulletUpdateCount > 0 || m_XMLDocument.FirearmBulletNewCount > 0;
 				FirearmBulletCountCheckBox.Enabled = false;
 				}
+			else
+				{
+				FirearmCountCheckBox.Enabled = m_XMLDocument.FirearmCount != 0 || m_XMLDocument.FirearmUpdateCount != 0;
+				FirearmCaliberCountCheckBox.Enabled = m_XMLDocument.FirearmCaliberCount != 0 || m_XMLDocument.FirearmCaliberUpdateCount != 0;
+				FirearmBulletCountCheckBox.Enabled = m_XMLDocument.FirearmBulletCount != 0 || m_XMLDocument.FirearmBulletUpdateCount != 0;
+				}
 
 			//----------------------------------------------------------------------------*
 			// Reloading Components Group
@@ -199,10 +213,23 @@ namespace ReloadersWorkShop
 			if (ResetAllDataCheckBox.Checked || ImportAllCheckBox.Checked)
 				{
 				BulletCountCheckBox.Checked = m_XMLDocument.BulletUpdateCount > 0 || m_XMLDocument.BulletNewCount > 0;
+				BulletCountCheckBox.Enabled = false;
 				BulletCaliberCountCheckBox.Checked = m_XMLDocument.BulletCaliberUpdateCount > 0 || m_XMLDocument.BulletCaliberNewCount > 0;
-				CaseCountCheckBox.Checked = m_XMLDocument.PowderUpdateCount > 0 || m_XMLDocument.PowderNewCount > 0;
+				BulletCaliberCountCheckBox.Enabled = false;
+				CaseCountCheckBox.Checked = m_XMLDocument.CaseUpdateCount > 0 || m_XMLDocument.CaseNewCount > 0;
+				CaseCountCheckBox.Enabled = false;
 				PowderCountCheckBox.Checked = m_XMLDocument.PowderUpdateCount > 0 || m_XMLDocument.PowderNewCount > 0;
+				PowderCountCheckBox.Enabled = false;
 				PrimerCountCheckBox.Checked = m_XMLDocument.PrimerUpdateCount > 0 || m_XMLDocument.PrimerNewCount > 0;
+				PrimerCountCheckBox.Enabled = false;
+				}
+			else
+				{
+				BulletCountCheckBox.Enabled = m_XMLDocument.BulletCount != 0 || m_XMLDocument.BulletUpdateCount != 0;
+				BulletCaliberCountCheckBox.Enabled = m_XMLDocument.BulletCaliberCount != 0 || m_XMLDocument.BulletCaliberUpdateCount != 0;
+				CaseCountCheckBox.Enabled = m_XMLDocument.CaseCount != 0 || m_XMLDocument.CaseUpdateCount != 0;
+				PowderCountCheckBox.Enabled = m_XMLDocument.PowderCount != 0 || m_XMLDocument.PowderUpdateCount != 0;
+				PrimerCountCheckBox.Enabled = m_XMLDocument.PrimerCount != 0 || m_XMLDocument.PrimerUpdateCount != 0;
 				}
 
 			//----------------------------------------------------------------------------*

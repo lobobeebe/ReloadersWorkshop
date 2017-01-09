@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cMainForm.CaliberTab.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -80,7 +80,7 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// Private Data Members
+		// InitializeCaliberTab()
 		//============================================================================*
 
 		public void InitializeCaliberTab()
@@ -181,7 +181,7 @@ namespace ReloadersWorkShop
 
 		protected void OnCaliberChecked(object sender, ItemCheckedEventArgs args)
 			{
-			if (!m_fInitialized)
+			if (!m_fInitialized || m_fPopulating || m_CalibersListView.Populating)
 				return;
 
 			cCaliber Caliber = (cCaliber)args.Item.Tag;
@@ -392,7 +392,11 @@ namespace ReloadersWorkShop
 
 		public void PopulateCalibersListView()
 			{
+			m_fPopulating = true;
+
 			m_CalibersListView.Populate();
+
+			m_fPopulating = false;
 
 			UpdateCaliberTabButtons();
 			}
@@ -420,7 +424,6 @@ namespace ReloadersWorkShop
 				CaliberCountLabel.Text += "    (All checked calibers are displayed)";
 			else
 				CaliberCountLabel.Text += "    (All calibers are displayed)";
-
 			}
 
 		//============================================================================*

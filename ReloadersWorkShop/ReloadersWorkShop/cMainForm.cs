@@ -2234,10 +2234,17 @@ namespace ReloadersWorkShop
 
 			string strPath = FileDlg.FileName;
 
-			bool fLoadOK = m_DataFiles.Load(strPath, true);
+			string strText = String.Format("Warning: Your current data will be replaced with the data contained in \n\n{0}\n\nAre you sure you wish to continue?", strPath);
 
-			if (fLoadOK)
-				InitializeAllTabs();
+			rc = MessageBox.Show(strText, "Data Restoration Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+
+			if (rc == DialogResult.Yes)
+				{
+				bool fLoadOK = m_DataFiles.Load(strPath, true);
+
+				if (fLoadOK)
+					InitializeAllTabs();
+				}
 
 			UpdateButtons();
 			}

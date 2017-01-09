@@ -59,14 +59,43 @@ namespace ReloadersWorkShop
 		// Append()
 		//============================================================================*
 
-		public void Append(cCase Case)
+		public int Append(cCase Case, bool fCountOnly = false)
 			{
-			m_strPartNumber = String.IsNullOrEmpty(m_strPartNumber) ? Case.m_strPartNumber : m_strPartNumber;
-			m_Caliber = m_Caliber == null ? Case.m_Caliber : m_Caliber;
-			m_fMatch = !m_fMatch ? Case.m_fMatch : true;
-			m_fMilitary = !m_fMilitary ? Case.m_fMilitary : true;
-			m_fLargePrimer = !m_fLargePrimer ? Case.m_fLargePrimer : true;
-			m_fSmallPrimer = !m_fSmallPrimer ? Case.m_fSmallPrimer : true;
+			int nUpdateCount = base.Append(Case, fCountOnly);
+
+			if (!m_fMatch && Case.m_fMatch)
+				{
+				if (fCountOnly)
+					m_fMatch = Case.m_fMatch;
+
+				nUpdateCount++;
+				}
+
+			if (!m_fMilitary && Case.m_fMilitary)
+				{
+				if (fCountOnly)
+					m_fMilitary = Case.m_fMilitary;
+
+				nUpdateCount++;
+				}
+
+			if (!m_fLargePrimer && Case.m_fLargePrimer)
+				{
+				if (fCountOnly)
+					m_fLargePrimer = Case.m_fLargePrimer;
+
+				nUpdateCount++;
+				}
+
+			if (!m_fSmallPrimer && Case.m_fSmallPrimer)
+				{
+				if (fCountOnly)
+					m_fSmallPrimer = Case.m_fSmallPrimer;
+
+				nUpdateCount++;
+				}
+
+			return (nUpdateCount);
 			}
 
 		//============================================================================*

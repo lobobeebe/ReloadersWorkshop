@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cCaseList.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -24,22 +24,35 @@ namespace ReloadersWorkShop
 	public class cCaseList : List<cCase>
 		{
 		//============================================================================*
+		// Private Data Members
+		//============================================================================*
+
+		private int m_nImportCount = 0;
+		private int m_nNewCount = 0;
+		private int m_nUpdateCount = 0;
+
+		//============================================================================*
 		// AddCase()
 		//============================================================================*
 
-		public bool AddCase(cCase Case)
+		public bool AddCase(cCase Case, bool fCountOnly = false)
 			{
+			m_nImportCount++;
+
 			foreach (cCase CheckCase in this)
 				{
 				if (CheckCase.CompareTo(Case) == 0)
 					{
-					CheckCase.Append(Case);
+					m_nUpdateCount += CheckCase.Append(Case, fCountOnly);
 
 					return (false);
 					}
 				}
 
-			Add(Case);
+			if (!fCountOnly)
+				Add(Case);
+
+			m_nNewCount++;
 
 			return (true);
 			}
@@ -123,8 +136,12 @@ namespace ReloadersWorkShop
 		// Import()
 		//============================================================================*
 
-		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles, bool fCountOnly = false)
 			{
+			m_nImportCount = 0;
+			m_nNewCount = 0;
+			m_nUpdateCount = 0;
+
 			XmlNode XMLNode = XMLThisNode.FirstChild;
 
 			while (XMLNode != null)
@@ -135,12 +152,36 @@ namespace ReloadersWorkShop
 						cCase Case = new cCase();
 
 						if (Case.Import(XMLDocument, XMLNode, DataFiles))
-							AddCase(Case);
+							AddCase(Case, fCountOnly);
 
 						break;
 					}
 
 				XMLNode = XMLNode.NextSibling;
+				}
+			}
+
+		//============================================================================*
+		// ImportCount Property
+		//============================================================================*
+
+		public int ImportCount
+			{
+			get
+				{
+				return (m_nImportCount);
+				}
+			}
+
+		//============================================================================*
+		// NewCount Property
+		//============================================================================*
+
+		public int NewCount
+			{
+			get
+				{
+				return (m_nNewCount);
 				}
 			}
 
@@ -185,6 +226,18 @@ namespace ReloadersWorkShop
 					}
 
 				return (nCount);
+				}
+			}
+
+		//============================================================================*
+		// UpdateCount Property
+		//============================================================================*
+
+		public int UpdateCount
+			{
+			get
+				{
+				return (m_nUpdateCount);
 				}
 			}
 		}

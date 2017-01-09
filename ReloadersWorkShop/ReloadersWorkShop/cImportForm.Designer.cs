@@ -63,6 +63,9 @@
 			this.CaseCountCheckBox = new System.Windows.Forms.CheckBox();
 			this.PowderCountCheckBox = new System.Windows.Forms.CheckBox();
 			this.PrimerCountCheckBox = new System.Windows.Forms.CheckBox();
+			this.groupBox8 = new System.Windows.Forms.GroupBox();
+			this.TransactionCountCheckBox = new System.Windows.Forms.CheckBox();
+			this.label1 = new System.Windows.Forms.Label();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox3.SuspendLayout();
@@ -70,13 +73,14 @@
 			this.groupBox5.SuspendLayout();
 			this.groupBox6.SuspendLayout();
 			this.groupBox7.SuspendLayout();
+			this.groupBox8.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// OKButton
 			// 
 			this.OKButton.ButtonType = CommonLib.Controls.cOKButton.eButtonTypes.OK;
 			this.OKButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.OKButton.Location = new System.Drawing.Point(376, 523);
+			this.OKButton.Location = new System.Drawing.Point(376, 591);
 			this.OKButton.Name = "OKButton";
 			this.OKButton.ShowToolTips = true;
 			this.OKButton.Size = new System.Drawing.Size(75, 23);
@@ -89,7 +93,7 @@
 			// 
 			this.FormCancelButton.ButtonType = CommonLib.Controls.cCancelButton.eButtonTypes.Cancel;
 			this.FormCancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.FormCancelButton.Location = new System.Drawing.Point(487, 523);
+			this.FormCancelButton.Location = new System.Drawing.Point(487, 591);
 			this.FormCancelButton.Name = "FormCancelButton";
 			this.FormCancelButton.ShowToolTips = true;
 			this.FormCancelButton.Size = new System.Drawing.Size(75, 23);
@@ -104,9 +108,9 @@
 			this.groupBox1.Controls.Add(this.AmmoCountCheckBox);
 			this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.groupBox1.ForeColor = System.Drawing.SystemColors.HotTrack;
-			this.groupBox1.Location = new System.Drawing.Point(12, 416);
+			this.groupBox1.Location = new System.Drawing.Point(473, 290);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(455, 90);
+			this.groupBox1.Size = new System.Drawing.Size(455, 74);
 			this.groupBox1.TabIndex = 2;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Ammunition";
@@ -114,11 +118,9 @@
 			// AmmoTestCountCheckBox
 			// 
 			this.AmmoTestCountCheckBox.AutoSize = true;
-			this.AmmoTestCountCheckBox.Checked = true;
-			this.AmmoTestCountCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.AmmoTestCountCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.AmmoTestCountCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.AmmoTestCountCheckBox.Location = new System.Drawing.Point(18, 52);
+			this.AmmoTestCountCheckBox.Location = new System.Drawing.Point(18, 48);
 			this.AmmoTestCountCheckBox.Name = "AmmoTestCountCheckBox";
 			this.AmmoTestCountCheckBox.Size = new System.Drawing.Size(328, 17);
 			this.AmmoTestCountCheckBox.TabIndex = 3;
@@ -128,11 +130,9 @@
 			// AmmoCountCheckBox
 			// 
 			this.AmmoCountCheckBox.AutoSize = true;
-			this.AmmoCountCheckBox.Checked = true;
-			this.AmmoCountCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.AmmoCountCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.AmmoCountCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.AmmoCountCheckBox.Location = new System.Drawing.Point(6, 29);
+			this.AmmoCountCheckBox.Location = new System.Drawing.Point(6, 25);
 			this.AmmoCountCheckBox.Name = "AmmoCountCheckBox";
 			this.AmmoCountCheckBox.Size = new System.Drawing.Size(393, 17);
 			this.AmmoCountCheckBox.TabIndex = 2;
@@ -261,7 +261,7 @@
 			this.groupBox5.Controls.Add(this.LoadCountLabel);
 			this.groupBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.groupBox5.ForeColor = System.Drawing.SystemColors.HotTrack;
-			this.groupBox5.Location = new System.Drawing.Point(473, 290);
+			this.groupBox5.Location = new System.Drawing.Point(12, 416);
 			this.groupBox5.Name = "groupBox5";
 			this.groupBox5.Size = new System.Drawing.Size(455, 120);
 			this.groupBox5.TabIndex = 5;
@@ -319,9 +319,9 @@
 			this.groupBox6.Controls.Add(this.PreferencesWarningLabel);
 			this.groupBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.groupBox6.ForeColor = System.Drawing.SystemColors.HotTrack;
-			this.groupBox6.Location = new System.Drawing.Point(473, 416);
+			this.groupBox6.Location = new System.Drawing.Point(473, 468);
 			this.groupBox6.Name = "groupBox6";
-			this.groupBox6.Size = new System.Drawing.Size(455, 90);
+			this.groupBox6.Size = new System.Drawing.Size(455, 72);
 			this.groupBox6.TabIndex = 3;
 			this.groupBox6.TabStop = false;
 			this.groupBox6.Text = "Preferences";
@@ -331,7 +331,7 @@
 			this.UpdatePreferencesCheckBox.AutoSize = true;
 			this.UpdatePreferencesCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.UpdatePreferencesCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.UpdatePreferencesCheckBox.Location = new System.Drawing.Point(189, 50);
+			this.UpdatePreferencesCheckBox.Location = new System.Drawing.Point(189, 48);
 			this.UpdatePreferencesCheckBox.Name = "UpdatePreferencesCheckBox";
 			this.UpdatePreferencesCheckBox.Size = new System.Drawing.Size(181, 17);
 			this.UpdatePreferencesCheckBox.TabIndex = 2;
@@ -343,7 +343,7 @@
 			this.ResetPreferencesCheckBox.AutoSize = true;
 			this.ResetPreferencesCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.ResetPreferencesCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.ResetPreferencesCheckBox.Location = new System.Drawing.Point(9, 50);
+			this.ResetPreferencesCheckBox.Location = new System.Drawing.Point(9, 48);
 			this.ResetPreferencesCheckBox.Name = "ResetPreferencesCheckBox";
 			this.ResetPreferencesCheckBox.Size = new System.Drawing.Size(174, 17);
 			this.ResetPreferencesCheckBox.TabIndex = 1;
@@ -355,7 +355,7 @@
 			this.PreferencesWarningLabel.AutoSize = true;
 			this.PreferencesWarningLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.PreferencesWarningLabel.ForeColor = System.Drawing.Color.Red;
-			this.PreferencesWarningLabel.Location = new System.Drawing.Point(29, 29);
+			this.PreferencesWarningLabel.Location = new System.Drawing.Point(29, 25);
 			this.PreferencesWarningLabel.Name = "PreferencesWarningLabel";
 			this.PreferencesWarningLabel.Size = new System.Drawing.Size(304, 13);
 			this.PreferencesWarningLabel.TabIndex = 0;
@@ -509,14 +509,52 @@
 			this.PrimerCountCheckBox.Text = "2 new Primers (out of 167) with 39 updates to existing Primers.";
 			this.PrimerCountCheckBox.UseVisualStyleBackColor = true;
 			// 
+			// groupBox8
+			// 
+			this.groupBox8.Controls.Add(this.label1);
+			this.groupBox8.Controls.Add(this.TransactionCountCheckBox);
+			this.groupBox8.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.groupBox8.ForeColor = System.Drawing.SystemColors.HotTrack;
+			this.groupBox8.Location = new System.Drawing.Point(472, 370);
+			this.groupBox8.Name = "groupBox8";
+			this.groupBox8.Size = new System.Drawing.Size(455, 76);
+			this.groupBox8.TabIndex = 4;
+			this.groupBox8.TabStop = false;
+			this.groupBox8.Text = "Inventory";
+			// 
+			// TransactionCountCheckBox
+			// 
+			this.TransactionCountCheckBox.AutoSize = true;
+			this.TransactionCountCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TransactionCountCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.TransactionCountCheckBox.Location = new System.Drawing.Point(18, 48);
+			this.TransactionCountCheckBox.Name = "TransactionCountCheckBox";
+			this.TransactionCountCheckBox.Size = new System.Drawing.Size(420, 17);
+			this.TransactionCountCheckBox.TabIndex = 3;
+			this.TransactionCountCheckBox.Text = "No new Transactions (out of 167) but there are 39 updates to existing Transaction" +
+    "s.";
+			this.TransactionCountCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label1.ForeColor = System.Drawing.Color.Red;
+			this.label1.Location = new System.Drawing.Point(6, 25);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(420, 13);
+			this.label1.TabIndex = 4;
+			this.label1.Text = "WARNING: This File contains Activity but you have Tracking turned OFF";
+			// 
 			// cImportForm
 			// 
 			this.AcceptButton = this.OKButton;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.FormCancelButton;
-			this.ClientSize = new System.Drawing.Size(938, 575);
+			this.ClientSize = new System.Drawing.Size(938, 639);
 			this.ControlBox = false;
+			this.Controls.Add(this.groupBox8);
 			this.Controls.Add(this.FileContentsLabel);
 			this.Controls.Add(this.groupBox7);
 			this.Controls.Add(this.groupBox6);
@@ -551,6 +589,8 @@
 			this.groupBox6.PerformLayout();
 			this.groupBox7.ResumeLayout(false);
 			this.groupBox7.PerformLayout();
+			this.groupBox8.ResumeLayout(false);
+			this.groupBox8.PerformLayout();
 			this.ResumeLayout(false);
 
 			}
@@ -592,5 +632,8 @@
 		private System.Windows.Forms.CheckBox PrimerCountCheckBox;
 		private System.Windows.Forms.CheckBox PowderCountCheckBox;
 		private System.Windows.Forms.CheckBox CaseCountCheckBox;
+		private System.Windows.Forms.GroupBox groupBox8;
+		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.CheckBox TransactionCountCheckBox;
 		}
 	}

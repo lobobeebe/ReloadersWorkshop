@@ -60,14 +60,16 @@ namespace ReloadersWorkShop
 
 			if (m_dCOL == 0.0 && BulletCaliber.m_dCOL != 0.0)
 				{
-				m_dCOL = BulletCaliber.m_dCOL;
+				if (!fCountOnly)
+					m_dCOL = BulletCaliber.m_dCOL;
 
 				nUpdateCount++;
 				}
 
 			if (m_dCBTO == 0.0 && BulletCaliber.m_dCBTO != 0.0)
 				{
-				m_dCBTO = BulletCaliber.m_dCBTO;
+				if (!fCountOnly)
+					m_dCBTO = BulletCaliber.m_dCBTO;
 
 				nUpdateCount++;
 				}

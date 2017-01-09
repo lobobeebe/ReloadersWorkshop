@@ -381,7 +381,7 @@ namespace ReloadersWorkShop
 
 		protected void OnLoadDataChecked(object sender, ItemCheckedEventArgs args)
 			{
-			if (!m_fInitialized || m_fPopulating)
+			if (!m_fInitialized || m_fPopulating || m_LoadDataListView.Populating)
 				return;
 
 			(args.Item.Tag as cLoad).Checked = args.Item.Checked;

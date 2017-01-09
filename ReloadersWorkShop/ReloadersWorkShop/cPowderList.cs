@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cPowderList.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -20,18 +20,31 @@ namespace ReloadersWorkShop
 	public class cPowderList : List<cPowder>
 		{
 		//============================================================================*
+		// Private Data Members
+		//============================================================================*
+
+		private int m_nImportCount = 0;
+		private int m_nNewCount = 0;
+		private int m_nUpdateCount = 0;
+
+		//============================================================================*
 		// AddPowder()
 		//============================================================================*
 
-		public bool AddPowder(cPowder Powder)
+		public bool AddPowder(cPowder Powder, bool fCountOnly = false)
 			{
+			m_nImportCount++;
+
 			foreach (cPowder CheckPowder in this)
 				{
 				if (CheckPowder.CompareTo(Powder) == 0)
-					return (false);
+					m_nUpdateCount += CheckPowder.Append(Powder, fCountOnly);
 				}
 
-			Add(Powder);
+			if (!fCountOnly)
+				Add(Powder);
+
+			m_nNewCount++;
 
 			return (true);
 			}
@@ -92,31 +105,15 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// HandgunCount Property
-		//============================================================================*
-
-		public int HandgunCount
-			{
-			get
-				{
-				int nCount = 0;
-
-				foreach (cPowder Powder in this)
-					{
-					if (Powder.FirearmType == cFirearm.eFireArmType.Handgun)
-						nCount++;
-					}
-
-				return (nCount);
-				}
-			}
-
-		//============================================================================*
 		// Import()
 		//============================================================================*
 
-		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles, bool fCountOnly = false)
 			{
+			m_nImportCount = 0;
+			m_nNewCount = 0;
+			m_nUpdateCount = 0;
+
 			XmlNode XMLNode = XMLThisNode.FirstChild;
 
 			while (XMLNode != null)
@@ -127,12 +124,36 @@ namespace ReloadersWorkShop
 						cPowder Powder = new cPowder();
 
 						if (Powder.Import(XMLDocument, XMLNode, DataFiles))
-							AddPowder(Powder);
+							AddPowder(Powder, fCountOnly);
 
 						break;
 					}
 
 				XMLNode = XMLNode.NextSibling;
+				}
+			}
+
+		//============================================================================*
+		// ImportCount Property
+		//============================================================================*
+
+		public int ImportCount
+			{
+			get
+				{
+				return (m_nImportCount);
+				}
+			}
+
+		//============================================================================*
+		// NewCount Property
+		//============================================================================*
+
+		public int NewCount
+			{
+			get
+				{
+				return (m_nNewCount);
 				}
 			}
 
@@ -147,36 +168,14 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// ResolveIdentities()
+		// UpdateCount Property
 		//============================================================================*
 
-		public bool ResolveIdentities(cDataFiles Datafiles)
-			{
-			bool fChanged = false;
-
-			foreach (cPowder Powder in this)
-				fChanged = Powder.ResolveIdentities(Datafiles) ? true : fChanged;
-
-			return (fChanged);
-			}
-
-		//============================================================================*
-		// RifleCount Property
-		//============================================================================*
-
-		public int RifleCount
+		public int UpdateCount
 			{
 			get
 				{
-				int nCount = 0;
-
-				foreach (cPowder Powder in this)
-					{
-					if (Powder.FirearmType == cFirearm.eFireArmType.Rifle)
-						nCount++;
-					}
-
-				return (nCount);
+				return (m_nUpdateCount);
 				}
 			}
 		}

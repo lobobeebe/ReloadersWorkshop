@@ -24,6 +24,14 @@ namespace ReloadersWorkShop
 	public class cPrimerList : List<cPrimer>
 		{
 		//============================================================================*
+		// Private Data Members
+		//============================================================================*
+
+		private int m_nImportCount = 0;
+		private int m_nNewCount = 0;
+		private int m_nUpdateCount = 0;
+
+		//============================================================================*
 		// AddPrimer()
 		//============================================================================*
 
@@ -119,8 +127,12 @@ namespace ReloadersWorkShop
 		// Import()
 		//============================================================================*
 
-		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles, bool fCountOnly = false)
 			{
+			m_nImportCount = 0;
+			m_nNewCount = 0;
+			m_nUpdateCount = 0;
+
 			XmlNode XMLNode = XMLThisNode.FirstChild;
 
 			while (XMLNode != null)
@@ -137,6 +149,30 @@ namespace ReloadersWorkShop
 					}
 
 				XMLNode = XMLNode.NextSibling;
+				}
+			}
+
+		//============================================================================*
+		// ImportCount Property
+		//============================================================================*
+
+		public int ImportCount
+			{
+			get
+				{
+				return (m_nImportCount);
+				}
+			}
+
+		//============================================================================*
+		// NewCount Property
+		//============================================================================*
+
+		public int NewCount
+			{
+			get
+				{
+				return (m_nNewCount);
 				}
 			}
 
@@ -181,6 +217,18 @@ namespace ReloadersWorkShop
 					}
 
 				return (nCount);
+				}
+			}
+
+		//============================================================================*
+		// UpdateCount Property
+		//============================================================================*
+
+		public int UpdateCount
+			{
+			get
+				{
+				return (m_nUpdateCount);
 				}
 			}
 		}
