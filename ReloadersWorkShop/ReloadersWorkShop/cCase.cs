@@ -216,7 +216,7 @@ namespace ReloadersWorkShop
 				{
 				string strHeadStamp = "";
 
-				if (Manufacturer != null && Manufacturer.HeadStamp != null && Manufacturer.HeadStamp.Length > 0)
+				if (Manufacturer != null && !String.IsNullOrEmpty( Manufacturer.HeadStamp))
 					strHeadStamp += Manufacturer.HeadStamp;
 
 				if (m_fMatch)

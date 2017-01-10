@@ -32,13 +32,14 @@ namespace ReloadersWorkShop
 
 		cTransactionList m_TransactionList = null;
 		cDataFiles m_DataFiles = null;
+		cSupply m_Supply = null;
 
 		private cListViewColumn[] m_arColumns = new cListViewColumn[]
 			{
 			new cListViewColumn(0, "DateHeader", "Date", HorizontalAlignment.Left, 150),
 			new cListViewColumn(1, "TypeHeader", "Type", HorizontalAlignment.Left, 100),
 			new cListViewColumn(2, "SourceHeader", "Location/Reason", HorizontalAlignment.Left, 100),
-			new cListViewColumn(3, "QuantityHeader", "Quantity", HorizontalAlignment.Right, 80),
+			new cListViewColumn(3, "QuantityHeader", "Quantity", HorizontalAlignment.Center, 80),
 			new cListViewColumn(4, "CostHeader", "Cost", HorizontalAlignment.Right, 80),
 			new cListViewColumn(5, "TaxHeader", "Tax", HorizontalAlignment.Right, 80),
 			new cListViewColumn(6, "ShippingHeader", "Shipping", HorizontalAlignment.Right, 80),
@@ -50,11 +51,12 @@ namespace ReloadersWorkShop
 		// cTransactionListView() - Constructor
 		//============================================================================*
 
-		public cTransactionListView(cTransactionList TransactionList, cDataFiles DataFiles)
+		public cTransactionListView(cTransactionList TransactionList, cDataFiles DataFiles, cSupply Supply = null)
 			: base(DataFiles, cPreferences.eApplicationListView.TransactionsListView)
 			{
 			m_TransactionList = TransactionList;
 			m_DataFiles = DataFiles;
+			m_Supply = Supply;
 
 			//----------------------------------------------------------------------------*
 			// Set Properties
@@ -76,6 +78,15 @@ namespace ReloadersWorkShop
 			SortingOrder = m_DataFiles.Preferences.TransactionSortOrder;
 
 			SortingColumn = m_DataFiles.Preferences.TransactionSortColumn;
+
+			if (m_Supply != null && m_Supply.SupplyType == cSupply.eSupplyTypes.Powder)
+				m_arColumns[3].Text += String.Format(" ({0}s)", cDataFiles.MetricString(cDataFiles.eDataType.CanWeight));
+
+			m_arColumns[4].Text += String.Format(" ({0})", m_DataFiles.Preferences.Currency);
+			m_arColumns[5].Text += String.Format(" ({0})", m_DataFiles.Preferences.Currency);
+			m_arColumns[6].Text += String.Format(" ({0})", m_DataFiles.Preferences.Currency);
+			m_arColumns[7].Text += String.Format(" ({0})", m_DataFiles.Preferences.Currency);
+			m_arColumns[8].Text += String.Format(" ({0})", m_DataFiles.Preferences.Currency);
 
 			PopulateColumns(m_arColumns);
 
@@ -200,27 +211,18 @@ namespace ReloadersWorkShop
 
 			switch (Transaction.Supply.SupplyType)
 				{
+				case cSupply.eSupplyTypes.Ammo:
 				case cSupply.eSupplyTypes.Bullets:
-					Item.SubItems.Add(String.Format("{0:N0}", dQuantity));
-					break;
-
 				case cSupply.eSupplyTypes.Cases:
+				case cSupply.eSupplyTypes.Primers:
 					Item.SubItems.Add(String.Format("{0:N0}", dQuantity));
 					break;
 
 				case cSupply.eSupplyTypes.Powder:
 					dQuantity = cDataFiles.StandardToMetric(dQuantity / 7000.0, cDataFiles.eDataType.CanWeight);
 
-					Item.SubItems.Add(String.Format("{0:F3} {1}{2}", dQuantity, cDataFiles.MetricString(cDataFiles.eDataType.CanWeight), Math.Round(dQuantity, 3) != 1.0 ? "s" : ""));
+					Item.SubItems.Add(String.Format("{0:F3}", dQuantity));
 
-					break;
-
-				case cSupply.eSupplyTypes.Primers:
-					Item.SubItems.Add(String.Format("{0:N0}", dQuantity));
-					break;
-
-				case cSupply.eSupplyTypes.Ammo:
-					Item.SubItems.Add(String.Format("{0:N0}", dQuantity));
 					break;
 				}
 
@@ -231,34 +233,23 @@ namespace ReloadersWorkShop
 			if (Transaction.BatchID != 0)
 				{
 				if (Transaction.Supply.SupplyType == cSupply.eSupplyTypes.Ammo)
-					{
-					foreach (cBatch Batch in m_DataFiles.BatchList)
-						{
-						if (Batch.BatchID == Transaction.BatchID)
-							{
-							dCost = m_DataFiles.BatchCost(Batch);
-
-							break;
-							}
-						}
-					}
+					dCost = m_DataFiles.BatchCost(Transaction.BatchID);
 				else
-					{
 					dCost = Transaction.Quantity * dCostEach;
-					}
 				}
 			else
 				{
 				dCost = Transaction.Cost;
 				}
 
-			Item.SubItems.Add(String.Format("{1}{0:F2}", dCost, m_DataFiles.Preferences.Currency));
+			Item.SubItems.Add(String.Format("{0:F2}", dCost));
 
 			if (Transaction.BatchID == 0 &&
-				(Transaction.TransactionType == cTransaction.eTransactionType.Purchase || Transaction.TransactionType == cTransaction.eTransactionType.SetStockLevel))
+				(Transaction.TransactionType == cTransaction.eTransactionType.Purchase ||
+				Transaction.TransactionType == cTransaction.eTransactionType.SetStockLevel))
 				{
-				Item.SubItems.Add(String.Format("{1}{0:F2}", Transaction.Tax, m_DataFiles.Preferences.Currency));
-				Item.SubItems.Add(String.Format("{1}{0:F2}", Transaction.Shipping, m_DataFiles.Preferences.Currency));
+				Item.SubItems.Add(Transaction.Tax != 0.0 ? String.Format("{0:F2}", Transaction.Tax) : "-");
+				Item.SubItems.Add(Transaction.Shipping != 0.0 ? String.Format("{0:F2}", Transaction.Shipping) : "-");
 				}
 			else
 				{
@@ -266,7 +257,7 @@ namespace ReloadersWorkShop
 				Item.SubItems.Add("-");
 				}
 
-			Item.SubItems.Add(String.Format("{1}{0:F2}", dCost + Transaction.Tax + Transaction.Shipping, m_DataFiles.Preferences.Currency));
+			Item.SubItems.Add(String.Format("{0:F2}", dCost + Transaction.Tax + Transaction.Shipping));
 
 			if (Transaction.TransactionType == cTransaction.eTransactionType.Purchase ||
 				Transaction.TransactionType == cTransaction.eTransactionType.SetStockLevel)
@@ -279,7 +270,7 @@ namespace ReloadersWorkShop
 				if (dQuantity > 0.0)
 					dCostEach = dCost / dQuantity;
 
-				Item.SubItems.Add(String.Format("{1}{0:F2}", dCostEach, m_DataFiles.Preferences.Currency));
+				Item.SubItems.Add(String.Format("{0:F2}", dCostEach));
 				}
 			else
 				Item.SubItems.Add("-");
@@ -299,7 +290,7 @@ namespace ReloadersWorkShop
 
 			foreach (ListViewItem CheckItem in Items)
 				{
-				if ((CheckItem.Tag as cTransaction).Equals(Transaction))
+				if ((CheckItem.Tag as cTransaction).CompareTo(Transaction) == 0)
 					{
 					Item = CheckItem;
 

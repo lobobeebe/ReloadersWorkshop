@@ -819,7 +819,7 @@ namespace ReloadersWorkShop
 				bool fReceiverFinishFound = false;
 				bool fBarrelFinishFound = false;
 
-				if (Firearm.ReceiverFinish != null && Firearm.ReceiverFinish.Length > 0)
+				if (!String.IsNullOrEmpty(Firearm.ReceiverFinish))
 					{
 					//----------------------------------------------------------------------------*
 					// ReceiverFinishComboBox
@@ -860,7 +860,7 @@ namespace ReloadersWorkShop
 				// Set Selection
 				//----------------------------------------------------------------------------*
 
-				if (m_Firearm.ReceiverFinish != null && m_Firearm.ReceiverFinish.Length > 0)
+				if (!String.IsNullOrEmpty(m_Firearm.ReceiverFinish))
 					{
 					ReceiverFinishComboBox.SelectedItem = m_Firearm.ReceiverFinish;
 
@@ -879,7 +879,7 @@ namespace ReloadersWorkShop
 				fReceiverFinishFound = false;
 				fBarrelFinishFound = false;
 
-				if (Firearm.BarrelFinish != null && Firearm.BarrelFinish.Length > 0)
+				if (!String.IsNullOrEmpty(Firearm.BarrelFinish))
 					{
 					//----------------------------------------------------------------------------*
 					// ReceiverFinishComboBox
@@ -920,7 +920,7 @@ namespace ReloadersWorkShop
 				// Set Selection
 				//----------------------------------------------------------------------------*
 
-				if (m_Firearm.BarrelFinish != null && m_Firearm.BarrelFinish.Length > 0)
+				if (!String.IsNullOrEmpty(m_Firearm.BarrelFinish))
 					{
 					BarrelFinishComboBox.SelectedItem = m_Firearm.BarrelFinish;
 
@@ -1095,7 +1095,7 @@ namespace ReloadersWorkShop
 			{
 			SourceComboBox.Items.Clear();
 
-			if (m_Firearm.Source != null && m_Firearm.Source.Length > 0)
+			if (!String.IsNullOrEmpty(m_Firearm.Source))
 				SourceComboBox.Items.Add(m_Firearm.Source);
 
 			foreach (cFirearm Firearm in m_DataFiles.FirearmList)
@@ -1112,7 +1112,7 @@ namespace ReloadersWorkShop
 						}
 					}
 
-				if (!fSourceFound && Firearm.Source != null && Firearm.Source.Length > 0)
+				if (!fSourceFound && !String.IsNullOrEmpty(Firearm.Source))
 					SourceComboBox.Items.Add(Firearm.Source);
 				}
 

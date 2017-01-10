@@ -283,17 +283,7 @@ namespace ReloadersWorkShop
 
 		public double BatchCost(int nBatchID)
 			{
-			cBatch Batch = null;
-
-			foreach (cBatch CheckBatch in m_BatchList)
-				{
-				if (CheckBatch.BatchID == nBatchID)
-					{
-					Batch = CheckBatch;
-
-					break;
-					}
-				}
+			cBatch Batch = GetBatchByID(nBatchID);
 
 			return (BatchCost(Batch));
 			}

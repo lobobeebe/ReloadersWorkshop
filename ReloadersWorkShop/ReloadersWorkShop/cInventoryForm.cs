@@ -66,7 +66,7 @@ namespace ReloadersWorkShop
 			// Create the Transaction List View
 			//----------------------------------------------------------------------------*
 
-			m_TransactionListView = new cTransactionListView(m_Supply.TransactionList, m_DataFiles);
+			m_TransactionListView = new cTransactionListView(m_Supply.TransactionList, m_DataFiles, m_Supply);
 
 			m_TransactionListView.Location = new Point(6, 20);
 			m_TransactionListView.Size = new Size(TotalsGroupBox.Width - 12, AddActivityButton.Location.Y - 26);

@@ -283,7 +283,7 @@ namespace ReloadersWorkShop
 					// Check Purchase Location
 					//----------------------------------------------------------------------------*
 
-					if (m_strLocation != null && m_strLocation.Length > 0)
+					if (!String.IsNullOrEmpty(m_strLocation))
 						{
 						if (m_strLocation.ToUpper() != Transaction.Source.ToUpper())
 							return(false);

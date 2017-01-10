@@ -368,7 +368,7 @@ namespace ReloadersWorkShop
 
 			cCaliber Caliber = (cCaliber) CaliberCombo.SelectedItem;
 
-			if (m_Load.Caliber != null && m_Load.Caliber.Equals(Caliber))
+			if (m_Load.Caliber != null && m_Load.Caliber.CompareTo(Caliber) == 0)
 				return;
 
 			m_fChanged = true;
@@ -401,7 +401,7 @@ namespace ReloadersWorkShop
 
 			cCase Case = (cCase) CaseCombo.SelectedItem;
 
-			if (m_Load.Case != null && m_Load.Case.Equals(Case))
+			if (m_Load.Case != null && m_Load.Case.CompareTo(Case) == 0)
 				return;
 
 			m_fChanged = true;
@@ -582,7 +582,7 @@ namespace ReloadersWorkShop
 
 			cPowder Powder = (cPowder) PowderCombo.SelectedItem;
 
-			if (m_Load.Powder != null && m_Load.Powder.Equals(Powder))
+			if (m_Load.Powder != null && m_Load.Powder.CompareTo(Powder) == 0)
 				return;
 
 			m_fChanged = true;
@@ -607,7 +607,7 @@ namespace ReloadersWorkShop
 
 			cPrimer Primer = (cPrimer) PrimerCombo.SelectedItem;
 
-			if (m_Load.Primer != null && m_Load.Primer.Equals(Primer))
+			if (m_Load.Primer != null && m_Load.Primer.CompareTo(Primer) == 0)
 				return;
 
 			m_fChanged = true;
@@ -708,7 +708,7 @@ namespace ReloadersWorkShop
 
 				foreach (cBullet Bullet in m_DataFiles.BulletList)
 					{
-					if ((m_Load.Bullet != null && m_Load.Bullet.Equals(Bullet)) ||
+					if ((m_Load.Bullet != null && m_Load.Bullet.CompareTo(Bullet) == 0) ||
 						(Bullet.CrossUse || Bullet.FirearmType == (cFirearm.eFireArmType) FirearmTypeCombo.SelectedIndex) &&
 						(!m_DataFiles.Preferences.HideUncheckedSupplies || Bullet.Checked) &&
 						(CaliberCombo.SelectedIndex >= 0 && Bullet.HasCaliber((cCaliber) CaliberCombo.SelectedItem)))
@@ -769,13 +769,13 @@ namespace ReloadersWorkShop
 
 				foreach (cCaliber Caliber in m_DataFiles.CaliberList)
 					{
-					if ((m_Load.Caliber != null && m_Load.Caliber.Equals(Caliber)) ||
+					if ((m_Load.Caliber != null && m_Load.Caliber.CompareTo(Caliber) == 0) ||
 						((Caliber.FirearmType == (cFirearm.eFireArmType) FirearmTypeCombo.SelectedIndex) &&
 						(!m_DataFiles.Preferences.HideUncheckedCalibers || Caliber.Checked)))
 						{
 						CaliberCombo.Items.Add(Caliber);
 
-						if (m_Load.Caliber != null && m_Load.Caliber.Equals(Caliber))
+						if (m_Load.Caliber != null && m_Load.Caliber.CompareTo(Caliber) == 0)
 							SelectCaliber = Caliber;
 						}
 					}
@@ -825,13 +825,13 @@ namespace ReloadersWorkShop
 
 				foreach (cCase Case in m_DataFiles.CaseList)
 					{
-					if ((m_Load.Case != null && m_Load.Case.Equals(Case)) ||
-						((CaliberCombo.SelectedIndex >= 0 && Case.Caliber.Equals((cCaliber) CaliberCombo.SelectedItem)) &&
+					if ((m_Load.Case != null && m_Load.Case.CompareTo(Case) == 0) ||
+						((CaliberCombo.SelectedIndex >= 0 && Case.Caliber.CompareTo((cCaliber) CaliberCombo.SelectedItem) == 0) &&
 						(!m_DataFiles.Preferences.HideUncheckedSupplies || Case.Checked)))
 						{
 						CaseCombo.Items.Add(Case);
 
-						if (m_Load.Case != null && m_Load.Case.Equals(Case))
+						if (m_Load.Case != null && m_Load.Case.CompareTo(Case) == 0)
 							SelectCase = Case;
 						}
 					}
@@ -879,13 +879,13 @@ namespace ReloadersWorkShop
 
 				foreach (cPowder Powder in m_DataFiles.PowderList)
 					{
-					if ((m_Load.Powder != null && m_Load.Powder.Equals(Powder)) ||
+					if ((m_Load.Powder != null && m_Load.Powder.CompareTo(Powder) == 0) ||
 						(Powder.CrossUse || (FirearmTypeCombo.SelectedIndex >= 0 && Powder.FirearmType == (cFirearm.eFireArmType) FirearmTypeCombo.SelectedIndex)) &&
 						(!m_DataFiles.Preferences.HideUncheckedSupplies || Powder.Checked))
 						{
 						PowderCombo.Items.Add(Powder);
 
-						if (m_Load.Powder != null && m_Load.Powder.Equals(Powder))
+						if (m_Load.Powder != null && m_Load.Powder.CompareTo(Powder) == 0)
 							SelectPowder = Powder;
 						}
 					}
@@ -942,7 +942,7 @@ namespace ReloadersWorkShop
 
 					foreach (cPrimer Primer in m_DataFiles.PrimerList)
 						{
-						if ((m_Load.Primer != null && m_Load.Primer.Equals(Primer)) ||
+						if ((m_Load.Primer != null && m_Load.Primer.CompareTo(Primer) == 0) ||
 
 							((Primer.CrossUse || Primer.FirearmType == (cFirearm.eFireArmType) FirearmTypeCombo.SelectedIndex) &&
 
@@ -954,7 +954,7 @@ namespace ReloadersWorkShop
 							{
 							PrimerCombo.Items.Add(Primer);
 
-							if (m_Load.Primer != null && m_Load.Primer.Equals(Primer))
+							if (m_Load.Primer != null && m_Load.Primer.CompareTo(Primer) == 0)
 								SelectPrimer = Primer;
 							}
 						}

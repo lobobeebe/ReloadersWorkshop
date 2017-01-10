@@ -222,7 +222,7 @@ namespace ReloadersWorkShop
 
 					try
 						{
-						if (Firearm.ImageFile != null && Firearm.ImageFile.Length > 0)
+						if (!String.IsNullOrEmpty(Firearm.ImageFile))
 							FirearmImage = new Bitmap(Firearm.ImageFile);
 						else
 							FirearmImage = Properties.Resources.No_Photo_Available;
@@ -254,7 +254,7 @@ namespace ReloadersWorkShop
 					// Purchase Info
 					//----------------------------------------------------------------------------*
 
-					if (Firearm.Source != null && Firearm.Source.Length > 0)
+					if (!String.IsNullOrEmpty(Firearm.Source))
 						{
 						strText = "Acquired from ";
 						strText += Firearm.Source;
@@ -310,7 +310,7 @@ namespace ReloadersWorkShop
 							else
 								strText = String.Format("{1} {2} in {0}", Firearm.PrimaryCaliber.ToString(), Firearm.Action, Firearm.Type);
 
-							if (Firearm.Magazine != null && Firearm.Magazine.Length > 0)
+							if (!String.IsNullOrEmpty(Firearm.Magazine))
 								strText += String.Format(" with a{0} {1:G0} Round {2} Magazine.", Firearm.Capacity == 8 || Firearm.Capacity == 18 ? "n" : "", Firearm.Capacity, Firearm.Magazine);
 							break;
 						}
@@ -330,7 +330,7 @@ namespace ReloadersWorkShop
 
 					strText = "";
 
-					if (Firearm.ReceiverFinish != null && Firearm.ReceiverFinish.Length > 0)
+					if (!String.IsNullOrEmpty(Firearm.ReceiverFinish))
 						{
 						strText = Firearm.ReceiverFinish;
 
@@ -347,7 +347,7 @@ namespace ReloadersWorkShop
 							}
 						}
 
-					if (Firearm.BarrelFinish != null && Firearm.BarrelFinish.Length > 0)
+					if (!String.IsNullOrEmpty(Firearm.BarrelFinish))
 						{
 						if (strText.Length > 0)
 							{
@@ -409,7 +409,7 @@ namespace ReloadersWorkShop
 					// Notes
 					//----------------------------------------------------------------------------*
 
-					if (Firearm.Notes != null && Firearm.Notes.Length > 0)
+					if (!String.IsNullOrEmpty(Firearm.Notes))
 						{
 						strText = "Notes:";
 

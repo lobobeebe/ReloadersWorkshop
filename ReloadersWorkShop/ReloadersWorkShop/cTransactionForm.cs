@@ -848,7 +848,7 @@ namespace ReloadersWorkShop
 			SourceCombo.BackColor = SystemColors.Window;
 
 			//			if (SourceCombo.Text.Length == 0)
-			if (m_Transaction.Source != null && m_Transaction.Source.Length == 0)
+			if (!String.IsNullOrEmpty(m_Transaction.Source))
 				{
 				if (m_Transaction.Supply != null && m_Transaction.TransactionType == cTransaction.eTransactionType.Purchase)
 					{

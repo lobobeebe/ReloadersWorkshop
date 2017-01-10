@@ -499,7 +499,7 @@ namespace ReloadersWorkShop
 			if (Manufacturer != null)
 				strString = Manufacturer.Name;
 
-			if (m_strPartNumber != null && m_strPartNumber.Length > 0)
+			if (!String.IsNullOrEmpty(m_strPartNumber))
 				strString += String.Format(" {0}, {1}", m_strPartNumber, m_strType);
 			else
 				strString += String.Format(", {0}", m_strType);
@@ -531,7 +531,7 @@ namespace ReloadersWorkShop
 
 			bool fType = false;
 
-			if (m_strPartNumber != null && m_strPartNumber.Length > 0)
+			if (!String.IsNullOrEmpty(m_strPartNumber))
 				strString += String.Format(" {0}", m_strPartNumber);
 			else
 				{
@@ -573,7 +573,7 @@ namespace ReloadersWorkShop
 
 			bool fType = false;
 
-			if (m_strPartNumber != null && m_strPartNumber.Length > 0)
+			if (!String.IsNullOrEmpty(m_strPartNumber))
 				strString += String.Format(" {0}", m_strPartNumber);
 			else
 				{

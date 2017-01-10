@@ -1282,7 +1282,7 @@ namespace ReloadersWorkShop
 						// Draw the Purchase Location filter if needed
 						//----------------------------------------------------------------------------*
 
-						if (m_Parms.Location != null && m_Parms.Location.Length > 0)
+						if (!String.IsNullOrEmpty(m_Parms.Location))
 							{
 							if (strText.Length > 0)
 								strText += ", ";

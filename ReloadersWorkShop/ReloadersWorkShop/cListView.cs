@@ -418,7 +418,7 @@ namespace ReloadersWorkShop
 				{
 				cCaliber Caliber = GetCaliberFromTag(args.Item);
 
-				if (Caliber != null && Caliber.SAAMIPDF != null && Caliber.SAAMIPDF.Length > 0)
+				if (Caliber != null && !String.IsNullOrEmpty(Caliber.SAAMIPDF))
 					{
 					Brush ViewBrush = Brushes.Blue;
 
@@ -623,7 +623,7 @@ namespace ReloadersWorkShop
 					{
 					cCaliber Caliber = GetCaliberFromTag(Item);
 
-					if (Caliber != null && Caliber.SAAMIPDF != null && Caliber.SAAMIPDF.Length > 0)
+					if (Caliber != null && !String.IsNullOrEmpty(Caliber.SAAMIPDF))
 						{
 						Size BoxSize = CheckBoxRenderer.GetGlyphSize(g, (Item.Checked ? CheckBoxState.CheckedNormal : CheckBoxState.UncheckedNormal));
 
@@ -702,7 +702,7 @@ namespace ReloadersWorkShop
 
 				if (Header.Text == "Website")
 					{
-					if (Item.SubItems[nColumn].Text.Length > 0)
+					if (!String.IsNullOrEmpty(Item.SubItems[nColumn].Text))
 						{
 						if (nX - nColumnX < (int) TextSize.Width)
 							this.Cursor = Cursors.Hand;
@@ -717,7 +717,7 @@ namespace ReloadersWorkShop
 					{
 					cCaliber Caliber = GetCaliberFromTag(Item);
 
-					if (Caliber != null && Caliber.SAAMIPDF != null && Caliber.SAAMIPDF.Length > 0)
+					if (Caliber != null && !String.IsNullOrEmpty(Caliber.SAAMIPDF))
 						{
 						Size BoxSize = CheckBoxRenderer.GetGlyphSize(g, (Item.Checked ? CheckBoxState.CheckedNormal : CheckBoxState.UncheckedNormal));
 
