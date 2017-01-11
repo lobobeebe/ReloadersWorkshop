@@ -704,7 +704,7 @@ namespace ReloadersWorkShop
 				// See if this is the same Ammo
 				//----------------------------------------------------------------------------*
 
-				if (CheckAmmo.CompareTo(OldAmmo) == 0)
+				if (CheckAmmo.Equals(OldAmmo))
 					{
 					//----------------------------------------------------------------------------*
 					// Update the current Firearm record

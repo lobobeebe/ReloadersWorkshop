@@ -438,8 +438,6 @@ namespace ReloadersWorkShop
 					break;
 				}
 
-			SetSupplyCount();
-
 			m_SuppliesListView.Focus();
 			}
 
@@ -459,8 +457,6 @@ namespace ReloadersWorkShop
 					Supply.Checked = false;
 					}
 				}
-
-			SetSupplyCount();
 			}
 
 		//============================================================================*
@@ -629,8 +625,6 @@ namespace ReloadersWorkShop
 					break;
 				}
 
-			SetSupplyCount();
-
 			m_SuppliesListView.Focus();
 			}
 
@@ -648,8 +642,6 @@ namespace ReloadersWorkShop
 
 			InitializeLoadDataTab();
 			InitializeBallisticsTab();
-
-			SetSupplyCount();
 
 			UpdateSuppliesTabButtons();
 			}
@@ -909,8 +901,6 @@ namespace ReloadersWorkShop
 
 			m_SuppliesListView.CheckedFilter = SuppliesPrintCheckedRadioButton.Checked;
 
-			SetSupplyCount();
-
 			UpdateSuppliesTabButtons();
 			}
 
@@ -925,8 +915,6 @@ namespace ReloadersWorkShop
 			m_SuppliesListView.MinStockFilter = SuppliesMinStockCheckBox.Checked;
 
 			m_SuppliesListView.Populate();
-
-			SetSupplyCount();
 
 			UpdateSuppliesTabButtons();
 			}
@@ -945,8 +933,6 @@ namespace ReloadersWorkShop
 
 			m_SuppliesListView.CheckedFilter = SuppliesPrintCheckedRadioButton.Checked;
 
-			SetSupplyCount();
-
 			UpdateSuppliesTabButtons();
 			}
 
@@ -961,8 +947,6 @@ namespace ReloadersWorkShop
 			m_SuppliesListView.NonZeroFilter = SuppliesNonZeroCheckBox.Checked;
 
 			m_SuppliesListView.Populate();
-
-			SetSupplyCount();
 
 			UpdateSuppliesTabButtons();
 			}
@@ -983,8 +967,6 @@ namespace ReloadersWorkShop
 
 			PopulateBallisticsCaliberCombo();
 			PopulateBallisticsBulletCombo();
-
-			SetSupplyCount();
 
 			UpdateSuppliesTabButtons();
 			}
@@ -1021,8 +1003,6 @@ namespace ReloadersWorkShop
 
 				OnEditSupply(sender, args);
 				}
-
-			SetSupplyCount();
 
 			UpdateSuppliesTabButtons();
 			}
