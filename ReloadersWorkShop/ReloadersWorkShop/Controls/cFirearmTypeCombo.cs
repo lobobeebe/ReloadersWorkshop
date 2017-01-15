@@ -12,6 +12,10 @@
 using System;
 using System.Windows.Forms;
 
+//============================================================================*
+// Application Specific Using Statements
+//============================================================================*
+
 using CommonLib.Controls;
 
 using ReloadersWorkShop.Preferences;
@@ -37,7 +41,7 @@ namespace ReloadersWorkShop.Controls
 		private bool m_fIncludeAny = false;
 		private bool m_fIncludeShotgun = false;
 
-		private bool m_fPopulating = false;
+        private bool m_fPopulating = false;
 
 		//============================================================================*
 		// cFirearmTypeCombo() - Default Constructor
@@ -167,11 +171,11 @@ namespace ReloadersWorkShop.Controls
 			m_fPopulating = false;
 			}
 
-		//============================================================================*
-		// Value Property
-		//============================================================================*
+        //============================================================================*
+        // Value Property
+        //============================================================================*
 
-		public cFirearm.eFireArmType Value
+        public cFirearm.eFireArmType Value
 			{
 			get
 				{
