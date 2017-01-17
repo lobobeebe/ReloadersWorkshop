@@ -3464,11 +3464,11 @@ namespace ReloadersWorkShop
 			m_RestoreReferenceBulletToolTip.ShowAlways = true;
 			m_RestoreReferenceBulletToolTip.RemoveAll();
 			m_RestoreReferenceBulletToolTip.SetToolTip(RestoreReferenceBulletButton, cm_strRestoreReferenceBulletToolTip);
-
+/*
 			m_BallisticsKestrelToolTip.ShowAlways = true;
 			m_BallisticsKestrelToolTip.RemoveAll();
 			m_BallisticsKestrelToolTip.SetToolTip(BallisticsKestrelButton, cm_strBallisticsKestrelToolTip);
-
+*/
 			m_CompareReferenceBulletToolTip.ShowAlways = true;
 			m_CompareReferenceBulletToolTip.RemoveAll();
 			m_CompareReferenceBulletToolTip.SetToolTip(RestoreReferenceBulletButton, cm_strCompareReferenceBulletToolTip);

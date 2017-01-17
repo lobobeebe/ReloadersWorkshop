@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cSuppliesListView.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -415,10 +415,16 @@ namespace ReloadersWorkShop
 				case cSupply.eSupplyTypes.Bullets:
 					foreach (cSupply Supply in m_DataFiles.BulletList)
 						{
+						double dSupplyQuantity = Math.Round(m_DataFiles.SupplyQuantity(Supply), 4);
+						double dMinStockLevel = Math.Round(Supply.MinimumStockLevel, 4);
+
+						if (Supply.Checked)
+							Console.WriteLine("Here!");
+
 						if ((Supply.CrossUse || m_eFirearmTypeFilter == cFirearm.eFireArmType.None || Supply.FirearmType == m_eFirearmTypeFilter) &&
 							(m_ManufacturerFilter == null || Supply.Manufacturer.CompareTo(m_ManufacturerFilter) == 0) &&
-							(!m_fNonZeroFilter || m_DataFiles.SupplyQuantity(Supply) > 0.0) &&
-							(!m_fMinStockFilter || m_DataFiles.SupplyQuantity(Supply) < Supply.MinimumStockLevel) &&
+							(!m_fNonZeroFilter || dSupplyQuantity > 0.0) &&
+							(!m_fMinStockFilter || dSupplyQuantity < dMinStockLevel) &&
 							(!m_fCheckedFilter || Supply.Checked))
 							{
 							Item = AddBullet(Supply as cBullet);
@@ -465,10 +471,16 @@ namespace ReloadersWorkShop
 				case cSupply.eSupplyTypes.Powder:
 					foreach (cSupply Supply in m_DataFiles.PowderList)
 						{
+						double dSupplyQuantity = Math.Round(m_DataFiles.SupplyQuantity(Supply), m_DataFiles.Preferences.CanWeightDecimals);
+						double dMinStockLevel = Math.Round(Supply.MinimumStockLevel, m_DataFiles.Preferences.CanWeightDecimals);
+
+						if (Supply.Checked)
+							Console.WriteLine("Here!");
+
 						if ((Supply.CrossUse || m_eFirearmTypeFilter == cFirearm.eFireArmType.None || Supply.FirearmType == m_eFirearmTypeFilter) &&
 							(m_ManufacturerFilter == null || Supply.Manufacturer.CompareTo(m_ManufacturerFilter) == 0) &&
-							(!m_fNonZeroFilter || m_DataFiles.SupplyQuantity(Supply) > 0.0) &&
-							(!m_fMinStockFilter || m_DataFiles.SupplyQuantity(Supply) < Supply.MinimumStockLevel) &&
+							(!m_fNonZeroFilter || dSupplyQuantity > 0.0) &&
+							(!m_fMinStockFilter || dSupplyQuantity < dMinStockLevel) &&
 							(!m_fCheckedFilter || Supply.Checked))
 							{
 							Item = AddPowder(Supply as cPowder);
@@ -828,6 +840,8 @@ namespace ReloadersWorkShop
 			double dQuantity = m_DataFiles.SupplyQuantity(Powder);
 
 			dQuantity = cDataFiles.StandardToMetric(dQuantity / 7000.0, cDataFiles.eDataType.CanWeight);
+
+			dQuantity = Math.Round(dQuantity, m_DataFiles.Preferences.CanWeightDecimals);
 
 			double dCost = m_DataFiles.SupplyCost(Powder);
 

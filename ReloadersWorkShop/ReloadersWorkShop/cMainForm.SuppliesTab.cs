@@ -281,7 +281,7 @@ namespace ReloadersWorkShop
 
 		protected void OnAddSupply(object sender, EventArgs args)
 			{
-			switch ((cSupply.eSupplyTypes) SupplyTypeCombo.SelectedIndex)
+			switch ((cSupply.eSupplyTypes)SupplyTypeCombo.SelectedIndex)
 				{
 				//----------------------------------------------------------------------------*
 				// Bullets
@@ -449,7 +449,7 @@ namespace ReloadersWorkShop
 			{
 			foreach (ListViewItem Item in m_SuppliesListView.Items)
 				{
-				cSupply Supply = (cSupply) Item.Tag;
+				cSupply Supply = (cSupply)Item.Tag;
 
 				if (Supply != null)
 					{
@@ -480,13 +480,13 @@ namespace ReloadersWorkShop
 				// Bullets
 				//----------------------------------------------------------------------------*
 
-				case (int) cSupply.eSupplyTypes.Bullets:
+				case (int)cSupply.eSupplyTypes.Bullets:
 					Item = m_SuppliesListView.SelectedItems[0];
 
 					if (Item == null)
 						return;
 
-					cBullet Bullet = (cBullet) Item.Tag;
+					cBullet Bullet = (cBullet)Item.Tag;
 
 					if (Bullet == null)
 						return;
@@ -517,13 +517,13 @@ namespace ReloadersWorkShop
 				// Cases
 				//----------------------------------------------------------------------------*
 
-				case (int) cSupply.eSupplyTypes.Cases:
+				case (int)cSupply.eSupplyTypes.Cases:
 					Item = m_SuppliesListView.SelectedItems[0];
 
 					if (Item == null)
 						return;
 
-					cCase Case = (cCase) Item.Tag;
+					cCase Case = (cCase)Item.Tag;
 
 					if (Case == null)
 						return;
@@ -554,13 +554,13 @@ namespace ReloadersWorkShop
 				// Powder
 				//----------------------------------------------------------------------------*
 
-				case (int) cSupply.eSupplyTypes.Powder:
+				case (int)cSupply.eSupplyTypes.Powder:
 					Item = m_SuppliesListView.SelectedItems[0];
 
 					if (Item == null)
 						return;
 
-					cPowder Powder = (cPowder) Item.Tag;
+					cPowder Powder = (cPowder)Item.Tag;
 
 					if (Powder == null)
 						return;
@@ -591,13 +591,13 @@ namespace ReloadersWorkShop
 				// Primers
 				//----------------------------------------------------------------------------*
 
-				case (int) cSupply.eSupplyTypes.Primers:
+				case (int)cSupply.eSupplyTypes.Primers:
 					Item = m_SuppliesListView.SelectedItems[0];
 
 					if (Item == null)
 						return;
 
-					cPrimer Primer = (cPrimer) Item.Tag;
+					cPrimer Primer = (cPrimer)Item.Tag;
 
 					if (Primer == null)
 						return;
@@ -638,10 +638,10 @@ namespace ReloadersWorkShop
 
 			PopulateSuppliesListView();
 
-			SetSupplyCount();
-
 			InitializeLoadDataTab();
 			InitializeBallisticsTab();
+
+			SetSupplyCount();
 
 			UpdateSuppliesTabButtons();
 			}
@@ -656,7 +656,7 @@ namespace ReloadersWorkShop
 			// Show the dialog
 			//----------------------------------------------------------------------------*
 
-			cSupplyListPreviewDialog SupplyListDialog = new cSupplyListPreviewDialog(m_DataFiles,  m_SuppliesListView);
+			cSupplyListPreviewDialog SupplyListDialog = new cSupplyListPreviewDialog(m_DataFiles, m_SuppliesListView);
 
 			SupplyListDialog.ShowDialog();
 			}
@@ -671,7 +671,7 @@ namespace ReloadersWorkShop
 			// Determine which type of supply is being displayed
 			//----------------------------------------------------------------------------*
 
-			switch ((cSupply.eSupplyTypes) SupplyTypeCombo.SelectedIndex)
+			switch ((cSupply.eSupplyTypes)SupplyTypeCombo.SelectedIndex)
 				{
 				//----------------------------------------------------------------------------*
 				// Bullets
@@ -684,7 +684,7 @@ namespace ReloadersWorkShop
 						ListViewItem Item = m_SuppliesListView.SelectedItems[0];
 
 						if (Item != null)
-							Bullet = (cBullet) Item.Tag;
+							Bullet = (cBullet)Item.Tag;
 
 						if (Bullet == null)
 							break;
@@ -731,7 +731,7 @@ namespace ReloadersWorkShop
 						ListViewItem Item = m_SuppliesListView.SelectedItems[0];
 
 						if (Item != null)
-							Case = (cCase) Item.Tag;
+							Case = (cCase)Item.Tag;
 
 						if (Case == null)
 							break;
@@ -778,7 +778,7 @@ namespace ReloadersWorkShop
 						ListViewItem Item = m_SuppliesListView.SelectedItems[0];
 
 						if (Item != null)
-							Powder = (cPowder) Item.Tag;
+							Powder = (cPowder)Item.Tag;
 
 						if (Powder == null)
 							break;
@@ -825,7 +825,7 @@ namespace ReloadersWorkShop
 						ListViewItem Item = m_SuppliesListView.SelectedItems[0];
 
 						if (Item != null)
-							Primer = (cPrimer) Item.Tag;
+							Primer = (cPrimer)Item.Tag;
 
 						if (Primer == null)
 							break;
@@ -877,7 +877,7 @@ namespace ReloadersWorkShop
 			{
 			foreach (ListViewItem Item in m_SuppliesListView.Items)
 				{
-				cSupply Supply = (cSupply) Item.Tag;
+				cSupply Supply = (cSupply)Item.Tag;
 
 				if (Supply != null)
 					{
@@ -905,7 +905,7 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// OnSuppliesPrintBelowStockClicked()
+		// OnSuppliesBelowStockClicked()
 		//============================================================================*
 
 		protected void OnSuppliesBelowStockClicked(object sender, EventArgs args)
@@ -915,6 +915,8 @@ namespace ReloadersWorkShop
 			m_SuppliesListView.MinStockFilter = SuppliesMinStockCheckBox.Checked;
 
 			m_SuppliesListView.Populate();
+
+			SetSupplyCount();
 
 			UpdateSuppliesTabButtons();
 			}
@@ -948,6 +950,8 @@ namespace ReloadersWorkShop
 
 			m_SuppliesListView.Populate();
 
+			SetSupplyCount();
+
 			UpdateSuppliesTabButtons();
 			}
 
@@ -960,7 +964,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_SuppliesListView.Populating)
 				return;
 
-			cSupply Supply = (cSupply) args.Item.Tag;
+			cSupply Supply = (cSupply)args.Item.Tag;
 
 			if (Supply != null)
 				Supply.Checked = args.Item.Checked;
@@ -982,22 +986,22 @@ namespace ReloadersWorkShop
 
 			if (m_SuppliesListView.SelectedItems.Count > 0)
 				{
-				switch ((cSupply.eSupplyTypes) SupplyTypeCombo.SelectedIndex)
+				switch ((cSupply.eSupplyTypes)SupplyTypeCombo.SelectedIndex)
 					{
 					case cSupply.eSupplyTypes.Bullets:
-						m_DataFiles.Preferences.LastBulletSelected = (cBullet) m_SuppliesListView.SelectedItems[0].Tag;
+						m_DataFiles.Preferences.LastBulletSelected = (cBullet)m_SuppliesListView.SelectedItems[0].Tag;
 						break;
 
 					case cSupply.eSupplyTypes.Cases:
-						m_DataFiles.Preferences.LastCaseSelected = (cCase) m_SuppliesListView.SelectedItems[0].Tag;
+						m_DataFiles.Preferences.LastCaseSelected = (cCase)m_SuppliesListView.SelectedItems[0].Tag;
 						break;
 
 					case cSupply.eSupplyTypes.Primers:
-						m_DataFiles.Preferences.LastPrimerSelected = (cPrimer) m_SuppliesListView.SelectedItems[0].Tag;
+						m_DataFiles.Preferences.LastPrimerSelected = (cPrimer)m_SuppliesListView.SelectedItems[0].Tag;
 						break;
 
 					case cSupply.eSupplyTypes.Powder:
-						m_DataFiles.Preferences.LastPowderSelected = (cPowder) m_SuppliesListView.SelectedItems[0].Tag;
+						m_DataFiles.Preferences.LastPowderSelected = (cPowder)m_SuppliesListView.SelectedItems[0].Tag;
 						break;
 					}
 
@@ -1041,7 +1045,7 @@ namespace ReloadersWorkShop
 			cManufacturer Manufacturer = null;
 
 			if (SupplyManufacturerCombo.SelectedIndex > 0)
-				Manufacturer = (cManufacturer) SupplyManufacturerCombo.SelectedItem;
+				Manufacturer = (cManufacturer)SupplyManufacturerCombo.SelectedItem;
 
 			m_SuppliesListView.ManufacturerFilter = Manufacturer;
 
@@ -1063,26 +1067,26 @@ namespace ReloadersWorkShop
 
 			if (m_SuppliesListView.SelectedItems.Count > 0)
 				{
-				cSupply Supply = (cSupply) m_SuppliesListView.SelectedItems[0].Tag;
+				cSupply Supply = (cSupply)m_SuppliesListView.SelectedItems[0].Tag;
 
 				if (Supply != null)
 					{
 					switch (Supply.SupplyType)
 						{
 						case cSupply.eSupplyTypes.Bullets:
-							m_DataFiles.Preferences.LastBulletSelected = (cBullet) Supply;
+							m_DataFiles.Preferences.LastBulletSelected = (cBullet)Supply;
 							break;
 
 						case cSupply.eSupplyTypes.Cases:
-							m_DataFiles.Preferences.LastCaseSelected = (cCase) Supply;
+							m_DataFiles.Preferences.LastCaseSelected = (cCase)Supply;
 							break;
 
 						case cSupply.eSupplyTypes.Primers:
-							m_DataFiles.Preferences.LastPrimerSelected = (cPrimer) Supply;
+							m_DataFiles.Preferences.LastPrimerSelected = (cPrimer)Supply;
 							break;
 
 						case cSupply.eSupplyTypes.Powder:
-							m_DataFiles.Preferences.LastPowderSelected = (cPowder) Supply;
+							m_DataFiles.Preferences.LastPowderSelected = (cPowder)Supply;
 							break;
 						}
 					}
@@ -1100,12 +1104,12 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			if (m_SuppliesListView.SupplyType == (cSupply.eSupplyTypes) SupplyTypeCombo.SelectedIndex)
+			if (m_SuppliesListView.SupplyType == (cSupply.eSupplyTypes)SupplyTypeCombo.SelectedIndex)
 				return;
 
-			m_DataFiles.Preferences.LastSupplyTypeSelected = (cSupply.eSupplyTypes) SupplyTypeCombo.SelectedIndex;
+			m_DataFiles.Preferences.LastSupplyTypeSelected = (cSupply.eSupplyTypes)SupplyTypeCombo.SelectedIndex;
 
-			m_SuppliesListView.SupplyType = (cSupply.eSupplyTypes) SupplyTypeCombo.SelectedIndex;
+			m_SuppliesListView.SupplyType = (cSupply.eSupplyTypes)SupplyTypeCombo.SelectedIndex;
 
 			PopulateSupplyManufacturerCombo();
 
@@ -1130,13 +1134,13 @@ namespace ReloadersWorkShop
 				// Bullets
 				//----------------------------------------------------------------------------*
 
-				case (int) cSupply.eSupplyTypes.Bullets:
+				case (int)cSupply.eSupplyTypes.Bullets:
 					Item = m_SuppliesListView.SelectedItems[0];
 
 					if (Item == null)
 						return;
 
-					cBullet Bullet = (cBullet) Item.Tag;
+					cBullet Bullet = (cBullet)Item.Tag;
 
 					if (Bullet == null)
 						return;
@@ -1155,13 +1159,13 @@ namespace ReloadersWorkShop
 				// Cases
 				//----------------------------------------------------------------------------*
 
-				case (int) cSupply.eSupplyTypes.Cases:
+				case (int)cSupply.eSupplyTypes.Cases:
 					Item = m_SuppliesListView.SelectedItems[0];
 
 					if (Item == null)
 						return;
 
-					cCase Case = (cCase) Item.Tag;
+					cCase Case = (cCase)Item.Tag;
 
 					if (Case == null)
 						return;
@@ -1180,13 +1184,13 @@ namespace ReloadersWorkShop
 				// Powder
 				//----------------------------------------------------------------------------*
 
-				case (int) cSupply.eSupplyTypes.Powder:
+				case (int)cSupply.eSupplyTypes.Powder:
 					Item = m_SuppliesListView.SelectedItems[0];
 
 					if (Item == null)
 						return;
 
-					cPowder Powder = (cPowder) Item.Tag;
+					cPowder Powder = (cPowder)Item.Tag;
 
 					if (Powder == null)
 						return;
@@ -1205,13 +1209,13 @@ namespace ReloadersWorkShop
 				// Primers
 				//----------------------------------------------------------------------------*
 
-				case (int) cSupply.eSupplyTypes.Primers:
+				case (int)cSupply.eSupplyTypes.Primers:
 					Item = m_SuppliesListView.SelectedItems[0];
 
 					if (Item == null)
 						return;
 
-					cPrimer Primer = (cPrimer) Item.Tag;
+					cPrimer Primer = (cPrimer)Item.Tag;
 
 					if (Primer == null)
 						return;
@@ -1274,7 +1278,7 @@ namespace ReloadersWorkShop
 				// Bullets
 				//----------------------------------------------------------------------------*
 
-				case (int) cSupply.eSupplyTypes.Bullets:
+				case (int)cSupply.eSupplyTypes.Bullets:
 					foreach (cBullet Bullet in m_DataFiles.BulletList)
 						{
 						if (eType == cFirearm.eFireArmType.None || Bullet.CrossUse || Bullet.FirearmType == eType)
@@ -1290,7 +1294,7 @@ namespace ReloadersWorkShop
 				// Cases
 				//----------------------------------------------------------------------------*
 
-				case (int) cSupply.eSupplyTypes.Cases:
+				case (int)cSupply.eSupplyTypes.Cases:
 					foreach (cCase Case in m_DataFiles.CaseList)
 						{
 						if (eType == cFirearm.eFireArmType.None || Case.CrossUse || Case.FirearmType == eType)
@@ -1306,7 +1310,7 @@ namespace ReloadersWorkShop
 				// Powders
 				//----------------------------------------------------------------------------*
 
-				case (int) cSupply.eSupplyTypes.Powder:
+				case (int)cSupply.eSupplyTypes.Powder:
 					foreach (cPowder Powder in m_DataFiles.PowderList)
 						{
 						if (eType == cFirearm.eFireArmType.None || Powder.CrossUse || Powder.FirearmType == eType)
@@ -1322,7 +1326,7 @@ namespace ReloadersWorkShop
 				// Primers
 				//----------------------------------------------------------------------------*
 
-				case (int) cSupply.eSupplyTypes.Primers:
+				case (int)cSupply.eSupplyTypes.Primers:
 					foreach (cPrimer Primer in m_DataFiles.PrimerList)
 						{
 						if (eType == cFirearm.eFireArmType.None || Primer.CrossUse || Primer.FirearmType == eType)
@@ -1366,7 +1370,7 @@ namespace ReloadersWorkShop
 			SupplyTypeCombo.Items.Add("Powder");
 			SupplyTypeCombo.Items.Add("Primers");
 
-			SupplyTypeCombo.SelectedIndex = (int) m_DataFiles.Preferences.LastSupplyTypeSelected;
+			SupplyTypeCombo.SelectedIndex = (int)m_DataFiles.Preferences.LastSupplyTypeSelected;
 
 			if (SupplyTypeCombo.SelectedIndex < 0)
 				SupplyTypeCombo.SelectedIndex = 0;
@@ -1384,7 +1388,7 @@ namespace ReloadersWorkShop
 			m_SuppliesListView.NonZeroFilter = SuppliesNonZeroCheckBox.Checked;
 			m_SuppliesListView.MinStockFilter = SuppliesMinStockCheckBox.Checked;
 
-			m_SuppliesListView.SupplyType = (cSupply.eSupplyTypes) SupplyTypeCombo.SelectedIndex;
+			m_SuppliesListView.SupplyType = (cSupply.eSupplyTypes)SupplyTypeCombo.SelectedIndex;
 
 			m_SuppliesListView.PopulateColumns(true);
 
@@ -1439,7 +1443,7 @@ namespace ReloadersWorkShop
 
 			string strSupply = "";
 
-			switch ((cSupply.eSupplyTypes) SupplyTypeCombo.SelectedIndex)
+			switch ((cSupply.eSupplyTypes)SupplyTypeCombo.SelectedIndex)
 				{
 				case cSupply.eSupplyTypes.Bullets:
 					strSupply = "bullets";
@@ -1462,7 +1466,7 @@ namespace ReloadersWorkShop
 				{
 				if (m_DataFiles.Preferences.HideUncheckedCalibers)
 					{
-					if (SupplyTypeCombo.SelectedIndex == (int) cSupply.eSupplyTypes.Powder || SupplyTypeCombo.SelectedIndex == (int) cSupply.eSupplyTypes.Primers)
+					if (SupplyTypeCombo.SelectedIndex == (int)cSupply.eSupplyTypes.Powder || SupplyTypeCombo.SelectedIndex == (int)cSupply.eSupplyTypes.Primers)
 						{
 						SupplyCountLabel.ForeColor = SystemColors.WindowText;
 
@@ -1480,7 +1484,7 @@ namespace ReloadersWorkShop
 
 					SupplyCountLabel.Text += strSupply;
 
-					if (SupplyTypeCombo.SelectedIndex == (int) cSupply.eSupplyTypes.Powder || SupplyTypeCombo.SelectedIndex == (int) cSupply.eSupplyTypes.Primers)
+					if (SupplyTypeCombo.SelectedIndex == (int)cSupply.eSupplyTypes.Powder || SupplyTypeCombo.SelectedIndex == (int)cSupply.eSupplyTypes.Primers)
 						SupplyCountLabel.Text += " are displayed)";
 					else
 						SupplyCountLabel.Text += " usable in the selected calibers are displayed)";
@@ -1745,37 +1749,50 @@ namespace ReloadersWorkShop
 		public void UpdateSuppliesTabButtons()
 			{
 			//----------------------------------------------------------------------------*
-			// Checked Only Button
-			//----------------------------------------------------------------------------*
-
-			if (m_SuppliesListView.CheckedItems.Count == 0)
-				{
-				SuppliesPrintCheckedRadioButton.Checked = false;
-				SuppliesPrintAllRadioButton.Checked = true;
-				SuppliesPrintCheckedRadioButton.Enabled = false;
-
-				m_DataFiles.Preferences.SupplyPrintAll = true;
-				m_DataFiles.Preferences.SupplyPrintChecked = false;
-				}
-			else
-				SuppliesPrintCheckedRadioButton.Enabled = true;
-
-			//----------------------------------------------------------------------------*
 			// Print Button
 			//----------------------------------------------------------------------------*
+
+			int nSupplyCount = 0;
 
 			if (m_SuppliesListView.Items.Count == 0)
 				{
 				SupplyListPrintButton.Enabled = false;
-
-				NoSupplyListLabel.Visible = true;
+				SuppliesPrintAllRadioButton.Enabled = false;
+				SuppliesPrintCheckedRadioButton.Enabled = false;
 				}
 			else
 				{
-				SupplyListPrintButton.Enabled = true;
+				nSupplyCount = m_SuppliesListView.Items.Count;
 
-				NoSupplyListLabel.Visible = false;
+				SupplyListPrintButton.Enabled = true;
+				SuppliesPrintAllRadioButton.Enabled = true;
+
+				//----------------------------------------------------------------------------*
+				// All/Checked Only Buttons
+				//----------------------------------------------------------------------------*
+
+				if (m_SuppliesListView.CheckedItems.Count == 0)
+					{
+					SuppliesPrintAllRadioButton.Checked = true;
+
+					SuppliesPrintCheckedRadioButton.Checked = false;
+					SuppliesPrintCheckedRadioButton.Enabled = false;
+
+					m_DataFiles.Preferences.SupplyPrintAll = true;
+					m_DataFiles.Preferences.SupplyPrintChecked = false;
+					}
+				else
+					{
+					SuppliesPrintCheckedRadioButton.Enabled = true;
+
+					if (SuppliesPrintCheckedRadioButton.Checked)
+						nSupplyCount = m_SuppliesListView.CheckedItems.Count;
+					}
 				}
+
+			SupplyListFilterCountLabel.Text = string.Format("{0} {1}{2} match{3} the filter criteria", nSupplyCount == 0 ? "No" : nSupplyCount.ToString(), cSupply.SupplyTypeString((cSupply.eSupplyTypes) SupplyTypeCombo.SelectedIndex, false), nSupplyCount != 1 ? "s" : "", nSupplyCount == 1 ? "es" : "");
+
+			SupplyListFilterCountLabel.ForeColor = nSupplyCount == 0 ? Color.Maroon : SystemColors.ControlText;
 
 			//----------------------------------------------------------------------------*
 			// Edit, View, Remove Buttons
@@ -1796,9 +1813,9 @@ namespace ReloadersWorkShop
 			{
 			if (m_DataFiles.Preferences.HideUncheckedSupplies && !Supply.Checked)
 				{
-				string strMessage = "You are currently hiding unckecked supplies, and do not have an applicable 'AutoCheck' option selected in Preferences.\n\n";
+				string strMessage = "You are currently hiding unchecked supplies, and do not have an applicable 'AutoCheck' option selected in Preferences.\n\n";
 
-				strMessage += String.Format("Your new {0} will not appear on the supplies list unless it is checked.  Do you wish to check it now?", cSupply.SupplyTypeString(Supply.SupplyType));
+				strMessage += String.Format("Your new {0} will not appear on the supplies list unless it is checked.  Do you wish to check it now?", cSupply.SupplyTypeString(Supply.SupplyType, false));
 
 				DialogResult rc = MessageBox.Show(strMessage, "Hidden Data Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
 

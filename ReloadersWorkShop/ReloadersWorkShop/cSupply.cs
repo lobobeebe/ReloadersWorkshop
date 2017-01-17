@@ -265,7 +265,7 @@ namespace ReloadersWorkShop
 			// Supply Type
 			//----------------------------------------------------------------------------*
 
-			cSupply Supply = (cSupply) obj;
+			cSupply Supply = (cSupply)obj;
 
 			int rc = m_eType.CompareTo(Supply.m_eType);
 
@@ -622,6 +622,11 @@ namespace ReloadersWorkShop
 
 			foreach (cTransaction Transaction in m_TransactionList)
 				{
+				Transaction.Cost = Math.Round(Transaction.Cost, 4);
+				Transaction.Quantity = Math.Round(Transaction.Quantity, 4);
+				Transaction.Shipping = Math.Round(Transaction.Shipping, 4);
+				Transaction.Tax = Math.Round(Transaction.Tax, 4);
+
 				//----------------------------------------------------------------------------*
 				// If this is a batch transaction, recalculate the current costs
 				//----------------------------------------------------------------------------*
@@ -856,7 +861,7 @@ namespace ReloadersWorkShop
 			{
 			bool fChanged = m_TransactionList.ResolveIdentities(DataFiles);
 
-			return(fChanged);
+			return (fChanged);
 			}
 
 		//============================================================================*
@@ -911,18 +916,18 @@ namespace ReloadersWorkShop
 		// SupplyTypeString() - eSupplyType
 		//============================================================================*
 
-		public static string SupplyTypeString(eSupplyTypes eSupplyType)
+		public static string SupplyTypeString(eSupplyTypes eSupplyType, bool fPlural = true)
 			{
 			string strTypeString = "";
 
 			switch (eSupplyType)
 				{
 				case cSupply.eSupplyTypes.Bullets:
-					strTypeString = "Bullets";
+					strTypeString = "Bullet";
 					break;
 
 				case cSupply.eSupplyTypes.Cases:
-					strTypeString = "Cases";
+					strTypeString = "Case";
 					break;
 
 				case cSupply.eSupplyTypes.Powder:
@@ -930,7 +935,7 @@ namespace ReloadersWorkShop
 					break;
 
 				case cSupply.eSupplyTypes.Primers:
-					strTypeString = "Primers";
+					strTypeString = "Primer";
 					break;
 
 				case cSupply.eSupplyTypes.Ammo:
@@ -941,6 +946,9 @@ namespace ReloadersWorkShop
 					strTypeString = "Unknown!";
 					break;
 				}
+
+			if (fPlural && (eSupplyType == eSupplyTypes.Bullets || eSupplyType == eSupplyTypes.Cases || eSupplyType == eSupplyTypes.Primers))
+				strTypeString += "s";
 
 			return (strTypeString);
 			}
