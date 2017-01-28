@@ -1751,13 +1751,22 @@ namespace ReloadersWorkShop
 
 			foreach (cAmmo Ammo in m_AmmoList)
 				{
+				if (Ammo.BatchID == 0 && Ammo.PartNumber.IndexOf("Batch ") < 0)
+					continue;
+
 				foreach (cTransaction Transaction in Ammo.TransactionList)
 					{
-					if (Transaction.BatchID == 0)
+					if (Transaction.Date.Year == 2010 && Transaction.Date.Month == 1 && Transaction.Date.Day == 1)
+						{
+						Transaction.TransactionType = cTransaction.eTransactionType.SetStockLevel;
+
 						continue;
+						}
 
 					if (Transaction.TransactionType == cTransaction.eTransactionType.Purchase)
-						Transaction.TransactionType = cTransaction.eTransactionType.SetStockLevel;
+						{
+						Transaction.TransactionType = cTransaction.eTransactionType.Fired;
+						}
 					}
 				}
 
