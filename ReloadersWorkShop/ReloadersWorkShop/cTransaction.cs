@@ -633,6 +633,33 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// TransactionDescriptionFromString()
+		//============================================================================*
+
+		public static cTransaction.eTransactionType TransactionDescriptionFromString(string strString)
+			{
+			switch (strString)
+				{
+				case "Purchase":
+					return (eTransactionType.Purchase);
+
+				case "Increase Stock":
+					return (eTransactionType.AddStock);
+
+				case "Fired Ammo":
+					return (eTransactionType.Fired);
+
+				case "Reduce Stock":
+					return (eTransactionType.ReduceStock);
+
+				case "Initial Stock":
+					return (eTransactionType.SetStockLevel);
+				}
+
+			return (eTransactionType.Purchase);
+			}
+
+		//============================================================================*
 		// TransactionType Property
 		//============================================================================*
 

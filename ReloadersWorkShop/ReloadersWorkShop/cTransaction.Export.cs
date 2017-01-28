@@ -119,7 +119,7 @@ namespace ReloadersWorkShop
 				switch (XMLNode.Name)
 					{
 					case "TransactionType":
-						m_eTransactionType = cTransaction.TransactionTypeFromString(XMLNode.FirstChild.Value);
+						m_eTransactionType = cTransaction.TransactionDescriptionFromString(XMLNode.FirstChild.Value);
 						break;
 					case "Source":
 						m_strSource = XMLNode.FirstChild.Value;

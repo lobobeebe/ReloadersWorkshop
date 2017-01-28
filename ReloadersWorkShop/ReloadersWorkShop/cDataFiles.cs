@@ -1746,6 +1746,22 @@ namespace ReloadersWorkShop
 				}
 
 			//----------------------------------------------------------------------------*
+			// Check transaction types for ammo
+			//----------------------------------------------------------------------------*
+
+			foreach (cAmmo Ammo in m_AmmoList)
+				{
+				foreach (cTransaction Transaction in Ammo.TransactionList)
+					{
+					if (Transaction.BatchID == 0)
+						continue;
+
+					if (Transaction.TransactionType == cTransaction.eTransactionType.Purchase)
+						Transaction.TransactionType = cTransaction.eTransactionType.SetStockLevel;
+					}
+				}
+
+			//----------------------------------------------------------------------------*
 			// Sort the Lists
 			//----------------------------------------------------------------------------*
 
@@ -1863,16 +1879,16 @@ namespace ReloadersWorkShop
 
 					try
 						{
-						m_ManufacturerList = (cManufacturerList) Formatter.Deserialize(Stream);
-						m_CaliberList = (cCaliberList) Formatter.Deserialize(Stream);
-						m_FirearmList = (cFirearmList) Formatter.Deserialize(Stream);
-						m_BulletList = (cBulletList) Formatter.Deserialize(Stream);
-						m_CaseList = (cCaseList) Formatter.Deserialize(Stream);
-						m_PowderList = (cPowderList) Formatter.Deserialize(Stream);
-						m_PrimerList = (cPrimerList) Formatter.Deserialize(Stream);
-						m_LoadList = (cLoadList) Formatter.Deserialize(Stream);
-						m_BatchList = (cBatchList) Formatter.Deserialize(Stream);
-						m_AmmoList = (cAmmoList) Formatter.Deserialize(Stream);
+						m_ManufacturerList = (cManufacturerList)Formatter.Deserialize(Stream);
+						m_CaliberList = (cCaliberList)Formatter.Deserialize(Stream);
+						m_FirearmList = (cFirearmList)Formatter.Deserialize(Stream);
+						m_BulletList = (cBulletList)Formatter.Deserialize(Stream);
+						m_CaseList = (cCaseList)Formatter.Deserialize(Stream);
+						m_PowderList = (cPowderList)Formatter.Deserialize(Stream);
+						m_PrimerList = (cPrimerList)Formatter.Deserialize(Stream);
+						m_LoadList = (cLoadList)Formatter.Deserialize(Stream);
+						m_BatchList = (cBatchList)Formatter.Deserialize(Stream);
+						m_AmmoList = (cAmmoList)Formatter.Deserialize(Stream);
 
 						//----------------------------------------------------------------------------*
 						// Load the Preferences
@@ -1880,7 +1896,7 @@ namespace ReloadersWorkShop
 
 						cPreferences.StaticPreferences.Deserialize(Formatter, Stream);
 
-						m_GearList = (cGearList) Formatter.Deserialize(Stream);
+						m_GearList = (cGearList)Formatter.Deserialize(Stream);
 						}
 					catch
 						{
