@@ -5345,16 +5345,6 @@ namespace ReloadersWorkShop
 			this.SupplyFirearmTypeCombo.IncludeAny = false;
 			this.SupplyFirearmTypeCombo.IncludeShotgun = true;
 			this.SupplyFirearmTypeCombo.IntegralHeight = false;
-			this.SupplyFirearmTypeCombo.Items.AddRange(new object[] {
-            "Handgun",
-            "Rifle",
-            "Shotgun",
-            "Handgun",
-            "Rifle",
-            "Shotgun",
-            "Handgun",
-            "Rifle",
-            "Shotgun"});
 			this.SupplyFirearmTypeCombo.Location = new System.Drawing.Point(98, 50);
 			this.SupplyFirearmTypeCombo.Name = "SupplyFirearmTypeCombo";
 			this.SupplyFirearmTypeCombo.ShowToolTips = true;
@@ -5371,13 +5361,6 @@ namespace ReloadersWorkShop
 			this.LoadDataFirearmTypeCombo.FormattingEnabled = true;
 			this.LoadDataFirearmTypeCombo.IncludeAny = false;
 			this.LoadDataFirearmTypeCombo.IncludeShotgun = false;
-			this.LoadDataFirearmTypeCombo.Items.AddRange(new object[] {
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle"});
 			this.LoadDataFirearmTypeCombo.Location = new System.Drawing.Point(83, 22);
 			this.LoadDataFirearmTypeCombo.Name = "LoadDataFirearmTypeCombo";
 			this.LoadDataFirearmTypeCombo.ShowToolTips = true;
@@ -5394,13 +5377,6 @@ namespace ReloadersWorkShop
 			this.BatchFirearmTypeCombo.FormattingEnabled = true;
 			this.BatchFirearmTypeCombo.IncludeAny = false;
 			this.BatchFirearmTypeCombo.IncludeShotgun = false;
-			this.BatchFirearmTypeCombo.Items.AddRange(new object[] {
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle"});
 			this.BatchFirearmTypeCombo.Location = new System.Drawing.Point(83, 22);
 			this.BatchFirearmTypeCombo.Name = "BatchFirearmTypeCombo";
 			this.BatchFirearmTypeCombo.ShowToolTips = true;
@@ -5417,16 +5393,6 @@ namespace ReloadersWorkShop
 			this.AmmunitionFirearmTypeCombo.FormattingEnabled = true;
 			this.AmmunitionFirearmTypeCombo.IncludeAny = false;
 			this.AmmunitionFirearmTypeCombo.IncludeShotgun = true;
-			this.AmmunitionFirearmTypeCombo.Items.AddRange(new object[] {
-            "Handgun",
-            "Rifle",
-            "Shotgun",
-            "Handgun",
-            "Rifle",
-            "Shotgun",
-            "Handgun",
-            "Rifle",
-            "Shotgun"});
 			this.AmmunitionFirearmTypeCombo.Location = new System.Drawing.Point(81, 23);
 			this.AmmunitionFirearmTypeCombo.Name = "AmmunitionFirearmTypeCombo";
 			this.AmmunitionFirearmTypeCombo.ShowToolTips = true;
@@ -5443,13 +5409,6 @@ namespace ReloadersWorkShop
 			this.BallisticsFirearmTypeCombo.FormattingEnabled = true;
 			this.BallisticsFirearmTypeCombo.IncludeAny = false;
 			this.BallisticsFirearmTypeCombo.IncludeShotgun = false;
-			this.BallisticsFirearmTypeCombo.Items.AddRange(new object[] {
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle"});
 			this.BallisticsFirearmTypeCombo.Location = new System.Drawing.Point(94, 22);
 			this.BallisticsFirearmTypeCombo.Name = "BallisticsFirearmTypeCombo";
 			this.BallisticsFirearmTypeCombo.ShowToolTips = true;
