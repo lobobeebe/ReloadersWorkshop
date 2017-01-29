@@ -418,9 +418,6 @@ namespace ReloadersWorkShop
 						double dSupplyQuantity = Math.Round(m_DataFiles.SupplyQuantity(Supply), 4);
 						double dMinStockLevel = Math.Round(Supply.MinimumStockLevel, 4);
 
-						if (Supply.Checked)
-							Console.WriteLine("Here!");
-
 						if ((Supply.CrossUse || m_eFirearmTypeFilter == cFirearm.eFireArmType.None || Supply.FirearmType == m_eFirearmTypeFilter) &&
 							(m_ManufacturerFilter == null || Supply.Manufacturer.CompareTo(m_ManufacturerFilter) == 0) &&
 							(!m_fNonZeroFilter || dSupplyQuantity > 0.0) &&
@@ -473,9 +470,6 @@ namespace ReloadersWorkShop
 						{
 						double dSupplyQuantity = Math.Round(m_DataFiles.SupplyQuantity(Supply), m_DataFiles.Preferences.CanWeightDecimals);
 						double dMinStockLevel = Math.Round(Supply.MinimumStockLevel, m_DataFiles.Preferences.CanWeightDecimals);
-
-						if (Supply.Checked)
-							Console.WriteLine("Here!");
 
 						if ((Supply.CrossUse || m_eFirearmTypeFilter == cFirearm.eFireArmType.None || Supply.FirearmType == m_eFirearmTypeFilter) &&
 							(m_ManufacturerFilter == null || Supply.Manufacturer.CompareTo(m_ManufacturerFilter) == 0) &&

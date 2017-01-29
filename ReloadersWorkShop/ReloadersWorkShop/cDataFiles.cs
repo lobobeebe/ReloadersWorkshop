@@ -1771,6 +1771,85 @@ namespace ReloadersWorkShop
 				}
 
 			//----------------------------------------------------------------------------*
+			// Set inventory tracking for batches
+			//----------------------------------------------------------------------------*
+
+			// Bullets
+
+			foreach (cSupply Supply in m_BulletList)
+				{
+				foreach (cTransaction Transaction in Supply.TransactionList)
+					{
+					if (Transaction.BatchID != 0)
+						{
+						cBatch Batch = GetBatchByID(Transaction.BatchID);
+
+						Batch.TrackInventory = true;
+						}
+					}
+				}
+
+			// Cases
+
+			foreach (cSupply Supply in m_CaseList)
+				{
+				foreach (cTransaction Transaction in Supply.TransactionList)
+					{
+					if (Transaction.BatchID != 0)
+						{
+						cBatch Batch = GetBatchByID(Transaction.BatchID);
+
+						Batch.TrackInventory = true;
+						}
+					}
+				}
+
+			// Powder
+
+			foreach (cSupply Supply in m_PowderList)
+				{
+				foreach (cTransaction Transaction in Supply.TransactionList)
+					{
+					if (Transaction.BatchID != 0)
+						{
+						cBatch Batch = GetBatchByID(Transaction.BatchID);
+
+						Batch.TrackInventory = true;
+						}
+					}
+				}
+
+			// Primer
+
+			foreach (cSupply Supply in m_PrimerList)
+				{
+				foreach (cTransaction Transaction in Supply.TransactionList)
+					{
+					if (Transaction.BatchID != 0)
+						{
+						cBatch Batch = GetBatchByID(Transaction.BatchID);
+
+						Batch.TrackInventory = true;
+						}
+					}
+				}
+
+			// Ammo
+
+			foreach (cSupply Supply in m_AmmoList)
+				{
+				foreach (cTransaction Transaction in Supply.TransactionList)
+					{
+					if (Transaction.BatchID != 0)
+						{
+						cBatch Batch = GetBatchByID(Transaction.BatchID);
+
+						Batch.TrackInventory = true;
+						}
+					}
+				}
+
+			//----------------------------------------------------------------------------*
 			// Sort the Lists
 			//----------------------------------------------------------------------------*
 

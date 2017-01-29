@@ -432,15 +432,16 @@ namespace ReloadersWorkShop
 			// Set the selected item
 			//----------------------------------------------------------------------------*
 
-			if (nSelectIndex == -1 && !string.IsNullOrEmpty(m_Transaction.Source) && SourceCombo.FindString(m_Transaction.Source) == -1)
-				nSelectIndex = SourceCombo.Items.Add(m_Transaction.Source);
+			if (String.IsNullOrEmpty(m_Transaction.Source))
+				SourceCombo.Text = "";
+			else
+				{
+				if (nSelectIndex == -1 && SourceCombo.FindString(m_Transaction.Source) == -1)
+					nSelectIndex = SourceCombo.Items.Add(m_Transaction.Source);
 
-			SourceCombo.SelectedIndex = nSelectIndex;
-
-			if (SourceCombo.SelectedIndex == -1)
-				SourceCombo.SelectedItem = strLastSource;
-
-			m_Transaction.Source = SourceCombo.Text;
+				if (nSelectIndex >= 0)
+					SourceCombo.SelectedIndex = nSelectIndex;
+				}
 
 			m_fPopulating = false;
 			}
@@ -457,8 +458,8 @@ namespace ReloadersWorkShop
 
 			ComponentLabel.Text = String.Format("{0} {1}", m_Transaction.Supply.ToString(), cSupply.SupplyTypeString(m_Transaction.Supply));
 
-            if (TransactionTypeCombo.FindString(cTransaction.TransactionTypeString(m_Transaction.TransactionType)) != -1)
-    			TransactionTypeCombo.SelectedItem = cTransaction.TransactionTypeString(m_Transaction.TransactionType);
+			if (TransactionTypeCombo.FindString(cTransaction.TransactionTypeString(m_Transaction.TransactionType)) != -1)
+				TransactionTypeCombo.SelectedItem = cTransaction.TransactionTypeString(m_Transaction.TransactionType);
 
 			if (TransactionTypeCombo.SelectedIndex == -1 && TransactionTypeCombo.Items.Count > 0)
 				TransactionTypeCombo.SelectedIndex = 0;
@@ -847,8 +848,7 @@ namespace ReloadersWorkShop
 
 			SourceCombo.BackColor = SystemColors.Window;
 
-			//			if (SourceCombo.Text.Length == 0)
-			if (!String.IsNullOrEmpty(m_Transaction.Source))
+			if (String.IsNullOrEmpty(m_Transaction.Source))
 				{
 				if (m_Transaction.Supply != null && m_Transaction.TransactionType == cTransaction.eTransactionType.Purchase)
 					{
