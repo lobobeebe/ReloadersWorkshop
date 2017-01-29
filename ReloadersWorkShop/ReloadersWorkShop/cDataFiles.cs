@@ -1784,7 +1784,8 @@ namespace ReloadersWorkShop
 						{
 						cBatch Batch = GetBatchByID(Transaction.BatchID);
 
-						Batch.TrackInventory = true;
+						if (Batch != null)
+							Batch.TrackInventory = true;
 						}
 					}
 				}
@@ -1799,7 +1800,8 @@ namespace ReloadersWorkShop
 						{
 						cBatch Batch = GetBatchByID(Transaction.BatchID);
 
-						Batch.TrackInventory = true;
+						if (Batch != null)
+							Batch.TrackInventory = true;
 						}
 					}
 				}
@@ -1814,7 +1816,8 @@ namespace ReloadersWorkShop
 						{
 						cBatch Batch = GetBatchByID(Transaction.BatchID);
 
-						Batch.TrackInventory = true;
+						if (Batch != null)
+							Batch.TrackInventory = true;
 						}
 					}
 				}
@@ -1829,7 +1832,8 @@ namespace ReloadersWorkShop
 						{
 						cBatch Batch = GetBatchByID(Transaction.BatchID);
 
-						Batch.TrackInventory = true;
+						if (Batch != null)
+							Batch.TrackInventory = true;
 						}
 					}
 				}
@@ -1844,7 +1848,8 @@ namespace ReloadersWorkShop
 						{
 						cBatch Batch = GetBatchByID(Transaction.BatchID);
 
-						Batch.TrackInventory = true;
+						if (Batch != null)
+							Batch.TrackInventory = true;
 						}
 					}
 				}
