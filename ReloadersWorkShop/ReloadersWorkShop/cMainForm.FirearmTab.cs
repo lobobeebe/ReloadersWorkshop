@@ -197,7 +197,7 @@ namespace ReloadersWorkShop
 			cFirearm Firearm = null;
 
 			if (m_FirearmsListView.SelectedItems.Count > 0 && !FirearmAccessoriesShowAllCheckBox.Checked)
-				Firearm = (cFirearm) m_FirearmsListView.SelectedItems[0].Tag;
+				Firearm = (cFirearm)m_FirearmsListView.SelectedItems[0].Tag;
 
 			m_FirearmAccessoriesListView.Firearm = Firearm;
 
@@ -305,7 +305,7 @@ namespace ReloadersWorkShop
 			if (Item == null)
 				return;
 
-			cFirearm Firearm = (cFirearm) Item.Tag;
+			cFirearm Firearm = (cFirearm)Item.Tag;
 
 			if (Firearm == null)
 				return;
@@ -355,7 +355,7 @@ namespace ReloadersWorkShop
 			if (Item == null)
 				return;
 
-			cGear Gear = (cGear) Item.Tag;
+			cGear Gear = (cGear)Item.Tag;
 
 			if (Gear == null)
 				return;
@@ -391,11 +391,11 @@ namespace ReloadersWorkShop
 			cFirearm Firearm = null;
 
 			if (!FirearmAccessoriesShowAllCheckBox.Checked && m_FirearmsListView.SelectedItems.Count > 0)
-				Firearm = (cFirearm) m_FirearmsListView.SelectedItems[0].Tag;
+				Firearm = (cFirearm)m_FirearmsListView.SelectedItems[0].Tag;
 
 			foreach (ListViewItem Item in m_FirearmAccessoriesListView.Items)
 				{
-				cGear Gear = (cGear) Item.Tag;
+				cGear Gear = (cGear)Item.Tag;
 
 				if (Gear != null)
 					GearList.Add(Gear);
@@ -420,7 +420,7 @@ namespace ReloadersWorkShop
 			if (!FirearmAccessoriesShowAllCheckBox.Checked)
 				{
 				if (m_FirearmsListView.SelectedItems.Count > 0)
-					Firearm = (cFirearm) m_FirearmsListView.SelectedItems[0].Tag;
+					Firearm = (cFirearm)m_FirearmsListView.SelectedItems[0].Tag;
 				}
 
 			m_FirearmAccessoriesListView.Firearm = Firearm;
@@ -458,11 +458,11 @@ namespace ReloadersWorkShop
 			cFirearm Firearm = null;
 
 			if (m_FirearmsListView.SelectedItems.Count > 0)
-				Firearm = (cFirearm) m_FirearmsListView.SelectedItems[0].Tag;
+				Firearm = (cFirearm)m_FirearmsListView.SelectedItems[0].Tag;
 
 			if (m_FirearmAccessoriesListView.SelectedItems.Count > 0)
 				{
-				cGear Gear = (cGear) m_FirearmAccessoriesListView.SelectedItems[0].Tag;
+				cGear Gear = (cGear)m_FirearmAccessoriesListView.SelectedItems[0].Tag;
 
 				if (Gear.Parent != null)
 					Gear.Parent = null;
@@ -495,7 +495,7 @@ namespace ReloadersWorkShop
 
 			if (m_FirearmAccessoriesListView.SelectedItems.Count > 0)
 				{
-				Gear = (cGear) m_FirearmAccessoriesListView.SelectedItems[0].Tag;
+				Gear = (cGear)m_FirearmAccessoriesListView.SelectedItems[0].Tag;
 
 				m_DataFiles.Preferences.LastFirearmAccessorySelected = Gear;
 				}
@@ -525,7 +525,7 @@ namespace ReloadersWorkShop
 			{
 			if (m_FirearmsListView.SelectedItems.Count > 0)
 				{
-				m_DataFiles.Preferences.LastFirearmSelected = (cFirearm) (sender as ListView).SelectedItems[0].Tag;
+				m_DataFiles.Preferences.LastFirearmSelected = (cFirearm)(sender as ListView).SelectedItems[0].Tag;
 
 				OnEditFirearm(sender, args);
 				}
@@ -720,7 +720,7 @@ namespace ReloadersWorkShop
 
 			if (m_FirearmsListView.SelectedItems.Count > 0)
 				{
-				Firearm = (cFirearm) m_FirearmsListView.SelectedItems[0].Tag;
+				Firearm = (cFirearm)m_FirearmsListView.SelectedItems[0].Tag;
 
 				m_DataFiles.Preferences.LastFirearmSelected = Firearm;
 
@@ -747,7 +747,7 @@ namespace ReloadersWorkShop
 			ListViewItem Item = m_FirearmsListView.SelectedItems[0];
 
 			if (Item != null)
-				Firearm = (cFirearm) Item.Tag;
+				Firearm = (cFirearm)Item.Tag;
 
 			if (Firearm == null)
 				{
@@ -805,7 +805,7 @@ namespace ReloadersWorkShop
 			ListViewItem Item = m_FirearmAccessoriesListView.SelectedItems[0];
 
 			if (Item != null)
-				Gear = (cGear) Item.Tag;
+				Gear = (cGear)Item.Tag;
 
 			if (Gear == null || Gear.Parent != null)
 				{
@@ -847,7 +847,7 @@ namespace ReloadersWorkShop
 			if (Item == null)
 				return;
 
-			cFirearm Firearm = (cFirearm) Item.Tag;
+			cFirearm Firearm = (cFirearm)Item.Tag;
 
 			if (Firearm == null)
 				return;
@@ -885,7 +885,7 @@ namespace ReloadersWorkShop
 			if (Item == null)
 				return;
 
-			cGear Gear = (cGear) Item.Tag;
+			cGear Gear = (cGear)Item.Tag;
 
 			if (Gear == null)
 				return;
@@ -950,7 +950,7 @@ namespace ReloadersWorkShop
 
 			if (m_FirearmAccessoriesListView.SelectedItems.Count > 0)
 				{
-				Gear = (cGear) m_FirearmAccessoriesListView.SelectedItems[0].Tag;
+				Gear = (cGear)m_FirearmAccessoriesListView.SelectedItems[0].Tag;
 
 				if (Gear != null)
 					{
@@ -981,16 +981,17 @@ namespace ReloadersWorkShop
 			cFirearm Firearm = null;
 
 			if (m_FirearmsListView.SelectedItems.Count > 0)
-				Firearm = (cFirearm) m_FirearmsListView.SelectedItems[0].Tag;
+				Firearm = (cFirearm)m_FirearmsListView.SelectedItems[0].Tag;
 
 			double dFirearmCost = 0.0;
 			double dTotalCost = 0.0;
 			double dTotalTaxes = 0.0;
 			double dTotalShipping = 0.0;
-			double dAccessoryTotalCost = 0.0;
 			double dGrandTotal = 0.0;
 			double dTransferFees = 0.0;
 			double dOtherFees = 0.0;
+
+			double dAccessoryTotalCost = 0.0;
 
 			if (Firearm != null)
 				{
@@ -999,6 +1000,8 @@ namespace ReloadersWorkShop
 				dTotalShipping = Firearm.Shipping;
 				dTransferFees = Firearm.TransferFees;
 				dOtherFees = Firearm.OtherFees;
+
+				dAccessoryTotalCost = 0.0;
 
 				dTotalCost = dFirearmCost + dTransferFees + dOtherFees;
 
@@ -1046,7 +1049,7 @@ namespace ReloadersWorkShop
 
 			foreach (ListViewItem Item in m_FirearmAccessoriesListView.Items)
 				{
-				cGear Gear = (cGear) Item.Tag;
+				cGear Gear = (cGear)Item.Tag;
 
 				if (Gear != null)
 					{
@@ -1090,29 +1093,28 @@ namespace ReloadersWorkShop
 
 			foreach (cFirearm Firearm in m_DataFiles.FirearmList)
 				{
-				if (Firearm != null)
+				dFirearmCost += Firearm.PurchasePrice;
+				dTotalTaxes += Firearm.Tax;
+				dTotalShipping += Firearm.Shipping;
+				dTransferFees += Firearm.TransferFees;
+				dOtherFees += Firearm.OtherFees;
+
+				dTotalCost += Firearm.PurchasePrice + Firearm.TransferFees + Firearm.OtherFees;
+
+				dAccessoryTotalCost = 0.0;
+
+				foreach (cGear Gear in m_DataFiles.GearList)
 					{
-					dFirearmCost += Firearm.PurchasePrice;
-					dTotalTaxes += Firearm.Tax;
-					dTotalShipping += Firearm.Shipping;
-					dTransferFees += Firearm.TransferFees;
-					dOtherFees += Firearm.OtherFees;
-
-					dTotalCost += Firearm.PurchasePrice + Firearm.TransferFees + Firearm.OtherFees;
-
-					foreach (cGear Gear in m_DataFiles.GearList)
+					if (Gear.Parent != null && Gear.Parent.CompareTo(Firearm) == 0)
 						{
-						if (Gear.Parent != null && Gear.Parent.CompareTo(Firearm) == 0)
-							{
-							dAccessoryTotalCost += Gear.PurchasePrice;
+						dAccessoryTotalCost += Gear.PurchasePrice;
 
-							dTotalTaxes += Gear.Tax;
-							dTotalShipping += Gear.Shipping;
-							}
+						dTotalTaxes += Gear.Tax;
+						dTotalShipping += Gear.Shipping;
 						}
-
-					dTotalCost += dAccessoryTotalCost;
 					}
+
+				dTotalCost += dAccessoryTotalCost;
 				}
 
 			FirearmCollectionCostLabel.Text = String.Format("{0:N2}", dFirearmCost);

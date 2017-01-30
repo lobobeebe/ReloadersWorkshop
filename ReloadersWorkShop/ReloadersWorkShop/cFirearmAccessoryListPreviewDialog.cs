@@ -393,7 +393,7 @@ namespace ReloadersWorkShop
 
 				// Tax
 
-				strText = Gear.PurchasePrice > 0.0 ? String.Format("{0:N2}", Gear.Tax) : "-";
+				strText = Gear.Tax > 0.0 ? String.Format("{0:N2}", Gear.Tax) : "-";
 
 				TextSize = e.Graphics.MeasureString(strText, DataFont);
 
@@ -403,7 +403,7 @@ namespace ReloadersWorkShop
 
 				// Shipping
 
-				strText = Gear.PurchasePrice > 0.0 ? String.Format("{0:N2}", Gear.Shipping) : "-";
+				strText = Gear.Shipping > 0.0 ? String.Format("{0:N2}", Gear.Shipping) : "-";
 
 				TextSize = e.Graphics.MeasureString(strText, DataFont);
 
@@ -413,7 +413,9 @@ namespace ReloadersWorkShop
 
 				// Total
 
-				strText = Gear.PurchasePrice > 0.0 ? String.Format("{0:N2}", Gear.PurchasePrice + Gear.Tax + Gear.Shipping) : "-";
+				double dTotal = Gear.PurchasePrice + Gear.Tax + Gear.Shipping;
+
+				strText = dTotal > 0.0 ? String.Format("{0:N2}", dTotal) : "-";
 
 				TextSize = e.Graphics.MeasureString(strText, DataFont);
 
