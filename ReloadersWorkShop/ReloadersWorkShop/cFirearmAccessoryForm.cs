@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cFirearmAccessoryForm.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -823,7 +823,7 @@ namespace ReloadersWorkShop
 						}
 					else
 						{
-						ScopeTurretTypeCombo.SelectedItem = (m_Gear as cScope).TurretType;
+						ScopeTurretTypeCombo.SelectedIndex = (int) (m_Gear as cScope).TurretType;
 
 						if (ScopeTurretTypeCombo.SelectedIndex < 0 && ScopeTurretTypeCombo.Items.Count > 0)
 							{

@@ -7,10 +7,10 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("Reloader's WorkShop Launcher")]
 [assembly: AssemblyDescription("Launcher for Reloader's WorkShop")]
-[assembly: AssemblyConfiguration("Beta")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("Hornady Loader")]
 [assembly: AssemblyProduct("Reloader's WorkShop Launcher")]
-[assembly: AssemblyCopyright("Copyright © 2015-2016, Kevin S. Beebe")]
+[assembly: AssemblyCopyright("Copyright © 2015-2017, Kevin S. Beebe")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.1.007")]
-[assembly: AssemblyFileVersion("1.1.007")]
+[assembly: AssemblyVersion("1.1.007.1")]
+[assembly: AssemblyFileVersion("1.1.007.1")]

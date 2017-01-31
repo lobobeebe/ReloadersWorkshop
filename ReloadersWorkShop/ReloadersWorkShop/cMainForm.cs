@@ -838,7 +838,7 @@ namespace ReloadersWorkShop
 
 		public void OnFileExportClicked(Object sender, EventArgs e)
 			{
-			cExportForm ExportForm = new cExportForm(m_DataFiles);
+			cExportForm ExportForm = new cExportForm(m_DataFiles, m_fDev);
 
 			ExportForm.ShowDialog();
 			}
@@ -1037,9 +1037,6 @@ namespace ReloadersWorkShop
 		protected void OnHelpDataUpdateClicked(object sender, EventArgs args)
 			{
 			bool fUpdate = true;
-			bool fUpdateAvailable = false;
-
-			this.Cursor = Cursors.WaitCursor;
 
 			//----------------------------------------------------------------------------*
 			// See if there's a new update file
@@ -1051,32 +1048,20 @@ namespace ReloadersWorkShop
 				{
 				string strOutputPath = m_DataFiles.GetDataPath();
 
-				bool fSuccess = true;
-				//	bool fSuccess = RWUpdater.UpdateFile("RWDataUpdate.xml", strOutputPath);
+//				bool fSuccess = false;
+
+				bool fSuccess = RWUpdater.UpdateFile("RWDatabaseUpdate.xml", strOutputPath);
 
 				if (fSuccess)
 					{
-					fUpdateAvailable = true;
+					cRWXMLDocument XMLDocument = new cRWXMLDocument(m_DataFiles);
 
-					string strText = "There is a data update file available. Data update files contain new manufacturers, calibers, reloading components, etc.  Everything except firearms, loads, and batches.\n\n";
-					strText += "Missing data can also be filled in.  For example, if the Ballistic Coefficient for a particular bullet is set to 0.000 and the update file has a valid value, it will update your current data.\n\n";
-					strText += "You should BACKUP YOUR DATA before continuing.\n\n";
-					strText += "Would you like to merge the data update file with your data?";
+					XMLDocument.Load(Path.Combine(strOutputPath, "RWDatabaseUpdate.xml"));
+					XMLDocument.Import(true, true);
 
-					DialogResult rc = MessageBox.Show(strText, "Data Update Verification", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+					cImportForm ImportForm = new cImportForm(XMLDocument);
 
-					if (rc == DialogResult.Yes)
-						{
-						cRWXMLDocument XMLDocument = new cRWXMLDocument(m_DataFiles);
-
-						XMLDocument.Load("RWDataUpdate.xml");
-
-						XMLDocument.Import(false);
-
-						InitializeAllTabs();
-						}
-					else
-						fUpdate = false;
+					DialogResult rc = ImportForm.ShowDialog();
 					}
 				else
 					{
@@ -1088,26 +1073,16 @@ namespace ReloadersWorkShop
 				fUpdate = false;
 				}
 
-			this.Cursor = Cursors.Default;
-
 			//----------------------------------------------------------------------------*
 			// If a problem was encountered, or no new data is available, display it
 			//----------------------------------------------------------------------------*
 
 			if (!fUpdate)
 				{
-				if (!fUpdateAvailable)
-					MessageBox.Show("No new data updates are available", "No Update Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
-				else
-					MessageBox.Show("A problem was encountered while merging the data update file!  Verify that it is a valid Reloader's WorkShop XML File.", "Data Update Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show("No new data updates are available", "No Update Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 				return;
 				}
-
-			//----------------------------------------------------------------------------*
-			// OK, if we get to here, an update happened
-			//----------------------------------------------------------------------------*
-
 			}
 
 		//============================================================================*

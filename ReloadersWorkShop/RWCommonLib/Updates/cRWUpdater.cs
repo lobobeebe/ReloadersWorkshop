@@ -279,49 +279,5 @@ namespace RWCommonLib.Updates
 				return (fUpdatesAvailable);
 				}
 			}
-/*
-		//============================================================================*
-		// UserID Property
-		//============================================================================*
-
-		static private string UserID
-			{
-			get
-				{
-				string strUserID = "u";
-
-				strUserID += (char) ('7' + 1);
-				strUserID += (char) ('1' + 1);
-				strUserID += (char) ('8' + 1);
-				strUserID += '1';
-				strUserID += (char) ('7' + 1);
-				strUserID += (char) ('7' + 1);
-				strUserID += (char) ('4' + 1);
-				strUserID += '1';
-
-				return (strUserID);
-				}
-			}
-
-		//============================================================================*
-		// Password Property
-		//============================================================================*
-
-		static private string Password
-			{
-			get
-				{
-				string strPassword = "N";
-				strPassword += '1';
-				strPassword += (char) ('b' + 1);
-				strPassword += (char) ('g' + 1);
-				strPassword += (char) ('n' + 1);
-				strPassword += (char) ('k' + 1);
-				strPassword += 'a';
-				strPassword += (char) ('r' + 1);
-
-				return (strPassword);
-				}
-			}
-*/		}
+		}
 	}

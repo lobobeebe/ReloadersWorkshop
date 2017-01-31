@@ -472,14 +472,12 @@ namespace ReloadersWorkShop
 				if (FirearmAccessoriesShowAllCheckBox.Checked)
 					m_FirearmAccessoriesListView.UpdateFirearmAccessory(Gear, true);
 				else
-					{
 					m_FirearmAccessoriesListView.Populate();
 
-					SetFirearmAccessoriesCostDetails();
-					}
-
-				UpdateFirearmTabButtons();
+				SetFirearmAccessoriesCostDetails();
 				}
+
+			UpdateFirearmTabButtons();
 			}
 
 		//============================================================================*

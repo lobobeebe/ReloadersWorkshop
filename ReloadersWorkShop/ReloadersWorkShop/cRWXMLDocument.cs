@@ -444,7 +444,7 @@ namespace ReloadersWorkShop
 		// Export()
 		//============================================================================*
 
-		public void Export(bool fComplete = true)
+		public void Export(bool fComplete = true, bool fDataUpdate = false)
 			{
 			//----------------------------------------------------------------------------*
 			// Create Declaration
@@ -459,7 +459,12 @@ namespace ReloadersWorkShop
 			XmlElement MainElement = CreateElement("Body");
 			AppendChild(MainElement);
 
-			XmlText XMLTextElement = CreateTextNode(String.Format("{0} {1} Data File Export", Application.ProductName, fComplete ? "Complete" : "Partial"));
+			string strExportType = fComplete ? "Complete Data" : "Partial Data";
+
+			if (fDataUpdate)
+				strExportType = "Database Update";
+
+			XmlText XMLTextElement = CreateTextNode(String.Format("{0} {1} Export File", Application.ProductName, strExportType));
 			MainElement.AppendChild(XMLTextElement);
 
 			if (fComplete || m_fIncludeManufacturers)

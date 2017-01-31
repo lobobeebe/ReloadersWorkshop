@@ -294,6 +294,8 @@
             "Handgun",
             "Rifle",
             "Handgun",
+            "Rifle",
+            "Handgun",
             "Rifle"});
 			this.FirearmTypeCombo.Location = new System.Drawing.Point(96, 22);
 			this.FirearmTypeCombo.Name = "FirearmTypeCombo";
@@ -707,7 +709,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.LoadCancelButton;
-			this.ClientSize = new System.Drawing.Size(710, 564);
+			this.ClientSize = new System.Drawing.Size(706, 579);
 			this.ControlBox = false;
 			this.Controls.Add(this.PowderChargeGroup);
 			this.Controls.Add(this.LoadCancelButton);

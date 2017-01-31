@@ -60,6 +60,7 @@
 			// 
 			// BatchPrintButton
 			// 
+			this.BatchPrintButton.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.BatchPrintButton.Location = new System.Drawing.Point(160, 486);
 			this.BatchPrintButton.Name = "BatchPrintButton";
 			this.BatchPrintButton.Size = new System.Drawing.Size(75, 23);

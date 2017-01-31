@@ -38,6 +38,8 @@
 			System.Windows.Forms.Label label2;
 			System.Windows.Forms.Label label1;
 			this.TotalsGroupBox = new System.Windows.Forms.GroupBox();
+			this.MinimumStockLevelMeasurementLabel = new System.Windows.Forms.Label();
+			this.MinimumStockLevelTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			this.MethodLabel = new System.Windows.Forms.Label();
 			this.LastPurchaseDateLabel = new System.Windows.Forms.Label();
 			this.ValueLabel = new System.Windows.Forms.Label();
@@ -58,8 +60,6 @@
 			this.EditActivityButton = new System.Windows.Forms.Button();
 			this.AddActivityButton = new System.Windows.Forms.Button();
 			this.CloseButton = new System.Windows.Forms.Button();
-			this.MinimumStockLevelTextBox = new CommonLib.Controls.cDoubleValueTextBox();
-			this.MinimumStockLevelMeasurementLabel = new System.Windows.Forms.Label();
 			label16 = new System.Windows.Forms.Label();
 			label15 = new System.Windows.Forms.Label();
 			label6 = new System.Windows.Forms.Label();
@@ -169,6 +169,18 @@
 			label2.TabIndex = 39;
 			label2.Text = "Last Purchase Date:";
 			// 
+			// label1
+			// 
+			label1.AutoSize = true;
+			label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			label1.ForeColor = System.Drawing.SystemColors.ControlText;
+			label1.Location = new System.Drawing.Point(429, 99);
+			label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			label1.Name = "label1";
+			label1.Size = new System.Drawing.Size(111, 13);
+			label1.TabIndex = 42;
+			label1.Text = "Minimum Stock Level:";
+			// 
 			// TotalsGroupBox
 			// 
 			this.TotalsGroupBox.Controls.Add(this.MinimumStockLevelMeasurementLabel);
@@ -203,6 +215,34 @@
 			this.TotalsGroupBox.TabIndex = 0;
 			this.TotalsGroupBox.TabStop = false;
 			this.TotalsGroupBox.Text = "Totals";
+			// 
+			// MinimumStockLevelMeasurementLabel
+			// 
+			this.MinimumStockLevelMeasurementLabel.AutoSize = true;
+			this.MinimumStockLevelMeasurementLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.MinimumStockLevelMeasurementLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.MinimumStockLevelMeasurementLabel.Location = new System.Drawing.Point(607, 99);
+			this.MinimumStockLevelMeasurementLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.MinimumStockLevelMeasurementLabel.Name = "MinimumStockLevelMeasurementLabel";
+			this.MinimumStockLevelMeasurementLabel.Size = new System.Drawing.Size(20, 13);
+			this.MinimumStockLevelMeasurementLabel.TabIndex = 44;
+			this.MinimumStockLevelMeasurementLabel.Text = "lbs";
+			// 
+			// MinimumStockLevelTextBox
+			// 
+			this.MinimumStockLevelTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.MinimumStockLevelTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.MinimumStockLevelTextBox.Location = new System.Drawing.Point(545, 96);
+			this.MinimumStockLevelTextBox.MaxValue = 0D;
+			this.MinimumStockLevelTextBox.MinValue = 0D;
+			this.MinimumStockLevelTextBox.Name = "MinimumStockLevelTextBox";
+			this.MinimumStockLevelTextBox.NumDecimals = 0;
+			this.MinimumStockLevelTextBox.Size = new System.Drawing.Size(57, 20);
+			this.MinimumStockLevelTextBox.TabIndex = 43;
+			this.MinimumStockLevelTextBox.Text = "0";
+			this.MinimumStockLevelTextBox.ToolTip = "";
+			this.MinimumStockLevelTextBox.Value = 0D;
+			this.MinimumStockLevelTextBox.ZeroAllowed = true;
 			// 
 			// MethodLabel
 			// 
@@ -444,55 +484,14 @@
 			this.CloseButton.Name = "CloseButton";
 			this.CloseButton.Size = new System.Drawing.Size(75, 23);
 			this.CloseButton.TabIndex = 3;
-			this.CloseButton.Text = "Close";
+			this.CloseButton.Text = "OK";
 			this.CloseButton.UseVisualStyleBackColor = true;
-			// 
-			// label1
-			// 
-			label1.AutoSize = true;
-			label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			label1.ForeColor = System.Drawing.SystemColors.ControlText;
-			label1.Location = new System.Drawing.Point(429, 99);
-			label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			label1.Name = "label1";
-			label1.Size = new System.Drawing.Size(111, 13);
-			label1.TabIndex = 42;
-			label1.Text = "Minimum Stock Level:";
-			// 
-			// MinimumStockLevelTextBox
-			// 
-			this.MinimumStockLevelTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.MinimumStockLevelTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.MinimumStockLevelTextBox.Location = new System.Drawing.Point(545, 96);
-			this.MinimumStockLevelTextBox.MaxValue = 0D;
-			this.MinimumStockLevelTextBox.MinValue = 0D;
-			this.MinimumStockLevelTextBox.Name = "MinimumStockLevelTextBox";
-			this.MinimumStockLevelTextBox.NumDecimals = 0;
-			this.MinimumStockLevelTextBox.Size = new System.Drawing.Size(57, 20);
-			this.MinimumStockLevelTextBox.TabIndex = 43;
-			this.MinimumStockLevelTextBox.Text = "0";
-			this.MinimumStockLevelTextBox.ToolTip = "";
-			this.MinimumStockLevelTextBox.Value = 0D;
-			this.MinimumStockLevelTextBox.ZeroAllowed = true;
-			// 
-			// MinimumStockLevelMeasurementLabel
-			// 
-			this.MinimumStockLevelMeasurementLabel.AutoSize = true;
-			this.MinimumStockLevelMeasurementLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.MinimumStockLevelMeasurementLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.MinimumStockLevelMeasurementLabel.Location = new System.Drawing.Point(607, 99);
-			this.MinimumStockLevelMeasurementLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.MinimumStockLevelMeasurementLabel.Name = "MinimumStockLevelMeasurementLabel";
-			this.MinimumStockLevelMeasurementLabel.Size = new System.Drawing.Size(20, 13);
-			this.MinimumStockLevelMeasurementLabel.TabIndex = 44;
-			this.MinimumStockLevelMeasurementLabel.Text = "lbs";
 			// 
 			// cInventoryForm
 			// 
 			this.AcceptButton = this.CloseButton;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.CancelButton = this.CloseButton;
 			this.ClientSize = new System.Drawing.Size(852, 558);
 			this.ControlBox = false;
 			this.Controls.Add(this.CloseButton);

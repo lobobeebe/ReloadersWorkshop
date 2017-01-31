@@ -33,11 +33,13 @@ namespace ReloadersWorkShop
 		private cDataFiles m_DataFiles = null;
 		private string m_strFilePath = String.Format(@"C:\Users\Public\{0}\Exported Data\RWData.csv", Application.ProductName);
 
+		private bool m_fDev = false;
+
 		//============================================================================*
 		// cExportForm() - Constructor
 		//============================================================================*
 
-		public cExportForm(cDataFiles DataFiles)
+		public cExportForm(cDataFiles DataFiles, bool fDev = false)
 			{
 			InitializeComponent();
 
@@ -45,8 +47,16 @@ namespace ReloadersWorkShop
 				Directory.CreateDirectory(Path.GetDirectoryName(m_strFilePath));
 
 			m_DataFiles = DataFiles;
+			m_fDev = fDev;
 
 			SetClientSizeCore(ExportFileGroupBox.Location.X + ExportFileGroupBox.Width + 10, CancelFormButton.Location.Y + CancelFormButton.Height + 20);
+
+			if (!m_fDev)
+				{
+				DatabaseUpdateCheckBox.Visible = false;
+				DatabaseUpdateCheckBox.Enabled = false;
+				DatabaseUpdateCheckBox.Checked = false;
+				}
 
 			//----------------------------------------------------------------------------*
 			// Event Handlers
@@ -56,6 +66,7 @@ namespace ReloadersWorkShop
 			ExportButton.Click += OnExportClicked;
 
 			FullDataDumpCheckBox.Click += OnFilterClicked;
+			DatabaseUpdateCheckBox.Click += OnFilterClicked;
 			LoadsCheckBox.Click += OnFilterClicked;
 			BatchesCheckBox.Click += OnFilterClicked;
 
@@ -91,7 +102,7 @@ namespace ReloadersWorkShop
 			{
 			bool fExportOK = false;
 
-			switch ((cDataFiles.eExportType) FileTypeCombo.SelectedIndex)
+			switch ((cDataFiles.eExportType)FileTypeCombo.SelectedIndex)
 				{
 				case cDataFiles.eExportType.CSV:
 					StreamWriter Writer = null;
@@ -231,7 +242,7 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				switch ((cDataFiles.eExportType) FileTypeCombo.SelectedIndex)
+				switch ((cDataFiles.eExportType)FileTypeCombo.SelectedIndex)
 					{
 					case cDataFiles.eExportType.XML:
 						return ("XML Files (*.xml)|*.xml");
@@ -265,7 +276,7 @@ namespace ReloadersWorkShop
 			XMLDocument.IncludePrimers = PrimersCheckBox.Checked;
 			XMLDocument.IncludeParts = PartsCheckBox.Checked;
 
-			XMLDocument.Export(FullDataDumpCheckBox.Checked);
+			XMLDocument.Export(FullDataDumpCheckBox.Checked, DatabaseUpdateCheckBox.Checked);
 
 			return (XMLDocument);
 			}
@@ -320,7 +331,7 @@ namespace ReloadersWorkShop
 
 		private void OnFileTypeSelected(Object sender, EventArgs e)
 			{
-			switch ((cDataFiles.eExportType) FileTypeCombo.SelectedIndex)
+			switch ((cDataFiles.eExportType)FileTypeCombo.SelectedIndex)
 				{
 				case cDataFiles.eExportType.CSV:
 					m_strFilePath = Path.ChangeExtension(m_strFilePath, "csv");
@@ -407,22 +418,64 @@ namespace ReloadersWorkShop
 				AmmoCheckBox.Enabled = false;
 				LoadsCheckBox.Enabled = false;
 				BatchesCheckBox.Enabled = false;
+
+				DatabaseUpdateCheckBox.Enabled = false;
+				DatabaseUpdateCheckBox.Checked = false;
 				}
 			else
 				{
-				ManufacturersCheckBox.Enabled = true;
-				CalibersCheckBox.Enabled = true;
-				FirearmsCheckBox.Enabled = true;
-				PartsCheckBox.Enabled = true;
+				if (m_fDev && DatabaseUpdateCheckBox.Checked)
+					{
+					ManufacturersCheckBox.Checked = true;
+					CalibersCheckBox.Checked = true;
+					FirearmsCheckBox.Checked = false;
+					PartsCheckBox.Checked = false;
 
-				BulletsCheckBox.Enabled = true;
-				CasesCheckBox.Enabled = true;
-				PrimersCheckBox.Enabled = true;
-				PowdersCheckBox.Enabled = true;
+					BulletsCheckBox.Checked = true;
+					CasesCheckBox.Checked = true;
+					PrimersCheckBox.Checked = true;
+					PowdersCheckBox.Checked = true;
 
-				AmmoCheckBox.Enabled = true;
-				LoadsCheckBox.Enabled = true;
-				BatchesCheckBox.Enabled = true;
+					AmmoCheckBox.Checked = false;
+					LoadsCheckBox.Checked = false;
+					BatchesCheckBox.Checked = false;
+
+					ManufacturersCheckBox.Enabled = false;
+					CalibersCheckBox.Enabled = false;
+					FirearmsCheckBox.Enabled = false;
+					PartsCheckBox.Enabled = false;
+
+					BulletsCheckBox.Enabled = false;
+					CasesCheckBox.Enabled = false;
+					PrimersCheckBox.Enabled = false;
+					PowdersCheckBox.Enabled = false;
+
+					AmmoCheckBox.Enabled = false;
+					LoadsCheckBox.Enabled = false;
+					BatchesCheckBox.Enabled = false;
+
+					FullDataDumpCheckBox.Enabled = false;
+					FullDataDumpCheckBox.Checked = false;
+					}
+				else
+					{
+					ManufacturersCheckBox.Enabled = true;
+					CalibersCheckBox.Enabled = true;
+					FirearmsCheckBox.Enabled = true;
+					PartsCheckBox.Enabled = true;
+
+					BulletsCheckBox.Enabled = true;
+					CasesCheckBox.Enabled = true;
+					PrimersCheckBox.Enabled = true;
+					PowdersCheckBox.Enabled = true;
+
+					AmmoCheckBox.Enabled = true;
+					LoadsCheckBox.Enabled = true;
+					BatchesCheckBox.Enabled = true;
+
+					FullDataDumpCheckBox.Enabled = true;
+					DatabaseUpdateCheckBox.Enabled = true;
+					}
 				}
 
 			//----------------------------------------------------------------------------*

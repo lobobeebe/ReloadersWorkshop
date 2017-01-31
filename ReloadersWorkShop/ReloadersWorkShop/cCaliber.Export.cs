@@ -94,18 +94,12 @@ namespace ReloadersWorkShop
 			if (fIdentityOnly)
 				return;
 
+			//----------------------------------------------------------------------------*
+			// General Data
+			//----------------------------------------------------------------------------*
+
 			XMLDocument.CreateElement("HeadStamp", m_strHeadStamp, XMLThisElement);
 			XMLDocument.CreateElement("Pistol", m_fPistol, XMLThisElement);
-
-			string strHandgunType = "N/A";
-
-			if (m_eFirearmType == cFirearm.eFireArmType.Handgun)
-				{
-				if (m_eFirearmType == cFirearm.eFireArmType.Handgun)
-					strHandgunType = m_fPistol ? "Pistol" : "Revolver";
-				}
-
-			XMLDocument.CreateElement("HandgunType", strHandgunType, XMLThisElement);
 			XMLDocument.CreateElement("SAAMIPDF", m_strSAAMIPDF, XMLThisElement);
 			XMLDocument.CreateElement("SmallPrimer", m_fSmallPrimer, XMLThisElement);
 			XMLDocument.CreateElement("LargePrimer", m_fLargePrimer, XMLThisElement);
@@ -160,7 +154,9 @@ namespace ReloadersWorkShop
 						XMLDocument.Import(XMLNode, out m_strHeadStamp);
 						break;
 					case "HandgunType":
-						XMLDocument.Import(XMLNode, out m_fPistol);
+						string strHandgunType = "Pistol";
+						XMLDocument.Import(XMLNode, out strHandgunType);
+						m_fPistol = (strHandgunType == "Pistol");
 						break;
 					case "SmallPrimer":
 						XMLDocument.Import(XMLNode, out m_fSmallPrimer);
@@ -190,10 +186,14 @@ namespace ReloadersWorkShop
 						XMLDocument.Import(XMLNode, out m_dMaxCaseLength);
 						break;
 					case "MaxCOAL":
+					case "MaxCOL":
 						XMLDocument.Import(XMLNode, out m_dMaxCOL);
 						break;
 					case "MaxNeckDiameter":
 						XMLDocument.Import(XMLNode, out m_dMaxNeckDiameter);
+						break;
+					case "Pistol":
+						XMLDocument.Import(XMLNode, out m_fPistol);
 						break;
 					case "SAAMIPDF":
 						XMLDocument.Import(XMLNode, out m_strSAAMIPDF);

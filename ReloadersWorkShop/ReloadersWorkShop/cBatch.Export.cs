@@ -150,7 +150,7 @@ namespace ReloadersWorkShop
 						XMLDocument.Import(XMLNode, out m_fTrackInventory);
 						break;
 					case "Checked":
-						XMLDocument.Import(XMLNode, out m_fTrackInventory);
+						XMLDocument.Import(XMLNode, out m_fChecked);
 						break;
 					case "BatchTests":
 					case "BatchTestList":

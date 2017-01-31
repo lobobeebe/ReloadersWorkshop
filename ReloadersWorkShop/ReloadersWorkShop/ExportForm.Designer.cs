@@ -51,6 +51,7 @@
 			this.ManufacturersCheckBox = new System.Windows.Forms.CheckBox();
 			this.CancelFormButton = new System.Windows.Forms.Button();
 			this.ExportButton = new CommonLib.Controls.cButton();
+			this.DatabaseUpdateCheckBox = new System.Windows.Forms.CheckBox();
 			this.ExportFileGroupBox.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.SuspendLayout();
@@ -145,6 +146,7 @@
 			// 
 			// groupBox2
 			// 
+			this.groupBox2.Controls.Add(this.DatabaseUpdateCheckBox);
 			this.groupBox2.Controls.Add(this.XMLPreferencesLabel);
 			this.groupBox2.Controls.Add(this.FullDataDumpCheckBox);
 			this.groupBox2.Controls.Add(this.PartsCheckBox);
@@ -172,7 +174,7 @@
 			this.XMLPreferencesLabel.AutoSize = true;
 			this.XMLPreferencesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.XMLPreferencesLabel.ForeColor = System.Drawing.Color.Blue;
-			this.XMLPreferencesLabel.Location = new System.Drawing.Point(26, 68);
+			this.XMLPreferencesLabel.Location = new System.Drawing.Point(26, 65);
 			this.XMLPreferencesLabel.Name = "XMLPreferencesLabel";
 			this.XMLPreferencesLabel.Size = new System.Drawing.Size(162, 13);
 			this.XMLPreferencesLabel.TabIndex = 14;
@@ -181,8 +183,6 @@
 			// FullDataDumpCheckBox
 			// 
 			this.FullDataDumpCheckBox.AutoSize = true;
-			this.FullDataDumpCheckBox.Checked = true;
-			this.FullDataDumpCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.FullDataDumpCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FullDataDumpCheckBox.ForeColor = System.Drawing.Color.Blue;
 			this.FullDataDumpCheckBox.Location = new System.Drawing.Point(10, 42);
@@ -369,12 +369,24 @@
 			this.ExportButton.ToolTip = "";
 			this.ExportButton.UseVisualStyleBackColor = true;
 			// 
+			// DatabaseUpdateCheckBox
+			// 
+			this.DatabaseUpdateCheckBox.AutoSize = true;
+			this.DatabaseUpdateCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.DatabaseUpdateCheckBox.ForeColor = System.Drawing.Color.Blue;
+			this.DatabaseUpdateCheckBox.Location = new System.Drawing.Point(10, 88);
+			this.DatabaseUpdateCheckBox.Name = "DatabaseUpdateCheckBox";
+			this.DatabaseUpdateCheckBox.Size = new System.Drawing.Size(185, 20);
+			this.DatabaseUpdateCheckBox.TabIndex = 15;
+			this.DatabaseUpdateCheckBox.Text = "Data Base Update File";
+			this.DatabaseUpdateCheckBox.UseVisualStyleBackColor = true;
+			// 
 			// cExportForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.CancelFormButton;
-			this.ClientSize = new System.Drawing.Size(549, 271);
+			this.ClientSize = new System.Drawing.Size(545, 267);
 			this.ControlBox = false;
 			this.Controls.Add(this.ExportButton);
 			this.Controls.Add(this.CancelFormButton);
@@ -421,5 +433,6 @@
 		private System.Windows.Forms.CheckBox FullDataDumpCheckBox;
 		private System.Windows.Forms.Label XMLPreferencesLabel;
 		private CommonLib.Controls.cButton ExportButton;
+		private System.Windows.Forms.CheckBox DatabaseUpdateCheckBox;
 		}
 	}

@@ -487,6 +487,7 @@ namespace ReloadersWorkShop
 			this.FormCancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.FormCancelButton.Location = new System.Drawing.Point(174, 453);
 			this.FormCancelButton.Name = "FormCancelButton";
+			this.FormCancelButton.ShowToolTips = true;
 			this.FormCancelButton.Size = new System.Drawing.Size(75, 23);
 			this.FormCancelButton.TabIndex = 5;
 			this.FormCancelButton.Text = "Cancel";
@@ -496,9 +497,10 @@ namespace ReloadersWorkShop
 			// OKButton
 			// 
 			this.OKButton.ButtonType = CommonLib.Controls.cOKButton.eButtonTypes.OK;
-			this.OKButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.OKButton.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.OKButton.Location = new System.Drawing.Point(81, 453);
 			this.OKButton.Name = "OKButton";
+			this.OKButton.ShowToolTips = true;
 			this.OKButton.Size = new System.Drawing.Size(75, 23);
 			this.OKButton.TabIndex = 6;
 			this.OKButton.Text = "OK";
@@ -511,7 +513,7 @@ namespace ReloadersWorkShop
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.FormCancelButton;
-			this.ClientSize = new System.Drawing.Size(330, 490);
+			this.ClientSize = new System.Drawing.Size(326, 486);
 			this.ControlBox = false;
 			this.Controls.Add(this.OKButton);
 			this.Controls.Add(this.FormCancelButton);
