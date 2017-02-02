@@ -1048,9 +1048,9 @@ namespace ReloadersWorkShop
 				{
 				string strOutputPath = m_DataFiles.GetDataPath();
 
-//				bool fSuccess = false;
+				bool fSuccess = false;
 
-				bool fSuccess = RWUpdater.UpdateFile("RWDatabaseUpdate.xml", strOutputPath);
+//				bool fSuccess = RWUpdater.UpdateFile("RWDatabaseUpdate.xml", strOutputPath);
 
 				if (fSuccess)
 					{
