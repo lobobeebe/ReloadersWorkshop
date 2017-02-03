@@ -2078,6 +2078,31 @@ namespace ReloadersWorkShop.Preferences
 			}
 
 		//============================================================================*
+		// FormatString Property
+		//============================================================================*
+
+		public string FormatString(cDataFiles.eDataType eDataType, int nParmNum = 0)
+			{
+			string strFormat = "{";
+
+			strFormat += String.Format("{0}:F", nParmNum);
+
+			switch (eDataType)
+				{
+				case cDataFiles.eDataType.BulletWeight:
+					strFormat += String.Format("{0:G0}", m_nBulletWeightDecimals);
+					break;
+				case cDataFiles.eDataType.Dimension:
+					strFormat += String.Format("{0:G0}", m_nDimensionDecimals);
+					break;
+				}
+
+			strFormat += "}";
+
+			return (strFormat);
+			}
+
+		//============================================================================*
 		// GetColumn()
 		//============================================================================*
 

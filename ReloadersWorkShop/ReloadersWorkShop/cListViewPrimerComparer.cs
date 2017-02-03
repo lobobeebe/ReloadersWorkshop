@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cListViewPrimerComparer.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -101,7 +101,7 @@ namespace ReloadersWorkShop
 				// Quantity
 				//----------------------------------------------------------------------------*
 
-				case 10:
+				case 8:
 					double dQuantity1 = Primer1.Quantity;
 					double dQuantity2 = Primer2.Quantity;
 
@@ -121,9 +121,16 @@ namespace ReloadersWorkShop
 				// Cost
 				//----------------------------------------------------------------------------*
 
-				case 11:
-					double dCost1 = m_DataFiles.SupplyCostEach(Primer1);
-					double dCost2 = m_DataFiles.SupplyCostEach(Primer2);
+				case 9:
+					double dCost1 = 0.0;
+
+					if ((Object1 as ListViewItem).Text != "-")
+						Double.TryParse((Object1 as ListViewItem).SubItems[9].Text, out dCost1);
+
+					double dCost2 = 0.0;
+
+					if ((Object2 as ListViewItem).Text != "-")
+						Double.TryParse((Object2 as ListViewItem).SubItems[9].Text, out dCost2);
 
 					rc = dCost1.CompareTo(dCost2);
 

@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cBullet.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -521,21 +521,17 @@ namespace ReloadersWorkShop
 			if (Manufacturer != null)
 				strString = Manufacturer.Name;
 
-			string strDiameterFormat = " {0:F";
-			strDiameterFormat += String.Format("{0:G0}", cPreferences.StaticPreferences.DimensionDecimals);
-			strDiameterFormat += "}";
+			string strDiameterFormat = cPreferences.StaticPreferences.FormatString(cDataFiles.eDataType.Dimension);
 
-			string strWeightFormat = " {0:F";
-			strWeightFormat += String.Format("{0:G0}", cPreferences.StaticPreferences.BulletWeightDecimals);
-			strWeightFormat += "}";
+			string strWeightFormat = cPreferences.StaticPreferences.FormatString(cDataFiles.eDataType.BulletWeight);
 
 			bool fType = false;
 
 			if (!String.IsNullOrEmpty(m_strPartNumber))
-				strString += String.Format(" {0}", m_strPartNumber);
+				strString += String.Format(" {0}, ", m_strPartNumber);
 			else
 				{
-				strString += String.Format(" {0}", m_strType);
+				strString += String.Format(" {0}, ", m_strType);
 
 				fType = true;
 				}
@@ -544,9 +540,11 @@ namespace ReloadersWorkShop
 
 			strString += cDataFiles.MetricString(cDataFiles.eDataType.Dimension);
 
+			strString += " ";
+
 			strString += String.Format(strWeightFormat, cPreferences.StaticPreferences.MetricBulletWeights ? cConversions.GrainsToGrams(m_dWeight) : m_dWeight);
 
-			strString += cPreferences.StaticPreferences.MetricBulletWeights ? "g" : "gr";
+			strString += cDataFiles.MetricString(cDataFiles.eDataType.BulletWeight);
 
 			if (!fType)
 				strString += String.Format(" {0}", m_strType);
@@ -567,22 +565,18 @@ namespace ReloadersWorkShop
 			if (Manufacturer != null)
 				strString = Manufacturer.Name;
 
-			string strWeightFormat = ", {0:F";
-			strWeightFormat += String.Format("{0:G0}", cPreferences.StaticPreferences.BulletWeightDecimals);
-			strWeightFormat += "}";
-
 			bool fType = false;
 
 			if (!String.IsNullOrEmpty(m_strPartNumber))
-				strString += String.Format(" {0}", m_strPartNumber);
+				strString += String.Format(" {0}, ", m_strPartNumber);
 			else
 				{
-				strString += String.Format(", {0}", m_strType);
+				strString += String.Format(", {0}, ", m_strType);
 
 				fType = true;
 				}
 
-			strString += String.Format(strWeightFormat, cPreferences.StaticPreferences.MetricBulletWeights ? cConversions.GrainsToGrams(m_dWeight) : m_dWeight);
+			strString += String.Format(cPreferences.StaticPreferences.FormatString(cDataFiles.eDataType.BulletWeight), cPreferences.StaticPreferences.MetricBulletWeights ? cConversions.GrainsToGrams(m_dWeight) : m_dWeight);
 
 			strString += cPreferences.StaticPreferences.MetricBulletWeights ? " g" : " gr";
 

@@ -124,7 +124,7 @@ namespace ReloadersWorkShop
 					}
 				}
 
-			SetClientSizeCore(GeneralGroup.Location.X + GeneralGroup.Width + 10, FormCancelButton.Location.Y + FormCancelButton.Height + 20);
+			SetClientSizeCore(GeneralGroupBox.Location.X + GeneralGroupBox.Width + 10, FormCancelButton.Location.Y + FormCancelButton.Height + 20);
 
 			//----------------------------------------------------------------------------*
 			// Event Handlers
@@ -245,7 +245,7 @@ namespace ReloadersWorkShop
 			// Set Gear Data Fields
 			//----------------------------------------------------------------------------*
 
-			SetInputParameters();
+//			SetInputParameters();
 
 			SetStaticToolTips();
 
@@ -1019,6 +1019,7 @@ namespace ReloadersWorkShop
 			ScopeDetailsGroupBox.Visible = m_Gear.GearType == cGear.eGearTypes.Scope;
 			RedDotDetailsGroupBox.Visible = m_Gear.GearType == cGear.eGearTypes.RedDot;
 			MagnifierDetailsGroupBox.Visible = m_Gear.GearType == cGear.eGearTypes.Magnifier;
+			LightDetailsGroupBox.Visible = m_Gear.GearType == cGear.eGearTypes.Light;
 
 			GroupBox DetailsGroup = null;
 
@@ -1032,6 +1033,10 @@ namespace ReloadersWorkShop
 					DetailsGroup = RedDotDetailsGroupBox;
 					break;
 
+				case cGear.eGearTypes.Light:
+					DetailsGroup = LightDetailsGroupBox;
+					break;
+
 				case cGear.eGearTypes.Magnifier:
 					DetailsGroup = MagnifierDetailsGroupBox;
 					break;
@@ -1039,17 +1044,21 @@ namespace ReloadersWorkShop
 
 			if (DetailsGroup != null)
 				{
-				DetailsGroup.Location = new Point(12, AcquisitionGroupBox.Location.Y + AcquisitionGroupBox.Height + 6);
+				DetailsGroup.Location = new Point(12, GeneralGroupBox.Location.Y + GeneralGroupBox.Height + 6);
 
-				NotesGroup.Location = new Point(12, DetailsGroup.Location.Y + DetailsGroup.Height + 6);
+				AcquisitionGroupBox.Location = new Point(12, DetailsGroup.Location.Y + DetailsGroup.Height + 6);
 				}
 			else
-				NotesGroup.Location = new Point(12, AcquisitionGroupBox.Location.Y + AcquisitionGroupBox.Height + 6);
+				{
+				AcquisitionGroupBox.Location = new Point(12, GeneralGroupBox.Location.Y + GeneralGroupBox.Height + 6);
+				}
+
+			NotesGroup.Location = new Point(12, AcquisitionGroupBox.Location.Y + AcquisitionGroupBox.Height + 6);
 
 			OKButton.Location = new Point(OKButton.Location.X, NotesGroup.Location.Y + NotesGroup.Size.Height + 10);
 			FormCancelButton.Location = new Point(FormCancelButton.Location.X, NotesGroup.Location.Y + NotesGroup.Size.Height + 10);
 
-			SetClientSizeCore(GeneralGroup.Location.X + GeneralGroup.Width + 10, FormCancelButton.Location.Y + FormCancelButton.Height + 20);
+			SetClientSizeCore(GeneralGroupBox.Location.X + GeneralGroupBox.Width + 10, FormCancelButton.Location.Y + FormCancelButton.Height + 20);
 			}
 
 		//============================================================================*

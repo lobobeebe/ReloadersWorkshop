@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cListViewFirearmComparer.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -75,6 +75,9 @@ namespace ReloadersWorkShop
 
 			bool fSpecial = false;
 			int rc = 0;
+
+			double dTotal1 = 0.0;
+			double dTotal2 = 0.0;
 
 			switch (SortColumn)
 				{
@@ -313,20 +316,109 @@ namespace ReloadersWorkShop
 
 					break;
 
+
 				//----------------------------------------------------------------------------*
-				// Total
+				// Transfer Fees
 				//----------------------------------------------------------------------------*
 
 				case 10:
-					double dTotal1 = 0.0;
+					dTotal1 = 0.0;
 
 					if ((Object1 as ListViewItem).Text != "-")
 						Double.TryParse((Object1 as ListViewItem).SubItems[10].Text, out dTotal1);
 
-					double dTotal2 = 0.0;
+					dTotal2 = 0.0;
 
 					if ((Object2 as ListViewItem).Text != "-")
 						Double.TryParse((Object2 as ListViewItem).SubItems[10].Text, out dTotal2);
+
+					rc = dTotal1.CompareTo(dTotal2);
+
+					if (rc == 0)
+						{
+						rc = Firearm1.Manufacturer.CompareTo(Firearm2.Manufacturer);
+
+						if (rc == 0)
+							{
+							rc = cDataFiles.ComparePartNumbers(Firearm1.PartNumber, Firearm2.PartNumber);
+
+							if (rc == 0)
+								{
+								rc = Firearm1.Description.CompareTo(Firearm2.Description);
+
+								if (rc == 0)
+									{
+									rc = cDataFiles.ComparePartNumbers(Firearm1.SerialNumber, Firearm2.SerialNumber);
+
+									if (rc == 0)
+										rc = Firearm1.Source.CompareTo(Firearm2.Source);
+									}
+								}
+							}
+						}
+
+					fSpecial = true;
+
+					break;
+
+				//----------------------------------------------------------------------------*
+				// Other Fees
+				//----------------------------------------------------------------------------*
+
+				case 11:
+					dTotal1 = 0.0;
+
+					if ((Object1 as ListViewItem).Text != "-")
+						Double.TryParse((Object1 as ListViewItem).SubItems[11].Text, out dTotal1);
+
+					dTotal2 = 0.0;
+
+					if ((Object2 as ListViewItem).Text != "-")
+						Double.TryParse((Object2 as ListViewItem).SubItems[11].Text, out dTotal2);
+
+					rc = dTotal1.CompareTo(dTotal2);
+
+					if (rc == 0)
+						{
+						rc = Firearm1.Manufacturer.CompareTo(Firearm2.Manufacturer);
+
+						if (rc == 0)
+							{
+							rc = cDataFiles.ComparePartNumbers(Firearm1.PartNumber, Firearm2.PartNumber);
+
+							if (rc == 0)
+								{
+								rc = Firearm1.Description.CompareTo(Firearm2.Description);
+
+								if (rc == 0)
+									{
+									rc = cDataFiles.ComparePartNumbers(Firearm1.SerialNumber, Firearm2.SerialNumber);
+
+									if (rc == 0)
+										rc = Firearm1.Source.CompareTo(Firearm2.Source);
+									}
+								}
+							}
+						}
+
+					fSpecial = true;
+
+					break;
+
+				//----------------------------------------------------------------------------*
+				// Total
+				//----------------------------------------------------------------------------*
+
+				case 12:
+					dTotal1 = 0.0;
+
+					if ((Object1 as ListViewItem).Text != "-")
+						Double.TryParse((Object1 as ListViewItem).SubItems[12].Text, out dTotal1);
+
+					dTotal2 = 0.0;
+
+					if ((Object2 as ListViewItem).Text != "-")
+						Double.TryParse((Object2 as ListViewItem).SubItems[12].Text, out dTotal2);
 
 					rc = dTotal1.CompareTo(dTotal2);
 

@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cListViewCaseComparer.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -169,7 +169,7 @@ namespace ReloadersWorkShop
 				// Match
 				//----------------------------------------------------------------------------*
 
-				case 5:
+				case 6:
 					rc = Case1.Match.CompareTo(Case2.Match);
 
 					if (rc == 0)
@@ -190,7 +190,7 @@ namespace ReloadersWorkShop
 				// Military
 				//----------------------------------------------------------------------------*
 
-				case 6:
+				case 7:
 					rc = Case1.Military.CompareTo(Case2.Military);
 
 					if (rc == 0)
@@ -211,7 +211,7 @@ namespace ReloadersWorkShop
 				// Quantity
 				//----------------------------------------------------------------------------*
 
-				case 7:
+				case 8:
 					double dQuantity1 = Case1.Quantity;
 					double dQuantity2 = Case2.Quantity;
 
@@ -231,9 +231,16 @@ namespace ReloadersWorkShop
 				// Cost
 				//----------------------------------------------------------------------------*
 
-				case 8:
-					double dCost1 = m_DataFiles.SupplyCostEach(Case1);
-					double dCost2 = m_DataFiles.SupplyCostEach(Case2);
+				case 9:
+					double dCost1 = 0.0;
+
+					if ((Object1 as ListViewItem).Text != "-")
+						Double.TryParse((Object1 as ListViewItem).SubItems[9].Text, out dCost1);
+
+					double dCost2 = 0.0;
+
+					if ((Object2 as ListViewItem).Text != "-")
+						Double.TryParse((Object2 as ListViewItem).SubItems[9].Text, out dCost2);
 
 					rc = dCost1.CompareTo(dCost2);
 

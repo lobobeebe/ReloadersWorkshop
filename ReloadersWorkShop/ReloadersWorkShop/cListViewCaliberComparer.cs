@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cListViewCaliberComparer.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -145,11 +145,22 @@ namespace ReloadersWorkShop
 					break;
 
 				//----------------------------------------------------------------------------*
-				// Max Case Length
+				// Max COL
 				//----------------------------------------------------------------------------*
 
 				case 11:
 					rc = Caliber1.MaxCOL.CompareTo(Caliber2.MaxCOL);
+
+					fSpecial = true;
+
+					break;
+
+				//----------------------------------------------------------------------------*
+				// Max Neick Diameter
+				//----------------------------------------------------------------------------*
+
+				case 12:
+					rc = Caliber1.MaxNeckDiameter.CompareTo(Caliber2.MaxNeckDiameter);
 
 					fSpecial = true;
 

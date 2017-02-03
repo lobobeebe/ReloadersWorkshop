@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 			{
 			System.Windows.Forms.Label label18;
-			this.GeneralGroup = new System.Windows.Forms.GroupBox();
+			this.GeneralGroupBox = new System.Windows.Forms.GroupBox();
 			this.DescriptionTextBox = new CommonLib.Controls.cTextBox();
 			this.SerialNumberTextBox = new CommonLib.Controls.cTextBox();
 			this.PartNumberTextBox = new CommonLib.Controls.cTextBox();
@@ -84,18 +84,33 @@
 			this.label23 = new System.Windows.Forms.Label();
 			this.label22 = new System.Windows.Forms.Label();
 			this.MagnifierDetailsGroupBox = new System.Windows.Forms.GroupBox();
-			this.MagnifierEyeReliefTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.label20 = new System.Windows.Forms.Label();
 			this.MagnifierEyeReliefMeasurementLabel = new System.Windows.Forms.Label();
 			this.MagnifierFoVTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			this.label15 = new System.Windows.Forms.Label();
-			this.label20 = new System.Windows.Forms.Label();
+			this.MagnifierEyeReliefTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.ScopeBatteryTextBox = new CommonLib.Controls.cTextBox();
+			this.label16 = new System.Windows.Forms.Label();
+			this.label25 = new System.Windows.Forms.Label();
+			this.ScopeEyeReliefTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.label26 = new System.Windows.Forms.Label();
+			this.label27 = new System.Windows.Forms.Label();
+			this.label28 = new System.Windows.Forms.Label();
+			this.cDoubleValueTextBox1 = new CommonLib.Controls.cDoubleValueTextBox();
+			this.label29 = new System.Windows.Forms.Label();
+			this.LightDetailsGroupBox = new System.Windows.Forms.GroupBox();
+			this.LightBatteryTextBox = new CommonLib.Controls.cTextBox();
+			this.label32 = new System.Windows.Forms.Label();
+			this.LightLumensTextBox = new CommonLib.Controls.cTextBox();
+			this.label38 = new System.Windows.Forms.Label();
 			label18 = new System.Windows.Forms.Label();
-			this.GeneralGroup.SuspendLayout();
+			this.GeneralGroupBox.SuspendLayout();
 			this.AcquisitionGroupBox.SuspendLayout();
 			this.ScopeDetailsGroupBox.SuspendLayout();
 			this.RedDotDetailsGroupBox.SuspendLayout();
 			this.NotesGroup.SuspendLayout();
 			this.MagnifierDetailsGroupBox.SuspendLayout();
+			this.LightDetailsGroupBox.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// label18
@@ -103,33 +118,33 @@
 			label18.AutoSize = true;
 			label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			label18.ForeColor = System.Drawing.SystemColors.ControlText;
-			label18.Location = new System.Drawing.Point(153, 51);
+			label18.Location = new System.Drawing.Point(153, 52);
 			label18.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			label18.Name = "label18";
 			label18.Size = new System.Drawing.Size(64, 13);
 			label18.TabIndex = 30;
 			label18.Text = "Turret Click:";
 			// 
-			// GeneralGroup
+			// GeneralGroupBox
 			// 
-			this.GeneralGroup.Controls.Add(this.DescriptionTextBox);
-			this.GeneralGroup.Controls.Add(this.SerialNumberTextBox);
-			this.GeneralGroup.Controls.Add(this.PartNumberTextBox);
-			this.GeneralGroup.Controls.Add(this.label5);
-			this.GeneralGroup.Controls.Add(this.label4);
-			this.GeneralGroup.Controls.Add(this.label3);
-			this.GeneralGroup.Controls.Add(this.ManufacturerCombo);
-			this.GeneralGroup.Controls.Add(this.label2);
-			this.GeneralGroup.Controls.Add(this.TypeCombo);
-			this.GeneralGroup.Controls.Add(this.label1);
-			this.GeneralGroup.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.GeneralGroup.ForeColor = System.Drawing.SystemColors.HotTrack;
-			this.GeneralGroup.Location = new System.Drawing.Point(12, 12);
-			this.GeneralGroup.Name = "GeneralGroup";
-			this.GeneralGroup.Size = new System.Drawing.Size(339, 170);
-			this.GeneralGroup.TabIndex = 0;
-			this.GeneralGroup.TabStop = false;
-			this.GeneralGroup.Text = "General";
+			this.GeneralGroupBox.Controls.Add(this.DescriptionTextBox);
+			this.GeneralGroupBox.Controls.Add(this.SerialNumberTextBox);
+			this.GeneralGroupBox.Controls.Add(this.PartNumberTextBox);
+			this.GeneralGroupBox.Controls.Add(this.label5);
+			this.GeneralGroupBox.Controls.Add(this.label4);
+			this.GeneralGroupBox.Controls.Add(this.label3);
+			this.GeneralGroupBox.Controls.Add(this.ManufacturerCombo);
+			this.GeneralGroupBox.Controls.Add(this.label2);
+			this.GeneralGroupBox.Controls.Add(this.TypeCombo);
+			this.GeneralGroupBox.Controls.Add(this.label1);
+			this.GeneralGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.GeneralGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
+			this.GeneralGroupBox.Location = new System.Drawing.Point(12, 12);
+			this.GeneralGroupBox.Name = "GeneralGroupBox";
+			this.GeneralGroupBox.Size = new System.Drawing.Size(339, 170);
+			this.GeneralGroupBox.TabIndex = 0;
+			this.GeneralGroupBox.TabStop = false;
+			this.GeneralGroupBox.Text = "General";
 			// 
 			// DescriptionTextBox
 			// 
@@ -233,19 +248,20 @@
 			this.TypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.TypeCombo.FormattingEnabled = true;
 			this.TypeCombo.Items.AddRange(new object[] {
-            "Scope",
-            "Red Dot",
-            "Laser",
-            "Magnifier",
-            "Light",
-            "Trigger",
-            "Furniture",
             "Bipod / Monopod",
             "Firearm Parts",
-            "Other"});
+            "Furniture",
+            "Laser",
+            "Light",
+            "Magnifier",
+            "Other",
+            "Red Dot",
+            "Scope",
+            "Trigger"});
 			this.TypeCombo.Location = new System.Drawing.Point(107, 24);
 			this.TypeCombo.Name = "TypeCombo";
 			this.TypeCombo.Size = new System.Drawing.Size(174, 21);
+			this.TypeCombo.Sorted = true;
 			this.TypeCombo.TabIndex = 0;
 			// 
 			// label1
@@ -278,7 +294,7 @@
 			this.AcquisitionGroupBox.Location = new System.Drawing.Point(12, 188);
 			this.AcquisitionGroupBox.Name = "AcquisitionGroupBox";
 			this.AcquisitionGroupBox.Size = new System.Drawing.Size(339, 160);
-			this.AcquisitionGroupBox.TabIndex = 1;
+			this.AcquisitionGroupBox.TabIndex = 2;
 			this.AcquisitionGroupBox.TabStop = false;
 			this.AcquisitionGroupBox.Text = "Acquisition Details";
 			// 
@@ -432,6 +448,11 @@
 			// 
 			// ScopeDetailsGroupBox
 			// 
+			this.ScopeDetailsGroupBox.Controls.Add(this.label25);
+			this.ScopeDetailsGroupBox.Controls.Add(this.ScopeEyeReliefTextBox);
+			this.ScopeDetailsGroupBox.Controls.Add(this.label26);
+			this.ScopeDetailsGroupBox.Controls.Add(this.ScopeBatteryTextBox);
+			this.ScopeDetailsGroupBox.Controls.Add(this.label16);
 			this.ScopeDetailsGroupBox.Controls.Add(this.ScopeTurretTypeCombo);
 			this.ScopeDetailsGroupBox.Controls.Add(this.ScopeClickTextBox);
 			this.ScopeDetailsGroupBox.Controls.Add(label18);
@@ -447,8 +468,8 @@
 			this.ScopeDetailsGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
 			this.ScopeDetailsGroupBox.Location = new System.Drawing.Point(392, 12);
 			this.ScopeDetailsGroupBox.Name = "ScopeDetailsGroupBox";
-			this.ScopeDetailsGroupBox.Size = new System.Drawing.Size(339, 85);
-			this.ScopeDetailsGroupBox.TabIndex = 2;
+			this.ScopeDetailsGroupBox.Size = new System.Drawing.Size(339, 102);
+			this.ScopeDetailsGroupBox.TabIndex = 1;
 			this.ScopeDetailsGroupBox.TabStop = false;
 			this.ScopeDetailsGroupBox.Text = "Scope Details";
 			this.ScopeDetailsGroupBox.Visible = false;
@@ -462,7 +483,7 @@
 			this.ScopeTurretTypeCombo.Items.AddRange(new object[] {
             "MOA",
             "Mil"});
-			this.ScopeTurretTypeCombo.Location = new System.Drawing.Point(265, 48);
+			this.ScopeTurretTypeCombo.Location = new System.Drawing.Point(265, 49);
 			this.ScopeTurretTypeCombo.Margin = new System.Windows.Forms.Padding(2);
 			this.ScopeTurretTypeCombo.Name = "ScopeTurretTypeCombo";
 			this.ScopeTurretTypeCombo.Size = new System.Drawing.Size(55, 21);
@@ -472,7 +493,7 @@
 			// 
 			this.ScopeClickTextBox.BackColor = System.Drawing.SystemColors.Window;
 			this.ScopeClickTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.ScopeClickTextBox.Location = new System.Drawing.Point(222, 48);
+			this.ScopeClickTextBox.Location = new System.Drawing.Point(222, 49);
 			this.ScopeClickTextBox.MaxLength = 5;
 			this.ScopeClickTextBox.MaxValue = 0D;
 			this.ScopeClickTextBox.MinValue = 0D;
@@ -493,7 +514,7 @@
 			this.ScopeTubeCombo.Items.AddRange(new object[] {
             "1 Inch",
             "30 mm"});
-			this.ScopeTubeCombo.Location = new System.Drawing.Point(65, 48);
+			this.ScopeTubeCombo.Location = new System.Drawing.Point(65, 49);
 			this.ScopeTubeCombo.Name = "ScopeTubeCombo";
 			this.ScopeTubeCombo.Size = new System.Drawing.Size(80, 21);
 			this.ScopeTubeCombo.TabIndex = 2;
@@ -503,7 +524,7 @@
 			this.label7.AutoSize = true;
 			this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label7.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label7.Location = new System.Drawing.Point(24, 51);
+			this.label7.Location = new System.Drawing.Point(24, 52);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(35, 13);
 			this.label7.TabIndex = 10;
@@ -585,21 +606,25 @@
 			// RedDotDetailsGroupBox
 			// 
 			this.RedDotDetailsGroupBox.Controls.Add(this.RedDotCowitnessMeasurementLabel);
+			this.RedDotDetailsGroupBox.Controls.Add(this.label29);
 			this.RedDotDetailsGroupBox.Controls.Add(this.RedDotTubeDiameterMeasurementLabel);
+			this.RedDotDetailsGroupBox.Controls.Add(this.cDoubleValueTextBox1);
 			this.RedDotDetailsGroupBox.Controls.Add(this.RedDotTubeDiameterTextBox);
+			this.RedDotDetailsGroupBox.Controls.Add(this.label28);
 			this.RedDotDetailsGroupBox.Controls.Add(this.label8);
 			this.RedDotDetailsGroupBox.Controls.Add(this.RedDotCowitnessTextBox);
 			this.RedDotDetailsGroupBox.Controls.Add(this.RedDotMOATextBox);
 			this.RedDotDetailsGroupBox.Controls.Add(this.label14);
+			this.RedDotDetailsGroupBox.Controls.Add(this.label27);
 			this.RedDotDetailsGroupBox.Controls.Add(this.RedDotBatteryTextBox);
 			this.RedDotDetailsGroupBox.Controls.Add(this.label17);
 			this.RedDotDetailsGroupBox.Controls.Add(this.label19);
 			this.RedDotDetailsGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.RedDotDetailsGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
-			this.RedDotDetailsGroupBox.Location = new System.Drawing.Point(392, 103);
+			this.RedDotDetailsGroupBox.Location = new System.Drawing.Point(392, 127);
 			this.RedDotDetailsGroupBox.Name = "RedDotDetailsGroupBox";
 			this.RedDotDetailsGroupBox.Size = new System.Drawing.Size(339, 85);
-			this.RedDotDetailsGroupBox.TabIndex = 2;
+			this.RedDotDetailsGroupBox.TabIndex = 1;
 			this.RedDotDetailsGroupBox.TabStop = false;
 			this.RedDotDetailsGroupBox.Text = "Red Dot Details";
 			this.RedDotDetailsGroupBox.Visible = false;
@@ -702,7 +727,7 @@
 			// 
 			this.RedDotBatteryTextBox.BackColor = System.Drawing.SystemColors.Window;
 			this.RedDotBatteryTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.RedDotBatteryTextBox.Location = new System.Drawing.Point(229, 50);
+			this.RedDotBatteryTextBox.Location = new System.Drawing.Point(229, 49);
 			this.RedDotBatteryTextBox.MaxLength = 20;
 			this.RedDotBatteryTextBox.Name = "RedDotBatteryTextBox";
 			this.RedDotBatteryTextBox.Required = false;
@@ -769,7 +794,7 @@
 			this.OKButton.Name = "OKButton";
 			this.OKButton.ShowToolTips = true;
 			this.OKButton.Size = new System.Drawing.Size(75, 23);
-			this.OKButton.TabIndex = 7;
+			this.OKButton.TabIndex = 4;
 			this.OKButton.Text = "OK";
 			this.OKButton.ToolTip = "Click to accept changes and exit.";
 			this.OKButton.UseVisualStyleBackColor = true;
@@ -782,7 +807,7 @@
 			this.FormCancelButton.Name = "FormCancelButton";
 			this.FormCancelButton.ShowToolTips = true;
 			this.FormCancelButton.Size = new System.Drawing.Size(75, 23);
-			this.FormCancelButton.TabIndex = 8;
+			this.FormCancelButton.TabIndex = 5;
 			this.FormCancelButton.Text = "Cancel";
 			this.FormCancelButton.ToolTip = "Click to cancel changes and exit.";
 			this.FormCancelButton.UseVisualStyleBackColor = true;
@@ -847,30 +872,24 @@
 			this.MagnifierDetailsGroupBox.Controls.Add(this.label24);
 			this.MagnifierDetailsGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.MagnifierDetailsGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
-			this.MagnifierDetailsGroupBox.Location = new System.Drawing.Point(392, 194);
+			this.MagnifierDetailsGroupBox.Location = new System.Drawing.Point(392, 218);
 			this.MagnifierDetailsGroupBox.Name = "MagnifierDetailsGroupBox";
 			this.MagnifierDetailsGroupBox.Size = new System.Drawing.Size(339, 85);
-			this.MagnifierDetailsGroupBox.TabIndex = 2;
+			this.MagnifierDetailsGroupBox.TabIndex = 1;
 			this.MagnifierDetailsGroupBox.TabStop = false;
 			this.MagnifierDetailsGroupBox.Text = "Magnifier Details";
 			this.MagnifierDetailsGroupBox.Visible = false;
 			// 
-			// MagnifierEyeReliefTextBox
+			// label20
 			// 
-			this.MagnifierEyeReliefTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.MagnifierEyeReliefTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.MagnifierEyeReliefTextBox.Location = new System.Drawing.Point(242, 23);
-			this.MagnifierEyeReliefTextBox.MaxLength = 4;
-			this.MagnifierEyeReliefTextBox.MaxValue = 0D;
-			this.MagnifierEyeReliefTextBox.MinValue = 0D;
-			this.MagnifierEyeReliefTextBox.Name = "MagnifierEyeReliefTextBox";
-			this.MagnifierEyeReliefTextBox.NumDecimals = 1;
-			this.MagnifierEyeReliefTextBox.Size = new System.Drawing.Size(50, 20);
-			this.MagnifierEyeReliefTextBox.TabIndex = 1;
-			this.MagnifierEyeReliefTextBox.Text = "0.0";
-			this.MagnifierEyeReliefTextBox.ToolTip = "";
-			this.MagnifierEyeReliefTextBox.Value = 0D;
-			this.MagnifierEyeReliefTextBox.ZeroAllowed = true;
+			this.label20.AutoSize = true;
+			this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label20.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label20.Location = new System.Drawing.Point(144, 52);
+			this.label20.Name = "label20";
+			this.label20.Size = new System.Drawing.Size(25, 13);
+			this.label20.TabIndex = 36;
+			this.label20.Text = "deg";
 			// 
 			// MagnifierEyeReliefMeasurementLabel
 			// 
@@ -911,23 +930,210 @@
 			this.label15.TabIndex = 34;
 			this.label15.Text = "Field of View:";
 			// 
-			// label20
+			// MagnifierEyeReliefTextBox
 			// 
-			this.label20.AutoSize = true;
-			this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label20.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label20.Location = new System.Drawing.Point(144, 52);
-			this.label20.Name = "label20";
-			this.label20.Size = new System.Drawing.Size(25, 13);
-			this.label20.TabIndex = 36;
-			this.label20.Text = "deg";
+			this.MagnifierEyeReliefTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.MagnifierEyeReliefTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.MagnifierEyeReliefTextBox.Location = new System.Drawing.Point(242, 23);
+			this.MagnifierEyeReliefTextBox.MaxLength = 4;
+			this.MagnifierEyeReliefTextBox.MaxValue = 0D;
+			this.MagnifierEyeReliefTextBox.MinValue = 0D;
+			this.MagnifierEyeReliefTextBox.Name = "MagnifierEyeReliefTextBox";
+			this.MagnifierEyeReliefTextBox.NumDecimals = 1;
+			this.MagnifierEyeReliefTextBox.Size = new System.Drawing.Size(50, 20);
+			this.MagnifierEyeReliefTextBox.TabIndex = 1;
+			this.MagnifierEyeReliefTextBox.Text = "0.0";
+			this.MagnifierEyeReliefTextBox.ToolTip = "";
+			this.MagnifierEyeReliefTextBox.Value = 0D;
+			this.MagnifierEyeReliefTextBox.ZeroAllowed = true;
+			// 
+			// ScopeBatteryTextBox
+			// 
+			this.ScopeBatteryTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.ScopeBatteryTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ScopeBatteryTextBox.Location = new System.Drawing.Point(65, 74);
+			this.ScopeBatteryTextBox.MaxLength = 20;
+			this.ScopeBatteryTextBox.Name = "ScopeBatteryTextBox";
+			this.ScopeBatteryTextBox.Required = false;
+			this.ScopeBatteryTextBox.Size = new System.Drawing.Size(85, 20);
+			this.ScopeBatteryTextBox.TabIndex = 5;
+			this.ScopeBatteryTextBox.ToolTip = "";
+			this.ScopeBatteryTextBox.ValidChars = "";
+			this.ScopeBatteryTextBox.Value = "";
+			// 
+			// label16
+			// 
+			this.label16.AutoSize = true;
+			this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label16.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label16.Location = new System.Drawing.Point(19, 77);
+			this.label16.Name = "label16";
+			this.label16.Size = new System.Drawing.Size(43, 13);
+			this.label16.TabIndex = 32;
+			this.label16.Text = "Battery:";
+			// 
+			// label25
+			// 
+			this.label25.AutoSize = true;
+			this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label25.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label25.Location = new System.Drawing.Point(278, 77);
+			this.label25.Name = "label25";
+			this.label25.Size = new System.Drawing.Size(15, 13);
+			this.label25.TabIndex = 37;
+			this.label25.Text = "in";
+			// 
+			// ScopeEyeReliefTextBox
+			// 
+			this.ScopeEyeReliefTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.ScopeEyeReliefTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ScopeEyeReliefTextBox.Location = new System.Drawing.Point(222, 74);
+			this.ScopeEyeReliefTextBox.MaxLength = 4;
+			this.ScopeEyeReliefTextBox.MaxValue = 0D;
+			this.ScopeEyeReliefTextBox.MinValue = 0D;
+			this.ScopeEyeReliefTextBox.Name = "ScopeEyeReliefTextBox";
+			this.ScopeEyeReliefTextBox.NumDecimals = 1;
+			this.ScopeEyeReliefTextBox.Size = new System.Drawing.Size(50, 20);
+			this.ScopeEyeReliefTextBox.TabIndex = 6;
+			this.ScopeEyeReliefTextBox.Text = "0.0";
+			this.ScopeEyeReliefTextBox.ToolTip = "";
+			this.ScopeEyeReliefTextBox.Value = 0D;
+			this.ScopeEyeReliefTextBox.ZeroAllowed = true;
+			// 
+			// label26
+			// 
+			this.label26.AutoSize = true;
+			this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label26.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label26.Location = new System.Drawing.Point(158, 77);
+			this.label26.Name = "label26";
+			this.label26.Size = new System.Drawing.Size(58, 13);
+			this.label26.TabIndex = 36;
+			this.label26.Text = "Eye Relief:";
+			// 
+			// label27
+			// 
+			this.label27.AutoSize = true;
+			this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label27.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label27.Location = new System.Drawing.Point(182, 52);
+			this.label27.Name = "label27";
+			this.label27.Size = new System.Drawing.Size(43, 13);
+			this.label27.TabIndex = 6;
+			this.label27.Text = "Battery:";
+			// 
+			// label28
+			// 
+			this.label28.AutoSize = true;
+			this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label28.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label28.Location = new System.Drawing.Point(19, 52);
+			this.label28.Name = "label28";
+			this.label28.Size = new System.Drawing.Size(58, 13);
+			this.label28.TabIndex = 34;
+			this.label28.Text = "Tube Size:";
+			// 
+			// cDoubleValueTextBox1
+			// 
+			this.cDoubleValueTextBox1.BackColor = System.Drawing.SystemColors.Window;
+			this.cDoubleValueTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.cDoubleValueTextBox1.Location = new System.Drawing.Point(82, 49);
+			this.cDoubleValueTextBox1.MaxLength = 2;
+			this.cDoubleValueTextBox1.MaxValue = 0D;
+			this.cDoubleValueTextBox1.MinValue = 0D;
+			this.cDoubleValueTextBox1.Name = "cDoubleValueTextBox1";
+			this.cDoubleValueTextBox1.NumDecimals = 0;
+			this.cDoubleValueTextBox1.Size = new System.Drawing.Size(40, 20);
+			this.cDoubleValueTextBox1.TabIndex = 2;
+			this.cDoubleValueTextBox1.Text = "0";
+			this.cDoubleValueTextBox1.ToolTip = "";
+			this.cDoubleValueTextBox1.Value = 0D;
+			this.cDoubleValueTextBox1.ZeroAllowed = true;
+			// 
+			// label29
+			// 
+			this.label29.AutoSize = true;
+			this.label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label29.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label29.Location = new System.Drawing.Point(128, 52);
+			this.label29.Name = "label29";
+			this.label29.Size = new System.Drawing.Size(23, 13);
+			this.label29.TabIndex = 36;
+			this.label29.Text = "mm";
+			// 
+			// LightDetailsGroupBox
+			// 
+			this.LightDetailsGroupBox.Controls.Add(this.LightBatteryTextBox);
+			this.LightDetailsGroupBox.Controls.Add(this.label32);
+			this.LightDetailsGroupBox.Controls.Add(this.LightLumensTextBox);
+			this.LightDetailsGroupBox.Controls.Add(this.label38);
+			this.LightDetailsGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.LightDetailsGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
+			this.LightDetailsGroupBox.Location = new System.Drawing.Point(392, 309);
+			this.LightDetailsGroupBox.Name = "LightDetailsGroupBox";
+			this.LightDetailsGroupBox.Size = new System.Drawing.Size(339, 102);
+			this.LightDetailsGroupBox.TabIndex = 38;
+			this.LightDetailsGroupBox.TabStop = false;
+			this.LightDetailsGroupBox.Text = "Light Details";
+			this.LightDetailsGroupBox.Visible = false;
+			// 
+			// LightBatteryTextBox
+			// 
+			this.LightBatteryTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.LightBatteryTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.LightBatteryTextBox.Location = new System.Drawing.Point(212, 24);
+			this.LightBatteryTextBox.MaxLength = 20;
+			this.LightBatteryTextBox.Name = "LightBatteryTextBox";
+			this.LightBatteryTextBox.Required = false;
+			this.LightBatteryTextBox.Size = new System.Drawing.Size(85, 20);
+			this.LightBatteryTextBox.TabIndex = 5;
+			this.LightBatteryTextBox.ToolTip = "";
+			this.LightBatteryTextBox.ValidChars = "";
+			this.LightBatteryTextBox.Value = "";
+			// 
+			// label32
+			// 
+			this.label32.AutoSize = true;
+			this.label32.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label32.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label32.Location = new System.Drawing.Point(166, 27);
+			this.label32.Name = "label32";
+			this.label32.Size = new System.Drawing.Size(43, 13);
+			this.label32.TabIndex = 32;
+			this.label32.Text = "Battery:";
+			// 
+			// LightLumensTextBox
+			// 
+			this.LightLumensTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.LightLumensTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.LightLumensTextBox.Location = new System.Drawing.Point(65, 24);
+			this.LightLumensTextBox.MaxLength = 5;
+			this.LightLumensTextBox.Name = "LightLumensTextBox";
+			this.LightLumensTextBox.Required = false;
+			this.LightLumensTextBox.Size = new System.Drawing.Size(55, 20);
+			this.LightLumensTextBox.TabIndex = 0;
+			this.LightLumensTextBox.ToolTip = "";
+			this.LightLumensTextBox.ValidChars = "";
+			this.LightLumensTextBox.Value = "";
+			// 
+			// label38
+			// 
+			this.label38.AutoSize = true;
+			this.label38.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label38.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label38.Location = new System.Drawing.Point(12, 27);
+			this.label38.Name = "label38";
+			this.label38.Size = new System.Drawing.Size(47, 13);
+			this.label38.TabIndex = 0;
+			this.label38.Text = "Lumens:";
 			// 
 			// cFirearmAccessoryForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(745, 488);
+			this.ClientSize = new System.Drawing.Size(741, 484);
 			this.ControlBox = false;
+			this.Controls.Add(this.LightDetailsGroupBox);
 			this.Controls.Add(this.FormCancelButton);
 			this.Controls.Add(this.OKButton);
 			this.Controls.Add(this.MagnifierDetailsGroupBox);
@@ -935,7 +1141,7 @@
 			this.Controls.Add(this.RedDotDetailsGroupBox);
 			this.Controls.Add(this.ScopeDetailsGroupBox);
 			this.Controls.Add(this.AcquisitionGroupBox);
-			this.Controls.Add(this.GeneralGroup);
+			this.Controls.Add(this.GeneralGroupBox);
 			this.DoubleBuffered = true;
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
 			this.MaximizeBox = false;
@@ -945,8 +1151,8 @@
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Add Firearm Accessory";
-			this.GeneralGroup.ResumeLayout(false);
-			this.GeneralGroup.PerformLayout();
+			this.GeneralGroupBox.ResumeLayout(false);
+			this.GeneralGroupBox.PerformLayout();
 			this.AcquisitionGroupBox.ResumeLayout(false);
 			this.AcquisitionGroupBox.PerformLayout();
 			this.ScopeDetailsGroupBox.ResumeLayout(false);
@@ -957,13 +1163,15 @@
 			this.NotesGroup.PerformLayout();
 			this.MagnifierDetailsGroupBox.ResumeLayout(false);
 			this.MagnifierDetailsGroupBox.PerformLayout();
+			this.LightDetailsGroupBox.ResumeLayout(false);
+			this.LightDetailsGroupBox.PerformLayout();
 			this.ResumeLayout(false);
 
 			}
 
 		#endregion
 
-		private System.Windows.Forms.GroupBox GeneralGroup;
+		private System.Windows.Forms.GroupBox GeneralGroupBox;
 		private System.Windows.Forms.ComboBox TypeCombo;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.ComboBox ManufacturerCombo;
@@ -1023,5 +1231,19 @@
 		private CommonLib.Controls.cDoubleValueTextBox MagnifierFoVTextBox;
 		private System.Windows.Forms.Label label15;
 		private CommonLib.Controls.cDoubleValueTextBox MagnifierEyeReliefTextBox;
+		private CommonLib.Controls.cTextBox ScopeBatteryTextBox;
+		private System.Windows.Forms.Label label16;
+		private System.Windows.Forms.Label label25;
+		private CommonLib.Controls.cDoubleValueTextBox ScopeEyeReliefTextBox;
+		private System.Windows.Forms.Label label26;
+		private System.Windows.Forms.Label label29;
+		private CommonLib.Controls.cDoubleValueTextBox cDoubleValueTextBox1;
+		private System.Windows.Forms.Label label28;
+		private System.Windows.Forms.Label label27;
+		private System.Windows.Forms.GroupBox LightDetailsGroupBox;
+		private CommonLib.Controls.cTextBox LightBatteryTextBox;
+		private System.Windows.Forms.Label label32;
+		private CommonLib.Controls.cTextBox LightLumensTextBox;
+		private System.Windows.Forms.Label label38;
 		}
 	}

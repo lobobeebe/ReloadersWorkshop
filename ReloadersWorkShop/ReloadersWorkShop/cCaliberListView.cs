@@ -49,7 +49,7 @@ namespace ReloadersWorkShop
 			new cListViewColumn(9, "CaseTrimHeader", "Min Case/Shell Length", HorizontalAlignment.Center, 150),
 			new cListViewColumn(10, "MaxCaseLengthHeader", "Max Case/Shell Length", HorizontalAlignment.Center, 150),
 			new cListViewColumn(11, "MaxCOLHeader", "Max COAL", HorizontalAlignment.Center, 120),
-			new cListViewColumn(12, "MaxneckDiameterHeader", "Max Neck Diameter", HorizontalAlignment.Center, 120)
+			new cListViewColumn(12, "MaxNeckDiameterHeader", "Max Neck Diameter", HorizontalAlignment.Center, 120)
 			};
 
 		//============================================================================*
