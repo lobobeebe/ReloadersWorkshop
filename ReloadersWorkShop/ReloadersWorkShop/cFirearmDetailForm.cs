@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cFirearmDetailForm.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -200,6 +200,8 @@ namespace ReloadersWorkShop
 				strTitle = "View Firearm Details";
 
 			Text = strTitle;
+
+			Text += String.Format("({0}x{1}", Size.Width, Size.Height);
 
 			//----------------------------------------------------------------------------*
 			// Finish up and exit

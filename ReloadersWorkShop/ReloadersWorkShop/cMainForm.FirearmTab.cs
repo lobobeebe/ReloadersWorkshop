@@ -1001,7 +1001,7 @@ namespace ReloadersWorkShop
 
 				dAccessoryTotalCost = 0.0;
 
-				dTotalCost = dFirearmCost + dTransferFees + dOtherFees;
+				dTotalCost = dFirearmCost;
 
 				foreach (cGear Gear in m_DataFiles.GearList)
 					{
@@ -1097,9 +1097,7 @@ namespace ReloadersWorkShop
 				dTransferFees += Firearm.TransferFees;
 				dOtherFees += Firearm.OtherFees;
 
-				dTotalCost += Firearm.PurchasePrice + Firearm.TransferFees + Firearm.OtherFees;
-
-				dAccessoryTotalCost = 0.0;
+				dTotalCost += Firearm.PurchasePrice;
 
 				foreach (cGear Gear in m_DataFiles.GearList)
 					{

@@ -710,6 +710,23 @@ namespace ReloadersWorkShop
 			label60.TabIndex = 20;
 			label60.Text = "Manufacturer:";
 			// 
+			// BallisticsKestrelButton
+			// 
+			BallisticsKestrelButton.AutoSize = true;
+			BallisticsKestrelButton.BackColor = System.Drawing.Color.Green;
+			BallisticsKestrelButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			BallisticsKestrelButton.FlatAppearance.BorderSize = 0;
+			BallisticsKestrelButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			BallisticsKestrelButton.ForeColor = System.Drawing.Color.White;
+			BallisticsKestrelButton.Location = new System.Drawing.Point(567, 70);
+			BallisticsKestrelButton.Margin = new System.Windows.Forms.Padding(2);
+			BallisticsKestrelButton.Name = "BallisticsKestrelButton";
+			BallisticsKestrelButton.Size = new System.Drawing.Size(92, 23);
+			BallisticsKestrelButton.TabIndex = 62;
+			BallisticsKestrelButton.Text = "Kestrel Start";
+			BallisticsKestrelButton.UseVisualStyleBackColor = false;
+			BallisticsKestrelButton.Visible = false;
+			// 
 			// MainMenu
 			// 
 			this.MainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -2270,23 +2287,6 @@ namespace ReloadersWorkShop
 			this.groupBox2.TabIndex = 53;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Atmospheric Conditions";
-			// 
-			// BallisticsKestrelButton
-			// 
-			BallisticsKestrelButton.AutoSize = true;
-			BallisticsKestrelButton.BackColor = System.Drawing.Color.Green;
-			BallisticsKestrelButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			BallisticsKestrelButton.FlatAppearance.BorderSize = 0;
-			BallisticsKestrelButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			BallisticsKestrelButton.ForeColor = System.Drawing.Color.White;
-			BallisticsKestrelButton.Location = new System.Drawing.Point(567, 70);
-			BallisticsKestrelButton.Margin = new System.Windows.Forms.Padding(2);
-			BallisticsKestrelButton.Name = "BallisticsKestrelButton";
-			BallisticsKestrelButton.Size = new System.Drawing.Size(92, 23);
-			BallisticsKestrelButton.TabIndex = 62;
-			BallisticsKestrelButton.Text = "Kestrel Start";
-			BallisticsKestrelButton.UseVisualStyleBackColor = false;
-			BallisticsKestrelButton.Visible = false;
 			// 
 			// BallisticsUseStationPressureCheckBox
 			// 
@@ -5345,6 +5345,10 @@ namespace ReloadersWorkShop
 			this.SupplyFirearmTypeCombo.IncludeAny = false;
 			this.SupplyFirearmTypeCombo.IncludeShotgun = true;
 			this.SupplyFirearmTypeCombo.IntegralHeight = false;
+			this.SupplyFirearmTypeCombo.Items.AddRange(new object[] {
+            "Handgun",
+            "Rifle",
+            "Shotgun"});
 			this.SupplyFirearmTypeCombo.Location = new System.Drawing.Point(98, 50);
 			this.SupplyFirearmTypeCombo.Name = "SupplyFirearmTypeCombo";
 			this.SupplyFirearmTypeCombo.ShowToolTips = true;
@@ -5361,6 +5365,9 @@ namespace ReloadersWorkShop
 			this.LoadDataFirearmTypeCombo.FormattingEnabled = true;
 			this.LoadDataFirearmTypeCombo.IncludeAny = false;
 			this.LoadDataFirearmTypeCombo.IncludeShotgun = false;
+			this.LoadDataFirearmTypeCombo.Items.AddRange(new object[] {
+            "Handgun",
+            "Rifle"});
 			this.LoadDataFirearmTypeCombo.Location = new System.Drawing.Point(83, 22);
 			this.LoadDataFirearmTypeCombo.Name = "LoadDataFirearmTypeCombo";
 			this.LoadDataFirearmTypeCombo.ShowToolTips = true;
@@ -5377,6 +5384,9 @@ namespace ReloadersWorkShop
 			this.BatchFirearmTypeCombo.FormattingEnabled = true;
 			this.BatchFirearmTypeCombo.IncludeAny = false;
 			this.BatchFirearmTypeCombo.IncludeShotgun = false;
+			this.BatchFirearmTypeCombo.Items.AddRange(new object[] {
+            "Handgun",
+            "Rifle"});
 			this.BatchFirearmTypeCombo.Location = new System.Drawing.Point(83, 22);
 			this.BatchFirearmTypeCombo.Name = "BatchFirearmTypeCombo";
 			this.BatchFirearmTypeCombo.ShowToolTips = true;
@@ -5393,6 +5403,10 @@ namespace ReloadersWorkShop
 			this.AmmunitionFirearmTypeCombo.FormattingEnabled = true;
 			this.AmmunitionFirearmTypeCombo.IncludeAny = false;
 			this.AmmunitionFirearmTypeCombo.IncludeShotgun = true;
+			this.AmmunitionFirearmTypeCombo.Items.AddRange(new object[] {
+            "Handgun",
+            "Rifle",
+            "Shotgun"});
 			this.AmmunitionFirearmTypeCombo.Location = new System.Drawing.Point(81, 23);
 			this.AmmunitionFirearmTypeCombo.Name = "AmmunitionFirearmTypeCombo";
 			this.AmmunitionFirearmTypeCombo.ShowToolTips = true;
@@ -5409,6 +5423,9 @@ namespace ReloadersWorkShop
 			this.BallisticsFirearmTypeCombo.FormattingEnabled = true;
 			this.BallisticsFirearmTypeCombo.IncludeAny = false;
 			this.BallisticsFirearmTypeCombo.IncludeShotgun = false;
+			this.BallisticsFirearmTypeCombo.Items.AddRange(new object[] {
+            "Handgun",
+            "Rifle"});
 			this.BallisticsFirearmTypeCombo.Location = new System.Drawing.Point(94, 22);
 			this.BallisticsFirearmTypeCombo.Name = "BallisticsFirearmTypeCombo";
 			this.BallisticsFirearmTypeCombo.ShowToolTips = true;
