@@ -201,8 +201,6 @@ namespace ReloadersWorkShop
 
 			Text = strTitle;
 
-			Text += String.Format("({0}x{1}", Size.Width, Size.Height);
-
 			//----------------------------------------------------------------------------*
 			// Finish up and exit
 			//----------------------------------------------------------------------------*

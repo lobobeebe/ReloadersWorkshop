@@ -165,6 +165,8 @@ namespace ReloadersWorkShop
 				ScopeTubeCombo.SelectedIndexChanged += OnScopeTubeSizeChanged;
 				ScopeClickTextBox.TextChanged += OnScopeClickChanged;
 				ScopeTurretTypeCombo.SelectedIndexChanged += OnScopeTurretTypeChanged;
+				ScopeBatteryTextBox.TextChanged += OnScopeBatteryChanged;
+				ScopeEyeReliefTextBox.TextChanged += OnScopeEyeReliefChanged;
 
 				// Red Dot Details
 
@@ -522,6 +524,22 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// OnScopeBatteryChanged()
+		//============================================================================*
+
+		public void OnScopeBatteryChanged(Object sender, EventArgs args)
+			{
+			if (!m_fInitialized || m_fPopulating)
+				return;
+
+			(m_Gear as cScope).Battery = ScopeBatteryTextBox.Text;
+
+			m_fChanged = true;
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
 		// OnScopeClickChanged()
 		//============================================================================*
 
@@ -531,6 +549,22 @@ namespace ReloadersWorkShop
 				return;
 
 			(m_Gear as cScope).TurretClick = ScopeClickTextBox.Value;
+
+			m_fChanged = true;
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
+		// OnScopeEyeReliefChanged()
+		//============================================================================*
+
+		public void OnScopeEyeReliefChanged(Object sender, EventArgs args)
+			{
+			if (!m_fInitialized || m_fPopulating)
+				return;
+
+			(m_Gear as cScope).EyeRelief = cDataFiles.MetricToStandard(ScopeEyeReliefTextBox.Value, cDataFiles.eDataType.Firearm);
 
 			m_fChanged = true;
 
@@ -784,6 +818,8 @@ namespace ReloadersWorkShop
 					ScopePowerTextBox.Value = (m_Gear as cScope).Power;
 					ScopeObjectiveTextBox.Value = (m_Gear as cScope).Objective;
 					ScopeClickTextBox.Value = (m_Gear as cScope).TurretClick;
+					ScopeBatteryTextBox.Value = (m_Gear as cScope).Battery;
+					ScopeEyeReliefTextBox.Value = (m_Gear as cScope).EyeRelief;
 
 					//----------------------------------------------------------------------------*
 					// Turret Tube Size Combo

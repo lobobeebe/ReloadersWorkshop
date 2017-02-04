@@ -46,6 +46,10 @@ namespace ReloadersWorkShop
 
 		private double m_dTurretClick = 0.0;
 
+		private string m_strBattery = "";
+
+		private double m_dEyeRelief = 0.0;
+
 		//============================================================================*
 		// cScope() - Constructor
 		//============================================================================*
@@ -63,6 +67,23 @@ namespace ReloadersWorkShop
 			: base(Scope)
 			{
 			Copy(Scope);
+			}
+
+		//============================================================================*
+		// Battery Property
+		//============================================================================*
+
+		public string Battery
+			{
+			get
+				{
+				return (m_strBattery);
+				}
+
+			set
+				{
+				m_strBattery = value;
+				}
 			}
 
 		//============================================================================*
@@ -85,6 +106,26 @@ namespace ReloadersWorkShop
 			m_eTurretType = Scope.m_eTurretType;
 
 			m_dTurretClick = Scope.m_dTurretClick;
+
+			m_strBattery = Scope.m_strBattery;
+			m_dEyeRelief = Scope.m_dEyeRelief;
+			}
+
+		//============================================================================*
+		// EyeRelief Property
+		//============================================================================*
+
+		public double EyeRelief
+			{
+			get
+				{
+				return (m_dEyeRelief);
+				}
+
+			set
+				{
+				m_dEyeRelief = value;
+				}
 			}
 
 		//============================================================================*
