@@ -101,8 +101,8 @@
 			this.LightDetailsGroupBox = new System.Windows.Forms.GroupBox();
 			this.LightBatteryTextBox = new CommonLib.Controls.cTextBox();
 			this.label32 = new System.Windows.Forms.Label();
-			this.LightLumensTextBox = new CommonLib.Controls.cTextBox();
 			this.label38 = new System.Windows.Forms.Label();
+			this.LightLumensTextBox = new CommonLib.Controls.cIntegerValueTextBox();
 			label18 = new System.Windows.Forms.Label();
 			this.GeneralGroupBox.SuspendLayout();
 			this.AcquisitionGroupBox.SuspendLayout();
@@ -1063,9 +1063,9 @@
 			// 
 			// LightDetailsGroupBox
 			// 
+			this.LightDetailsGroupBox.Controls.Add(this.LightLumensTextBox);
 			this.LightDetailsGroupBox.Controls.Add(this.LightBatteryTextBox);
 			this.LightDetailsGroupBox.Controls.Add(this.label32);
-			this.LightDetailsGroupBox.Controls.Add(this.LightLumensTextBox);
 			this.LightDetailsGroupBox.Controls.Add(this.label38);
 			this.LightDetailsGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.LightDetailsGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
@@ -1079,12 +1079,12 @@
 			// 
 			// LightBatteryTextBox
 			// 
-			this.LightBatteryTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.LightBatteryTextBox.BackColor = System.Drawing.Color.LightPink;
 			this.LightBatteryTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.LightBatteryTextBox.Location = new System.Drawing.Point(212, 24);
 			this.LightBatteryTextBox.MaxLength = 20;
 			this.LightBatteryTextBox.Name = "LightBatteryTextBox";
-			this.LightBatteryTextBox.Required = false;
+			this.LightBatteryTextBox.Required = true;
 			this.LightBatteryTextBox.Size = new System.Drawing.Size(85, 20);
 			this.LightBatteryTextBox.TabIndex = 2;
 			this.LightBatteryTextBox.ToolTip = "";
@@ -1102,20 +1102,6 @@
 			this.label32.TabIndex = 32;
 			this.label32.Text = "Battery:";
 			// 
-			// LightLumensTextBox
-			// 
-			this.LightLumensTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.LightLumensTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.LightLumensTextBox.Location = new System.Drawing.Point(65, 24);
-			this.LightLumensTextBox.MaxLength = 5;
-			this.LightLumensTextBox.Name = "LightLumensTextBox";
-			this.LightLumensTextBox.Required = false;
-			this.LightLumensTextBox.Size = new System.Drawing.Size(55, 20);
-			this.LightLumensTextBox.TabIndex = 0;
-			this.LightLumensTextBox.ToolTip = "";
-			this.LightLumensTextBox.ValidChars = "";
-			this.LightLumensTextBox.Value = "";
-			// 
 			// label38
 			// 
 			this.label38.AutoSize = true;
@@ -1127,11 +1113,27 @@
 			this.label38.TabIndex = 0;
 			this.label38.Text = "Lumens:";
 			// 
+			// LightLumensTextBox
+			// 
+			this.LightLumensTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.LightLumensTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.LightLumensTextBox.Location = new System.Drawing.Point(65, 24);
+			this.LightLumensTextBox.MaxLength = 5;
+			this.LightLumensTextBox.MaxValue = 0;
+			this.LightLumensTextBox.MinValue = 0;
+			this.LightLumensTextBox.Name = "LightLumensTextBox";
+			this.LightLumensTextBox.Required = true;
+			this.LightLumensTextBox.Size = new System.Drawing.Size(57, 20);
+			this.LightLumensTextBox.TabIndex = 33;
+			this.LightLumensTextBox.Text = "0";
+			this.LightLumensTextBox.ToolTip = "";
+			this.LightLumensTextBox.Value = 0;
+			// 
 			// cFirearmAccessoryForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(737, 480);
+			this.ClientSize = new System.Drawing.Size(733, 476);
 			this.ControlBox = false;
 			this.Controls.Add(this.LightDetailsGroupBox);
 			this.Controls.Add(this.FormCancelButton);
@@ -1243,7 +1245,7 @@
 		private System.Windows.Forms.GroupBox LightDetailsGroupBox;
 		private CommonLib.Controls.cTextBox LightBatteryTextBox;
 		private System.Windows.Forms.Label label32;
-		private CommonLib.Controls.cTextBox LightLumensTextBox;
 		private System.Windows.Forms.Label label38;
+		private CommonLib.Controls.cIntegerValueTextBox LightLumensTextBox;
 		}
 	}

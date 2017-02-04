@@ -176,9 +176,14 @@ namespace ReloadersWorkShop
 			FirearmPrintDetailCheckBox.Checked = m_DataFiles.Preferences.FirearmPrintDetail;
 			FirearmPrintSpecsCheckBox.Checked = m_DataFiles.Preferences.FirearmPrintSpecs;
 
-			FirearmCostDetailsGroupBox.Text = String.Format("{0} ({1})", FirearmCostDetailsGroupBox.Text, m_DataFiles.Preferences.Currency);
-			FirearmCollectionGroupBox.Text = String.Format("{0} ({1})", FirearmCollectionGroupBox.Text, m_DataFiles.Preferences.Currency);
-			FirearmAccessoriesCostDetailsGroupBox.Text = String.Format("{0} ({1})", FirearmAccessoriesCostDetailsGroupBox.Text, m_DataFiles.Preferences.Currency);
+			if(FirearmCostDetailsGroupBox.Text.IndexOf(m_DataFiles.Preferences.Currency) < 0)
+				FirearmCostDetailsGroupBox.Text = String.Format("{0} ({1})", FirearmCostDetailsGroupBox.Text, m_DataFiles.Preferences.Currency);
+
+			if (FirearmCollectionGroupBox.Text.IndexOf(m_DataFiles.Preferences.Currency) < 0)
+				FirearmCollectionGroupBox.Text = String.Format("{0} ({1})", FirearmCollectionGroupBox.Text, m_DataFiles.Preferences.Currency);
+
+			if (FirearmAccessoriesCostDetailsGroupBox.Text.IndexOf(m_DataFiles.Preferences.Currency) < 0)
+				FirearmAccessoriesCostDetailsGroupBox.Text = String.Format("{0} ({1})", FirearmAccessoriesCostDetailsGroupBox.Text, m_DataFiles.Preferences.Currency);
 
 			FirearmAccessoriesShowAllCheckBox.Checked = m_DataFiles.Preferences.FirearmAccessoryShowAll;
 			FirearmAccessoriesShowGroupsCheckBox.Checked = m_DataFiles.Preferences.FirearmAccessoryShowGroups;

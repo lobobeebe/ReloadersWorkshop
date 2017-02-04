@@ -277,6 +277,7 @@
     <Compile Include="cImportForm.Designer.cs">
       <DependentUpon>cImportForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="cLight.cs" />
     <Compile Include="cListViewFirearmAccessoryComparer.cs" />
     <Compile Include="cLoad.Export.cs" />
     <Compile Include="cMagnifier.cs" />

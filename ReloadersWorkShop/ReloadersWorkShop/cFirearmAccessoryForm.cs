@@ -49,11 +49,16 @@ namespace ReloadersWorkShop
 		private const string cm_strScopeTubeToolTip = "Select this scope's tube diameter.";
 		private const string cm_strScopeClickToolTip = "Enter this scope's turret click increment.";
 		private const string cm_strScopeTypeToolTip = "Select this scope's turret type.";
+		private const string cm_strScopeBatteryToolTip = "Enter the battery information for this scope.  (2x2032, CR200, etc...)";
+		private const string cm_strScopeEyeReliefToolTip = "Enter this Scope's eye relief distance.";
 
 		private const string cm_strRedDotMOAToolTip = "Enter the MOA of this sight's dot.";
 		private const string cm_strRedDotCowitnessHeightToolTip = "Enter the height at which this sight will line up with iron sights.";
 		private const string cm_strRedDotTubeDiameterToolTip = "Enter this sight's tube diameter.";
 		private const string cm_strRedDotBatteryToolTip = "Enter the battery information for this sight.  (2x2032, CR200, etc...)";
+
+		private const string cm_strLightLumensToolTip = "Enter the lumen value for this light.";
+		private const string cm_strLightBatteryToolTip = "Enter the battery information for this light.  (2x2032, CR200, etc...)";
 
 		private const string cm_strOKButtonToolTip = "Click to add or update this part or accessory with the above data.";
 		private const string cm_strCancelButtonToolTip = "Click to cancel changes and return to the main window.";
@@ -110,6 +115,10 @@ namespace ReloadersWorkShop
 						m_Gear = new cScope((Gear as cScope));
 						break;
 
+					case cGear.eGearTypes.Light:
+						m_Gear = new cLight((Gear as cLight));
+						break;
+
 					case cGear.eGearTypes.RedDot:
 						m_Gear = new cRedDot((Gear as cRedDot));
 						break;
@@ -149,14 +158,16 @@ namespace ReloadersWorkShop
 				TaxTextBox.TextChanged += OnTaxChanged;
 				ShippingTextBox.TextChanged += OnShippingChanged;
 
+				// Light Details
+
+				LightBatteryTextBox.TextChanged += OnLightBatteryChanged;
+				LightLumensTextBox.TextChanged += OnLightLumensChanged;
+
 				// Magnifier Details
 
 				MagnifierPowerTextBox.TextChanged += OnMagnifierPowerChanged;
 				MagnifierEyeReliefTextBox.TextChanged += OnMagnifierEyeReliefChanged;
 				MagnifierFoVTextBox.TextChanged += OnMagnifierFoVChanged;
-
-				ScopeClickTextBox.TextChanged += OnScopeClickChanged;
-				ScopeTurretTypeCombo.SelectedIndexChanged += OnScopeTurretTypeChanged;
 
 				// Scope Details
 
@@ -190,12 +201,16 @@ namespace ReloadersWorkShop
 				PurchaseDatePicker.Enabled = false;
 				PriceTextBox.ReadOnly = true;
 
-				// Scope Details
+				// Light Details
 
-				ScopePowerTextBox.ReadOnly = true;
-				ScopeObjectiveTextBox.ReadOnly = true;
-				ScopeClickTextBox.ReadOnly = true;
+				LightBatteryTextBox.ReadOnly = true;
+				LightLumensTextBox.ReadOnly = true;
 
+				// Magnifier Details
+
+				MagnifierPowerTextBox.ReadOnly = true;
+				MagnifierEyeReliefTextBox.ReadOnly = true;
+				MagnifierFoVTextBox.ReadOnly = true;
 
 				// Red Dot Details
 
@@ -203,6 +218,12 @@ namespace ReloadersWorkShop
 				RedDotCowitnessTextBox.ReadOnly = true;
 				RedDotTubeDiameterTextBox.ReadOnly = true;
 				RedDotBatteryTextBox.ReadOnly = true;
+
+				// Scope Details
+
+				ScopePowerTextBox.ReadOnly = true;
+				ScopeObjectiveTextBox.ReadOnly = true;
+				ScopeClickTextBox.ReadOnly = true;
 				}
 
 			//----------------------------------------------------------------------------*
@@ -274,14 +295,17 @@ namespace ReloadersWorkShop
 			{
 			switch (eType)
 				{
-				case cGear.eGearTypes.Scope:
-					return (new cScope());
+				case cGear.eGearTypes.Light:
+					return (new cLight());
+
+				case cGear.eGearTypes.Magnifier:
+					return (new cMagnifier());
 
 				case cGear.eGearTypes.RedDot:
 					return (new cRedDot());
 
-				case cGear.eGearTypes.Magnifier:
-					return (new cMagnifier());
+				case cGear.eGearTypes.Scope:
+					return (new cScope());
 				}
 
 			return (new cGear(eType));
@@ -309,6 +333,38 @@ namespace ReloadersWorkShop
 				return;
 
 			m_Gear.Description = @DescriptionTextBox.Value;
+
+			m_fChanged = true;
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
+		// OnLightBatteryChanged()
+		//============================================================================*
+
+		public void OnLightBatteryChanged(Object sender, EventArgs args)
+			{
+			if (!m_fInitialized || m_fPopulating)
+				return;
+
+			(m_Gear as cLight).Battery = LightBatteryTextBox.Text;
+
+			m_fChanged = true;
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
+		// OnLightLumensChanged()
+		//============================================================================*
+
+		public void OnLightLumensChanged(Object sender, EventArgs args)
+			{
+			if (!m_fInitialized || m_fPopulating)
+				return;
+
+			(m_Gear as cLight).Lumens = LightLumensTextBox.Value;
 
 			m_fChanged = true;
 
@@ -872,6 +928,15 @@ namespace ReloadersWorkShop
 					break;
 
 				//----------------------------------------------------------------------------*
+				// Light Details
+				//----------------------------------------------------------------------------*
+
+				case cGear.eGearTypes.Light:
+					LightLumensTextBox.Value = (m_Gear as cLight).Lumens;
+					LightBatteryTextBox.Value = (m_Gear as cLight).Battery;
+					break;
+
+				//----------------------------------------------------------------------------*
 				// Magnifier Details
 				//----------------------------------------------------------------------------*
 
@@ -1116,6 +1181,9 @@ namespace ReloadersWorkShop
 
 			SourceCombo.MaxLength = 35;
 
+			LightBatteryTextBox.MaxLength = 30;
+			LightLumensTextBox.MaxLength = 5;
+
 			MagnifierPowerTextBox.MaxLength = 10;
 			MagnifierPowerTextBox.ValidChars = "0123456789-.";
 
@@ -1190,7 +1258,12 @@ namespace ReloadersWorkShop
 			m_PurchaseDateToolTip.ShowAlways = true;
 			m_PurchaseDateToolTip.RemoveAll();
 			m_PurchaseDateToolTip.SetToolTip(PurchaseDatePicker, cm_strPurchaseDateToolTip);
-			
+
+			// Light
+
+			LightBatteryTextBox.ToolTip = cm_strLightBatteryToolTip;
+			LightLumensTextBox.ToolTip = cm_strLightLumensToolTip;
+
 			// Magnifier
 
 			MagnifierPowerTextBox.ToolTip = cm_strMagnifierPowerToolTip;
@@ -1211,6 +1284,9 @@ namespace ReloadersWorkShop
 			m_ScopeTypeToolTip.ShowAlways = true;
 			m_ScopeTypeToolTip.RemoveAll();
 			m_ScopeTypeToolTip.SetToolTip(ScopeTurretTypeCombo, cm_strScopeTypeToolTip);
+
+			ScopeBatteryTextBox.ToolTip = cm_strScopeBatteryToolTip;
+			ScopeEyeReliefTextBox.ToolTip = cm_strScopeEyeReliefToolTip;
 
 			// Red Dot
 
@@ -1284,6 +1360,11 @@ namespace ReloadersWorkShop
 
 			switch (m_Gear.GearType)
 				{
+				case cGear.eGearTypes.Light:
+					if (!LightBatteryTextBox.ValueOK || !LightLumensTextBox.ValueOK)
+						fEnableOK = false;
+					break;
+
 				case cGear.eGearTypes.Magnifier:
 					if (!MagnifierPowerTextBox.ValueOK || !MagnifierEyeReliefTextBox.ValueOK || !MagnifierFoVTextBox.ValueOK)
 						fEnableOK = false;
