@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cBulletForm.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -11,10 +11,8 @@
 
 using System;
 using System.Drawing;
-using System.Windows;
 using System.Windows.Forms;
 
-using ReloadersWorkShop.Controls;
 using ReloadersWorkShop.Preferences;
 
 //============================================================================*
@@ -1181,13 +1179,11 @@ namespace ReloadersWorkShop
 
                 if (CheckBulletCaliber.CompareTo(OldBulletCaliber) == 0)
                     {
-                    //----------------------------------------------------------------------------*
-                    // Update the current Caliber record
-                    //----------------------------------------------------------------------------*
+					//----------------------------------------------------------------------------*
+					// Update the current Caliber record
+					//----------------------------------------------------------------------------*
 
-                    CheckBulletCaliber.Caliber = NewBulletCaliber.Caliber;
-                    CheckBulletCaliber.COL = NewBulletCaliber.COL;
-                    CheckBulletCaliber.CBTO = NewBulletCaliber.CBTO;
+					CheckBulletCaliber.Copy(NewBulletCaliber);
 
                     //----------------------------------------------------------------------------*
                     // Update the Caliber on the Caliber tab
@@ -1539,10 +1535,10 @@ namespace ReloadersWorkShop
 
                     bool fAdd = true;
 
-                    if (Math.Round(dBulletDiameter, 3) >= Math.Round(CheckCaliber.MinBulletDiameter, 3) &&
-                        Math.Round(dBulletDiameter, 3) <= Math.Round(CheckCaliber.MaxBulletDiameter, 3) &&
-                        Math.Round(dWeight, 3) >= Math.Round(CheckCaliber.MinBulletWeight, 3) &&
-                        Math.Round(dWeight, 3) <= Math.Round(CheckCaliber.MaxBulletWeight, 3))
+                    if (dBulletDiameter >= CheckCaliber.MinBulletDiameter &&
+                        dBulletDiameter <= CheckCaliber.MaxBulletDiameter &&
+                        dWeight >= CheckCaliber.MinBulletWeight &&
+                        dWeight <= CheckCaliber.MaxBulletWeight)
                         {
                         foreach (cBulletCaliber BulletCaliber in m_Bullet.BulletCaliberList)
                             {
