@@ -223,25 +223,17 @@ namespace ReloadersWorkShop
 
 			Item.Checked = Firearm.Checked;
 
-			string strLengthFormat = "{0:F";
-			strLengthFormat += String.Format("{0:G0}", m_DataFiles.Preferences.FirearmDecimals);
-			strLengthFormat += "}";
+			Item.SubItems.Add(Firearm.PartNumber);
+			Item.SubItems.Add(Firearm.SerialNumber);
+			Item.SubItems.Add(Firearm.Description);
+			Item.SubItems.Add(Firearm.PrimaryCaliber.ToString());
+			Item.SubItems.Add(Firearm.Source);
 
-			string strDimensionFormat = "{0:F";
-			strDimensionFormat += String.Format("{0:G0}", m_DataFiles.Preferences.DimensionDecimals);
-			strDimensionFormat += "}";
+			if (Firearm.PurchaseDate.Year == 1)
+				Firearm.PurchaseDate = DateTime.Today;
 
-			string strTwistFormat = "1 in {0:F";
-			strTwistFormat += String.Format("{0:G0}", m_DataFiles.Preferences.FirearmDecimals);
-			strTwistFormat += "} {1}";
-
-			Item.SubItems.Add(String.Format("{0}", Firearm.PartNumber));
-			Item.SubItems.Add(String.Format("{0}", Firearm.SerialNumber));
-			Item.SubItems.Add(String.Format("{0}", Firearm.Description));
-			Item.SubItems.Add(String.Format("{0}", Firearm.PrimaryCaliber));
-			Item.SubItems.Add(String.Format("{0}", Firearm.Source));
-			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source) ? String.Format("{0}", Firearm.PurchaseDate.ToShortDateString()) : "");
-			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source) && Firearm.PurchasePrice !=  0.0 ? String.Format("{0:F2}", Firearm.PurchasePrice) : "-");
+			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source)? String.Format("{0}", Firearm.PurchaseDate.ToShortDateString()) : "");
+			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source) && Firearm.PurchasePrice !=  0.0? String.Format("{0:F2}", Firearm.PurchasePrice) : "-");
 			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source) && Firearm.Tax != 0.0 ? String.Format("{0:F2}", Firearm.Tax) : "-");
 			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source) && Firearm.Shipping != 0.0 ? String.Format("{0:F2}", Firearm.Shipping) : "-");
 			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source) && Firearm.TransferFees != 0.0 ? String.Format("{0:F2}", Firearm.TransferFees) : "-");
@@ -249,7 +241,7 @@ namespace ReloadersWorkShop
 
 			double dTotal = Firearm.PurchasePrice + Firearm.Tax + Firearm.Shipping + Firearm.TransferFees + Firearm.OtherFees;
 
-			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source) && dTotal != 0.0 ? String.Format("{0:F2}", dTotal) : "-");
+			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source) && dTotal != 0.0 && Firearm.PurchaseDate.Year > 1 ? String.Format("{0:F2}", dTotal) : "-");
 			}
 
 		//============================================================================*

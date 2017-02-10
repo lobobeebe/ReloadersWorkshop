@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cChargeList.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -59,7 +59,7 @@ namespace ReloadersWorkShop
 			foreach (cCharge CheckCharge in this)
 				{
 				if (Charge.CompareTo(CheckCharge) == 0)
-					return(CheckCharge);
+					return (CheckCharge);
 				}
 
 			Add(Charge);
@@ -120,6 +120,46 @@ namespace ReloadersWorkShop
 					}
 
 				XMLNode = XMLNode.NextSibling;
+				}
+			}
+
+		//============================================================================*
+		// MinCharge Property
+		//============================================================================*
+
+		public cCharge MinCharge
+			{
+			get
+				{
+				cCharge Charge = null;
+
+				foreach (cCharge CheckCharge in this)
+					{
+					if (Charge == null || CheckCharge.PowderWeight < Charge.PowderWeight)
+						Charge = CheckCharge;
+					}
+
+				return (Charge);
+				}
+			}
+
+		//============================================================================*
+		// MaxCharge Property
+		//============================================================================*
+
+		public cCharge MaxCharge
+			{
+			get
+				{
+				cCharge Charge = null;
+
+				foreach (cCharge CheckCharge in this)
+					{
+					if (Charge == null || CheckCharge.PowderWeight > Charge.PowderWeight)
+						Charge = CheckCharge;
+					}
+
+				return (Charge);
 				}
 			}
 

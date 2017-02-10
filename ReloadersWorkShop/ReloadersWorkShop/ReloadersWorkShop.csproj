@@ -282,6 +282,12 @@
     <Compile Include="cLoad.Export.cs" />
     <Compile Include="cMagnifier.cs" />
     <Compile Include="cManufacturer.Export.cs" />
+    <Compile Include="cOCWForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="cOCWForm.Designer.cs">
+      <DependentUpon>cOCWForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\cViewButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -642,6 +648,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="cChargeForm.resx">
       <DependentUpon>cChargeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="cOCWForm.resx">
+      <DependentUpon>cOCWForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="cPowderForm.resx">
       <DependentUpon>cPowderForm.cs</DependentUpon>

@@ -190,6 +190,14 @@ namespace ReloadersWorkShop
 
 			Item.Text = String.Format("{0:N0}", Batch.BatchID);
 
+			if (Batch.OCWBatchID != 0)
+				{
+				if (Batch.BatchID != Batch.OCWBatchID)
+					Item.Text += String.Format(" (OCW-{0})", Batch.OCWBatchID);
+				else
+					Item.Text += " (OCW)";
+				}
+
 			if (Batch.Archived)
 				Item.Text += " - Archived";
 
@@ -227,7 +235,7 @@ namespace ReloadersWorkShop
 
 			if (fCompressed)
 				strPowderWeightFormat += "C";
-			 
+
 			strPowderWeightFormat += " {1} of {2}";
 
 			Item.SubItems.Add(String.Format(strPowderWeightFormat, cDataFiles.StandardToMetric(Batch.PowderWeight, cDataFiles.eDataType.PowderWeight), cDataFiles.MetricString(cDataFiles.eDataType.PowderWeight), Batch.Load.Powder.ToString()));
@@ -267,7 +275,7 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			if (Item == null)
-				return(null);
+				return (null);
 
 			//----------------------------------------------------------------------------*
 			// Otherwise, update the Item Data

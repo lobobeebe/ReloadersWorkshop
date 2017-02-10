@@ -595,51 +595,52 @@ namespace ReloadersWorkShop
 		// OnRemoveImageClicked()
 		//============================================================================*
 
-		private void OnRemoveImageClicked(object sender, EventArgs e)
+		private void OnRemoveImageClicked(object sender, EventArgs args)
 			{
 			DialogResult rc = MessageBox.Show(String.Format("Warning: Image file will be deleted from the {0} data folder\n\nAre you sure you wish to remove this photo?", Application.ProductName), "Image Deletion Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
 
 			if (rc == DialogResult.No)
 				return;
 
+			string strFilePath = m_strCurrentImagePath;
+
+			Bitmap FirearmImage = (Bitmap)FirearmPictureBox.Image;
+
+			FirearmPictureBox.Image = null;
+
+			FirearmImage.Dispose();
+
+			m_ImageList.Remove(m_strCurrentImagePath);
+
+			bool fPrimary = m_Firearm.ImageFile == m_strCurrentImagePath;
+
+			if (m_ImageList.Count > 0)
+				{
+				m_strCurrentImagePath = m_ImageList[0];
+
+				if (fPrimary)
+					m_Firearm.ImageFile = m_strCurrentImagePath;
+				}
+			else
+				{
+				m_strCurrentImagePath = "";
+
+				m_Firearm.ImageFile = m_strCurrentImagePath;
+				}
+
 			try
 				{
-				string strFilePath = m_strCurrentImagePath;
-
-				Image FirearmImage = FirearmPictureBox.Image;
-
-				FirearmPictureBox.Image = null;
-
-				FirearmImage.Dispose();
-
 				File.Delete(strFilePath);
 
-				m_ImageList.Remove(m_strCurrentImagePath);
-
-				bool fPrimary = m_Firearm.ImageFile == m_strCurrentImagePath;
-
-				if (m_ImageList.Count > 0)
-					{
-					m_strCurrentImagePath = m_ImageList[0];
-
-					if (fPrimary)
-						m_Firearm.ImageFile = m_strCurrentImagePath;
-					}
-				else
-					{
-					m_strCurrentImagePath = "";
-
-					m_Firearm.ImageFile = m_strCurrentImagePath;
-					}
-
-				m_fChanged = true;
-
-				PopulateFirearmData();
 				}
 			catch
 				{
 				// No need to do anything here
 				}
+
+			m_fChanged = true;
+
+			PopulateFirearmData();
 
 			UpdateButtons();
 			}
@@ -977,7 +978,7 @@ namespace ReloadersWorkShop
 				}
 			catch
 				{
-				MessageBox.Show("One or more images file for this firearm have been moved or deleted.  You will need to select a new image.", "Image File Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show("One or more images file for this firearm have been moved or deleted.  You may need to select new images.", "Image File Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
 				m_Firearm.ImageFile = null;
 
@@ -988,7 +989,7 @@ namespace ReloadersWorkShop
 				m_fChanged = true;
 				}
 
-			FirearmPictureBox.Image = FirearmImage;
+			FirearmPictureBox.Image = new Bitmap(FirearmImage);
 
 			SetImageDimensions();
 
@@ -1200,7 +1201,7 @@ namespace ReloadersWorkShop
 
 			ReceiverFinishLabel.Text = strReceiver;
 
-			ReceiverFinishLabel.Location = new Point((int) (LabelLocation.X + LabelSize.Width - TextSize.Width), (int) LabelLocation.Y);
+			ReceiverFinishLabel.Location = new Point((int)(LabelLocation.X + LabelSize.Width - TextSize.Width), (int)LabelLocation.Y);
 
 			LabelLocation = BarrelFinishLabel.Location;
 			LabelSize = BarrelFinishLabel.Size;
@@ -1209,7 +1210,7 @@ namespace ReloadersWorkShop
 
 			BarrelFinishLabel.Text = strBarrel;
 
-			BarrelFinishLabel.Location = new Point((int) (LabelLocation.X + LabelSize.Width - TextSize.Width), (int) LabelLocation.Y);
+			BarrelFinishLabel.Location = new Point((int)(LabelLocation.X + LabelSize.Width - TextSize.Width), (int)LabelLocation.Y);
 			}
 
 		//============================================================================*
@@ -1257,7 +1258,7 @@ namespace ReloadersWorkShop
 					}
 				}
 
-			FirearmPictureBox.Size = new Size((int) dWidth, (int) dHeight);
+			FirearmPictureBox.Size = new Size((int)dWidth, (int)dHeight);
 
 			FirearmPictureBox.Location = new Point((FirearmImageGroupBox.Width / 2) - (FirearmPictureBox.Width / 2), FirearmPictureBox.Location.Y + 148 - (FirearmPictureBox.Height / 2));
 			}

@@ -13,7 +13,6 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-using ReloadersWorkShop.Preferences;
 using RWCommonLib.Registry;
 
 //============================================================================*
@@ -22,6 +21,36 @@ using RWCommonLib.Registry;
 
 namespace ReloadersWorkShop
 	{
+	//============================================================================*
+	// rOCW Structure
+	//============================================================================*
+
+	public struct rOCW
+		{
+		public int m_nMaxBatches;
+		public int m_nNumRounds;
+		public double m_dStartCharge;
+		public double m_dChargeIncrement;
+
+		public rOCW(rOCW OCW)
+			{
+			m_dStartCharge = 0.0;
+			m_dChargeIncrement = 0.0;
+			m_nMaxBatches = 0;
+			m_nNumRounds = 0;
+
+			Copy(OCW);
+			}
+
+		public void Copy(rOCW OCW)
+			{
+			m_dChargeIncrement = OCW.m_dChargeIncrement;
+			m_dStartCharge = OCW.m_dStartCharge;
+			m_nMaxBatches = OCW.m_nMaxBatches;
+			m_nNumRounds = OCW.m_nNumRounds;
+			}
+		}
+
 	//============================================================================*
 	// cBatchForm Class
 	//============================================================================*
@@ -63,6 +92,8 @@ namespace ReloadersWorkShop
 
 		private cDataFiles m_DataFiles = null;
 		private cRWRegistry m_RWRegistry = null;
+
+		private rOCW m_rOCW = new rOCW();
 
 		//============================================================================*
 		// cBatchForm() - Constructor
@@ -154,7 +185,7 @@ namespace ReloadersWorkShop
 			// Load
 			//----------------------------------------------------------------------------*
 
-			m_Batch.Load = (cLoad) m_BatchLoadListView.SelectedItems[0].Tag;
+			m_Batch.Load = (cLoad)m_BatchLoadListView.SelectedItems[0].Tag;
 
 			//----------------------------------------------------------------------------*
 			// PowderWeight
@@ -163,7 +194,7 @@ namespace ReloadersWorkShop
 			cCharge Charge = null;
 
 			if (ChargeCombo.SelectedIndex >= 0)
-				Charge = (cCharge) ChargeCombo.SelectedItem;
+				Charge = (cCharge)ChargeCombo.SelectedItem;
 
 			double dPowderWeight = 0.0;
 
@@ -177,7 +208,7 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			if (FirearmCombo.Text != "Any Firearm")
-				m_Batch.Firearm = (cFirearm) FirearmCombo.SelectedItem;
+				m_Batch.Firearm = (cFirearm)FirearmCombo.SelectedItem;
 			else
 				m_Batch.Firearm = null;
 
@@ -371,6 +402,18 @@ namespace ReloadersWorkShop
 					m_BatchLoadListView.DoubleClick += OnBatchLoadDoubleClicked;
 					}
 
+				if (m_fAdd)
+					{
+					OCWCheckBox.Enabled = true;
+
+					OCWCheckBox.Click += OnOCWClicked;
+					}
+				else
+					{
+					OCWCheckBox.Checked = m_Batch.OCWBatchID != 0;
+					OCWCheckBox.Enabled = false;
+					}
+
 				CaseTrimLengthTextBox.TextChanged += OnCaseTrimLengthTextChanged;
 				COALTextBox.TextChanged += OnCOALTextChanged;
 				CBTOTextBox.TextChanged += OnCBTOTextChanged;
@@ -492,6 +535,63 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// OCW Property
+		//============================================================================*
+
+		public bool OCW
+			{
+			get
+				{
+				return (OCWCheckBox.Checked);
+				}
+			}
+
+		//============================================================================*
+		// OCWBatchCount()
+		//============================================================================*
+
+		public static int OCWBatchCount(rOCW OCWSettings, cBatch Batch)
+			{
+			int nCount = 0;
+
+			if (Batch != null && Batch.Load != null)
+				{
+				double dInc = OCWSettings.m_dChargeIncrement;
+
+				if (dInc <= 0.0)
+					dInc = 0.2;
+
+				double dCharge = OCWSettings.m_dStartCharge;
+
+				cCharge Charge = Batch.Load.ChargeList.MaxCharge;
+
+				if (Charge != null)
+					{
+					while (dCharge <= Batch.Load.ChargeList.MaxCharge.PowderWeight)
+						{
+						nCount++;
+
+						dCharge += dInc;
+						}
+					}
+				}
+
+			return (nCount);
+			}
+
+		//============================================================================*
+		// OCWSettings Property
+		//============================================================================*
+
+		public rOCW OCWSettings
+			{
+			get
+				{
+				return (m_rOCW);
+				}
+			}
+
+		//============================================================================*
 		// OnAnnealedClicked()
 		//============================================================================*
 
@@ -518,7 +618,7 @@ namespace ReloadersWorkShop
 
 			if (m_BatchLoadListView.SelectedItems.Count > 0)
 				{
-				cLoad Load = (cLoad) m_BatchLoadListView.SelectedItems[0].Tag;
+				cLoad Load = (cLoad)m_BatchLoadListView.SelectedItems[0].Tag;
 
 				cLoadForm LoadForm = new cLoadForm(Load, m_DataFiles, true);
 
@@ -537,7 +637,7 @@ namespace ReloadersWorkShop
 
 			if (BulletCombo.SelectedIndex > 0)
 				{
-				cBullet Bullet = (cBullet) BulletCombo.SelectedItem;
+				cBullet Bullet = (cBullet)BulletCombo.SelectedItem;
 
 				m_DataFiles.Preferences.LastBatchLoadBulletSelected = Bullet;
 				}
@@ -586,7 +686,7 @@ namespace ReloadersWorkShop
 
 			if (CaliberCombo.SelectedIndex > 0)
 				{
-				cCaliber Caliber = (cCaliber) CaliberCombo.SelectedItem;
+				cCaliber Caliber = (cCaliber)CaliberCombo.SelectedItem;
 
 				m_DataFiles.Preferences.LastBatchLoadCaliberSelected = Caliber;
 
@@ -623,7 +723,7 @@ namespace ReloadersWorkShop
 			cCharge Charge = null;
 
 			if (ChargeCombo.SelectedIndex >= 0)
-				Charge = (cCharge) ChargeCombo.SelectedItem;
+				Charge = (cCharge)ChargeCombo.SelectedItem;
 
 			double dPowderCharge = 0.0;
 
@@ -686,7 +786,7 @@ namespace ReloadersWorkShop
 				return;
 
 			if (FirearmCombo.SelectedIndex > 0)
-				m_Batch.Firearm = (cFirearm) FirearmCombo.SelectedItem;
+				m_Batch.Firearm = (cFirearm)FirearmCombo.SelectedItem;
 			else
 				m_Batch.Firearm = null;
 
@@ -867,6 +967,13 @@ namespace ReloadersWorkShop
 
 			PopulateChargeCombo();
 
+			if (m_fAdd)
+				{
+				OCWCheckBox.Checked = false;
+
+				m_rOCW.m_dStartCharge = 0.0;
+				}
+
 			UpdateButtons();
 			}
 
@@ -975,6 +1082,27 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// OnOCWClicked()
+		//============================================================================*
+
+		private void OnOCWClicked(object sender, EventArgs e)
+			{
+			if (m_fAdd)
+				{
+				string strText = "Add ";
+
+				if (OCWCheckBox.Checked)
+					strText += "OCW Batches";
+				else
+					strText += "Batch";
+
+				Text = strText;
+				}
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
 		// OnCBTOTextChanged()
 		//============================================================================*
 
@@ -1000,7 +1128,7 @@ namespace ReloadersWorkShop
 				{
 				m_DataFiles.Preferences.NextBatchID++;
 
-				Batch.TrackInventory = m_DataFiles.Preferences.TrackInventory;
+				m_Batch.TrackInventory = m_DataFiles.Preferences.TrackInventory;
 				}
 			}
 
@@ -1015,7 +1143,7 @@ namespace ReloadersWorkShop
 
 			if (PowderCombo.SelectedIndex > 0)
 				{
-				cPowder Powder = (cPowder) PowderCombo.SelectedItem;
+				cPowder Powder = (cPowder)PowderCombo.SelectedItem;
 
 				m_DataFiles.Preferences.LastBatchLoadPowderSelected = Powder;
 				}
@@ -1156,23 +1284,48 @@ namespace ReloadersWorkShop
 		private void OnViewChargeClicked(object sender, EventArgs e)
 			{
 			//----------------------------------------------------------------------------*
-			// Get the selected charge
+			// If OCW is not checked, view the selected charge
 			//----------------------------------------------------------------------------*
 
-			cCharge Charge = null;
-
-			if (ChargeCombo.SelectedIndex >= 0)
-				Charge = (cCharge) ChargeCombo.SelectedItem;
-
-			//----------------------------------------------------------------------------*
-			// Start the dialog
-			//----------------------------------------------------------------------------*
-
-			if (Charge != null && m_Batch.Load != null)
+			if (!m_fAdd || !OCWCheckBox.Checked)
 				{
-				cChargeForm ChargeForm = new cChargeForm(Charge, m_Batch.Load, m_DataFiles, true);
+				//----------------------------------------------------------------------------*
+				// Get the selected charge
+				//----------------------------------------------------------------------------*
 
-				ChargeForm.ShowDialog();
+				cCharge Charge = null;
+
+				if (ChargeCombo.SelectedIndex >= 0)
+					Charge = (cCharge)ChargeCombo.SelectedItem;
+
+				//----------------------------------------------------------------------------*
+				// Start the dialog
+				//----------------------------------------------------------------------------*
+
+				if (Charge != null && m_Batch.Load != null)
+					{
+					cChargeForm ChargeForm = new cChargeForm(Charge, m_Batch.Load, m_DataFiles, true);
+
+					ChargeForm.ShowDialog();
+					}
+				}
+
+			//----------------------------------------------------------------------------*
+			// Otherwise, edit the OCW settings
+			//----------------------------------------------------------------------------*
+
+			else
+				{
+				cOCWForm OCWForm = new cOCWForm(m_DataFiles, m_rOCW, m_Batch);
+
+				DialogResult rc = OCWForm.ShowDialog();
+
+				if (rc == DialogResult.OK)
+					{
+					m_rOCW.Copy(OCWForm.OCWSettings);
+
+					UpdateButtons();
+					}
 				}
 			}
 
@@ -1256,16 +1409,16 @@ namespace ReloadersWorkShop
 				if (m_Batch.Load != null)
 					{
 					if (m_Batch.Load.Bullet != null && nNumRounds > m_Batch.Load.Bullet.QuantityOnHand + m_nInitalRounds)
-						nNumRounds = (int) m_Batch.Load.Bullet.QuantityOnHand + m_nInitalRounds;
+						nNumRounds = (int)m_Batch.Load.Bullet.QuantityOnHand + m_nInitalRounds;
 
 					if (m_Batch.Load.Case != null && nNumRounds > m_Batch.Load.Case.QuantityOnHand + m_nInitalRounds)
-						nNumRounds = (int) m_Batch.Load.Case.QuantityOnHand + m_nInitalRounds;
+						nNumRounds = (int)m_Batch.Load.Case.QuantityOnHand + m_nInitalRounds;
 
 					if (m_Batch.Load.Powder != null && m_Batch.PowderWeight > 0 && nNumRounds > (m_DataFiles.SupplyQuantity(m_Batch.Load.Powder) / m_Batch.PowderWeight + (m_nInitalRounds * m_Batch.PowderWeight)))
-						nNumRounds = (int) ((m_DataFiles.SupplyQuantity(m_Batch.Load.Powder) / m_Batch.PowderWeight) + (m_nInitalRounds * m_Batch.PowderWeight));
+						nNumRounds = (int)((m_DataFiles.SupplyQuantity(m_Batch.Load.Powder) / m_Batch.PowderWeight) + (m_nInitalRounds * m_Batch.PowderWeight));
 
 					if (m_Batch.Load.Primer != null && nNumRounds > m_Batch.Load.Primer.QuantityOnHand + m_nInitalRounds)
-						nNumRounds = (int) m_Batch.Load.Primer.QuantityOnHand + m_nInitalRounds;
+						nNumRounds = (int)m_Batch.Load.Primer.QuantityOnHand + m_nInitalRounds;
 					}
 				else
 					nNumRounds = 0;
@@ -1303,7 +1456,7 @@ namespace ReloadersWorkShop
 			cCaliber Caliber = null;
 
 			if (CaliberCombo.SelectedIndex > 0)
-				Caliber = (cCaliber) CaliberCombo.SelectedItem;
+				Caliber = (cCaliber)CaliberCombo.SelectedItem;
 
 			if (!m_fViewOnly && m_Batch.BatchTest == null)
 				{
@@ -1390,7 +1543,7 @@ namespace ReloadersWorkShop
 			cLoad Load = null;
 
 			if (m_BatchLoadListView.SelectedItems.Count > 0)
-				Load = (cLoad) m_BatchLoadListView.SelectedItems[0].Tag;
+				Load = (cLoad)m_BatchLoadListView.SelectedItems[0].Tag;
 
 			ChargeCombo.Items.Clear();
 
@@ -1423,7 +1576,7 @@ namespace ReloadersWorkShop
 			cCharge Charge = null;
 
 			if (ChargeCombo.SelectedIndex >= 0)
-				Charge = (cCharge) ChargeCombo.SelectedItem;
+				Charge = (cCharge)ChargeCombo.SelectedItem;
 
 			double dPowerWeight = 0.0;
 
@@ -1489,7 +1642,7 @@ namespace ReloadersWorkShop
 				if (m_Batch.Firearm == null)
 					{
 					if (FirearmCombo.SelectedIndex > 0)
-						m_Batch.Firearm = (cFirearm) FirearmCombo.SelectedItem;
+						m_Batch.Firearm = (cFirearm)FirearmCombo.SelectedItem;
 					}
 				}
 			else
@@ -1523,12 +1676,12 @@ namespace ReloadersWorkShop
 			cLoad Load = null;
 
 			if (m_BatchLoadListView.SelectedItems.Count > 0)
-				Load = (cLoad) m_BatchLoadListView.SelectedItems[0].Tag;
+				Load = (cLoad)m_BatchLoadListView.SelectedItems[0].Tag;
 
 			cFirearm Firearm = null;
 
 			if (FirearmCombo.SelectedIndex > 0)
-				Firearm = (cFirearm) FirearmCombo.SelectedItem;
+				Firearm = (cFirearm)FirearmCombo.SelectedItem;
 
 			cFirearmBullet FirearmBullet = null;
 
@@ -1743,13 +1896,13 @@ namespace ReloadersWorkShop
 				cPowder Powder = null;
 
 				if (CaliberCombo.SelectedIndex > 0)
-					Caliber = (cCaliber) CaliberCombo.SelectedItem;
+					Caliber = (cCaliber)CaliberCombo.SelectedItem;
 
 				if (BulletCombo.SelectedIndex > 0)
-					Bullet = (cBullet) BulletCombo.SelectedItem;
+					Bullet = (cBullet)BulletCombo.SelectedItem;
 
 				if (PowderCombo.SelectedIndex > 0)
-					Powder = (cPowder) PowderCombo.SelectedItem;
+					Powder = (cPowder)PowderCombo.SelectedItem;
 
 				//----------------------------------------------------------------------------*
 				// Populate Load List
@@ -1782,12 +1935,12 @@ namespace ReloadersWorkShop
 			cCaliber Caliber = null;
 
 			if (CaliberCombo.SelectedIndex > 0)
-				Caliber = (cCaliber) CaliberCombo.SelectedItem;
+				Caliber = (cCaliber)CaliberCombo.SelectedItem;
 
 			cBullet Bullet = null;
 
 			if (BulletCombo.SelectedIndex > 0)
-				Bullet = (cBullet) BulletCombo.SelectedItem;
+				Bullet = (cBullet)BulletCombo.SelectedItem;
 
 			if (!m_fViewOnly && m_Batch.BatchTest == null)
 				{
@@ -1838,7 +1991,7 @@ namespace ReloadersWorkShop
 
 			if (m_BatchLoadListView.SelectedItems.Count > 0)
 				{
-				cLoad Load = (cLoad) m_BatchLoadListView.SelectedItems[0].Tag;
+				cLoad Load = (cLoad)m_BatchLoadListView.SelectedItems[0].Tag;
 
 				if (Load != null)
 					{
@@ -1886,7 +2039,7 @@ namespace ReloadersWorkShop
 				m_Batch.Firearm = null;
 
 				if (FirearmCombo.SelectedIndex > 0)
-					m_Batch.Firearm = (cFirearm) FirearmCombo.SelectedItem;
+					m_Batch.Firearm = (cFirearm)FirearmCombo.SelectedItem;
 
 				if (m_Batch.Firearm != null)
 					{
@@ -2038,6 +2191,54 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// SetOCWString()
+		//============================================================================*
+
+		public static void SetOCWString(cDataFiles DataFiles, Label OCWLabel, ref rOCW OCWSettings, cBatch Batch)
+			{
+			if (OCWSettings.m_dStartCharge == 0.0)
+				{
+				OCWSettings.m_nMaxBatches = 3;
+				OCWSettings.m_nNumRounds = 5;
+
+				if (Batch != null && Batch.Load != null)
+					{
+					cCharge MinCharge = Batch.Load.ChargeList.MinCharge;
+					cCharge MaxCharge = Batch.Load.ChargeList.MaxCharge;
+
+					double dMinCharge = MinCharge != null ? MinCharge.PowderWeight : 0.0;
+					double dMaxCharge = MaxCharge != null ? MaxCharge.PowderWeight : 0.0;
+
+					double dIncrement = (Math.Abs(dMaxCharge - dMinCharge) / 2) / 2;
+
+					OCWSettings.m_dStartCharge = dMinCharge;
+					OCWSettings.m_dChargeIncrement = dIncrement;
+					}
+				else
+					{
+					OCWSettings.m_dStartCharge = 0.0;
+					OCWSettings.m_dChargeIncrement = 0.0;
+					}
+				}
+
+			string strOCW = "";
+
+			int nBatchCount = OCWBatchCount(OCWSettings, Batch);
+
+			if (nBatchCount > OCWSettings.m_nMaxBatches)
+				nBatchCount = OCWSettings.m_nMaxBatches;
+
+			strOCW = String.Format("Create {0} batch{1} of {2} round{3}{4}", nBatchCount, nBatchCount != 1 ? "es" : "", OCWSettings.m_nNumRounds, OCWSettings.m_nNumRounds != 1 ? "s" : "", OCWSettings.m_nMaxBatches > 1 ? " each" : "");
+
+			if (OCWSettings.m_dStartCharge > 0.0)
+				strOCW += string.Format(", starting at {0} {1} of {2} with increments of {3} {4}.", OCWSettings.m_dStartCharge, DataFiles.MetricLongString(cDataFiles.eDataType.PowderWeight), Batch.Load.Powder.ToString(), OCWSettings.m_dChargeIncrement, DataFiles.MetricLongString(cDataFiles.eDataType.PowderWeight));
+			else
+				strOCW += ".";
+
+			OCWLabel.Text = strOCW;
+			}
+
+		//============================================================================*
 		// SetStaticToolTips()
 		//============================================================================*
 
@@ -2092,11 +2293,99 @@ namespace ReloadersWorkShop
 				m_BatchLoadListView.BackColor = SystemColors.Window;
 
 			//----------------------------------------------------------------------------*
+			// See if the selected load supports OCW
+			//----------------------------------------------------------------------------*
+
+			bool fEnableOCW = OCWBatchCount(m_rOCW, m_Batch) >= 3;
+
+			if (fEnableOCW)
+				{
+				if (m_Batch.Load != null)
+					{
+					double dMin = 1000.0;
+					double dMax = 0.0;
+
+					foreach (cCharge Charge in m_Batch.Load.ChargeList)
+						{
+						if (Charge.PowderWeight < dMin)
+							dMin = Charge.PowderWeight;
+
+						if (Charge.PowderWeight > dMax)
+							dMax = Charge.PowderWeight;
+						}
+
+					if (dMax - dMin < 1.0)
+						fEnableOCW = false;
+					}
+				else
+					fEnableOCW = false;
+				}
+
+			OCWCheckBox.Visible = fEnableOCW;
+
+			if (!fEnableOCW)
+				OCWCheckBox.Checked = false;
+
+			//----------------------------------------------------------------------------*
 			// Check Powder Charge
 			//----------------------------------------------------------------------------*
 
-			if (ChargeCombo.SelectedIndex < 0)
-				fEnableOK = false;
+			if (!m_fAdd || !OCWCheckBox.Checked)
+				{
+				PowderChargeLabel.Visible = true;
+				ChargeCombo.Visible = true;
+				PowderChargeMeasurementLabel.Visible = true;
+				ViewChargeButton.Text = "View";
+				LoadCOALLabel.Visible = true;
+				LoadCOLLabel.Visible = true;
+				LoadCOLMeasurementLabel.Visible = true;
+				LoadFillRatioLabel.Visible = true;
+				FillRatioLabel.Visible = true;
+				FillRatioPctLabel.Visible = true;
+				LoadMuzzleVelocityLabel.Visible = true;
+				MuzzleVelocityLabel.Visible = true;
+				LoadPressureLabel.Visible = true;
+				PressureLabel.Visible = true;
+
+				OCWLabel.Visible = false;
+
+				if (ChargeCombo.SelectedIndex < 0)
+					fEnableOK = false;
+
+				NumRoundsTextBox.Enabled = true;
+				}
+			else
+				{
+				PowderChargeLabel.Visible = false;
+				ChargeCombo.Visible = false;
+				PowderChargeMeasurementLabel.Visible = false;
+				ViewChargeButton.Text = "Edit";
+				LoadCOALLabel.Visible = false;
+				LoadCOLLabel.Visible = false;
+				LoadCOLMeasurementLabel.Visible = false;
+				LoadFillRatioLabel.Visible = false;
+				FillRatioLabel.Visible = false;
+				FillRatioPctLabel.Visible = false;
+				LoadMuzzleVelocityLabel.Visible = false;
+				MuzzleVelocityLabel.Visible = false;
+				LoadPressureLabel.Visible = false;
+				PressureLabel.Visible = false;
+
+				SetOCWString(m_DataFiles, OCWLabel, ref m_rOCW, m_Batch);
+
+				OCWLabel.Visible = true;
+
+				OCWLabel.Location = new Point(5, 50);
+				OCWLabel.Size = new Size(LoadDetailsGroup.Width - 20, LoadDetailsGroup.Height - 60);
+
+				int nBatchCount = OCWBatchCount(m_rOCW, Batch);
+
+				if (nBatchCount > m_rOCW.m_nMaxBatches)
+					nBatchCount = m_rOCW.m_nMaxBatches;
+
+				NumRoundsTextBox.Enabled = false;
+				NumRoundsTextBox.Value = nBatchCount * m_rOCW.m_nNumRounds;
+				}
 
 			//----------------------------------------------------------------------------*
 			// Check Firearm
@@ -2238,7 +2527,7 @@ namespace ReloadersWorkShop
 			cFirearmBullet FirearmBullet = null;
 
 			if (FirearmCombo.SelectedIndex > 0)
-				Firearm = (cFirearm) FirearmCombo.SelectedItem;
+				Firearm = (cFirearm)FirearmCombo.SelectedItem;
 
 			if (Firearm != null)
 				{

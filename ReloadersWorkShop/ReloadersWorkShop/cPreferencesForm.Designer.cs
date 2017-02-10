@@ -104,6 +104,9 @@
 			this.DimensionFourDecimalsRadioButton = new System.Windows.Forms.RadioButton();
 			this.DimensionThreeDecimalsRadioButton = new System.Windows.Forms.RadioButton();
 			this.InventoryGroupBox = new System.Windows.Forms.GroupBox();
+			this.ReloadKeepDaysLabel1 = new System.Windows.Forms.Label();
+			this.ReloadKeepDaysTextBox = new CommonLib.Controls.cIntegerValueTextBox();
+			this.ReloadKeepDaysLabel = new System.Windows.Forms.Label();
 			this.IncludeTaxShippingCheckBox = new System.Windows.Forms.CheckBox();
 			this.TrackReloadsCheckBox = new System.Windows.Forms.CheckBox();
 			this.TrackInventoryCheckBox = new System.Windows.Forms.CheckBox();
@@ -121,9 +124,6 @@
 			this.RestoreBackupButton = new System.Windows.Forms.Button();
 			this.BackupButton = new System.Windows.Forms.Button();
 			this.CloseButton = new System.Windows.Forms.Button();
-			this.ReloadKeepDaysTextBox = new CommonLib.Controls.cIntegerValueTextBox();
-			this.ReloadKeepDaysLabel = new System.Windows.Forms.Label();
-			this.ReloadKeepDaysLabel1 = new System.Windows.Forms.Label();
 			label55 = new System.Windows.Forms.Label();
 			label52 = new System.Windows.Forms.Label();
 			label53 = new System.Windows.Forms.Label();
@@ -1204,6 +1204,46 @@
 			this.InventoryGroupBox.TabStop = false;
 			this.InventoryGroupBox.Text = "Inventory";
 			// 
+			// ReloadKeepDaysLabel1
+			// 
+			this.ReloadKeepDaysLabel1.AutoSize = true;
+			this.ReloadKeepDaysLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ReloadKeepDaysLabel1.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.ReloadKeepDaysLabel1.Location = new System.Drawing.Point(308, 44);
+			this.ReloadKeepDaysLabel1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.ReloadKeepDaysLabel1.Name = "ReloadKeepDaysLabel1";
+			this.ReloadKeepDaysLabel1.Size = new System.Drawing.Size(29, 13);
+			this.ReloadKeepDaysLabel1.TabIndex = 20;
+			this.ReloadKeepDaysLabel1.Text = "days";
+			// 
+			// ReloadKeepDaysTextBox
+			// 
+			this.ReloadKeepDaysTextBox.BackColor = System.Drawing.Color.LightPink;
+			this.ReloadKeepDaysTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ReloadKeepDaysTextBox.Location = new System.Drawing.Point(271, 41);
+			this.ReloadKeepDaysTextBox.MaxLength = 3;
+			this.ReloadKeepDaysTextBox.MaxValue = 999;
+			this.ReloadKeepDaysTextBox.MinValue = 1;
+			this.ReloadKeepDaysTextBox.Name = "ReloadKeepDaysTextBox";
+			this.ReloadKeepDaysTextBox.Required = false;
+			this.ReloadKeepDaysTextBox.Size = new System.Drawing.Size(32, 20);
+			this.ReloadKeepDaysTextBox.TabIndex = 18;
+			this.ReloadKeepDaysTextBox.Text = "0";
+			this.ReloadKeepDaysTextBox.ToolTip = "";
+			this.ReloadKeepDaysTextBox.Value = 0;
+			// 
+			// ReloadKeepDaysLabel
+			// 
+			this.ReloadKeepDaysLabel.AutoSize = true;
+			this.ReloadKeepDaysLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ReloadKeepDaysLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.ReloadKeepDaysLabel.Location = new System.Drawing.Point(175, 44);
+			this.ReloadKeepDaysLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.ReloadKeepDaysLabel.Name = "ReloadKeepDaysLabel";
+			this.ReloadKeepDaysLabel.Size = new System.Drawing.Size(91, 13);
+			this.ReloadKeepDaysLabel.TabIndex = 19;
+			this.ReloadKeepDaysLabel.Text = "Keep Zero Qty for";
+			// 
 			// IncludeTaxShippingCheckBox
 			// 
 			this.IncludeTaxShippingCheckBox.AutoCheck = false;
@@ -1433,52 +1473,12 @@
 			this.CloseButton.Text = "Close";
 			this.CloseButton.UseVisualStyleBackColor = true;
 			// 
-			// ReloadKeepDaysTextBox
-			// 
-			this.ReloadKeepDaysTextBox.BackColor = System.Drawing.Color.LightPink;
-			this.ReloadKeepDaysTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.ReloadKeepDaysTextBox.Location = new System.Drawing.Point(271, 41);
-			this.ReloadKeepDaysTextBox.MaxLength = 3;
-			this.ReloadKeepDaysTextBox.MaxValue = 999;
-			this.ReloadKeepDaysTextBox.MinValue = 5;
-			this.ReloadKeepDaysTextBox.Name = "ReloadKeepDaysTextBox";
-			this.ReloadKeepDaysTextBox.Required = false;
-			this.ReloadKeepDaysTextBox.Size = new System.Drawing.Size(32, 20);
-			this.ReloadKeepDaysTextBox.TabIndex = 18;
-			this.ReloadKeepDaysTextBox.Text = "000";
-			this.ReloadKeepDaysTextBox.ToolTip = "";
-			this.ReloadKeepDaysTextBox.Value = 0;
-			// 
-			// ReloadKeepDaysLabel
-			// 
-			this.ReloadKeepDaysLabel.AutoSize = true;
-			this.ReloadKeepDaysLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.ReloadKeepDaysLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.ReloadKeepDaysLabel.Location = new System.Drawing.Point(175, 44);
-			this.ReloadKeepDaysLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.ReloadKeepDaysLabel.Name = "ReloadKeepDaysLabel";
-			this.ReloadKeepDaysLabel.Size = new System.Drawing.Size(91, 13);
-			this.ReloadKeepDaysLabel.TabIndex = 19;
-			this.ReloadKeepDaysLabel.Text = "Keep Zero Qty for";
-			// 
-			// ReloadKeepDaysLabel1
-			// 
-			this.ReloadKeepDaysLabel1.AutoSize = true;
-			this.ReloadKeepDaysLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.ReloadKeepDaysLabel1.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.ReloadKeepDaysLabel1.Location = new System.Drawing.Point(308, 44);
-			this.ReloadKeepDaysLabel1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.ReloadKeepDaysLabel1.Name = "ReloadKeepDaysLabel1";
-			this.ReloadKeepDaysLabel1.Size = new System.Drawing.Size(29, 13);
-			this.ReloadKeepDaysLabel1.TabIndex = 20;
-			this.ReloadKeepDaysLabel1.Text = "days";
-			// 
 			// cPreferencesForm
 			// 
 			this.AcceptButton = this.CloseButton;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(965, 497);
+			this.ClientSize = new System.Drawing.Size(961, 493);
 			this.ControlBox = false;
 			this.Controls.Add(this.CloseButton);
 			this.Controls.Add(this.groupBox1);

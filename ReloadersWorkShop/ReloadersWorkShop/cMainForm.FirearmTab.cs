@@ -176,7 +176,7 @@ namespace ReloadersWorkShop
 			FirearmPrintDetailCheckBox.Checked = m_DataFiles.Preferences.FirearmPrintDetail;
 			FirearmPrintSpecsCheckBox.Checked = m_DataFiles.Preferences.FirearmPrintSpecs;
 
-			if(FirearmCostDetailsGroupBox.Text.IndexOf(m_DataFiles.Preferences.Currency) < 0)
+			if (FirearmCostDetailsGroupBox.Text.IndexOf(m_DataFiles.Preferences.Currency) < 0)
 				FirearmCostDetailsGroupBox.Text = String.Format("{0} ({1})", FirearmCostDetailsGroupBox.Text, m_DataFiles.Preferences.Currency);
 
 			if (FirearmCollectionGroupBox.Text.IndexOf(m_DataFiles.Preferences.Currency) < 0)
@@ -287,6 +287,14 @@ namespace ReloadersWorkShop
 					{
 					if (CheckGear.CompareTo(NewGear) == 0)
 						return;
+					}
+
+				if (m_FirearmsListView.SelectedItems.Count > 0)
+					{
+					DialogResult rc = MessageBox.Show("Attach this part or accessory to the selected firearm?", "Attachment Verification", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+
+					if (rc == DialogResult.Yes)
+						NewGear.Parent = (cFirearm)m_FirearmsListView.SelectedItems[0].Tag;
 					}
 
 				AddFirearmAccessory(NewGear);
@@ -1114,9 +1122,9 @@ namespace ReloadersWorkShop
 						dTotalShipping += Gear.Shipping;
 						}
 					}
-
-				dTotalCost += dAccessoryTotalCost;
 				}
+
+			dTotalCost += dAccessoryTotalCost;
 
 			FirearmCollectionCostLabel.Text = String.Format("{0:N2}", dFirearmCost);
 			FirearmCollectionAccessoryCostLabel.Text = String.Format("{0:N2}", dAccessoryTotalCost);

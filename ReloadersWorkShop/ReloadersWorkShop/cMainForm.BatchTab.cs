@@ -1,7 +1,7 @@
 ﻿//============================================================================*
-// cMainForm.LoadDataTab.cs
+// cMainForm.BatchTab.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -254,14 +254,69 @@ namespace ReloadersWorkShop
 			if (BatchForm.ShowDialog() == DialogResult.OK)
 				{
 				//----------------------------------------------------------------------------*
-				// Get the new Load Data
+				// Create OCW batches
 				//----------------------------------------------------------------------------*
 
-				cBatch NewBatch = new cBatch(BatchForm.Batch);
+				if (BatchForm.OCW)
+					{
+					rOCW OCWSettings = BatchForm.OCWSettings;
 
-				m_DataFiles.Preferences.LastBatch = BatchForm.Batch;
+					cBatch NewBatch = new cBatch(BatchForm.Batch);
 
-				AddBatch(NewBatch);
+					int nOCWBatchID = NewBatch.BatchID;
+
+					int nNumBatches = cBatchForm.OCWBatchCount(OCWSettings, NewBatch);
+
+					if (nNumBatches > OCWSettings.m_nMaxBatches)
+						nNumBatches = OCWSettings.m_nMaxBatches;
+
+					double dPowderWeight = OCWSettings.m_dStartCharge;
+
+					for (int i = 0; i < nNumBatches; i++)
+						{
+						if (NewBatch == null)
+							{
+							NewBatch = new cBatch(BatchForm.Batch);
+							NewBatch.BatchID = m_DataFiles.Preferences.NextBatchID++;
+							}
+
+						NewBatch.NumRounds = OCWSettings.m_nNumRounds;
+						NewBatch.OCWBatchID = nOCWBatchID;
+						NewBatch.PowderWeight = dPowderWeight;
+
+						cCharge Charge = new cCharge();
+						Charge.PowderWeight = dPowderWeight;
+
+						NewBatch.Load.ChargeList.AddCharge(Charge);
+
+						m_DataFiles.Preferences.LastBatch = BatchForm.Batch;
+
+						AddBatch(NewBatch);
+
+						NewBatch = null;
+
+						dPowderWeight += OCWSettings.m_dChargeIncrement;
+						}
+
+					m_LoadDataListView.Populate();
+					}
+
+				//----------------------------------------------------------------------------*
+				// Create single batch
+				//----------------------------------------------------------------------------*
+
+				else
+					{
+					cBatch NewBatch = new cBatch(BatchForm.Batch);
+
+					m_DataFiles.Preferences.LastBatch = BatchForm.Batch;
+
+					AddBatch(NewBatch);
+					}
+
+				//----------------------------------------------------------------------------*
+				// Reset all affected tabs and exit
+				//----------------------------------------------------------------------------*
 
 				InitializeBallisticsTab();
 
@@ -457,7 +512,7 @@ namespace ReloadersWorkShop
 			{
 			cBatchList BatchList = new cBatchList();
 
-			for (int i = 0;i < m_BatchListView.CheckedItems.Count;i++)
+			for (int i = 0; i < m_BatchListView.CheckedItems.Count; i++)
 				{
 				cBatch Batch = (m_BatchListView.CheckedItems[i].Tag as cBatch);
 

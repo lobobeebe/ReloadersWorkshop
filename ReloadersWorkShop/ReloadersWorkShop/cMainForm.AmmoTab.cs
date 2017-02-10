@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cMainForm.AmmoTab.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -16,8 +16,6 @@ using System.Windows.Forms;
 //============================================================================*
 // Application Specific Using Statements
 //============================================================================*
-
-using ReloadersWorkShop.Preferences;
 
 //============================================================================*
 // NameSpace
@@ -414,6 +412,8 @@ namespace ReloadersWorkShop
 				m_DataFiles.Preferences.LastAmmo = AmmoForm.Ammo;
 
 				UpdateAmmo(Ammo, NewAmmo);
+
+				UpdateAmmoTabButtons();				
 				}
 
 			m_AmmoListView.Focus();
@@ -647,7 +647,7 @@ namespace ReloadersWorkShop
 
 					if ((Ammo.Reload || Ammo.BatchID != 0) && m_DataFiles.SupplyQuantity(Ammo) == 0.0)
 						{
-						bool fCurrent = true;
+						bool fCurrent = false;
 
 						//----------------------------------------------------------------------------*
 						// Loop through the transactions
@@ -655,8 +655,6 @@ namespace ReloadersWorkShop
 
 						foreach (cTransaction Transaction in Ammo.TransactionList)
 							{
-							fCurrent = false;
-
 							//----------------------------------------------------------------------------*
 							// If the transaction is less than 30 days old, mark it as current
 							//----------------------------------------------------------------------------*
@@ -672,7 +670,7 @@ namespace ReloadersWorkShop
 							}
 
 						//----------------------------------------------------------------------------*
-						// If nothing has happened with this ammo in 30 days, remove it
+						// If nothing has happened with this ammo in the "keep days" specified, remove it
 						//----------------------------------------------------------------------------*
 
 						if (!fCurrent)

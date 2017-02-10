@@ -27,7 +27,7 @@ namespace ReloadersWorkShop
 			XMLDocument.CreateElement("TestDate", m_TestDate, XMLElement);
 			XMLDocument.CreateElement("Source", m_strSource, XMLElement);
 
-			if (m_Firearm != null)
+			if (m_Firearm != null && Firearm.Validate())
 				m_Firearm.Export(XMLDocument, XMLElement, true);
 
 			XMLDocument.CreateElement("BarrelLength", m_dBarrelLength, XMLElement);

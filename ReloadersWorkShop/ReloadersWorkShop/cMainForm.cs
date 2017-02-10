@@ -694,6 +694,8 @@ namespace ReloadersWorkShop
 
 						UpdateBullet((OriginalSupply as cBullet), NewBullet);
 
+						UpdateSuppliesTabButtons();
+
 						break;
 
 					//----------------------------------------------------------------------------*
@@ -704,6 +706,8 @@ namespace ReloadersWorkShop
 						cCase NewCase = new cCase((InventoryForm.Supply as cCase));
 
 						UpdateCase((OriginalSupply as cCase), NewCase);
+
+						UpdateSuppliesTabButtons();
 
 						break;
 
@@ -716,6 +720,8 @@ namespace ReloadersWorkShop
 
 						UpdatePowder((OriginalSupply as cPowder), NewPowder);
 
+						UpdateSuppliesTabButtons();
+
 						break;
 
 					//----------------------------------------------------------------------------*
@@ -727,6 +733,8 @@ namespace ReloadersWorkShop
 
 						UpdatePrimer((OriginalSupply as cPrimer), NewPrimer);
 
+						UpdateSuppliesTabButtons();
+
 						break;
 
 					//----------------------------------------------------------------------------*
@@ -737,6 +745,8 @@ namespace ReloadersWorkShop
 						cAmmo NewAmmo = new cAmmo((InventoryForm.Supply as cAmmo));
 
 						UpdateAmmo((OriginalSupply as cAmmo), NewAmmo);
+
+						UpdateAmmoTabButtons();
 
 						break;
 					}

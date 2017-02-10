@@ -290,6 +290,7 @@ namespace ReloadersWorkShop
 				ReloadCheckBox.Enabled = false;
 				TypeTextBox.ReadOnly = true;
 				BallisticCoefficientTextBox.ReadOnly = true;
+				BulletDiameterTextBox.ReadOnly = true;
 				BulletWeightTextBox.ReadOnly = true;
 				QuantityTextBox.ReadOnly = true;
 				CostTextBox.ReadOnly = true;

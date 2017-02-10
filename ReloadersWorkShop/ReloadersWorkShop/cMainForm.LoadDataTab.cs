@@ -592,6 +592,8 @@ namespace ReloadersWorkShop
 
 			LoadDataBulletCombo.Items.Clear();
 
+			cFirearm.eFireArmType eFirearmType = LoadDataFirearmTypeCombo.Value;
+
 			cCaliber Caliber = null;
 
 			if (LoadDataCaliberCombo.SelectedIndex > 0)
@@ -601,46 +603,21 @@ namespace ReloadersWorkShop
 
 			cBullet SelectBullet = null;
 
-			foreach (cBullet CheckBullet in m_DataFiles.BulletList)
+			foreach (cLoad Load in m_DataFiles.LoadList)
 				{
-				if ((CheckBullet.CrossUse || CheckBullet.FirearmType == LoadDataFirearmTypeCombo.Value) &&
-					(Caliber == null || CheckBullet.HasCaliber(Caliber)))
+				if ((Caliber == null || Load.Caliber.CompareTo(Caliber) == 0) &&
+					(eFirearmType == cFirearm.eFireArmType.None || Load.FirearmType == eFirearmType))
 					{
-					bool fOK = false;
-
-					foreach (cLoad CheckLoad in m_DataFiles.LoadList)
+					if ((Load.Bullet.CrossUse || Load.Bullet.FirearmType == eFirearmType) &&
+						(Caliber == null || Load.Bullet.HasCaliber(Caliber)))
 						{
-						if (CheckLoad.Bullet.CompareTo(CheckBullet) == 0)
+						if (LoadDataBulletCombo.Items.IndexOf(Load.Bullet) < 0)
 							{
-							fOK = true;
+							LoadDataBulletCombo.Items.Add(Load.Bullet);
 
-							break;
+							if (Load.Bullet.CompareTo(m_DataFiles.Preferences.LastLoadDataBulletSelected) == 0)
+								SelectBullet = Load.Bullet;
 							}
-						}
-
-					if (fOK)
-						{
-						bool fBulletUsed = false;
-
-						foreach (cLoad Load in m_DataFiles.LoadList)
-							{
-							if (Load.Bullet.CompareTo(CheckBullet) == 0)
-								{
-								fBulletUsed = true;
-
-								break;
-								}
-							}
-
-						fOK = fBulletUsed;
-						}
-
-					if (fOK)
-						{
-						LoadDataBulletCombo.Items.Add(CheckBullet);
-
-						if (CheckBullet.CompareTo(m_DataFiles.Preferences.LastLoadDataBulletSelected) == 0)
-							SelectBullet = CheckBullet;
 						}
 					}
 				}
@@ -652,6 +629,9 @@ namespace ReloadersWorkShop
 				if (LoadDataBulletCombo.Items.Count > 0)
 					LoadDataBulletCombo.SelectedIndex = 0;
 				}
+
+			if (LoadDataBulletCombo.SelectedIndex < 0)
+				LoadDataBulletCombo.SelectedIndex = 0;
 
 			m_fPopulating = false;
 
@@ -751,44 +731,37 @@ namespace ReloadersWorkShop
 
 			LoadDataPowderCombo.Items.Clear();
 
-			cPowder SelectPowder = null;
-
-			cBullet Bullet = null;
-
-			if (LoadDataBulletCombo.SelectedIndex > 0)
-				Bullet = (cBullet)LoadDataBulletCombo.SelectedItem;
+			cFirearm.eFireArmType eFirearmType = LoadDataFirearmTypeCombo.Value;
 
 			cCaliber Caliber = null;
 
 			if (LoadDataCaliberCombo.SelectedIndex > 0)
 				Caliber = (cCaliber)LoadDataCaliberCombo.SelectedItem;
 
+			cBullet Bullet = null;
+
+			if (LoadDataBulletCombo.SelectedIndex > 0)
+				Bullet = (cBullet)LoadDataBulletCombo.SelectedItem;
+
 			LoadDataPowderCombo.Items.Add("Any Powder");
 
-			foreach (cPowder CheckPowder in m_DataFiles.PowderList)
+			cPowder SelectPowder = null;
+
+			foreach (cLoad Load in m_DataFiles.LoadList)
 				{
-				if ((LoadDataFirearmTypeCombo.Value == cFirearm.eFireArmType.None || CheckPowder.CrossUse || CheckPowder.FirearmType == LoadDataFirearmTypeCombo.Value))
+				if ((Caliber == null || Load.Caliber.CompareTo(Caliber) == 0) &&
+					(eFirearmType == cFirearm.eFireArmType.None || Load.FirearmType == eFirearmType) &&
+					(Bullet == null || Load.Bullet.CompareTo(Bullet) == 0))
 					{
-					bool fPowderUsed = false;
-
-					foreach (cLoad Load in m_DataFiles.LoadList)
+					if (Load.Powder.CrossUse || Load.Powder.FirearmType == eFirearmType)
 						{
-						if (Load.Powder.CompareTo(CheckPowder) == 0 &&
-							(Bullet == null || Load.Bullet.CompareTo(Bullet) == 0) &&
-							(Caliber == null || Load.Caliber.CompareTo(Caliber) == 0))
+						if (LoadDataPowderCombo.Items.IndexOf(Load.Powder) < 0)
 							{
-							fPowderUsed = true;
+							LoadDataPowderCombo.Items.Add(Load.Powder);
 
-							break;
+							if (Load.Powder.CompareTo(m_DataFiles.Preferences.LastLoadDataPowderSelected) == 0)
+								SelectPowder = Load.Powder;
 							}
-						}
-
-					if (fPowderUsed)
-						{
-						LoadDataPowderCombo.Items.Add(CheckPowder);
-
-						if (CheckPowder.CompareTo(m_DataFiles.Preferences.LastLoadDataPowderSelected) == 0)
-							SelectPowder = CheckPowder;
 						}
 					}
 				}
@@ -800,6 +773,9 @@ namespace ReloadersWorkShop
 				if (LoadDataPowderCombo.Items.Count > 0)
 					LoadDataPowderCombo.SelectedIndex = 0;
 				}
+
+			if (LoadDataPowderCombo.SelectedIndex < 0)
+				LoadDataPowderCombo.SelectedIndex = 0;
 
 			m_fPopulating = false;
 

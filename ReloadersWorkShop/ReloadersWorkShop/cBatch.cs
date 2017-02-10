@@ -77,6 +77,8 @@ namespace ReloadersWorkShop
 		private bool m_fJumpSet = false;
 		private double m_dJump = 0.0;
 
+		private int m_nOCWBatchID = 0;
+
 		private cBatchTestList m_BatchTestList = new cBatchTestList();
 
 		//----------------------------------------------------------------------------*
@@ -739,6 +741,22 @@ namespace ReloadersWorkShop
 			set
 				{
 				m_nNumRounds = value;
+				}
+			}
+
+		//============================================================================*
+		// OCWBatchID Property
+		//============================================================================*
+
+		public int OCWBatchID
+			{
+			get
+				{
+				return (m_nOCWBatchID);
+				}
+			set
+				{
+				m_nOCWBatchID = value;
 				}
 			}
 
