@@ -72,6 +72,7 @@ namespace ReloadersWorkShop
 
 			foreach (cBulletCaliber CheckBulletCaliber in this)
 				{
+				if (CheckBulletCaliber.CompareTo(BulletCaliber) == 0)
 					{
 					m_nUpdateCount += CheckBulletCaliber.Append(BulletCaliber, fCountOnly);
 
@@ -79,7 +80,7 @@ namespace ReloadersWorkShop
 					}
 				}
 
-			if(!fCountOnly)
+			if (!fCountOnly)
 				Add(BulletCaliber);
 
 			m_nNewCount++;
