@@ -22,7 +22,7 @@ namespace ReloadersWorkShop
 	// cScope Class
 	//============================================================================*
 
-	public partial class cScope
+	public partial class cScope : cGear
 		{
 		//============================================================================*
 		// CSVHeaderExtension Property

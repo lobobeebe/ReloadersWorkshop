@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cEvaluationListView.cs
 //
-// Copyright © 2013-2015, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -58,9 +58,9 @@ namespace ReloadersWorkShop
 			new cListViewColumn(1, "CaliberHeader","Caliber", HorizontalAlignment.Left, 120),
 			new cListViewColumn(2, "BulletHeader","Bullet", HorizontalAlignment.Left, 200),
 			new cListViewColumn(3, "PowderHeader", "Powder", HorizontalAlignment.Left, 160),
-			new cListViewColumn(4, "PrimerHeader", "Primer", HorizontalAlignment.Left, 160),
-			new cListViewColumn(5, "CaseHeader", "Case", HorizontalAlignment.Left, 160),
-			new cListViewColumn(6, "ChargeHeader", "Charge", HorizontalAlignment.Center, 80),
+			new cListViewColumn(4, "ChargeHeader", "Charge", HorizontalAlignment.Center, 80),
+			new cListViewColumn(5, "PrimerHeader", "Primer", HorizontalAlignment.Left, 160),
+			new cListViewColumn(6, "CaseHeader", "Case", HorizontalAlignment.Left, 160),
 			new cListViewColumn(7, "BestGroupHeader", "Best Group", HorizontalAlignment.Center, 80),
 			new cListViewColumn(8, "MOAHeader", "MOA", HorizontalAlignment.Center, 80),
 			new cListViewColumn(9, "RangeHeader", "Range", HorizontalAlignment.Center, 80),
@@ -340,9 +340,9 @@ namespace ReloadersWorkShop
 					Item.SubItems.Add(Load.Caliber.ToString());
 					Item.SubItems.Add(Load.Bullet.ToString());
 					Item.SubItems.Add(Load.Powder.ToString());
+					Item.SubItems.Add(String.Format(strChargeFormat, cDataFiles.StandardToMetric(Charge.PowderWeight, cDataFiles.eDataType.PowderWeight)));
 					Item.SubItems.Add(Load.Primer.ToShortString());
 					Item.SubItems.Add(Load.Case.ToShortString());
-					Item.SubItems.Add(String.Format(strChargeFormat, cDataFiles.StandardToMetric(Charge.PowderWeight, cDataFiles.eDataType.PowderWeight)));
 
 					if (ChargeTest.BestGroup == 0.0)
 						Item.SubItems.Add("-");

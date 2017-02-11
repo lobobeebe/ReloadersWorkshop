@@ -22,7 +22,7 @@ namespace ReloadersWorkShop
 	// cFirearm Class
 	//============================================================================*
 
-	public partial class cFirearm
+	public partial class cFirearm : cGear, IComparable
 		{
 		//============================================================================*
 		// CSVLine Property
@@ -101,43 +101,46 @@ namespace ReloadersWorkShop
 
 		public override void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement, bool fIdentityOnly = false)
 			{
-			string strName = ExportName;
+			if (XMLDocument != null && XMLParentElement != null)
+				{
+				string strName = ExportName;
 
-			if (fIdentityOnly)
-				strName += "Identity";
+				if (fIdentityOnly)
+					strName += "Identity";
 
-			XmlElement XMLThisElement = XMLDocument.CreateElement(strName, XMLParentElement);
+				XmlElement XMLThisElement = XMLDocument.CreateElement(strName, XMLParentElement);
 
-			base.Export(XMLDocument, XMLThisElement, fIdentityOnly);
+				base.Export(XMLDocument, XMLThisElement, fIdentityOnly);
 
-			XMLDocument.CreateElement("FirearmType", m_eFirearmType, XMLThisElement);
+				XMLDocument.CreateElement("FirearmType", m_eFirearmType, XMLThisElement);
 
-			if (fIdentityOnly)
-				return;
+				if (fIdentityOnly)
+					return;
 
-			XMLDocument.CreateElement("BarrelLength", m_dBarrelLength, XMLThisElement);
-			XMLDocument.CreateElement("Twist", m_dTwist, XMLThisElement);
-			XMLDocument.CreateElement("SightHeight", m_dSightHeight, XMLThisElement);
-			XMLDocument.CreateElement("Scoped", m_fScoped, XMLThisElement);
-			XMLDocument.CreateElement("ScopeClick", m_dScopeClick, XMLThisElement);
-			XMLDocument.CreateElement("TurretType", m_eTurretType, XMLThisElement);
-			XMLDocument.CreateElement("ZeroRange", m_dZeroRange, XMLThisElement);
-			XMLDocument.CreateElement("HeadSpace", m_dHeadSpace, XMLThisElement);
-			XMLDocument.CreateElement("NeckSize", m_dNeck, XMLThisElement);
-			XMLDocument.CreateElement("ReceiverFinish", m_strReceiverFinish, XMLThisElement);
-			XMLDocument.CreateElement("BarrelFinish", m_strBarrelFinish, XMLThisElement);
-			XMLDocument.CreateElement("Type", m_strType, XMLThisElement);
-			XMLDocument.CreateElement("Action", m_strAction, XMLThisElement);
-			XMLDocument.CreateElement("Hammer", m_strHammer, XMLThisElement);
-			XMLDocument.CreateElement("Magazine", m_strMagazine, XMLThisElement);
-			XMLDocument.CreateElement("Capacity", m_nCapacity, XMLThisElement);
-			XMLDocument.CreateElement("TransferFees", m_dTransferFees, XMLThisElement);
-			XMLDocument.CreateElement("OtherFees", m_dOtherFees, XMLThisElement);
-			XMLDocument.CreateElement("Checked", m_fChecked, XMLThisElement);
+				XMLDocument.CreateElement("BarrelLength", m_dBarrelLength, XMLThisElement);
+				XMLDocument.CreateElement("Twist", m_dTwist, XMLThisElement);
+				XMLDocument.CreateElement("SightHeight", m_dSightHeight, XMLThisElement);
+				XMLDocument.CreateElement("Scoped", m_fScoped, XMLThisElement);
+				XMLDocument.CreateElement("ScopeClick", m_dScopeClick, XMLThisElement);
+				XMLDocument.CreateElement("TurretType", m_eTurretType, XMLThisElement);
+				XMLDocument.CreateElement("ZeroRange", m_dZeroRange, XMLThisElement);
+				XMLDocument.CreateElement("HeadSpace", m_dHeadSpace, XMLThisElement);
+				XMLDocument.CreateElement("NeckSize", m_dNeck, XMLThisElement);
+				XMLDocument.CreateElement("ReceiverFinish", m_strReceiverFinish, XMLThisElement);
+				XMLDocument.CreateElement("BarrelFinish", m_strBarrelFinish, XMLThisElement);
+				XMLDocument.CreateElement("Type", m_strType, XMLThisElement);
+				XMLDocument.CreateElement("Action", m_strAction, XMLThisElement);
+				XMLDocument.CreateElement("Hammer", m_strHammer, XMLThisElement);
+				XMLDocument.CreateElement("Magazine", m_strMagazine, XMLThisElement);
+				XMLDocument.CreateElement("Capacity", m_nCapacity, XMLThisElement);
+				XMLDocument.CreateElement("TransferFees", m_dTransferFees, XMLThisElement);
+				XMLDocument.CreateElement("OtherFees", m_dOtherFees, XMLThisElement);
+				XMLDocument.CreateElement("Checked", m_fChecked, XMLThisElement);
 
-			m_FirearmCaliberList.Export(XMLDocument, XMLThisElement);
+				m_FirearmCaliberList.Export(XMLDocument, XMLThisElement);
 
-			m_FirearmBulletList.Export(XMLDocument, XMLThisElement);
+				m_FirearmBulletList.Export(XMLDocument, XMLThisElement);
+				}
 			}
 
 		//============================================================================*

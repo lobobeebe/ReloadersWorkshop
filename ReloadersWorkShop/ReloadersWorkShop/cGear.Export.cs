@@ -3,7 +3,7 @@ using System.Xml;
 
 namespace ReloadersWorkShop
 	{
-	public partial class cGear
+	public partial class cGear : cPrintObject, IComparable
 		{
 		//============================================================================*
 		// CSVLineHeaderExtension Property
@@ -100,26 +100,29 @@ namespace ReloadersWorkShop
 
 		public virtual void Export(cRWXMLDocument XMLDocument, XmlElement XMLThisElement, bool fIdentityOnly = false)
 			{
-			XMLDocument.CreateElement("GearType", cGear.GearTypeString(m_eType), XMLThisElement);
-			XMLDocument.CreateElement("Manufacturer", m_Manufacturer.Name, XMLThisElement);
-			XMLDocument.CreateElement("PartNumber", m_strPartNumber, XMLThisElement);
-			XMLDocument.CreateElement("SerialNumber", m_strSerialNumber, XMLThisElement);
+			if (XMLDocument != null && XMLThisElement != null)
+				{
+				XMLDocument.CreateElement("GearType", cGear.GearTypeString(m_eType), XMLThisElement);
+				XMLDocument.CreateElement("Manufacturer", m_Manufacturer.Name, XMLThisElement);
+				XMLDocument.CreateElement("PartNumber", m_strPartNumber, XMLThisElement);
+				XMLDocument.CreateElement("SerialNumber", m_strSerialNumber, XMLThisElement);
 
-			if (fIdentityOnly)
-				return;
+				if (fIdentityOnly)
+					return;
 
-			XMLDocument.CreateElement("Description", m_strDescription, XMLThisElement);
-			XMLDocument.CreateElement("AcquiredFrom", m_strSource, XMLThisElement);
-			XMLDocument.CreateElement("PurchaseDate", m_Date, XMLThisElement);
-			XMLDocument.CreateElement("Price", m_dPrice, XMLThisElement);
-			XMLDocument.CreateElement("Tax", m_dTax, XMLThisElement);
-			XMLDocument.CreateElement("Shipping", m_dTax, XMLThisElement);
+				XMLDocument.CreateElement("Description", m_strDescription, XMLThisElement);
+				XMLDocument.CreateElement("AcquiredFrom", m_strSource, XMLThisElement);
+				XMLDocument.CreateElement("PurchaseDate", m_Date, XMLThisElement);
+				XMLDocument.CreateElement("Price", m_dPrice, XMLThisElement);
+				XMLDocument.CreateElement("Tax", m_dTax, XMLThisElement);
+				XMLDocument.CreateElement("Shipping", m_dTax, XMLThisElement);
 
-			//----------------------------------------------------------------------------*
-			// Notes
-			//----------------------------------------------------------------------------*
+				//----------------------------------------------------------------------------*
+				// Notes
+				//----------------------------------------------------------------------------*
 
-			XMLDocument.CreateElement("Notes", m_strNotes, XMLThisElement);
+				XMLDocument.CreateElement("Notes", m_strNotes, XMLThisElement);
+				}
 			}
 
 		//============================================================================*

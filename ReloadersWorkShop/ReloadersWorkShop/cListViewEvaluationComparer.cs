@@ -201,7 +201,21 @@ namespace ReloadersWorkShop
 							}
 
 						rc = strPart1.CompareTo(strPart2);
+
+						if (rc == 0)
+							rc = Item1.Charge.PowderWeight.CompareTo(Item2.Charge.PowderWeight);
 						}
+
+					fSpecial = true;
+
+					break;
+
+				//----------------------------------------------------------------------------*
+				// Charge
+				//----------------------------------------------------------------------------*
+
+				case 4:
+					rc = Item1.Charge.PowderWeight.CompareTo(Item2.Charge.PowderWeight);
 
 					fSpecial = true;
 
@@ -211,7 +225,7 @@ namespace ReloadersWorkShop
 				// Primer
 				//----------------------------------------------------------------------------*
 
-				case 4:
+				case 5:
 					rc = Item1.Load.Primer.Manufacturer.CompareTo(Item2.Load.Primer.Manufacturer);
 
 					if (rc == 0)
@@ -250,7 +264,7 @@ namespace ReloadersWorkShop
 				// Case
 				//----------------------------------------------------------------------------*
 
-				case 5:
+				case 6:
 					rc = Item1.Load.Case.Manufacturer.CompareTo(Item2.Load.Case.Manufacturer);
 
 					if (rc == 0)
@@ -283,17 +297,6 @@ namespace ReloadersWorkShop
 
 						rc = strPart1.CompareTo(strPart2);
 						}
-
-					fSpecial = true;
-
-					break;
-
-				//----------------------------------------------------------------------------*
-				// Charge
-				//----------------------------------------------------------------------------*
-
-				case 6:
-					rc = Item1.Charge.PowderWeight.CompareTo(Item2.Charge.PowderWeight);
 
 					fSpecial = true;
 

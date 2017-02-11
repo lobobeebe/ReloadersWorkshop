@@ -1649,20 +1649,6 @@ namespace ReloadersWorkShop
 				TrackReloadsCheckBox.Checked = m_DataFiles.Preferences.TrackReloads;
 				TrackReloadsCheckBox.Enabled = true;
 
-				if (TrackReloadsCheckBox.Checked)
-					{
-					ReloadKeepDaysLabel.Visible = true;
-					ReloadKeepDaysLabel1.Visible = true;
-					ReloadKeepDaysTextBox.Visible = true;
-					ReloadKeepDaysTextBox.Value = m_DataFiles.Preferences.ReloadKeepDays;
-					}
-				else
-					{
-					ReloadKeepDaysLabel.Visible = false;
-					ReloadKeepDaysLabel1.Visible = false;
-					ReloadKeepDaysTextBox.Visible = false;
-					}
-
 				UseLastPurchaseRadioButton.Checked = m_DataFiles.Preferences.UseLastPurchase;
 				UseLastPurchaseRadioButton.Enabled = true;
 
@@ -1690,6 +1676,21 @@ namespace ReloadersWorkShop
 
 				CostCalculationsLabel.Enabled = false;
 				}
+
+			if (TrackReloadsCheckBox.Checked)
+				{
+				ReloadKeepDaysLabel.Visible = true;
+				ReloadKeepDaysLabel1.Visible = true;
+				ReloadKeepDaysTextBox.Visible = true;
+				ReloadKeepDaysTextBox.Value = m_DataFiles.Preferences.ReloadKeepDays;
+				}
+			else
+				{
+				ReloadKeepDaysLabel.Visible = false;
+				ReloadKeepDaysLabel1.Visible = false;
+				ReloadKeepDaysTextBox.Visible = false;
+				}
+
 
 			//----------------------------------------------------------------------------*
 			// Check Inventory Info
