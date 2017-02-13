@@ -13,6 +13,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
+using ReloadersWorkShop.Preferences;
 using RWCommonLib.Registry;
 
 //============================================================================*
@@ -2221,6 +2222,16 @@ namespace ReloadersWorkShop
 					}
 				}
 
+			OCWSettings.m_dStartCharge = Math.Round(OCWSettings.m_dStartCharge, cPreferences.StaticPreferences.PowderWeightDecimals);
+			OCWSettings.m_dChargeIncrement = Math.Round(OCWSettings.m_dChargeIncrement, cPreferences.StaticPreferences.PowderWeightDecimals);
+
+			string strPowderWeightFormat = "{0:F";
+			strPowderWeightFormat += String.Format("{0:G0}", cPreferences.StaticPreferences.PowderWeightDecimals);
+			strPowderWeightFormat += "}";
+
+			string strStartCharge = String.Format(strPowderWeightFormat, OCWSettings.m_dStartCharge);
+			string strIncrement = String.Format(strPowderWeightFormat, OCWSettings.m_dChargeIncrement);
+
 			string strOCW = "";
 
 			int nBatchCount = OCWBatchCount(OCWSettings, Batch);
@@ -2231,7 +2242,7 @@ namespace ReloadersWorkShop
 			strOCW = String.Format("Create {0} batch{1} of {2} round{3}{4}", nBatchCount, nBatchCount != 1 ? "es" : "", OCWSettings.m_nNumRounds, OCWSettings.m_nNumRounds != 1 ? "s" : "", OCWSettings.m_nMaxBatches > 1 ? " each" : "");
 
 			if (OCWSettings.m_dStartCharge > 0.0)
-				strOCW += string.Format(", starting at {0} {1} of {2} with increments of {3} {4}.", OCWSettings.m_dStartCharge, DataFiles.MetricLongString(cDataFiles.eDataType.PowderWeight), Batch.Load.Powder.ToString(), OCWSettings.m_dChargeIncrement, DataFiles.MetricLongString(cDataFiles.eDataType.PowderWeight));
+				strOCW += string.Format(", starting at {0} {1} of {2} with increments of {3} {4}.", strStartCharge, DataFiles.MetricLongString(cDataFiles.eDataType.PowderWeight), Batch.Load.Powder.ToString(), strIncrement, DataFiles.MetricLongString(cDataFiles.eDataType.PowderWeight));
 			else
 				strOCW += ".";
 

@@ -175,7 +175,7 @@ namespace ReloadersWorkShop
 				SizeCombo.Items.Add("Small");
 				SizeCombo.Items.Add("Large");
 
-				SizeCombo.SelectedIndex = (int) Primer.Size;
+				SizeCombo.SelectedIndex = (int) m_Primer.Size;
 				}
 			else
 				{

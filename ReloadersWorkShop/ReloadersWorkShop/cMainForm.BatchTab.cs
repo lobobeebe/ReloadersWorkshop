@@ -285,7 +285,7 @@ namespace ReloadersWorkShop
 						NewBatch.PowderWeight = dPowderWeight;
 
 						cCharge Charge = new cCharge();
-						Charge.PowderWeight = dPowderWeight;
+						Charge.PowderWeight = Math.Round(dPowderWeight, m_DataFiles.Preferences.PowderWeightDecimals);
 
 						NewBatch.Load.ChargeList.AddCharge(Charge);
 
@@ -295,10 +295,10 @@ namespace ReloadersWorkShop
 
 						NewBatch = null;
 
-						dPowderWeight += OCWSettings.m_dChargeIncrement;
+						dPowderWeight += Math.Round(OCWSettings.m_dChargeIncrement, m_DataFiles.Preferences.PowderWeightDecimals);
 						}
 
-					m_LoadDataListView.Populate();
+					InitializeLoadDataTab();
 					}
 
 				//----------------------------------------------------------------------------*
