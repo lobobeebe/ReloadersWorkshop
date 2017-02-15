@@ -155,6 +155,34 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// BatchIDString Property
+		//============================================================================*
+
+		public string BatchIDString
+			{
+			get
+				{
+				string strID = String.Format("{0:G0}", m_nBatchID);
+
+				if (m_nOCWBatchID != 0)
+					{
+					if (m_nBatchID == m_nOCWBatchID)
+						strID += " - ocw";
+					else
+						strID += String.Format(" - ocw {0:G0}", m_nOCWBatchID);
+					}
+
+				if (m_fArchive)
+					strID += " - Archived";
+
+				if (cPreferences.StaticPreferences.TrackInventory && !m_fTrackInventory)
+					strID += " *";
+
+				return (strID);
+				}
+			}
+
+		//============================================================================*
 		// BatchCost Property
 		//============================================================================*
 
@@ -252,7 +280,7 @@ namespace ReloadersWorkShop
 					dCaseCost = Load.Case.CostEach;
 
 					if (m_nTimesFired > 0)
-						dCaseCost = dCaseCost / (double) ((double) m_nTimesFired + 1.0);
+						dCaseCost = dCaseCost / (double)((double)m_nTimesFired + 1.0);
 
 					dPowderCost = Load.Powder.CostEach * (m_dPowderWeight / (cPreferences.StaticPreferences.MetricCanWeights ? 1000.0 : 7000.0));
 
@@ -358,7 +386,7 @@ namespace ReloadersWorkShop
 			if (obj == null)
 				return (1);
 
-			cBatch Batch = (cBatch) obj;
+			cBatch Batch = (cBatch)obj;
 
 			//----------------------------------------------------------------------------*
 			// Batch ID
@@ -374,6 +402,7 @@ namespace ReloadersWorkShop
 		public void Copy(cBatch Batch)
 			{
 			m_nBatchID = Batch.m_nBatchID;
+			m_nOCWBatchID = Batch.m_nOCWBatchID;
 			m_strUserID = Batch.m_strUserID;
 			m_DateLoaded = new DateTime(Batch.DateLoaded.Ticks);
 			m_dPowderWeight = Batch.m_dPowderWeight;
@@ -768,11 +797,11 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				return (m_dPowderWeight);
+				return (Math.Round(m_dPowderWeight, cPreferences.StaticPreferences.PowderWeightDecimals));
 				}
 			set
 				{
-				m_dPowderWeight = value;
+				m_dPowderWeight = Math.Round(value, cPreferences.StaticPreferences.PowderWeightDecimals);
 				}
 			}
 
@@ -826,7 +855,7 @@ namespace ReloadersWorkShop
 			if (m_BatchTestList == null)
 				m_BatchTestList = new cBatchTestList();
 
-			foreach(cBatchTest BatchTest in m_BatchTestList)
+			foreach (cBatchTest BatchTest in m_BatchTestList)
 				BatchTest.Batch = this;
 
 			return (true);

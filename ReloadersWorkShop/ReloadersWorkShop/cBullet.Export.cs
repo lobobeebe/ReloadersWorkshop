@@ -3,7 +3,7 @@ using System.Xml;
 
 namespace ReloadersWorkShop
 	{
-	public partial class cBullet
+	public partial class cBullet : cSupply
 		{
 		//============================================================================*
 		// CSVLine Property

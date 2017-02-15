@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cControls.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -38,6 +38,8 @@ namespace ReloadersWorkShop
 		public static void PopulateCaliberCombo(ComboBox CaliberCombo, cDataFiles DataFiles, cCase Case, cFirearm.eFireArmType eFirearmType = cFirearm.eFireArmType.None)
 			{
 			CaliberCombo.Items.Clear();
+
+			cCaliber.CurrentFirearmType = eFirearmType;
 
 			cCaliber SelectCaliber = null;
 
@@ -98,6 +100,8 @@ namespace ReloadersWorkShop
 
 			if (fAddFactory)
 				FirearmCombo.Items.Add("Factory");
+
+			cCaliber.CurrentFirearmType = eFirearmType;
 
 			cFirearm SelectedFirearm = null;
 

@@ -22,7 +22,7 @@ namespace ReloadersWorkShop
 	// cCase Class - Partial
 	//============================================================================*
 
-	public partial class cCase
+	public partial class cCase : cSupply
 		{
 		//============================================================================*
 		// CSVLine Property

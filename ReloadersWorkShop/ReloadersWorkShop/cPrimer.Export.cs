@@ -3,7 +3,7 @@ using System.Xml;
 
 namespace ReloadersWorkShop
 	{
-	public partial class cPrimer
+	public partial class cPrimer : cSupply
 		{
 		//============================================================================*
 		// CSVLine Property

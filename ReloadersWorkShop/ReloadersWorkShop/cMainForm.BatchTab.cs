@@ -295,7 +295,7 @@ namespace ReloadersWorkShop
 
 						NewBatch = null;
 
-						dPowderWeight += Math.Round(OCWSettings.m_dChargeIncrement, m_DataFiles.Preferences.PowderWeightDecimals);
+						dPowderWeight = Math.Round(dPowderWeight + OCWSettings.m_dChargeIncrement, m_DataFiles.Preferences.PowderWeightDecimals);
 						}
 
 					InitializeLoadDataTab();
@@ -557,24 +557,24 @@ namespace ReloadersWorkShop
 
 			if (MessageBox.Show(this, "Are you sure you wish to remove this batch?", "Data Deletion Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
 				{
-				RemoveBatchTransactions(Batch);
+				if (m_DataFiles.DeleteBatch(Batch))
+					{
 
-				m_DataFiles.DeleteBatch(Batch);
+					RemoveBatchTransactions(Batch);
 
-				m_BatchListView.Items.Remove(Item);
+					m_BatchListView.Items.Remove(Item);
 
-				m_DataFiles.SetNextBatchID();
+					m_DataFiles.SetNextBatchID();
 
-				InitializeSuppliesTab();
-				InitializeLoadDataTab();
-				InitializeBatchTab();
-				InitializeBallisticsTab();
-				InitializeAmmoTab();
+					InitializeSuppliesTab();
+					InitializeLoadDataTab();
+					InitializeBatchTab();
+					InitializeBallisticsTab();
+					InitializeAmmoTab();
 
-				UpdateBatchTabButtons();
+					UpdateBatchTabButtons();
+					}
 				}
-
-			UpdateBatchTabButtons();
 			}
 
 		//============================================================================*

@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cCaseForm.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -345,7 +345,7 @@ namespace ReloadersWorkShop
             if (!m_fInitialized)
                 return;
 
-            if (FirearmTypeCombo.SelectedIndex != (int) m_Case.FirearmType)
+            if (FirearmTypeCombo.Value != m_Case.FirearmType)
                 {
                 PopulateCaliberCombo();
 

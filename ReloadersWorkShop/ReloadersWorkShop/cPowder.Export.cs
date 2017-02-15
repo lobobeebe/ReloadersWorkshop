@@ -2,7 +2,7 @@
 
 namespace ReloadersWorkShop
 	{
-	public partial class cPowder
+	public partial class cPowder : cSupply
 		{
 		//============================================================================*
 		// CSVLine Property

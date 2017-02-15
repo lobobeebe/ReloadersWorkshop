@@ -188,21 +188,7 @@ namespace ReloadersWorkShop
 			{
 			Item.SubItems.Clear();
 
-			Item.Text = String.Format("{0:N0}", Batch.BatchID);
-
-			if (Batch.OCWBatchID != 0)
-				{
-				if (Batch.BatchID != Batch.OCWBatchID)
-					Item.Text += String.Format(" (OCW-{0})", Batch.OCWBatchID);
-				else
-					Item.Text += " (OCW)";
-				}
-
-			if (Batch.Archived)
-				Item.Text += " - Archived";
-
-			if (m_DataFiles.Preferences.TrackInventory && !Batch.TrackInventory)
-				Item.Text += " *";
+			Item.Text = Batch.BatchIDString;
 
 			Item.Checked = Batch.Checked;
 

@@ -217,7 +217,23 @@ namespace ReloadersWorkShop
 			// Batch ID
 			//----------------------------------------------------------------------------*
 
-			m_Batch.BatchID = Int32.Parse(BatchIDLabel.Text);
+			string strBatchID = BatchIDLabel.Text;
+
+			strBatchID = strBatchID.Trim();
+
+			int nIndex = strBatchID.IndexOf(' ');
+
+			if (nIndex > 0)
+				strBatchID = strBatchID.Substring(0, nIndex);
+
+			int nBatchID = 0;
+
+			Int32.TryParse(strBatchID, out nBatchID);
+
+			if (nBatchID == 0)
+				Console.WriteLine("Here!");
+
+			m_Batch.BatchID = nBatchID;
 
 			//----------------------------------------------------------------------------*
 			// User ID
@@ -1338,10 +1354,7 @@ namespace ReloadersWorkShop
 			{
 			m_fPopulating = true;
 
-			BatchIDLabel.Text = String.Format("{0:G}", m_Batch.BatchID);
-
-			if (m_Batch.Archived)
-				BatchIDLabel.Text += " - Archived";
+			BatchIDLabel.Text = m_Batch.BatchIDString;
 
 			UserIDTextBox.Value = String.IsNullOrEmpty(m_Batch.UserID) ? "" : m_Batch.UserID;
 

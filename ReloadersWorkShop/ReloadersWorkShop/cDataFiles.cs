@@ -596,9 +596,47 @@ namespace ReloadersWorkShop
 		// DeleteBatch()
 		//============================================================================*
 
-		public void DeleteBatch(cBatch Batch)
+		public bool DeleteBatch(cBatch Batch)
 			{
+			//----------------------------------------------------------------------------*
+			// Validate the Input
+			//----------------------------------------------------------------------------*
+
+			if (Batch == null)
+				return (false);
+
+			//----------------------------------------------------------------------------*
+			// Starting batch for an OCW series? Make sure there are no dependents
+			//----------------------------------------------------------------------------*
+
+			if (Batch.OCWBatchID != 0 && Batch.BatchID == Batch.OCWBatchID)
+				{
+				foreach (cBatch CheckBatch in m_BatchList)
+					{
+					if (CheckBatch.OCWBatchID == 0 || CheckBatch.OCWBatchID != Batch.BatchID)
+						continue;
+
+					if (CheckBatch.CompareTo(Batch) != 0)
+						{
+						if (CheckBatch.OCWBatchID == Batch.BatchID)
+							{
+							MessageBox.Show("This is the starting batch for an OCW series.  You need to remove all of the OCW batches that refer to this one before it can be deleted.", "OCW Batch Deletion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+							return (false);
+							}
+						}
+					}
+				}
+
+			//----------------------------------------------------------------------------*
+			// If we get to here, we're good to go
+			//----------------------------------------------------------------------------*
+
 			m_BatchList.Remove(Batch);
+
+			//----------------------------------------------------------------------------*
+			// Remove ChargeTest Data for this batch
+			//----------------------------------------------------------------------------*
 
 			foreach (cLoad Load in m_LoadList)
 				{
@@ -625,6 +663,8 @@ namespace ReloadersWorkShop
 						}
 					}
 				}
+
+			return (true);
 			}
 
 		//============================================================================*
