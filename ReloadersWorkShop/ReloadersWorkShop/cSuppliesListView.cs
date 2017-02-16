@@ -35,6 +35,8 @@ namespace ReloadersWorkShop
 		private cSupply.eSupplyTypes m_eSupplyType = cSupply.eSupplyTypes.Bullets;
 		private cFirearm.eFireArmType m_eFirearmTypeFilter = cFirearm.eFireArmType.None;
 		private cManufacturer m_ManufacturerFilter = null;
+		private cCaliber m_CaliberFilter = null;
+
 		private bool m_fNonZeroFilter = false;
 		private bool m_fMinStockFilter = false;
 		private bool m_fCheckedFilter = false;
@@ -184,6 +186,22 @@ namespace ReloadersWorkShop
 			AddItem(Item, fSelect);
 
 			return (Item);
+			}
+
+		//============================================================================*
+		// CaliberFilter Property
+		//============================================================================*
+
+		public cCaliber CaliberFilter
+			{
+			get
+				{
+				return (m_CaliberFilter);
+				}
+			set
+				{
+				m_CaliberFilter = value;
+				}
 			}
 
 		//============================================================================*
@@ -420,6 +438,7 @@ namespace ReloadersWorkShop
 
 						if ((Supply.CrossUse || m_eFirearmTypeFilter == cFirearm.eFireArmType.None || Supply.FirearmType == m_eFirearmTypeFilter) &&
 							(m_ManufacturerFilter == null || Supply.Manufacturer.CompareTo(m_ManufacturerFilter) == 0) &&
+							(m_CaliberFilter == null || (Supply as cBullet).HasCaliber(m_CaliberFilter)) &&
 							(!m_fNonZeroFilter || dSupplyQuantity > 0.0) &&
 							(!m_fMinStockFilter || dSupplyQuantity < dMinStockLevel) &&
 							(!m_fCheckedFilter || Supply.Checked))
@@ -445,6 +464,7 @@ namespace ReloadersWorkShop
 						{
 						if ((Supply.CrossUse || m_eFirearmTypeFilter == cFirearm.eFireArmType.None || Supply.FirearmType == m_eFirearmTypeFilter) &&
 							(m_ManufacturerFilter == null || Supply.Manufacturer.CompareTo(m_ManufacturerFilter) == 0) &&
+							(m_CaliberFilter == null || (Supply as cCase).Caliber.CompareTo(m_CaliberFilter) == 0) &&
 							(!m_fNonZeroFilter || m_DataFiles.SupplyQuantity(Supply) > 0.0) &&
 							(!m_fMinStockFilter || m_DataFiles.SupplyQuantity(Supply) < Supply.MinimumStockLevel) &&
 							(!m_fCheckedFilter || Supply.Checked))

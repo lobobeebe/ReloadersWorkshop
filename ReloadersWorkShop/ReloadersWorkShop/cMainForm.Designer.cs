@@ -213,6 +213,7 @@ namespace ReloadersWorkShop
 			this.BallisticsMuzzleVelocityTextBox = new CommonLib.Controls.cIntegerValueTextBox();
 			this.BallisticsDatabaseGroupBox = new System.Windows.Forms.GroupBox();
 			this.label2 = new System.Windows.Forms.Label();
+			this.BallisticsFirearmTypeCombo = new ReloadersWorkShop.Controls.cFirearmTypeCombo();
 			this.BallisticsResetButton = new System.Windows.Forms.Button();
 			this.BallisticsLoadDataVelocityRadioButton = new System.Windows.Forms.RadioButton();
 			this.BallisticsBatchTestVelocityRadioButton = new System.Windows.Forms.RadioButton();
@@ -296,6 +297,7 @@ namespace ReloadersWorkShop
 			this.BatchBulletLabel = new System.Windows.Forms.Label();
 			this.AmmoTab = new System.Windows.Forms.TabPage();
 			this.AmmunitionFiltersGroupBox = new System.Windows.Forms.GroupBox();
+			this.AmmunitionFirearmTypeCombo = new ReloadersWorkShop.Controls.cFirearmTypeCombo();
 			this.AmmoMyReloadsCheckBox = new System.Windows.Forms.CheckBox();
 			this.AmmoFactoryReloadsCheckBox = new System.Windows.Forms.CheckBox();
 			this.AmmoMinStockCheckBox = new System.Windows.Forms.CheckBox();
@@ -330,6 +332,7 @@ namespace ReloadersWorkShop
 			this.EditBatchButton = new System.Windows.Forms.Button();
 			this.AddBatchButton = new System.Windows.Forms.Button();
 			this.BatchFiltersGroupBox = new System.Windows.Forms.GroupBox();
+			this.BatchFirearmTypeCombo = new ReloadersWorkShop.Controls.cFirearmTypeCombo();
 			this.BatchCaliberCombo = new System.Windows.Forms.ComboBox();
 			this.BatchBulletCombo = new System.Windows.Forms.ComboBox();
 			this.BatchPowderCombo = new System.Windows.Forms.ComboBox();
@@ -340,6 +343,7 @@ namespace ReloadersWorkShop
 			this.EditLoadButton = new System.Windows.Forms.Button();
 			this.AddLoadButton = new System.Windows.Forms.Button();
 			this.LoadDataFiltersGroupBox = new System.Windows.Forms.GroupBox();
+			this.LoadDataFirearmTypeCombo = new ReloadersWorkShop.Controls.cFirearmTypeCombo();
 			this.LoadDataCaliberCombo = new System.Windows.Forms.ComboBox();
 			this.LoadDataBulletCombo = new System.Windows.Forms.ComboBox();
 			this.LoadDataPowderCombo = new System.Windows.Forms.ComboBox();
@@ -352,6 +356,7 @@ namespace ReloadersWorkShop
 			this.SuppliesTab = new System.Windows.Forms.TabPage();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.SupplyTypeCombo = new System.Windows.Forms.ComboBox();
+			this.SupplyFirearmTypeCombo = new ReloadersWorkShop.Controls.cFirearmTypeCombo();
 			this.SupplyManufacturerCombo = new System.Windows.Forms.ComboBox();
 			this.HideUncheckedSuppliesCheckBox = new System.Windows.Forms.CheckBox();
 			this.DeselectAllSuppliesButton = new System.Windows.Forms.Button();
@@ -468,11 +473,8 @@ namespace ReloadersWorkShop
 			this.radioButton1 = new System.Windows.Forms.RadioButton();
 			this.radioButton2 = new System.Windows.Forms.RadioButton();
 			this.button1 = new System.Windows.Forms.Button();
-			this.SupplyFirearmTypeCombo = new ReloadersWorkShop.Controls.cFirearmTypeCombo();
-			this.LoadDataFirearmTypeCombo = new ReloadersWorkShop.Controls.cFirearmTypeCombo();
-			this.BatchFirearmTypeCombo = new ReloadersWorkShop.Controls.cFirearmTypeCombo();
-			this.AmmunitionFirearmTypeCombo = new ReloadersWorkShop.Controls.cFirearmTypeCombo();
-			this.BallisticsFirearmTypeCombo = new ReloadersWorkShop.Controls.cFirearmTypeCombo();
+			this.SupplyCaliberCombo = new System.Windows.Forms.ComboBox();
+			this.SupplyCaliberLabel = new System.Windows.Forms.Label();
 			label54 = new System.Windows.Forms.Label();
 			label56 = new System.Windows.Forms.Label();
 			LoadDataFiltersFirearmTypeLabel = new System.Windows.Forms.Label();
@@ -655,7 +657,7 @@ namespace ReloadersWorkShop
 			label1.AutoSize = true;
 			label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			label1.ForeColor = System.Drawing.SystemColors.ControlText;
-			label1.Location = new System.Drawing.Point(25, 25);
+			label1.Location = new System.Drawing.Point(10, 25);
 			label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			label1.Name = "label1";
 			label1.Size = new System.Drawing.Size(69, 13);
@@ -691,7 +693,7 @@ namespace ReloadersWorkShop
 			label57.AutoSize = true;
 			label57.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			label57.ForeColor = System.Drawing.SystemColors.ControlText;
-			label57.Location = new System.Drawing.Point(25, 53);
+			label57.Location = new System.Drawing.Point(250, 25);
 			label57.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			label57.Name = "label57";
 			label57.Size = new System.Drawing.Size(71, 13);
@@ -703,7 +705,7 @@ namespace ReloadersWorkShop
 			label60.AutoSize = true;
 			label60.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			label60.ForeColor = System.Drawing.SystemColors.ControlText;
-			label60.Location = new System.Drawing.Point(21, 81);
+			label60.Location = new System.Drawing.Point(6, 81);
 			label60.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			label60.Name = "label60";
 			label60.Size = new System.Drawing.Size(73, 13);
@@ -2015,6 +2017,29 @@ namespace ReloadersWorkShop
 			this.label2.TabIndex = 10;
 			this.label2.Text = "Bullet:";
 			// 
+			// BallisticsFirearmTypeCombo
+			// 
+			this.BallisticsFirearmTypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.BallisticsFirearmTypeCombo.DropDownWidth = 115;
+			this.BallisticsFirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BallisticsFirearmTypeCombo.FormattingEnabled = true;
+			this.BallisticsFirearmTypeCombo.IncludeAny = false;
+			this.BallisticsFirearmTypeCombo.IncludeShotgun = false;
+			this.BallisticsFirearmTypeCombo.Items.AddRange(new object[] {
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle"});
+			this.BallisticsFirearmTypeCombo.Location = new System.Drawing.Point(94, 22);
+			this.BallisticsFirearmTypeCombo.Name = "BallisticsFirearmTypeCombo";
+			this.BallisticsFirearmTypeCombo.ShowToolTips = true;
+			this.BallisticsFirearmTypeCombo.Size = new System.Drawing.Size(98, 21);
+			this.BallisticsFirearmTypeCombo.TabIndex = 0;
+			this.BallisticsFirearmTypeCombo.ToolTip = "";
+			this.BallisticsFirearmTypeCombo.Value = ReloadersWorkShop.cFirearm.eFireArmType.Handgun;
+			// 
 			// BallisticsResetButton
 			// 
 			this.BallisticsResetButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -3191,6 +3216,32 @@ namespace ReloadersWorkShop
 			this.AmmunitionFiltersGroupBox.TabStop = false;
 			this.AmmunitionFiltersGroupBox.Text = "Filters";
 			// 
+			// AmmunitionFirearmTypeCombo
+			// 
+			this.AmmunitionFirearmTypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.AmmunitionFirearmTypeCombo.DropDownWidth = 100;
+			this.AmmunitionFirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.AmmunitionFirearmTypeCombo.FormattingEnabled = true;
+			this.AmmunitionFirearmTypeCombo.IncludeAny = false;
+			this.AmmunitionFirearmTypeCombo.IncludeShotgun = true;
+			this.AmmunitionFirearmTypeCombo.Items.AddRange(new object[] {
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun"});
+			this.AmmunitionFirearmTypeCombo.Location = new System.Drawing.Point(81, 23);
+			this.AmmunitionFirearmTypeCombo.Name = "AmmunitionFirearmTypeCombo";
+			this.AmmunitionFirearmTypeCombo.ShowToolTips = true;
+			this.AmmunitionFirearmTypeCombo.Size = new System.Drawing.Size(121, 21);
+			this.AmmunitionFirearmTypeCombo.TabIndex = 24;
+			this.AmmunitionFirearmTypeCombo.ToolTip = "";
+			this.AmmunitionFirearmTypeCombo.Value = ReloadersWorkShop.cFirearm.eFireArmType.Handgun;
+			// 
 			// AmmoMyReloadsCheckBox
 			// 
 			this.AmmoMyReloadsCheckBox.AutoSize = true;
@@ -3613,6 +3664,29 @@ namespace ReloadersWorkShop
 			this.BatchFiltersGroupBox.TabStop = false;
 			this.BatchFiltersGroupBox.Text = "Filters";
 			// 
+			// BatchFirearmTypeCombo
+			// 
+			this.BatchFirearmTypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.BatchFirearmTypeCombo.DropDownWidth = 115;
+			this.BatchFirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BatchFirearmTypeCombo.FormattingEnabled = true;
+			this.BatchFirearmTypeCombo.IncludeAny = false;
+			this.BatchFirearmTypeCombo.IncludeShotgun = false;
+			this.BatchFirearmTypeCombo.Items.AddRange(new object[] {
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle"});
+			this.BatchFirearmTypeCombo.Location = new System.Drawing.Point(83, 22);
+			this.BatchFirearmTypeCombo.Name = "BatchFirearmTypeCombo";
+			this.BatchFirearmTypeCombo.ShowToolTips = true;
+			this.BatchFirearmTypeCombo.Size = new System.Drawing.Size(100, 21);
+			this.BatchFirearmTypeCombo.TabIndex = 15;
+			this.BatchFirearmTypeCombo.ToolTip = "";
+			this.BatchFirearmTypeCombo.Value = ReloadersWorkShop.cFirearm.eFireArmType.Handgun;
+			// 
 			// BatchCaliberCombo
 			// 
 			this.BatchCaliberCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
@@ -3743,6 +3817,29 @@ namespace ReloadersWorkShop
 			this.LoadDataFiltersGroupBox.TabIndex = 0;
 			this.LoadDataFiltersGroupBox.TabStop = false;
 			this.LoadDataFiltersGroupBox.Text = "Filters";
+			// 
+			// LoadDataFirearmTypeCombo
+			// 
+			this.LoadDataFirearmTypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.LoadDataFirearmTypeCombo.DropDownWidth = 115;
+			this.LoadDataFirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.LoadDataFirearmTypeCombo.FormattingEnabled = true;
+			this.LoadDataFirearmTypeCombo.IncludeAny = false;
+			this.LoadDataFirearmTypeCombo.IncludeShotgun = false;
+			this.LoadDataFirearmTypeCombo.Items.AddRange(new object[] {
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle"});
+			this.LoadDataFirearmTypeCombo.Location = new System.Drawing.Point(83, 22);
+			this.LoadDataFirearmTypeCombo.Name = "LoadDataFirearmTypeCombo";
+			this.LoadDataFirearmTypeCombo.ShowToolTips = true;
+			this.LoadDataFirearmTypeCombo.Size = new System.Drawing.Size(100, 21);
+			this.LoadDataFirearmTypeCombo.TabIndex = 11;
+			this.LoadDataFirearmTypeCombo.ToolTip = "";
+			this.LoadDataFirearmTypeCombo.Value = ReloadersWorkShop.cFirearm.eFireArmType.Handgun;
 			// 
 			// LoadDataCaliberCombo
 			// 
@@ -3889,6 +3986,8 @@ namespace ReloadersWorkShop
 			// 
 			// groupBox4
 			// 
+			this.groupBox4.Controls.Add(this.SupplyCaliberCombo);
+			this.groupBox4.Controls.Add(this.SupplyCaliberLabel);
 			this.groupBox4.Controls.Add(this.SupplyTypeCombo);
 			this.groupBox4.Controls.Add(this.SupplyFirearmTypeCombo);
 			this.groupBox4.Controls.Add(this.SupplyManufacturerCombo);
@@ -3904,8 +4003,8 @@ namespace ReloadersWorkShop
 			this.groupBox4.ForeColor = System.Drawing.SystemColors.HotTrack;
 			this.groupBox4.Location = new System.Drawing.Point(8, 5);
 			this.groupBox4.Name = "groupBox4";
-			this.groupBox4.Size = new System.Drawing.Size(526, 109);
-			this.groupBox4.TabIndex = 17;
+			this.groupBox4.Size = new System.Drawing.Size(565, 109);
+			this.groupBox4.TabIndex = 0;
 			this.groupBox4.TabStop = false;
 			this.groupBox4.Text = "Filters";
 			// 
@@ -3914,10 +4013,38 @@ namespace ReloadersWorkShop
 			this.SupplyTypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.SupplyTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.SupplyTypeCombo.FormattingEnabled = true;
-			this.SupplyTypeCombo.Location = new System.Drawing.Point(98, 20);
+			this.SupplyTypeCombo.Location = new System.Drawing.Point(83, 20);
 			this.SupplyTypeCombo.Name = "SupplyTypeCombo";
 			this.SupplyTypeCombo.Size = new System.Drawing.Size(121, 24);
-			this.SupplyTypeCombo.TabIndex = 22;
+			this.SupplyTypeCombo.TabIndex = 0;
+			// 
+			// SupplyFirearmTypeCombo
+			// 
+			this.SupplyFirearmTypeCombo.DropDownHeight = 200;
+			this.SupplyFirearmTypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.SupplyFirearmTypeCombo.DropDownWidth = 100;
+			this.SupplyFirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.SupplyFirearmTypeCombo.FormattingEnabled = true;
+			this.SupplyFirearmTypeCombo.IncludeAny = false;
+			this.SupplyFirearmTypeCombo.IncludeShotgun = true;
+			this.SupplyFirearmTypeCombo.IntegralHeight = false;
+			this.SupplyFirearmTypeCombo.Items.AddRange(new object[] {
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun"});
+			this.SupplyFirearmTypeCombo.Location = new System.Drawing.Point(326, 21);
+			this.SupplyFirearmTypeCombo.Name = "SupplyFirearmTypeCombo";
+			this.SupplyFirearmTypeCombo.ShowToolTips = true;
+			this.SupplyFirearmTypeCombo.Size = new System.Drawing.Size(121, 21);
+			this.SupplyFirearmTypeCombo.TabIndex = 1;
+			this.SupplyFirearmTypeCombo.ToolTip = "";
+			this.SupplyFirearmTypeCombo.Value = ReloadersWorkShop.cFirearm.eFireArmType.None;
 			// 
 			// SupplyManufacturerCombo
 			// 
@@ -3926,21 +4053,21 @@ namespace ReloadersWorkShop
 			this.SupplyManufacturerCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.SupplyManufacturerCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.SupplyManufacturerCombo.FormattingEnabled = true;
-			this.SupplyManufacturerCombo.Location = new System.Drawing.Point(98, 78);
+			this.SupplyManufacturerCombo.Location = new System.Drawing.Point(83, 78);
 			this.SupplyManufacturerCombo.Margin = new System.Windows.Forms.Padding(2);
 			this.SupplyManufacturerCombo.Name = "SupplyManufacturerCombo";
-			this.SupplyManufacturerCombo.Size = new System.Drawing.Size(201, 21);
-			this.SupplyManufacturerCombo.TabIndex = 19;
+			this.SupplyManufacturerCombo.Size = new System.Drawing.Size(153, 21);
+			this.SupplyManufacturerCombo.TabIndex = 3;
 			// 
 			// HideUncheckedSuppliesCheckBox
 			// 
 			this.HideUncheckedSuppliesCheckBox.AutoSize = true;
 			this.HideUncheckedSuppliesCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.HideUncheckedSuppliesCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.HideUncheckedSuppliesCheckBox.Location = new System.Drawing.Point(328, 55);
+			this.HideUncheckedSuppliesCheckBox.Location = new System.Drawing.Point(270, 87);
 			this.HideUncheckedSuppliesCheckBox.Name = "HideUncheckedSuppliesCheckBox";
 			this.HideUncheckedSuppliesCheckBox.Size = new System.Drawing.Size(107, 17);
-			this.HideUncheckedSuppliesCheckBox.TabIndex = 14;
+			this.HideUncheckedSuppliesCheckBox.TabIndex = 8;
 			this.HideUncheckedSuppliesCheckBox.Text = "Hide Unchecked";
 			this.HideUncheckedSuppliesCheckBox.UseVisualStyleBackColor = true;
 			// 
@@ -3948,11 +4075,11 @@ namespace ReloadersWorkShop
 			// 
 			this.DeselectAllSuppliesButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.DeselectAllSuppliesButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.DeselectAllSuppliesButton.Location = new System.Drawing.Point(428, 81);
+			this.DeselectAllSuppliesButton.Location = new System.Drawing.Point(464, 73);
 			this.DeselectAllSuppliesButton.Margin = new System.Windows.Forms.Padding(2);
 			this.DeselectAllSuppliesButton.Name = "DeselectAllSuppliesButton";
 			this.DeselectAllSuppliesButton.Size = new System.Drawing.Size(83, 19);
-			this.DeselectAllSuppliesButton.TabIndex = 12;
+			this.DeselectAllSuppliesButton.TabIndex = 7;
 			this.DeselectAllSuppliesButton.Text = "Uncheck All";
 			this.DeselectAllSuppliesButton.UseVisualStyleBackColor = true;
 			// 
@@ -3960,11 +4087,11 @@ namespace ReloadersWorkShop
 			// 
 			this.SelectAllSuppliesButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.SelectAllSuppliesButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.SelectAllSuppliesButton.Location = new System.Drawing.Point(328, 81);
+			this.SelectAllSuppliesButton.Location = new System.Drawing.Point(464, 51);
 			this.SelectAllSuppliesButton.Margin = new System.Windows.Forms.Padding(2);
 			this.SelectAllSuppliesButton.Name = "SelectAllSuppliesButton";
 			this.SelectAllSuppliesButton.Size = new System.Drawing.Size(83, 19);
-			this.SelectAllSuppliesButton.TabIndex = 11;
+			this.SelectAllSuppliesButton.TabIndex = 6;
 			this.SelectAllSuppliesButton.Text = "Check All";
 			this.SelectAllSuppliesButton.UseVisualStyleBackColor = true;
 			// 
@@ -3973,10 +4100,10 @@ namespace ReloadersWorkShop
 			this.SuppliesMinStockCheckBox.AutoSize = true;
 			this.SuppliesMinStockCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.SuppliesMinStockCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.SuppliesMinStockCheckBox.Location = new System.Drawing.Point(328, 35);
+			this.SuppliesMinStockCheckBox.Location = new System.Drawing.Point(270, 67);
 			this.SuppliesMinStockCheckBox.Name = "SuppliesMinStockCheckBox";
 			this.SuppliesMinStockCheckBox.Size = new System.Drawing.Size(183, 17);
-			this.SuppliesMinStockCheckBox.TabIndex = 16;
+			this.SuppliesMinStockCheckBox.TabIndex = 5;
 			this.SuppliesMinStockCheckBox.Text = "Below Minimum Stock Level Only";
 			this.SuppliesMinStockCheckBox.UseVisualStyleBackColor = true;
 			// 
@@ -3985,10 +4112,10 @@ namespace ReloadersWorkShop
 			this.SuppliesNonZeroCheckBox.AutoSize = true;
 			this.SuppliesNonZeroCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.SuppliesNonZeroCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.SuppliesNonZeroCheckBox.Location = new System.Drawing.Point(328, 15);
+			this.SuppliesNonZeroCheckBox.Location = new System.Drawing.Point(270, 47);
 			this.SuppliesNonZeroCheckBox.Name = "SuppliesNonZeroCheckBox";
 			this.SuppliesNonZeroCheckBox.Size = new System.Drawing.Size(145, 17);
-			this.SuppliesNonZeroCheckBox.TabIndex = 3;
+			this.SuppliesNonZeroCheckBox.TabIndex = 4;
 			this.SuppliesNonZeroCheckBox.Text = "Non-Zero Quantities Only";
 			this.SuppliesNonZeroCheckBox.UseVisualStyleBackColor = true;
 			// 
@@ -3999,7 +4126,7 @@ namespace ReloadersWorkShop
 			this.SuppliesInventoryGroup.Controls.Add(this.EditInventoryButton);
 			this.SuppliesInventoryGroup.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.SuppliesInventoryGroup.ForeColor = System.Drawing.SystemColors.HotTrack;
-			this.SuppliesInventoryGroup.Location = new System.Drawing.Point(798, 5);
+			this.SuppliesInventoryGroup.Location = new System.Drawing.Point(837, 5);
 			this.SuppliesInventoryGroup.Name = "SuppliesInventoryGroup";
 			this.SuppliesInventoryGroup.Size = new System.Drawing.Size(227, 109);
 			this.SuppliesInventoryGroup.TabIndex = 14;
@@ -4050,7 +4177,7 @@ namespace ReloadersWorkShop
 			this.SuppliesPrintOptionsGroupBox.Controls.Add(this.SupplyListPrintButton);
 			this.SuppliesPrintOptionsGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.SuppliesPrintOptionsGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
-			this.SuppliesPrintOptionsGroupBox.Location = new System.Drawing.Point(540, 5);
+			this.SuppliesPrintOptionsGroupBox.Location = new System.Drawing.Point(579, 5);
 			this.SuppliesPrintOptionsGroupBox.Name = "SuppliesPrintOptionsGroupBox";
 			this.SuppliesPrintOptionsGroupBox.Size = new System.Drawing.Size(252, 109);
 			this.SuppliesPrintOptionsGroupBox.TabIndex = 13;
@@ -5293,7 +5420,7 @@ namespace ReloadersWorkShop
 			this.MainTabControl.Controls.Add(this.BatchEditorTab);
 			this.MainTabControl.Controls.Add(this.AmmoTab);
 			this.MainTabControl.Controls.Add(this.BallisticsTab);
-			this.MainTabControl.Location = new System.Drawing.Point(0, 26);
+			this.MainTabControl.Location = new System.Drawing.Point(-9, 26);
 			this.MainTabControl.Margin = new System.Windows.Forms.Padding(2);
 			this.MainTabControl.Name = "MainTabControl";
 			this.MainTabControl.SelectedIndex = 0;
@@ -5335,116 +5462,31 @@ namespace ReloadersWorkShop
 			this.button1.Size = new System.Drawing.Size(75, 23);
 			this.button1.TabIndex = 0;
 			// 
-			// SupplyFirearmTypeCombo
+			// SupplyCaliberCombo
 			// 
-			this.SupplyFirearmTypeCombo.DropDownHeight = 200;
-			this.SupplyFirearmTypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.SupplyFirearmTypeCombo.DropDownWidth = 100;
-			this.SupplyFirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.SupplyFirearmTypeCombo.FormattingEnabled = true;
-			this.SupplyFirearmTypeCombo.IncludeAny = false;
-			this.SupplyFirearmTypeCombo.IncludeShotgun = true;
-			this.SupplyFirearmTypeCombo.IntegralHeight = false;
-			this.SupplyFirearmTypeCombo.Items.AddRange(new object[] {
-            "Handgun",
-            "Rifle",
-            "Shotgun",
-            "Handgun",
-            "Rifle",
-            "Shotgun"});
-			this.SupplyFirearmTypeCombo.Location = new System.Drawing.Point(98, 50);
-			this.SupplyFirearmTypeCombo.Name = "SupplyFirearmTypeCombo";
-			this.SupplyFirearmTypeCombo.ShowToolTips = true;
-			this.SupplyFirearmTypeCombo.Size = new System.Drawing.Size(127, 21);
-			this.SupplyFirearmTypeCombo.TabIndex = 21;
-			this.SupplyFirearmTypeCombo.ToolTip = "";
-			this.SupplyFirearmTypeCombo.Value = ReloadersWorkShop.cFirearm.eFireArmType.None;
+			this.SupplyCaliberCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+			this.SupplyCaliberCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+			this.SupplyCaliberCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.SupplyCaliberCombo.DropDownWidth = 200;
+			this.SupplyCaliberCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.SupplyCaliberCombo.FormattingEnabled = true;
+			this.SupplyCaliberCombo.Location = new System.Drawing.Point(83, 50);
+			this.SupplyCaliberCombo.Margin = new System.Windows.Forms.Padding(2);
+			this.SupplyCaliberCombo.Name = "SupplyCaliberCombo";
+			this.SupplyCaliberCombo.Size = new System.Drawing.Size(153, 21);
+			this.SupplyCaliberCombo.TabIndex = 2;
 			// 
-			// LoadDataFirearmTypeCombo
+			// SupplyCaliberLabel
 			// 
-			this.LoadDataFirearmTypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.LoadDataFirearmTypeCombo.DropDownWidth = 115;
-			this.LoadDataFirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.LoadDataFirearmTypeCombo.FormattingEnabled = true;
-			this.LoadDataFirearmTypeCombo.IncludeAny = false;
-			this.LoadDataFirearmTypeCombo.IncludeShotgun = false;
-			this.LoadDataFirearmTypeCombo.Items.AddRange(new object[] {
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle"});
-			this.LoadDataFirearmTypeCombo.Location = new System.Drawing.Point(83, 22);
-			this.LoadDataFirearmTypeCombo.Name = "LoadDataFirearmTypeCombo";
-			this.LoadDataFirearmTypeCombo.ShowToolTips = true;
-			this.LoadDataFirearmTypeCombo.Size = new System.Drawing.Size(100, 21);
-			this.LoadDataFirearmTypeCombo.TabIndex = 11;
-			this.LoadDataFirearmTypeCombo.ToolTip = "";
-			this.LoadDataFirearmTypeCombo.Value = ReloadersWorkShop.cFirearm.eFireArmType.Handgun;
-			// 
-			// BatchFirearmTypeCombo
-			// 
-			this.BatchFirearmTypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.BatchFirearmTypeCombo.DropDownWidth = 115;
-			this.BatchFirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BatchFirearmTypeCombo.FormattingEnabled = true;
-			this.BatchFirearmTypeCombo.IncludeAny = false;
-			this.BatchFirearmTypeCombo.IncludeShotgun = false;
-			this.BatchFirearmTypeCombo.Items.AddRange(new object[] {
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle"});
-			this.BatchFirearmTypeCombo.Location = new System.Drawing.Point(83, 22);
-			this.BatchFirearmTypeCombo.Name = "BatchFirearmTypeCombo";
-			this.BatchFirearmTypeCombo.ShowToolTips = true;
-			this.BatchFirearmTypeCombo.Size = new System.Drawing.Size(100, 21);
-			this.BatchFirearmTypeCombo.TabIndex = 15;
-			this.BatchFirearmTypeCombo.ToolTip = "";
-			this.BatchFirearmTypeCombo.Value = ReloadersWorkShop.cFirearm.eFireArmType.Handgun;
-			// 
-			// AmmunitionFirearmTypeCombo
-			// 
-			this.AmmunitionFirearmTypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.AmmunitionFirearmTypeCombo.DropDownWidth = 100;
-			this.AmmunitionFirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.AmmunitionFirearmTypeCombo.FormattingEnabled = true;
-			this.AmmunitionFirearmTypeCombo.IncludeAny = false;
-			this.AmmunitionFirearmTypeCombo.IncludeShotgun = true;
-			this.AmmunitionFirearmTypeCombo.Items.AddRange(new object[] {
-            "Handgun",
-            "Rifle",
-            "Shotgun",
-            "Handgun",
-            "Rifle",
-            "Shotgun"});
-			this.AmmunitionFirearmTypeCombo.Location = new System.Drawing.Point(81, 23);
-			this.AmmunitionFirearmTypeCombo.Name = "AmmunitionFirearmTypeCombo";
-			this.AmmunitionFirearmTypeCombo.ShowToolTips = true;
-			this.AmmunitionFirearmTypeCombo.Size = new System.Drawing.Size(121, 21);
-			this.AmmunitionFirearmTypeCombo.TabIndex = 24;
-			this.AmmunitionFirearmTypeCombo.ToolTip = "";
-			this.AmmunitionFirearmTypeCombo.Value = ReloadersWorkShop.cFirearm.eFireArmType.Handgun;
-			// 
-			// BallisticsFirearmTypeCombo
-			// 
-			this.BallisticsFirearmTypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.BallisticsFirearmTypeCombo.DropDownWidth = 115;
-			this.BallisticsFirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BallisticsFirearmTypeCombo.FormattingEnabled = true;
-			this.BallisticsFirearmTypeCombo.IncludeAny = false;
-			this.BallisticsFirearmTypeCombo.IncludeShotgun = false;
-			this.BallisticsFirearmTypeCombo.Items.AddRange(new object[] {
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle"});
-			this.BallisticsFirearmTypeCombo.Location = new System.Drawing.Point(94, 22);
-			this.BallisticsFirearmTypeCombo.Name = "BallisticsFirearmTypeCombo";
-			this.BallisticsFirearmTypeCombo.ShowToolTips = true;
-			this.BallisticsFirearmTypeCombo.Size = new System.Drawing.Size(98, 21);
-			this.BallisticsFirearmTypeCombo.TabIndex = 0;
-			this.BallisticsFirearmTypeCombo.ToolTip = "";
-			this.BallisticsFirearmTypeCombo.Value = ReloadersWorkShop.cFirearm.eFireArmType.Handgun;
+			this.SupplyCaliberLabel.AutoSize = true;
+			this.SupplyCaliberLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.SupplyCaliberLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.SupplyCaliberLabel.Location = new System.Drawing.Point(37, 53);
+			this.SupplyCaliberLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.SupplyCaliberLabel.Name = "SupplyCaliberLabel";
+			this.SupplyCaliberLabel.Size = new System.Drawing.Size(42, 13);
+			this.SupplyCaliberLabel.TabIndex = 24;
+			this.SupplyCaliberLabel.Text = "Caliber:";
 			// 
 			// cMainForm
 			// 
@@ -5936,6 +5978,8 @@ namespace ReloadersWorkShop
 		private Controls.cFirearmTypeCombo AmmunitionFirearmTypeCombo;
 		private System.Windows.Forms.ToolStripMenuItem FileImportMenuItem;
         private System.Windows.Forms.ComboBox SupplyTypeCombo;
-    }
+		private System.Windows.Forms.ComboBox SupplyCaliberCombo;
+		private System.Windows.Forms.Label SupplyCaliberLabel;
+		}
 	}
 

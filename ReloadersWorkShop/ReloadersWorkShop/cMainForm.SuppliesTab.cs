@@ -14,8 +14,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-using ReloadersWorkShop.Preferences;
-
 //============================================================================*
 // Application Specific Using Statements
 //============================================================================*
@@ -241,6 +239,7 @@ namespace ReloadersWorkShop
 				SupplyFirearmTypeCombo.IncludeAny = true;
 				SupplyFirearmTypeCombo.IncludeShotgun = false;
 				SupplyManufacturerCombo.SelectedIndexChanged += OnSupplyManufacturerSelected;
+				SupplyCaliberCombo.SelectedIndexChanged += OnSupplyCaliberSelected;
 
 				m_SuppliesListView.SelectedIndexChanged += OnSupplySelected;
 				m_SuppliesListView.DoubleClick += OnSupplyDoubleClicked;
@@ -956,6 +955,29 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// OnSupplyCaliberSelected()
+		//============================================================================*
+
+		protected void OnSupplyCaliberSelected(object sender, EventArgs args)
+			{
+			if (!m_fInitialized || m_fPopulating)
+				return;
+
+			cCaliber Caliber = null;
+
+			if (SupplyCaliberCombo.SelectedIndex > 0)
+				Caliber = (cCaliber)SupplyCaliberCombo.SelectedItem;
+
+			m_SuppliesListView.CaliberFilter = Caliber;
+
+			m_SuppliesListView.Populate();
+
+			SetSupplyCount();
+
+			UpdateSuppliesTabButtons();
+			}
+
+		//============================================================================*
 		// OnSupplyChecked()
 		//============================================================================*
 
@@ -1026,7 +1048,7 @@ namespace ReloadersWorkShop
 
 			m_SuppliesListView.Populate();
 
-			PopulateSupplyManufacturerCombo();
+			PopulateSupplyCaliberCombo();
 
 			SetSupplyCount();
 
@@ -1111,7 +1133,7 @@ namespace ReloadersWorkShop
 
 			m_SuppliesListView.SupplyType = (cSupply.eSupplyTypes)SupplyTypeCombo.SelectedIndex;
 
-			PopulateSupplyManufacturerCombo();
+			PopulateSupplyCaliberCombo();
 
 			UpdateSuppliesTabButtons();
 			}
@@ -1259,6 +1281,70 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// PopulateSupplyCaliberCombo()
+		//============================================================================*
+
+		public void PopulateSupplyCaliberCombo()
+			{
+			SupplyCaliberCombo.Items.Clear();
+
+			SupplyCaliberCombo.Items.Add("Any Caliber");
+
+			cCaliberList CaliberList = new cCaliberList();
+
+			cSupply.eSupplyTypes eSupplyType = (cSupply.eSupplyTypes)SupplyTypeCombo.SelectedIndex;
+
+			cFirearm.eFireArmType eFirearmType = SupplyFirearmTypeCombo.Value;
+
+			cCaliber.CurrentFirearmType = eFirearmType;
+
+			switch (eSupplyType)
+				{
+				case cSupply.eSupplyTypes.Bullets:
+					foreach (cBullet Bullet in m_DataFiles.BulletList)
+						{
+						if (!m_DataFiles.Preferences.HideUncheckedSupplies || Bullet.Checked)
+							{
+							foreach (cBulletCaliber BulletCaliber in Bullet.BulletCaliberList)
+								{
+								if ((eFirearmType == cFirearm.eFireArmType.None || BulletCaliber.Caliber.FirearmType == eFirearmType) &&
+									(!m_DataFiles.Preferences.HideUncheckedCalibers || BulletCaliber.Caliber.Checked))
+									{
+									if (CaliberList.IndexOf(BulletCaliber.Caliber) < 0)
+										CaliberList.Add(BulletCaliber.Caliber);
+									}
+								}
+							}
+						}
+
+					break;
+
+				case cSupply.eSupplyTypes.Cases:
+					foreach (cCase Case in m_DataFiles.CaseList)
+						{
+						if ((eFirearmType == cFirearm.eFireArmType.None || Case.FirearmType == eFirearmType) &&
+							(!m_DataFiles.Preferences.HideUncheckedCalibers || Case.Caliber.Checked) &&
+							(!m_DataFiles.Preferences.HideUncheckedSupplies || Case.Checked))
+							{
+							if (CaliberList.IndexOf(Case.Caliber) < 0)
+								CaliberList.Add(Case.Caliber);
+							}
+						}
+
+					break;
+				}
+
+			CaliberList.Sort(cCaliber.Comparer);
+
+			foreach (cCaliber Caliber in CaliberList)
+				SupplyCaliberCombo.Items.Add(Caliber);
+
+			SupplyCaliberCombo.SelectedIndex = 0;
+
+			PopulateSupplyManufacturerCombo();
+			}
+
+		//============================================================================*
 		// PopulateSupplyManufacturerCombo()
 		//============================================================================*
 
@@ -1375,14 +1461,29 @@ namespace ReloadersWorkShop
 			if (SupplyTypeCombo.SelectedIndex < 0)
 				SupplyTypeCombo.SelectedIndex = 0;
 
-			PopulateSupplyManufacturerCombo();
+			PopulateSupplyCaliberCombo();
 
 			HideUncheckedSuppliesCheckBox.Checked = m_DataFiles.Preferences.HideUncheckedSupplies;
 
 			SuppliesPrintAllRadioButton.Checked = m_DataFiles.Preferences.SupplyPrintAll;
 			SuppliesPrintCheckedRadioButton.Checked = m_DataFiles.Preferences.SupplyPrintChecked;
-			SuppliesNonZeroCheckBox.Checked = m_DataFiles.Preferences.SupplyPrintNonZero;
-			SuppliesMinStockCheckBox.Checked = m_DataFiles.Preferences.SupplyPrintBelowStock;
+
+			if (m_DataFiles.Preferences.TrackInventory)
+				{
+				SuppliesNonZeroCheckBox.Checked = m_DataFiles.Preferences.SupplyPrintNonZero;
+				SuppliesNonZeroCheckBox.Visible = true;
+				SuppliesMinStockCheckBox.Checked = m_DataFiles.Preferences.SupplyPrintBelowStock;
+				SuppliesMinStockCheckBox.Visible = true;
+				}
+			else
+				{
+				SuppliesNonZeroCheckBox.Checked = false;
+				SuppliesNonZeroCheckBox.Visible = false;
+				SuppliesMinStockCheckBox.Checked = false;
+				SuppliesMinStockCheckBox.Visible = false;
+				}
+
+			m_SuppliesListView.CaliberFilter = null;
 
 			m_SuppliesListView.CheckedFilter = SuppliesPrintCheckedRadioButton.Checked;
 			m_SuppliesListView.NonZeroFilter = SuppliesNonZeroCheckBox.Checked;
@@ -1749,6 +1850,15 @@ namespace ReloadersWorkShop
 		public void UpdateSuppliesTabButtons()
 			{
 			//----------------------------------------------------------------------------*
+			// Caliber Filter
+			//----------------------------------------------------------------------------*
+
+			cSupply.eSupplyTypes eSupplyType = (cSupply.eSupplyTypes)SupplyTypeCombo.SelectedIndex;
+
+			SupplyCaliberCombo.Visible = eSupplyType == cSupply.eSupplyTypes.Bullets || eSupplyType == cSupply.eSupplyTypes.Cases;
+			SupplyCaliberLabel.Visible = eSupplyType == cSupply.eSupplyTypes.Bullets || eSupplyType == cSupply.eSupplyTypes.Cases;
+
+			//----------------------------------------------------------------------------*
 			// Print Button
 			//----------------------------------------------------------------------------*
 
@@ -1790,7 +1900,7 @@ namespace ReloadersWorkShop
 					}
 				}
 
-			SupplyListFilterCountLabel.Text = string.Format("{0} {1}{2} match{3} the filter criteria", nSupplyCount == 0 ? "No" : nSupplyCount.ToString(), cSupply.SupplyTypeString((cSupply.eSupplyTypes) SupplyTypeCombo.SelectedIndex, false), nSupplyCount != 1 ? "s" : "", nSupplyCount == 1 ? "es" : "");
+			SupplyListFilterCountLabel.Text = string.Format("{0} {1}{2} match{3} the filter criteria", nSupplyCount == 0 ? "No" : nSupplyCount.ToString(), cSupply.SupplyTypeString((cSupply.eSupplyTypes)SupplyTypeCombo.SelectedIndex, false), nSupplyCount != 1 ? "s" : "", nSupplyCount == 1 ? "es" : "");
 
 			SupplyListFilterCountLabel.ForeColor = nSupplyCount == 0 ? Color.Maroon : SystemColors.ControlText;
 
