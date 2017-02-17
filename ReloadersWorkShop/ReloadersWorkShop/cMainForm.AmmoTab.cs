@@ -702,7 +702,7 @@ namespace ReloadersWorkShop
 				// See if this is the same Ammo
 				//----------------------------------------------------------------------------*
 
-				if (CheckAmmo.Equals(OldAmmo))
+				if (CheckAmmo.CompareTo(OldAmmo) == 0)
 					{
 					//----------------------------------------------------------------------------*
 					// Update the current Firearm record
@@ -716,7 +716,7 @@ namespace ReloadersWorkShop
 					// Update the Firearm on the Firearm tab
 					//----------------------------------------------------------------------------*
 
-					m_AmmoListView.UpdateAmmo(CheckAmmo, true);
+					m_AmmoListView.UpdateAmmo(OldAmmo, CheckAmmo, true);
 
 					return;
 					}

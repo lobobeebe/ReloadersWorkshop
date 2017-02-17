@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cCaliberListView.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -199,13 +199,8 @@ namespace ReloadersWorkShop
 
 			Cursor = Cursors.WaitCursor;
 
-			m_strDimensionFormat = "{0:F";
-			m_strDimensionFormat += String.Format("{0:G0}", m_DataFiles.Preferences.DimensionDecimals);
-			m_strDimensionFormat += "}";
-
-			m_strBulletWeightFormat = "{0:F";
-			m_strBulletWeightFormat += String.Format("{0:G0}", m_DataFiles.Preferences.BulletWeightDecimals);
-			m_strBulletWeightFormat += "}";
+			m_strDimensionFormat = m_DataFiles.Preferences.FormatString(cDataFiles.eDataType.Dimension);
+			m_strBulletWeightFormat = m_DataFiles.Preferences.FormatString(cDataFiles.eDataType.BulletWeight);
 
 			Items.Clear();
 

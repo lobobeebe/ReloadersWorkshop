@@ -300,13 +300,8 @@ namespace ReloadersWorkShop
 			// Create the format strings
 			//----------------------------------------------------------------------------*
 
-			string strChargeFormat = "{0:F";
-			strChargeFormat += String.Format("{0:G0}", m_DataFiles.Preferences.PowderWeightDecimals);
-			strChargeFormat += "}";
-
-			string strGroupFormat = "{0:F";
-			strGroupFormat += String.Format("{0:G0}", m_DataFiles.Preferences.GroupDecimals);
-			strGroupFormat += "}";
+			string strChargeFormat = m_DataFiles.Preferences.FormatString(cDataFiles.eDataType.PowderWeight);
+			string strGroupFormat = m_DataFiles.Preferences.FormatString(cDataFiles.eDataType.GroupSize);
 
 			//----------------------------------------------------------------------------*
 			// Loop through the charges

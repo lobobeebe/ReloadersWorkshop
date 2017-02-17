@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cPreferences.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -14,7 +14,6 @@ using System.Drawing;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
-using System.Xml;
 
 using ReloadersWorkShop.Ballistics;
 
@@ -2092,8 +2091,17 @@ namespace ReloadersWorkShop.Preferences
 				case cDataFiles.eDataType.BulletWeight:
 					strFormat += String.Format("{0:G0}", m_nBulletWeightDecimals);
 					break;
+				case cDataFiles.eDataType.CanWeight:
+					strFormat += String.Format("{0:G0}", m_nCanWeightDecimals);
+					break;
 				case cDataFiles.eDataType.Dimension:
 					strFormat += String.Format("{0:G0}", m_nDimensionDecimals);
+					break;
+				case cDataFiles.eDataType.GroupSize:
+					strFormat += String.Format("{0:G0}", m_nGroupDecimals);
+					break;
+				case cDataFiles.eDataType.PowderWeight:
+					strFormat += String.Format("{0:G0}", m_nPowderWeightDecimals);
 					break;
 				}
 

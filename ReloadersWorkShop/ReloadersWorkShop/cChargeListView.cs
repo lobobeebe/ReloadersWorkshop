@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cChargeListView.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -162,9 +162,7 @@ namespace ReloadersWorkShop
 			// Create the format strings
 			//----------------------------------------------------------------------------*
 
-			m_strPowderWeightFormat = "{0:F";
-			m_strPowderWeightFormat += String.Format("{0:G0}", cPreferences.StaticPreferences.PowderWeightDecimals);
-			m_strPowderWeightFormat += "}";
+			m_strPowderWeightFormat = m_DataFiles.Preferences.FormatString(cDataFiles.eDataType.PowderWeight);
 
 			//----------------------------------------------------------------------------*
 			// Reset the list view

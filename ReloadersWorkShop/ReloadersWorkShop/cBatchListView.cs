@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cBatchListView.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -215,9 +215,7 @@ namespace ReloadersWorkShop
 					}
 				}
 
-			string strPowderWeightFormat = "{0:F";
-			strPowderWeightFormat += String.Format("{0:G0}", m_DataFiles.Preferences.PowderWeightDecimals);
-			strPowderWeightFormat += "}";
+			string strPowderWeightFormat = m_DataFiles.Preferences.FormatString(cDataFiles.eDataType.PowderWeight);
 
 			if (fCompressed)
 				strPowderWeightFormat += "C";

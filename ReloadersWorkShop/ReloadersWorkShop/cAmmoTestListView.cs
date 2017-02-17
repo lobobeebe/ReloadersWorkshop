@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cAmmoTestListView.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -153,9 +153,7 @@ namespace ReloadersWorkShop
 			// Create the format strings
 			//----------------------------------------------------------------------------*
 
-			m_strGroupFormat = "{0:F";
-			m_strGroupFormat += String.Format("{0:G0}", m_DataFiles.Preferences.GroupDecimals);
-			m_strGroupFormat += "}";
+			m_strGroupFormat = m_DataFiles.Preferences.FormatString(cDataFiles.eDataType.GroupSize);
 
 			//----------------------------------------------------------------------------*
 			// Reset the list view

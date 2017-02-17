@@ -405,17 +405,9 @@ namespace ReloadersWorkShop
 
 		public override void Populate()
 			{
-			m_strCanWeightFormat = "{0:F";
-			m_strCanWeightFormat += String.Format("{0:G0}", m_DataFiles.Preferences.CanWeightDecimals);
-			m_strCanWeightFormat += "}";
-
-			m_strDimensionFormat = "{0:F";
-			m_strDimensionFormat += String.Format("{0:G0}", m_DataFiles.Preferences.DimensionDecimals);
-			m_strDimensionFormat += "}";
-
-			m_strBulletWeightFormat = "{0:F";
-			m_strBulletWeightFormat += String.Format("{0:G0}", m_DataFiles.Preferences.BulletWeightDecimals);
-			m_strBulletWeightFormat += "}";
+			m_strCanWeightFormat = m_DataFiles.Preferences.FormatString(cDataFiles.eDataType.CanWeight);
+			m_strDimensionFormat = m_DataFiles.Preferences.FormatString(cDataFiles.eDataType.Dimension);
+			m_strBulletWeightFormat = m_DataFiles.Preferences.FormatString(cDataFiles.eDataType.BulletWeight);
 
 			Populating = true;
 

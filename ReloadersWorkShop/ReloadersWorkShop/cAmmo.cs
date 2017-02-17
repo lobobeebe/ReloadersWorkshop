@@ -120,8 +120,11 @@ namespace ReloadersWorkShop
 		// Copy()
 		//============================================================================*
 
-		public void Copy(cAmmo Ammo)
+		public void Copy(cAmmo Ammo, bool fCopyBase = true)
 			{
+			if (fCopyBase)
+				base.Copy(Ammo);
+
 			m_strPartNumber = Ammo.m_strPartNumber;
 			m_strType = Ammo.m_strType;
 			m_nBatchID = Ammo.m_nBatchID;

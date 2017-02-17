@@ -1143,10 +1143,10 @@ namespace ReloadersWorkShop
 			{
 			cRWXMLDocument XMLDocument = new cRWXMLDocument(this);
 
-			XMLDocument.Export(true);
-
 			try
 				{
+				XMLDocument.Export(true);
+
 				string strFilePath = Path.Combine(GetDataPath(), "RWDataRecovery.xml");
 
 				XmlTextWriter XMLTextWriter = new XmlTextWriter(strFilePath, System.Text.Encoding.ASCII);

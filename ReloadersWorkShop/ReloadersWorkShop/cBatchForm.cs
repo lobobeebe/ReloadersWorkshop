@@ -2168,9 +2168,8 @@ namespace ReloadersWorkShop
 			{
 			double dNeckTension = 0.0;
 
-			string strFormat = "{0:F";
-			strFormat += String.Format("{0:G0}", m_DataFiles.Preferences.DimensionDecimals);
-			strFormat += "} ";
+			string strFormat = m_DataFiles.Preferences.FormatString(cDataFiles.eDataType.Dimension);
+			strFormat += " ";
 			strFormat += cDataFiles.MetricString(cDataFiles.eDataType.Dimension);
 
 			NeckSizeTextBox.MinValue = 0.0;
@@ -2223,7 +2222,7 @@ namespace ReloadersWorkShop
 					double dMinCharge = MinCharge != null ? MinCharge.PowderWeight : 0.0;
 					double dMaxCharge = MaxCharge != null ? MaxCharge.PowderWeight : 0.0;
 
-					double dIncrement = (Math.Abs(dMaxCharge - dMinCharge) / 2) / 2;
+					double dIncrement = Math.Round((Math.Abs(dMaxCharge - dMinCharge) / 2.0) / 2.0, cPreferences.StaticPreferences.PowderWeightDecimals);
 
 					OCWSettings.m_dStartCharge = dMinCharge;
 					OCWSettings.m_dChargeIncrement = dIncrement;
@@ -2238,9 +2237,7 @@ namespace ReloadersWorkShop
 			OCWSettings.m_dStartCharge = Math.Round(OCWSettings.m_dStartCharge, cPreferences.StaticPreferences.PowderWeightDecimals);
 			OCWSettings.m_dChargeIncrement = Math.Round(OCWSettings.m_dChargeIncrement, cPreferences.StaticPreferences.PowderWeightDecimals);
 
-			string strPowderWeightFormat = "{0:F";
-			strPowderWeightFormat += String.Format("{0:G0}", cPreferences.StaticPreferences.PowderWeightDecimals);
-			strPowderWeightFormat += "}";
+			string strPowderWeightFormat = cPreferences.StaticPreferences.FormatString(cDataFiles.eDataType.PowderWeight);
 
 			string strStartCharge = String.Format(strPowderWeightFormat, OCWSettings.m_dStartCharge);
 			string strIncrement = String.Format(strPowderWeightFormat, OCWSettings.m_dChargeIncrement);

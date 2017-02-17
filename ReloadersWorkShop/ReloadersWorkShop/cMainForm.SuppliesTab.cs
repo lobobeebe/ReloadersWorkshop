@@ -446,6 +446,8 @@ namespace ReloadersWorkShop
 
 		protected void OnDeselectAllSuppliesClicked(object sender, EventArgs args)
 			{
+			m_fPopulating = true;
+
 			foreach (ListViewItem Item in m_SuppliesListView.Items)
 				{
 				cSupply Supply = (cSupply)Item.Tag;
@@ -456,6 +458,8 @@ namespace ReloadersWorkShop
 					Supply.Checked = false;
 					}
 				}
+
+			m_fPopulating = false;
 			}
 
 		//============================================================================*
@@ -874,6 +878,8 @@ namespace ReloadersWorkShop
 
 		protected void OnSelectAllSuppliesClicked(object sender, EventArgs args)
 			{
+			m_fPopulating = true;
+
 			foreach (ListViewItem Item in m_SuppliesListView.Items)
 				{
 				cSupply Supply = (cSupply)Item.Tag;
@@ -884,6 +890,8 @@ namespace ReloadersWorkShop
 					Supply.Checked = true;
 					}
 				}
+
+			m_fPopulating = false;
 			}
 
 		//============================================================================*
@@ -983,7 +991,7 @@ namespace ReloadersWorkShop
 
 		protected void OnSupplyChecked(object sender, ItemCheckedEventArgs args)
 			{
-			if (!m_fInitialized || m_SuppliesListView.Populating)
+			if (!m_fInitialized || m_fPopulating || m_SuppliesListView.Populating)
 				return;
 
 			cSupply Supply = (cSupply)args.Item.Tag;
@@ -1485,7 +1493,7 @@ namespace ReloadersWorkShop
 
 			m_SuppliesListView.CaliberFilter = null;
 
-			m_SuppliesListView.CheckedFilter = SuppliesPrintCheckedRadioButton.Checked;
+			m_SuppliesListView.CheckedFilter = m_DataFiles.Preferences.HideUncheckedSupplies;  // SuppliesPrintCheckedRadioButton.Checked;
 			m_SuppliesListView.NonZeroFilter = SuppliesNonZeroCheckBox.Checked;
 			m_SuppliesListView.MinStockFilter = SuppliesMinStockCheckBox.Checked;
 

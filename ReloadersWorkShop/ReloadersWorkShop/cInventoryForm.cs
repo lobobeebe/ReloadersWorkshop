@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cInventoryForm.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -11,11 +11,7 @@
 
 using System;
 using System.Drawing;
-using System.Windows;
 using System.Windows.Forms;
-
-using ReloadersWorkShop.Controls;
-using ReloadersWorkShop.Preferences;
 
 //============================================================================*
 // NameSpace
