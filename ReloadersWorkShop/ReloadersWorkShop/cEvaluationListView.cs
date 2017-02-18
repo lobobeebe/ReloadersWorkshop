@@ -61,12 +61,13 @@ namespace ReloadersWorkShop
 			new cListViewColumn(4, "ChargeHeader", "Charge", HorizontalAlignment.Center, 80),
 			new cListViewColumn(5, "PrimerHeader", "Primer", HorizontalAlignment.Left, 160),
 			new cListViewColumn(6, "CaseHeader", "Case", HorizontalAlignment.Left, 160),
-			new cListViewColumn(7, "BestGroupHeader", "Best Group", HorizontalAlignment.Center, 80),
-			new cListViewColumn(8, "MOAHeader", "MOA", HorizontalAlignment.Center, 80),
-			new cListViewColumn(9, "RangeHeader", "Range", HorizontalAlignment.Center, 80),
-			new cListViewColumn(10, "VelocityHeader", "Muzzle Velociy", HorizontalAlignment.Center, 80),
-			new cListViewColumn(11, "DeviationHeader", "Max Deviation", HorizontalAlignment.Center, 100),
-			new cListViewColumn(12, "StdDeviationHeader", "Std Deviation", HorizontalAlignment.Center, 100),
+			new cListViewColumn(7, "NumRoundsHeader", "Num Rounds", HorizontalAlignment.Center, 80),
+			new cListViewColumn(8, "BestGroupHeader", "Best Group", HorizontalAlignment.Center, 80),
+			new cListViewColumn(9, "MOAHeader", "MOA", HorizontalAlignment.Center, 80),
+			new cListViewColumn(10, "RangeHeader", "Range", HorizontalAlignment.Center, 80),
+			new cListViewColumn(11, "VelocityHeader", "Muzzle Velociy", HorizontalAlignment.Center, 80),
+			new cListViewColumn(12, "DeviationHeader", "Max Deviation", HorizontalAlignment.Center, 100),
+			new cListViewColumn(13, "StdDeviationHeader", "Std Deviation", HorizontalAlignment.Center, 100),
 			};
 
 		//============================================================================*
@@ -339,6 +340,16 @@ namespace ReloadersWorkShop
 					Item.SubItems.Add(Load.Primer.ToShortString());
 					Item.SubItems.Add(Load.Case.ToShortString());
 
+					cBatch Batch = null;
+
+					if (ChargeTest.BatchID != 0)
+						Batch = m_DataFiles.GetBatchByID(ChargeTest.BatchID);
+
+					if (Batch == null || Batch.BatchTest == null)
+						Item.SubItems.Add("-");
+					else
+						Item.SubItems.Add(String.Format("{0:G0}", Batch.BatchTest.NumRounds));
+
 					if (ChargeTest.BestGroup == 0.0)
 						Item.SubItems.Add("-");
 					else
@@ -359,8 +370,6 @@ namespace ReloadersWorkShop
 						Item.SubItems.Add("-");
 					else
 						Item.SubItems.Add(String.Format("{0:N0}", cDataFiles.StandardToMetric(ChargeTest.MuzzleVelocity, cDataFiles.eDataType.Velocity)));
-
-					cBatch Batch = m_DataFiles.GetBatchByID(ChargeTest.BatchID);
 
 					if (Batch == null || Batch.BatchTest == null || Batch.BatchTest.TestShotList == null)
 						{

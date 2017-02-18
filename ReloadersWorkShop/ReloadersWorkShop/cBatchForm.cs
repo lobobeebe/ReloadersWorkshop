@@ -100,13 +100,12 @@ namespace ReloadersWorkShop
 		// cBatchForm() - Constructor
 		//============================================================================*
 
-		public cBatchForm(cBatch Batch, cDataFiles DataFiles, cRWRegistry RWRegistry, cFirearm.eFireArmType eFirearmType = cFirearm.eFireArmType.None, bool fViewOnly = false)
+		public cBatchForm(cBatch Batch, cDataFiles DataFiles, cRWRegistry RWRegistry, cFirearm.eFireArmType eFirearmType = cFirearm.eFireArmType.None, bool fViewOnly = false, bool fAdd = false)
 			{
 			Cursor = Cursors.WaitCursor;
 
 			InitializeComponent();
 
-			m_Batch = Batch;
 			m_DataFiles = DataFiles;
 			m_RWRegistry = RWRegistry;
 
@@ -123,7 +122,7 @@ namespace ReloadersWorkShop
 			// Create the m_Batch object
 			//----------------------------------------------------------------------------*
 
-			if (Batch == null)
+			if (Batch == null || fAdd)
 				{
 				if (m_fUserViewOnly)
 					return;
@@ -132,11 +131,21 @@ namespace ReloadersWorkShop
 
 				m_fAdd = true;
 
-				m_Batch = new cBatch();
+				if (Batch != null)
+					m_Batch = new cBatch(Batch);
+				else
+					m_Batch = new cBatch();
 
 				m_Batch.BatchID = m_DataFiles.Preferences.NextBatchID;
-
+				m_Batch.OCWBatchID = 0;
+				m_Batch.UserID = "";
+				m_Batch.DateLoaded = DateTime.Today;
 				m_Batch.TrackInventory = m_DataFiles.Preferences.TrackInventory;
+				m_Batch.BatchTest = null;
+
+				m_nInitalRounds = m_Batch.NumRounds;
+
+				m_Batch.NumRounds = 0;
 				}
 			else
 				{

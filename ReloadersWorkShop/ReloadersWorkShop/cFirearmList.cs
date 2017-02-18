@@ -102,7 +102,8 @@ namespace ReloadersWorkShop
 
 				foreach (cFirearm Firearm in this)
 					{
-					Firearm.Export(XMLDocument, XMLElement);
+					if (Firearm.Validate())	
+						Firearm.Export(XMLDocument, XMLElement);
 					}
 				}
 			}

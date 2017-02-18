@@ -101,7 +101,7 @@ namespace ReloadersWorkShop
 
 		public override void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement, bool fIdentityOnly = false)
 			{
-			if (XMLDocument != null && XMLParentElement != null)
+			if (XMLDocument != null && XMLParentElement != null && Manufacturer != null)
 				{
 				string strName = ExportName;
 

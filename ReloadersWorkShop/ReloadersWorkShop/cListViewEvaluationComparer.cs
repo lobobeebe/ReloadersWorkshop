@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cListViewEvaluationComparer.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -10,7 +10,6 @@
 //============================================================================*
 
 using System;
-using System.Collections;
 using System.Windows.Forms;
 
 using ReloadersWorkShop.Preferences;
@@ -303,10 +302,27 @@ namespace ReloadersWorkShop
 					break;
 
 				//----------------------------------------------------------------------------*
-				// Best Group
+				// Num Rounds
 				//----------------------------------------------------------------------------*
 
 				case 7:
+					int nItem1 = 0;
+					int nItem2 = 0;
+
+					Int32.TryParse((Object1 as ListViewItem).Text, out nItem1);
+					Int32.TryParse((Object2 as ListViewItem).Text, out nItem2);
+
+					rc = nItem1.CompareTo(nItem2);
+
+					fSpecial = true;
+
+					break;
+
+				//----------------------------------------------------------------------------*
+				// Best Group
+				//----------------------------------------------------------------------------*
+
+				case 8:
 					rc = Item1.ChargeTest.BestGroup.CompareTo(Item2.ChargeTest.BestGroup);
 
 					fSpecial = true;
@@ -317,7 +333,7 @@ namespace ReloadersWorkShop
 				// MOA
 				//----------------------------------------------------------------------------*
 
-				case 8:
+				case 9:
 					double Group1 = Item1.ChargeTest.BestGroup;
 					double Group2 = Item2.ChargeTest.BestGroup;
 
@@ -346,7 +362,7 @@ namespace ReloadersWorkShop
 				// Best Group Range
 				//----------------------------------------------------------------------------*
 
-				case 9:
+				case 10:
 					rc = Item1.ChargeTest.BestGroupRange.CompareTo(Item2.ChargeTest.BestGroupRange);
 
 					fSpecial = true;
@@ -357,7 +373,7 @@ namespace ReloadersWorkShop
 				// Muzzle Velocity
 				//----------------------------------------------------------------------------*
 
-				case 10:
+				case 11:
 					rc = Item1.ChargeTest.MuzzleVelocity.CompareTo(Item2.ChargeTest.MuzzleVelocity);
 
 					fSpecial = true;
@@ -368,7 +384,7 @@ namespace ReloadersWorkShop
 				// Max Deviation
 				//----------------------------------------------------------------------------*
 
-				case 11:
+				case 12:
 					Batch1 = m_DataFiles.GetBatchByID(Item1.ChargeTest.BatchID);
 					Batch2 = m_DataFiles.GetBatchByID(Item2.ChargeTest.BatchID);
 
@@ -385,7 +401,7 @@ namespace ReloadersWorkShop
 				// Std Deviation
 				//----------------------------------------------------------------------------*
 
-				case 12:
+				case 13:
 					Batch1 = m_DataFiles.GetBatchByID(Item1.ChargeTest.BatchID);
 					Batch2 = m_DataFiles.GetBatchByID(Item2.ChargeTest.BatchID);
 

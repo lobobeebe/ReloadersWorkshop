@@ -217,6 +217,7 @@ namespace ReloadersWorkShop
 				BatchCaliberCombo.SelectedIndexChanged += OnBatchCaliberSelected;
 				BatchPowderCombo.SelectedIndexChanged += OnBatchPowderSelected;
 
+				CopyBatchButton.Click += OnAddBatch;
 				ArchiveCheckedButton.Click += OnArchiveChecked;
 				UnarchiveCheckedButton.Click += OnUnarchiveChecked;
 
@@ -245,11 +246,22 @@ namespace ReloadersWorkShop
 
 		protected void OnAddBatch(object sender, EventArgs args)
 			{
+			cBatch Batch = null;
+
+			if (sender is Button)
+				{
+				if ((sender as Button).Name == "CopyBatchButton")
+					{
+					if (m_BatchListView.SelectedItems.Count > 0)
+						Batch = (cBatch) m_BatchListView.SelectedItems[0].Tag;
+					}
+				}
+
 			//----------------------------------------------------------------------------*
 			// Start the dialog
 			//----------------------------------------------------------------------------*
 
-			cBatchForm BatchForm = new cBatchForm(null, m_DataFiles, m_RWRegistry, BatchFirearmTypeCombo.Value);
+			cBatchForm BatchForm = new cBatchForm(Batch, m_DataFiles, m_RWRegistry, BatchFirearmTypeCombo.Value, false, true);
 
 			if (BatchForm.ShowDialog() == DialogResult.OK)
 				{
@@ -1042,6 +1054,12 @@ namespace ReloadersWorkShop
 
 		public void UpdateBatchTabButtons()
 			{
+			//----------------------------------------------------------------------------*
+			// Copy Batch Button
+			//----------------------------------------------------------------------------*
+
+			CopyBatchButton.Enabled = m_BatchListView.SelectedItems.Count != 0;
+
 			//----------------------------------------------------------------------------*
 			// Archive Buttons
 			//----------------------------------------------------------------------------*

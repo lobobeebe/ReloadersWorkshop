@@ -1162,7 +1162,10 @@ namespace ReloadersWorkShop
 				}
 			catch (Exception e)
 				{
-				string strText = String.Format("Unable to export XML recovery file!\n\nSystem Error Message:\n\n{0}", e.Message);
+				string strText = "Unable to export XML recovery file (RWDataRecovery.xml)!\n\nDon't worry, your data is intact.  This is just a problem with saving an emergency recovery file, but it should be reported on the support forum.";
+
+				strText += String.Format("\n\nSystem Error Message:\n\n{0}", e.Message);
+
 
 				MessageBox.Show(strText, "XML Export Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 

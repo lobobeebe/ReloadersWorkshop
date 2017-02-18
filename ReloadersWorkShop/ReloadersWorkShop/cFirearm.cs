@@ -1188,10 +1188,10 @@ namespace ReloadersWorkShop
 
 		public override bool Validate(bool fIdentityOK = false)
 			{
-			if (!base.Validate(fIdentityOK))
+			if (m_eFirearmType == cFirearm.eFireArmType.None)
 				return (false);
 
-			if (m_eFirearmType == cFirearm.eFireArmType.None)
+			if (!base.Validate(fIdentityOK))
 				return (false);
 
 			if (fIdentityOK && Identity)
