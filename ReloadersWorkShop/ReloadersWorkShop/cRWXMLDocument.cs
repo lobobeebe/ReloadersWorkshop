@@ -32,8 +32,6 @@ namespace ReloadersWorkShop
 
 		private string m_strFilePath = null;
 
-		private cDataFiles m_DataFiles = null;
-
 		private bool m_fFullDataDump = true;
 		private bool m_fContainsPreferences = false;
 		private bool m_fTrackInventory = false;
@@ -49,6 +47,23 @@ namespace ReloadersWorkShop
 		private bool m_fIncludeLoads = true;
 		private bool m_fIncludeBatches = true;
 		private bool m_fIncludeParts = true;
+
+		// Data Lists
+
+		cAmmoList m_AmmoList = null;
+		cBatchList m_BatchList = null;
+		cBulletList m_BulletList = null;
+		cCaliberList m_CaliberList = null;
+		cCaseList m_CaseList = null;
+		cFirearmList m_FirearmList = null;
+		cGearList m_GearList = null;
+		cLoadList m_LoadList = null;
+		cManufacturerList m_ManufacturerList = null;
+		cPowderList m_PowderList = null;
+		cPrimerList m_PrimerList = null;
+
+//			if (fComplete)
+//				DataFiles.Preferences.Export(this, MainElement);
 
 		// Counters
 
@@ -108,9 +123,8 @@ namespace ReloadersWorkShop
 		// cRWXMLDocument() - Constructor
 		//============================================================================*
 
-		public cRWXMLDocument(cDataFiles DataFiles)
+		public cRWXMLDocument()
 			{
-			m_DataFiles = DataFiles;
 			}
 
 		//============================================================================*
@@ -444,7 +458,7 @@ namespace ReloadersWorkShop
 		// Export()
 		//============================================================================*
 
-		public void Export(bool fComplete = true, bool fDataUpdate = false)
+		public void Export(cDataFiles DataFiles, bool fComplete = true, bool fDataUpdate = false)
 			{
 			//----------------------------------------------------------------------------*
 			// Create Declaration
@@ -468,40 +482,40 @@ namespace ReloadersWorkShop
 			MainElement.AppendChild(XMLTextElement);
 
 			if (fComplete || m_fIncludeManufacturers)
-				m_DataFiles.ManufacturerList.Export(this, MainElement);
+				DataFiles.ManufacturerList.Export(this, MainElement);
 
 			if (fComplete || m_fIncludeCalibers)
-				m_DataFiles.CaliberList.Export(this, MainElement);
+				DataFiles.CaliberList.Export(this, MainElement);
 
 			if (fComplete || m_fIncludeBullets)
-				m_DataFiles.BulletList.Export(this, MainElement);
+				DataFiles.BulletList.Export(this, MainElement);
 
 			if (fComplete || m_fIncludeFirearms)
-				m_DataFiles.FirearmList.Export(this, MainElement);
+				DataFiles.FirearmList.Export(this, MainElement);
 
 			if (fComplete || m_fIncludeParts)
-				m_DataFiles.GearList.Export(this, MainElement);
+				DataFiles.GearList.Export(this, MainElement);
 
 			if (fComplete || m_fIncludeAmmo)
-				m_DataFiles.AmmoList.Export(this, MainElement);
+				DataFiles.AmmoList.Export(this, MainElement);
 
 			if (fComplete || m_fIncludePowders)
-				m_DataFiles.PowderList.Export(this, MainElement);
+				DataFiles.PowderList.Export(this, MainElement);
 
 			if (fComplete || m_fIncludePrimers)
-				m_DataFiles.PrimerList.Export(this, MainElement);
+				DataFiles.PrimerList.Export(this, MainElement);
 
 			if (fComplete || m_fIncludeCases)
-				m_DataFiles.CaseList.Export(this, MainElement);
+				DataFiles.CaseList.Export(this, MainElement);
 
 			if (fComplete || m_fIncludeLoads)
-				m_DataFiles.LoadList.Export(this, MainElement);
+				DataFiles.LoadList.Export(this, MainElement);
 
 			if (fComplete || m_fIncludeBatches)
-				m_DataFiles.BatchList.Export(this, MainElement);
+				DataFiles.BatchList.Export(this, MainElement);
 
 			if (fComplete)
-				m_DataFiles.Preferences.Export(this, MainElement);
+				DataFiles.Preferences.Export(this, MainElement);
 			}
 
 		//============================================================================*
@@ -1050,7 +1064,7 @@ namespace ReloadersWorkShop
 		// Import() - XML
 		//============================================================================*
 
-		public bool Import(string strFilePath, bool fMerge = true)
+		public bool Import(string strFilePath)
 			{
 			//----------------------------------------------------------------------------*
 			// Make sure the file exists
@@ -1059,12 +1073,6 @@ namespace ReloadersWorkShop
 			if (!File.Exists(strFilePath))
 				return (false);
 
-			//----------------------------------------------------------------------------*
-			// Reset the data if not merging
-			//----------------------------------------------------------------------------*
-
-			if (!fMerge)
-				m_DataFiles.Reset();
 
 			//----------------------------------------------------------------------------*
 			// Create and Load the XML document
