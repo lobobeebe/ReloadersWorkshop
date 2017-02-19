@@ -432,8 +432,7 @@ namespace ReloadersWorkShop
 							(m_ManufacturerFilter == null || Supply.Manufacturer.CompareTo(m_ManufacturerFilter) == 0) &&
 							(m_CaliberFilter == null || (Supply as cBullet).HasCaliber(m_CaliberFilter)) &&
 							(!m_fNonZeroFilter || dSupplyQuantity > 0.0) &&
-							(!m_fMinStockFilter || dSupplyQuantity < dMinStockLevel) &&
-							(!m_fCheckedFilter || Supply.Checked))
+							(!m_fMinStockFilter || dSupplyQuantity < dMinStockLevel))
 							{
 							Item = AddBullet(Supply as cBullet);
 
@@ -458,8 +457,7 @@ namespace ReloadersWorkShop
 							(m_ManufacturerFilter == null || Supply.Manufacturer.CompareTo(m_ManufacturerFilter) == 0) &&
 							(m_CaliberFilter == null || (Supply as cCase).Caliber.CompareTo(m_CaliberFilter) == 0) &&
 							(!m_fNonZeroFilter || m_DataFiles.SupplyQuantity(Supply) > 0.0) &&
-							(!m_fMinStockFilter || m_DataFiles.SupplyQuantity(Supply) < Supply.MinimumStockLevel) &&
-							(!m_fCheckedFilter || Supply.Checked))
+							(!m_fMinStockFilter || m_DataFiles.SupplyQuantity(Supply) < Supply.MinimumStockLevel))
 							{
 							Item = AddCase(Supply as cCase);
 
@@ -486,8 +484,7 @@ namespace ReloadersWorkShop
 						if ((Supply.CrossUse || m_eFirearmTypeFilter == cFirearm.eFireArmType.None || Supply.FirearmType == m_eFirearmTypeFilter) &&
 							(m_ManufacturerFilter == null || Supply.Manufacturer.CompareTo(m_ManufacturerFilter) == 0) &&
 							(!m_fNonZeroFilter || dSupplyQuantity > 0.0) &&
-							(!m_fMinStockFilter || dSupplyQuantity < dMinStockLevel) &&
-							(!m_fCheckedFilter || Supply.Checked))
+							(!m_fMinStockFilter || dSupplyQuantity < dMinStockLevel))
 							{
 							Item = AddPowder(Supply as cPowder);
 
@@ -511,8 +508,7 @@ namespace ReloadersWorkShop
 						if ((Supply.CrossUse || m_eFirearmTypeFilter == cFirearm.eFireArmType.None || Supply.FirearmType == m_eFirearmTypeFilter) &&
 							(m_ManufacturerFilter == null || Supply.Manufacturer.CompareTo(m_ManufacturerFilter) == 0) &&
 							(!m_fNonZeroFilter || m_DataFiles.SupplyQuantity(Supply) > 0.0) &&
-							(!m_fMinStockFilter || m_DataFiles.SupplyQuantity(Supply) < Supply.MinimumStockLevel) &&
-							(!m_fCheckedFilter || Supply.Checked))
+							(!m_fMinStockFilter || m_DataFiles.SupplyQuantity(Supply) < Supply.MinimumStockLevel))
 							{
 							Item = AddPrimer(Supply as cPrimer);
 

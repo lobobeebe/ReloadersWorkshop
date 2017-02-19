@@ -639,6 +639,8 @@ namespace ReloadersWorkShop
 			{
 			m_DataFiles.Preferences.HideUncheckedSupplies = HideUncheckedSuppliesCheckBox.Checked;
 
+			m_SuppliesListView.CheckedFilter = m_DataFiles.Preferences.HideUncheckedSupplies;
+
 			PopulateSuppliesListView();
 
 			InitializeLoadDataTab();
