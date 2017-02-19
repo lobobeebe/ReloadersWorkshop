@@ -211,7 +211,7 @@ namespace ReloadersWorkShop
 		// Import()
 		//============================================================================*
 
-		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode)
+		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles, bool fCountOnly = false)
 			{
 			m_nImportCount = 0;
 			m_nNewCount = 0;
@@ -226,8 +226,8 @@ namespace ReloadersWorkShop
 					case "Bullet":
 						cBullet Bullet = new cBullet();
 
-						if (Bullet.Import(XMLDocument, XMLNode))
-							AddBullet(Bullet);
+						if (Bullet.Import(XMLDocument, XMLNode, DataFiles))
+							AddBullet(Bullet, fCountOnly);
 
 						break;
 					}

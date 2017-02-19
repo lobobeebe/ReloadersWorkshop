@@ -32,6 +32,8 @@ namespace ReloadersWorkShop
 
 		private string m_strFilePath = null;
 
+		private cDataFiles m_DataFiles = null;
+
 		private bool m_fFullDataDump = true;
 		private bool m_fContainsPreferences = false;
 		private bool m_fTrackInventory = false;
@@ -47,23 +49,6 @@ namespace ReloadersWorkShop
 		private bool m_fIncludeLoads = true;
 		private bool m_fIncludeBatches = true;
 		private bool m_fIncludeParts = true;
-
-		// Data Lists
-
-		cAmmoList m_AmmoList = null;
-		cBatchList m_BatchList = null;
-		cBulletList m_BulletList = null;
-		cCaliberList m_CaliberList = null;
-		cCaseList m_CaseList = null;
-		cFirearmList m_FirearmList = null;
-		cGearList m_GearList = null;
-		cLoadList m_LoadList = null;
-		cManufacturerList m_ManufacturerList = null;
-		cPowderList m_PowderList = null;
-		cPrimerList m_PrimerList = null;
-
-//			if (fComplete)
-//				DataFiles.Preferences.Export(this, MainElement);
 
 		// Counters
 
@@ -123,8 +108,9 @@ namespace ReloadersWorkShop
 		// cRWXMLDocument() - Constructor
 		//============================================================================*
 
-		public cRWXMLDocument()
+		public cRWXMLDocument(cDataFiles DataFiles)
 			{
+			m_DataFiles = DataFiles;
 			}
 
 		//============================================================================*
@@ -458,7 +444,7 @@ namespace ReloadersWorkShop
 		// Export()
 		//============================================================================*
 
-		public void Export(cDataFiles DataFiles, bool fComplete = true, bool fDataUpdate = false)
+		public void Export(bool fComplete = true, bool fDataUpdate = false)
 			{
 			//----------------------------------------------------------------------------*
 			// Create Declaration
@@ -482,40 +468,40 @@ namespace ReloadersWorkShop
 			MainElement.AppendChild(XMLTextElement);
 
 			if (fComplete || m_fIncludeManufacturers)
-				DataFiles.ManufacturerList.Export(this, MainElement);
+				m_DataFiles.ManufacturerList.Export(this, MainElement);
 
 			if (fComplete || m_fIncludeCalibers)
-				DataFiles.CaliberList.Export(this, MainElement);
+				m_DataFiles.CaliberList.Export(this, MainElement);
 
 			if (fComplete || m_fIncludeBullets)
-				DataFiles.BulletList.Export(this, MainElement);
+				m_DataFiles.BulletList.Export(this, MainElement);
 
 			if (fComplete || m_fIncludeFirearms)
-				DataFiles.FirearmList.Export(this, MainElement);
+				m_DataFiles.FirearmList.Export(this, MainElement);
 
 			if (fComplete || m_fIncludeParts)
-				DataFiles.GearList.Export(this, MainElement);
+				m_DataFiles.GearList.Export(this, MainElement);
 
 			if (fComplete || m_fIncludeAmmo)
-				DataFiles.AmmoList.Export(this, MainElement);
+				m_DataFiles.AmmoList.Export(this, MainElement);
 
 			if (fComplete || m_fIncludePowders)
-				DataFiles.PowderList.Export(this, MainElement);
+				m_DataFiles.PowderList.Export(this, MainElement);
 
 			if (fComplete || m_fIncludePrimers)
-				DataFiles.PrimerList.Export(this, MainElement);
+				m_DataFiles.PrimerList.Export(this, MainElement);
 
 			if (fComplete || m_fIncludeCases)
-				DataFiles.CaseList.Export(this, MainElement);
+				m_DataFiles.CaseList.Export(this, MainElement);
 
 			if (fComplete || m_fIncludeLoads)
-				DataFiles.LoadList.Export(this, MainElement);
+				m_DataFiles.LoadList.Export(this, MainElement);
 
 			if (fComplete || m_fIncludeBatches)
-				DataFiles.BatchList.Export(this, MainElement);
+				m_DataFiles.BatchList.Export(this, MainElement);
 
 			if (fComplete)
-				DataFiles.Preferences.Export(this, MainElement);
+				m_DataFiles.Preferences.Export(this, MainElement);
 			}
 
 		//============================================================================*
@@ -1064,7 +1050,7 @@ namespace ReloadersWorkShop
 		// Import() - XML
 		//============================================================================*
 
-		public bool Import(string strFilePath)
+		public bool Import(string strFilePath, bool fMerge = true)
 			{
 			//----------------------------------------------------------------------------*
 			// Make sure the file exists
@@ -1073,6 +1059,12 @@ namespace ReloadersWorkShop
 			if (!File.Exists(strFilePath))
 				return (false);
 
+			//----------------------------------------------------------------------------*
+			// Reset the data if not merging
+			//----------------------------------------------------------------------------*
+
+			if (!fMerge)
+				m_DataFiles.Reset();
 
 			//----------------------------------------------------------------------------*
 			// Create and Load the XML document
@@ -1135,50 +1127,71 @@ namespace ReloadersWorkShop
 					{
 					case "Ammunition":
 					case "AmmoList":
-						m_AmmoList.Import(this, XMLNode);
+						m_DataFiles.AmmoList.Import(this, XMLNode, m_DataFiles, fCountOnly);
+
+						m_nAmmoCount += m_DataFiles.AmmoList.ImportCount;
+						m_nAmmoNewCount += m_DataFiles.AmmoList.NewCount;
+						m_nAmmoUpdateCount += m_DataFiles.AmmoList.UpdateCount;
+
+						break;
+
+					case "Preferences":
+						if (!fMerge)
+							m_DataFiles.Preferences.Import(this, XMLNode, fCountOnly);
+
+						m_fContainsPreferences = true;
+
 						break;
 
 					case "Manufacturers":
 					case "ManufacturerList":
-						m_ManufacturerList.Import(this, XMLNode);
+						m_DataFiles.ManufacturerList.Import(this, XMLNode);
+
+						m_nManufacturerCount += m_DataFiles.ManufacturerList.ImportCount;
+						m_nManufacturerNewCount += m_DataFiles.ManufacturerList.NewCount;
+						m_nManufacturerUpdateCount += m_DataFiles.ManufacturerList.UpdateCount;
 
 						break;
 
 					case "Calibers":
 					case "CaliberList":
-						m_CaliberList.Import(this, XMLNode);
+						m_DataFiles.CaliberList.Import(this, XMLNode, fCountOnly);
+
+						m_nCaliberCount += m_DataFiles.CaliberList.ImportCount;
+						m_nCaliberNewCount += m_DataFiles.CaliberList.NewCount;
+						m_nCaliberUpdateCount += m_DataFiles.CaliberList.UpdateCount;
 
 						break;
 
 					case "Bullets":
 					case "BulletList":
-						m_BulletList.Import(this, XMLNode);
+						m_DataFiles.BulletList.Import(this, XMLNode, m_DataFiles, fCountOnly);
 
-						m_nBulletCount += m_BulletList.ImportCount;
-						m_nBulletNewCount += m_BulletList.NewCount;
-						m_nBulletUpdateCount += m_BulletList.UpdateCount;
+						m_nBulletCount += m_DataFiles.BulletList.ImportCount;
+						m_nBulletNewCount += m_DataFiles.BulletList.NewCount;
+						m_nBulletUpdateCount += m_DataFiles.BulletList.UpdateCount;
 
-						m_nBulletCaliberCount += m_BulletList.BulletCaliberImportCount;
-						m_nBulletCaliberNewCount += m_BulletList.BulletCaliberNewCount;
-						m_nBulletCaliberUpdateCount += m_BulletList.BulletCaliberUpdateCount;
+						m_nBulletCaliberCount += m_DataFiles.BulletList.BulletCaliberImportCount;
+						m_nBulletCaliberNewCount += m_DataFiles.BulletList.BulletCaliberNewCount;
+						m_nBulletCaliberUpdateCount += m_DataFiles.BulletList.BulletCaliberUpdateCount;
 
 						break;
 
 					case "Firearms":
 					case "FirearmList":
-						m_FirearmList.Import(this, XMLNode, fCountOnly);
+						m_DataFiles.FirearmList.Import(this, XMLNode, m_DataFiles, fCountOnly);
 
-						m_nFirearmCount += m_FirearmList.ImportCount;
-						m_nFirearmNewCount += m_FirearmList.NewCount;
-						m_nFirearmUpdateCount += m_FirearmList.UpdateCount;
+						m_nFirearmCount += m_DataFiles.FirearmList.ImportCount;
+						m_nFirearmNewCount += m_DataFiles.FirearmList.NewCount;
+						m_nFirearmUpdateCount += m_DataFiles.FirearmList.UpdateCount;
 
-						m_nFirearmCaliberCount += m_FirearmList.FirearmCaliberImportCount;
-						m_nFirearmCaliberNewCount += m_FirearmList.FirearmCaliberNewCount;
-						m_nFirearmCaliberUpdateCount += m_FirearmList.FirearmCaliberUpdateCount;
+						m_nFirearmCaliberCount += m_DataFiles.FirearmList.FirearmCaliberImportCount;
+						m_nFirearmCaliberNewCount += m_DataFiles.FirearmList.FirearmCaliberNewCount;
+						m_nFirearmCaliberUpdateCount += m_DataFiles.FirearmList.FirearmCaliberUpdateCount;
 
-						m_nFirearmBulletCount += m_FirearmList.FirearmBulletImportCount;
-						m_nFirearmBulletNewCount += m_FirearmList.FirearmBulletNewCount;
-						m_nFirearmBulletUpdateCount += m_FirearmList.FirearmBulletUpdateCount;
+						m_nFirearmBulletCount += m_DataFiles.FirearmList.FirearmBulletImportCount;
+						m_nFirearmBulletNewCount += m_DataFiles.FirearmList.FirearmBulletNewCount;
+						m_nFirearmBulletUpdateCount += m_DataFiles.FirearmList.FirearmBulletUpdateCount;
 
 						break;
 
@@ -1242,18 +1255,6 @@ namespace ReloadersWorkShop
 
 			return (true);
 			}
-
-		//============================================================================*
-		// Import() - CaliberIdentity
-		//============================================================================*
-
-		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, out cCaliber Caliber)
-			{
-			Caliber = new cCaliber(true);
-
-			Caliber.Import(XMLDocument, XMLThisNode);
-			}
-
 
 		//============================================================================*
 		// Import() - FirearmType

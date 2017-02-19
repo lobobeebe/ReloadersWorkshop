@@ -122,7 +122,7 @@ namespace ReloadersWorkShop
 		// Import()
 		//============================================================================*
 
-		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode)
+		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles, bool fCountOnly = false)
 			{
 			m_nImportCount = 0;
 			m_nNewCount = 0;
@@ -137,8 +137,8 @@ namespace ReloadersWorkShop
 					case "Ammo":
 						cAmmo Ammo = new cAmmo();
 
-						if (Ammo.Import(XMLDocument, XMLNode))
-							AddSupply(Ammo);
+						if (Ammo.Import(XMLDocument, XMLNode, DataFiles))
+							AddSupply(Ammo, fCountOnly);
 
 						break;
 					}
