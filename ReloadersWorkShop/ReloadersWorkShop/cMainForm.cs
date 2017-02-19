@@ -882,7 +882,7 @@ namespace ReloadersWorkShop
 
 			string strPath = FileDlg.FileName;
 
-			cRWXMLDocument XMLDocument = new cRWXMLDocument(m_DataFiles);
+			cRWXMLDocument XMLDocument = new cRWXMLDocument();
 
 			try
 				{

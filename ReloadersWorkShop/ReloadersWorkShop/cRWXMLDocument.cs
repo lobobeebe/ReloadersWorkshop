@@ -1135,71 +1135,63 @@ namespace ReloadersWorkShop
 					{
 					case "Ammunition":
 					case "AmmoList":
-						m_DataFiles.AmmoList.Import(this, XMLNode, m_DataFiles, fCountOnly);
+						m_AmmoList.Import(this, XMLNode, m_DataFiles, fCountOnly);
 
-						m_nAmmoCount += m_DataFiles.AmmoList.ImportCount;
-						m_nAmmoNewCount += m_DataFiles.AmmoList.NewCount;
-						m_nAmmoUpdateCount += m_DataFiles.AmmoList.UpdateCount;
-
-						break;
-
-					case "Preferences":
-						if (!fMerge)
-							m_DataFiles.Preferences.Import(this, XMLNode, fCountOnly);
-
-						m_fContainsPreferences = true;
+						m_nAmmoCount += m_AmmoList.ImportCount;
+						m_nAmmoNewCount += m_AmmoList.NewCount;
+						m_nAmmoUpdateCount += m_AmmoList.UpdateCount;
 
 						break;
 
 					case "Manufacturers":
 					case "ManufacturerList":
-						m_DataFiles.ManufacturerList.Import(this, XMLNode);
+						m_ManufacturerList.Import(this, XMLNode);
 
-						m_nManufacturerCount += m_DataFiles.ManufacturerList.ImportCount;
-						m_nManufacturerNewCount += m_DataFiles.ManufacturerList.NewCount;
-						m_nManufacturerUpdateCount += m_DataFiles.ManufacturerList.UpdateCount;
+						m_nManufacturerCount += m_ManufacturerList.ImportCount;
+						m_nManufacturerNewCount += m_ManufacturerList.NewCount;
+						m_nManufacturerUpdateCount += m_ManufacturerList.UpdateCount;
 
 						break;
 
 					case "Calibers":
 					case "CaliberList":
-						m_DataFiles.CaliberList.Import(this, XMLNode, fCountOnly);
+						m_CaliberList.Import(this, XMLNode, fCountOnly);
 
-						m_nCaliberCount += m_DataFiles.CaliberList.ImportCount;
-						m_nCaliberNewCount += m_DataFiles.CaliberList.NewCount;
-						m_nCaliberUpdateCount += m_DataFiles.CaliberList.UpdateCount;
+						m_nCaliberCount += m_CaliberList.ImportCount;
+						m_nCaliberNewCount += m_CaliberList.NewCount;
+						m_nCaliberUpdateCount += m_CaliberList.UpdateCount;
 
 						break;
 
 					case "Bullets":
 					case "BulletList":
-						m_DataFiles.BulletList.Import(this, XMLNode, m_DataFiles, fCountOnly);
+						m_BulletList.Import(this, XMLNode, fCountOnly);
 
-						m_nBulletCount += m_DataFiles.BulletList.ImportCount;
-						m_nBulletNewCount += m_DataFiles.BulletList.NewCount;
-						m_nBulletUpdateCount += m_DataFiles.BulletList.UpdateCount;
+						m_nBulletCount += m_BulletList.ImportCount;
+						m_nBulletNewCount += m_BulletList.NewCount;
+						m_nBulletUpdateCount += m_BulletList.UpdateCount;
 
-						m_nBulletCaliberCount += m_DataFiles.BulletList.BulletCaliberImportCount;
-						m_nBulletCaliberNewCount += m_DataFiles.BulletList.BulletCaliberNewCount;
-						m_nBulletCaliberUpdateCount += m_DataFiles.BulletList.BulletCaliberUpdateCount;
+						m_nBulletCaliberCount += m_BulletList.BulletCaliberImportCount;
+						m_nBulletCaliberNewCount += m_BulletList.BulletCaliberNewCount;
+						m_nBulletCaliberUpdateCount += m_BulletList.BulletCaliberUpdateCount;
 
 						break;
 
 					case "Firearms":
 					case "FirearmList":
-						m_DataFiles.FirearmList.Import(this, XMLNode, m_DataFiles, fCountOnly);
+						m_FirearmList.Import(this, XMLNode, fCountOnly);
 
-						m_nFirearmCount += m_DataFiles.FirearmList.ImportCount;
-						m_nFirearmNewCount += m_DataFiles.FirearmList.NewCount;
-						m_nFirearmUpdateCount += m_DataFiles.FirearmList.UpdateCount;
+						m_nFirearmCount += m_FirearmList.ImportCount;
+						m_nFirearmNewCount += m_FirearmList.NewCount;
+						m_nFirearmUpdateCount += m_FirearmList.UpdateCount;
 
-						m_nFirearmCaliberCount += m_DataFiles.FirearmList.FirearmCaliberImportCount;
-						m_nFirearmCaliberNewCount += m_DataFiles.FirearmList.FirearmCaliberNewCount;
-						m_nFirearmCaliberUpdateCount += m_DataFiles.FirearmList.FirearmCaliberUpdateCount;
+						m_nFirearmCaliberCount += m_FirearmList.FirearmCaliberImportCount;
+						m_nFirearmCaliberNewCount += m_FirearmList.FirearmCaliberNewCount;
+						m_nFirearmCaliberUpdateCount += m_FirearmList.FirearmCaliberUpdateCount;
 
-						m_nFirearmBulletCount += m_DataFiles.FirearmList.FirearmBulletImportCount;
-						m_nFirearmBulletNewCount += m_DataFiles.FirearmList.FirearmBulletNewCount;
-						m_nFirearmBulletUpdateCount += m_DataFiles.FirearmList.FirearmBulletUpdateCount;
+						m_nFirearmBulletCount += m_FirearmList.FirearmBulletImportCount;
+						m_nFirearmBulletNewCount += m_FirearmList.FirearmBulletNewCount;
+						m_nFirearmBulletUpdateCount += m_FirearmList.FirearmBulletUpdateCount;
 
 						break;
 

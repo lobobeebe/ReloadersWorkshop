@@ -1141,7 +1141,7 @@ namespace ReloadersWorkShop
 
 		public void ExportRecoveryFile()
 			{
-			cRWXMLDocument XMLDocument = new cRWXMLDocument(this);
+			cRWXMLDocument XMLDocument = new cRWXMLDocument();
 
 			try
 				{
