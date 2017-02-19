@@ -119,9 +119,9 @@ namespace ReloadersWorkShop
 		// Import()
 		//============================================================================*
 
-		public override bool Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+		public override bool Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode)
 			{
-			base.Import(XMLDocument, XMLThisNode, DataFiles);
+			base.Import(XMLDocument, XMLThisNode);
 
 			XmlNode XMLNode = XMLThisNode.FirstChild;
 
@@ -130,7 +130,7 @@ namespace ReloadersWorkShop
 				switch (XMLNode.Name)
 					{
 					case "CaliberIdentity":
-						m_Caliber = cRWXMLDocument.GetCaliberByIdentity(XMLDocument, XMLNode, DataFiles);
+						m_Caliber = XMLDocument.Import(XMLNode, out m_Caliber);
 						break;
 					case "PartNumber":
 						XMLDocument.Import(XMLNode, out m_strPartNumber);

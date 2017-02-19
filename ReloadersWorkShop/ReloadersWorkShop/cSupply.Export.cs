@@ -99,7 +99,7 @@ namespace ReloadersWorkShop
 		// Import()
 		//============================================================================*
 
-		public virtual bool Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+		public virtual bool Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode)
 			{
 			XmlNode XMLNode = XMLThisNode.FirstChild;
 
