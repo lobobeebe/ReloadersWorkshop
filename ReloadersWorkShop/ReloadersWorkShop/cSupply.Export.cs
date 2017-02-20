@@ -99,7 +99,7 @@ namespace ReloadersWorkShop
 		// Import()
 		//============================================================================*
 
-		public virtual bool Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+		public virtual bool Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode)
 			{
 			XmlNode XMLNode = XMLThisNode.FirstChild;
 
@@ -114,7 +114,7 @@ namespace ReloadersWorkShop
 						XMLDocument.Import(XMLNode, out m_eFirearmType);
 						break;
 					case "Manufacturer":
-						m_Manufacturer = DataFiles.GetManufacturerByName(XMLNode.FirstChild.Value);
+						XMLDocument.Import(XMLDocument, XMLNode, out m_Manufacturer);
 						break;
 					case "CrossUse":
 						XMLDocument.Import(XMLNode, out m_fCrossUse);

@@ -100,7 +100,7 @@ namespace ReloadersWorkShop
 		// Import()
 		//============================================================================*
 
-		public override bool Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, bool fCountOnly = false)
+		public override bool Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode)
 			{
 			XmlNode XMLNode = XMLThisNode.FirstChild;
 
@@ -138,7 +138,7 @@ namespace ReloadersWorkShop
 					case "CaliberList":
 					case "BulletCalibers":
 					case "BulletCaliberList":
-						m_BulletCaliberList.Import(XMLDocument, XMLNode, fCountOnly);
+						m_BulletCaliberList.Import(XMLDocument, XMLNode);
 						break;
 
 					default:

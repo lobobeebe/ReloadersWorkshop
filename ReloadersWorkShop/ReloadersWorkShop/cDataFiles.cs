@@ -1145,7 +1145,7 @@ namespace ReloadersWorkShop
 
 			try
 				{
-				XMLDocument.Export(true);
+				XMLDocument.Export(this, true);
 
 				string strFilePath = Path.Combine(GetDataPath(), "RWDataRecovery.xml");
 
@@ -2065,7 +2065,7 @@ namespace ReloadersWorkShop
 
 								try
 									{
-									cRWXMLDocument XMLDocument = new ReloadersWorkShop.cRWXMLDocument(this);
+									cRWXMLDocument XMLDocument = new ReloadersWorkShop.cRWXMLDocument();
 
 									XMLDocument.Import(Path.Combine(GetDataPath(), "RWDataRecovery.xml"), true);
 									}

@@ -1073,7 +1073,6 @@ namespace ReloadersWorkShop
 			if (!File.Exists(strFilePath))
 				return (false);
 
-
 			//----------------------------------------------------------------------------*
 			// Create and Load the XML document
 			//----------------------------------------------------------------------------*
@@ -1117,10 +1116,8 @@ namespace ReloadersWorkShop
 		// Import() - XML Document
 		//============================================================================*
 
-		public bool Import(bool fMerge = true, bool fCountOnly = false)
+		public bool Import()
 			{
-			ResetCounts();
-
 			XmlElement XMLRoot = DocumentElement;
 
 			//----------------------------------------------------------------------------*
@@ -1135,11 +1132,7 @@ namespace ReloadersWorkShop
 					{
 					case "Ammunition":
 					case "AmmoList":
-						m_AmmoList.Import(this, XMLNode, m_DataFiles, fCountOnly);
-
-						m_nAmmoCount += m_AmmoList.ImportCount;
-						m_nAmmoNewCount += m_AmmoList.NewCount;
-						m_nAmmoUpdateCount += m_AmmoList.UpdateCount;
+						m_AmmoList.Import(this, XMLNode);
 
 						break;
 
@@ -1147,102 +1140,58 @@ namespace ReloadersWorkShop
 					case "ManufacturerList":
 						m_ManufacturerList.Import(this, XMLNode);
 
-						m_nManufacturerCount += m_ManufacturerList.ImportCount;
-						m_nManufacturerNewCount += m_ManufacturerList.NewCount;
-						m_nManufacturerUpdateCount += m_ManufacturerList.UpdateCount;
-
 						break;
 
 					case "Calibers":
 					case "CaliberList":
-						m_CaliberList.Import(this, XMLNode, fCountOnly);
-
-						m_nCaliberCount += m_CaliberList.ImportCount;
-						m_nCaliberNewCount += m_CaliberList.NewCount;
-						m_nCaliberUpdateCount += m_CaliberList.UpdateCount;
+						m_CaliberList.Import(this, XMLNode);
 
 						break;
 
 					case "Bullets":
 					case "BulletList":
-						m_BulletList.Import(this, XMLNode, fCountOnly);
-
-						m_nBulletCount += m_BulletList.ImportCount;
-						m_nBulletNewCount += m_BulletList.NewCount;
-						m_nBulletUpdateCount += m_BulletList.UpdateCount;
-
-						m_nBulletCaliberCount += m_BulletList.BulletCaliberImportCount;
-						m_nBulletCaliberNewCount += m_BulletList.BulletCaliberNewCount;
-						m_nBulletCaliberUpdateCount += m_BulletList.BulletCaliberUpdateCount;
+						m_BulletList.Import(this, XMLNode);
 
 						break;
 
 					case "Firearms":
 					case "FirearmList":
-						m_FirearmList.Import(this, XMLNode, fCountOnly);
-
-						m_nFirearmCount += m_FirearmList.ImportCount;
-						m_nFirearmNewCount += m_FirearmList.NewCount;
-						m_nFirearmUpdateCount += m_FirearmList.UpdateCount;
-
-						m_nFirearmCaliberCount += m_FirearmList.FirearmCaliberImportCount;
-						m_nFirearmCaliberNewCount += m_FirearmList.FirearmCaliberNewCount;
-						m_nFirearmCaliberUpdateCount += m_FirearmList.FirearmCaliberUpdateCount;
-
-						m_nFirearmBulletCount += m_FirearmList.FirearmBulletImportCount;
-						m_nFirearmBulletNewCount += m_FirearmList.FirearmBulletNewCount;
-						m_nFirearmBulletUpdateCount += m_FirearmList.FirearmBulletUpdateCount;
+						m_FirearmList.Import(this, XMLNode);
 
 						break;
 
 					case "Cases":
 					case "CaseList":
-						m_DataFiles.CaseList.Import(this, XMLNode, m_DataFiles, fCountOnly);
-
-						m_nCaseCount += m_DataFiles.CaseList.ImportCount;
-						m_nCaseNewCount += m_DataFiles.CaseList.NewCount;
-						m_nCaseUpdateCount += m_DataFiles.CaseList.UpdateCount;
+						m_CaseList.Import(this, XMLNode);
 
 						break;
 
 					case "Powders":
 					case "PowderList":
-						m_DataFiles.PowderList.Import(this, XMLNode, m_DataFiles, fCountOnly);
-
-						m_nPowderCount += m_DataFiles.PowderList.ImportCount;
-						m_nPowderNewCount += m_DataFiles.PowderList.NewCount;
-						m_nPowderUpdateCount += m_DataFiles.PowderList.UpdateCount;
+						m_PowderList.Import(this, XMLNode);
 
 						break;
 
 					case "Primers":
 					case "PrimerList":
-						m_DataFiles.PrimerList.Import(this, XMLNode, m_DataFiles, fCountOnly);
-
-						m_nPrimerCount += m_DataFiles.PrimerList.ImportCount;
-						m_nPrimerNewCount += m_DataFiles.PrimerList.NewCount;
-						m_nPrimerUpdateCount += m_DataFiles.PrimerList.UpdateCount;
+						m_PrimerList.Import(this, XMLNode);
 
 						break;
 
 					case "Loads":
 					case "LoadList":
-						m_DataFiles.LoadList.Import(this, XMLNode, m_DataFiles);
+						m_LoadList.Import(this, XMLNode);
 
 						break;
 
 					case "Batches":
 					case "BatchList":
-						m_DataFiles.BatchList.Import(this, XMLNode, m_DataFiles);
+						m_BatchList.Import(this, XMLNode);
 
 						break;
 
 					case "GearList":
-						m_DataFiles.GearList.Import(this, XMLNode, m_DataFiles, fCountOnly);
-
-						m_nAccessoryCount += m_DataFiles.GearList.ImportCount;
-						m_nAccessoryNewCount += m_DataFiles.GearList.NewCount;
-						m_nAccessoryUpdateCount += m_DataFiles.GearList.UpdateCount;
+						m_GearList.Import(this, XMLNode);
 
 						break;
 
@@ -1257,6 +1206,17 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Import() - Caliber
+		//============================================================================*
+
+		public void Import(XmlNode XMLThisNode, out cCaliber Caliber, bool fIdentity = false)
+			{
+			Caliber = new cCaliber(fIdentity);
+
+			Caliber.Import(this, XMLThisNode);
+			}
+
+		//============================================================================*
 		// Import() - FirearmType
 		//============================================================================*
 
@@ -1266,6 +1226,17 @@ namespace ReloadersWorkShop
 
 			if (XMLThisNode != null && XMLThisNode.FirstChild != null && XMLThisNode.FirstChild.Value != null)
 				eType = cFirearm.FirearmTypeFromString(XMLThisNode.FirstChild.Value);
+			}
+
+		//============================================================================*
+		// Import() - Manufacturer
+		//============================================================================*
+
+		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, out cManufacturer Manufacturer)
+			{
+			Manufacturer = new cManufacturer();
+
+			Manufacturer.Import(XMLDocument, XMLThisNode);
 			}
 
 		//============================================================================*

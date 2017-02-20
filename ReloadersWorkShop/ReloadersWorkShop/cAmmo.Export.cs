@@ -119,7 +119,7 @@ namespace ReloadersWorkShop
 		// Import()
 		//============================================================================*
 
-		public override bool Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+		public override bool Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode)
 			{
 			base.Import(XMLDocument, XMLThisNode, DataFiles);
 

@@ -896,10 +896,9 @@ namespace ReloadersWorkShop
 				}
 
 			//----------------------------------------------------------------------------*
-			// Show the XML Document stats and data differences
+			// Get the XML Document stats and data differences
 			//----------------------------------------------------------------------------*
 
-			XMLDocument.Import(true, true);
 
 			//----------------------------------------------------------------------------*
 			// Show the Summary dialog
@@ -908,7 +907,6 @@ namespace ReloadersWorkShop
 			cImportForm ImportForm = new ReloadersWorkShop.cImportForm(XMLDocument);
 
 			ImportForm.ShowDialog();
-
 			}
 
 		//============================================================================*
@@ -1064,10 +1062,10 @@ namespace ReloadersWorkShop
 
 				if (fSuccess)
 					{
-					cRWXMLDocument XMLDocument = new cRWXMLDocument(m_DataFiles);
+					cRWXMLDocument XMLDocument = new cRWXMLDocument();
 
 					XMLDocument.Load(Path.Combine(strOutputPath, "RWDatabaseUpdate.xml"));
-					XMLDocument.Import(true, true);
+					XMLDocument.Import();
 
 					cImportForm ImportForm = new cImportForm(XMLDocument);
 
