@@ -846,7 +846,7 @@ namespace ReloadersWorkShop
 							//----------------------------------------------------------------------------*
 
 							if (m_DataFiles.SupplyCostEach(Supply) != 0.0)
-								strText = String.Format("{1:F2}/1000", m_DataFiles.SupplyCostEach(Supply) * 1000);
+								strText = String.Format("{0:F2}/1000", m_DataFiles.SupplyCostEach(Supply) * 1000);
 							else
 								strText = "-";
 
