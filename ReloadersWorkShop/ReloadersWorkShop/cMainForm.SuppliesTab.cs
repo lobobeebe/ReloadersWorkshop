@@ -1342,6 +1342,19 @@ namespace ReloadersWorkShop
 						}
 
 					break;
+
+				case cSupply.eSupplyTypes.Primers:
+				case cSupply.eSupplyTypes.Powder:
+					foreach (cCaliber Caliber in m_DataFiles.CaliberList)
+						{
+						if ((eFirearmType == cFirearm.eFireArmType.None || Caliber.FirearmType == eFirearmType) &&
+							(!m_DataFiles.Preferences.HideUncheckedCalibers || Caliber.Checked))
+							{
+							CaliberList.Add(Caliber);
+							}
+						}
+
+					break;
 				}
 
 			CaliberList.Sort(cCaliber.Comparer);

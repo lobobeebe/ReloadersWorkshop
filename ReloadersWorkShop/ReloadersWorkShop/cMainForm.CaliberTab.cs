@@ -286,9 +286,12 @@ namespace ReloadersWorkShop
 
 			m_CalibersListView.HideUnchecked = HideUncheckedCalibersCheckBox.Checked;
 
-			PopulateSuppliesListView();
-
-			PopulateBallisticsCaliberCombo();
+			InitializeFirearmTab();
+			InitializeSuppliesTab();
+			InitializeLoadDataTab();
+			InitializeBatchTab();
+			InitializeAmmoTab();
+			InitializeBallisticsTab();
 
 			SetSupplyCount();
 			SetCaliberCount();
