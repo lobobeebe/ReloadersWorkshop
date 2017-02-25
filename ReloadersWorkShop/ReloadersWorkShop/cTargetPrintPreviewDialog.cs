@@ -252,7 +252,7 @@ namespace ReloadersWorkShop
 
 			strText = String.Format("{0:D0} Shot{1} at ", m_Target.NumShots, m_Target.NumShots > 1 ? "s" : "");
 
-			strText += String.Format("{0:D0} {1}", m_Target.Range, m_DataFiles.MetricLongString(cDataFiles.eDataType.Range));
+			strText += String.Format("{0:N0} {1}", m_Target.Range, m_DataFiles.MetricLongString(cDataFiles.eDataType.Range));
 
 			TextSize = e.Graphics.MeasureString(strText, HeaderFont);
 
