@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cCaliberForm.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -17,9 +17,6 @@ using System.Windows.Forms;
 //============================================================================*
 // Application Specific Using Statements
 //============================================================================*
-
-using ReloadersWorkShop.Controls;
-//using ReloadersWorkShop.Preferences;
 
 //============================================================================*
 // NameSpace
@@ -1071,7 +1068,7 @@ namespace ReloadersWorkShop
 					{
 					TestBitmap = (Bitmap)Properties.Resources.ResourceManager.GetObject("Reject");
 
-					fEnableOK = false;
+//					fEnableOK = false;
 					}
 
 				SAAMIOKImage.Image = TestBitmap;
