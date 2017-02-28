@@ -84,6 +84,7 @@ namespace ReloadersWorkShop
 			this.MinBulletDiameterTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			this.FormCancelButton = new CommonLib.Controls.cCancelButton();
 			this.OKButton = new CommonLib.Controls.cOKButton();
+			this.RimfireCheckBox = new System.Windows.Forms.CheckBox();
 			label1 = new System.Windows.Forms.Label();
 			label9 = new System.Windows.Forms.Label();
 			label13 = new System.Windows.Forms.Label();
@@ -495,9 +496,13 @@ namespace ReloadersWorkShop
             "Shotgun",
             "Handgun",
             "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
             "Shotgun"});
 			this.FirearmTypeCombo.Location = new System.Drawing.Point(93, 21);
 			this.FirearmTypeCombo.Name = "FirearmTypeCombo";
+			this.FirearmTypeCombo.ShowToolTips = true;
 			this.FirearmTypeCombo.Size = new System.Drawing.Size(100, 21);
 			this.FirearmTypeCombo.TabIndex = 0;
 			this.FirearmTypeCombo.ToolTip = "";
@@ -535,6 +540,7 @@ namespace ReloadersWorkShop
 			// 
 			// groupBox2
 			// 
+			this.groupBox2.Controls.Add(this.RimfireCheckBox);
 			this.groupBox2.Controls.Add(this.MaxNeckDiameterTextBox);
 			this.groupBox2.Controls.Add(this.MaxNeckDiameterMeasurementLabel);
 			this.groupBox2.Controls.Add(this.MaxNeckDiameterLabel);
@@ -799,13 +805,26 @@ namespace ReloadersWorkShop
 			this.OKButton.ToolTip = "Click to accept changes and exit.";
 			this.OKButton.UseVisualStyleBackColor = true;
 			// 
+			// RimfireCheckBox
+			// 
+			this.RimfireCheckBox.AutoCheck = false;
+			this.RimfireCheckBox.AutoSize = true;
+			this.RimfireCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.RimfireCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.RimfireCheckBox.Location = new System.Drawing.Point(284, 23);
+			this.RimfireCheckBox.Name = "RimfireCheckBox";
+			this.RimfireCheckBox.Size = new System.Drawing.Size(58, 17);
+			this.RimfireCheckBox.TabIndex = 32;
+			this.RimfireCheckBox.Text = "Rimfire";
+			this.RimfireCheckBox.UseVisualStyleBackColor = true;
+			// 
 			// cCaliberForm
 			// 
 			this.AcceptButton = this.OKButton;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.FormCancelButton;
-			this.ClientSize = new System.Drawing.Size(411, 329);
+			this.ClientSize = new System.Drawing.Size(407, 325);
 			this.ControlBox = false;
 			this.Controls.Add(this.OKButton);
 			this.Controls.Add(this.FormCancelButton);
@@ -869,5 +888,6 @@ namespace ReloadersWorkShop
 		private System.Windows.Forms.PictureBox SAAMIOKImage;
 		private CommonLib.Controls.cCancelButton FormCancelButton;
 		private CommonLib.Controls.cOKButton OKButton;
+		private System.Windows.Forms.CheckBox RimfireCheckBox;
 		}
 	}

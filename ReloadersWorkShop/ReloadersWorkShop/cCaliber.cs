@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cCaliber.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -11,7 +11,6 @@
 
 using System;
 using System.IO;
-using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -53,6 +52,7 @@ namespace ReloadersWorkShop
 		private bool m_fSmallPrimer = false;
 		private bool m_fLargePrimer = false;
 		private bool m_fMagnumPrimer = false;
+		private bool m_fRimfire = false;
 
 		//----------------------------------------------------------------------------*
 		// Dimensions
@@ -151,6 +151,14 @@ namespace ReloadersWorkShop
 				nUpdateCount++;
 				}
 
+			if (!m_fRimfire && Caliber.m_fRimfire)
+				{
+				if (!fCountOnly)
+					m_fRimfire = Caliber.m_fRimfire;
+
+				nUpdateCount++;
+				}
+
 			if (m_dMinBulletDiameter == 0.0 && Caliber.m_dMinBulletDiameter != 0.0)
 				{
 				if (!fCountOnly)
@@ -240,6 +248,7 @@ namespace ReloadersWorkShop
 			m_fSmallPrimer = Caliber.m_fSmallPrimer;
 			m_fLargePrimer = Caliber.m_fLargePrimer;
 			m_fMagnumPrimer = Caliber.m_fMagnumPrimer;
+			m_fRimfire = Caliber.m_fRimfire;
 			m_dMinBulletDiameter = Caliber.m_dMinBulletDiameter;
 			m_dMaxBulletDiameter = Caliber.m_dMaxBulletDiameter;
 			m_dMinBulletWeight = Caliber.m_dMinBulletWeight;
@@ -573,6 +582,22 @@ namespace ReloadersWorkShop
 		public bool ResolveIdentities(cDataFiles Datafiles)
 			{
 			return (false);
+			}
+
+		//============================================================================*
+		// Rimfire Property
+		//============================================================================*
+
+		public bool Rimfire
+			{
+			get
+				{
+				return (m_fRimfire);
+				}
+			set
+				{
+				m_fRimfire = value;
+				}
 			}
 
 		//============================================================================*

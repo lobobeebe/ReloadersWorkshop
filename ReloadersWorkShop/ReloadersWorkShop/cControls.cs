@@ -45,7 +45,7 @@ namespace ReloadersWorkShop
 
 			foreach (cCaliber CheckCaliber in DataFiles.CaliberList)
 				{
-				if (!DataFiles.Preferences.HideUncheckedCalibers || CheckCaliber.Checked)
+				if ((!DataFiles.Preferences.HideUncheckedCalibers || CheckCaliber.Checked) && !CheckCaliber.Rimfire)
 					{
 					if (eFirearmType == cFirearm.eFireArmType.None || CheckCaliber.FirearmType == eFirearmType)
 						{

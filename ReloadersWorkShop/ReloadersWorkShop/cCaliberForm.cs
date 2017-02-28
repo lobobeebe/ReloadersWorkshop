@@ -39,6 +39,7 @@ namespace ReloadersWorkShop
 		private const string cm_strHeadStampToolTip = "HeadStamp description (or abbreviated name) of this caliber.";
 		private const string cm_strPrimerSizeToolTip = "Size of the primer used in cartridges of this caliber.";
 		private const string cm_strMagnumToolTip = "Indicates whether this is a magnum caliber.";
+		private const string cm_strRimfireToolTip = "Indicates whether this is a rimfire caliber.";
 
 		private const string cm_strPistolToolTip = "Indicates that this is a pistol caliber.";
 		private const string cm_strRevolverToolTip = "Indicates that this is a revolver caliber.";
@@ -73,6 +74,7 @@ namespace ReloadersWorkShop
 
 		private ToolTip m_PrimerSizeToolTip = new ToolTip();
 		private ToolTip m_MagnumToolTip = new ToolTip();
+		private ToolTip m_RimfireToolTip = new ToolTip();
 
 		private cDataFiles m_DataFiles = null;
 
@@ -125,6 +127,7 @@ namespace ReloadersWorkShop
 				SmallPrimerCheckBox.Click += OnSmallPrimerClicked;
 				LargePrimerCheckBox.Click += OnLargePrimerClicked;
 				MagnumPrimerCheckBox.Click += OnMagnumClicked;
+				RimfireCheckBox.Click += OnRimfireClicked;
 
 				CaseTrimLengthTextBox.TextChanged += OnCaseTrimLengthChanged;
 				MaxBulletDiameterTextBox.TextChanged += OnMaxBulletDiameterChanged;
@@ -454,18 +457,18 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-            if (MaxCOLTextBox.Value < CaseTrimLengthTextBox.Value)
+			if (MaxCOLTextBox.Value < CaseTrimLengthTextBox.Value)
 				MaxCOLTextBox.Value = CaseTrimLengthTextBox.Value;
 
-            if (m_Caliber.FirearmType != cFirearm.eFireArmType.Shotgun)
+			if (m_Caliber.FirearmType != cFirearm.eFireArmType.Shotgun)
 				{
-                if (MaxCaseLengthTextBox.Value < CaseTrimLengthTextBox.Value + cDataFiles.StandardToMetric(0.005, cDataFiles.eDataType.Dimension))
+				if (MaxCaseLengthTextBox.Value < CaseTrimLengthTextBox.Value + cDataFiles.StandardToMetric(0.005, cDataFiles.eDataType.Dimension))
 					MaxCaseLengthTextBox.Value = CaseTrimLengthTextBox.Value + cDataFiles.StandardToMetric(0.005, cDataFiles.eDataType.Dimension);
 
 				MaxCOLTextBox.MinValue = CaseTrimLengthTextBox.Value;
-                MaxCOLTextBox.MaxValue = MaxCOLTextBox.MinValue + cDataFiles.StandardToMetric(1.5, cDataFiles.eDataType.Dimension);
+				MaxCOLTextBox.MaxValue = MaxCOLTextBox.MinValue + cDataFiles.StandardToMetric(1.5, cDataFiles.eDataType.Dimension);
 
-                m_Caliber.MaxCOL = cDataFiles.MetricToStandard(MaxCOLTextBox.Value, cDataFiles.eDataType.Dimension);
+				m_Caliber.MaxCOL = cDataFiles.MetricToStandard(MaxCOLTextBox.Value, cDataFiles.eDataType.Dimension);
 				}
 			else
 				{
@@ -478,9 +481,9 @@ namespace ReloadersWorkShop
 				}
 
 			MaxCaseLengthTextBox.MinValue = CaseTrimLengthTextBox.Value;
-            MaxCaseLengthTextBox.MaxValue = MaxCaseLengthTextBox.MinValue + cDataFiles.StandardToMetric(0.020, cDataFiles.eDataType.Dimension);
+			MaxCaseLengthTextBox.MaxValue = MaxCaseLengthTextBox.MinValue + cDataFiles.StandardToMetric(0.020, cDataFiles.eDataType.Dimension);
 
-            m_Caliber.CaseTrimLength = cDataFiles.MetricToStandard(CaseTrimLengthTextBox.Value, cDataFiles.eDataType.Dimension);
+			m_Caliber.CaseTrimLength = cDataFiles.MetricToStandard(CaseTrimLengthTextBox.Value, cDataFiles.eDataType.Dimension);
 			m_Caliber.MaxCaseLength = cDataFiles.MetricToStandard(MaxCaseLengthTextBox.Value, cDataFiles.eDataType.Dimension);
 
 			m_fChanged = true;
@@ -756,6 +759,31 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// OnRimfireClicked()
+		//============================================================================*
+
+		private void OnRimfireClicked(object sender, EventArgs e)
+			{
+			if (!m_fInitialized)
+				return;
+
+			RimfireCheckBox.Checked = (RimfireCheckBox.Checked ? false : true);
+
+			m_Caliber.Rimfire = RimfireCheckBox.Checked;
+
+			if (m_Caliber.Rimfire)
+				{
+				m_Caliber.SmallPrimer = false;
+				m_Caliber.LargePrimer = false;
+				m_Caliber.MagnumPrimer = false;
+				}
+
+			m_fChanged = true;
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
 		// OnSAAMIPDFChanged()
 		//============================================================================*
 
@@ -822,6 +850,7 @@ namespace ReloadersWorkShop
 			SmallPrimerCheckBox.Checked = m_Caliber.SmallPrimer;
 			LargePrimerCheckBox.Checked = m_Caliber.LargePrimer;
 			MagnumPrimerCheckBox.Checked = m_Caliber.MagnumPrimer;
+			RimfireCheckBox.Checked = m_Caliber.Rimfire;
 
 			MinBulletDiameterTextBox.Value = cDataFiles.StandardToMetric(m_Caliber.MinBulletDiameter, cDataFiles.eDataType.Dimension);
 			MaxBulletDiameterTextBox.Value = cDataFiles.StandardToMetric(m_Caliber.MaxBulletDiameter, cDataFiles.eDataType.Dimension);
@@ -947,6 +976,10 @@ namespace ReloadersWorkShop
 			m_MagnumToolTip.RemoveAll();
 			m_MagnumToolTip.SetToolTip(MagnumPrimerCheckBox, cm_strMagnumToolTip);
 
+			m_RimfireToolTip.ShowAlways = true;
+			m_RimfireToolTip.RemoveAll();
+			m_RimfireToolTip.SetToolTip(RimfireCheckBox, cm_strRimfireToolTip);
+
 			MinBulletDiameterTextBox.ToolTip = cm_strMinBulletDiameterToolTip;
 			MaxBulletDiameterTextBox.ToolTip = cm_strMaxBulletDiameterToolTip;
 			MinBulletWeightTextBox.ToolTip = cm_strMinBulletWeightToolTip;
@@ -1068,7 +1101,7 @@ namespace ReloadersWorkShop
 					{
 					TestBitmap = (Bitmap)Properties.Resources.ResourceManager.GetObject("Reject");
 
-//					fEnableOK = false;
+					//					fEnableOK = false;
 					}
 
 				SAAMIOKImage.Image = TestBitmap;
@@ -1128,19 +1161,38 @@ namespace ReloadersWorkShop
 
 			strToolTip = cm_strPrimerSizeToolTip;
 
-			if (!SmallPrimerCheckBox.Checked && !LargePrimerCheckBox.Checked)
+			if (m_Caliber.Rimfire)
+				{
+				SmallPrimerCheckBox.Checked = false;
+				LargePrimerCheckBox.Checked = false;
+				MagnumPrimerCheckBox.Checked = false;
+
+				SmallPrimerCheckBox.Enabled = false;
+				LargePrimerCheckBox.Enabled = false;
+				MagnumPrimerCheckBox.Enabled = false;
+				}
+			else
+				{
+				SmallPrimerCheckBox.Enabled = true;
+				LargePrimerCheckBox.Enabled = true;
+				MagnumPrimerCheckBox.Enabled = true;
+				}
+
+			if (!SmallPrimerCheckBox.Checked && !LargePrimerCheckBox.Checked && !RimfireCheckBox.Checked)
 				{
 				fEnableOK = false;
 
 				SmallPrimerCheckBox.BackColor = Color.LightPink;
 				LargePrimerCheckBox.BackColor = Color.LightPink;
+				RimfireCheckBox.BackColor = Color.LightPink;
 
-				strToolTip += "\n\nYou must select either a small or large primer size.";
+				strToolTip += "\n\nYou must select either a small or large primer size, or Rimfire.";
 				}
 			else
 				{
 				SmallPrimerCheckBox.BackColor = SystemColors.Control;
 				LargePrimerCheckBox.BackColor = SystemColors.Control;
+				RimfireCheckBox.BackColor = SystemColors.Control;
 				}
 
 			if (m_DataFiles.Preferences.ToolTips)

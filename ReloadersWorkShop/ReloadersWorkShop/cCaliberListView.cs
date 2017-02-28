@@ -102,7 +102,7 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			if (!VerifyCaliber(Caliber))
-				return(null);
+				return (null);
 
 			//----------------------------------------------------------------------------*
 			// Create the new Item
@@ -110,7 +110,7 @@ namespace ReloadersWorkShop
 
 			ListViewItem Item = new ListViewItem();
 
-			SetCaliberData(Item,  Caliber);
+			SetCaliberData(Item, Caliber);
 
 			//----------------------------------------------------------------------------*
 			// Add the item to the list and exit
@@ -284,15 +284,20 @@ namespace ReloadersWorkShop
 
 			string strPrimerSize = "";
 
-			if (Caliber.SmallPrimer)
-				strPrimerSize += "Small";
-
-			if (Caliber.LargePrimer)
+			if (Caliber.Rimfire)
+				strPrimerSize = "Rimfire";
+			else
 				{
-				if (strPrimerSize.Length > 0)
-					strPrimerSize += "/";
+				if (Caliber.SmallPrimer)
+					strPrimerSize += "Small";
 
-				strPrimerSize += "Large";
+				if (Caliber.LargePrimer)
+					{
+					if (strPrimerSize.Length > 0)
+						strPrimerSize += "/";
+
+					strPrimerSize += "Large";
+					}
 				}
 
 			Item.SubItems.Add(strPrimerSize);
@@ -365,7 +370,7 @@ namespace ReloadersWorkShop
 
 		public void UpdateCaliber(cCaliber Caliber, bool fSelect = false)
 			{
-			foreach(ListViewItem Item in Items)
+			foreach (ListViewItem Item in Items)
 				{
 				if ((Item.Tag as cCaliber).Equals(Caliber))
 					{
@@ -392,7 +397,7 @@ namespace ReloadersWorkShop
 			if (m_DataFiles.Preferences.HideUncheckedCalibers && !Caliber.Checked)
 				return (false);
 
-			return(true);
+			return (true);
 			}
 		}
 	}

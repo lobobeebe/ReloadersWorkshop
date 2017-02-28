@@ -771,7 +771,7 @@ namespace ReloadersWorkShop
 					{
 					if ((m_Load.Caliber != null && m_Load.Caliber.CompareTo(Caliber) == 0) ||
 						((Caliber.FirearmType == (cFirearm.eFireArmType) FirearmTypeCombo.SelectedIndex) &&
-						(!m_DataFiles.Preferences.HideUncheckedCalibers || Caliber.Checked)))
+						(!m_DataFiles.Preferences.HideUncheckedCalibers || Caliber.Checked)) && !Caliber.Rimfire)
 						{
 						CaliberCombo.Items.Add(Caliber);
 

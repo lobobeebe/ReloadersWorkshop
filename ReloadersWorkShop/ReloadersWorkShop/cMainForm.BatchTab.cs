@@ -732,7 +732,8 @@ namespace ReloadersWorkShop
 
 			foreach (cCaliber CheckCaliber in m_DataFiles.CaliberList)
 				{
-				if (CheckCaliber.FirearmType == BatchFirearmTypeCombo.Value)
+				if (CheckCaliber.FirearmType == BatchFirearmTypeCombo.Value &&
+					(!m_DataFiles.Preferences.HideUncheckedCalibers || CheckCaliber.Checked))
 					{
 					bool fCaliberUsed = false;
 

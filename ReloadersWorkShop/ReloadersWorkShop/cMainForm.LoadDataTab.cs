@@ -660,7 +660,8 @@ namespace ReloadersWorkShop
 
 					foreach (cLoad Load in m_DataFiles.LoadList)
 						{
-						if (CheckCaliber.CompareTo(Load.Caliber) == 0)
+						if (CheckCaliber.CompareTo(Load.Caliber) == 0 &&
+							(!m_DataFiles.Preferences.HideUncheckedCalibers || CheckCaliber.Checked))
 							{
 							fCaliberUsed = true;
 

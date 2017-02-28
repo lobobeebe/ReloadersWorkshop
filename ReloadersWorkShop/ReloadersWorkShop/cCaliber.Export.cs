@@ -31,6 +31,7 @@ namespace ReloadersWorkShop
 				strLine += m_fSmallPrimer ? ",Yes" : ",-";
 				strLine += m_fLargePrimer ? ",Yes" : ",-";
 				strLine += m_fMagnumPrimer ? ",Yes" : ",-";
+				strLine += m_fRimfire ? ",Yes" : ",-";
 
 				//----------------------------------------------------------------------------*
 				// Dimensions
@@ -69,7 +70,7 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				string strLine = "Name,Firearm Type,Headstamp,Handgun Type,Small Primer,Large Primer,Magnum Primer,Min Bullet Dia.,Max Bullet Dia.,Min Bullet Weight,Max Bullet Weight,Case Trim Length,Max Case Length,Max COAL,Max Neck Dia";
+				string strLine = "Name,Firearm Type,Headstamp,Handgun Type,Small Primer,Large Primer,Magnum Primer,Rimfire,Min Bullet Dia.,Max Bullet Dia.,Min Bullet Weight,Max Bullet Weight,Case Trim Length,Max Case Length,Max COAL,Max Neck Dia";
 
 				return (strLine);
 				}
@@ -104,6 +105,7 @@ namespace ReloadersWorkShop
 			XMLDocument.CreateElement("SmallPrimer", m_fSmallPrimer, XMLThisElement);
 			XMLDocument.CreateElement("LargePrimer", m_fLargePrimer, XMLThisElement);
 			XMLDocument.CreateElement("MagnumPrimer", m_fMagnumPrimer, XMLThisElement);
+			XMLDocument.CreateElement("Rimfire", m_fRimfire, XMLThisElement);
 
 			//----------------------------------------------------------------------------*
 			// Dimensions
@@ -166,6 +168,9 @@ namespace ReloadersWorkShop
 						break;
 					case "MagnumPrimer":
 						XMLDocument.Import(XMLNode, out m_fMagnumPrimer);
+						break;
+					case "Rimfire":
+						XMLDocument.Import(XMLNode, out m_fRimfire);
 						break;
 					case "MinBulletDiameter":
 						XMLDocument.Import(XMLNode, out m_dMinBulletDiameter);

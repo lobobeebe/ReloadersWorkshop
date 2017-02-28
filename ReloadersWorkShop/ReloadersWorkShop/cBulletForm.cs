@@ -1530,7 +1530,7 @@ namespace ReloadersWorkShop
                 {
                 foreach (cCaliber CheckCaliber in m_DataFiles.CaliberList)
                     {
-                    if (CheckCaliber.FirearmType != m_Bullet.FirearmType)
+                    if (CheckCaliber.FirearmType != m_Bullet.FirearmType || CheckCaliber.Rimfire)
                         continue;
 
                     bool fAdd = true;
