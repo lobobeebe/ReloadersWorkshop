@@ -154,6 +154,9 @@ namespace ReloadersWorkShop
 				if (m_DataFiles.Preferences.HideUncheckedCalibers && !Batch.Load.Caliber.Checked)
 					continue;
 
+				if (m_DataFiles.Preferences.HideUncheckedSupplies && (!Batch.Load.Bullet.Checked || !Batch.Load.Case.Checked || !Batch.Load.Powder.Checked || !Batch.Load.Primer.Checked))
+					continue;
+
 				ListViewItem Item = AddBatch(Batch, eFireArmType, Caliber, Bullet, Powder);
 
 				if (Item != null && m_DataFiles.Preferences.LastBatchSelected != null && m_DataFiles.Preferences.LastBatchSelected.CompareTo(Batch) == 0)

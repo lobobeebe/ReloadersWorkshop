@@ -1001,8 +1001,10 @@ namespace ReloadersWorkShop
 			if (Supply != null)
 				Supply.Checked = args.Item.Checked;
 
-			PopulateBallisticsCaliberCombo();
-			PopulateBallisticsBulletCombo();
+			InitializeLoadDataTab();
+			InitializeBatchTab();
+			InitializeAmmoTab();
+			InitializeBallisticsTab();
 
 			UpdateSuppliesTabButtons();
 			}
