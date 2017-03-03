@@ -2034,6 +2034,8 @@ namespace ReloadersWorkShop
             "Handgun",
             "Rifle",
             "Handgun",
+            "Rifle",
+            "Handgun",
             "Rifle"});
 			this.BallisticsFirearmTypeCombo.Location = new System.Drawing.Point(94, 22);
 			this.BallisticsFirearmTypeCombo.Name = "BallisticsFirearmTypeCombo";
@@ -3242,6 +3244,9 @@ namespace ReloadersWorkShop
             "Shotgun",
             "Handgun",
             "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
             "Shotgun"});
 			this.AmmunitionFirearmTypeCombo.Location = new System.Drawing.Point(81, 23);
 			this.AmmunitionFirearmTypeCombo.Name = "AmmunitionFirearmTypeCombo";
@@ -3706,6 +3711,8 @@ namespace ReloadersWorkShop
             "Handgun",
             "Rifle",
             "Handgun",
+            "Rifle",
+            "Handgun",
             "Rifle"});
 			this.BatchFirearmTypeCombo.Location = new System.Drawing.Point(83, 22);
 			this.BatchFirearmTypeCombo.Name = "BatchFirearmTypeCombo";
@@ -3855,6 +3862,8 @@ namespace ReloadersWorkShop
 			this.LoadDataFirearmTypeCombo.IncludeAny = false;
 			this.LoadDataFirearmTypeCombo.IncludeShotgun = false;
 			this.LoadDataFirearmTypeCombo.Items.AddRange(new object[] {
+            "Handgun",
+            "Rifle",
             "Handgun",
             "Rifle",
             "Handgun",
@@ -4101,6 +4110,9 @@ namespace ReloadersWorkShop
             "Shotgun",
             "Handgun",
             "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
             "Shotgun"});
 			this.SupplyFirearmTypeCombo.Location = new System.Drawing.Point(326, 21);
 			this.SupplyFirearmTypeCombo.Name = "SupplyFirearmTypeCombo";
@@ -4130,9 +4142,9 @@ namespace ReloadersWorkShop
 			this.HideUncheckedSuppliesCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.HideUncheckedSuppliesCheckBox.Location = new System.Drawing.Point(270, 87);
 			this.HideUncheckedSuppliesCheckBox.Name = "HideUncheckedSuppliesCheckBox";
-			this.HideUncheckedSuppliesCheckBox.Size = new System.Drawing.Size(107, 17);
+			this.HideUncheckedSuppliesCheckBox.Size = new System.Drawing.Size(150, 17);
 			this.HideUncheckedSuppliesCheckBox.TabIndex = 8;
-			this.HideUncheckedSuppliesCheckBox.Text = "Hide Unchecked";
+			this.HideUncheckedSuppliesCheckBox.Text = "Hide Unchecked Supplies";
 			this.HideUncheckedSuppliesCheckBox.UseVisualStyleBackColor = true;
 			// 
 			// DeselectAllSuppliesButton
@@ -5363,16 +5375,16 @@ namespace ReloadersWorkShop
 			this.HideUncheckedCalibersCheckBox.AutoSize = true;
 			this.HideUncheckedCalibersCheckBox.Location = new System.Drawing.Point(19, 21);
 			this.HideUncheckedCalibersCheckBox.Name = "HideUncheckedCalibersCheckBox";
-			this.HideUncheckedCalibersCheckBox.Size = new System.Drawing.Size(107, 17);
+			this.HideUncheckedCalibersCheckBox.Size = new System.Drawing.Size(199, 17);
 			this.HideUncheckedCalibersCheckBox.TabIndex = 6;
-			this.HideUncheckedCalibersCheckBox.Text = "Hide Unchecked";
+			this.HideUncheckedCalibersCheckBox.Text = "Hide Unchecked Calibers/Cartridges";
 			this.HideUncheckedCalibersCheckBox.UseVisualStyleBackColor = true;
 			// 
 			// CaliberCountLabel
 			// 
 			this.CaliberCountLabel.AutoSize = true;
 			this.CaliberCountLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.CaliberCountLabel.Location = new System.Drawing.Point(132, 22);
+			this.CaliberCountLabel.Location = new System.Drawing.Point(230, 22);
 			this.CaliberCountLabel.Name = "CaliberCountLabel";
 			this.CaliberCountLabel.Size = new System.Drawing.Size(118, 13);
 			this.CaliberCountLabel.TabIndex = 5;

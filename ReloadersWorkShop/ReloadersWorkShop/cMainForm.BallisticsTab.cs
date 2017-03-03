@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cMainForm.BallisticsTab.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -3355,7 +3355,7 @@ namespace ReloadersWorkShop
 			cDataFiles.SetMetricLabel(BulletDiameterMeasurementLabel, cDataFiles.eDataType.Dimension);
 
 			cDataFiles.SetInputParameters(BallisticsBulletWeightTextBox, cDataFiles.eDataType.BulletWeight);
-			cDataFiles.SetMetricLabel(BulletWeightMeasurementLabel, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetMetricLabel(BulletWeightMeasurementLabel, cDataFiles.eDataType.BulletWeight);
 
 			cDataFiles.SetInputParameters(BallisticsBulletLengthTextBox, cDataFiles.eDataType.Dimension);
 			cDataFiles.SetMetricLabel(BulletLengthMeasurementLabel, cDataFiles.eDataType.Dimension);
