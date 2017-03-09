@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cAmmoListPreviewDialog.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -13,8 +13,6 @@ using System;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Windows.Forms;
-
-using ReloadersWorkShop.Preferences;
 
 //============================================================================*
 // Namespace
