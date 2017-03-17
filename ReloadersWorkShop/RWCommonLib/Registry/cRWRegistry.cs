@@ -1,7 +1,7 @@
 ﻿//============================================================================*
-// cTestShotList.cs
+// cRWRegistry.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -10,7 +10,6 @@
 //============================================================================*
 
 using System;
-//using Microsoft.Win32;
 using System.Windows.Forms;
 
 using CommonLib.Registry;
@@ -108,6 +107,10 @@ namespace RWCommonLib.Registry
 
 		public void Activate(string strKey, string strName, string strEmail, string strVersion)
 			{
+			strKey = strKey.Trim();
+			strName = strName.Trim();
+			strEmail = strEmail.Trim();
+
 			//----------------------------------------------------------------------------*
 			// Check input parms
 			//----------------------------------------------------------------------------*
