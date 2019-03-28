@@ -1,5 +1,5 @@
 ﻿//============================================================================*
-// cFirearmListView.cs
+// cToolListView.cs
 //
 // Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
@@ -21,10 +21,10 @@ using ReloadersWorkShop.Preferences;
 namespace ReloadersWorkShop
 	{
 	//============================================================================*
-	// cFirearmListView Class
+	// cToolListView Class
 	//============================================================================*
 
-	public class cFirearmListView : cListView
+	public class cToolListView : cListView
 		{
 		//============================================================================*
 		// Private Data Members
@@ -32,29 +32,28 @@ namespace ReloadersWorkShop
 
 		private cDataFiles m_DataFiles = null;
 
+		private bool[] m_afFilters = new bool[(int)cTool.eToolTypes.NumToolTypes];
+
 		private cListViewColumn[] m_arColumns = new cListViewColumn[]
 			{
-			new cListViewColumn(0, "ManufacturerHeader","Manufacturer", HorizontalAlignment.Left, 140),
-			new cListViewColumn(1, "ModelHeader", "Model", HorizontalAlignment.Left, 140),
-			new cListViewColumn(2, "SerialHeader", "Serial #", HorizontalAlignment.Left, 140),
-			new cListViewColumn(3, "DescriptionHeader", "Description", HorizontalAlignment.Left, 160),
-			new cListViewColumn(4, "CaliberHeader", "Primary Caliber", HorizontalAlignment.Left, 160),
-			new cListViewColumn(5, "SourceHeader", "Acquired from", HorizontalAlignment.Left, 200),
-			new cListViewColumn(6, "DateHeader", "Date", HorizontalAlignment.Center, 80),
-			new cListViewColumn(7, "PriceHeader", "Price", HorizontalAlignment.Right, 80),
-			new cListViewColumn(8, "TaxHeader", "Tax", HorizontalAlignment.Right, 80),
-			new cListViewColumn(9, "ShippingHeader", "Shipping", HorizontalAlignment.Right, 80),
-			new cListViewColumn(10, "TransferFeesHeader", "Transfer Fees", HorizontalAlignment.Right, 100),
-			new cListViewColumn(11, "OtherFeesHeader", "Other Fees", HorizontalAlignment.Right, 100),
-			new cListViewColumn(12, "TotalHeader", "Total", HorizontalAlignment.Right, 80)
+			new cListViewColumn(0, "ManufacturerHeader","Manufacturer", HorizontalAlignment.Left, 200),
+			new cListViewColumn(1, "PartHeader", "Part Number", HorizontalAlignment.Left, 100),
+			new cListViewColumn(2, "SerialHeader", "Serial #", HorizontalAlignment.Left, 100),
+			new cListViewColumn(3, "DecriptionHeader", "Description", HorizontalAlignment.Left, 200),
+			new cListViewColumn(4, "SourceHeader", "Acquired from", HorizontalAlignment.Left, 200),
+			new cListViewColumn(5, "DateHeader", "Date", HorizontalAlignment.Center, 80),
+			new cListViewColumn(6, "PriceHeader", "Price", HorizontalAlignment.Right, 80),
+			new cListViewColumn(7, "TaxHeader", "Tax", HorizontalAlignment.Right, 80),
+			new cListViewColumn(8, "ShippingHeader", "Shipping", HorizontalAlignment.Right, 80),
+			new cListViewColumn(9, "TotalHeader", "Total", HorizontalAlignment.Right, 80)
 			};
 
 		//============================================================================*
-		// cFirearmListView() - Constructor
+		// cToolListView() - Constructor
 		//============================================================================*
 
-		public cFirearmListView(cDataFiles DataFiles)
-			: base(DataFiles, cPreferences.eApplicationListView.FirearmsListView)
+		public cToolListView(cDataFiles DataFiles)
+			: base(DataFiles, cPreferences.eApplicationListView.ToolsListView)
 			{
 			m_DataFiles = DataFiles;
 
@@ -64,7 +63,8 @@ namespace ReloadersWorkShop
 
 			SetColumns();
 
-			CheckBoxes = true;
+			for (int i = 0; i < (int)cGear.eGearTypes.NumGearTypes; i++)
+				m_afFilters[i] = true;
 
 			Font = new System.Drawing.Font(Font, System.Drawing.FontStyle.Bold);
 
@@ -78,11 +78,11 @@ namespace ReloadersWorkShop
 
 			PopulateGroups();
 
-			SortingOrder = m_DataFiles.Preferences.FirearmSortOrder;
+			SortingOrder = m_DataFiles.Preferences.ToolsSortOrder;
 
-			SortingColumn = m_DataFiles.Preferences.FirearmSortColumn;
+			SortingColumn = m_DataFiles.Preferences.ToolsSortColumn;
 
-			ListViewItemSorter = new cListViewFirearmComparer(SortingColumn, SortingOrder);
+			ListViewItemSorter = new cListViewToolComparer(SortingColumn, SortingOrder);
 
 			Populate();
 
@@ -90,16 +90,16 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// AddFirearm()
+		// AddTool()
 		//============================================================================*
 
-		public ListViewItem AddFirearm(cFirearm Firearm, bool fSelect = false)
+		public ListViewItem AddTool(cTool Tool, bool fSelect = true)
 			{
 			//----------------------------------------------------------------------------*
-			// Verify that the firearm should be added to the list
+			// Verify that the Tool should be added to the list
 			//----------------------------------------------------------------------------*
 
-			if (!VerifyFirearm(Firearm))
+			if (!VerifyTool(Tool))
 				return (null);
 
 			//----------------------------------------------------------------------------*
@@ -108,7 +108,7 @@ namespace ReloadersWorkShop
 
 			ListViewItem Item = new ListViewItem();
 
-			SetFirearmData(Item, Firearm);
+			SetToolData(Item, Tool);
 
 			//----------------------------------------------------------------------------*
 			// Add the item to the list and exit
@@ -117,6 +117,17 @@ namespace ReloadersWorkShop
 			AddItem(Item, fSelect);
 
 			return (Item);
+			}
+
+		//============================================================================*
+		// Filter()
+		//============================================================================*
+
+		public void Filter(cTool.eToolTypes eType, bool fShow = true)
+			{
+			m_afFilters[(int)eType] = fShow;
+
+			Populate();
 			}
 
 		//============================================================================*
@@ -129,9 +140,9 @@ namespace ReloadersWorkShop
 				{
 				SortingOrder = (SortingOrder == SortOrder.Ascending) ? SortOrder.Descending : SortOrder.Ascending;
 
-				m_DataFiles.Preferences.FirearmSortOrder = SortingOrder;
+				m_DataFiles.Preferences.ToolsSortOrder = SortingOrder;
 
-				ListViewItemSorter = new cListViewFirearmComparer(SortingColumn, SortingOrder);
+				ListViewItemSorter = new cListViewToolComparer(SortingColumn, SortingOrder);
 				}
 			else
 				{
@@ -139,13 +150,13 @@ namespace ReloadersWorkShop
 
 				this.Invalidate(true);
 
-				ListViewItemSorter = new cListViewFirearmComparer(SortingColumn, SortingOrder);
+				ListViewItemSorter = new cListViewToolComparer(SortingColumn, SortingOrder);
 				}
 
 			if (SelectedItems.Count > 0)
 				SelectedItems[0].EnsureVisible();
 
-			m_DataFiles.Preferences.FirearmSortColumn = args.Column;
+			m_DataFiles.Preferences.ToolsSortColumn = args.Column;
 			}
 
 		//============================================================================*
@@ -157,18 +168,18 @@ namespace ReloadersWorkShop
 			Populating = true;
 
 			//----------------------------------------------------------------------------*
-			// FirearmListView Items
+			// ToolsListView Items
 			//----------------------------------------------------------------------------*
 
 			Items.Clear();
 
 			ListViewItem SelectItem = null;
 
-			foreach (cFirearm Firearm in m_DataFiles.FirearmList)
+			foreach (cTool Tool in m_DataFiles.ToolList)
 				{
-				ListViewItem Item = AddFirearm(Firearm);
+				ListViewItem Item = AddTool(Tool);
 
-				if (Item != null && m_DataFiles.Preferences.LastFirearmSelected != null && m_DataFiles.Preferences.LastFirearmSelected.CompareTo(Firearm) == 0)
+				if (Item != null && m_DataFiles.Preferences.LastToolSelected != null && m_DataFiles.Preferences.LastToolSelected.CompareTo(Tool) == 0)
 					SelectItem = Item;
 				}
 
@@ -182,7 +193,7 @@ namespace ReloadersWorkShop
 					{
 					Items[0].Selected = true;
 
-					m_DataFiles.Preferences.LastFirearmSelected = (cFirearm)Items[0].Tag;
+					m_DataFiles.Preferences.LastToolSelected = (cTool)Items[0].Tag;
 					}
 				}
 
@@ -193,64 +204,105 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// PopulateGroups()
+		//============================================================================*
+
+		protected override void PopulateGroups()
+			{
+			Groups.Clear();
+
+			ListViewGroup Group = new ListViewGroup("PressGroup", cTool.ToolTypeString(cTool.eToolTypes.Press));
+
+			Groups.Add(Group);
+
+			Group = new ListViewGroup("PressAccessoryGroup", cTool.ToolTypeString(cTool.eToolTypes.PressAccessory));
+
+			Groups.Add(Group);
+
+			Group = new ListViewGroup("DieGroup", cTool.ToolTypeString(cTool.eToolTypes.Die));
+
+			Groups.Add(Group);
+
+			Group = new ListViewGroup("DieAccessoryGroup", cTool.ToolTypeString(cTool.eToolTypes.DieAccessory));
+
+			Groups.Add(Group);
+
+			Group = new ListViewGroup("PowderToolsGroup", cTool.ToolTypeString(cTool.eToolTypes.PowderTool));
+
+			Groups.Add(Group);
+
+			Group = new ListViewGroup("CasePrepGroup", cTool.ToolTypeString(cTool.eToolTypes.CasePrepTool));
+
+			Groups.Add(Group);
+
+			Group = new ListViewGroup("MeasurementGroup", cTool.ToolTypeString(cTool.eToolTypes.MeasurementTool));
+
+			Groups.Add(Group);
+
+			Group = new ListViewGroup("CastingGroup", cTool.ToolTypeString(cTool.eToolTypes.BulletCasting));
+
+			Groups.Add(Group);
+
+			Group = new ListViewGroup("GunsmithingGroup", cTool.ToolTypeString(cTool.eToolTypes.Gunsmithing));
+
+			Groups.Add(Group);
+
+			Group = new ListViewGroup("BookGroup", cTool.ToolTypeString(cTool.eToolTypes.Book));
+
+			Groups.Add(Group);
+
+			Group = new ListViewGroup("OtherGroup", cTool.ToolTypeString(cTool.eToolTypes.Other));
+
+			Groups.Add(Group);
+			}
+
+		//============================================================================*
 		// SetColumns()
 		//============================================================================*
 
 		public void SetColumns()
 			{
-			m_arColumns[7].Text = String.Format("Price ({0})", m_DataFiles.Preferences.Currency);
-			m_arColumns[8].Text = String.Format("Tax ({0})", m_DataFiles.Preferences.Currency);
-			m_arColumns[9].Text = String.Format("Shipping ({0})", m_DataFiles.Preferences.Currency);
-			m_arColumns[10].Text = String.Format("Transfer Fees ({0})", m_DataFiles.Preferences.Currency);
-			m_arColumns[11].Text = String.Format("Other Fees ({0})", m_DataFiles.Preferences.Currency);
-			m_arColumns[12].Text = String.Format("Total ({0})", m_DataFiles.Preferences.Currency);
+			m_arColumns[6].Text = String.Format("Price ({0})", m_DataFiles.Preferences.Currency);
+			m_arColumns[7].Text = String.Format("Tax ({0})", m_DataFiles.Preferences.Currency);
+			m_arColumns[8].Text = String.Format("Shipping ({0})", m_DataFiles.Preferences.Currency);
+			m_arColumns[9].Text = String.Format("Total ({0})", m_DataFiles.Preferences.Currency);
 
 			PopulateColumns(m_arColumns);
 			}
 
 		//============================================================================*
-		// SetFirearmData()
+		// SetToolData()
 		//============================================================================*
 
-		public void SetFirearmData(ListViewItem Item, cFirearm Firearm)
+		public void SetToolData(ListViewItem Item, cTool Tool)
 			{
 			Item.SubItems.Clear();
 
-			cCaliber.CurrentFirearmType = Firearm.FirearmType;
+			Item.Text = Tool.Manufacturer.ToString();
 
-			Item.Text = Firearm.Manufacturer.ToString();
+			Item.Group = Groups[(int)Tool.ToolType];
+			Item.Tag = Tool;
 
-			Item.Group = Groups[(int)Firearm.FirearmType];
-			Item.Tag = Firearm;
+			Item.SubItems.Add(String.Format("{0}", Tool.PartNumber));
+			Item.SubItems.Add(String.Format("{0}", Tool.SerialNumber));
+			Item.SubItems.Add(String.Format("{0}", Tool.Description));
 
-			Item.Checked = Firearm.Checked;
+			Item.SubItems.Add(String.Format("{0}", Tool.Source));
+			Item.SubItems.Add(!String.IsNullOrEmpty(Tool.Source) ? String.Format("{0}", Tool.PurchaseDate.ToShortDateString()) : "");
+			Item.SubItems.Add(!String.IsNullOrEmpty(Tool.Source) && Tool.PurchasePrice > 0.0 ? String.Format("{0:F2}", Tool.PurchasePrice) : "-");
+			Item.SubItems.Add(!String.IsNullOrEmpty(Tool.Source) && Tool.Tax > 0.0 ? String.Format("{0:F2}", Tool.Tax) : "-");
+			Item.SubItems.Add(!String.IsNullOrEmpty(Tool.Source) && Tool.Shipping > 0.0 ? String.Format("{0:F2}", Tool.Shipping) : "-");
 
-			Item.SubItems.Add(Firearm.PartNumber);
-			Item.SubItems.Add(Firearm.SerialNumber);
-			Item.SubItems.Add(Firearm.Description);
-			Item.SubItems.Add(Firearm.PrimaryCaliber.ToString());
-			Item.SubItems.Add(Firearm.Source);
+			double dTotal = Tool.PurchasePrice + Tool.Tax + Tool.Shipping;
 
-			if (Firearm.PurchaseDate.Year == 1)
-				Firearm.PurchaseDate = DateTime.Today;
-
-			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source)? String.Format("{0}", Firearm.PurchaseDate.ToShortDateString()) : "");
-			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source) && Firearm.PurchasePrice !=  0.0? String.Format("{0:F2}", Firearm.PurchasePrice) : "-");
-			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source) && Firearm.Tax != 0.0 ? String.Format("{0:F2}", Firearm.Tax) : "-");
-			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source) && Firearm.Shipping != 0.0 ? String.Format("{0:F2}", Firearm.Shipping) : "-");
-			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source) && Firearm.TransferFees != 0.0 ? String.Format("{0:F2}", Firearm.TransferFees) : "-");
-			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source) && Firearm.OtherFees != 0.0 ? String.Format("{0:F2}", Firearm.OtherFees) : "-");
-
-			double dTotal = Firearm.PurchasePrice + Firearm.Tax + Firearm.Shipping + Firearm.TransferFees + Firearm.OtherFees;
-
-			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source) && dTotal != 0.0 && Firearm.PurchaseDate.Year > 1 ? String.Format("{0:F2}", dTotal) : "-");
+			Item.SubItems.Add(!String.IsNullOrEmpty(Tool.Source) && dTotal != 0.0 ? String.Format("{0:F2}", dTotal) : "-");
 			}
 
 		//============================================================================*
-		// UpdateFirearm()
+		// UpdateTool()
 		//============================================================================*
 
-		public ListViewItem UpdateFirearm(cFirearm Firearm, bool fSelect = false)
+		public ListViewItem UpdateTool(cTool Tool, bool fSelect = false)
 			{
 			//----------------------------------------------------------------------------*
 			// Find the Item
@@ -260,7 +312,7 @@ namespace ReloadersWorkShop
 
 			foreach (ListViewItem CheckItem in Items)
 				{
-				if ((CheckItem.Tag as cFirearm).CompareTo(Firearm) == 0)
+				if ((CheckItem.Tag as cTool).CompareTo(Tool) == 0)
 					{
 					Item = CheckItem;
 
@@ -273,13 +325,13 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			if (Item == null)
-				return (AddFirearm(Firearm, fSelect));
+				return (AddTool(Tool, fSelect));
 
 			//----------------------------------------------------------------------------*
 			// Otherwise, update the Item Data
 			//----------------------------------------------------------------------------*
 
-			SetFirearmData(Item, Firearm);
+			SetToolData(Item, Tool);
 
 			if (fSelect)
 				{
@@ -288,20 +340,21 @@ namespace ReloadersWorkShop
 				Item.EnsureVisible();
 				}
 
-			Focus();
-
 			return (Item);
 			}
 
 		//============================================================================*
-		// VerifyFirearm()
+		// VerifyTool()
 		//============================================================================*
 
-		public bool VerifyFirearm(cFirearm Firearm)
+		public bool VerifyTool(cTool Tool)
 			{
 			//----------------------------------------------------------------------------*
-			// In this version, all firearms are verified OK
+			// Check Filters
 			//----------------------------------------------------------------------------*
+
+			if (!m_afFilters[(int)Tool.ToolType])
+				return (false);
 
 			return (true);
 			}

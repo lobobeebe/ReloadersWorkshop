@@ -58,6 +58,7 @@ namespace ReloadersWorkShop
 		private bool m_fInitialized = false;
 		private bool m_fCheckFromDoubleClick = false;
 
+
 		//============================================================================*
 		// cListView() - Default Constructor
 		//============================================================================*
@@ -105,27 +106,27 @@ namespace ReloadersWorkShop
 
 			if (sm_CheckMarkImage == null)
 				{
-				sm_CheckMarkImage = (Bitmap) Properties.Resources.ResourceManager.GetObject("CheckMark");
+				sm_CheckMarkImage = (Bitmap)Properties.Resources.ResourceManager.GetObject("CheckMark");
 
 				sm_CheckMarkImage.MakeTransparent(Color.White);
 				}
 
 			if (sm_CheckMarkSelectedImage == null)
 				{
-				sm_CheckMarkSelectedImage = (Bitmap) Properties.Resources.ResourceManager.GetObject("CheckMarkSelected");
+				sm_CheckMarkSelectedImage = (Bitmap)Properties.Resources.ResourceManager.GetObject("CheckMarkSelected");
 				sm_CheckMarkSelectedImage.MakeTransparent(Color.Black);
 				}
 
 			if (sm_SortAscendingImage == null)
 				{
-				sm_SortAscendingImage = (Bitmap) Properties.Resources.ResourceManager.GetObject("SortAscending");
+				sm_SortAscendingImage = (Bitmap)Properties.Resources.ResourceManager.GetObject("SortAscending");
 
 				sm_SortAscendingImage.MakeTransparent(Color.White);
 				}
 
 			if (sm_SortDescendingImage == null)
 				{
-				sm_SortDescendingImage = (Bitmap) Properties.Resources.ResourceManager.GetObject("SortDescending");
+				sm_SortDescendingImage = (Bitmap)Properties.Resources.ResourceManager.GetObject("SortDescending");
 
 				sm_SortDescendingImage.MakeTransparent(Color.White);
 				}
@@ -182,7 +183,7 @@ namespace ReloadersWorkShop
 			cCaliber Caliber = null;
 
 			if (Item.Tag is cCaliber)
-				Caliber = (cCaliber) Item.Tag;
+				Caliber = (cCaliber)Item.Tag;
 
 			if (Caliber == null)
 				{
@@ -317,7 +318,7 @@ namespace ReloadersWorkShop
 
 			string strText = Columns[args.ColumnIndex].Text;
 
-			Font HeaderFont = SystemFonts.DefaultFont;
+			Font HeaderFont = new Font(SystemFonts.DefaultFont, FontStyle.Bold);
 
 			SizeF TextSize = args.Graphics.MeasureString(strText, HeaderFont);
 
@@ -334,27 +335,27 @@ namespace ReloadersWorkShop
 			switch (Columns[args.ColumnIndex].TextAlign)
 				{
 				case HorizontalAlignment.Center:
-					nX += (int) ((args.Bounds.Width / 2) - ((TextSize.Width + nImageWidth + 5) / 2));
+					nX += (int)((args.Bounds.Width / 2) - ((TextSize.Width + nImageWidth + 5) / 2));
 
 					args.Graphics.DrawString(strText, HeaderFont, Brushes.Black, nX, nY);
 
-					nX += (int) TextSize.Width + 5;
+					nX += (int)TextSize.Width + 5;
 
 					break;
 
 				case HorizontalAlignment.Right:
-					nX += (args.Bounds.Width - (int) TextSize.Width);
+					nX += (args.Bounds.Width - (int)TextSize.Width);
 
 					args.Graphics.DrawString(strText, HeaderFont, Brushes.Black, nX, nY);
 
-					nX -= (int) (5 + nImageWidth);
+					nX -= (int)(5 + nImageWidth);
 
 					break;
 
 				case HorizontalAlignment.Left:
 					args.Graphics.DrawString(strText, HeaderFont, Brushes.Black, nX, nY);
 
-					nX += (int) TextSize.Width + 5;
+					nX += (int)TextSize.Width + 5;
 
 					break;
 				}
@@ -377,7 +378,7 @@ namespace ReloadersWorkShop
 				{
 				Brush WebsiteBrush = Brushes.Blue;
 
-				cManufacturer Manufacturer = (cManufacturer) args.Item.Tag;
+				cManufacturer Manufacturer = (cManufacturer)args.Item.Tag;
 
 				if (Manufacturer.WebSiteVisited)
 					WebsiteBrush = Brushes.Maroon;
@@ -403,7 +404,7 @@ namespace ReloadersWorkShop
 
 				args.DrawBackground();
 
-				Font WebSiteFont = new Font(SystemFonts.DefaultFont, FontStyle.Underline);
+				Font WebSiteFont = new Font(SystemFonts.DefaultFont, FontStyle.Underline | FontStyle.Bold);
 
 				args.Graphics.DrawString(args.SubItem.Text, WebSiteFont, WebsiteBrush, args.Bounds);
 
@@ -443,13 +444,78 @@ namespace ReloadersWorkShop
 
 					args.DrawBackground();
 
-					Font ViewFont = new Font(SystemFonts.DefaultFont, FontStyle.Underline);
+					Font ViewFont = new Font(SystemFonts.DefaultFont, FontStyle.Underline | FontStyle.Bold);
 
 					SizeF TextSize = args.Graphics.MeasureString(args.SubItem.Text, ViewFont);
 
 					Rectangle Rect = args.Bounds;
 
-					Rect.Y += (Rect.Height / 2) - (int) (TextSize.Height / 2);
+					Rect.Y += (Rect.Height / 2) - (int)(TextSize.Height / 2);
+
+					if (args.ColumnIndex == 0 && CheckBoxes)
+						{
+						CheckBoxRenderer.DrawCheckBox(args.Graphics, new Point(Rect.Left + 4, Rect.Top), args.Bounds, "", ViewFont, false, (args.Item.Checked ? CheckBoxState.CheckedNormal : CheckBoxState.UncheckedNormal));
+
+						Size BoxSize = CheckBoxRenderer.GetGlyphSize(args.Graphics, (args.Item.Checked ? CheckBoxState.CheckedNormal : CheckBoxState.UncheckedNormal));
+
+						args.Graphics.DrawString(args.SubItem.Text, ViewFont, ViewBrush, args.Bounds.X + BoxSize.Width + 6, args.Bounds.Y);
+						}
+					else
+						args.Graphics.DrawString(args.SubItem.Text, ViewFont, ViewBrush, args.Bounds.X + 4, args.Bounds.Y);
+
+					return;
+					}
+				}
+
+			//----------------------------------------------------------------------------*
+			// Batch-Made Ammo
+			//----------------------------------------------------------------------------*
+
+			if (args.Header.Text == "Part Number" && args.Item.Text == "Batch Editor")
+				{
+				string strBatchNumber = args.SubItem.Text;
+
+				if (strBatchNumber.Length >= 7 && strBatchNumber.Substring(0, 6) == "Batch ")
+					strBatchNumber = strBatchNumber.Substring(6);
+				else
+					strBatchNumber = "";
+
+				int nBatchID = 0;
+
+				Int32.TryParse(strBatchNumber, out nBatchID);
+
+				if (nBatchID > 0)
+					{
+					Brush ViewBrush = Brushes.Blue;
+
+					if (args.Item.Selected)
+						{
+						if (Focused)
+							{
+							args.SubItem.BackColor = SystemColors.Highlight;
+
+							ViewBrush = Brushes.White;
+							}
+						else
+							args.SubItem.BackColor = SystemColors.ControlLight;
+
+						args.SubItem.ForeColor = SystemColors.HighlightText;
+						}
+					else
+						{
+						args.SubItem.BackColor = SystemColors.Window;
+						args.SubItem.ForeColor = Color.Blue;
+						}
+
+					args.DrawBackground();
+
+					Font ViewFont = new Font(SystemFonts.DefaultFont, FontStyle.Underline | FontStyle.Bold);
+
+					SizeF TextSize = args.Graphics.MeasureString(args.SubItem.Text, ViewFont);
+
+					Rectangle Rect = args.Bounds;
+
+					Rect.Y += (Rect.Height / 2) - (int)(TextSize.Height / 2);
 
 					if (args.ColumnIndex == 0 && CheckBoxes)
 						{
@@ -597,7 +663,7 @@ namespace ReloadersWorkShop
 					{
 					if (Item.SubItems[nColumn].Text.Length > 0)
 						{
-						if (nX - nColumnX < (int) TextSize.Width)
+						if (nX - nColumnX < (int)TextSize.Width)
 							{
 							try
 								{
@@ -616,6 +682,43 @@ namespace ReloadersWorkShop
 					}
 
 				//----------------------------------------------------------------------------*
+				// Part Number Column
+				//----------------------------------------------------------------------------*
+
+				if (Header.Text == "Part Number" && Item.Text == "Batch Editor")
+					{
+					Size BoxSize = CheckBoxRenderer.GetGlyphSize(g, (Item.Checked ? CheckBoxState.CheckedNormal : CheckBoxState.UncheckedNormal));
+
+					if ((nColumn == 0 && CheckBoxes && nX > 4 + BoxSize.Width && nX - 4 - BoxSize.Width - nColumnX < (int)TextSize.Width) ||
+						(nColumn == 0 && !CheckBoxes && nX > 4 && nX - nColumnX < (int)TextSize.Width) ||
+						(nColumn != 0 && nX > 4 && nX - nColumnX < (int)TextSize.Width))
+						{
+						string strBatchNumber = Item.SubItems[1].Text;
+
+						if (strBatchNumber.Length >= 7 && strBatchNumber.Substring(0, 6) == "Batch ")
+							strBatchNumber = strBatchNumber.Substring(6);
+						else
+							strBatchNumber = "";
+
+						int nBatchID = 0;
+
+						Int32.TryParse(strBatchNumber, out nBatchID);
+
+						if (nBatchID > 0)
+							{
+							cBatch Batch = m_DataFiles.GetBatchByID(nBatchID);
+
+							if (Batch != null)
+								{
+								cBatchForm BatchForm = new cBatchForm(Batch, m_DataFiles, null, cFirearm.eFireArmType.None, true);
+
+								BatchForm.ShowDialog();
+								}
+							}
+						}
+					}
+
+				//----------------------------------------------------------------------------*
 				// Caliber Column
 				//----------------------------------------------------------------------------*
 
@@ -627,9 +730,9 @@ namespace ReloadersWorkShop
 						{
 						Size BoxSize = CheckBoxRenderer.GetGlyphSize(g, (Item.Checked ? CheckBoxState.CheckedNormal : CheckBoxState.UncheckedNormal));
 
-						if ((nColumn == 0 && CheckBoxes && nX > 4 + BoxSize.Width && nX - 4 - BoxSize.Width - nColumnX < (int) TextSize.Width) ||
-							(nColumn == 0 && !CheckBoxes && nX > 4 && nX - nColumnX < (int) TextSize.Width) ||
-							(nColumn != 0 && nX > 4 && nX - nColumnX < (int) TextSize.Width))
+						if ((nColumn == 0 && CheckBoxes && nX > 4 + BoxSize.Width && nX - 4 - BoxSize.Width - nColumnX < (int)TextSize.Width) ||
+							(nColumn == 0 && !CheckBoxes && nX > 4 && nX - nColumnX < (int)TextSize.Width) ||
+							(nColumn != 0 && nX > 4 && nX - nColumnX < (int)TextSize.Width))
 							cCaliber.ShowSAAMIPDF(m_DataFiles, Caliber);
 						}
 					}
@@ -704,9 +807,23 @@ namespace ReloadersWorkShop
 					{
 					if (!String.IsNullOrEmpty(Item.SubItems[nColumn].Text))
 						{
-						if (nX - nColumnX < (int) TextSize.Width)
+						if (nX - nColumnX < (int)TextSize.Width)
 							this.Cursor = Cursors.Hand;
 						}
+					}
+
+				//----------------------------------------------------------------------------*
+				// Part Number Column
+				//----------------------------------------------------------------------------*
+
+				if (Header.Text == "Part Number" && Item.Text == "Batch Editor")
+					{
+					Size BoxSize = CheckBoxRenderer.GetGlyphSize(g, (Item.Checked ? CheckBoxState.CheckedNormal : CheckBoxState.UncheckedNormal));
+
+					if ((nColumn == 0 && CheckBoxes && nX > 4 + BoxSize.Width && nX - 4 - BoxSize.Width - nColumnX < (int)TextSize.Width) ||
+						(nColumn == 0 && !CheckBoxes && nX > 4 && nX - nColumnX < (int)TextSize.Width) ||
+						(nColumn != 0 && nX > 4 && nX - nColumnX < (int)TextSize.Width))
+						this.Cursor = Cursors.Hand;
 					}
 
 				//----------------------------------------------------------------------------*
@@ -721,9 +838,9 @@ namespace ReloadersWorkShop
 						{
 						Size BoxSize = CheckBoxRenderer.GetGlyphSize(g, (Item.Checked ? CheckBoxState.CheckedNormal : CheckBoxState.UncheckedNormal));
 
-						if ((nColumn == 0 && CheckBoxes && nX > 4 + BoxSize.Width && nX - 4 - BoxSize.Width - nColumnX < (int) TextSize.Width) ||
-							(nColumn == 0 && !CheckBoxes && nX > 4 && nX - nColumnX < (int) TextSize.Width) ||
-							(nColumn != 0 && nX > 4 && nX - nColumnX < (int) TextSize.Width))
+						if ((nColumn == 0 && CheckBoxes && nX > 4 + BoxSize.Width && nX - 4 - BoxSize.Width - nColumnX < (int)TextSize.Width) ||
+							(nColumn == 0 && !CheckBoxes && nX > 4 && nX - nColumnX < (int)TextSize.Width) ||
+							(nColumn != 0 && nX > 4 && nX - nColumnX < (int)TextSize.Width))
 							this.Cursor = Cursors.Hand;
 						}
 					}

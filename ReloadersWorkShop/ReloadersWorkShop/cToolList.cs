@@ -1,5 +1,5 @@
 ﻿//============================================================================*
-// cGearList.cs
+// cToolList.cs
 //
 // Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
@@ -21,11 +21,11 @@ using System.Xml;
 namespace ReloadersWorkShop
 	{
 	//============================================================================*
-	// cGearList Class
+	// cToolList Class
 	//============================================================================*
 
 	[Serializable]
-	public class cGearList : List<cGear>
+	public class cToolList : List<cTool>
 		{
 		//============================================================================*
 		// Private Data Members
@@ -36,25 +36,25 @@ namespace ReloadersWorkShop
 		private int m_nUpdateCount = 0;
 
 		//============================================================================*
-		// AddGear()
+		// AddTool()
 		//============================================================================*
 
-		public bool AddGear(cGear Gear, bool fCountOnly = false)
+		public bool AddTool(cTool Tool, bool fCountOnly = false)
 			{
 			m_nImportCount++;
 
-			foreach (cGear CheckGear in this)
+			foreach (cTool CheckTool in this)
 				{
-				if (CheckGear.CompareTo(Gear) == 0)
+				if (CheckTool.CompareTo(Tool) == 0)
 					{
-					m_nUpdateCount += CheckGear.Append(Gear, fCountOnly);
+					m_nUpdateCount += CheckTool.Append(Tool, fCountOnly);
 
 					return (false);
 					}
 				}
 
 			if (!fCountOnly)
-				Add(Gear);
+				Add(Tool);
 
 			m_nNewCount++;
 
@@ -75,29 +75,29 @@ namespace ReloadersWorkShop
 			Writer.WriteLine(ExportName);
 			Writer.WriteLine();
 
-			for (int i = 0; i < (int) cGear.eGearTypes.NumGearTypes; i++)
+			for (int i = 0; i < (int)cTool.eToolTypes.NumToolTypes; i++)
 				{
-				cGear.eGearTypes eType = (cGear.eGearTypes) i;
+				cTool.eToolTypes eType = (cTool.eToolTypes)i;
 
-				Writer.WriteLine(cGear.GearTypeString(eType));
+				Writer.WriteLine(cTool.ToolTypeString(eType));
 				Writer.WriteLine();
 
 				bool fHeader = false;
 
-				foreach (cGear Gear in this)
+				foreach (cTool Tool in this)
 					{
-					if (Gear.GearType != eType)
+					if (Tool.ToolType != eType)
 						continue;
 
 					if (!fHeader)
 						{
-						Writer.WriteLine(Gear.CSVGearLineHeader);
+						Writer.WriteLine(Tool.CSVToolLineHeader);
 						Writer.WriteLine();
 
 						fHeader = true;
 						}
 
-					strLine = Gear.CSVLine;
+					strLine = Tool.CSVLine;
 
 					Writer.WriteLine(strLine);
 					}
@@ -116,8 +116,8 @@ namespace ReloadersWorkShop
 				{
 				XmlElement XMLElement = XMLDocument.CreateElement(ExportName, XMLParentElement);
 
-				foreach (cGear Gear in this)
-					Gear.Export(XMLDocument, XMLElement);
+				foreach (cTool Tool in this)
+					Tool.Export(XMLDocument, XMLElement);
 				}
 			}
 
@@ -129,7 +129,7 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				return ("GearList");
+				return ("ToolList");
 				}
 			}
 
@@ -149,11 +149,11 @@ namespace ReloadersWorkShop
 				{
 				switch (XMLNode.Name)
 					{
-					case "Gear":
-						cGear Gear = new cGear(cGear.eGearTypes.Misc);
+					case "Tool":
+						cTool Tool = new cTool(cTool.eToolTypes.Other);
 
-						if (Gear.Import(XMLDocument, XMLNode, DataFiles))
-							AddGear(Gear, fCountOnly);
+						if (Tool.Import(XMLDocument, XMLNode, DataFiles))
+							AddTool(Tool, fCountOnly);
 
 						break;
 					}
@@ -194,8 +194,8 @@ namespace ReloadersWorkShop
 			{
 			bool fChanged = false;
 
-			foreach (cGear Gear in this)
-				fChanged = Gear.ResolveIdentities(Datafiles) ? true : fChanged;
+			foreach (cTool Tool in this)
+				fChanged = Tool.ResolveIdentities(Datafiles) ? true : fChanged;
 
 			return (fChanged);
 			}
@@ -206,9 +206,9 @@ namespace ReloadersWorkShop
 
 		public void Sort(bool fSortByType = true)
 			{
-			cGear.SortByType = fSortByType;
+			cTool.SortByType = fSortByType;
 
-			Sort(cGear.Comparer);
+			Sort(cTool.Comparer);
 			}
 
 		//============================================================================*

@@ -21,6 +21,9 @@ namespace ReloadersWorkShop
 				strLine += cFirearm.FirearmTypeString(m_eFirearmType);
 				strLine += ",";
 
+				strLine += m_fCrossUse ? ",Yes" : ",-";
+				strLine += ",";
+
 				strLine += m_strHeadStamp;
 
 				if (m_eFirearmType == cFirearm.eFireArmType.Handgun)
@@ -70,7 +73,7 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				string strLine = "Name,Firearm Type,Headstamp,Handgun Type,Small Primer,Large Primer,Magnum Primer,Rimfire,Min Bullet Dia.,Max Bullet Dia.,Min Bullet Weight,Max Bullet Weight,Case Trim Length,Max Case Length,Max COAL,Max Neck Dia";
+				string strLine = "Name,Firearm Type,Cross Use,Headstamp,Handgun Type,Small Primer,Large Primer,Magnum Primer,Rimfire,Min Bullet Dia.,Max Bullet Dia.,Min Bullet Weight,Max Bullet Weight,Case Trim Length,Max Case Length,Max COAL,Max Neck Dia";
 
 				return (strLine);
 				}
@@ -99,6 +102,7 @@ namespace ReloadersWorkShop
 			// General Data
 			//----------------------------------------------------------------------------*
 
+			XMLDocument.CreateElement("CrossUse", m_fCrossUse, XMLThisElement);
 			XMLDocument.CreateElement("HeadStamp", m_strHeadStamp, XMLThisElement);
 			XMLDocument.CreateElement("Pistol", m_fPistol, XMLThisElement);
 			XMLDocument.CreateElement("SAAMIPDF", m_strSAAMIPDF, XMLThisElement);
@@ -151,6 +155,9 @@ namespace ReloadersWorkShop
 						break;
 					case "Name":
 						XMLDocument.Import(XMLNode, out m_strName);
+						break;
+					case "CrossUse":
+						XMLDocument.Import(XMLNode, out m_fCrossUse);
 						break;
 					case "HeadStamp":
 						XMLDocument.Import(XMLNode, out m_strHeadStamp);

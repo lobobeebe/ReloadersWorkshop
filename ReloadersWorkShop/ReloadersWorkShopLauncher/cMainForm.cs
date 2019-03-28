@@ -145,8 +145,8 @@ namespace ReloadersWorkShopLauncher
 			{
 			RegistrationLabel.Text = m_RWRegistry.ActivationStatusString;
 
-			RegistrationLabel.BackColor = (m_RWRegistry.Trial ? Color.Red : Color.LightBlue);
-			RegistrationLabel.ForeColor = (m_RWRegistry.Trial ? Color.Yellow : Color.Blue);
+			RegistrationLabel.BackColor = (m_RWRegistry.Trial ? Color.Red : Color.LightCyan);
+			RegistrationLabel.ForeColor = (m_RWRegistry.Trial ? Color.Yellow : Color.RoyalBlue);
 
 			RegistrationLabel.Location = new Point(400 - (RegistrationLabel.Width / 2), 350);
 
@@ -168,7 +168,7 @@ namespace ReloadersWorkShopLauncher
 			// Set the title text
 			//----------------------------------------------------------------------------*
 
-			Text = String.Format("{0} - v{1}", Application.ProductName, Application.ProductVersion);
+			Text = Application.ProductName;
 
 			if (m_RWRegistry.Trial)
 				Text += " - Trial";

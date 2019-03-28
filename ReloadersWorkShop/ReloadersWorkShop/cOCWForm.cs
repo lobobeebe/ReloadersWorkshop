@@ -201,8 +201,8 @@ namespace ReloadersWorkShop
 					dMaxWeight = MaxCharge.PowderWeight;
 				}
 
-			StartingWeightTextBox.MinValue = dMinWeight;
-			StartingWeightTextBox.MaxValue = dMaxWeight;
+			StartingWeightTextBox.MinValue = cDataFiles.StandardToMetric(dMinWeight, cDataFiles.eDataType.PowderWeight);
+			StartingWeightTextBox.MaxValue = cDataFiles.StandardToMetric(dMaxWeight, cDataFiles.eDataType.PowderWeight);
 
 			IncrementTextBox.MinValue = 0.1;
 

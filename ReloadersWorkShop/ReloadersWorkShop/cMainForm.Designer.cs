@@ -51,22 +51,22 @@ namespace ReloadersWorkShop
 		/// </summary>
 		private void InitializeComponent()
 			{
-			System.Windows.Forms.Label label54;
-			System.Windows.Forms.Label label56;
-			System.Windows.Forms.Label LoadDataFiltersFirearmTypeLabel;
-			System.Windows.Forms.Label LoadDataFiltersCaliberlabel;
 			System.Windows.Forms.Label label40;
+			System.Windows.Forms.Label label56;
+			System.Windows.Forms.Label label54;
+			System.Windows.Forms.Button BallisticsKestrelButton;
+			System.Windows.Forms.Label label39;
+			System.Windows.Forms.Label label37;
 			System.Windows.Forms.Label BatchPowderLabel;
 			System.Windows.Forms.Label BatchCaliberLabel;
-			System.Windows.Forms.Label LoadDataFiltersBulletLabel;
 			System.Windows.Forms.Label BatchFirearmTypeLabel;
 			System.Windows.Forms.Label LoadDataFiltersPowderLabel;
+			System.Windows.Forms.Label LoadDataFiltersBulletLabel;
+			System.Windows.Forms.Label LoadDataFiltersCaliberlabel;
+			System.Windows.Forms.Label LoadDataFiltersFirearmTypeLabel;
 			System.Windows.Forms.Label label1;
-			System.Windows.Forms.Label label37;
-			System.Windows.Forms.Label label39;
 			System.Windows.Forms.Label label57;
 			System.Windows.Forms.Label label60;
-			System.Windows.Forms.Button BallisticsKestrelButton;
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(cMainForm));
 			this.MainMenu = new System.Windows.Forms.MenuStrip();
 			this.FileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -116,26 +116,6 @@ namespace ReloadersWorkShop
 			this.ToolsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.ToolsStabilityCalculatorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.ToolsConversionCalculatorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.SAAMIDocumentsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.ToolsSAAMIPistolMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.ToolsSAAMIPistolSpecsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.ToolsSAAMIPistolVelocityDataMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.ToolsSAAMIRifleMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.ToolsSAAMIRifleSpecsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.ToolsSAAMIRifleVelocityDataMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.ToolsSAAMIRimfireMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.ToolsSAAMIRimfireSpecsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.ToolsSAAMIShotshellMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.ToolsSAAMIShotshellSpecsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-			this.ToolsSAAMIBrochuresMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.ToolsSAAMIFactsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.ToolsSAAMIAmmoFiresMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.ToolsSAAMIPrimersMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.ToolsSAAMISafeAmmoStorageMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.ToolsSAAMISmokelessPowderMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.ToolsSAAMISportingFirearmsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.ToolsSAAMIUnsafeArmsAmmoMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.ToolsTargetCalculatorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
 			this.ToolsIntegrityCheckerMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -164,6 +144,11 @@ namespace ReloadersWorkShop
 			this.HelpDataUpdateMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
 			this.HelpAboutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.checkBox1 = new System.Windows.Forms.CheckBox();
+			this.checkBox2 = new System.Windows.Forms.CheckBox();
+			this.radioButton1 = new System.Windows.Forms.RadioButton();
+			this.radioButton2 = new System.Windows.Forms.RadioButton();
+			this.button1 = new System.Windows.Forms.Button();
 			this.BallisticsTab = new System.Windows.Forms.TabPage();
 			this.WindDriftChartGroup = new System.Windows.Forms.GroupBox();
 			this.label6 = new System.Windows.Forms.Label();
@@ -294,7 +279,6 @@ namespace ReloadersWorkShop
 			this.label18 = new System.Windows.Forms.Label();
 			this.label16 = new System.Windows.Forms.Label();
 			this.label15 = new System.Windows.Forms.Label();
-			this.BatchBulletLabel = new System.Windows.Forms.Label();
 			this.AmmoTab = new System.Windows.Forms.TabPage();
 			this.AmmunitionFiltersGroupBox = new System.Windows.Forms.GroupBox();
 			this.AmmunitionFirearmTypeCombo = new ReloadersWorkShop.Controls.cFirearmTypeCombo();
@@ -311,6 +295,7 @@ namespace ReloadersWorkShop
 			this.ViewAmmoInventoryButton = new System.Windows.Forms.Button();
 			this.EditAmmoInventoryButton = new System.Windows.Forms.Button();
 			this.AmmoPrintOptionsGroupBox = new System.Windows.Forms.GroupBox();
+			this.AmmoShowCostPerBoxCheckBox = new System.Windows.Forms.CheckBox();
 			this.NoAmmoListLabel = new System.Windows.Forms.Label();
 			this.AmmoPrintCheckedRadioButton = new System.Windows.Forms.RadioButton();
 			this.AmmoPrintAllRadioButton = new System.Windows.Forms.RadioButton();
@@ -335,6 +320,7 @@ namespace ReloadersWorkShop
 			this.BatchFiltersGroupBox = new System.Windows.Forms.GroupBox();
 			this.BatchFirearmTypeCombo = new ReloadersWorkShop.Controls.cFirearmTypeCombo();
 			this.BatchCaliberCombo = new System.Windows.Forms.ComboBox();
+			this.BatchBulletLabel = new System.Windows.Forms.Label();
 			this.BatchBulletCombo = new System.Windows.Forms.ComboBox();
 			this.BatchPowderCombo = new System.Windows.Forms.ComboBox();
 			this.LoadDataTab = new System.Windows.Forms.TabPage();
@@ -471,27 +457,52 @@ namespace ReloadersWorkShop
 			this.EditManufacturerButton = new System.Windows.Forms.Button();
 			this.AddManufacturerButton = new System.Windows.Forms.Button();
 			this.MainTabControl = new System.Windows.Forms.TabControl();
-			this.checkBox1 = new System.Windows.Forms.CheckBox();
-			this.checkBox2 = new System.Windows.Forms.CheckBox();
-			this.radioButton1 = new System.Windows.Forms.RadioButton();
-			this.radioButton2 = new System.Windows.Forms.RadioButton();
-			this.button1 = new System.Windows.Forms.Button();
-			label54 = new System.Windows.Forms.Label();
-			label56 = new System.Windows.Forms.Label();
-			LoadDataFiltersFirearmTypeLabel = new System.Windows.Forms.Label();
-			LoadDataFiltersCaliberlabel = new System.Windows.Forms.Label();
+			this.ToolsTab = new System.Windows.Forms.TabPage();
+			this.ViewToolButton = new System.Windows.Forms.Button();
+			this.RemoveToolButton = new System.Windows.Forms.Button();
+			this.EditToolButton = new System.Windows.Forms.Button();
+			this.AddToolButton = new System.Windows.Forms.Button();
+			this.ToolsCostsGroupBox = new System.Windows.Forms.GroupBox();
+			this.ToolsGrandTotalLabel = new System.Windows.Forms.Label();
+			this.label64 = new System.Windows.Forms.Label();
+			this.ToolsTotalShippingLabel = new System.Windows.Forms.Label();
+			this.ToolsTotalTaxLabel = new System.Windows.Forms.Label();
+			this.label69 = new System.Windows.Forms.Label();
+			this.label70 = new System.Windows.Forms.Label();
+			this.ToolsTotalCostLabel = new System.Windows.Forms.Label();
+			this.ToolsCountLabel = new System.Windows.Forms.Label();
+			this.label73 = new System.Windows.Forms.Label();
+			this.label74 = new System.Windows.Forms.Label();
+			this.ToolsFiltersGroupBox = new System.Windows.Forms.GroupBox();
+			this.ToolsShowGroupsCheckBox = new System.Windows.Forms.CheckBox();
+			this.ToolsOtherFilterCheckBox = new System.Windows.Forms.CheckBox();
+			this.ToolsPressAccessoriesFilterCheckBox = new System.Windows.Forms.CheckBox();
+			this.ToolsCasePrepFilterCheckBox = new System.Windows.Forms.CheckBox();
+			this.ToolsDieAccessoriesFilterCheckBox = new System.Windows.Forms.CheckBox();
+			this.ToolsBooksFilterCheckBox = new System.Windows.Forms.CheckBox();
+			this.ToolsGunsmithingFilterCheckBox = new System.Windows.Forms.CheckBox();
+			this.ToolsCastingFilterCheckBox = new System.Windows.Forms.CheckBox();
+			this.ToolsMeasurementToolsFilterCheckBox = new System.Windows.Forms.CheckBox();
+			this.ToolsPowderToolsFilterCheckBox = new System.Windows.Forms.CheckBox();
+			this.ToolsDiesFilterCheckBox = new System.Windows.Forms.CheckBox();
+			this.ToolsPressesFilterCheckBox = new System.Windows.Forms.CheckBox();
+			this.ToolsSAAMIWebsiteMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			label40 = new System.Windows.Forms.Label();
+			label56 = new System.Windows.Forms.Label();
+			label54 = new System.Windows.Forms.Label();
+			BallisticsKestrelButton = new System.Windows.Forms.Button();
+			label39 = new System.Windows.Forms.Label();
+			label37 = new System.Windows.Forms.Label();
 			BatchPowderLabel = new System.Windows.Forms.Label();
 			BatchCaliberLabel = new System.Windows.Forms.Label();
-			LoadDataFiltersBulletLabel = new System.Windows.Forms.Label();
 			BatchFirearmTypeLabel = new System.Windows.Forms.Label();
 			LoadDataFiltersPowderLabel = new System.Windows.Forms.Label();
+			LoadDataFiltersBulletLabel = new System.Windows.Forms.Label();
+			LoadDataFiltersCaliberlabel = new System.Windows.Forms.Label();
+			LoadDataFiltersFirearmTypeLabel = new System.Windows.Forms.Label();
 			label1 = new System.Windows.Forms.Label();
-			label37 = new System.Windows.Forms.Label();
-			label39 = new System.Windows.Forms.Label();
 			label57 = new System.Windows.Forms.Label();
 			label60 = new System.Windows.Forms.Label();
-			BallisticsKestrelButton = new System.Windows.Forms.Button();
 			this.MainMenu.SuspendLayout();
 			this.BallisticsTab.SuspendLayout();
 			this.WindDriftChartGroup.SuspendLayout();
@@ -531,19 +542,22 @@ namespace ReloadersWorkShop
 			this.CalibersTab.SuspendLayout();
 			this.ManufacturersTab.SuspendLayout();
 			this.MainTabControl.SuspendLayout();
+			this.ToolsTab.SuspendLayout();
+			this.ToolsCostsGroupBox.SuspendLayout();
+			this.ToolsFiltersGroupBox.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// label54
+			// label40
 			// 
-			label54.AutoSize = true;
-			label54.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			label54.ForeColor = System.Drawing.SystemColors.ControlText;
-			label54.Location = new System.Drawing.Point(472, 24);
-			label54.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			label54.Name = "label54";
-			label54.Size = new System.Drawing.Size(58, 13);
-			label54.TabIndex = 9;
-			label54.Text = "Crosswind:";
+			label40.AutoSize = true;
+			label40.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			label40.ForeColor = System.Drawing.SystemColors.ControlText;
+			label40.Location = new System.Drawing.Point(307, 24);
+			label40.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			label40.Name = "label40";
+			label40.Size = new System.Drawing.Size(36, 13);
+			label40.TabIndex = 11;
+			label40.Text = "Bullet:";
 			// 
 			// label56
 			// 
@@ -557,41 +571,58 @@ namespace ReloadersWorkShop
 			label56.TabIndex = 44;
 			label56.Text = "HeadWind:";
 			// 
-			// LoadDataFiltersFirearmTypeLabel
+			// label54
 			// 
-			LoadDataFiltersFirearmTypeLabel.AutoSize = true;
-			LoadDataFiltersFirearmTypeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			LoadDataFiltersFirearmTypeLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
-			LoadDataFiltersFirearmTypeLabel.Location = new System.Drawing.Point(6, 24);
-			LoadDataFiltersFirearmTypeLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			LoadDataFiltersFirearmTypeLabel.Name = "LoadDataFiltersFirearmTypeLabel";
-			LoadDataFiltersFirearmTypeLabel.Size = new System.Drawing.Size(71, 13);
-			LoadDataFiltersFirearmTypeLabel.TabIndex = 5;
-			LoadDataFiltersFirearmTypeLabel.Text = "Firearm Type:";
+			label54.AutoSize = true;
+			label54.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			label54.ForeColor = System.Drawing.SystemColors.ControlText;
+			label54.Location = new System.Drawing.Point(472, 24);
+			label54.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			label54.Name = "label54";
+			label54.Size = new System.Drawing.Size(58, 13);
+			label54.TabIndex = 9;
+			label54.Text = "Crosswind:";
 			// 
-			// LoadDataFiltersCaliberlabel
+			// BallisticsKestrelButton
 			// 
-			LoadDataFiltersCaliberlabel.AutoSize = true;
-			LoadDataFiltersCaliberlabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			LoadDataFiltersCaliberlabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
-			LoadDataFiltersCaliberlabel.Location = new System.Drawing.Point(36, 49);
-			LoadDataFiltersCaliberlabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			LoadDataFiltersCaliberlabel.Name = "LoadDataFiltersCaliberlabel";
-			LoadDataFiltersCaliberlabel.Size = new System.Drawing.Size(42, 13);
-			LoadDataFiltersCaliberlabel.TabIndex = 7;
-			LoadDataFiltersCaliberlabel.Text = "Caliber:";
+			BallisticsKestrelButton.AutoSize = true;
+			BallisticsKestrelButton.BackColor = System.Drawing.Color.Green;
+			BallisticsKestrelButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			BallisticsKestrelButton.FlatAppearance.BorderSize = 0;
+			BallisticsKestrelButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			BallisticsKestrelButton.ForeColor = System.Drawing.Color.White;
+			BallisticsKestrelButton.Location = new System.Drawing.Point(567, 70);
+			BallisticsKestrelButton.Margin = new System.Windows.Forms.Padding(2);
+			BallisticsKestrelButton.Name = "BallisticsKestrelButton";
+			BallisticsKestrelButton.Size = new System.Drawing.Size(92, 23);
+			BallisticsKestrelButton.TabIndex = 62;
+			BallisticsKestrelButton.Text = "Kestrel Start";
+			BallisticsKestrelButton.UseVisualStyleBackColor = false;
+			BallisticsKestrelButton.Visible = false;
 			// 
-			// label40
+			// label39
 			// 
-			label40.AutoSize = true;
-			label40.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			label40.ForeColor = System.Drawing.SystemColors.ControlText;
-			label40.Location = new System.Drawing.Point(307, 24);
-			label40.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			label40.Name = "label40";
-			label40.Size = new System.Drawing.Size(36, 13);
-			label40.TabIndex = 11;
-			label40.Text = "Bullet:";
+			label39.AutoSize = true;
+			label39.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			label39.ForeColor = System.Drawing.SystemColors.ControlText;
+			label39.Location = new System.Drawing.Point(35, 51);
+			label39.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			label39.Name = "label39";
+			label39.Size = new System.Drawing.Size(42, 13);
+			label39.TabIndex = 3;
+			label39.Text = "Caliber:";
+			// 
+			// label37
+			// 
+			label37.AutoSize = true;
+			label37.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			label37.ForeColor = System.Drawing.SystemColors.ControlText;
+			label37.Location = new System.Drawing.Point(6, 26);
+			label37.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			label37.Name = "label37";
+			label37.Size = new System.Drawing.Size(71, 13);
+			label37.TabIndex = 8;
+			label37.Text = "Firearm Type:";
 			// 
 			// BatchPowderLabel
 			// 
@@ -617,18 +648,6 @@ namespace ReloadersWorkShop
 			BatchCaliberLabel.TabIndex = 3;
 			BatchCaliberLabel.Text = "Caliber:";
 			// 
-			// LoadDataFiltersBulletLabel
-			// 
-			LoadDataFiltersBulletLabel.AutoSize = true;
-			LoadDataFiltersBulletLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			LoadDataFiltersBulletLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			LoadDataFiltersBulletLabel.Location = new System.Drawing.Point(302, 24);
-			LoadDataFiltersBulletLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			LoadDataFiltersBulletLabel.Name = "LoadDataFiltersBulletLabel";
-			LoadDataFiltersBulletLabel.Size = new System.Drawing.Size(36, 13);
-			LoadDataFiltersBulletLabel.TabIndex = 1;
-			LoadDataFiltersBulletLabel.Text = "Bullet:";
-			// 
 			// BatchFirearmTypeLabel
 			// 
 			BatchFirearmTypeLabel.AutoSize = true;
@@ -653,6 +672,42 @@ namespace ReloadersWorkShop
 			LoadDataFiltersPowderLabel.TabIndex = 10;
 			LoadDataFiltersPowderLabel.Text = "Powder:";
 			// 
+			// LoadDataFiltersBulletLabel
+			// 
+			LoadDataFiltersBulletLabel.AutoSize = true;
+			LoadDataFiltersBulletLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			LoadDataFiltersBulletLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			LoadDataFiltersBulletLabel.Location = new System.Drawing.Point(302, 24);
+			LoadDataFiltersBulletLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			LoadDataFiltersBulletLabel.Name = "LoadDataFiltersBulletLabel";
+			LoadDataFiltersBulletLabel.Size = new System.Drawing.Size(36, 13);
+			LoadDataFiltersBulletLabel.TabIndex = 1;
+			LoadDataFiltersBulletLabel.Text = "Bullet:";
+			// 
+			// LoadDataFiltersCaliberlabel
+			// 
+			LoadDataFiltersCaliberlabel.AutoSize = true;
+			LoadDataFiltersCaliberlabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			LoadDataFiltersCaliberlabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
+			LoadDataFiltersCaliberlabel.Location = new System.Drawing.Point(36, 49);
+			LoadDataFiltersCaliberlabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			LoadDataFiltersCaliberlabel.Name = "LoadDataFiltersCaliberlabel";
+			LoadDataFiltersCaliberlabel.Size = new System.Drawing.Size(42, 13);
+			LoadDataFiltersCaliberlabel.TabIndex = 7;
+			LoadDataFiltersCaliberlabel.Text = "Caliber:";
+			// 
+			// LoadDataFiltersFirearmTypeLabel
+			// 
+			LoadDataFiltersFirearmTypeLabel.AutoSize = true;
+			LoadDataFiltersFirearmTypeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			LoadDataFiltersFirearmTypeLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
+			LoadDataFiltersFirearmTypeLabel.Location = new System.Drawing.Point(6, 24);
+			LoadDataFiltersFirearmTypeLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			LoadDataFiltersFirearmTypeLabel.Name = "LoadDataFiltersFirearmTypeLabel";
+			LoadDataFiltersFirearmTypeLabel.Size = new System.Drawing.Size(71, 13);
+			LoadDataFiltersFirearmTypeLabel.TabIndex = 5;
+			LoadDataFiltersFirearmTypeLabel.Text = "Firearm Type:";
+			// 
 			// label1
 			// 
 			label1.AutoSize = true;
@@ -664,30 +719,6 @@ namespace ReloadersWorkShop
 			label1.Size = new System.Drawing.Size(69, 13);
 			label1.TabIndex = 6;
 			label1.Text = "Supply Type:";
-			// 
-			// label37
-			// 
-			label37.AutoSize = true;
-			label37.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			label37.ForeColor = System.Drawing.SystemColors.ControlText;
-			label37.Location = new System.Drawing.Point(6, 26);
-			label37.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			label37.Name = "label37";
-			label37.Size = new System.Drawing.Size(71, 13);
-			label37.TabIndex = 8;
-			label37.Text = "Firearm Type:";
-			// 
-			// label39
-			// 
-			label39.AutoSize = true;
-			label39.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			label39.ForeColor = System.Drawing.SystemColors.ControlText;
-			label39.Location = new System.Drawing.Point(35, 51);
-			label39.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			label39.Name = "label39";
-			label39.Size = new System.Drawing.Size(42, 13);
-			label39.TabIndex = 3;
-			label39.Text = "Caliber:";
 			// 
 			// label57
 			// 
@@ -712,23 +743,6 @@ namespace ReloadersWorkShop
 			label60.Size = new System.Drawing.Size(73, 13);
 			label60.TabIndex = 20;
 			label60.Text = "Manufacturer:";
-			// 
-			// BallisticsKestrelButton
-			// 
-			BallisticsKestrelButton.AutoSize = true;
-			BallisticsKestrelButton.BackColor = System.Drawing.Color.Green;
-			BallisticsKestrelButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			BallisticsKestrelButton.FlatAppearance.BorderSize = 0;
-			BallisticsKestrelButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			BallisticsKestrelButton.ForeColor = System.Drawing.Color.White;
-			BallisticsKestrelButton.Location = new System.Drawing.Point(567, 70);
-			BallisticsKestrelButton.Margin = new System.Windows.Forms.Padding(2);
-			BallisticsKestrelButton.Name = "BallisticsKestrelButton";
-			BallisticsKestrelButton.Size = new System.Drawing.Size(92, 23);
-			BallisticsKestrelButton.TabIndex = 62;
-			BallisticsKestrelButton.Text = "Kestrel Start";
-			BallisticsKestrelButton.UseVisualStyleBackColor = false;
-			BallisticsKestrelButton.Visible = false;
 			// 
 			// MainMenu
 			// 
@@ -1080,7 +1094,7 @@ namespace ReloadersWorkShop
 			this.ToolsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolsStabilityCalculatorMenuItem,
             this.ToolsConversionCalculatorMenuItem,
-            this.SAAMIDocumentsMenuItem,
+            this.ToolsSAAMIWebsiteMenuItem,
             this.ToolsTargetCalculatorMenuItem,
             this.toolStripSeparator10,
             this.ToolsIntegrityCheckerMenuItem});
@@ -1100,150 +1114,6 @@ namespace ReloadersWorkShop
 			this.ToolsConversionCalculatorMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F12;
 			this.ToolsConversionCalculatorMenuItem.Size = new System.Drawing.Size(216, 22);
 			this.ToolsConversionCalculatorMenuItem.Text = "Conversion &Calculator";
-			// 
-			// SAAMIDocumentsMenuItem
-			// 
-			this.SAAMIDocumentsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolsSAAMIPistolMenuItem,
-            this.ToolsSAAMIRifleMenuItem,
-            this.ToolsSAAMIRimfireMenuItem,
-            this.ToolsSAAMIShotshellMenuItem,
-            this.toolStripSeparator7,
-            this.ToolsSAAMIBrochuresMenuItem});
-			this.SAAMIDocumentsMenuItem.Name = "SAAMIDocumentsMenuItem";
-			this.SAAMIDocumentsMenuItem.Size = new System.Drawing.Size(216, 22);
-			this.SAAMIDocumentsMenuItem.Text = "SAAMI Documents";
-			// 
-			// ToolsSAAMIPistolMenuItem
-			// 
-			this.ToolsSAAMIPistolMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolsSAAMIPistolSpecsMenuItem,
-            this.ToolsSAAMIPistolVelocityDataMenuItem});
-			this.ToolsSAAMIPistolMenuItem.Name = "ToolsSAAMIPistolMenuItem";
-			this.ToolsSAAMIPistolMenuItem.Size = new System.Drawing.Size(219, 22);
-			this.ToolsSAAMIPistolMenuItem.Text = "Centerfire Pistol && Revolver";
-			// 
-			// ToolsSAAMIPistolSpecsMenuItem
-			// 
-			this.ToolsSAAMIPistolSpecsMenuItem.Name = "ToolsSAAMIPistolSpecsMenuItem";
-			this.ToolsSAAMIPistolSpecsMenuItem.Size = new System.Drawing.Size(203, 22);
-			this.ToolsSAAMIPistolSpecsMenuItem.Text = "Standards && Drawings";
-			// 
-			// ToolsSAAMIPistolVelocityDataMenuItem
-			// 
-			this.ToolsSAAMIPistolVelocityDataMenuItem.Name = "ToolsSAAMIPistolVelocityDataMenuItem";
-			this.ToolsSAAMIPistolVelocityDataMenuItem.Size = new System.Drawing.Size(203, 22);
-			this.ToolsSAAMIPistolVelocityDataMenuItem.Text = "Velocity && Pressure Data";
-			// 
-			// ToolsSAAMIRifleMenuItem
-			// 
-			this.ToolsSAAMIRifleMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolsSAAMIRifleSpecsMenuItem,
-            this.ToolsSAAMIRifleVelocityDataMenuItem});
-			this.ToolsSAAMIRifleMenuItem.Name = "ToolsSAAMIRifleMenuItem";
-			this.ToolsSAAMIRifleMenuItem.Size = new System.Drawing.Size(219, 22);
-			this.ToolsSAAMIRifleMenuItem.Text = "Centerfire Rifle";
-			// 
-			// ToolsSAAMIRifleSpecsMenuItem
-			// 
-			this.ToolsSAAMIRifleSpecsMenuItem.Name = "ToolsSAAMIRifleSpecsMenuItem";
-			this.ToolsSAAMIRifleSpecsMenuItem.Size = new System.Drawing.Size(203, 22);
-			this.ToolsSAAMIRifleSpecsMenuItem.Text = "Standards && Drawings";
-			// 
-			// ToolsSAAMIRifleVelocityDataMenuItem
-			// 
-			this.ToolsSAAMIRifleVelocityDataMenuItem.Name = "ToolsSAAMIRifleVelocityDataMenuItem";
-			this.ToolsSAAMIRifleVelocityDataMenuItem.Size = new System.Drawing.Size(203, 22);
-			this.ToolsSAAMIRifleVelocityDataMenuItem.Text = "Velocity && Pressure Data";
-			// 
-			// ToolsSAAMIRimfireMenuItem
-			// 
-			this.ToolsSAAMIRimfireMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolsSAAMIRimfireSpecsMenuItem});
-			this.ToolsSAAMIRimfireMenuItem.Name = "ToolsSAAMIRimfireMenuItem";
-			this.ToolsSAAMIRimfireMenuItem.Size = new System.Drawing.Size(219, 22);
-			this.ToolsSAAMIRimfireMenuItem.Text = "Rimfire";
-			// 
-			// ToolsSAAMIRimfireSpecsMenuItem
-			// 
-			this.ToolsSAAMIRimfireSpecsMenuItem.Name = "ToolsSAAMIRimfireSpecsMenuItem";
-			this.ToolsSAAMIRimfireSpecsMenuItem.Size = new System.Drawing.Size(191, 22);
-			this.ToolsSAAMIRimfireSpecsMenuItem.Text = "Standards && Drawings";
-			// 
-			// ToolsSAAMIShotshellMenuItem
-			// 
-			this.ToolsSAAMIShotshellMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolsSAAMIShotshellSpecsMenuItem});
-			this.ToolsSAAMIShotshellMenuItem.Name = "ToolsSAAMIShotshellMenuItem";
-			this.ToolsSAAMIShotshellMenuItem.Size = new System.Drawing.Size(219, 22);
-			this.ToolsSAAMIShotshellMenuItem.Text = "Shotshell";
-			// 
-			// ToolsSAAMIShotshellSpecsMenuItem
-			// 
-			this.ToolsSAAMIShotshellSpecsMenuItem.Name = "ToolsSAAMIShotshellSpecsMenuItem";
-			this.ToolsSAAMIShotshellSpecsMenuItem.Size = new System.Drawing.Size(191, 22);
-			this.ToolsSAAMIShotshellSpecsMenuItem.Text = "Standards && Drawings";
-			// 
-			// toolStripSeparator7
-			// 
-			this.toolStripSeparator7.Name = "toolStripSeparator7";
-			this.toolStripSeparator7.Size = new System.Drawing.Size(216, 6);
-			// 
-			// ToolsSAAMIBrochuresMenuItem
-			// 
-			this.ToolsSAAMIBrochuresMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolsSAAMIFactsMenuItem,
-            this.ToolsSAAMIAmmoFiresMenuItem,
-            this.ToolsSAAMIPrimersMenuItem,
-            this.ToolsSAAMISafeAmmoStorageMenuItem,
-            this.ToolsSAAMISmokelessPowderMenuItem,
-            this.ToolsSAAMISportingFirearmsMenuItem,
-            this.ToolsSAAMIUnsafeArmsAmmoMenuItem});
-			this.ToolsSAAMIBrochuresMenuItem.Name = "ToolsSAAMIBrochuresMenuItem";
-			this.ToolsSAAMIBrochuresMenuItem.Size = new System.Drawing.Size(219, 22);
-			this.ToolsSAAMIBrochuresMenuItem.Text = "Informational Brochures";
-			// 
-			// ToolsSAAMIFactsMenuItem
-			// 
-			this.ToolsSAAMIFactsMenuItem.Name = "ToolsSAAMIFactsMenuItem";
-			this.ToolsSAAMIFactsMenuItem.Size = new System.Drawing.Size(281, 22);
-			this.ToolsSAAMIFactsMenuItem.Text = "About SAAMI";
-			// 
-			// ToolsSAAMIAmmoFiresMenuItem
-			// 
-			this.ToolsSAAMIAmmoFiresMenuItem.Name = "ToolsSAAMIAmmoFiresMenuItem";
-			this.ToolsSAAMIAmmoFiresMenuItem.Size = new System.Drawing.Size(281, 22);
-			this.ToolsSAAMIAmmoFiresMenuItem.Text = "Facts about Sporting Ammunition Fires";
-			// 
-			// ToolsSAAMIPrimersMenuItem
-			// 
-			this.ToolsSAAMIPrimersMenuItem.Name = "ToolsSAAMIPrimersMenuItem";
-			this.ToolsSAAMIPrimersMenuItem.Size = new System.Drawing.Size(281, 22);
-			this.ToolsSAAMIPrimersMenuItem.Text = "Primers";
-			// 
-			// ToolsSAAMISafeAmmoStorageMenuItem
-			// 
-			this.ToolsSAAMISafeAmmoStorageMenuItem.Name = "ToolsSAAMISafeAmmoStorageMenuItem";
-			this.ToolsSAAMISafeAmmoStorageMenuItem.Size = new System.Drawing.Size(281, 22);
-			this.ToolsSAAMISafeAmmoStorageMenuItem.Text = "Safe Ammo Storage && Handlinig";
-			// 
-			// ToolsSAAMISmokelessPowderMenuItem
-			// 
-			this.ToolsSAAMISmokelessPowderMenuItem.Name = "ToolsSAAMISmokelessPowderMenuItem";
-			this.ToolsSAAMISmokelessPowderMenuItem.Size = new System.Drawing.Size(281, 22);
-			this.ToolsSAAMISmokelessPowderMenuItem.Text = "Smokeless Powder";
-			// 
-			// ToolsSAAMISportingFirearmsMenuItem
-			// 
-			this.ToolsSAAMISportingFirearmsMenuItem.Name = "ToolsSAAMISportingFirearmsMenuItem";
-			this.ToolsSAAMISportingFirearmsMenuItem.Size = new System.Drawing.Size(281, 22);
-			this.ToolsSAAMISportingFirearmsMenuItem.Text = "Sporting Firearms";
-			// 
-			// ToolsSAAMIUnsafeArmsAmmoMenuItem
-			// 
-			this.ToolsSAAMIUnsafeArmsAmmoMenuItem.Name = "ToolsSAAMIUnsafeArmsAmmoMenuItem";
-			this.ToolsSAAMIUnsafeArmsAmmoMenuItem.Size = new System.Drawing.Size(281, 22);
-			this.ToolsSAAMIUnsafeArmsAmmoMenuItem.Text = "Unsafe Arms/Ammo Combinations";
 			// 
 			// ToolsTargetCalculatorMenuItem
 			// 
@@ -1284,7 +1154,7 @@ namespace ReloadersWorkShop
 			this.HelpSupportForumMenuItem.Name = "HelpSupportForumMenuItem";
 			this.HelpSupportForumMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F1)));
 			this.HelpSupportForumMenuItem.Size = new System.Drawing.Size(264, 22);
-			this.HelpSupportForumMenuItem.Text = "&Support Forum";
+			this.HelpSupportForumMenuItem.Text = "Contact &Support";
 			// 
 			// HelpVideoMenuItem
 			// 
@@ -1438,6 +1308,41 @@ namespace ReloadersWorkShop
 			this.HelpAboutMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
 			this.HelpAboutMenuItem.Size = new System.Drawing.Size(264, 22);
 			this.HelpAboutMenuItem.Text = "&About Reloader\'s WorkShop";
+			// 
+			// checkBox1
+			// 
+			this.checkBox1.Location = new System.Drawing.Point(0, 0);
+			this.checkBox1.Name = "checkBox1";
+			this.checkBox1.Size = new System.Drawing.Size(104, 24);
+			this.checkBox1.TabIndex = 0;
+			// 
+			// checkBox2
+			// 
+			this.checkBox2.Location = new System.Drawing.Point(0, 0);
+			this.checkBox2.Name = "checkBox2";
+			this.checkBox2.Size = new System.Drawing.Size(104, 24);
+			this.checkBox2.TabIndex = 0;
+			// 
+			// radioButton1
+			// 
+			this.radioButton1.Location = new System.Drawing.Point(0, 0);
+			this.radioButton1.Name = "radioButton1";
+			this.radioButton1.Size = new System.Drawing.Size(104, 24);
+			this.radioButton1.TabIndex = 0;
+			// 
+			// radioButton2
+			// 
+			this.radioButton2.Location = new System.Drawing.Point(0, 0);
+			this.radioButton2.Name = "radioButton2";
+			this.radioButton2.Size = new System.Drawing.Size(104, 24);
+			this.radioButton2.TabIndex = 0;
+			// 
+			// button1
+			// 
+			this.button1.Location = new System.Drawing.Point(0, 0);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(75, 23);
+			this.button1.TabIndex = 0;
 			// 
 			// BallisticsTab
 			// 
@@ -1857,7 +1762,7 @@ namespace ReloadersWorkShop
             this.ScopeClickHeader,
             this.SFHeader,
             this.AdjBCHeader});
-			this.BallisticsListView.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BallisticsListView.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BallisticsListView.FullRowSelect = true;
 			this.BallisticsListView.GridLines = true;
 			this.BallisticsListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -2020,11 +1925,29 @@ namespace ReloadersWorkShop
 			// 
 			this.BallisticsFirearmTypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.BallisticsFirearmTypeCombo.DropDownWidth = 115;
-			this.BallisticsFirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BallisticsFirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BallisticsFirearmTypeCombo.FormattingEnabled = true;
 			this.BallisticsFirearmTypeCombo.IncludeAny = false;
 			this.BallisticsFirearmTypeCombo.IncludeShotgun = false;
 			this.BallisticsFirearmTypeCombo.Items.AddRange(new object[] {
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
             "Handgun",
             "Rifle",
             "Handgun",
@@ -2093,7 +2016,7 @@ namespace ReloadersWorkShop
 			this.BallisticsBulletCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.BallisticsBulletCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.BallisticsBulletCombo.DropDownWidth = 300;
-			this.BallisticsBulletCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BallisticsBulletCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BallisticsBulletCombo.FormattingEnabled = true;
 			this.BallisticsBulletCombo.Location = new System.Drawing.Point(94, 123);
 			this.BallisticsBulletCombo.Margin = new System.Windows.Forms.Padding(2);
@@ -2106,7 +2029,8 @@ namespace ReloadersWorkShop
 			this.BallisticsCaliberCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
 			this.BallisticsCaliberCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.BallisticsCaliberCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.BallisticsCaliberCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BallisticsCaliberCombo.DropDownWidth = 220;
+			this.BallisticsCaliberCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BallisticsCaliberCombo.FormattingEnabled = true;
 			this.BallisticsCaliberCombo.Location = new System.Drawing.Point(207, 98);
 			this.BallisticsCaliberCombo.Margin = new System.Windows.Forms.Padding(2);
@@ -2131,7 +2055,7 @@ namespace ReloadersWorkShop
 			this.BallisticsChargeCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
 			this.BallisticsChargeCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.BallisticsChargeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.BallisticsChargeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BallisticsChargeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BallisticsChargeCombo.FormattingEnabled = true;
 			this.BallisticsChargeCombo.Location = new System.Drawing.Point(94, 99);
 			this.BallisticsChargeCombo.Margin = new System.Windows.Forms.Padding(2);
@@ -2156,7 +2080,7 @@ namespace ReloadersWorkShop
 			this.BallisticsFirearmCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
 			this.BallisticsFirearmCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.BallisticsFirearmCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.BallisticsFirearmCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BallisticsFirearmCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BallisticsFirearmCombo.FormattingEnabled = true;
 			this.BallisticsFirearmCombo.Location = new System.Drawing.Point(254, 22);
 			this.BallisticsFirearmCombo.Margin = new System.Windows.Forms.Padding(2);
@@ -2181,7 +2105,7 @@ namespace ReloadersWorkShop
 			this.BallisticsLoadCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
 			this.BallisticsLoadCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.BallisticsLoadCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.BallisticsLoadCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BallisticsLoadCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BallisticsLoadCombo.FormattingEnabled = true;
 			this.BallisticsLoadCombo.Location = new System.Drawing.Point(94, 73);
 			this.BallisticsLoadCombo.Margin = new System.Windows.Forms.Padding(2);
@@ -2218,7 +2142,7 @@ namespace ReloadersWorkShop
 			this.BallisticsBatchCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
 			this.BallisticsBatchCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.BallisticsBatchCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.BallisticsBatchCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BallisticsBatchCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BallisticsBatchCombo.FormattingEnabled = true;
 			this.BallisticsBatchCombo.Location = new System.Drawing.Point(94, 47);
 			this.BallisticsBatchCombo.Margin = new System.Windows.Forms.Padding(2);
@@ -3168,18 +3092,6 @@ namespace ReloadersWorkShop
 			this.label15.TabIndex = 6;
 			this.label15.Text = "Ballistic Coefficient:";
 			// 
-			// BatchBulletLabel
-			// 
-			this.BatchBulletLabel.AutoSize = true;
-			this.BatchBulletLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BatchBulletLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.BatchBulletLabel.Location = new System.Drawing.Point(302, 24);
-			this.BatchBulletLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.BatchBulletLabel.Name = "BatchBulletLabel";
-			this.BatchBulletLabel.Size = new System.Drawing.Size(36, 13);
-			this.BatchBulletLabel.TabIndex = 4;
-			this.BatchBulletLabel.Text = "Bullet:";
-			// 
 			// AmmoTab
 			// 
 			this.AmmoTab.Controls.Add(this.AmmunitionFiltersGroupBox);
@@ -3225,11 +3137,62 @@ namespace ReloadersWorkShop
 			// 
 			this.AmmunitionFirearmTypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.AmmunitionFirearmTypeCombo.DropDownWidth = 100;
-			this.AmmunitionFirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.AmmunitionFirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.AmmunitionFirearmTypeCombo.FormattingEnabled = true;
 			this.AmmunitionFirearmTypeCombo.IncludeAny = false;
 			this.AmmunitionFirearmTypeCombo.IncludeShotgun = true;
 			this.AmmunitionFirearmTypeCombo.Items.AddRange(new object[] {
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
             "Handgun",
             "Rifle",
             "Shotgun",
@@ -3321,7 +3284,8 @@ namespace ReloadersWorkShop
 			this.AmmunitionCaliberCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
 			this.AmmunitionCaliberCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.AmmunitionCaliberCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.AmmunitionCaliberCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.AmmunitionCaliberCombo.DropDownWidth = 220;
+			this.AmmunitionCaliberCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.AmmunitionCaliberCombo.FormattingEnabled = true;
 			this.AmmunitionCaliberCombo.Items.AddRange(new object[] {
             "Any Caliber"});
@@ -3348,7 +3312,7 @@ namespace ReloadersWorkShop
 			this.AmmunitionManufacturerCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
 			this.AmmunitionManufacturerCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.AmmunitionManufacturerCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.AmmunitionManufacturerCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.AmmunitionManufacturerCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.AmmunitionManufacturerCombo.FormattingEnabled = true;
 			this.AmmunitionManufacturerCombo.Items.AddRange(new object[] {
             "Any Manufacturer"});
@@ -3411,6 +3375,7 @@ namespace ReloadersWorkShop
 			// 
 			// AmmoPrintOptionsGroupBox
 			// 
+			this.AmmoPrintOptionsGroupBox.Controls.Add(this.AmmoShowCostPerBoxCheckBox);
 			this.AmmoPrintOptionsGroupBox.Controls.Add(this.NoAmmoListLabel);
 			this.AmmoPrintOptionsGroupBox.Controls.Add(this.AmmoPrintCheckedRadioButton);
 			this.AmmoPrintOptionsGroupBox.Controls.Add(this.AmmoPrintAllRadioButton);
@@ -3424,11 +3389,23 @@ namespace ReloadersWorkShop
 			this.AmmoPrintOptionsGroupBox.TabStop = false;
 			this.AmmoPrintOptionsGroupBox.Text = "Print Options";
 			// 
+			// AmmoShowCostPerBoxCheckBox
+			// 
+			this.AmmoShowCostPerBoxCheckBox.AutoSize = true;
+			this.AmmoShowCostPerBoxCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.AmmoShowCostPerBoxCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.AmmoShowCostPerBoxCheckBox.Location = new System.Drawing.Point(19, 69);
+			this.AmmoShowCostPerBoxCheckBox.Name = "AmmoShowCostPerBoxCheckBox";
+			this.AmmoShowCostPerBoxCheckBox.Size = new System.Drawing.Size(117, 17);
+			this.AmmoShowCostPerBoxCheckBox.TabIndex = 17;
+			this.AmmoShowCostPerBoxCheckBox.Text = "Show Cost Per Box";
+			this.AmmoShowCostPerBoxCheckBox.UseVisualStyleBackColor = true;
+			// 
 			// NoAmmoListLabel
 			// 
 			this.NoAmmoListLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.NoAmmoListLabel.ForeColor = System.Drawing.Color.Maroon;
-			this.NoAmmoListLabel.Location = new System.Drawing.Point(15, 84);
+			this.NoAmmoListLabel.Location = new System.Drawing.Point(15, 91);
 			this.NoAmmoListLabel.Name = "NoAmmoListLabel";
 			this.NoAmmoListLabel.Size = new System.Drawing.Size(231, 13);
 			this.NoAmmoListLabel.TabIndex = 16;
@@ -3467,7 +3444,7 @@ namespace ReloadersWorkShop
 			// 
 			this.AmmoListPrintButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.AmmoListPrintButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.AmmoListPrintButton.Location = new System.Drawing.Point(159, 32);
+			this.AmmoListPrintButton.Location = new System.Drawing.Point(159, 45);
 			this.AmmoListPrintButton.Name = "AmmoListPrintButton";
 			this.AmmoListPrintButton.Size = new System.Drawing.Size(75, 23);
 			this.AmmoListPrintButton.TabIndex = 4;
@@ -3697,11 +3674,45 @@ namespace ReloadersWorkShop
 			// 
 			this.BatchFirearmTypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.BatchFirearmTypeCombo.DropDownWidth = 115;
-			this.BatchFirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BatchFirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BatchFirearmTypeCombo.FormattingEnabled = true;
 			this.BatchFirearmTypeCombo.IncludeAny = false;
 			this.BatchFirearmTypeCombo.IncludeShotgun = false;
 			this.BatchFirearmTypeCombo.Items.AddRange(new object[] {
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
             "Handgun",
             "Rifle",
             "Handgun",
@@ -3727,7 +3738,7 @@ namespace ReloadersWorkShop
 			this.BatchCaliberCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
 			this.BatchCaliberCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.BatchCaliberCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.BatchCaliberCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BatchCaliberCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BatchCaliberCombo.FormattingEnabled = true;
 			this.BatchCaliberCombo.Location = new System.Drawing.Point(83, 47);
 			this.BatchCaliberCombo.Margin = new System.Windows.Forms.Padding(2);
@@ -3735,12 +3746,24 @@ namespace ReloadersWorkShop
 			this.BatchCaliberCombo.Size = new System.Drawing.Size(200, 21);
 			this.BatchCaliberCombo.TabIndex = 1;
 			// 
+			// BatchBulletLabel
+			// 
+			this.BatchBulletLabel.AutoSize = true;
+			this.BatchBulletLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BatchBulletLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.BatchBulletLabel.Location = new System.Drawing.Point(302, 24);
+			this.BatchBulletLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.BatchBulletLabel.Name = "BatchBulletLabel";
+			this.BatchBulletLabel.Size = new System.Drawing.Size(36, 13);
+			this.BatchBulletLabel.TabIndex = 4;
+			this.BatchBulletLabel.Text = "Bullet:";
+			// 
 			// BatchBulletCombo
 			// 
 			this.BatchBulletCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
 			this.BatchBulletCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.BatchBulletCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.BatchBulletCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BatchBulletCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BatchBulletCombo.FormattingEnabled = true;
 			this.BatchBulletCombo.Location = new System.Drawing.Point(343, 22);
 			this.BatchBulletCombo.Margin = new System.Windows.Forms.Padding(2);
@@ -3754,7 +3777,7 @@ namespace ReloadersWorkShop
 			this.BatchPowderCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
 			this.BatchPowderCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.BatchPowderCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.BatchPowderCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BatchPowderCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BatchPowderCombo.FormattingEnabled = true;
 			this.BatchPowderCombo.Location = new System.Drawing.Point(343, 46);
 			this.BatchPowderCombo.Margin = new System.Windows.Forms.Padding(2);
@@ -3857,11 +3880,45 @@ namespace ReloadersWorkShop
 			// 
 			this.LoadDataFirearmTypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.LoadDataFirearmTypeCombo.DropDownWidth = 115;
-			this.LoadDataFirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.LoadDataFirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.LoadDataFirearmTypeCombo.FormattingEnabled = true;
 			this.LoadDataFirearmTypeCombo.IncludeAny = false;
 			this.LoadDataFirearmTypeCombo.IncludeShotgun = false;
 			this.LoadDataFirearmTypeCombo.Items.AddRange(new object[] {
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
             "Handgun",
             "Rifle",
             "Handgun",
@@ -3887,7 +3944,8 @@ namespace ReloadersWorkShop
 			this.LoadDataCaliberCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
 			this.LoadDataCaliberCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.LoadDataCaliberCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.LoadDataCaliberCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.LoadDataCaliberCombo.DropDownWidth = 220;
+			this.LoadDataCaliberCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.LoadDataCaliberCombo.FormattingEnabled = true;
 			this.LoadDataCaliberCombo.Location = new System.Drawing.Point(83, 47);
 			this.LoadDataCaliberCombo.Margin = new System.Windows.Forms.Padding(2);
@@ -3900,7 +3958,7 @@ namespace ReloadersWorkShop
 			this.LoadDataBulletCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
 			this.LoadDataBulletCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.LoadDataBulletCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.LoadDataBulletCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.LoadDataBulletCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.LoadDataBulletCombo.FormattingEnabled = true;
 			this.LoadDataBulletCombo.Location = new System.Drawing.Point(343, 22);
 			this.LoadDataBulletCombo.Margin = new System.Windows.Forms.Padding(2);
@@ -3914,7 +3972,7 @@ namespace ReloadersWorkShop
 			this.LoadDataPowderCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
 			this.LoadDataPowderCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.LoadDataPowderCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.LoadDataPowderCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.LoadDataPowderCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.LoadDataPowderCombo.FormattingEnabled = true;
 			this.LoadDataPowderCombo.Location = new System.Drawing.Point(343, 46);
 			this.LoadDataPowderCombo.Margin = new System.Windows.Forms.Padding(2);
@@ -4054,8 +4112,8 @@ namespace ReloadersWorkShop
 			this.SupplyCaliberCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
 			this.SupplyCaliberCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.SupplyCaliberCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.SupplyCaliberCombo.DropDownWidth = 200;
-			this.SupplyCaliberCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.SupplyCaliberCombo.DropDownWidth = 220;
+			this.SupplyCaliberCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.SupplyCaliberCombo.FormattingEnabled = true;
 			this.SupplyCaliberCombo.Location = new System.Drawing.Point(83, 50);
 			this.SupplyCaliberCombo.Margin = new System.Windows.Forms.Padding(2);
@@ -4090,12 +4148,63 @@ namespace ReloadersWorkShop
 			this.SupplyFirearmTypeCombo.DropDownHeight = 200;
 			this.SupplyFirearmTypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.SupplyFirearmTypeCombo.DropDownWidth = 100;
-			this.SupplyFirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.SupplyFirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.SupplyFirearmTypeCombo.FormattingEnabled = true;
 			this.SupplyFirearmTypeCombo.IncludeAny = false;
 			this.SupplyFirearmTypeCombo.IncludeShotgun = true;
 			this.SupplyFirearmTypeCombo.IntegralHeight = false;
 			this.SupplyFirearmTypeCombo.Items.AddRange(new object[] {
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
             "Handgun",
             "Rifle",
             "Shotgun",
@@ -4127,7 +4236,7 @@ namespace ReloadersWorkShop
 			this.SupplyManufacturerCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
 			this.SupplyManufacturerCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.SupplyManufacturerCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.SupplyManufacturerCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.SupplyManufacturerCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.SupplyManufacturerCombo.FormattingEnabled = true;
 			this.SupplyManufacturerCombo.Location = new System.Drawing.Point(83, 78);
 			this.SupplyManufacturerCombo.Margin = new System.Windows.Forms.Padding(2);
@@ -5495,6 +5604,7 @@ namespace ReloadersWorkShop
 			this.MainTabControl.Controls.Add(this.LoadDataTab);
 			this.MainTabControl.Controls.Add(this.BatchEditorTab);
 			this.MainTabControl.Controls.Add(this.AmmoTab);
+			this.MainTabControl.Controls.Add(this.ToolsTab);
 			this.MainTabControl.Controls.Add(this.BallisticsTab);
 			this.MainTabControl.Location = new System.Drawing.Point(-9, 26);
 			this.MainTabControl.Margin = new System.Windows.Forms.Padding(2);
@@ -5503,40 +5613,389 @@ namespace ReloadersWorkShop
 			this.MainTabControl.Size = new System.Drawing.Size(1473, 1051);
 			this.MainTabControl.TabIndex = 0;
 			// 
-			// checkBox1
+			// ToolsTab
 			// 
-			this.checkBox1.Location = new System.Drawing.Point(0, 0);
-			this.checkBox1.Name = "checkBox1";
-			this.checkBox1.Size = new System.Drawing.Size(104, 24);
-			this.checkBox1.TabIndex = 0;
+			this.ToolsTab.Controls.Add(this.ViewToolButton);
+			this.ToolsTab.Controls.Add(this.RemoveToolButton);
+			this.ToolsTab.Controls.Add(this.EditToolButton);
+			this.ToolsTab.Controls.Add(this.AddToolButton);
+			this.ToolsTab.Controls.Add(this.ToolsCostsGroupBox);
+			this.ToolsTab.Controls.Add(this.ToolsFiltersGroupBox);
+			this.ToolsTab.Location = new System.Drawing.Point(4, 22);
+			this.ToolsTab.Name = "ToolsTab";
+			this.ToolsTab.Padding = new System.Windows.Forms.Padding(3);
+			this.ToolsTab.Size = new System.Drawing.Size(1465, 1025);
+			this.ToolsTab.TabIndex = 11;
+			this.ToolsTab.Text = "Tools & Equipment";
+			this.ToolsTab.UseVisualStyleBackColor = true;
 			// 
-			// checkBox2
+			// ViewToolButton
 			// 
-			this.checkBox2.Location = new System.Drawing.Point(0, 0);
-			this.checkBox2.Name = "checkBox2";
-			this.checkBox2.Size = new System.Drawing.Size(104, 24);
-			this.checkBox2.TabIndex = 0;
+			this.ViewToolButton.Location = new System.Drawing.Point(741, 503);
+			this.ViewToolButton.Margin = new System.Windows.Forms.Padding(2);
+			this.ViewToolButton.Name = "ViewToolButton";
+			this.ViewToolButton.Size = new System.Drawing.Size(56, 19);
+			this.ViewToolButton.TabIndex = 15;
+			this.ViewToolButton.Text = "View";
+			this.ViewToolButton.UseVisualStyleBackColor = true;
 			// 
-			// radioButton1
+			// RemoveToolButton
 			// 
-			this.radioButton1.Location = new System.Drawing.Point(0, 0);
-			this.radioButton1.Name = "radioButton1";
-			this.radioButton1.Size = new System.Drawing.Size(104, 24);
-			this.radioButton1.TabIndex = 0;
+			this.RemoveToolButton.Location = new System.Drawing.Point(814, 503);
+			this.RemoveToolButton.Margin = new System.Windows.Forms.Padding(2);
+			this.RemoveToolButton.Name = "RemoveToolButton";
+			this.RemoveToolButton.Size = new System.Drawing.Size(56, 19);
+			this.RemoveToolButton.TabIndex = 16;
+			this.RemoveToolButton.Text = "Remove";
+			this.RemoveToolButton.UseVisualStyleBackColor = true;
 			// 
-			// radioButton2
+			// EditToolButton
 			// 
-			this.radioButton2.Location = new System.Drawing.Point(0, 0);
-			this.radioButton2.Name = "radioButton2";
-			this.radioButton2.Size = new System.Drawing.Size(104, 24);
-			this.radioButton2.TabIndex = 0;
+			this.EditToolButton.Location = new System.Drawing.Point(667, 503);
+			this.EditToolButton.Margin = new System.Windows.Forms.Padding(2);
+			this.EditToolButton.Name = "EditToolButton";
+			this.EditToolButton.Size = new System.Drawing.Size(56, 19);
+			this.EditToolButton.TabIndex = 14;
+			this.EditToolButton.Text = "Edit";
+			this.EditToolButton.UseVisualStyleBackColor = true;
 			// 
-			// button1
+			// AddToolButton
 			// 
-			this.button1.Location = new System.Drawing.Point(0, 0);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(75, 23);
-			this.button1.TabIndex = 0;
+			this.AddToolButton.Location = new System.Drawing.Point(594, 503);
+			this.AddToolButton.Margin = new System.Windows.Forms.Padding(2);
+			this.AddToolButton.Name = "AddToolButton";
+			this.AddToolButton.Size = new System.Drawing.Size(56, 19);
+			this.AddToolButton.TabIndex = 13;
+			this.AddToolButton.Text = "Add";
+			this.AddToolButton.UseVisualStyleBackColor = true;
+			// 
+			// ToolsCostsGroupBox
+			// 
+			this.ToolsCostsGroupBox.Controls.Add(this.ToolsGrandTotalLabel);
+			this.ToolsCostsGroupBox.Controls.Add(this.label64);
+			this.ToolsCostsGroupBox.Controls.Add(this.ToolsTotalShippingLabel);
+			this.ToolsCostsGroupBox.Controls.Add(this.ToolsTotalTaxLabel);
+			this.ToolsCostsGroupBox.Controls.Add(this.label69);
+			this.ToolsCostsGroupBox.Controls.Add(this.label70);
+			this.ToolsCostsGroupBox.Controls.Add(this.ToolsTotalCostLabel);
+			this.ToolsCostsGroupBox.Controls.Add(this.ToolsCountLabel);
+			this.ToolsCostsGroupBox.Controls.Add(this.label73);
+			this.ToolsCostsGroupBox.Controls.Add(this.label74);
+			this.ToolsCostsGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ToolsCostsGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
+			this.ToolsCostsGroupBox.Location = new System.Drawing.Point(656, 6);
+			this.ToolsCostsGroupBox.Name = "ToolsCostsGroupBox";
+			this.ToolsCostsGroupBox.Size = new System.Drawing.Size(525, 74);
+			this.ToolsCostsGroupBox.TabIndex = 12;
+			this.ToolsCostsGroupBox.TabStop = false;
+			this.ToolsCostsGroupBox.Text = "Tools && Equipment Costs";
+			// 
+			// ToolsGrandTotalLabel
+			// 
+			this.ToolsGrandTotalLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ToolsGrandTotalLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.ToolsGrandTotalLabel.Location = new System.Drawing.Point(417, 27);
+			this.ToolsGrandTotalLabel.Name = "ToolsGrandTotalLabel";
+			this.ToolsGrandTotalLabel.Size = new System.Drawing.Size(91, 25);
+			this.ToolsGrandTotalLabel.TabIndex = 11;
+			this.ToolsGrandTotalLabel.Text = "1000.00";
+			this.ToolsGrandTotalLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// label64
+			// 
+			this.label64.AutoSize = true;
+			this.label64.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label64.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label64.Location = new System.Drawing.Point(333, 32);
+			this.label64.Name = "label64";
+			this.label64.Size = new System.Drawing.Size(78, 13);
+			this.label64.TabIndex = 9;
+			this.label64.Text = "Grand Total:";
+			// 
+			// ToolsTotalShippingLabel
+			// 
+			this.ToolsTotalShippingLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ToolsTotalShippingLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.ToolsTotalShippingLabel.Location = new System.Drawing.Point(259, 43);
+			this.ToolsTotalShippingLabel.Name = "ToolsTotalShippingLabel";
+			this.ToolsTotalShippingLabel.Size = new System.Drawing.Size(53, 13);
+			this.ToolsTotalShippingLabel.TabIndex = 7;
+			this.ToolsTotalShippingLabel.Text = "0.00";
+			this.ToolsTotalShippingLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// ToolsTotalTaxLabel
+			// 
+			this.ToolsTotalTaxLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ToolsTotalTaxLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.ToolsTotalTaxLabel.Location = new System.Drawing.Point(259, 22);
+			this.ToolsTotalTaxLabel.Name = "ToolsTotalTaxLabel";
+			this.ToolsTotalTaxLabel.Size = new System.Drawing.Size(53, 13);
+			this.ToolsTotalTaxLabel.TabIndex = 6;
+			this.ToolsTotalTaxLabel.Text = "0.00";
+			this.ToolsTotalTaxLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// label69
+			// 
+			this.label69.AutoSize = true;
+			this.label69.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label69.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label69.Location = new System.Drawing.Point(175, 43);
+			this.label69.Name = "label69";
+			this.label69.Size = new System.Drawing.Size(78, 13);
+			this.label69.TabIndex = 5;
+			this.label69.Text = "Total Shipping:";
+			// 
+			// label70
+			// 
+			this.label70.AutoSize = true;
+			this.label70.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label70.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label70.Location = new System.Drawing.Point(187, 22);
+			this.label70.Name = "label70";
+			this.label70.Size = new System.Drawing.Size(66, 13);
+			this.label70.TabIndex = 4;
+			this.label70.Text = "Total Taxes:";
+			// 
+			// ToolsTotalCostLabel
+			// 
+			this.ToolsTotalCostLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ToolsTotalCostLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.ToolsTotalCostLabel.Location = new System.Drawing.Point(103, 43);
+			this.ToolsTotalCostLabel.Name = "ToolsTotalCostLabel";
+			this.ToolsTotalCostLabel.Size = new System.Drawing.Size(66, 13);
+			this.ToolsTotalCostLabel.TabIndex = 3;
+			this.ToolsTotalCostLabel.Text = "0.00";
+			this.ToolsTotalCostLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// ToolsCountLabel
+			// 
+			this.ToolsCountLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ToolsCountLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.ToolsCountLabel.Location = new System.Drawing.Point(103, 23);
+			this.ToolsCountLabel.Name = "ToolsCountLabel";
+			this.ToolsCountLabel.Size = new System.Drawing.Size(66, 13);
+			this.ToolsCountLabel.TabIndex = 2;
+			this.ToolsCountLabel.Text = "0";
+			this.ToolsCountLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+			// 
+			// label73
+			// 
+			this.label73.AutoSize = true;
+			this.label73.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label73.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label73.Location = new System.Drawing.Point(34, 43);
+			this.label73.Name = "label73";
+			this.label73.Size = new System.Drawing.Size(63, 13);
+			this.label73.TabIndex = 1;
+			this.label73.Text = "Total Costs:";
+			// 
+			// label74
+			// 
+			this.label74.AutoSize = true;
+			this.label74.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label74.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label74.Location = new System.Drawing.Point(19, 22);
+			this.label74.Name = "label74";
+			this.label74.Size = new System.Drawing.Size(78, 13);
+			this.label74.TabIndex = 0;
+			this.label74.Text = "# Tools/Equip:";
+			// 
+			// ToolsFiltersGroupBox
+			// 
+			this.ToolsFiltersGroupBox.Controls.Add(this.ToolsShowGroupsCheckBox);
+			this.ToolsFiltersGroupBox.Controls.Add(this.ToolsOtherFilterCheckBox);
+			this.ToolsFiltersGroupBox.Controls.Add(this.ToolsPressAccessoriesFilterCheckBox);
+			this.ToolsFiltersGroupBox.Controls.Add(this.ToolsCasePrepFilterCheckBox);
+			this.ToolsFiltersGroupBox.Controls.Add(this.ToolsDieAccessoriesFilterCheckBox);
+			this.ToolsFiltersGroupBox.Controls.Add(this.ToolsBooksFilterCheckBox);
+			this.ToolsFiltersGroupBox.Controls.Add(this.ToolsGunsmithingFilterCheckBox);
+			this.ToolsFiltersGroupBox.Controls.Add(this.ToolsCastingFilterCheckBox);
+			this.ToolsFiltersGroupBox.Controls.Add(this.ToolsMeasurementToolsFilterCheckBox);
+			this.ToolsFiltersGroupBox.Controls.Add(this.ToolsPowderToolsFilterCheckBox);
+			this.ToolsFiltersGroupBox.Controls.Add(this.ToolsDiesFilterCheckBox);
+			this.ToolsFiltersGroupBox.Controls.Add(this.ToolsPressesFilterCheckBox);
+			this.ToolsFiltersGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ToolsFiltersGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
+			this.ToolsFiltersGroupBox.Location = new System.Drawing.Point(17, 6);
+			this.ToolsFiltersGroupBox.Name = "ToolsFiltersGroupBox";
+			this.ToolsFiltersGroupBox.Size = new System.Drawing.Size(633, 74);
+			this.ToolsFiltersGroupBox.TabIndex = 11;
+			this.ToolsFiltersGroupBox.TabStop = false;
+			this.ToolsFiltersGroupBox.Text = "Filters";
+			// 
+			// ToolsShowGroupsCheckBox
+			// 
+			this.ToolsShowGroupsCheckBox.AutoSize = true;
+			this.ToolsShowGroupsCheckBox.Checked = true;
+			this.ToolsShowGroupsCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.ToolsShowGroupsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ToolsShowGroupsCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.ToolsShowGroupsCheckBox.Location = new System.Drawing.Point(535, 45);
+			this.ToolsShowGroupsCheckBox.Name = "ToolsShowGroupsCheckBox";
+			this.ToolsShowGroupsCheckBox.Size = new System.Drawing.Size(90, 17);
+			this.ToolsShowGroupsCheckBox.TabIndex = 17;
+			this.ToolsShowGroupsCheckBox.Text = "Show Groups";
+			this.ToolsShowGroupsCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// ToolsOtherFilterCheckBox
+			// 
+			this.ToolsOtherFilterCheckBox.AutoSize = true;
+			this.ToolsOtherFilterCheckBox.Checked = true;
+			this.ToolsOtherFilterCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.ToolsOtherFilterCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ToolsOtherFilterCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.ToolsOtherFilterCheckBox.Location = new System.Drawing.Point(535, 22);
+			this.ToolsOtherFilterCheckBox.Name = "ToolsOtherFilterCheckBox";
+			this.ToolsOtherFilterCheckBox.Size = new System.Drawing.Size(52, 17);
+			this.ToolsOtherFilterCheckBox.TabIndex = 16;
+			this.ToolsOtherFilterCheckBox.Text = "Other";
+			this.ToolsOtherFilterCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// ToolsPressAccessoriesFilterCheckBox
+			// 
+			this.ToolsPressAccessoriesFilterCheckBox.AutoSize = true;
+			this.ToolsPressAccessoriesFilterCheckBox.Checked = true;
+			this.ToolsPressAccessoriesFilterCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.ToolsPressAccessoriesFilterCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ToolsPressAccessoriesFilterCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.ToolsPressAccessoriesFilterCheckBox.Location = new System.Drawing.Point(92, 21);
+			this.ToolsPressAccessoriesFilterCheckBox.Name = "ToolsPressAccessoriesFilterCheckBox";
+			this.ToolsPressAccessoriesFilterCheckBox.Size = new System.Drawing.Size(112, 17);
+			this.ToolsPressAccessoriesFilterCheckBox.TabIndex = 15;
+			this.ToolsPressAccessoriesFilterCheckBox.Text = "Press Accessories";
+			this.ToolsPressAccessoriesFilterCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// ToolsCasePrepFilterCheckBox
+			// 
+			this.ToolsCasePrepFilterCheckBox.AutoSize = true;
+			this.ToolsCasePrepFilterCheckBox.Checked = true;
+			this.ToolsCasePrepFilterCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.ToolsCasePrepFilterCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ToolsCasePrepFilterCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.ToolsCasePrepFilterCheckBox.Location = new System.Drawing.Point(210, 45);
+			this.ToolsCasePrepFilterCheckBox.Name = "ToolsCasePrepFilterCheckBox";
+			this.ToolsCasePrepFilterCheckBox.Size = new System.Drawing.Size(104, 17);
+			this.ToolsCasePrepFilterCheckBox.TabIndex = 14;
+			this.ToolsCasePrepFilterCheckBox.Text = "Case Prep Tools";
+			this.ToolsCasePrepFilterCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// ToolsDieAccessoriesFilterCheckBox
+			// 
+			this.ToolsDieAccessoriesFilterCheckBox.AutoSize = true;
+			this.ToolsDieAccessoriesFilterCheckBox.Checked = true;
+			this.ToolsDieAccessoriesFilterCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.ToolsDieAccessoriesFilterCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ToolsDieAccessoriesFilterCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.ToolsDieAccessoriesFilterCheckBox.Location = new System.Drawing.Point(92, 45);
+			this.ToolsDieAccessoriesFilterCheckBox.Name = "ToolsDieAccessoriesFilterCheckBox";
+			this.ToolsDieAccessoriesFilterCheckBox.Size = new System.Drawing.Size(102, 17);
+			this.ToolsDieAccessoriesFilterCheckBox.TabIndex = 13;
+			this.ToolsDieAccessoriesFilterCheckBox.Text = "Die Accessories";
+			this.ToolsDieAccessoriesFilterCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// ToolsBooksFilterCheckBox
+			// 
+			this.ToolsBooksFilterCheckBox.AutoSize = true;
+			this.ToolsBooksFilterCheckBox.Checked = true;
+			this.ToolsBooksFilterCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.ToolsBooksFilterCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ToolsBooksFilterCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.ToolsBooksFilterCheckBox.Location = new System.Drawing.Point(445, 45);
+			this.ToolsBooksFilterCheckBox.Name = "ToolsBooksFilterCheckBox";
+			this.ToolsBooksFilterCheckBox.Size = new System.Drawing.Size(56, 17);
+			this.ToolsBooksFilterCheckBox.TabIndex = 12;
+			this.ToolsBooksFilterCheckBox.Text = "Books";
+			this.ToolsBooksFilterCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// ToolsGunsmithingFilterCheckBox
+			// 
+			this.ToolsGunsmithingFilterCheckBox.AutoSize = true;
+			this.ToolsGunsmithingFilterCheckBox.Checked = true;
+			this.ToolsGunsmithingFilterCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.ToolsGunsmithingFilterCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ToolsGunsmithingFilterCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.ToolsGunsmithingFilterCheckBox.Location = new System.Drawing.Point(445, 21);
+			this.ToolsGunsmithingFilterCheckBox.Name = "ToolsGunsmithingFilterCheckBox";
+			this.ToolsGunsmithingFilterCheckBox.Size = new System.Drawing.Size(84, 17);
+			this.ToolsGunsmithingFilterCheckBox.TabIndex = 11;
+			this.ToolsGunsmithingFilterCheckBox.Text = "Gunsmithing";
+			this.ToolsGunsmithingFilterCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// ToolsCastingFilterCheckBox
+			// 
+			this.ToolsCastingFilterCheckBox.AutoSize = true;
+			this.ToolsCastingFilterCheckBox.Checked = true;
+			this.ToolsCastingFilterCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.ToolsCastingFilterCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ToolsCastingFilterCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.ToolsCastingFilterCheckBox.Location = new System.Drawing.Point(320, 45);
+			this.ToolsCastingFilterCheckBox.Name = "ToolsCastingFilterCheckBox";
+			this.ToolsCastingFilterCheckBox.Size = new System.Drawing.Size(92, 17);
+			this.ToolsCastingFilterCheckBox.TabIndex = 10;
+			this.ToolsCastingFilterCheckBox.Text = "Bullet Castiing";
+			this.ToolsCastingFilterCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// ToolsMeasurementToolsFilterCheckBox
+			// 
+			this.ToolsMeasurementToolsFilterCheckBox.AutoSize = true;
+			this.ToolsMeasurementToolsFilterCheckBox.Checked = true;
+			this.ToolsMeasurementToolsFilterCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.ToolsMeasurementToolsFilterCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ToolsMeasurementToolsFilterCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.ToolsMeasurementToolsFilterCheckBox.Location = new System.Drawing.Point(320, 19);
+			this.ToolsMeasurementToolsFilterCheckBox.Name = "ToolsMeasurementToolsFilterCheckBox";
+			this.ToolsMeasurementToolsFilterCheckBox.Size = new System.Drawing.Size(119, 17);
+			this.ToolsMeasurementToolsFilterCheckBox.TabIndex = 9;
+			this.ToolsMeasurementToolsFilterCheckBox.Text = "Measurement Tools";
+			this.ToolsMeasurementToolsFilterCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// ToolsPowderToolsFilterCheckBox
+			// 
+			this.ToolsPowderToolsFilterCheckBox.AutoSize = true;
+			this.ToolsPowderToolsFilterCheckBox.Checked = true;
+			this.ToolsPowderToolsFilterCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.ToolsPowderToolsFilterCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ToolsPowderToolsFilterCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.ToolsPowderToolsFilterCheckBox.Location = new System.Drawing.Point(210, 22);
+			this.ToolsPowderToolsFilterCheckBox.Name = "ToolsPowderToolsFilterCheckBox";
+			this.ToolsPowderToolsFilterCheckBox.Size = new System.Drawing.Size(91, 17);
+			this.ToolsPowderToolsFilterCheckBox.TabIndex = 7;
+			this.ToolsPowderToolsFilterCheckBox.Text = "Powder Tools";
+			this.ToolsPowderToolsFilterCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// ToolsDiesFilterCheckBox
+			// 
+			this.ToolsDiesFilterCheckBox.AutoSize = true;
+			this.ToolsDiesFilterCheckBox.Checked = true;
+			this.ToolsDiesFilterCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.ToolsDiesFilterCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ToolsDiesFilterCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.ToolsDiesFilterCheckBox.Location = new System.Drawing.Point(23, 45);
+			this.ToolsDiesFilterCheckBox.Name = "ToolsDiesFilterCheckBox";
+			this.ToolsDiesFilterCheckBox.Size = new System.Drawing.Size(47, 17);
+			this.ToolsDiesFilterCheckBox.TabIndex = 6;
+			this.ToolsDiesFilterCheckBox.Text = "Dies";
+			this.ToolsDiesFilterCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// ToolsPressesFilterCheckBox
+			// 
+			this.ToolsPressesFilterCheckBox.AutoSize = true;
+			this.ToolsPressesFilterCheckBox.Checked = true;
+			this.ToolsPressesFilterCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.ToolsPressesFilterCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ToolsPressesFilterCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.ToolsPressesFilterCheckBox.Location = new System.Drawing.Point(23, 22);
+			this.ToolsPressesFilterCheckBox.Name = "ToolsPressesFilterCheckBox";
+			this.ToolsPressesFilterCheckBox.Size = new System.Drawing.Size(63, 17);
+			this.ToolsPressesFilterCheckBox.TabIndex = 5;
+			this.ToolsPressesFilterCheckBox.Text = "Presses";
+			this.ToolsPressesFilterCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// ToolsSAAMIWebsiteMenuItem
+			// 
+			this.ToolsSAAMIWebsiteMenuItem.Name = "ToolsSAAMIWebsiteMenuItem";
+			this.ToolsSAAMIWebsiteMenuItem.Size = new System.Drawing.Size(216, 22);
+			this.ToolsSAAMIWebsiteMenuItem.Text = "SAAMI Website";
 			// 
 			// cMainForm
 			// 
@@ -5616,6 +6075,11 @@ namespace ReloadersWorkShop
 			this.CalibersTab.PerformLayout();
 			this.ManufacturersTab.ResumeLayout(false);
 			this.MainTabControl.ResumeLayout(false);
+			this.ToolsTab.ResumeLayout(false);
+			this.ToolsCostsGroupBox.ResumeLayout(false);
+			this.ToolsCostsGroupBox.PerformLayout();
+			this.ToolsFiltersGroupBox.ResumeLayout(false);
+			this.ToolsFiltersGroupBox.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -5667,73 +6131,97 @@ namespace ReloadersWorkShop
 		private System.Windows.Forms.ToolStripMenuItem FilePrintSupplyListMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem FilePrintAmmoListMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem HelpNotesMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem SAAMIDocumentsMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem ToolsSAAMIRifleMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem ToolsSAAMIPistolMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem ToolsSAAMIRimfireMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem ToolsSAAMIShotshellMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem ToolsSAAMIPistolSpecsMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem ToolsSAAMIPistolVelocityDataMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem ToolsSAAMIRifleSpecsMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem ToolsSAAMIRifleVelocityDataMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem ToolsSAAMIRimfireSpecsMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem ToolsSAAMIShotshellSpecsMenuItem;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
 		private System.Windows.Forms.ToolStripMenuItem FileResetDataMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem ToolsSAAMIBrochuresMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem ToolsSAAMISafeAmmoStorageMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem ToolsSAAMISmokelessPowderMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem ToolsSAAMIUnsafeArmsAmmoMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem ToolsSAAMIPrimersMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem ToolsSAAMIFactsMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem ToolsSAAMIAmmoFiresMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem ToolsSAAMISportingFirearmsMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem EditInventoryActivityMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem ViewInventoryActivityMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem FilePrintCostAnalysisMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem HelpVideoMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+		private System.Windows.Forms.ToolStripMenuItem ToolsStabilityCalculatorMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem HelpDataUpdateMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem HelpVideoCrimpingMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem HelpVideoHeadspaceMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
+		private System.Windows.Forms.ToolStripMenuItem HelpVideoRWMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem HelpVideoRWInventoryMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem HelpVideoRWOperationMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem HelpVideoBulletSelectionMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem HelpVideoSDBCMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem HelpVideoRWLoadDataMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem HelpVideoRWBatchEditorMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem HelpVideoRWBallisticsCalculatorMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem HelpPurchaseMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem FilePrintSupplyShoppingListMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem FilePrintAmmoShoppingListMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem ToolsTargetCalculatorMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem HelpVideoRWTargetCalculatorMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem FileExportMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem HelpVideoRWCrossUseMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem HelpVideoRWExportingDataMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem HelpVideoRWSettingJumpMenuItem;
+		private System.Windows.Forms.CheckBox checkBox1;
+		private System.Windows.Forms.CheckBox checkBox2;
+		private System.Windows.Forms.RadioButton radioButton1;
+		private System.Windows.Forms.RadioButton radioButton2;
+		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
+		private System.Windows.Forms.ToolStripMenuItem ToolsIntegrityCheckerMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem FileImportMenuItem;
 		private System.Windows.Forms.TabPage BallisticsTab;
-		private System.Windows.Forms.GroupBox BallisticsInputDataGroupBox;
-		private System.Windows.Forms.ComboBox BallisticsTurretTypeComboBox;
-		private CommonLib.Controls.cIntegerValueTextBox BallisticsWindDirectionTextBox;
-		private CommonLib.Controls.cIntegerValueTextBox BallisticsWindSpeedTextBox;
-		private CommonLib.Controls.cDoubleValueTextBox BallisticsSightHeightTextBox;
-		private CommonLib.Controls.cDoubleValueTextBox BallisticsScopeClickTextBox;
-		private CommonLib.Controls.cIntegerValueTextBox BallisticsMuzzleVelocityTextBox;
-		private CommonLib.Controls.cDoubleValueTextBox BallisticsBCTextBox;
-		private CommonLib.Controls.cIntegerValueTextBox BallisticsMaxRangeTextBox;
-		private CommonLib.Controls.cIntegerValueTextBox BallisticsMinRangeTextBox;
-		private CommonLib.Controls.cIntegerValueTextBox BallisticsZeroRangeTextBox;
-		private CommonLib.Controls.cIntegerValueTextBox BallisticsIncrementTextBox;
-		private CommonLib.Controls.cDoubleValueTextBox BallisticsBulletDiameterTextBox;
-		private CommonLib.Controls.cDoubleValueTextBox BallisticsBulletWeightTextBox;
-		private System.Windows.Forms.Label HeadWindLabel;
-		private System.Windows.Forms.Label CrossWindLabel;
-		private System.Windows.Forms.Label IncrementMeasurementLabel;
-		private System.Windows.Forms.Label label38;
-		private System.Windows.Forms.Label MaxRangeMeasurementLabel;
-		private System.Windows.Forms.Label label36;
-		private System.Windows.Forms.Label MinRangeMeasurementLabel;
-		private System.Windows.Forms.Label label34;
-		private System.Windows.Forms.Label label31;
-		private System.Windows.Forms.Label label32;
-		private System.Windows.Forms.Label WindSpeedMeasurementLabel;
-		private System.Windows.Forms.Label label30;
-		private System.Windows.Forms.Label label28;
-		private System.Windows.Forms.Label SightHeightMeasurementLabel;
-		private System.Windows.Forms.Label label26;
-		private System.Windows.Forms.Label ZeroRangeMeasurementLabel;
-		private System.Windows.Forms.Label label24;
-		private System.Windows.Forms.Label MuzzleVelocityMeasurementLabel;
-		private System.Windows.Forms.Label BulletWeightMeasurementLabel;
-		private System.Windows.Forms.Label BulletDiameterMeasurementLabel;
-		private System.Windows.Forms.Label label18;
+		private System.Windows.Forms.GroupBox WindDriftChartGroup;
+		private System.Windows.Forms.Label label6;
+		private System.Windows.Forms.Button ResetWindageTurretButton;
+		private System.Windows.Forms.Label DriftTurretTypeLabel;
+		private System.Windows.Forms.Label label23;
+		private System.Windows.Forms.NumericUpDown WindageTurretUpDown;
+		private System.Windows.Forms.Label ReferenceDataDriftLegendLabel;
+		private System.Windows.Forms.Label CurrentDataDriftLegendLabel;
+		private System.Windows.Forms.CheckBox ShowWindDriftRangeMarkersCheckBox;
+		private System.Windows.Forms.PictureBox WindDriftChart;
+		private System.Windows.Forms.GroupBox BulletDropChartGroup;
+		private System.Windows.Forms.Label BallisticsSoundSpeedLabel;
+		private System.Windows.Forms.Label label35;
+		private System.Windows.Forms.Label label5;
+		private System.Windows.Forms.Button ResetElevationTurretButton;
+		private System.Windows.Forms.Label TurretTypeLabel;
+		private System.Windows.Forms.Label BallisticsMuzzleHeightLabel;
+		private System.Windows.Forms.Label label21;
+		private System.Windows.Forms.NumericUpDown ElevationTurretUpDown;
+		private System.Windows.Forms.CheckBox ShowTransonicMarkersCheckBox;
+		private System.Windows.Forms.CheckBox ShowApexMarkerCheckBox;
+		private System.Windows.Forms.Label ReferenceDataLegendLabel;
+		private System.Windows.Forms.Label CurrentDataLegendLabel;
+		private System.Windows.Forms.CheckBox ShowGroundStrikeMarkerCheckBox;
+		private System.Windows.Forms.CheckBox ShowDropChartRangeMarkersCheckBox;
+		private System.Windows.Forms.PictureBox BulletDropChart;
+		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.GroupBox DropTableGroup;
+		private System.Windows.Forms.Button BallisticsPrintButton;
+		private System.Windows.Forms.CheckBox BallisticsUseSFCheckBox;
+		private System.Windows.Forms.CheckBox CompareToReferenceBulletCheckBox;
+		private System.Windows.Forms.ListView BallisticsListView;
+		private System.Windows.Forms.ColumnHeader RangeHeader;
+		private System.Windows.Forms.ColumnHeader DropHeader;
+		private System.Windows.Forms.ColumnHeader DropMOAHeader;
+		private System.Windows.Forms.ColumnHeader WindDriftHeader;
+		private System.Windows.Forms.ColumnHeader WindDriftMOAHeader;
+		private System.Windows.Forms.ColumnHeader VelocityHeader;
+		private System.Windows.Forms.ColumnHeader EnergyHeader;
+		private System.Windows.Forms.ColumnHeader TimeOfFlightHeader;
+		private System.Windows.Forms.ColumnHeader ScopeClickHeader;
+		private System.Windows.Forms.ColumnHeader SFHeader;
+		private System.Windows.Forms.ColumnHeader AdjBCHeader;
 		private System.Windows.Forms.Label label17;
-		private System.Windows.Forms.Label label16;
-		private System.Windows.Forms.Label label15;
+		private System.Windows.Forms.Label MuzzleVelocityMeasurementLabel;
+		private CommonLib.Controls.cIntegerValueTextBox BallisticsMuzzleVelocityTextBox;
 		private System.Windows.Forms.GroupBox BallisticsDatabaseGroupBox;
+		private System.Windows.Forms.Label label2;
 		private Controls.cFirearmTypeCombo BallisticsFirearmTypeCombo;
 		private System.Windows.Forms.Button BallisticsResetButton;
 		private System.Windows.Forms.RadioButton BallisticsLoadDataVelocityRadioButton;
 		private System.Windows.Forms.RadioButton BallisticsBatchTestVelocityRadioButton;
 		private System.Windows.Forms.ComboBox BallisticsBulletCombo;
-		private System.Windows.Forms.Label BatchBulletLabel;
 		private System.Windows.Forms.ComboBox BallisticsCaliberCombo;
 		private System.Windows.Forms.Label label11;
 		private System.Windows.Forms.ComboBox BallisticsChargeCombo;
@@ -5745,8 +6233,88 @@ namespace ReloadersWorkShop
 		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.ComboBox BallisticsBatchCombo;
 		private System.Windows.Forms.Label label8;
+		private System.Windows.Forms.GroupBox BallisticsInputDataGroupBox;
+		private System.Windows.Forms.GroupBox groupBox2;
+		private System.Windows.Forms.CheckBox BallisticsUseStationPressureCheckBox;
+		private System.Windows.Forms.Label BallisticsStationPressureLabel;
+		private System.Windows.Forms.Label TemperatureMeasurementLabel;
+		private System.Windows.Forms.Label label14;
+		private System.Windows.Forms.CheckBox BallisticsUseDensityAltitudeCheckBox;
+		private CommonLib.Controls.cIntegerValueTextBox BallisticsTemperatureTextBox;
+		private System.Windows.Forms.Label BallisticsDensityAltitudeLabel;
+		private System.Windows.Forms.Label label7;
+		private CommonLib.Controls.cIntegerValueTextBox BallisticsHumidityTextBox;
+		private CommonLib.Controls.cIntegerValueTextBox BallisticsAltitudeTextBox;
+		private System.Windows.Forms.Label label22;
+		private System.Windows.Forms.Label AltitudeMeasurementLabel;
+		private System.Windows.Forms.Label label32;
+		private System.Windows.Forms.Label BallisticsPressureMeasurementLabel;
+		private System.Windows.Forms.Label label25;
+		private System.Windows.Forms.Label label30;
+		private System.Windows.Forms.Label label19;
+		private System.Windows.Forms.Label label31;
+		private CommonLib.Controls.cDoubleValueTextBox BallisticsPressureTextBox;
+		private System.Windows.Forms.Label WindSpeedMeasurementLabel;
+		private CommonLib.Controls.cIntegerValueTextBox BallisticsWindSpeedTextBox;
+		private System.Windows.Forms.Label CrossWindLabel;
+		private System.Windows.Forms.Label HeadWindLabel;
+		private CommonLib.Controls.cIntegerValueTextBox BallisticsWindDirectionTextBox;
+		private CommonLib.Controls.cDoubleValueTextBox BallisticsTwistTextBox;
+		private System.Windows.Forms.Label TwistMeasurementLabel;
+		private System.Windows.Forms.Label label33;
+		private CommonLib.Controls.cDoubleValueTextBox BallisticsBulletLengthTextBox;
+		private System.Windows.Forms.Label BulletLengthMeasurementLabel;
+		private System.Windows.Forms.Label label29;
+		private System.Windows.Forms.CheckBox ShowReferenceDataCheckBox;
+		private System.Windows.Forms.GroupBox groupBox1;
+		private System.Windows.Forms.Label MaxRangeMeasurementLabel;
+		private System.Windows.Forms.Label label34;
+		private System.Windows.Forms.Label label36;
+		private System.Windows.Forms.Label label38;
+		private System.Windows.Forms.Label IncrementMeasurementLabel;
+		private CommonLib.Controls.cIntegerValueTextBox BallisticsIncrementTextBox;
+		private System.Windows.Forms.Label MinRangeMeasurementLabel;
+		private CommonLib.Controls.cIntegerValueTextBox BallisticsMinRangeTextBox;
+		private CommonLib.Controls.cIntegerValueTextBox BallisticsMaxRangeTextBox;
+		private System.Windows.Forms.Label label3;
+		private CommonLib.Controls.cIntegerValueTextBox BallisticsTargetRangeTextBox;
+		private System.Windows.Forms.Label TargetRangeMeasurementLabel;
+		private System.Windows.Forms.ComboBox BallisticsTurretTypeComboBox;
+		private CommonLib.Controls.cDoubleValueTextBox BallisticsSightHeightTextBox;
+		private System.Windows.Forms.Label SightHeightMeasurementLabel;
+		private CommonLib.Controls.cDoubleValueTextBox BallisticsScopeClickTextBox;
+		private CommonLib.Controls.cDoubleValueTextBox BallisticsBCTextBox;
+		private CommonLib.Controls.cIntegerValueTextBox BallisticsZeroRangeTextBox;
+		private System.Windows.Forms.Label ZeroRangeMeasurementLabel;
+		private CommonLib.Controls.cDoubleValueTextBox BallisticsBulletDiameterTextBox;
+		private System.Windows.Forms.Label BulletDiameterMeasurementLabel;
+		private CommonLib.Controls.cDoubleValueTextBox BallisticsBulletWeightTextBox;
+		private System.Windows.Forms.Label BulletWeightMeasurementLabel;
+		private System.Windows.Forms.Button SaveReferenceBulletButton;
+		private System.Windows.Forms.Button RestoreReferenceBulletButton;
+		private System.Windows.Forms.Label label28;
+		private System.Windows.Forms.Label label26;
+		private System.Windows.Forms.Label label24;
+		private System.Windows.Forms.Label label18;
+		private System.Windows.Forms.Label label16;
+		private System.Windows.Forms.Label label15;
 		private System.Windows.Forms.TabPage AmmoTab;
+		private System.Windows.Forms.GroupBox AmmunitionFiltersGroupBox;
+		private Controls.cFirearmTypeCombo AmmunitionFirearmTypeCombo;
+		private System.Windows.Forms.CheckBox AmmoMyReloadsCheckBox;
+		private System.Windows.Forms.CheckBox AmmoFactoryReloadsCheckBox;
+		private System.Windows.Forms.CheckBox AmmoMinStockCheckBox;
+		private System.Windows.Forms.CheckBox AmmoFactoryCheckBox;
+		private System.Windows.Forms.CheckBox AmmoNonZeroCheckBox;
+		private System.Windows.Forms.ComboBox AmmunitionCaliberCombo;
+		private System.Windows.Forms.Label label52;
+		private System.Windows.Forms.ComboBox AmmunitionManufacturerCombo;
+		private System.Windows.Forms.GroupBox AmmoInventoryGroup;
+		private System.Windows.Forms.Button AmmoCostAnalysisButton;
+		private System.Windows.Forms.Button ViewAmmoInventoryButton;
+		private System.Windows.Forms.Button EditAmmoInventoryButton;
 		private System.Windows.Forms.GroupBox AmmoPrintOptionsGroupBox;
+		private System.Windows.Forms.Label NoAmmoListLabel;
 		private System.Windows.Forms.RadioButton AmmoPrintCheckedRadioButton;
 		private System.Windows.Forms.RadioButton AmmoPrintAllRadioButton;
 		private System.Windows.Forms.Button AmmoListPrintButton;
@@ -5758,6 +6326,7 @@ namespace ReloadersWorkShop
 		private System.Windows.Forms.Label BatchNotTrackedLabel;
 		private System.Windows.Forms.Label NoInventoryWarningLabel;
 		private System.Windows.Forms.GroupBox BatchEditorActionsGroupBox;
+		private System.Windows.Forms.Button CopyBatchButton;
 		private System.Windows.Forms.Button PrintCheckedBatchLabelsButton;
 		private System.Windows.Forms.CheckBox ShowArchivedBatchesCheckBox;
 		private System.Windows.Forms.Button UnarchiveCheckedButton;
@@ -5768,215 +6337,55 @@ namespace ReloadersWorkShop
 		private System.Windows.Forms.Button AddBatchButton;
 		private System.Windows.Forms.GroupBox BatchFiltersGroupBox;
 		private Controls.cFirearmTypeCombo BatchFirearmTypeCombo;
-		private System.Windows.Forms.ComboBox BatchPowderCombo;
-		private System.Windows.Forms.ComboBox BatchBulletCombo;
 		private System.Windows.Forms.ComboBox BatchCaliberCombo;
+		private System.Windows.Forms.Label BatchBulletLabel;
+		private System.Windows.Forms.ComboBox BatchBulletCombo;
+		private System.Windows.Forms.ComboBox BatchPowderCombo;
 		private System.Windows.Forms.TabPage LoadDataTab;
 		private System.Windows.Forms.Label LoadDataListViewInfoLabel;
-		private System.Windows.Forms.Button LoadDataDeselectAllButton;
-		private System.Windows.Forms.Button LoadDataSelectAllButton;
-		private System.Windows.Forms.GroupBox groupBox5;
-		private System.Windows.Forms.Button ShareFileButton;
-		private System.Windows.Forms.Button LoadShoppingListButton;
-		private System.Windows.Forms.Button EvaluateLoadButton;
 		private System.Windows.Forms.Button ViewLoadButton;
 		private System.Windows.Forms.Button RemoveLoadButton;
 		private System.Windows.Forms.Button EditLoadButton;
 		private System.Windows.Forms.Button AddLoadButton;
 		private System.Windows.Forms.GroupBox LoadDataFiltersGroupBox;
 		private Controls.cFirearmTypeCombo LoadDataFirearmTypeCombo;
-		private System.Windows.Forms.ComboBox LoadDataPowderCombo;
-		private System.Windows.Forms.ComboBox LoadDataBulletCombo;
 		private System.Windows.Forms.ComboBox LoadDataCaliberCombo;
+		private System.Windows.Forms.ComboBox LoadDataBulletCombo;
+		private System.Windows.Forms.ComboBox LoadDataPowderCombo;
+		private System.Windows.Forms.GroupBox groupBox5;
+		private System.Windows.Forms.Button ShareFileButton;
+		private System.Windows.Forms.Button LoadDataDeselectAllButton;
+		private System.Windows.Forms.Button LoadShoppingListButton;
+		private System.Windows.Forms.Button LoadDataSelectAllButton;
+		private System.Windows.Forms.Button EvaluateLoadButton;
 		private System.Windows.Forms.TabPage SuppliesTab;
+		private System.Windows.Forms.GroupBox groupBox4;
+		private System.Windows.Forms.ComboBox SupplyCaliberCombo;
+		private System.Windows.Forms.Label SupplyCaliberLabel;
+		private System.Windows.Forms.ComboBox SupplyTypeCombo;
+		private Controls.cFirearmTypeCombo SupplyFirearmTypeCombo;
+		private System.Windows.Forms.ComboBox SupplyManufacturerCombo;
 		private System.Windows.Forms.CheckBox HideUncheckedSuppliesCheckBox;
+		private System.Windows.Forms.Button DeselectAllSuppliesButton;
+		private System.Windows.Forms.Button SelectAllSuppliesButton;
+		private System.Windows.Forms.CheckBox SuppliesMinStockCheckBox;
+		private System.Windows.Forms.CheckBox SuppliesNonZeroCheckBox;
+		private System.Windows.Forms.GroupBox SuppliesInventoryGroup;
+		private System.Windows.Forms.Button SuppliesCostAnalysisButton;
+		private System.Windows.Forms.Button ViewInventoryButton;
+		private System.Windows.Forms.Button EditInventoryButton;
 		private System.Windows.Forms.GroupBox SuppliesPrintOptionsGroupBox;
+		private System.Windows.Forms.Label SupplyListFilterCountLabel;
 		private System.Windows.Forms.RadioButton SuppliesPrintCheckedRadioButton;
 		private System.Windows.Forms.RadioButton SuppliesPrintAllRadioButton;
 		private System.Windows.Forms.Button SupplyListPrintButton;
-		private System.Windows.Forms.Button DeselectAllSuppliesButton;
-		private System.Windows.Forms.Button SelectAllSuppliesButton;
 		private System.Windows.Forms.Label SupplyCountLabel;
 		private System.Windows.Forms.Button ViewSupplyButton;
 		private System.Windows.Forms.Button RemoveSupplyButton;
 		private System.Windows.Forms.Button EditSupplyButton;
 		private System.Windows.Forms.Button AddSupplyButton;
 		private System.Windows.Forms.TabPage FirearmsTab;
-		private System.Windows.Forms.GroupBox FirearmPrintOptionsGroupBox;
-		private System.Windows.Forms.CheckBox FirearmPrintSpecsCheckBox;
-		private System.Windows.Forms.CheckBox FirearmPrintDetailCheckBox;
-		private System.Windows.Forms.RadioButton FirearmPrintAllRadioButton;
-		private System.Windows.Forms.RadioButton FirearmPrintCheckedRadioButton;
-		private System.Windows.Forms.Button FirearmPrintButton;
-		private System.Windows.Forms.Button ViewFirearmButton;
-		private System.Windows.Forms.Button RemoveFirearmButton;
-		private System.Windows.Forms.Button EditFirearmButton;
-		private System.Windows.Forms.Button AddFirearmButton;
-		private System.Windows.Forms.TabPage CalibersTab;
-		private System.Windows.Forms.CheckBox HideUncheckedCalibersCheckBox;
-		private System.Windows.Forms.Label CaliberCountLabel;
-		private System.Windows.Forms.Button ViewCaliberButton;
-		private System.Windows.Forms.Button RemoveCaliberButton;
-		private System.Windows.Forms.Button EditCaliberButton;
-		private System.Windows.Forms.Button AddCaliberButton;
-		private System.Windows.Forms.TabPage ManufacturersTab;
-		private System.Windows.Forms.Button ViewManufacturerButton;
-		private System.Windows.Forms.Button RemoveManufacturerButton;
-		private System.Windows.Forms.Button EditManufacturerButton;
-		private System.Windows.Forms.Button AddManufacturerButton;
-		private System.Windows.Forms.TabControl MainTabControl;
-		private System.Windows.Forms.GroupBox SuppliesInventoryGroup;
-		private System.Windows.Forms.ToolStripMenuItem EditInventoryActivityMenuItem;
-		private System.Windows.Forms.Button EditInventoryButton;
-		private System.Windows.Forms.ToolStripMenuItem ViewInventoryActivityMenuItem;
-		private System.Windows.Forms.Button ViewInventoryButton;
-		private System.Windows.Forms.GroupBox AmmoInventoryGroup;
-		private System.Windows.Forms.Button ViewAmmoInventoryButton;
-		private System.Windows.Forms.Button EditAmmoInventoryButton;
-		private System.Windows.Forms.Button AmmoCostAnalysisButton;
-		private System.Windows.Forms.Button SuppliesCostAnalysisButton;
-		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
-		private System.Windows.Forms.ToolStripMenuItem FilePrintCostAnalysisMenuItem;
-		private System.Windows.Forms.Label SupplyListFilterCountLabel;
-		private System.Windows.Forms.Label NoAmmoListLabel;
-		private System.Windows.Forms.ToolStripMenuItem HelpVideoMenuItem;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
-		private System.Windows.Forms.ToolStripMenuItem ToolsStabilityCalculatorMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem HelpDataUpdateMenuItem;
-		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.ToolStripMenuItem HelpVideoCrimpingMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem HelpVideoHeadspaceMenuItem;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
-		private System.Windows.Forms.ToolStripMenuItem HelpVideoRWMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem HelpVideoRWInventoryMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem HelpVideoRWOperationMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem HelpVideoBulletSelectionMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem HelpVideoSDBCMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem HelpVideoRWLoadDataMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem HelpVideoRWBatchEditorMenuItem;
-		private System.Windows.Forms.GroupBox DropTableGroup;
-		private System.Windows.Forms.ListView BallisticsListView;
-		private System.Windows.Forms.ColumnHeader RangeHeader;
-		private System.Windows.Forms.ColumnHeader DropHeader;
-		private System.Windows.Forms.ColumnHeader DropMOAHeader;
-		private System.Windows.Forms.ColumnHeader WindDriftHeader;
-		private System.Windows.Forms.ColumnHeader WindDriftMOAHeader;
-		private System.Windows.Forms.ColumnHeader VelocityHeader;
-		private System.Windows.Forms.ColumnHeader TimeOfFlightHeader;
-		private System.Windows.Forms.ColumnHeader ScopeClickHeader;
-		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.GroupBox BulletDropChartGroup;
-		private System.Windows.Forms.PictureBox BulletDropChart;
-		private System.Windows.Forms.CheckBox CompareToReferenceBulletCheckBox;
-		private System.Windows.Forms.Button SaveReferenceBulletButton;
-		private System.Windows.Forms.Button RestoreReferenceBulletButton;
-		private System.Windows.Forms.GroupBox WindDriftChartGroup;
-		private System.Windows.Forms.PictureBox WindDriftChart;
-		private System.Windows.Forms.CheckBox ShowWindDriftRangeMarkersCheckBox;
-		private System.Windows.Forms.CheckBox ShowDropChartRangeMarkersCheckBox;
-		private System.Windows.Forms.Label ReferenceDataLegendLabel;
-		private System.Windows.Forms.Label CurrentDataLegendLabel;
-		private System.Windows.Forms.CheckBox ShowGroundStrikeMarkerCheckBox;
-		private System.Windows.Forms.Label ReferenceDataDriftLegendLabel;
-		private System.Windows.Forms.Label CurrentDataDriftLegendLabel;
-		private CommonLib.Controls.cIntegerValueTextBox BallisticsTargetRangeTextBox;
-		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.CheckBox ShowApexMarkerCheckBox;
-		private System.Windows.Forms.Label TargetRangeMeasurementLabel;
-		private System.Windows.Forms.Label BallisticsMuzzleHeightLabel;
-		private System.Windows.Forms.GroupBox groupBox1;
-		private CommonLib.Controls.cDoubleValueTextBox BallisticsPressureTextBox;
-		private System.Windows.Forms.Label label19;
-		private System.Windows.Forms.Label BallisticsPressureMeasurementLabel;
-		private System.Windows.Forms.Label label14;
-		private System.Windows.Forms.Label AltitudeMeasurementLabel;
-		private CommonLib.Controls.cIntegerValueTextBox BallisticsAltitudeTextBox;
-		private System.Windows.Forms.Label label7;
-		private CommonLib.Controls.cIntegerValueTextBox BallisticsTemperatureTextBox;
-		private System.Windows.Forms.CheckBox ShowTransonicMarkersCheckBox;
-		private System.Windows.Forms.Label TurretTypeLabel;
-		private System.Windows.Forms.Label label21;
-		private System.Windows.Forms.NumericUpDown ElevationTurretUpDown;
-		private System.Windows.Forms.Button ResetElevationTurretButton;
-		private System.Windows.Forms.Button ResetWindageTurretButton;
-		private System.Windows.Forms.Label DriftTurretTypeLabel;
-		private System.Windows.Forms.Label label23;
-		private System.Windows.Forms.NumericUpDown WindageTurretUpDown;
-		private System.Windows.Forms.CheckBox ShowReferenceDataCheckBox;
-		private System.Windows.Forms.Label label6;
-		private System.Windows.Forms.Label label5;
-		private CommonLib.Controls.cIntegerValueTextBox BallisticsHumidityTextBox;
-		private System.Windows.Forms.Label label22;
-		private System.Windows.Forms.Label label25;
-		private CommonLib.Controls.cDoubleValueTextBox BallisticsBulletLengthTextBox;
-		private System.Windows.Forms.Label BulletLengthMeasurementLabel;
-		private System.Windows.Forms.Label label29;
-		private System.Windows.Forms.ColumnHeader SFHeader;
-		private System.Windows.Forms.ColumnHeader AdjBCHeader;
-		private System.Windows.Forms.CheckBox BallisticsUseSFCheckBox;
-		private System.Windows.Forms.Label TwistMeasurementLabel;
-		private System.Windows.Forms.Label label33;
-		private CommonLib.Controls.cDoubleValueTextBox BallisticsTwistTextBox;
-		private System.Windows.Forms.Label BallisticsSoundSpeedLabel;
-		private System.Windows.Forms.Label label35;
-		private System.Windows.Forms.Button BallisticsPrintButton;
-		private System.Windows.Forms.ToolStripMenuItem HelpVideoRWBallisticsCalculatorMenuItem;
-		private System.Windows.Forms.ColumnHeader EnergyHeader;
-		private System.Windows.Forms.CheckBox BallisticsUseDensityAltitudeCheckBox;
-		private System.Windows.Forms.Label BallisticsDensityAltitudeLabel;
-		private System.Windows.Forms.GroupBox groupBox2;
-		private System.Windows.Forms.Label TemperatureMeasurementLabel;
-		private System.Windows.Forms.CheckBox BallisticsUseStationPressureCheckBox;
-		private System.Windows.Forms.Label BallisticsStationPressureLabel;
-		private System.Windows.Forms.ToolStripMenuItem HelpPurchaseMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem FilePrintSupplyShoppingListMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem FilePrintAmmoShoppingListMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem ToolsTargetCalculatorMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem HelpVideoRWTargetCalculatorMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem FileExportMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem HelpVideoRWCrossUseMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem HelpVideoRWExportingDataMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem HelpVideoRWSettingJumpMenuItem;
-		private System.Windows.Forms.GroupBox FirearmsGroupBox;
-		private System.Windows.Forms.CheckBox checkBox1;
-		private System.Windows.Forms.CheckBox checkBox2;
-		private System.Windows.Forms.RadioButton radioButton1;
-		private System.Windows.Forms.RadioButton radioButton2;
-		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.GroupBox FirearmAccessoriesGroupBox;
-		private System.Windows.Forms.Button RemoveFirearmAccessoryButton;
-		private System.Windows.Forms.Button AddFirearmAccessoryButton;
-		private System.Windows.Forms.Button EditFirearmAccessoryButton;
-		private System.Windows.Forms.Button ViewFirearmAccessoryButton;
-		private System.Windows.Forms.GroupBox FirearmAccessoriesActionsGroupBox;
-		private System.Windows.Forms.CheckBox FirearmAccessoriesShowAllCheckBox;
-		private System.Windows.Forms.Button FirearmAccessoryAttachButton;
-		private System.Windows.Forms.GroupBox FirearmCostDetailsGroupBox;
-		private System.Windows.Forms.Label FirearmAccessoryCostLabel;
-		private System.Windows.Forms.Label FirearmCostLabel;
-		private System.Windows.Forms.Label label27;
-		private System.Windows.Forms.Label label20;
-		private System.Windows.Forms.Label FirearmGrandTotalLabel;
-		private System.Windows.Forms.Label FirearmTotalCostsLabel;
-		private System.Windows.Forms.Label label45;
-		private System.Windows.Forms.Label label46;
-		private System.Windows.Forms.Label FirearmTotalShippingLabel;
-		private System.Windows.Forms.Label FirearmTotalTaxesLabel;
-		private System.Windows.Forms.Label label41;
-		private System.Windows.Forms.Label label42;
-		private System.Windows.Forms.GroupBox groupBox3;
-		private System.Windows.Forms.CheckBox FirearmsOtherFilterCheckBox;
-		private System.Windows.Forms.CheckBox FirearmsPartsFilterCheckBox;
-		private System.Windows.Forms.CheckBox FirearmsBipodFilterCheckBox;
-		private System.Windows.Forms.CheckBox FirearmsFurnitureFilterCheckBox;
-		private System.Windows.Forms.CheckBox FirearmsTriggerFilterCheckBox;
-		private System.Windows.Forms.CheckBox FirearmsLaserFilterCheckBox;
-		private System.Windows.Forms.CheckBox FirearmsRedDotFilterCheckBox;
-		private System.Windows.Forms.CheckBox FirearmsScopeFilterCheckBox;
-		private System.Windows.Forms.CheckBox FirearmAccessoriesShowGroupsCheckBox;
-		private System.Windows.Forms.CheckBox FirearmsLightFilterCheckBox;
-		private System.Windows.Forms.CheckBox FirearmsMagnifierFilterCheckBox;
-		private System.Windows.Forms.Button FirearmAccessoriesPrintButton;
 		private System.Windows.Forms.GroupBox FirearmAccessoriesCostDetailsGroupBox;
 		private System.Windows.Forms.Label FirearmAccessoriesGrandTotalLabel;
 		private System.Windows.Forms.Label label43;
@@ -5988,10 +6397,27 @@ namespace ReloadersWorkShop
 		private System.Windows.Forms.Label FirearmAccessoriesCountLabel;
 		private System.Windows.Forms.Label label53;
 		private System.Windows.Forms.Label label55;
-		private System.Windows.Forms.Label FirearmOtherFeesLabel;
-		private System.Windows.Forms.Label FirearmTransferFeesLabel;
-		private System.Windows.Forms.Label label44;
-		private System.Windows.Forms.Label label47;
+		private System.Windows.Forms.GroupBox groupBox3;
+		private System.Windows.Forms.CheckBox FirearmsLightFilterCheckBox;
+		private System.Windows.Forms.CheckBox FirearmsMagnifierFilterCheckBox;
+		private System.Windows.Forms.CheckBox FirearmsOtherFilterCheckBox;
+		private System.Windows.Forms.CheckBox FirearmsPartsFilterCheckBox;
+		private System.Windows.Forms.CheckBox FirearmsBipodFilterCheckBox;
+		private System.Windows.Forms.CheckBox FirearmsFurnitureFilterCheckBox;
+		private System.Windows.Forms.CheckBox FirearmsTriggerFilterCheckBox;
+		private System.Windows.Forms.CheckBox FirearmsLaserFilterCheckBox;
+		private System.Windows.Forms.CheckBox FirearmsRedDotFilterCheckBox;
+		private System.Windows.Forms.CheckBox FirearmsScopeFilterCheckBox;
+		private System.Windows.Forms.GroupBox FirearmAccessoriesActionsGroupBox;
+		private System.Windows.Forms.Button FirearmAccessoriesPrintButton;
+		private System.Windows.Forms.CheckBox FirearmAccessoriesShowGroupsCheckBox;
+		private System.Windows.Forms.CheckBox FirearmAccessoriesShowAllCheckBox;
+		private System.Windows.Forms.Button FirearmAccessoryAttachButton;
+		private System.Windows.Forms.Button RemoveFirearmAccessoryButton;
+		private System.Windows.Forms.Button AddFirearmAccessoryButton;
+		private System.Windows.Forms.Button EditFirearmAccessoryButton;
+		private System.Windows.Forms.Button ViewFirearmAccessoryButton;
+		private System.Windows.Forms.GroupBox FirearmsGroupBox;
 		private System.Windows.Forms.GroupBox FirearmCollectionGroupBox;
 		private System.Windows.Forms.Label FirearmCollectionOtherFeesLabel;
 		private System.Windows.Forms.Label FirearmCollectionTransferFeesLabel;
@@ -6009,28 +6435,77 @@ namespace ReloadersWorkShop
 		private System.Windows.Forms.Label FirearmCollectionCostLabel;
 		private System.Windows.Forms.Label label66;
 		private System.Windows.Forms.Label label67;
-		private System.Windows.Forms.GroupBox AmmunitionFiltersGroupBox;
-		private System.Windows.Forms.ComboBox AmmunitionCaliberCombo;
-		private System.Windows.Forms.Label label52;
-		private System.Windows.Forms.ComboBox AmmunitionManufacturerCombo;
-		private System.Windows.Forms.CheckBox AmmoMinStockCheckBox;
-		private System.Windows.Forms.CheckBox AmmoFactoryCheckBox;
-		private System.Windows.Forms.CheckBox AmmoNonZeroCheckBox;
-		private System.Windows.Forms.CheckBox AmmoMyReloadsCheckBox;
-		private System.Windows.Forms.CheckBox AmmoFactoryReloadsCheckBox;
-		private System.Windows.Forms.GroupBox groupBox4;
-		private System.Windows.Forms.ComboBox SupplyManufacturerCombo;
-		private System.Windows.Forms.CheckBox SuppliesMinStockCheckBox;
-		private System.Windows.Forms.CheckBox SuppliesNonZeroCheckBox;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
-		private System.Windows.Forms.ToolStripMenuItem ToolsIntegrityCheckerMenuItem;
-		private Controls.cFirearmTypeCombo SupplyFirearmTypeCombo;
-		private Controls.cFirearmTypeCombo AmmunitionFirearmTypeCombo;
-		private System.Windows.Forms.ToolStripMenuItem FileImportMenuItem;
-        private System.Windows.Forms.ComboBox SupplyTypeCombo;
-		private System.Windows.Forms.ComboBox SupplyCaliberCombo;
-		private System.Windows.Forms.Label SupplyCaliberLabel;
-		private System.Windows.Forms.Button CopyBatchButton;
+		private System.Windows.Forms.GroupBox FirearmCostDetailsGroupBox;
+		private System.Windows.Forms.Label FirearmOtherFeesLabel;
+		private System.Windows.Forms.Label FirearmTransferFeesLabel;
+		private System.Windows.Forms.Label label44;
+		private System.Windows.Forms.Label label47;
+		private System.Windows.Forms.Label FirearmGrandTotalLabel;
+		private System.Windows.Forms.Label FirearmTotalCostsLabel;
+		private System.Windows.Forms.Label label45;
+		private System.Windows.Forms.Label label46;
+		private System.Windows.Forms.Label FirearmTotalShippingLabel;
+		private System.Windows.Forms.Label FirearmTotalTaxesLabel;
+		private System.Windows.Forms.Label label41;
+		private System.Windows.Forms.Label label42;
+		private System.Windows.Forms.Label FirearmAccessoryCostLabel;
+		private System.Windows.Forms.Label FirearmCostLabel;
+		private System.Windows.Forms.Label label27;
+		private System.Windows.Forms.Label label20;
+		private System.Windows.Forms.Button RemoveFirearmButton;
+		private System.Windows.Forms.Button AddFirearmButton;
+		private System.Windows.Forms.GroupBox FirearmPrintOptionsGroupBox;
+		private System.Windows.Forms.CheckBox FirearmPrintSpecsCheckBox;
+		private System.Windows.Forms.CheckBox FirearmPrintDetailCheckBox;
+		private System.Windows.Forms.RadioButton FirearmPrintAllRadioButton;
+		private System.Windows.Forms.RadioButton FirearmPrintCheckedRadioButton;
+		private System.Windows.Forms.Button FirearmPrintButton;
+		private System.Windows.Forms.Button EditFirearmButton;
+		private System.Windows.Forms.Button ViewFirearmButton;
+		private System.Windows.Forms.TabPage CalibersTab;
+		private System.Windows.Forms.CheckBox HideUncheckedCalibersCheckBox;
+		private System.Windows.Forms.Label CaliberCountLabel;
+		private System.Windows.Forms.Button ViewCaliberButton;
+		private System.Windows.Forms.Button RemoveCaliberButton;
+		private System.Windows.Forms.Button EditCaliberButton;
+		private System.Windows.Forms.Button AddCaliberButton;
+		private System.Windows.Forms.TabPage ManufacturersTab;
+		private System.Windows.Forms.Button ViewManufacturerButton;
+		private System.Windows.Forms.Button RemoveManufacturerButton;
+		private System.Windows.Forms.Button EditManufacturerButton;
+		private System.Windows.Forms.Button AddManufacturerButton;
+		private System.Windows.Forms.TabControl MainTabControl;
+		private System.Windows.Forms.TabPage ToolsTab;
+		private System.Windows.Forms.GroupBox ToolsCostsGroupBox;
+		private System.Windows.Forms.Label ToolsGrandTotalLabel;
+		private System.Windows.Forms.Label label64;
+		private System.Windows.Forms.Label ToolsTotalShippingLabel;
+		private System.Windows.Forms.Label ToolsTotalTaxLabel;
+		private System.Windows.Forms.Label label69;
+		private System.Windows.Forms.Label label70;
+		private System.Windows.Forms.Label ToolsTotalCostLabel;
+		private System.Windows.Forms.Label ToolsCountLabel;
+		private System.Windows.Forms.Label label73;
+		private System.Windows.Forms.Label label74;
+		private System.Windows.Forms.GroupBox ToolsFiltersGroupBox;
+		private System.Windows.Forms.CheckBox ToolsCasePrepFilterCheckBox;
+		private System.Windows.Forms.CheckBox ToolsDieAccessoriesFilterCheckBox;
+		private System.Windows.Forms.CheckBox ToolsBooksFilterCheckBox;
+		private System.Windows.Forms.CheckBox ToolsGunsmithingFilterCheckBox;
+		private System.Windows.Forms.CheckBox ToolsCastingFilterCheckBox;
+		private System.Windows.Forms.CheckBox ToolsMeasurementToolsFilterCheckBox;
+		private System.Windows.Forms.CheckBox ToolsPowderToolsFilterCheckBox;
+		private System.Windows.Forms.CheckBox ToolsDiesFilterCheckBox;
+		private System.Windows.Forms.CheckBox ToolsPressesFilterCheckBox;
+		private System.Windows.Forms.CheckBox ToolsPressAccessoriesFilterCheckBox;
+		private System.Windows.Forms.CheckBox ToolsOtherFilterCheckBox;
+		private System.Windows.Forms.Button ViewToolButton;
+		private System.Windows.Forms.Button RemoveToolButton;
+		private System.Windows.Forms.Button EditToolButton;
+		private System.Windows.Forms.Button AddToolButton;
+		private System.Windows.Forms.CheckBox AmmoShowCostPerBoxCheckBox;
+		private System.Windows.Forms.CheckBox ToolsShowGroupsCheckBox;
+		private System.Windows.Forms.ToolStripMenuItem ToolsSAAMIWebsiteMenuItem;
 		}
 	}
 

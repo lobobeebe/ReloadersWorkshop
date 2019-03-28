@@ -57,7 +57,8 @@ namespace ReloadersWorkShop.Preferences
 			AmmoListView,
 			EvaluationListView,
 			AmmoTestListView,
-			FirearmAccessoriesListView
+			FirearmAccessoriesListView,
+			ToolsListView
 			}
 
 		//============================================================================*
@@ -124,6 +125,8 @@ namespace ReloadersWorkShop.Preferences
 		private bool m_fAmmoFactoryFilter = false;
 		private bool m_fAmmoFactoryReloadFilter = false;
 		private bool m_fAmmoMyReloadFilter = false;
+
+		private bool m_fAmmoShowCostPerBox = true;
 
 		private int m_nReloadKeepDays = 30;
 
@@ -478,6 +481,26 @@ namespace ReloadersWorkShop.Preferences
 
 		private string m_strTargetFolder = "";
 
+		// Tools List Settings
+
+		private cTool m_LastTool = null;
+		private cTool m_LastToolSelected = null;
+
+		private int m_nToolsSortColumn = 0;
+		private SortOrder m_ToolsSortOrder = SortOrder.Ascending;
+
+		private bool m_fToolsPressesFilter = true;
+		private bool m_fToolsPressAccessoriesFilter = true;
+		private bool m_fToolsDiesFilter = true;
+		private bool m_fToolsDieAccessoriesFilter = true;
+		private bool m_fToolsPowderToolsFilter = true;
+		private bool m_fToolsCasePrepFilter = true;
+		private bool m_fToolsMeasurementToolsFilter = true;
+		private bool m_fToolsCastingFilter = true;
+		private bool m_fToolsGunsmithingFilter = true;
+		private bool m_fToolsBooksFilter = true;
+		private bool m_fToolsOtherFilter = true;
+
 		// Transaction Form Settings
 
 		private cTransaction m_LastTransaction = null;
@@ -662,6 +685,22 @@ namespace ReloadersWorkShop.Preferences
 			set
 				{
 				m_fAmmoNonZeroFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// AmmoShowCostPerBox Property
+		//============================================================================*
+
+		public bool AmmoShowCostPerBox
+			{
+			get
+				{
+				return (m_fAmmoShowCostPerBox);
+				}
+			set
+				{
+				m_fAmmoShowCostPerBox = value;
 				}
 			}
 
@@ -3054,6 +3093,38 @@ namespace ReloadersWorkShop.Preferences
 			}
 
 		//============================================================================*
+		// LastTool Property
+		//============================================================================*
+
+		public cTool LastTool
+			{
+			get
+				{
+				return (m_LastTool);
+				}
+			set
+				{
+				m_LastTool = value;
+				}
+			}
+
+		//============================================================================*
+		// LastToolSelected Property
+		//============================================================================*
+
+		public cTool LastToolSelected
+			{
+			get
+				{
+				return (m_LastToolSelected);
+				}
+			set
+				{
+				m_LastToolSelected = value;
+				}
+			}
+
+		//============================================================================*
 		// LastTransaction Property
 		//============================================================================*
 
@@ -4031,7 +4102,7 @@ namespace ReloadersWorkShop.Preferences
 			}
 
 		//============================================================================*
-		// FirearmListPreviewSize Property
+		// TargetPrintSize Property
 		//============================================================================*
 
 		public Size TargetPrintSize
@@ -4251,6 +4322,214 @@ namespace ReloadersWorkShop.Preferences
 			set
 				{
 				m_dTaxRate = value;
+				}
+			}
+
+		//============================================================================*
+		// ToolsSortOrder Property
+		//============================================================================*
+
+		public SortOrder ToolsSortOrder
+			{
+			get
+				{
+				return (m_ToolsSortOrder);
+				}
+			set
+				{
+				m_ToolsSortOrder = value;
+				}
+			}
+
+		//============================================================================*
+		// ToolsBooksFilter Property
+		//============================================================================*
+
+		public bool ToolsBooksFilter
+			{
+			get
+				{
+				return (m_fToolsBooksFilter);
+				}
+			set
+				{
+				m_fToolsBooksFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// ToolsCasePrepFilter Property
+		//============================================================================*
+
+		public bool ToolsCasePrepFilter
+			{
+			get
+				{
+				return (m_fToolsCasePrepFilter);
+				}
+			set
+				{
+				m_fToolsCasePrepFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// ToolsCastingFilter Property
+		//============================================================================*
+
+		public bool ToolsCastingFilter
+			{
+			get
+				{
+				return (m_fToolsCastingFilter);
+				}
+			set
+				{
+				m_fToolsCastingFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// ToolsDiesFilter Property
+		//============================================================================*
+
+		public bool ToolsDiesFilter
+			{
+			get
+				{
+				return (m_fToolsDiesFilter);
+				}
+			set
+				{
+				m_fToolsDiesFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// ToolsDieAccessoriesFilter Property
+		//============================================================================*
+
+		public bool ToolsDieAccessoriesFilter
+			{
+			get
+				{
+				return (m_fToolsDieAccessoriesFilter);
+				}
+			set
+				{
+				m_fToolsDieAccessoriesFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// ToolsGunsmithingFilter Property
+		//============================================================================*
+
+		public bool ToolsGunsmithingFilter
+			{
+			get
+				{
+				return (m_fToolsGunsmithingFilter);
+				}
+			set
+				{
+				m_fToolsGunsmithingFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// ToolsMeasurementToolsFilter Property
+		//============================================================================*
+
+		public bool ToolsMeasurementToolsFilter
+			{
+			get
+				{
+				return (m_fToolsMeasurementToolsFilter);
+				}
+			set
+				{
+				m_fToolsMeasurementToolsFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// ToolsOtherFilter Property
+		//============================================================================*
+
+		public bool ToolsOtherFilter
+			{
+			get
+				{
+				return (m_fToolsOtherFilter);
+				}
+			set
+				{
+				m_fToolsOtherFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// ToolsPowderToolsFilter Property
+		//============================================================================*
+
+		public bool ToolsPowderToolsFilter
+			{
+			get
+				{
+				return (m_fToolsPowderToolsFilter);
+				}
+			set
+				{
+				m_fToolsPowderToolsFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// ToolsPressesFilter Property
+		//============================================================================*
+
+		public bool ToolsPressesFilter
+			{
+			get
+				{
+				return (m_fToolsPressesFilter);
+				}
+			set
+				{
+				m_fToolsPressesFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// ToolsPressAccessoriesFilter Property
+		//============================================================================*
+
+		public bool ToolsPressAccessoriesFilter
+			{
+			get
+				{
+				return (m_fToolsPressAccessoriesFilter);
+				}
+			set
+				{
+				m_fToolsPressAccessoriesFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// ToolsSortColumn Property
+		//============================================================================*
+
+		public int ToolsSortColumn
+			{
+			get
+				{
+				return (m_nToolsSortColumn);
+				}
+			set
+				{
+				m_nToolsSortColumn = value;
 				}
 			}
 

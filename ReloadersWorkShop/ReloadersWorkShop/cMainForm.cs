@@ -180,19 +180,7 @@ namespace ReloadersWorkShop
 
 			ToolsIntegrityCheckerMenuItem.Click += OnToolsIntegrityCheckerClicked;
 
-			ToolsSAAMIAmmoFiresMenuItem.Click += OnToolsSAAMIAmmoFiresClicked;
-			ToolsSAAMIFactsMenuItem.Click += OnToolsSAAMIFactsClicked;
-			ToolsSAAMIPistolSpecsMenuItem.Click += OnToolsSAAMIPistolSpecsClicked;
-			ToolsSAAMIPistolVelocityDataMenuItem.Click += OnToolsSAAMIPistolVelocityDataClicked;
-			ToolsSAAMIPrimersMenuItem.Click += OnToolsSAAMIPrimersClicked;
-			ToolsSAAMIRifleSpecsMenuItem.Click += OnToolsSAAMIRifleSpecsClicked;
-			ToolsSAAMIRifleVelocityDataMenuItem.Click += OnToolsSAAMIRifleVelocityDataClicked;
-			ToolsSAAMIRimfireSpecsMenuItem.Click += OnToolsSAAMIRimfireSpecsClicked;
-			ToolsSAAMISafeAmmoStorageMenuItem.Click += OnToolsSAAMISafeAmmoStorageClicked;
-			ToolsSAAMIShotshellSpecsMenuItem.Click += OnToolsSAAMIShotshellSpecsClicked;
-			ToolsSAAMISmokelessPowderMenuItem.Click += OnToolsSAAMISmokelessPowderClicked;
-			ToolsSAAMISportingFirearmsMenuItem.Click += OnToolsSAAMISportingFirearmsClicked;
-			ToolsSAAMIUnsafeArmsAmmoMenuItem.Click += OnToolsSAAMIUnsafeArmsAmmoClicked;
+			ToolsSAAMIWebsiteMenuItem.Click += OnToolsSAAMIWebsiteClicked;
 
 			ToolsStabilityCalculatorMenuItem.Click += OnToolsStabilityCalculatorClicked;
 			ToolsTargetCalculatorMenuItem.Click += OnToolsTargetCalculatorClicked;
@@ -202,7 +190,7 @@ namespace ReloadersWorkShop
 
 			HelpMenuItem.DropDownOpened += OnHelpClicked;
 			HelpAboutMenuItem.Click += OnHelpAboutClicked;
-			HelpSupportForumMenuItem.Click += OnHelpSupportForumClicked;
+			HelpSupportForumMenuItem.Click += OnHelpContactSupportClicked;
 			HelpNotesMenuItem.Click += OnHelpNotesClicked;
 			HelpPurchaseMenuItem.Click += OnHelpPurchaseClicked;
 			HelpProgramUpdateMenuItem.Click += OnHelpProgramUpdateClicked;
@@ -315,10 +303,9 @@ namespace ReloadersWorkShop
 		// DownloadSAAMIDoc()
 		//============================================================================*
 
-		public static bool DownloadSAAMIDoc(cDataFiles DataFiles, string strDocPath)
+		public static bool DownloadSAAMIDoc(cDataFiles DataFiles, string strDocPath, string strLocalFilePath)
 			{
-			string strLocalPath = Path.Combine(DataFiles.GetDataPath(), "SAAMI");
-			string strLocalFilePath = Path.Combine(strLocalPath, Path.GetFileName(strDocPath));
+			string strLocalPath = Path.GetDirectoryName(strLocalFilePath);
 
 			if (!Directory.Exists(strLocalPath))
 				Directory.CreateDirectory(strLocalPath);
@@ -335,25 +322,11 @@ namespace ReloadersWorkShop
 					{
 					string strMessage = "Unable to download the SAAMI document for the following reason:\n\n";
 					strMessage += e.Message;
-					strMessage += "\n\nMake sure you are connected to the Internet and the document name is correct.";
 
 					MessageBox.Show(strMessage, "Download Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
 					return (false);
 					}
-				}
-
-			try
-				{
-				Process.Start(strLocalFilePath);
-				}
-			catch
-				{
-				string strMessage = "Unable to view the PDF file!  Make sure you have the PDF Viewer installed on your PC.";
-
-				MessageBox.Show(strMessage, "View PDF Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-
-				return (false);
 				}
 
 			return (true);
@@ -397,6 +370,7 @@ namespace ReloadersWorkShop
 			InitializeLoadDataTab();
 			InitializeBatchTab();
 			InitializeAmmoTab();
+			InitializeToolTab();
 			InitializeBallisticsTab();
 			}
 
@@ -518,6 +492,15 @@ namespace ReloadersWorkShop
 					EditInventoryActivityMenuItem.Visible = m_DataFiles.Preferences.TrackInventory;
 					break;
 
+				case "ToolsTab":
+					EditNewMenuItem.Text = "&New Tool";
+					EditNewMenuItem.Enabled = AddToolButton.Enabled;
+					EditEditMenuItem.Text = "&Edit Tool";
+					EditEditMenuItem.Enabled = EditToolButton.Enabled;
+					EditRemoveMenuItem.Text = "&Remove Tool";
+					EditRemoveMenuItem.Enabled = RemoveToolButton.Enabled;
+					break;
+
 				case "PreferencesTab":
 					EditNewMenuItem.Text = "&New";
 					EditNewMenuItem.Enabled = false;
@@ -571,6 +554,11 @@ namespace ReloadersWorkShop
 					OnAddAmmo(sender, e);
 
 					break;
+
+				case "ToolsTab":
+					OnAddTool(sender, e);
+
+					break;
 				}
 			}
 
@@ -621,6 +609,12 @@ namespace ReloadersWorkShop
 				case "AmmoTab":
 					if (EditAmmoButton.Enabled)
 						OnEditAmmo(sender, e);
+
+					break;
+
+				case "ToolsTab":
+					if (EditToolButton.Enabled)
+						OnEditTool(sender, e);
 
 					break;
 				}
@@ -800,6 +794,12 @@ namespace ReloadersWorkShop
 				case "AmmoTab":
 					if (RemoveAmmoButton.Enabled)
 						OnRemoveAmmo(sender, e);
+
+					break;
+
+				case "ToolsTab":
+					if (RemoveToolButton.Enabled)
+						OnRemoveTool(sender, e);
 
 					break;
 				}
@@ -1041,6 +1041,22 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// OnHelpContactSupportClicked()
+		//============================================================================*
+
+		protected void OnHelpContactSupportClicked(object sender, EventArgs args)
+			{
+			try
+				{
+				System.Diagnostics.Process.Start("mailto:Support@ReloadersWorkShop.com");
+				}
+			catch
+				{
+				MessageBox.Show(String.Format("Unable to start your email program.  Please contact Support@ReloadersWorkShop.com manually.", Application.ProductName), "Email Program Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+			}
+
+		//============================================================================*
 		// OnHelpDataUpdateClicked()
 		//============================================================================*
 
@@ -1148,22 +1164,6 @@ namespace ReloadersWorkShop
 			cPurchaseKeyForm PurchaseForm = new cPurchaseKeyForm(m_RWRegistry);
 
 			PurchaseForm.ShowDialog();
-			}
-
-		//============================================================================*
-		// OnHelpSupportForumClicked()
-		//============================================================================*
-
-		protected void OnHelpSupportForumClicked(object sender, EventArgs args)
-			{
-			try
-				{
-				System.Diagnostics.Process.Start("https://www.HornadyLoader.com/index.php");
-				}
-			catch
-				{
-				MessageBox.Show(String.Format("Unable to navigate to the {0} Support Forum at this time, try again later.  Please make sure you are connected to the Internet.", Application.ProductName), "Support Forum Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
 			}
 
 		//============================================================================*
@@ -1408,6 +1408,7 @@ namespace ReloadersWorkShop
 
 			m_DataFiles.Preferences.Maximized = (WindowState == FormWindowState.Maximized);
 
+			MainTabControl.Location = new Point(0, MainMenu.Height);
 			MainTabControl.Size = new Size(ClientRectangle.Width, ClientRectangle.Height - MainMenu.Height);
 
 			//----------------------------------------------------------------------------*
@@ -1648,6 +1649,33 @@ namespace ReloadersWorkShop
 
 			m_AmmoListView.Location = new Point(7, AmmoPrintOptionsGroupBox.Location.Y + AmmoPrintOptionsGroupBox.Height + 6);
 			m_AmmoListView.Size = new Size(ClientRectangle.Width - 24, nButtonY - m_AmmoListView.Location.Y - 20);
+
+			//----------------------------------------------------------------------------*
+			// Tools Tab
+			//----------------------------------------------------------------------------*
+
+			nButtonY = ClientRectangle.Height - 20 - AddLoadButton.Height - MainMenu.Height - ((MainTabControl.ItemSize.Height == 0) ? 21 : MainTabControl.ItemSize.Height);
+
+			nButtonSpacing = ((MainTabControl.Width / 4) - (AddToolButton.Width + EditToolButton.Width + RemoveToolButton.Width + ViewToolButton.Width)) / 2;
+
+			if (nButtonSpacing <= 0)
+				nButtonSpacing = 20;
+
+			nButtonX = (MainTabControl.Size.Width / 2) - ((AddToolButton.Width + EditToolButton.Width + RemoveToolButton.Width + ViewToolButton.Width + (nButtonSpacing * 2)) / 2);
+
+			AddToolButton.Location = new Point(nButtonX, nButtonY);
+			nButtonX += AddToolButton.Width + nButtonSpacing;
+
+			EditToolButton.Location = new Point(nButtonX, nButtonY);
+			nButtonX += EditToolButton.Width + nButtonSpacing;
+
+			ViewToolButton.Location = new Point(nButtonX, nButtonY);
+			nButtonX += ViewToolButton.Width + nButtonSpacing;
+
+			RemoveToolButton.Location = new Point(nButtonX, nButtonY);
+
+			m_ToolsListView.Location = new Point(6, ToolsFiltersGroupBox.Location.Y + ToolsFiltersGroupBox.Height + 6);
+			m_ToolsListView.Size = new Size(MainTabControl.Width - 26, nButtonY - m_ToolsListView.Location.Y - 20);
 			}
 
 		//============================================================================*
@@ -1682,172 +1710,12 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// OnToolsSAAMIAmmoFiresClicked()
+		// OnToolsSAAMIWebsiteClicked()
 		//============================================================================*
 
-		private void OnToolsSAAMIAmmoFiresClicked(Object sender, EventArgs e)
+		private void OnToolsSAAMIWebsiteClicked(Object sender, EventArgs e)
 			{
-			this.Cursor = Cursors.WaitCursor;
-
-			DownloadSAAMIDoc(m_DataFiles, "http://www.SAAMI.org/specifications_and_information/publications/download/SAAMI_ITEM_212-Facts_About_Sporting_Ammunition_Fires.pdf");
-
-			this.Cursor = Cursors.Default;
-			}
-
-		//============================================================================*
-		// OnToolsSAAMIFactsClicked()
-		//============================================================================*
-
-		private void OnToolsSAAMIFactsClicked(Object sender, EventArgs e)
-			{
-			this.Cursor = Cursors.WaitCursor;
-
-			DownloadSAAMIDoc(m_DataFiles, "http://www.SAAMI.org/specifications_and_information/publications/download/SAAMI_ITEM_241-Setting_the_Standard_Safety_and_Technical_Standards_for_Firearms_and_Ammunition.pdf");
-
-			this.Cursor = Cursors.Default;
-			}
-
-		//============================================================================*
-		// OnToolsSAAMIPistolSpecsClicked()
-		//============================================================================*
-
-		private void OnToolsSAAMIPistolSpecsClicked(Object sender, EventArgs e)
-			{
-			this.Cursor = Cursors.WaitCursor;
-
-			DownloadSAAMIDoc(m_DataFiles, "http://www.SAAMI.org/specifications_and_information/publications/download/205.pdf");
-
-			this.Cursor = Cursors.Default;
-			}
-
-		//============================================================================*
-		// OnToolsSAAMIPistolVelocityDataClicked()
-		//============================================================================*
-
-		private void OnToolsSAAMIPistolVelocityDataClicked(Object sender, EventArgs e)
-			{
-			this.Cursor = Cursors.WaitCursor;
-
-			DownloadSAAMIDoc(m_DataFiles, "http://www.SAAMI.org/specifications_and_information/Specifications/Velocity_Pressure_CFPR.pdf");
-
-			this.Cursor = Cursors.Default;
-			}
-
-		//============================================================================*
-		// OnToolsSAAMIPrimersClicked()
-		//============================================================================*
-
-		private void OnToolsSAAMIPrimersClicked(Object sender, EventArgs e)
-			{
-			this.Cursor = Cursors.WaitCursor;
-
-			DownloadSAAMIDoc(m_DataFiles, "http://www.SAAMI.org/specifications_and_information/publications/download/SAAMI_ITEM_201-Primers.pdf");
-
-			this.Cursor = Cursors.Default;
-			}
-
-		//============================================================================*
-		// OnToolsSAAMIRifleSpecsClicked()
-		//============================================================================*
-
-		private void OnToolsSAAMIRifleSpecsClicked(Object sender, EventArgs e)
-			{
-			this.Cursor = Cursors.WaitCursor;
-
-			DownloadSAAMIDoc(m_DataFiles, "http://www.SAAMI.org/specifications_and_information/publications/download/206.pdf");
-
-			this.Cursor = Cursors.Default;
-			}
-
-		//============================================================================*
-		// OnToolsSAAMIRifleVelocityDataClicked()
-		//============================================================================*
-
-		private void OnToolsSAAMIRifleVelocityDataClicked(Object sender, EventArgs e)
-			{
-			this.Cursor = Cursors.WaitCursor;
-
-			DownloadSAAMIDoc(m_DataFiles, "http://www.SAAMI.org/specifications_and_information/Specifications/Velocity_Pressure_CFR.pdf");
-
-			this.Cursor = Cursors.Default;
-			}
-
-		//============================================================================*
-		// OnToolsSAAMIRimfireSpecsClicked()
-		//============================================================================*
-
-		private void OnToolsSAAMIRimfireSpecsClicked(Object sender, EventArgs e)
-			{
-			this.Cursor = Cursors.WaitCursor;
-
-			DownloadSAAMIDoc(m_DataFiles, "http://www.SAAMI.org/specifications_and_information/publications/download/208.pdf");
-
-			this.Cursor = Cursors.Default;
-			}
-
-		//============================================================================*
-		// OnToolsSAAMISafeAmmoStorageClicked()
-		//============================================================================*
-
-		private void OnToolsSAAMISafeAmmoStorageClicked(Object sender, EventArgs e)
-			{
-			this.Cursor = Cursors.WaitCursor;
-
-			DownloadSAAMIDoc(m_DataFiles, "http://www.SAAMI.org/PDF/SAAMI_AmmoStorage.pdf");
-
-			this.Cursor = Cursors.Default;
-			}
-
-		//============================================================================*
-		// OnToolsSAAMIShotshellSpecsClicked()
-		//============================================================================*
-
-		private void OnToolsSAAMIShotshellSpecsClicked(Object sender, EventArgs e)
-			{
-			this.Cursor = Cursors.WaitCursor;
-
-			DownloadSAAMIDoc(m_DataFiles, "http://www.SAAMI.org/specifications_and_information/publications/download/209.pdf");
-
-			this.Cursor = Cursors.Default;
-			}
-
-		//============================================================================*
-		// OnToolsSAAMISmokelessPowderClicked()
-		//============================================================================*
-
-		private void OnToolsSAAMISmokelessPowderClicked(Object sender, EventArgs e)
-			{
-			this.Cursor = Cursors.WaitCursor;
-
-			DownloadSAAMIDoc(m_DataFiles, "http://www.SAAMI.org/specifications_and_information/publications/download/SAAMI_ITEM_200-Smokeless_Powder.pdf");
-
-			this.Cursor = Cursors.Default;
-			}
-
-		//============================================================================*
-		// OnToolsSAAMISportingFirearmsClicked()
-		//============================================================================*
-
-		private void OnToolsSAAMISportingFirearmsClicked(Object sender, EventArgs e)
-			{
-			this.Cursor = Cursors.WaitCursor;
-
-			DownloadSAAMIDoc(m_DataFiles, "http://www.SAAMI.org/specifications_and_information/publications/download/SAAMI_ITEM_203-Sporting_Firearms.pdf");
-
-			this.Cursor = Cursors.Default;
-			}
-
-		//============================================================================*
-		// OnToolsSAAMIUnsafeArmsAmmoClicked()
-		//============================================================================*
-
-		private void OnToolsSAAMIUnsafeArmsAmmoClicked(Object sender, EventArgs e)
-			{
-			this.Cursor = Cursors.WaitCursor;
-
-			DownloadSAAMIDoc(m_DataFiles, "http://www.SAAMI.org/specifications_and_information/publications/download/SAAMI_ITEM_211-Unsafe_Arms_and_Ammunition_Combinations.pdf");
-
-			this.Cursor = Cursors.Default;
+			Process.Start("http://www.SAAMI.org/");
 			}
 
 		//============================================================================*
@@ -1955,13 +1823,13 @@ namespace ReloadersWorkShop
 		private void OnViewClicked(Object sender, EventArgs e)
 			{
 			ViewInventoryActivityMenuItem.Visible = false;
+			ViewCheckedMenuItem.Text = "Checked Only";
 
 			switch (MainTabControl.SelectedTab.Name)
 				{
 				case "ManufacturersTab":
 					ViewViewMenuItem.Text = "&View Manufacturer";
 					ViewViewMenuItem.Enabled = ViewManufacturerButton.Enabled;
-					ViewCheckedMenuItem.Text = "Checked Only";
 					ViewCheckedMenuItem.Visible = false;
 					ViewCheckedMenuItem.Checked = false;
 
@@ -1979,7 +1847,6 @@ namespace ReloadersWorkShop
 				case "FirearmsTab":
 					ViewViewMenuItem.Text = "&View Firearm";
 					ViewViewMenuItem.Enabled = ViewFirearmButton.Enabled;
-					ViewCheckedMenuItem.Text = "Checked Only";
 					ViewCheckedMenuItem.Visible = false;
 					ViewCheckedMenuItem.Checked = false;
 
@@ -2017,7 +1884,6 @@ namespace ReloadersWorkShop
 				case "LoadDataTab":
 					ViewViewMenuItem.Text = "&View Load";
 					ViewViewMenuItem.Enabled = ViewLoadButton.Enabled;
-					ViewCheckedMenuItem.Text = "Checked Only";
 					ViewCheckedMenuItem.Visible = false;
 					ViewCheckedMenuItem.Checked = false;
 
@@ -2026,7 +1892,6 @@ namespace ReloadersWorkShop
 				case "BatchEditorTab":
 					ViewViewMenuItem.Text = "&View Batch";
 					ViewViewMenuItem.Enabled = ViewBatchButton.Enabled;
-					ViewCheckedMenuItem.Text = "Checked Only";
 					ViewCheckedMenuItem.Visible = false;
 					ViewCheckedMenuItem.Checked = false;
 
@@ -2047,6 +1912,14 @@ namespace ReloadersWorkShop
 					ViewCheckedMenuItem.Visible = false;
 					ViewCheckedMenuItem.Checked = false;
 					ViewInventoryActivityMenuItem.Visible = m_DataFiles.Preferences.TrackInventory;
+
+					break;
+
+				case "ToolsTab":
+					ViewViewMenuItem.Text = "&View Tool";
+					ViewViewMenuItem.Enabled = ViewToolButton.Enabled;
+					ViewCheckedMenuItem.Visible = false;
+					ViewCheckedMenuItem.Checked = false;
 
 					break;
 				}
@@ -2194,6 +2067,10 @@ namespace ReloadersWorkShop
 
 				case "AmmoTab":
 					OnViewAmmo(sender, e);
+					break;
+
+				case "ToolsTab":
+					OnViewTool(sender, e);
 					break;
 				}
 			}

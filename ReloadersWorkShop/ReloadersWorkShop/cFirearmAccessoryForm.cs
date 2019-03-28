@@ -46,7 +46,8 @@ namespace ReloadersWorkShop
 
 		private const string cm_strScopePowerToolTip = "Enter this scope's power, leaving off the trailing 'x'. Example: 6, 3-9, 6-24, etc.";
 		private const string cm_strScopeObjectiveToolTip = "Enter this scope's Objective in millimeters.";
-		private const string cm_strScopeTubeToolTip = "Select this scope's tube diameter.";
+		private const string cm_strScopeTubeSizeToolTip = "Enter this scope's tube diameter.";
+		private const string cm_strScopeTubeToolTip = "Select this scope's tube diameter measurement.";
 		private const string cm_strScopeClickToolTip = "Enter this scope's turret click increment.";
 		private const string cm_strScopeTypeToolTip = "Select this scope's turret type.";
 		private const string cm_strScopeBatteryToolTip = "Enter the battery information for this scope.  (2x2032, CR200, etc...)";
@@ -173,7 +174,8 @@ namespace ReloadersWorkShop
 
 				ScopePowerTextBox.TextChanged += OnScopePowerChanged;
 				ScopeObjectiveTextBox.TextChanged += OnScopeObjectiveChanged;
-				ScopeTubeCombo.SelectedIndexChanged += OnScopeTubeSizeChanged;
+				ScopeTubeSizeTextBox.TextChanged += OnScopeTubeSizeChanged;
+				ScopeTubeSizeCombo.SelectedIndexChanged += OnScopeTubeSizeChanged;
 				ScopeClickTextBox.TextChanged += OnScopeClickChanged;
 				ScopeTurretTypeCombo.SelectedIndexChanged += OnScopeTurretTypeChanged;
 				ScopeBatteryTextBox.TextChanged += OnScopeBatteryChanged;
@@ -668,7 +670,11 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			(m_Gear as cScope).TubeSize = (cScope.eTurretTubeSizes) ScopeTubeCombo.SelectedIndex;
+			int nTubeSize = 1;
+			Int32.TryParse(ScopeTubeSizeTextBox.Text, out nTubeSize);
+
+			(m_Gear as cScope).TubeSize = nTubeSize;
+			(m_Gear as cScope).TubeMeasurement = (cScope.eTubeMeasurements) ScopeTubeSizeCombo.SelectedIndex;
 
 			m_fChanged = true;
 
@@ -878,26 +884,28 @@ namespace ReloadersWorkShop
 					ScopeEyeReliefTextBox.Value = (m_Gear as cScope).EyeRelief;
 
 					//----------------------------------------------------------------------------*
-					// Turret Tube Size Combo
+					// Turret Tube Size info
 					//----------------------------------------------------------------------------*
+
+					ScopeTubeSizeTextBox.Text = (m_Gear as cScope).TubeSize.ToString();
 
 					if (m_fViewOnly)
 						{
-						ScopeTubeCombo.Items.Clear();
+						ScopeTubeSizeCombo.Items.Clear();
 
-						ScopeTubeCombo.Items.Add(cScope.TubeSizeString((m_Gear as cScope).TubeSize));
+						ScopeTubeSizeCombo.Items.Add(cScope.TubeMeasurementString((m_Gear as cScope).TubeMeasurement));
 
-						ScopeTubeCombo.SelectedIndex = 0;
+						ScopeTubeSizeCombo.SelectedIndex = 0;
 						}
 					else
 						{
-						ScopeTubeCombo.SelectedIndex = (int) (m_Gear as cScope).TubeSize;
+						ScopeTubeSizeCombo.SelectedIndex = (int) (m_Gear as cScope).TubeMeasurement;
 
-						if (ScopeTubeCombo.SelectedIndex < 0 && ScopeTubeCombo.Items.Count > 0)
+						if (ScopeTubeSizeCombo.SelectedIndex < 0 && ScopeTubeSizeCombo.Items.Count > 0)
 							{
-							ScopeTubeCombo.SelectedIndex = 0;
+							ScopeTubeSizeCombo.SelectedIndex = 0;
 
-							(m_Gear as cScope).TubeSize = (cScope.eTurretTubeSizes) ScopeTubeCombo.SelectedIndex;
+							(m_Gear as cScope).TubeMeasurement = (cScope.eTubeMeasurements) ScopeTubeSizeCombo.SelectedIndex;
 							}
 						}
 
@@ -1275,9 +1283,11 @@ namespace ReloadersWorkShop
 			ScopePowerTextBox.ToolTip = cm_strScopePowerToolTip;
 			ScopeObjectiveTextBox.ToolTip = cm_strScopeObjectiveToolTip;
 
+			ScopeTubeSizeTextBox.ToolTip = cm_strScopeTubeSizeToolTip;
+
 			m_ScopeTubeToolTip.ShowAlways = true;
 			m_ScopeTubeToolTip.RemoveAll();
-			m_ScopeTubeToolTip.SetToolTip(ScopeTubeCombo, cm_strScopeTubeToolTip);
+			m_ScopeTubeToolTip.SetToolTip(ScopeTubeSizeCombo, cm_strScopeTubeToolTip);
 
 			ScopeClickTextBox.ToolTip = cm_strScopeClickToolTip;
 

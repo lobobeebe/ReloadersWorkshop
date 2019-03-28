@@ -46,6 +46,7 @@
 			// 
 			this.ReleaseNotesTextBox.Location = new System.Drawing.Point(12, 12);
 			this.ReleaseNotesTextBox.Name = "ReleaseNotesTextBox";
+			this.ReleaseNotesTextBox.ReadOnly = true;
 			this.ReleaseNotesTextBox.Size = new System.Drawing.Size(634, 545);
 			this.ReleaseNotesTextBox.TabIndex = 2;
 			this.ReleaseNotesTextBox.Text = "";

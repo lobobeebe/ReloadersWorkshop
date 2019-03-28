@@ -495,7 +495,7 @@ namespace ReloadersWorkShop
 
 			dY -= (int) (BoldSize.Height - LabelSize.Height);
 
-			strString = String.Format(" {0:F3} {1}", Batch.CaseTrimLength, cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
+			strString = String.Format(" {0:F3} {1}", cDataFiles.StandardToMetric(Batch.CaseTrimLength, cDataFiles.eDataType.Dimension), cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
 
 			Graphics.DrawString(strString, LabelBoldFont, Brushes.Black, dX, dY);
 
@@ -523,7 +523,7 @@ namespace ReloadersWorkShop
 
 			dY -= (int) (BoldSize.Height - LabelSize.Height);
 
-			strString = Batch.COL > 0.0 ? String.Format(" {0:F3} {1}", Batch.COL, cDataFiles.MetricString(cDataFiles.eDataType.Dimension)) : "N/A";
+			strString = Batch.COL > 0.0 ? String.Format(" {0:F3} {1}", cDataFiles.StandardToMetric(Batch.COL, cDataFiles.eDataType.Dimension), cDataFiles.MetricString(cDataFiles.eDataType.Dimension)) : "N/A";
 
 			Graphics.DrawString(strString, LabelBoldFont, Brushes.Black, dData1X, dY);
 
@@ -585,7 +585,7 @@ namespace ReloadersWorkShop
 
 				dY -= (int) (BoldSize.Height - LabelSize.Height);
 
-				Graphics.DrawString(Batch.HeadSpace > 0.0 ? String.Format(" {0:F3} {1}", Batch.HeadSpace, cDataFiles.MetricString(cDataFiles.eDataType.Dimension)) : "N/A", LabelBoldFont, Brushes.Black, dX, dY);
+				Graphics.DrawString(Batch.HeadSpace > 0.0 ? String.Format(" {0:F3} {1}", cDataFiles.StandardToMetric(Batch.HeadSpace, cDataFiles.eDataType.Dimension), cDataFiles.MetricString(cDataFiles.eDataType.Dimension)) : "N/A", LabelBoldFont, Brushes.Black, dX, dY);
 
 				dY += (int) (BoldSize.Height - LabelSize.Height);
 
@@ -603,7 +603,7 @@ namespace ReloadersWorkShop
 
 				dY -= (int) (BoldSize.Height - LabelSize.Height);
 
-				strString = Batch.CBTO > 0.0 ? String.Format(" {0:F3} {1}", Batch.CBTO, cDataFiles.MetricString(cDataFiles.eDataType.Dimension)) : "N/A";
+				strString = Batch.CBTO > 0.0 ? String.Format(" {0:F3} {1}", cDataFiles.StandardToMetric(Batch.CBTO, cDataFiles.eDataType.Dimension), cDataFiles.MetricString(cDataFiles.eDataType.Dimension)) : "N/A";
 
 				Graphics.DrawString(strString, LabelBoldFont, Brushes.Black, dX, dY);
 
@@ -634,9 +634,41 @@ namespace ReloadersWorkShop
 
 				dY -= (int) (BoldSize.Height - LabelSize.Height);
 
-				strString = Batch.NeckSize > 0.0 ? String.Format(" {0:F3} {1}", Batch.NeckSize, cDataFiles.MetricString(cDataFiles.eDataType.Dimension)) : "N/A";
+				strString = Batch.NeckSize > 0.0 ? String.Format(" {0:F3} {1}", cDataFiles.StandardToMetric(Batch.NeckSize, cDataFiles.eDataType.Dimension), cDataFiles.MetricString(cDataFiles.eDataType.Dimension)) : "N/A";
 
 				Graphics.DrawString(strString, LabelBoldFont, Brushes.Black, dX, dY);
+
+				dY += LabelBoldFont.Height;
+				}
+
+			dX = LabelRect.X;
+
+			//----------------------------------------------------------------------------*
+			// Additional Rifle Measurements
+			//----------------------------------------------------------------------------*
+
+			if (Batch.Load.FirearmType == cFirearm.eFireArmType.Rifle)
+				{
+				if (Batch.JumpSet)
+					{
+					// Jump
+
+					LabelSize = Graphics.MeasureString("Jump: ", LabelFont);
+
+					dX = dDataX - LabelSize.Width;
+
+					Graphics.DrawString("Jump:", LabelFont, Brushes.Black, dX, dY);
+
+					dX = dDataX;
+
+					BoldSize = Graphics.MeasureString("Jump: ", LabelBoldFont);
+
+					dY -= (int)(BoldSize.Height - LabelSize.Height);
+
+					Graphics.DrawString(String.Format(" {0:F3}", cDataFiles.StandardToMetric(Batch.Jump, cDataFiles.eDataType.Dimension)), LabelBoldFont, Brushes.Black, dX, dY);
+
+					dY += (int)(BoldSize.Height - LabelSize.Height);
+					}
 
 				dY += LabelBoldFont.Height;
 				}

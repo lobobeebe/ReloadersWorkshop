@@ -34,6 +34,12 @@ namespace ReloadersWorkShop
 			Large
 			}
 
+		public enum eTubeMeasurements
+			{
+			Inch = 0,
+			Millimeter
+			}
+
 		//============================================================================*
 		// Private Data Members
 		//============================================================================*
@@ -50,6 +56,9 @@ namespace ReloadersWorkShop
 
 		private double m_dEyeRelief = 0.0;
 
+		private int m_nTubeSize = 0;
+		private eTubeMeasurements m_eTubeMeasurement = eTubeMeasurements.Inch;
+
 		//============================================================================*
 		// cScope() - Constructor
 		//============================================================================*
@@ -57,6 +66,7 @@ namespace ReloadersWorkShop
 		public cScope()
 			: base(cGear.eGearTypes.Scope)
 			{
+			FixTubeSize();
 			}
 
 		//============================================================================*
@@ -97,18 +107,21 @@ namespace ReloadersWorkShop
 
 			base.Copy(Gear);
 
-			cScope Scope = (cScope) Gear;
+			cScope Scope = (cScope)Gear;
 
 			m_strPower = Scope.m_strPower;
 			m_strObjective = Scope.m_strObjective;
 
-			m_eTubeSize = Scope.m_eTubeSize;
+			m_nTubeSize = Scope.m_nTubeSize;
+			m_eTubeMeasurement = Scope.m_eTubeMeasurement;
 			m_eTurretType = Scope.m_eTurretType;
 
 			m_dTurretClick = Scope.m_dTurretClick;
 
 			m_strBattery = Scope.m_strBattery;
 			m_dEyeRelief = Scope.m_dEyeRelief;
+
+			FixTubeSize();
 			}
 
 		//============================================================================*
@@ -125,6 +138,27 @@ namespace ReloadersWorkShop
 			set
 				{
 				m_dEyeRelief = value;
+				}
+			}
+
+		//============================================================================*
+		// FixTubeSize()
+		//============================================================================*
+
+		public void FixTubeSize()
+			{
+			if (m_nTubeSize == 0)
+				{
+				if (m_eTubeSize == 0)
+					{
+					m_nTubeSize = 1;
+					m_eTubeMeasurement = eTubeMeasurements.Inch;
+					}
+				else
+					{
+					m_nTubeSize = 30;
+					m_eTubeMeasurement = eTubeMeasurements.Millimeter;
+					}
 				}
 			}
 
@@ -180,35 +214,72 @@ namespace ReloadersWorkShop
 		// TubeSize Property
 		//============================================================================*
 
-		public eTurretTubeSizes TubeSize
+		public int TubeSize
 			{
 			get
 				{
-				return (m_eTubeSize);
+				return (m_nTubeSize);
 				}
 
 			set
 				{
-				m_eTubeSize = value;
+				m_nTubeSize = value;
 				}
 			}
 
 		//============================================================================*
-		// TubeSizeFromString()
+		// TubeMeasurement Property
 		//============================================================================*
 
-		public static cScope.eTurretTubeSizes TubeSizeFromString(string strType)
+		public eTubeMeasurements TubeMeasurement
 			{
-			return (strType == "1 in" ? eTurretTubeSizes.Small : eTurretTubeSizes.Large);
+			get
+				{
+				return (m_eTubeMeasurement);
+				}
+
+			set
+				{
+				m_eTubeMeasurement = value;
+				}
 			}
 
 		//============================================================================*
-		// TubeSizeString()
+		// TubeMeasurementFromString()
 		//============================================================================*
 
-		public static string TubeSizeString(eTurretTubeSizes eTubeSize)
+		public static cScope.eTubeMeasurements TubeMeasurementFromString(string strMeasurement)
 			{
-			return (eTubeSize == eTurretTubeSizes.Small ? "1 in" : "30 mm");
+			switch (strMeasurement)
+				{
+				case "in":
+				case "Inch":
+					return (cScope.eTubeMeasurements.Inch);
+
+				case "mm":
+				case "Millimeter":
+					return (cScope.eTubeMeasurements.Millimeter);
+				}
+
+			return (cScope.eTubeMeasurements.Inch);
+			}
+
+		//============================================================================*
+		// TubeMeasurementString Property
+		//============================================================================*
+
+		public static string TubeMeasurementString(eTubeMeasurements eTubeMeasurement)
+			{
+			switch (eTubeMeasurement)
+				{
+				case eTubeMeasurements.Inch:
+					return ("in");
+
+				case eTubeMeasurements.Millimeter:
+					return ("mm");
+				}
+
+			return ("");
 			}
 
 		//============================================================================*

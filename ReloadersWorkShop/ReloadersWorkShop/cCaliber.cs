@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cCaliber.cs
 //
-// Copyright © 2013-2017, Kevin S. Beebe
+// Copyright © 2013-2018, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -10,7 +10,10 @@
 //============================================================================*
 
 using System;
+using System.Diagnostics;
 using System.IO;
+
+using System.Windows.Forms;
 
 //============================================================================*
 // NameSpace
@@ -44,6 +47,7 @@ namespace ReloadersWorkShop
 		private string m_strHeadStamp = "";
 
 		private bool m_fPistol = true;
+		private bool m_fCrossUse = false;
 
 		//----------------------------------------------------------------------------*
 		// Primer
@@ -76,6 +80,7 @@ namespace ReloadersWorkShop
 		//----------------------------------------------------------------------------*
 
 		private string m_strSAAMIPDF = "";
+		private int m_nSAAMIPDFPage = 0;
 
 		private bool m_fChecked = false;
 
@@ -243,6 +248,7 @@ namespace ReloadersWorkShop
 			{
 			m_eFirearmType = Caliber.m_eFirearmType;
 			m_strName = Caliber.m_strName;
+			m_fCrossUse = Caliber.m_fCrossUse;
 			m_strHeadStamp = Caliber.m_strHeadStamp;
 			m_fPistol = Caliber.m_fPistol;
 			m_fSmallPrimer = Caliber.m_fSmallPrimer;
@@ -327,7 +333,7 @@ namespace ReloadersWorkShop
 			if (obj == null)
 				return (1);
 
-			cCaliber Caliber = (cCaliber) obj;
+			cCaliber Caliber = (cCaliber)obj;
 
 			cCaliber.CurrentFirearmType = FirearmType;
 
@@ -337,6 +343,22 @@ namespace ReloadersWorkShop
 				rc = Name.ToUpper().CompareTo(Caliber.Name.ToUpper());
 
 			return (rc);
+			}
+
+		//============================================================================*
+		// CrossUse Property
+		//============================================================================*
+
+		public bool CrossUse
+			{
+			get
+				{
+				return (m_fCrossUse);
+				}
+			set
+				{
+				m_fCrossUse = value;
+				}
 			}
 
 		//============================================================================*
@@ -617,33 +639,82 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// SAAMIPDFPage Property
+		//============================================================================*
+
+		public int SAAMIPDFPage
+			{
+			get
+				{
+				return (m_nSAAMIPDFPage);
+				}
+			set
+				{
+				m_nSAAMIPDFPage = value;
+				}
+			}
+
+		//============================================================================*
 		// ShowSAAMIPDF()
 		//============================================================================*
 
 		public static bool ShowSAAMIPDF(cDataFiles DataFiles, cCaliber Caliber)
 			{
-			string strDocPath = "http://www.saami.org/PubResources/CC_Drawings/";
+			string strDocPath = "https://saami.org/wp-content/uploads/2019/01/";
+
+			string strFileName = "";
 
 			switch (Caliber.FirearmType)
 				{
 				case cFirearm.eFireArmType.Handgun:
-					strDocPath += "Pistol/";
+					strFileName = "SAAMI-Z299.3-Centerfire-Pistol-Revolver-Approved-12-14-2015.pdf";
 					break;
 
 				case cFirearm.eFireArmType.Rifle:
-					strDocPath += "Rifle/";
+					strFileName = "SAAMI-Z299.4-Centerfire-Rifle-Approved-12-14-2015.pdf";
 					break;
 
 				case cFirearm.eFireArmType.Shotgun:
-					strDocPath += "Shotgun/";
+					strFileName = "SAAMI-Z299.2-Shotshell-Approved-2015-08-31.pdf";
 					break;
 				}
 
-			strDocPath += Caliber.SAAMIPDF;
+			string strRemotePath = String.Format("{0}", Path.Combine(strDocPath, strFileName));
 
-			strDocPath = Path.ChangeExtension(strDocPath, ".pdf");
+			string strLocalPath = DataFiles.GetSAAMIPath();
+			string strLocalFilePath = Path.Combine(strLocalPath, strFileName);
 
-			return (cMainForm.DownloadSAAMIDoc(DataFiles, strDocPath));
+			if (cMainForm.DownloadSAAMIDoc(DataFiles, strRemotePath, strLocalFilePath))
+				{
+//				Process ReaderProcess = new Process();
+//				ProcessStartInfo ReaderStartInfo = new ProcessStartInfo();
+
+//				ReaderStartInfo.Arguments = String.Format(@"""{0}""", strLocalFilePath);
+
+//				if (Caliber.SAAMIPDFPage > 0)
+//					ReaderStartInfo.Arguments += String.Format(@" ""#page={0}""", Caliber.SAAMIPDFPage);
+
+				try
+					{
+					Process.Start(strLocalFilePath);
+
+//					ReaderStartInfo.FileName = @"C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
+
+					//					ReaderProcess.StartInfo = ReaderStartInfo;
+
+					//					ReaderProcess.Start();
+					}
+				catch (Exception e)
+					{
+					string strMessage = String.Format("Unable to view the PDF file!\n\n{0}", e.Message);
+
+					MessageBox.Show(strMessage, "View PDF Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+					return (false);
+					}
+				}
+
+			return (true);
 			}
 
 		//============================================================================*

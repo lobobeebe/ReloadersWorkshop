@@ -1,5 +1,5 @@
 ﻿//============================================================================*
-// cGear.Export.cs
+// cTool.Export.cs
 //
 // Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
@@ -19,10 +19,10 @@ using System.Xml;
 namespace ReloadersWorkShop
 	{
 	//============================================================================*
-	// cGear Class
+	// cTool Class
 	//============================================================================*
 
-	public partial class cGear : cPrintObject, IComparable
+	public partial class cTool : cPrintObject, IComparable
 		{
 		//============================================================================*
 		// CSVLineHeaderExtension Property
@@ -44,7 +44,7 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				string strLine = cGear.GearTypeString(m_eType);
+				string strLine = cTool.ToolTypeString(m_eType);
 				strLine += ",";
 				strLine += m_Manufacturer.ToString();
 				strLine += ",";
@@ -63,14 +63,6 @@ namespace ReloadersWorkShop
 				strLine += m_dTax;
 				strLine += ",";
 				strLine += m_dShipping;
-
-				switch (m_eType)
-					{
-					case eGearTypes.Scope:
-						strLine += (this as cScope).CSVLineExtension;
-						break;
-					}
-
 				strLine += ",";
 				strLine += m_strNotes;
 
@@ -91,21 +83,14 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// CSVGearLineHeader Property
+		// CSVToolLineHeader Property
 		//============================================================================*
 
-		public virtual string CSVGearLineHeader
+		public virtual string CSVToolLineHeader
 			{
 			get
 				{
-				string strLine = "Gear Type,Manufacturer,Part Number,Serial Number,Description,Acquired From,Purchase Date,Purchase Price,Tax,Shipping";
-
-				switch (m_eType)
-					{
-					case eGearTypes.Scope:
-						strLine += (this as cScope).CSVLineHeaderExtension;
-						break;
-					}
+				string strLine = "Tool Type,Manufacturer,Part Number,Serial Number,Description,Acquired From,Purchase Date,Purchase Price,Tax,Shipping";
 
 				strLine += ",Notes";
 
@@ -121,7 +106,7 @@ namespace ReloadersWorkShop
 			{
 			if (XMLDocument != null && XMLThisElement != null)
 				{
-				XMLDocument.CreateElement("GearType", cGear.GearTypeString(m_eType), XMLThisElement);
+				XMLDocument.CreateElement("ToolType", cTool.ToolTypeString(m_eType), XMLThisElement);
 				XMLDocument.CreateElement("Manufacturer", m_Manufacturer.Name, XMLThisElement);
 				XMLDocument.CreateElement("PartNumber", m_strPartNumber, XMLThisElement);
 				XMLDocument.CreateElement("SerialNumber", m_strSerialNumber, XMLThisElement);

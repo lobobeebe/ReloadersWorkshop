@@ -466,9 +466,6 @@ namespace ReloadersWorkShop
 
 			SourceCombo.Text = m_Transaction.Source;
 
-			if (m_Transaction.Date < DatePicker.MinDate)
-				m_Transaction.Date = DatePicker.MinDate;
-
 			DatePicker.Value = m_Transaction.Date;
 
 			QuantityTextBox.Value = m_Transaction.Quantity;
@@ -612,21 +609,6 @@ namespace ReloadersWorkShop
 				}
 
 			//----------------------------------------------------------------------------*
-			// Set Date Minimum
-			//----------------------------------------------------------------------------*
-
-			DateTime MinDate = new DateTime(2010, 1, 1, 0, 0, 0);
-
-			if (DatePicker.Value < MinDate)
-				{
-				DatePicker.Value = MinDate;
-
-				m_Transaction.Date = DatePicker.Value;
-				}
-
-			DatePicker.MinDate = MinDate;
-
-			//----------------------------------------------------------------------------*
 			// Set quantity minimums
 			//----------------------------------------------------------------------------*
 
@@ -664,8 +646,6 @@ namespace ReloadersWorkShop
 
 					break;
 				}
-
-			StartDateLabel.Text = String.Format("({0} or later)", DatePicker.MinDate.ToShortDateString());
 
 			UpdateButtons();
 			}

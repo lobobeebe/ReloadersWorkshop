@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cManufacturer.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -64,6 +64,11 @@ namespace ReloadersWorkShop
 		private bool m_fBipods = false;
 		private bool m_fParts = false;
 		private bool m_fMisc = false;
+
+		// Tools & Equipment
+
+		private bool m_fTools = false;
+		private bool m_fEquipment = false;
 
 		//============================================================================*
 		// cManufacturer() - Constructor
@@ -419,6 +424,8 @@ namespace ReloadersWorkShop
 			m_fRifles = Manufacturer.m_fRifles;
 			m_fShotguns = Manufacturer.m_fShotguns;
 
+			m_fTools = Manufacturer.m_fTools;
+
 			m_fScopes = Manufacturer.m_fScopes;
 			m_fLasers = Manufacturer.m_fLasers;
 			m_fRedDots = Manufacturer.m_fRedDots;
@@ -429,6 +436,38 @@ namespace ReloadersWorkShop
 			m_fBipods = Manufacturer.m_fBipods;
 			m_fParts = Manufacturer.m_fParts;
 			m_fMisc = Manufacturer.m_fMisc;
+			}
+
+		//============================================================================*
+		// Equipment Property
+		//============================================================================*
+
+		public bool Equipment
+			{
+			get
+				{
+				return (m_fEquipment);
+				}
+			set
+				{
+				m_fEquipment = value;
+				}
+			}
+
+		//============================================================================*
+		// Furniture Property
+		//============================================================================*
+
+		public bool Furniture
+			{
+			get
+				{
+				return (m_fFurniture);
+				}
+			set
+				{
+				m_fFurniture = value;
+				}
 			}
 
 		//============================================================================*
@@ -672,18 +711,18 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// Furniture Property
+		// Tools Property
 		//============================================================================*
 
-		public bool Furniture
+		public bool Tools
 			{
 			get
 				{
-				return (m_fFurniture);
+				return (m_fTools);
 				}
 			set
 				{
-				m_fFurniture = value;
+				m_fTools = value;
 				}
 			}
 

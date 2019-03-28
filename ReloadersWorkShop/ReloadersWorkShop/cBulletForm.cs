@@ -206,8 +206,6 @@ namespace ReloadersWorkShop
                 AddCaliberButton.Click += OnAddCaliber;
                 EditCaliberButton.Click += OnEditCaliber;
                 RemoveCaliberButton.Click += OnRemoveCaliber;
-
-                BulletOKButton.Click += OnOKClicked;
                 }
             else
                 {
@@ -590,14 +588,6 @@ namespace ReloadersWorkShop
             SetBulletImage();
 
             UpdateButtons();
-            }
-
-        //============================================================================*
-        // OnOKClicked()
-        //============================================================================*
-
-        private void OnOKClicked(object sender, EventArgs e)
-            {
             }
 
         //============================================================================*
@@ -1535,10 +1525,10 @@ namespace ReloadersWorkShop
 
                     bool fAdd = true;
 
-                    if (dBulletDiameter >= CheckCaliber.MinBulletDiameter &&
-                        dBulletDiameter <= CheckCaliber.MaxBulletDiameter &&
-                        dWeight >= CheckCaliber.MinBulletWeight &&
-                        dWeight <= CheckCaliber.MaxBulletWeight)
+                    if (dBulletDiameter >= cDataFiles.StandardToMetric(CheckCaliber.MinBulletDiameter, cDataFiles.eDataType.Dimension) &&
+                        dBulletDiameter <= cDataFiles.StandardToMetric(CheckCaliber.MaxBulletDiameter, cDataFiles.eDataType.Dimension) &&
+                        dWeight >= cDataFiles.StandardToMetric(CheckCaliber.MinBulletWeight, cDataFiles.eDataType.BulletWeight) &&
+                        dWeight <= cDataFiles.StandardToMetric(CheckCaliber.MaxBulletWeight, cDataFiles.eDataType.BulletWeight))
                         {
                         foreach (cBulletCaliber BulletCaliber in m_Bullet.BulletCaliberList)
                             {

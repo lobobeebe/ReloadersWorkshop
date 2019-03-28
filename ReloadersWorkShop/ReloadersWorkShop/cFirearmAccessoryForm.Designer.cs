@@ -61,7 +61,7 @@
 			this.label16 = new System.Windows.Forms.Label();
 			this.ScopeTurretTypeCombo = new System.Windows.Forms.ComboBox();
 			this.ScopeClickTextBox = new CommonLib.Controls.cDoubleValueTextBox();
-			this.ScopeTubeCombo = new System.Windows.Forms.ComboBox();
+			this.ScopeTubeSizeCombo = new System.Windows.Forms.ComboBox();
 			this.label7 = new System.Windows.Forms.Label();
 			this.label6 = new System.Windows.Forms.Label();
 			this.label13 = new System.Windows.Forms.Label();
@@ -99,10 +99,11 @@
 			this.label15 = new System.Windows.Forms.Label();
 			this.MagnifierEyeReliefTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			this.LightDetailsGroupBox = new System.Windows.Forms.GroupBox();
+			this.LightLumensTextBox = new CommonLib.Controls.cIntegerValueTextBox();
 			this.LightBatteryTextBox = new CommonLib.Controls.cTextBox();
 			this.label32 = new System.Windows.Forms.Label();
 			this.label38 = new System.Windows.Forms.Label();
-			this.LightLumensTextBox = new CommonLib.Controls.cIntegerValueTextBox();
+			this.ScopeTubeSizeTextBox = new CommonLib.Controls.cIntegerValueTextBox();
 			label18 = new System.Windows.Forms.Label();
 			this.GeneralGroupBox.SuspendLayout();
 			this.AcquisitionGroupBox.SuspendLayout();
@@ -224,7 +225,7 @@
 			// ManufacturerCombo
 			// 
 			this.ManufacturerCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.ManufacturerCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ManufacturerCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.ManufacturerCombo.FormattingEnabled = true;
 			this.ManufacturerCombo.Location = new System.Drawing.Point(107, 51);
 			this.ManufacturerCombo.Name = "ManufacturerCombo";
@@ -245,7 +246,7 @@
 			// TypeCombo
 			// 
 			this.TypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.TypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.TypeCombo.FormattingEnabled = true;
 			this.TypeCombo.Items.AddRange(new object[] {
             "Bipod / Monopod",
@@ -448,6 +449,7 @@
 			// 
 			// ScopeDetailsGroupBox
 			// 
+			this.ScopeDetailsGroupBox.Controls.Add(this.ScopeTubeSizeTextBox);
 			this.ScopeDetailsGroupBox.Controls.Add(this.ScopeEyeReliefMeasurementLabel);
 			this.ScopeDetailsGroupBox.Controls.Add(this.ScopeEyeReliefTextBox);
 			this.ScopeDetailsGroupBox.Controls.Add(this.label26);
@@ -456,7 +458,7 @@
 			this.ScopeDetailsGroupBox.Controls.Add(this.ScopeTurretTypeCombo);
 			this.ScopeDetailsGroupBox.Controls.Add(this.ScopeClickTextBox);
 			this.ScopeDetailsGroupBox.Controls.Add(label18);
-			this.ScopeDetailsGroupBox.Controls.Add(this.ScopeTubeCombo);
+			this.ScopeDetailsGroupBox.Controls.Add(this.ScopeTubeSizeCombo);
 			this.ScopeDetailsGroupBox.Controls.Add(this.label7);
 			this.ScopeDetailsGroupBox.Controls.Add(this.label6);
 			this.ScopeDetailsGroupBox.Controls.Add(this.label13);
@@ -517,7 +519,7 @@
 			// 
 			this.ScopeBatteryTextBox.BackColor = System.Drawing.SystemColors.Window;
 			this.ScopeBatteryTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.ScopeBatteryTextBox.Location = new System.Drawing.Point(65, 74);
+			this.ScopeBatteryTextBox.Location = new System.Drawing.Point(53, 74);
 			this.ScopeBatteryTextBox.MaxLength = 20;
 			this.ScopeBatteryTextBox.Name = "ScopeBatteryTextBox";
 			this.ScopeBatteryTextBox.Required = false;
@@ -532,7 +534,7 @@
 			this.label16.AutoSize = true;
 			this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label16.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label16.Location = new System.Drawing.Point(19, 77);
+			this.label16.Location = new System.Drawing.Point(7, 77);
 			this.label16.Name = "label16";
 			this.label16.Size = new System.Drawing.Size(43, 13);
 			this.label16.TabIndex = 32;
@@ -541,7 +543,7 @@
 			// ScopeTurretTypeCombo
 			// 
 			this.ScopeTurretTypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.ScopeTurretTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ScopeTurretTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.ScopeTurretTypeCombo.ForeColor = System.Drawing.SystemColors.WindowText;
 			this.ScopeTurretTypeCombo.FormattingEnabled = true;
 			this.ScopeTurretTypeCombo.Items.AddRange(new object[] {
@@ -570,25 +572,25 @@
 			this.ScopeClickTextBox.Value = 0D;
 			this.ScopeClickTextBox.ZeroAllowed = true;
 			// 
-			// ScopeTubeCombo
+			// ScopeTubeSizeCombo
 			// 
-			this.ScopeTubeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.ScopeTubeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.ScopeTubeCombo.FormattingEnabled = true;
-			this.ScopeTubeCombo.Items.AddRange(new object[] {
-            "1 Inch",
-            "30 mm"});
-			this.ScopeTubeCombo.Location = new System.Drawing.Point(65, 49);
-			this.ScopeTubeCombo.Name = "ScopeTubeCombo";
-			this.ScopeTubeCombo.Size = new System.Drawing.Size(80, 21);
-			this.ScopeTubeCombo.TabIndex = 2;
+			this.ScopeTubeSizeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ScopeTubeSizeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ScopeTubeSizeCombo.FormattingEnabled = true;
+			this.ScopeTubeSizeCombo.Items.AddRange(new object[] {
+            "in",
+            "mm"});
+			this.ScopeTubeSizeCombo.Location = new System.Drawing.Point(102, 49);
+			this.ScopeTubeSizeCombo.Name = "ScopeTubeSizeCombo";
+			this.ScopeTubeSizeCombo.Size = new System.Drawing.Size(44, 21);
+			this.ScopeTubeSizeCombo.TabIndex = 2;
 			// 
 			// label7
 			// 
 			this.label7.AutoSize = true;
 			this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label7.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label7.Location = new System.Drawing.Point(24, 52);
+			this.label7.Location = new System.Drawing.Point(12, 52);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(35, 13);
 			this.label7.TabIndex = 10;
@@ -610,7 +612,7 @@
 			this.label13.AutoSize = true;
 			this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label13.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label13.Location = new System.Drawing.Point(126, 27);
+			this.label13.Location = new System.Drawing.Point(114, 27);
 			this.label13.Name = "label13";
 			this.label13.Size = new System.Drawing.Size(12, 13);
 			this.label13.TabIndex = 8;
@@ -646,7 +648,7 @@
 			// 
 			this.ScopePowerTextBox.BackColor = System.Drawing.Color.LightPink;
 			this.ScopePowerTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.ScopePowerTextBox.Location = new System.Drawing.Point(65, 24);
+			this.ScopePowerTextBox.Location = new System.Drawing.Point(53, 24);
 			this.ScopePowerTextBox.MaxLength = 5;
 			this.ScopePowerTextBox.Name = "ScopePowerTextBox";
 			this.ScopePowerTextBox.Required = true;
@@ -661,7 +663,7 @@
 			this.label11.AutoSize = true;
 			this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label11.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label11.Location = new System.Drawing.Point(19, 27);
+			this.label11.Location = new System.Drawing.Point(7, 27);
 			this.label11.Name = "label11";
 			this.label11.Size = new System.Drawing.Size(40, 13);
 			this.label11.TabIndex = 0;
@@ -876,7 +878,7 @@
 			// NotesTextBox
 			// 
 			this.NotesTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.NotesTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.NotesTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.NotesTextBox.Location = new System.Drawing.Point(16, 21);
 			this.NotesTextBox.MaxLength = 1000;
 			this.NotesTextBox.Multiline = true;
@@ -1077,6 +1079,22 @@
 			this.LightDetailsGroupBox.Text = "Light Details";
 			this.LightDetailsGroupBox.Visible = false;
 			// 
+			// LightLumensTextBox
+			// 
+			this.LightLumensTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.LightLumensTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.LightLumensTextBox.Location = new System.Drawing.Point(65, 24);
+			this.LightLumensTextBox.MaxLength = 5;
+			this.LightLumensTextBox.MaxValue = 0;
+			this.LightLumensTextBox.MinValue = 0;
+			this.LightLumensTextBox.Name = "LightLumensTextBox";
+			this.LightLumensTextBox.Required = true;
+			this.LightLumensTextBox.Size = new System.Drawing.Size(57, 20);
+			this.LightLumensTextBox.TabIndex = 33;
+			this.LightLumensTextBox.Text = "0";
+			this.LightLumensTextBox.ToolTip = "";
+			this.LightLumensTextBox.Value = 0;
+			// 
 			// LightBatteryTextBox
 			// 
 			this.LightBatteryTextBox.BackColor = System.Drawing.Color.LightPink;
@@ -1113,27 +1131,26 @@
 			this.label38.TabIndex = 0;
 			this.label38.Text = "Lumens:";
 			// 
-			// LightLumensTextBox
+			// ScopeTubeSizeTextBox
 			// 
-			this.LightLumensTextBox.BackColor = System.Drawing.SystemColors.Window;
-			this.LightLumensTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.LightLumensTextBox.Location = new System.Drawing.Point(65, 24);
-			this.LightLumensTextBox.MaxLength = 5;
-			this.LightLumensTextBox.MaxValue = 0;
-			this.LightLumensTextBox.MinValue = 0;
-			this.LightLumensTextBox.Name = "LightLumensTextBox";
-			this.LightLumensTextBox.Required = true;
-			this.LightLumensTextBox.Size = new System.Drawing.Size(57, 20);
-			this.LightLumensTextBox.TabIndex = 33;
-			this.LightLumensTextBox.Text = "0";
-			this.LightLumensTextBox.ToolTip = "";
-			this.LightLumensTextBox.Value = 0;
+			this.ScopeTubeSizeTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.ScopeTubeSizeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ScopeTubeSizeTextBox.Location = new System.Drawing.Point(51, 47);
+			this.ScopeTubeSizeTextBox.MaxValue = 0;
+			this.ScopeTubeSizeTextBox.MinValue = 0;
+			this.ScopeTubeSizeTextBox.Name = "ScopeTubeSizeTextBox";
+			this.ScopeTubeSizeTextBox.Required = false;
+			this.ScopeTubeSizeTextBox.Size = new System.Drawing.Size(45, 22);
+			this.ScopeTubeSizeTextBox.TabIndex = 38;
+			this.ScopeTubeSizeTextBox.Text = "0";
+			this.ScopeTubeSizeTextBox.ToolTip = "";
+			this.ScopeTubeSizeTextBox.Value = 0;
 			// 
 			// cFirearmAccessoryForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(733, 476);
+			this.ClientSize = new System.Drawing.Size(729, 472);
 			this.ControlBox = false;
 			this.Controls.Add(this.LightDetailsGroupBox);
 			this.Controls.Add(this.FormCancelButton);
@@ -1192,7 +1209,7 @@
 		private CommonLib.Controls.cTextBox PartNumberTextBox;
 		private System.Windows.Forms.GroupBox ScopeDetailsGroupBox;
 		private System.Windows.Forms.Label label11;
-		private System.Windows.Forms.ComboBox ScopeTubeCombo;
+		private System.Windows.Forms.ComboBox ScopeTubeSizeCombo;
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.Label label13;
@@ -1247,5 +1264,6 @@
 		private System.Windows.Forms.Label label32;
 		private System.Windows.Forms.Label label38;
 		private CommonLib.Controls.cIntegerValueTextBox LightLumensTextBox;
+		private CommonLib.Controls.cIntegerValueTextBox ScopeTubeSizeTextBox;
 		}
 	}

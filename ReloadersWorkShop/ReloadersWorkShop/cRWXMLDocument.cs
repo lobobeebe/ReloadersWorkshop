@@ -426,9 +426,9 @@ namespace ReloadersWorkShop
 		// CreateElement() - TubeSize
 		//============================================================================*
 
-		public XmlElement CreateElement(string strName, cScope.eTurretTubeSizes eSize, XmlNode XMLParentNode)
+		public XmlElement CreateElement(string strName, cScope.eTubeMeasurements eSize, XmlNode XMLParentNode)
 			{
-			return (CreateElement(strName, cScope.TubeSizeString(eSize), XMLParentNode));
+			return (CreateElement(strName, cScope.TubeMeasurementString(eSize), XMLParentNode));
 			}
 
 		//============================================================================*
@@ -1308,12 +1308,12 @@ namespace ReloadersWorkShop
 		// Import() - Turret Size
 		//============================================================================*
 
-		public void Import(XmlNode XMLThisNode, out cScope.eTurretTubeSizes eSize)
+		public void Import(XmlNode XMLThisNode, out cScope.eTubeMeasurements eSize)
 			{
-			eSize = cScope.eTurretTubeSizes.Small;
+			eSize = cScope.eTubeMeasurements.Inch;
 
 			if (XMLThisNode != null && XMLThisNode.FirstChild != null && XMLThisNode.FirstChild.Value != null)
-				eSize = cScope.TubeSizeFromString(XMLThisNode.FirstChild.Value);
+				eSize = cScope.TubeMeasurementFromString(XMLThisNode.FirstChild.Value);
 			}
 
 		//============================================================================*

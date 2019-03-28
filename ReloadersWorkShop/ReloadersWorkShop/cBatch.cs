@@ -70,6 +70,7 @@ namespace ReloadersWorkShop
 		private bool m_fNeckSized = false;
 		private bool m_fExpandedNeck = false;
 
+		private bool m_fGasCheck = false;
 		private bool m_fNeckTurned = false;
 		private bool m_fAnnealed = false;
 		private bool m_fModifiedBullet = false;
@@ -420,6 +421,7 @@ namespace ReloadersWorkShop
 			m_fNeckSized = Batch.m_fNeckSized;
 			m_fExpandedNeck = Batch.m_fExpandedNeck;
 
+			m_fGasCheck = Batch.m_fGasCheck;
 			m_fNeckTurned = Batch.m_fNeckTurned;
 			m_fAnnealed = Batch.m_fAnnealed;
 			m_fModifiedBullet = Batch.m_fModifiedBullet;
@@ -504,6 +506,7 @@ namespace ReloadersWorkShop
 				strLine += m_fFullLengthSized ? "Yes," : "-,";
 				strLine += m_fNeckSized ? "Yes," : "-,";
 				strLine += m_fExpandedNeck ? "Yes," : "-,";
+				strLine += m_fGasCheck ? "Yes," : "-,";
 				strLine += m_fNeckTurned ? "Yes," : "-,";
 				strLine += m_fAnnealed ? "Yes," : "-,";
 				strLine += m_fModifiedBullet ? "Yes," : "-,";
@@ -527,7 +530,7 @@ namespace ReloadersWorkShop
 			get
 				{
 				string strLine = "Batch ID,User Batch ID,Date Loaded,Bullet,Powder,Primer,Case,Firearm,Powder Weight,Num Rounds,Times Case Fired,COAL,CBTO,Headspace,Neck Size,Neck Wall,";
-				strLine += "Case Trim Length,Bullet Diameter,Full-Length Sized,Neck Sized,Expanded Neck,Nect Turned,Annealed,Modified Bullet,Jumpset,Jump,Archived";
+				strLine += "Case Trim Length,Bullet Diameter,Full-Length Sized,GasCheck,Neck Sized,Expanded Neck,Nect Turned,Annealed,Modified Bullet,Jumpset,Jump,Archived";
 
 				return (strLine);
 				}
@@ -594,6 +597,22 @@ namespace ReloadersWorkShop
 			set
 				{
 				m_fFullLengthSized = value;
+				}
+			}
+
+		//============================================================================*
+		// GasCheck Property
+		//============================================================================*
+
+		public bool GasCheck
+			{
+			get
+				{
+				return (m_fGasCheck);
+				}
+			set
+				{
+				m_fGasCheck = value;
 				}
 			}
 

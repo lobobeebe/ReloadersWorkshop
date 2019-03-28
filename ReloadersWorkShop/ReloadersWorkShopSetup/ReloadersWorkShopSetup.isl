@@ -351,7 +351,7 @@
 		<row><td>ISX_DEFAULTCOMPONENT5</td><td>{29811AF0-3899-4763-B0C6-880E80E0B708}</td><td>RELOADER_S_WORKSHOP</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT6</td><td>{587DD37B-F0E7-4641-BEBE-749BB1878B61}</td><td>RELOADER_S_WORKSHOP</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT7</td><td>{4321176D-E8BE-462F-9A8F-ABA2DEEE489A}</td><td>BACKUP</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT8</td><td>{75705C1D-F260-42E3-87CB-AA6B1FE07007}</td><td>SHARE</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT8</td><td>{4800B1C3-5345-4FAD-B2CA-E7913264E3BA}</td><td>SHARE</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT9</td><td>{B65A85EE-E87F-4514-BC85-1102E41F8861}</td><td>SAAMI</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>Interop.WIA.dll</td><td>{597BAFD9-9B4B-49A1-A424-EB72FC4A8AC7}</td><td>INSTALLDIR</td><td>2</td><td/><td>interop.wia.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>RWCommonLib.dll</td><td>{7648B9F6-23A2-4695-9BCE-3737AC99B9AC}</td><td>INSTALLDIR</td><td>2</td><td/><td>rwcommonlib.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
@@ -1957,7 +1957,6 @@
 		<row><td>reloadersworkshopupdater.exe</td><td>ReloadersWorkShopUpdater.exe</td><td>RELOAD~1.EXE|ReloadersWorkShopUpdater.exe</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Software Projects\GitHub Projects\ReloadersWorkshop\ReloadersWorkShop\ReloadersWorkShopUpdater\bin\Release\ReloadersWorkShopUpdater.exe</td><td>1</td><td/></row>
 		<row><td>rifle_cartridge.jpg</td><td>ISX_DEFAULTCOMPONENT</td><td>RIFLEC~1.JPG|Rifle Cartridge.jpg</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Software Projects\GitHub Projects\ReloadersWorkshop\ReloadersWorkShop\ReloadersWorkShop\bin\Release\Images\Rifle Cartridge.jpg</td><td>1</td><td/></row>
 		<row><td>rwcommonlib.dll</td><td>RWCommonLib.dll</td><td>RWCOMM~1.DLL|RWCommonLib.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Software Projects\GitHub Projects\ReloadersWorkshop\ReloadersWorkShop\RWCommonLib\bin\Release\RWCommonLib.dll</td><td>1</td><td/></row>
-		<row><td>share_readme.txt.txt</td><td>ISX_DEFAULTCOMPONENT8</td><td>SHARE_~1.TXT|Share_README.TXT.txt</td><td>0</td><td/><td/><td>1</td><td>1</td><td>D:\Software Projects\ReloadersWorkShop\ReloadersWorkShop\Share_README.TXT.txt</td><td>5</td><td/></row>
 	</table>
 
 	<table name="FileSFPCatalog">
@@ -2109,7 +2108,7 @@
 		<row><td>ISX_DEFAULTCOMPONENT5</td><td/><td/><td>_1017CBBB_0FCA_48A7_A246_9E643097211F_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT6</td><td/><td/><td>_E4B1D8CF_326E_41DA_8289_79D723FC22ED_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT7</td><td/><td/><td>_B0C1DDC0_0E8D_496E_A807_2E3F6C307935_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT8</td><td/><td/><td>_A346A268_D7D9_4263_A07B_5C0886FFE932_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT8</td><td/><td/><td>_D37C1720_A463_4982_926F_A13F3C303B6C_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT9</td><td/><td/><td>_8ABE26CC_AD8E_4D8E_AC5F_582E52737C8A_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>Interop.WIA.dll</td><td/><td/><td>_D5A01C7C_7AC8_452C_BAE6_73451394F3BB_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>RWCommonLib.dll</td><td/><td/><td>_4E258AC5_38EA_4C74_B8FE_5CD94BF4EFB7_FILTER</td><td/><td/><td/><td/></row>
@@ -2705,7 +2704,7 @@
 		<col def="I2">Encoded</col>
 		<col def="S0">Comment</col>
 		<col def="I4">TimeStamp</col>
-		<row><td>COMPANY_NAME</td><td>1033</td><td>Hornady Loader</td><td>0</td><td/><td>-2052858002</td></row>
+		<row><td>COMPANY_NAME</td><td>1033</td><td>Hornady Loader</td><td>0</td><td/><td>1025838188</td></row>
 		<row><td>DN_AlwaysInstall</td><td>1033</td><td>Always Install</td><td>0</td><td/><td>1294171717</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_COLOR</td><td>1033</td><td>The color settings of your system are not adequate for running [ProductName].</td><td>0</td><td/><td>1294171717</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_DOTNETVERSION40CLIENT</td><td>1033</td><td>Microsoft .NET Framework 4.0 Client Package or greater needs to be installed for this installation to continue.</td><td>0</td><td/><td>1294176619</td></row>
@@ -3813,8 +3812,8 @@
 		<row><td>IDS__TargetReq_DESC_RAM</td><td>1033</td><td>The amount of RAM is not adequate for running [ProductName].</td><td>0</td><td/><td>1294171717</td></row>
 		<row><td>IDS__TargetReq_DESC_RESOLUTION</td><td>1033</td><td>The screen resolution is not adequate for running [ProductName].</td><td>0</td><td/><td>1294171717</td></row>
 		<row><td>ID_STRING1</td><td>1033</td><td/><td>0</td><td/><td>1294171717</td></row>
-		<row><td>ID_STRING2</td><td>1033</td><td>https://www.ReloadersWorkShop.com</td><td>0</td><td/><td>774100321</td></row>
-		<row><td>ID_STRING3</td><td>1033</td><td>Hornady Loader</td><td>0</td><td/><td>-2052858002</td></row>
+		<row><td>ID_STRING2</td><td>1033</td><td>http://www.HornadyLoader.com</td><td>0</td><td/><td>1025838188</td></row>
+		<row><td>ID_STRING3</td><td>1033</td><td>Hornady Loader</td><td>0</td><td/><td>1025838188</td></row>
 		<row><td>ID_STRING4</td><td>1033</td><td>Reloader's WorkShop</td><td>0</td><td/><td>1294198822</td></row>
 		<row><td>IIDS_UITEXT_FeatureUninstalled</td><td>1033</td><td>This feature will remain uninstalled.</td><td>0</td><td/><td>1294171717</td></row>
 	</table>

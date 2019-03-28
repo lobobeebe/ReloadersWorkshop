@@ -31,6 +31,8 @@ namespace ReloadersWorkShop
 				strLine += m_fRifles ? ",Yes" : ",-";
 				strLine += m_fShotguns ? ",Yes" : ",-";
 
+				strLine += m_fTools ? ",Yes" : ",-";
+
 				// Firearms Parts
 
 				strLine += m_fScopes ? ",Yes" : ",-";
@@ -56,7 +58,7 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				string strLine = "Name,Website,Bullets,Powder,Primers,Cases,Ammo,Bullet Molds,Head Stamp,Handguns,Rifles,Shotguns, Scopes,Lasers,Red Dots,Magnifiers,Lights,Triggers,Furniture,Bipods,Firearm Parts,Other";
+				string strLine = "Name,Website,Bullets,Powder,Primers,Cases,Ammo,Bullet Molds,Head Stamp,Handguns,Rifles,Shotguns, Tools, Scopes,Lasers,Red Dots,Magnifiers,Lights,Triggers,Furniture,Bipods,Firearm Parts,Other";
 
 				return (strLine);
 				}
@@ -92,6 +94,7 @@ namespace ReloadersWorkShop
 			XMLDocument.CreateElement("Rifles", m_fRifles, XMLThisElement);
 			XMLDocument.CreateElement("Scopes", m_fScopes, XMLThisElement);
 			XMLDocument.CreateElement("Shotguns", m_fShotguns, XMLThisElement);
+			XMLDocument.CreateElement("Tools", m_fTools, XMLThisElement);
 			XMLDocument.CreateElement("Triggers", m_fTriggers, XMLThisElement);
 			}
 
@@ -154,6 +157,9 @@ namespace ReloadersWorkShop
 						break;
 					case "Shotguns":
 						XMLDocument.Import(XMLNode, out m_fShotguns);
+						break;
+					case "Tools":
+						XMLDocument.Import(XMLNode, out m_fTools);
 						break;
 					case "Scopes":
 						XMLDocument.Import(XMLNode, out m_fScopes);

@@ -48,6 +48,9 @@ namespace ReloadersWorkShop
 			new cPrintColumn("Cost")
 			};
 
+		private double m_dTotalRounds = 0.0;
+		private double m_dTotalCost = 0.0;
+
 		//============================================================================*
 		// cAmmoListPreviewDialog() - Constructor
 		//============================================================================*
@@ -234,6 +237,9 @@ namespace ReloadersWorkShop
 			// Loop through the ammo in the list
 			//----------------------------------------------------------------------------*
 
+			float nQtyX = 0;
+			float nCostX = 0;
+
 			bool fHeader = false;
 
 			foreach (cAmmo Ammo in m_AmmoList)
@@ -408,17 +414,21 @@ namespace ReloadersWorkShop
 				// Qty on Hand
 				//----------------------------------------------------------------------------*
 
-				if (m_DataFiles.Preferences.TrackInventory)
-					{
-					dQuantity = m_DataFiles.SupplyQuantity(Ammo);
+				nQtyX = nX - 10;
 
-					if (dQuantity != 0.0)
-						strText = String.Format("{0:N0}", dQuantity);
-					else
-						strText = "-";
-					}
+				dQuantity = m_DataFiles.SupplyQuantity(Ammo);
+
+				if (dQuantity != 0.0)
+					strText = String.Format("{0:N0}", dQuantity);
 				else
 					strText = "-";
+
+				if (m_DataFiles.Preferences.TrackInventory)
+					{
+					m_dTotalRounds += dQuantity;
+
+					m_dTotalCost += (dQuantity * m_DataFiles.SupplyCostEach(Ammo));
+					}
 
 				TextSize = e.Graphics.MeasureString(strText, DataFont);
 
@@ -430,6 +440,8 @@ namespace ReloadersWorkShop
 				// Estimated Cost
 				//----------------------------------------------------------------------------*
 
+				nCostX = nX - 10;
+
 				double dBoxSize = 50;
 
 				if (Ammo.FirearmType == cFirearm.eFireArmType.Rifle)
@@ -438,7 +450,12 @@ namespace ReloadersWorkShop
 				double dCostEach = m_DataFiles.SupplyCostEach(Ammo);
 
 				if (dCostEach > 0.0)
-					strText = String.Format("{0:F2}/{1:F0}", m_DataFiles.SupplyCostEach(Ammo) * dBoxSize, dBoxSize);
+					{
+					if (m_DataFiles.Preferences.TrackInventory && m_DataFiles.Preferences.AmmoShowCostPerBox)
+						strText = String.Format("{0:F2}/{1:F0}", m_DataFiles.SupplyCostEach(Ammo) * dBoxSize, dBoxSize);
+					else
+						strText = String.Format("{0:F2}", m_DataFiles.SupplyCostEach(Ammo) * dQuantity);
+					}
 				else
 					strText = "-";
 
@@ -452,6 +469,9 @@ namespace ReloadersWorkShop
 				}
 
 			e.HasMorePages = false;
+
+			if (nQtyX > 0.0 && nCostX > 0.0)
+				PrintTotals(nY, e, DataFont, nQtyX, nCostX);
 
 			ResetPrintedFlag();
 			}
@@ -474,6 +494,51 @@ namespace ReloadersWorkShop
 				m_DataFiles.Preferences.AmmoListPreviewLocation = Location;
 				m_DataFiles.Preferences.AmmoListPreviewSize = ClientSize;
 				}
+			}
+
+		//============================================================================*
+		// PrintTotals()
+		//============================================================================*
+
+		private void PrintTotals(float nY, PrintPageEventArgs e, Font DataFont, float nQtyX, float nCostX)
+			{
+			//----------------------------------------------------------------------------*
+			// Separators
+			//----------------------------------------------------------------------------*
+
+			string strText = "----------";
+
+			SizeF TextSize = e.Graphics.MeasureString(strText, DataFont);
+
+			float nX = nQtyX + (m_AmmoColumns[6].Width / 2) - (TextSize.Width / 2);
+
+			e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX, nY);
+
+			nX = nCostX + m_AmmoColumns[7].Width;
+
+			e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX - TextSize.Width, nY);
+
+			//----------------------------------------------------------------------------*
+			// Values
+			//----------------------------------------------------------------------------*
+
+			nY += DataFont.Height;
+
+			nX = nQtyX + (m_AmmoColumns[6].Width) - (TextSize.Width / 2);
+
+			strText = String.Format("{0:F0}", m_dTotalRounds);
+
+			TextSize = e.Graphics.MeasureString(strText, DataFont);
+
+			e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX, nY);
+
+			strText = String.Format("{0:F2}", m_dTotalCost);
+
+			TextSize = e.Graphics.MeasureString(strText, DataFont);
+
+			nX = nCostX + (m_AmmoColumns[7].Width);
+
+			e.Graphics.DrawString(strText, DataFont, Brushes.Black, nX - TextSize.Width, nY);
 			}
 
 		//============================================================================*

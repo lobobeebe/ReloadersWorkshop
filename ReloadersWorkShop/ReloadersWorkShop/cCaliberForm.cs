@@ -36,6 +36,7 @@ namespace ReloadersWorkShop
 
 		private const string cm_strFirearmTypeToolTip = "Type of firearm for which this caliber is designed.";
 		private const string cm_strNameToolTip = "Name of this caliber.";
+		private const string cm_strCrossUseToolTip = "Check this box if cartridges of this caliber can be used in both handguns and rifles.";
 		private const string cm_strHeadStampToolTip = "HeadStamp description (or abbreviated name) of this caliber.";
 		private const string cm_strPrimerSizeToolTip = "Size of the primer used in cartridges of this caliber.";
 		private const string cm_strMagnumToolTip = "Indicates whether this is a magnum caliber.";
@@ -68,6 +69,8 @@ namespace ReloadersWorkShop
 		private bool m_fViewOnly = false;
 
 		private ToolTip m_FirearmTypeToolTip = new ToolTip();
+
+		private ToolTip m_CrossUseToolTip = new ToolTip();
 
 		private ToolTip m_PistolToolTip = new ToolTip();
 		private ToolTip m_RevolverToolTip = new ToolTip();
@@ -120,6 +123,8 @@ namespace ReloadersWorkShop
 
 				NameTextBox.TextChanged += OnNameChanged;
 				HeadStampTextBox.TextChanged += OnHeadStampChanged;
+
+				CrossUseCheckBox.Click += OnCrossUseClicked;
 
 				PistolRadioButton.Click += OnPistolClicked;
 				RevolverRadioButton.Click += OnRevolverClicked;
@@ -492,6 +497,24 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// OnCrossUseClicked()
+		//============================================================================*
+
+		private void OnCrossUseClicked(object sender, EventArgs e)
+			{
+			if (!m_fInitialized)
+				return;
+
+			CrossUseCheckBox.Checked = ((CrossUseCheckBox.Checked) ? false : true);
+
+			m_Caliber.CrossUse = CrossUseCheckBox.Checked;
+
+			m_fChanged = true;
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
 		// OnFirearmTypeChanged()
 		//============================================================================*
 
@@ -792,7 +815,8 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_Caliber.SAAMIPDF = SAAMIPDFTextBox.Value;
+			m_Caliber.SAAMIPDFPage = SAAMIPDFTextBox.Value;
+			m_Caliber.SAAMIPDF = null;
 
 			m_fChanged = true;
 
@@ -842,7 +866,10 @@ namespace ReloadersWorkShop
 			NameTextBox.Value = m_Caliber.Name;
 			HeadStampTextBox.Value = m_Caliber.HeadStamp;
 
-			SAAMIPDFTextBox.Value = m_Caliber.SAAMIPDF;
+			if (m_Caliber.SAAMIPDFPage == 0 && !String.IsNullOrEmpty(m_Caliber.SAAMIPDF))
+				m_Caliber.SAAMIPDFPage = 3;
+
+			SAAMIPDFTextBox.Value = m_Caliber.SAAMIPDFPage;
 
 			PistolRadioButton.Checked = m_Caliber.Pistol;
 			RevolverRadioButton.Checked = !m_Caliber.Pistol;
@@ -958,6 +985,10 @@ namespace ReloadersWorkShop
 
 			NameTextBox.ToolTip = m_DataFiles.Preferences.ToolTips ? cm_strNameToolTip : "";
 			HeadStampTextBox.ToolTip = m_DataFiles.Preferences.ToolTips ? cm_strHeadStampToolTip : "";
+
+			m_CrossUseToolTip.ShowAlways = true;
+			m_CrossUseToolTip.RemoveAll();
+			m_CrossUseToolTip.SetToolTip(CrossUseCheckBox, cm_strCrossUseToolTip);
 
 			m_PistolToolTip.ShowAlways = true;
 			m_PistolToolTip.RemoveAll();
@@ -1085,33 +1116,7 @@ namespace ReloadersWorkShop
 			// Check SAAMI PDF
 			//----------------------------------------------------------------------------*
 
-			if (SAAMIPDFTextBox.Value != null && SAAMIPDFTextBox.Value.Length > 0)
-				{
-				TestSAAMIPDFButton.Enabled = true;
-
-				string strFilePath = m_DataFiles.GetDataPath() + "\\SAAMI";
-				strFilePath = Path.Combine(strFilePath, m_Caliber.SAAMIPDF);
-				strFilePath = Path.ChangeExtension(strFilePath, ".pdf");
-
-				Bitmap TestBitmap = null;
-
-				if (File.Exists(strFilePath))
-					TestBitmap = (Bitmap)Properties.Resources.ResourceManager.GetObject("CheckMark");
-				else
-					{
-					TestBitmap = (Bitmap)Properties.Resources.ResourceManager.GetObject("Reject");
-
-					//					fEnableOK = false;
-					}
-
-				SAAMIOKImage.Image = TestBitmap;
-				}
-			else
-				{
-				TestSAAMIPDFButton.Enabled = false;
-
-				SAAMIOKImage.Image = null;
-				}
+			TestSAAMIPDFButton.Enabled = SAAMIPDFTextBox.Value != 0;
 
 			//----------------------------------------------------------------------------*
 			// Check Pistol/Revolver

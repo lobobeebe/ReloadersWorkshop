@@ -525,8 +525,6 @@ namespace ReloadersWorkShop
 
 		private void OnPrintPage(object sender, PrintPageEventArgs e)
 			{
-			ResetPrintedFlag(m_DataFiles);
-
 			DrawAccessoryList(m_DataFiles, ref e);
 			}
 

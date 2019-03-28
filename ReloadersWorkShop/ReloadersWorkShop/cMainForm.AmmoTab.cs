@@ -102,6 +102,8 @@ namespace ReloadersWorkShop
 				AmmoMyReloadsCheckBox.Click += OnAmmoMyReloadsFilterClicked;
 				AmmoListPrintButton.Click += OnPrintAmmoListClicked;
 
+				AmmoShowCostPerBoxCheckBox.Click += OnAmmoShowCostPerBoxClicked;
+
 				AmmoPrintAllRadioButton.Checked = m_DataFiles.Preferences.AmmoPrintAll;
 				AmmoPrintCheckedRadioButton.Checked = m_DataFiles.Preferences.AmmoPrintChecked;
 
@@ -138,6 +140,9 @@ namespace ReloadersWorkShop
 
 			AmmoMinStockCheckBox.Visible = m_DataFiles.Preferences.TrackInventory;
 			AmmoMinStockCheckBox.Checked = false;
+
+			AmmoShowCostPerBoxCheckBox.Visible = m_DataFiles.Preferences.TrackInventory;
+			AmmoShowCostPerBoxCheckBox.Checked = m_DataFiles.Preferences.AmmoShowCostPerBox;
 
 			AmmoInventoryGroup.Visible = m_DataFiles.Preferences.TrackInventory;
 
@@ -370,6 +375,17 @@ namespace ReloadersWorkShop
 				m_DataFiles.Preferences.LastAmmoSelected = (cAmmo) (sender as ListView).SelectedItems[0].Tag;
 
 			UpdateAmmoTabButtons();
+			}
+
+		//============================================================================*
+		// OnAmmoShowCostPerBoxClicked()
+		//============================================================================*
+
+		protected void OnAmmoShowCostPerBoxClicked(object sender, EventArgs args)
+			{
+			m_DataFiles.Preferences.AmmoShowCostPerBox = AmmoShowCostPerBoxCheckBox.Checked;
+
+			PopulateAmmoListView();
 			}
 
 		//============================================================================*

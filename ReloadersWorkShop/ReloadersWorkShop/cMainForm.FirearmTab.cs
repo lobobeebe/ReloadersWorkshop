@@ -1278,7 +1278,7 @@ namespace ReloadersWorkShop
 
 		private void UpdateFirearmTabButtons()
 			{
-			if (!m_fInitialized)
+			if (!m_fFirearmTabInitialized)
 				return;
 
 			SetFirearmCostDetails();
@@ -1297,7 +1297,7 @@ namespace ReloadersWorkShop
 			else
 				FirearmPrintButton.Enabled = false;
 
-			FirearmAccessoriesShowAllCheckBox.Checked = m_FirearmsListView.SelectedItems.Count > 0 ? FirearmAccessoriesShowAllCheckBox.Checked : true;
+//			FirearmAccessoriesShowAllCheckBox.Checked = m_FirearmsListView.SelectedItems.Count > 0 ? FirearmAccessoriesShowAllCheckBox.Checked : true;
 			FirearmAccessoriesShowAllCheckBox.Enabled = m_FirearmsListView.SelectedItems.Count > 0;
 
 			FirearmAccessoriesPrintButton.Enabled = m_FirearmAccessoriesListView.Items.Count > 0;

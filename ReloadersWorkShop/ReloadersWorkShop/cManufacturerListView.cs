@@ -42,22 +42,24 @@ namespace ReloadersWorkShop
 			new cListViewColumn(5, "PowderHeader", "Powder", HorizontalAlignment.Center, 70),
 			new cListViewColumn(6, "PrimersHeader", "Primers", HorizontalAlignment.Center, 70),
 			new cListViewColumn(7, "CasesHeader", "Cases", HorizontalAlignment.Center, 70),
-			new cListViewColumn(8, "BulletMoldsHeader", "BulletMolds", HorizontalAlignment.Center, 70),
+			new cListViewColumn(8, "BulletMoldsHeader", "Bullet Molds", HorizontalAlignment.Center, 70),
 
 			new cListViewColumn(9, "HandgunsHeader", "Handguns", HorizontalAlignment.Center, 70),
 			new cListViewColumn(10, "RiflesHeader", "Rifles", HorizontalAlignment.Center, 70),
 			new cListViewColumn(11, "ShotgunsHeader", "Shotguns", HorizontalAlignment.Center, 70),
 
-			new cListViewColumn(12, "ScopesHeader", "Scopes", HorizontalAlignment.Center, 70),
-			new cListViewColumn(13, "LasersHeader", "Lasers", HorizontalAlignment.Center, 70),
-			new cListViewColumn(14, "RedDotsHeader", "Red Dots", HorizontalAlignment.Center, 70),
-			new cListViewColumn(15, "MagnifiersHeader", "Magnifiers", HorizontalAlignment.Center, 70),
-			new cListViewColumn(16, "LightsHeader", "Lights", HorizontalAlignment.Center, 70),
-			new cListViewColumn(17, "TriggersHeader", "Triggers", HorizontalAlignment.Center, 70),
-			new cListViewColumn(18, "FurnitureHeader", "Furniture", HorizontalAlignment.Center, 70),
-			new cListViewColumn(19, "BipodsHeader", "Bipods", HorizontalAlignment.Center, 70),
-			new cListViewColumn(20, "PartsHeader", "Firearm Parts", HorizontalAlignment.Center, 70),
-			new cListViewColumn(21, "OtherHeader", "Other", HorizontalAlignment.Center, 70)
+			new cListViewColumn(12, "ToolsHeader", "Tools & Equipment", HorizontalAlignment.Center, 120),
+
+			new cListViewColumn(13, "ScopesHeader", "Scopes", HorizontalAlignment.Center, 70),
+			new cListViewColumn(14, "LasersHeader", "Lasers", HorizontalAlignment.Center, 70),
+			new cListViewColumn(15, "RedDotsHeader", "Red Dots", HorizontalAlignment.Center, 70),
+			new cListViewColumn(16, "MagnifiersHeader", "Magnifiers", HorizontalAlignment.Center, 70),
+			new cListViewColumn(17, "LightsHeader", "Lights", HorizontalAlignment.Center, 70),
+			new cListViewColumn(18, "TriggersHeader", "Triggers", HorizontalAlignment.Center, 70),
+			new cListViewColumn(19, "FurnitureHeader", "Furniture", HorizontalAlignment.Center, 70),
+			new cListViewColumn(20, "BipodsHeader", "Bipods", HorizontalAlignment.Center, 70),
+			new cListViewColumn(21, "PartsHeader", "Firearm Parts", HorizontalAlignment.Center, 70),
+			new cListViewColumn(22, "OtherHeader", "Other", HorizontalAlignment.Center, 70)
 			};
 
 		//============================================================================*
@@ -74,6 +76,8 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			GridLines = true;
+
+			Font = new System.Drawing.Font(Font, System.Drawing.FontStyle.Bold);
 
 			//----------------------------------------------------------------------------*
 			// Event Handlers
@@ -218,6 +222,8 @@ namespace ReloadersWorkShop
 			Item.SubItems.Add((Manufacturer.Handguns ? "Y" : ""));
 			Item.SubItems.Add((Manufacturer.Rifles ? "Y" : ""));
 			Item.SubItems.Add((Manufacturer.Shotguns ? "Y" : ""));
+
+			Item.SubItems.Add((Manufacturer.Tools ? "Y" : ""));
 
 			Item.SubItems.Add((Manufacturer.Scopes ? "Y" : ""));
 			Item.SubItems.Add((Manufacturer.Lasers ? "Y" : ""));

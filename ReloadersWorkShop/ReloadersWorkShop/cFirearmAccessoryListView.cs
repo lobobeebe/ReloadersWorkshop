@@ -69,6 +69,8 @@ namespace ReloadersWorkShop
 			for (int i = 0; i < (int) cGear.eGearTypes.NumGearTypes; i++)
 				m_afFilters[i] = true;
 
+			Font = new System.Drawing.Font(Font, System.Drawing.FontStyle.Bold);
+
 			//----------------------------------------------------------------------------*
 			// Event Handlers
 			//----------------------------------------------------------------------------*

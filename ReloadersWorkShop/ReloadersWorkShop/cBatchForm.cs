@@ -329,6 +329,7 @@ namespace ReloadersWorkShop
 			m_Batch.FullLengthSized = FullLengthSizedRadioButton.Checked;
 			m_Batch.NeckSized = NeckSizedRadioButton.Checked;
 			m_Batch.ExpandedNeck = ExpandedNeckRadioButton.Checked;
+			m_Batch.GasCheck = GasCheckCheckBox.Checked;
 			m_Batch.NeckTurned = NeckTurnedCheckBox.Checked;
 			m_Batch.ModifiedBullet = ModifiedBulletCheckBox.Checked;
 			m_Batch.Annealed = AnnealedCheckBox.Checked;
@@ -340,9 +341,6 @@ namespace ReloadersWorkShop
 
 		private void Initialize()
 			{
-			if (BatchDateTimePicker.MinDate < new DateTime(2010, 1, 1, 0, 0, 0))
-				BatchDateTimePicker.MinDate = new DateTime(2010, 1, 1, 0, 0, 0);
-
 			if (!m_fViewOnly && !m_fUserViewOnly)
 				{
 				BatchOKButton.Visible = true;
@@ -458,6 +456,7 @@ namespace ReloadersWorkShop
 				FullLengthSizedRadioButton.Click += OnFullLengthSizeClicked;
 				NeckSizedRadioButton.Click += OnNeckSizedClicked;
 				ExpandedNeckRadioButton.Click += OnExpandedNeckClicked;
+				GasCheckCheckBox.Click += OnGasCheckClicked;
 				NeckTurnedCheckBox.Click += OnNeckTurnedClicked;
 				AnnealedCheckBox.Click += OnAnnealedClicked;
 				ModifiedBulletCheckBox.Click += OnModifiedBulletClicked;
@@ -484,6 +483,7 @@ namespace ReloadersWorkShop
 				FullLengthSizedRadioButton.Enabled = false;
 				NeckSizedRadioButton.Enabled = false;
 				ExpandedNeckRadioButton.Enabled = false;
+				GasCheckCheckBox.Enabled = false;
 				NeckTurnedCheckBox.Enabled = false;
 				AnnealedCheckBox.Enabled = false;
 				ModifiedBulletCheckBox.Enabled = false;
@@ -576,13 +576,13 @@ namespace ReloadersWorkShop
 		// OCWBatchCount()
 		//============================================================================*
 
-		public static int OCWBatchCount(rOCW OCWSettings, cBatch Batch)
+		public static int OCWBatchCount(rOCW OCWSettings, cBatch Batch, cDataFiles DataFiles)
 			{
 			int nCount = 0;
 
 			if (Batch != null && Batch.Load != null)
 				{
-				double dInc = OCWSettings.m_dChargeIncrement;
+				double dInc = Math.Round(OCWSettings.m_dChargeIncrement, DataFiles.Preferences.PowderWeightDecimals);
 
 				if (dInc <= 0.0)
 					dInc = 0.2;
@@ -593,11 +593,11 @@ namespace ReloadersWorkShop
 
 				if (Charge != null)
 					{
-					while (dCharge <= Batch.Load.ChargeList.MaxCharge.PowderWeight)
+					while (Math.Round(dCharge, DataFiles.Preferences.PowderWeightDecimals) <= Math.Round(Charge.PowderWeight, DataFiles.Preferences.PowderWeightDecimals))
 						{
 						nCount++;
 
-						dCharge += dInc;
+						dCharge = Math.Round(dCharge += dInc, DataFiles.Preferences.PowderWeightDecimals);
 						}
 					}
 				}
@@ -929,6 +929,22 @@ namespace ReloadersWorkShop
 			m_Batch.FullLengthSized = FullLengthSizedRadioButton.Checked;
 			m_Batch.NeckSized = NeckSizedRadioButton.Checked;
 			m_Batch.ExpandedNeck = ExpandedNeckRadioButton.Checked;
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
+		// OnGasCheckClicked()
+		//============================================================================*
+
+		private void OnGasCheckClicked(object sender, EventArgs e)
+			{
+			if (m_fViewOnly || m_fUserViewOnly || m_fPopulating)
+				return;
+
+			GasCheckCheckBox.Checked = !GasCheckCheckBox.Checked;
+
+			m_Batch.GasCheck = GasCheckCheckBox.Checked;
 
 			UpdateButtons();
 			}
@@ -1367,9 +1383,6 @@ namespace ReloadersWorkShop
 
 			UserIDTextBox.Value = String.IsNullOrEmpty(m_Batch.UserID) ? "" : m_Batch.UserID;
 
-			if (m_Batch.DateLoaded < BatchDateTimePicker.MinDate)
-				m_Batch.DateLoaded = BatchDateTimePicker.MinDate;
-
 			BatchDateTimePicker.Value = m_Batch.DateLoaded;
 
 			NumRoundsTextBox.Value = m_Batch.NumRounds;
@@ -1382,7 +1395,7 @@ namespace ReloadersWorkShop
 				COALTextBox.MinValue = cDataFiles.StandardToMetric(m_Batch.Load.Caliber.CaseTrimLength, cDataFiles.eDataType.Dimension);
 				COALTextBox.MaxValue = cDataFiles.StandardToMetric(m_Batch.Load.Caliber.MaxCOL, cDataFiles.eDataType.Dimension);
 
-				CBTOTextBox.MinValue = COALTextBox.MinValue;
+				CBTOTextBox.MinValue = m_fViewOnly ? 0.0 :  COALTextBox.MinValue;
 				CBTOTextBox.MaxValue = COALTextBox.MaxValue;
 				}
 
@@ -1398,12 +1411,13 @@ namespace ReloadersWorkShop
 			FullLengthSizedRadioButton.Checked = m_Batch.FullLengthSized;
 			NeckSizedRadioButton.Checked = m_Batch.NeckSized;
 			ExpandedNeckRadioButton.Checked = m_Batch.ExpandedNeck;
+			GasCheckCheckBox.Checked = m_Batch.GasCheck;
 			NeckTurnedCheckBox.Checked = m_Batch.NeckTurned;
 			AnnealedCheckBox.Checked = m_Batch.Annealed;
 			ModifiedBulletCheckBox.Checked = m_Batch.ModifiedBullet;
 
 			JumpSetCheckBox.Checked = m_Batch.JumpSet;
-			JumpTextBox.Value = m_Batch.Jump;
+			JumpTextBox.Value = cDataFiles.StandardToMetric(m_Batch.Jump, cDataFiles.eDataType.Dimension);
 
 			if (m_Batch.BulletDiameter != 0.0)
 				BulletDiameterTextBox.Value = cDataFiles.StandardToMetric(m_Batch.BulletDiameter, cDataFiles.eDataType.Dimension);
@@ -2248,12 +2262,12 @@ namespace ReloadersWorkShop
 
 			string strPowderWeightFormat = cPreferences.StaticPreferences.FormatString(cDataFiles.eDataType.PowderWeight);
 
-			string strStartCharge = String.Format(strPowderWeightFormat, OCWSettings.m_dStartCharge);
-			string strIncrement = String.Format(strPowderWeightFormat, OCWSettings.m_dChargeIncrement);
+			string strStartCharge = String.Format(strPowderWeightFormat, cDataFiles.StandardToMetric(OCWSettings.m_dStartCharge, cDataFiles.eDataType.PowderWeight));
+			string strIncrement = String.Format(strPowderWeightFormat, cDataFiles.StandardToMetric(OCWSettings.m_dChargeIncrement, cDataFiles.eDataType.PowderWeight));
 
 			string strOCW = "";
 
-			int nBatchCount = OCWBatchCount(OCWSettings, Batch);
+			int nBatchCount = OCWBatchCount(OCWSettings, Batch, DataFiles);
 
 			if (nBatchCount > OCWSettings.m_nMaxBatches)
 				nBatchCount = OCWSettings.m_nMaxBatches;
@@ -2326,7 +2340,7 @@ namespace ReloadersWorkShop
 			// See if the selected load supports OCW
 			//----------------------------------------------------------------------------*
 
-			bool fEnableOCW = OCWBatchCount(m_rOCW, m_Batch) >= 3;
+			bool fEnableOCW = OCWBatchCount(m_rOCW, m_Batch, m_DataFiles) >= 3;
 
 			if (fEnableOCW)
 				{
@@ -2408,7 +2422,7 @@ namespace ReloadersWorkShop
 				OCWLabel.Location = new Point(5, 50);
 				OCWLabel.Size = new Size(LoadDetailsGroup.Width - 20, LoadDetailsGroup.Height - 60);
 
-				int nBatchCount = OCWBatchCount(m_rOCW, Batch);
+				int nBatchCount = OCWBatchCount(m_rOCW, Batch, m_DataFiles);
 
 				if (nBatchCount > m_rOCW.m_nMaxBatches)
 					nBatchCount = m_rOCW.m_nMaxBatches;

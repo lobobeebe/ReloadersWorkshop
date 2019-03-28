@@ -124,6 +124,8 @@ namespace ReloadersWorkShop
 				RiflesCheckBox.Click += OnCheckBoxClicked;
 				ShotgunsCheckBox.Click += OnCheckBoxClicked;
 
+				ToolsCheckBox.Click += OnCheckBoxClicked;
+
 				ScopesCheckBox.Click += OnCheckBoxClicked;
 				LasersCheckBox.Click += OnCheckBoxClicked;
 				RedDotsCheckBox.Click += OnCheckBoxClicked;
@@ -147,6 +149,8 @@ namespace ReloadersWorkShop
 				HandgunsCheckBox.AutoCheck = false;
 				RiflesCheckBox.AutoCheck = false;
 				ShotgunsCheckBox.AutoCheck = false;
+
+				ToolsCheckBox.AutoCheck = false;
 
 				ScopesCheckBox.AutoCheck = false;
 				LasersCheckBox.AutoCheck = false;
@@ -193,6 +197,8 @@ namespace ReloadersWorkShop
 			HandgunsCheckBox.Checked = m_Manufacturer.Handguns;
 			RiflesCheckBox.Checked = m_Manufacturer.Rifles;
 			ShotgunsCheckBox.Checked = m_Manufacturer.Shotguns;
+
+			ToolsCheckBox.Checked = m_Manufacturer.Tools;
 
 			ScopesCheckBox.Checked = m_Manufacturer.Scopes;
 			LasersCheckBox.Checked = m_Manufacturer.Lasers;
@@ -298,8 +304,9 @@ namespace ReloadersWorkShop
 			if (m_OriginalManufacturer.Handguns || m_OriginalManufacturer.Rifles || m_OriginalManufacturer.Shotguns ||
 				m_OriginalManufacturer.Scopes || m_OriginalManufacturer.RedDots || m_OriginalManufacturer.Lights ||
 				m_OriginalManufacturer.Triggers || m_OriginalManufacturer.Furniture || m_OriginalManufacturer.Bipods ||
-				m_OriginalManufacturer.Parts || m_OriginalManufacturer.Misc ||
-				m_OriginalManufacturer.Bullets || m_OriginalManufacturer.BulletMolds || m_OriginalManufacturer.Cases || m_OriginalManufacturer.Powder || m_OriginalManufacturer.Primers || m_OriginalManufacturer.Ammo)
+				m_OriginalManufacturer.Parts || m_OriginalManufacturer.Misc || m_OriginalManufacturer.Tools ||
+				m_OriginalManufacturer.Bullets || m_OriginalManufacturer.BulletMolds || m_OriginalManufacturer.Cases || 
+				m_OriginalManufacturer.Powder || m_OriginalManufacturer.Primers || m_OriginalManufacturer.Ammo)
 				{
 				foreach (cFirearm Firearm in m_DataFiles.FirearmList)
 					{
@@ -519,6 +526,37 @@ namespace ReloadersWorkShop
 						}
 					}
 
+				//----------------------------------------------------------------------------*
+				// Tools
+				//----------------------------------------------------------------------------*
+
+				int nToolCount = 0;
+
+				if (m_Manufacturer.Tools)
+					{
+					foreach (cTool Tool in m_DataFiles.ToolList)
+						{
+						if (Tool.Manufacturer.CompareTo(m_OriginalManufacturer) == 0)
+							nToolCount++;
+						}
+
+					if (nToolCount > 0)
+						{
+						ToolsCheckBox.Enabled = false;
+
+						if (strProducts.Length > 0)
+							{
+							strProducts += ", ";
+
+							nLastCommaIndex = strProducts.IndexOf(',', nLastCommaIndex > 0 ? nLastCommaIndex + 1 : 0);
+							}
+
+						strProducts += String.Format("{0:N0} tool{1}", nToolCount, nToolCount > 1 ? "s" : "");
+
+						nProductCount++;
+						}
+					}
+
 				if (strProducts.Length > 0)
 					{
 					if (nLastCommaIndex > 0)
@@ -630,6 +668,10 @@ namespace ReloadersWorkShop
 
 				case "TriggersCheckBox":
 					m_Manufacturer.Triggers = CheckBox.Checked;
+					break;
+
+				case "ToolsCheckBox":
+					m_Manufacturer.Tools = CheckBox.Checked;
 					break;
 
 				case "FurnitureCheckBox":
@@ -750,6 +792,8 @@ namespace ReloadersWorkShop
 			m_ProductsToolTip.SetToolTip(RiflesCheckBox, cm_strProductsToolTip);
 			m_ProductsToolTip.SetToolTip(ShotgunsCheckBox, cm_strProductsToolTip);
 
+			m_ProductsToolTip.SetToolTip(ToolsCheckBox, cm_strProductsToolTip);
+
 			m_ProductsToolTip.SetToolTip(ScopesCheckBox, cm_strProductsToolTip);
 			m_ProductsToolTip.SetToolTip(LasersCheckBox, cm_strProductsToolTip);
 			m_ProductsToolTip.SetToolTip(RedDotsCheckBox, cm_strProductsToolTip);
@@ -864,6 +908,7 @@ namespace ReloadersWorkShop
 				!FurnitureCheckBox.Checked &&
 				!BipodsCheckBox.Checked &&
 				!PartsCheckBox.Checked &&
+				!ToolsCheckBox.Checked &&
 				!OtherCheckBox.Checked)
 				{
 				fEnableOK = false;
@@ -877,6 +922,8 @@ namespace ReloadersWorkShop
 				HandgunsCheckBox.BackColor = Color.LightPink;
 				RiflesCheckBox.BackColor = Color.LightPink;
 				ShotgunsCheckBox.BackColor = Color.LightPink;
+
+				ToolsCheckBox.BackColor = Color.LightPink;
 
 				ScopesCheckBox.BackColor = Color.LightPink;
 				LasersCheckBox.BackColor = Color.LightPink;
@@ -903,6 +950,8 @@ namespace ReloadersWorkShop
 				RiflesCheckBox.BackColor = SystemColors.Control;
 				ShotgunsCheckBox.BackColor = SystemColors.Control;
 
+				ToolsCheckBox.BackColor = SystemColors.Control;
+
 				ScopesCheckBox.BackColor = SystemColors.Control;
 				LasersCheckBox.BackColor = SystemColors.Control;
 				RedDotsCheckBox.BackColor = SystemColors.Control;
@@ -927,6 +976,8 @@ namespace ReloadersWorkShop
 				m_ProductsToolTip.SetToolTip(HandgunsCheckBox, strToolTip);
 				m_ProductsToolTip.SetToolTip(RiflesCheckBox, strToolTip);
 				m_ProductsToolTip.SetToolTip(ShotgunsCheckBox, strToolTip);
+
+				m_ProductsToolTip.SetToolTip(ToolsCheckBox, strToolTip);
 
 				m_ProductsToolTip.SetToolTip(ScopesCheckBox, strToolTip);
 				m_ProductsToolTip.SetToolTip(LasersCheckBox, strToolTip);

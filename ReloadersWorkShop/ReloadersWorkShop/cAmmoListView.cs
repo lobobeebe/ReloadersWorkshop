@@ -86,6 +86,8 @@ namespace ReloadersWorkShop
 
 			CheckBoxes = true;
 
+			Font = new System.Drawing.Font(Font, System.Drawing.FontStyle.Bold);
+
 			//----------------------------------------------------------------------------*
 			// Event Handlers
 			//----------------------------------------------------------------------------*
@@ -299,11 +301,17 @@ namespace ReloadersWorkShop
 				Columns[7].Text += String.Format(" ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
 
 				if (m_DataFiles.Preferences.TrackInventory)
+					{
 					Columns[9].Text = "Qty on Hand";
+
+					Columns[10].Text = String.Format("Value ({0})", m_DataFiles.Preferences.Currency);
+					}
 				else
+					{
 					Columns[9].Text = "Box of";
 
-				Columns[10].Text = String.Format("Value ({0})", m_DataFiles.Preferences.Currency);
+					Columns[10].Text = String.Format("Costs ({0})", m_DataFiles.Preferences.Currency);
+					}
 				}
 			else
 				{
@@ -311,11 +319,17 @@ namespace ReloadersWorkShop
 				Columns[7].Text += String.Format(" ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
 
 				if (m_DataFiles.Preferences.TrackInventory)
+					{
 					Columns[11].Text = "Qty on Hand";
+
+					Columns[12].Text = String.Format("Value ({0})", m_DataFiles.Preferences.Currency);
+					}
 				else
+					{
 					Columns[11].Text = "Box of";
 
-				Columns[12].Text = String.Format("Value ({0})", m_DataFiles.Preferences.Currency);
+					Columns[12].Text = String.Format("Costs ({0})", m_DataFiles.Preferences.Currency);
+					}
 				}
 			}
 

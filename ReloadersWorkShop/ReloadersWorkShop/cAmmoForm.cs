@@ -1114,6 +1114,7 @@ namespace ReloadersWorkShop
 				return;
 
 			bool fEnableOK = m_fChanged;
+			bool fPrintOK = true;
 			string strToolTip;
 
 			SetMinMax();
@@ -1135,6 +1136,7 @@ namespace ReloadersWorkShop
 			if (ManufacturerCombo.SelectedIndex == -1)
 				{
 				fEnableOK = false;
+				fPrintOK = false;
 
 				ManufacturerCombo.BackColor = Color.LightPink;
 
@@ -1151,7 +1153,10 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			if (!PartNumberTextBox.ValueOK)
+				{
 				fEnableOK = false;
+				fPrintOK = false;
+				}
 
 			//----------------------------------------------------------------------------*
 			// Check Part Number
@@ -1183,28 +1188,40 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			if (!TypeTextBox.ValueOK)
+				{
 				fEnableOK = false;
+				fPrintOK = false;
+				}
 
 			//----------------------------------------------------------------------------*
 			// Check Bullet Diameter
 			//----------------------------------------------------------------------------*
 
 			if (!BulletDiameterTextBox.ValueOK)
+				{
 				fEnableOK = false;
+				fPrintOK = false;
+				}
 
 			//----------------------------------------------------------------------------*
 			// Check BallisticCoefficient
 			//----------------------------------------------------------------------------*
 
 			if (!BallisticCoefficientTextBox.ValueOK)
+				{
 				fEnableOK = false;
+				fPrintOK = false;
+				}
 
 			//----------------------------------------------------------------------------*
 			// Check Weight
 			//----------------------------------------------------------------------------*
 
 			if (!BulletWeightTextBox.ValueOK)
+				{
 				fEnableOK = false;
+				fPrintOK = false;
+				}
 
 			//----------------------------------------------------------------------------*
 			// Add, Edit, Remove Test Buttons
@@ -1248,7 +1265,7 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			OKButton.Enabled = fEnableOK;
-			PrintButton.Enabled = fEnableOK;
+			PrintButton.Enabled = fPrintOK;
 			}
 
 		//============================================================================*

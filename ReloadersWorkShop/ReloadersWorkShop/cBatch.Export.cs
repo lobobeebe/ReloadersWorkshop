@@ -37,6 +37,7 @@ namespace ReloadersWorkShop
 			XMLDocument.CreateElement("FullLengthSized", m_fFullLengthSized, XMLThisElement);
 			XMLDocument.CreateElement("NeckSized", m_fNeckSized, XMLThisElement);
 			XMLDocument.CreateElement("ExpandedNeck", m_fExpandedNeck, XMLThisElement);
+			XMLDocument.CreateElement("GasCheck", m_fGasCheck, XMLThisElement);
 			XMLDocument.CreateElement("NeckTurned", m_fNeckTurned, XMLThisElement);
 			XMLDocument.CreateElement("Annealed", m_fAnnealed, XMLThisElement);
 			XMLDocument.CreateElement("ModifiedBullet", m_fModifiedBullet, XMLThisElement);
@@ -128,8 +129,11 @@ namespace ReloadersWorkShop
 					case "ExpandedNeck":
 						XMLDocument.Import(XMLNode, out m_fExpandedNeck);
 						break;
+					case "GasCheck":
+						XMLDocument.Import(XMLNode, out m_fGasCheck);
+						break;
 					case "NeckTurned":
-						XMLDocument.Import(XMLNode, out m_fExpandedNeck);
+						XMLDocument.Import(XMLNode, out m_fNeckTurned);
 						break;
 					case "Annealed":
 						XMLDocument.Import(XMLNode, out m_fAnnealed);

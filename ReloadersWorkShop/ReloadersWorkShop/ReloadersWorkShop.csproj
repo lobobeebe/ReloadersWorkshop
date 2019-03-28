@@ -280,8 +280,12 @@
     </Compile>
     <Compile Include="cLight.cs" />
     <Compile Include="cListViewFirearmAccessoryComparer.cs" />
+    <Compile Include="cListViewToolComparer.cs" />
     <Compile Include="cLoad.Export.cs" />
     <Compile Include="cMagnifier.cs" />
+    <Compile Include="cMainForm.ToolsTab.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="cManufacturer.Export.cs" />
     <Compile Include="cOCWForm.cs">
       <SubType>Form</SubType>
@@ -484,6 +488,18 @@
       <DependentUpon>cTestShotForm.cs</DependentUpon>
     </Compile>
     <Compile Include="cTestShotList.cs" />
+    <Compile Include="cTool.cs" />
+    <Compile Include="cTool.Export.cs" />
+    <Compile Include="cToolForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="cToolForm.Designer.cs">
+      <DependentUpon>cToolForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="cToolList.cs" />
+    <Compile Include="cToolListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="cTransaction.cs" />
     <Compile Include="cTransaction.Export.cs" />
     <Compile Include="cTransactionList.cs" />
@@ -682,6 +698,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="cTestShotForm.resx">
       <DependentUpon>cTestShotForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="cToolForm.resx">
+      <DependentUpon>cToolForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

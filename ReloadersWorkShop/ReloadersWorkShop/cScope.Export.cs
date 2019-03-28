@@ -49,7 +49,7 @@ namespace ReloadersWorkShop
 				strLine += ",";
 				strLine += (this as cScope).Objective;
 				strLine += ",";
-				strLine += cScope.TubeSizeString((this as cScope).TubeSize);
+				strLine += cScope.TubeMeasurementString((this as cScope).TubeMeasurement);
 				strLine += ",";
 				strLine += (this as cScope).TurretClick;
 				strLine += ",";
@@ -79,7 +79,8 @@ namespace ReloadersWorkShop
 
 			XMLDocument.CreateElement("Power", m_strPower, XMLThisElement);
 			XMLDocument.CreateElement("Objective", m_strObjective, XMLThisElement);
-			XMLDocument.CreateElement("TubeSize", m_eTubeSize, XMLThisElement);
+			XMLDocument.CreateElement("TubeSize", m_nTubeSize.ToString(), XMLThisElement);
+			XMLDocument.CreateElement("TubeMeasurement", m_eTubeMeasurement, XMLThisElement);
 			XMLDocument.CreateElement("TurretClick", m_dTurretClick, XMLThisElement);
 			XMLDocument.CreateElement("TurretType", m_eTurretType, XMLThisElement);
 			}
@@ -117,7 +118,10 @@ namespace ReloadersWorkShop
 						XMLDocument.Import(XMLNode, out m_strObjective);
 						break;
 					case "TubeSize":
-						XMLDocument.Import(XMLNode, out m_eTubeSize);
+						XMLDocument.Import(XMLNode, out m_nTubeSize);
+						break;
+					case "TubeMeasurement":
+						XMLDocument.Import(XMLNode, out m_eTubeMeasurement);
 						break;
 					case "TurretClick":
 						XMLDocument.Import(XMLNode, out m_dTurretClick);

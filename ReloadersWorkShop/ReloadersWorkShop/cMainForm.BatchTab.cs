@@ -277,7 +277,7 @@ namespace ReloadersWorkShop
 
 					int nOCWBatchID = NewBatch.BatchID;
 
-					int nNumBatches = cBatchForm.OCWBatchCount(OCWSettings, NewBatch);
+					int nNumBatches = cBatchForm.OCWBatchCount(OCWSettings, NewBatch, m_DataFiles);
 
 					if (nNumBatches > OCWSettings.m_nMaxBatches)
 						nNumBatches = OCWSettings.m_nMaxBatches;

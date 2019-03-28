@@ -302,7 +302,7 @@
 			this.ManufacturerCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
 			this.ManufacturerCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.ManufacturerCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.ManufacturerCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ManufacturerCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.ManufacturerCombo.FormattingEnabled = true;
 			this.ManufacturerCombo.Location = new System.Drawing.Point(100, 47);
 			this.ManufacturerCombo.Margin = new System.Windows.Forms.Padding(2);
@@ -316,7 +316,7 @@
 			this.CaliberCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
 			this.CaliberCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.CaliberCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.CaliberCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.CaliberCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.CaliberCombo.ForeColor = System.Drawing.SystemColors.WindowText;
 			this.CaliberCombo.FormattingEnabled = true;
 			this.CaliberCombo.Location = new System.Drawing.Point(7, 134);
@@ -416,11 +416,20 @@
 			// 
 			this.FirearmTypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.FirearmTypeCombo.DropDownWidth = 115;
-			this.FirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmTypeCombo.FormattingEnabled = true;
 			this.FirearmTypeCombo.IncludeAny = false;
 			this.FirearmTypeCombo.IncludeShotgun = true;
 			this.FirearmTypeCombo.Items.AddRange(new object[] {
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
             "Handgun",
             "Rifle",
             "Shotgun",
@@ -783,7 +792,7 @@
 			// 
 			// CaliberListBox
 			// 
-			this.CaliberListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.CaliberListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.CaliberListBox.FormattingEnabled = true;
 			this.CaliberListBox.HorizontalScrollbar = true;
 			this.CaliberListBox.Location = new System.Drawing.Point(7, 20);
@@ -852,7 +861,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.FirearmCancelButton;
-			this.ClientSize = new System.Drawing.Size(693, 466);
+			this.ClientSize = new System.Drawing.Size(681, 454);
 			this.ControlBox = false;
 			this.Controls.Add(this.UsableCartridgeGroup);
 			this.Controls.Add(this.CartridgeSpecsGroupBox);

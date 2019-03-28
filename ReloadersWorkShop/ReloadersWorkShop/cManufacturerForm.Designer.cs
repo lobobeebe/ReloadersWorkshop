@@ -67,6 +67,7 @@ namespace ReloadersWorkShop
 			this.NameTextBox = new CommonLib.Controls.cTextBox();
 			this.ProductUseLabel = new System.Windows.Forms.Label();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.ToolsCheckBox = new System.Windows.Forms.CheckBox();
 			this.LightsCheckBox = new System.Windows.Forms.CheckBox();
 			this.MagnifiersCheckBox = new System.Windows.Forms.CheckBox();
 			this.LasersCheckBox = new System.Windows.Forms.CheckBox();
@@ -340,6 +341,7 @@ namespace ReloadersWorkShop
 			// 
 			// groupBox3
 			// 
+			this.groupBox3.Controls.Add(this.ToolsCheckBox);
 			this.groupBox3.Controls.Add(this.LightsCheckBox);
 			this.groupBox3.Controls.Add(this.MagnifiersCheckBox);
 			this.groupBox3.Controls.Add(this.LasersCheckBox);
@@ -359,7 +361,19 @@ namespace ReloadersWorkShop
 			this.groupBox3.Size = new System.Drawing.Size(302, 125);
 			this.groupBox3.TabIndex = 3;
 			this.groupBox3.TabStop = false;
-			this.groupBox3.Text = "Parts && Accessories";
+			this.groupBox3.Text = "Tools, Parts && Accessories";
+			// 
+			// ToolsCheckBox
+			// 
+			this.ToolsCheckBox.AutoSize = true;
+			this.ToolsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ToolsCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.ToolsCheckBox.Location = new System.Drawing.Point(111, 94);
+			this.ToolsCheckBox.Name = "ToolsCheckBox";
+			this.ToolsCheckBox.Size = new System.Drawing.Size(165, 17);
+			this.ToolsCheckBox.TabIndex = 10;
+			this.ToolsCheckBox.Text = "Tools && Reloading Equipment";
+			this.ToolsCheckBox.UseVisualStyleBackColor = true;
 			// 
 			// LightsCheckBox
 			// 
@@ -369,7 +383,7 @@ namespace ReloadersWorkShop
 			this.LightsCheckBox.Location = new System.Drawing.Point(111, 48);
 			this.LightsCheckBox.Name = "LightsCheckBox";
 			this.LightsCheckBox.Size = new System.Drawing.Size(54, 17);
-			this.LightsCheckBox.TabIndex = 9;
+			this.LightsCheckBox.TabIndex = 4;
 			this.LightsCheckBox.Text = "Lights";
 			this.LightsCheckBox.UseVisualStyleBackColor = true;
 			// 
@@ -381,7 +395,7 @@ namespace ReloadersWorkShop
 			this.MagnifiersCheckBox.Location = new System.Drawing.Point(18, 48);
 			this.MagnifiersCheckBox.Name = "MagnifiersCheckBox";
 			this.MagnifiersCheckBox.Size = new System.Drawing.Size(74, 17);
-			this.MagnifiersCheckBox.TabIndex = 8;
+			this.MagnifiersCheckBox.TabIndex = 3;
 			this.MagnifiersCheckBox.Text = "Magnifiers";
 			this.MagnifiersCheckBox.UseVisualStyleBackColor = true;
 			// 
@@ -393,7 +407,7 @@ namespace ReloadersWorkShop
 			this.LasersCheckBox.Location = new System.Drawing.Point(111, 25);
 			this.LasersCheckBox.Name = "LasersCheckBox";
 			this.LasersCheckBox.Size = new System.Drawing.Size(57, 17);
-			this.LasersCheckBox.TabIndex = 7;
+			this.LasersCheckBox.TabIndex = 1;
 			this.LasersCheckBox.Text = "Lasers";
 			this.LasersCheckBox.UseVisualStyleBackColor = true;
 			// 
@@ -405,7 +419,7 @@ namespace ReloadersWorkShop
 			this.OtherCheckBox.Location = new System.Drawing.Point(18, 94);
 			this.OtherCheckBox.Name = "OtherCheckBox";
 			this.OtherCheckBox.Size = new System.Drawing.Size(52, 17);
-			this.OtherCheckBox.TabIndex = 6;
+			this.OtherCheckBox.TabIndex = 9;
 			this.OtherCheckBox.Text = "Other";
 			this.OtherCheckBox.UseVisualStyleBackColor = true;
 			// 
@@ -417,7 +431,7 @@ namespace ReloadersWorkShop
 			this.PartsCheckBox.Location = new System.Drawing.Point(184, 71);
 			this.PartsCheckBox.Name = "PartsCheckBox";
 			this.PartsCheckBox.Size = new System.Drawing.Size(87, 17);
-			this.PartsCheckBox.TabIndex = 5;
+			this.PartsCheckBox.TabIndex = 8;
 			this.PartsCheckBox.Text = "Firearm Parts";
 			this.PartsCheckBox.UseVisualStyleBackColor = true;
 			// 
@@ -429,7 +443,7 @@ namespace ReloadersWorkShop
 			this.BipodsCheckBox.Location = new System.Drawing.Point(111, 71);
 			this.BipodsCheckBox.Name = "BipodsCheckBox";
 			this.BipodsCheckBox.Size = new System.Drawing.Size(58, 17);
-			this.BipodsCheckBox.TabIndex = 4;
+			this.BipodsCheckBox.TabIndex = 7;
 			this.BipodsCheckBox.Text = "Bipods";
 			this.BipodsCheckBox.UseVisualStyleBackColor = true;
 			// 
@@ -441,7 +455,7 @@ namespace ReloadersWorkShop
 			this.RedDotsCheckBox.Location = new System.Drawing.Point(184, 25);
 			this.RedDotsCheckBox.Name = "RedDotsCheckBox";
 			this.RedDotsCheckBox.Size = new System.Drawing.Size(71, 17);
-			this.RedDotsCheckBox.TabIndex = 3;
+			this.RedDotsCheckBox.TabIndex = 2;
 			this.RedDotsCheckBox.Text = "Red Dots";
 			this.RedDotsCheckBox.UseVisualStyleBackColor = true;
 			// 
@@ -453,7 +467,7 @@ namespace ReloadersWorkShop
 			this.FurnitureCheckBox.Location = new System.Drawing.Point(18, 71);
 			this.FurnitureCheckBox.Name = "FurnitureCheckBox";
 			this.FurnitureCheckBox.Size = new System.Drawing.Size(67, 17);
-			this.FurnitureCheckBox.TabIndex = 2;
+			this.FurnitureCheckBox.TabIndex = 6;
 			this.FurnitureCheckBox.Text = "Furniture";
 			this.FurnitureCheckBox.UseVisualStyleBackColor = true;
 			// 
@@ -465,7 +479,7 @@ namespace ReloadersWorkShop
 			this.TriggersCheckBox.Location = new System.Drawing.Point(184, 48);
 			this.TriggersCheckBox.Name = "TriggersCheckBox";
 			this.TriggersCheckBox.Size = new System.Drawing.Size(64, 17);
-			this.TriggersCheckBox.TabIndex = 1;
+			this.TriggersCheckBox.TabIndex = 5;
 			this.TriggersCheckBox.Text = "Triggers";
 			this.TriggersCheckBox.UseVisualStyleBackColor = true;
 			// 
@@ -489,7 +503,7 @@ namespace ReloadersWorkShop
 			this.FormCancelButton.Name = "FormCancelButton";
 			this.FormCancelButton.ShowToolTips = true;
 			this.FormCancelButton.Size = new System.Drawing.Size(75, 23);
-			this.FormCancelButton.TabIndex = 5;
+			this.FormCancelButton.TabIndex = 6;
 			this.FormCancelButton.Text = "Cancel";
 			this.FormCancelButton.ToolTip = "Click to cancel changes and exit.";
 			this.FormCancelButton.UseVisualStyleBackColor = true;
@@ -502,7 +516,7 @@ namespace ReloadersWorkShop
 			this.OKButton.Name = "OKButton";
 			this.OKButton.ShowToolTips = true;
 			this.OKButton.Size = new System.Drawing.Size(75, 23);
-			this.OKButton.TabIndex = 6;
+			this.OKButton.TabIndex = 5;
 			this.OKButton.Text = "OK";
 			this.OKButton.ToolTip = "Click to accept changes and exit.";
 			this.OKButton.UseVisualStyleBackColor = true;
@@ -513,7 +527,7 @@ namespace ReloadersWorkShop
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.FormCancelButton;
-			this.ClientSize = new System.Drawing.Size(326, 486);
+			this.ClientSize = new System.Drawing.Size(318, 478);
 			this.ControlBox = false;
 			this.Controls.Add(this.OKButton);
 			this.Controls.Add(this.FormCancelButton);
@@ -574,5 +588,6 @@ namespace ReloadersWorkShop
 		private System.Windows.Forms.CheckBox LightsCheckBox;
 		private CommonLib.Controls.cCancelButton FormCancelButton;
 		private CommonLib.Controls.cOKButton OKButton;
+		private System.Windows.Forms.CheckBox ToolsCheckBox;
 		}
 	}

@@ -62,6 +62,8 @@ namespace ReloadersWorkShop
 
 			CheckBoxes = true;
 
+			Font = new System.Drawing.Font(Font, System.Drawing.FontStyle.Bold);
+
 			//----------------------------------------------------------------------------*
 			// Event Handlers
 			//----------------------------------------------------------------------------*

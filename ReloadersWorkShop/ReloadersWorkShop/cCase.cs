@@ -366,6 +366,8 @@ namespace ReloadersWorkShop
 			{
 			string strString = String.Format("{0}", Manufacturer.Name);
 
+			strString += (" " + m_strPartNumber);
+
 			if (!string.IsNullOrEmpty(Manufacturer.HeadStamp) && Manufacturer.HeadStamp != Manufacturer.Name)
 				strString += String.Format(" ({0})", Manufacturer.HeadStamp);
 
@@ -392,6 +394,9 @@ namespace ReloadersWorkShop
 
 			if (!String.IsNullOrEmpty(Manufacturer.HeadStamp) && Manufacturer.HeadStamp != Manufacturer.Name)
 				strHeadStamp += String.Format("({0}", (Manufacturer != null) ? Manufacturer.HeadStamp : "");
+
+			if (!String.IsNullOrEmpty(m_strPartNumber))
+				strString += " " + m_strPartNumber;
 
 			if (m_fMatch)
 				strString += " Match";

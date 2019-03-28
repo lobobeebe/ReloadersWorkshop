@@ -88,6 +88,7 @@ namespace ReloadersWorkShop
 		private cPrimerList m_PrimerList = null;
 		private cAmmoList m_AmmoList = null;
 		private cGearList m_GearList = null;
+		private cToolList m_ToolList = null;
 
 		private cManufacturer m_BatchManufacturer = null;
 
@@ -510,6 +511,7 @@ namespace ReloadersWorkShop
 			m_CaliberList.Clear();
 			m_ManufacturerList.Clear();
 			m_GearList.Clear();
+			m_ToolList.Clear();
 			}
 
 		//============================================================================*
@@ -970,6 +972,7 @@ namespace ReloadersWorkShop
 				int nPowderCount = 0;
 				int nPrimerCount = 0;
 				int nFirearmCount = 0;
+				int nToolCount = 0;
 				int nFirearmAccessoryCount = 0;
 
 				//----------------------------------------------------------------------------*
@@ -990,6 +993,16 @@ namespace ReloadersWorkShop
 					{
 					if (CheckGear.Manufacturer.CompareTo(Manufacturer) == 0)
 						nFirearmAccessoryCount++;
+					}
+
+				//----------------------------------------------------------------------------*
+				// Count all tools and equipment made by this manufacturer
+				//----------------------------------------------------------------------------*
+
+				foreach (cTool CheckTool in m_ToolList)
+					{
+					if (CheckTool.Manufacturer.CompareTo(Manufacturer) == 0)
+						nToolCount++;
 					}
 
 				//----------------------------------------------------------------------------*
@@ -1037,6 +1050,9 @@ namespace ReloadersWorkShop
 
 				if (nFirearmAccessoryCount > 0)
 					strCount += String.Format("{0:G0} Firearm Accessor{1}\n", nFirearmAccessoryCount, nFirearmAccessoryCount > 1 ? "ies" : "y");
+
+				if (nToolCount > 0)
+					strCount += String.Format("{0:G0} Tool{1}\n", nToolCount, nToolCount > 1 ? "s" : "");
 
 				if (nBulletCount > 0)
 					strCount += String.Format("{0:G0} Bullet{1}\n", nBulletCount, nBulletCount > 1 ? "s" : "");
@@ -1133,6 +1149,18 @@ namespace ReloadersWorkShop
 				m_PrimerList.Remove(Primer);
 
 			return (strCount);
+			}
+
+		//============================================================================*
+		// DeleteTool()
+		//============================================================================*
+
+		public void DeleteTool(cTool Tool)
+			{
+			if (Tool == null)
+				return;
+
+			m_ToolList.Remove(Tool);
 			}
 
 		//============================================================================*
@@ -1416,6 +1444,15 @@ namespace ReloadersWorkShop
 				}
 
 			return (null);
+			}
+
+		//============================================================================*
+		// GetSAAMIPath()
+		//============================================================================*
+
+		public string GetSAAMIPath()
+			{
+			return (String.Format(@"c:\Users\Public\{0}\SAAMI", Application.ProductName));
 			}
 
 		//============================================================================*
@@ -1953,6 +1990,7 @@ namespace ReloadersWorkShop
 			m_BatchList = new cBatchList();
 			m_AmmoList = new cAmmoList();
 			m_GearList = new cGearList();
+			m_ToolList = new cToolList();
 
 			//----------------------------------------------------------------------------*
 			// Restore Backup?
@@ -2013,8 +2051,14 @@ namespace ReloadersWorkShop
 					// Load the data members
 					//----------------------------------------------------------------------------*
 
+					bool fExtendedData = false;
+
 					try
 						{
+						//----------------------------------------------------------------------------*
+						// Load the Original Data Lists
+						//----------------------------------------------------------------------------*
+
 						m_ManufacturerList = (cManufacturerList)Formatter.Deserialize(Stream);
 						m_CaliberList = (cCaliberList)Formatter.Deserialize(Stream);
 						m_FirearmList = (cFirearmList)Formatter.Deserialize(Stream);
@@ -2032,7 +2076,15 @@ namespace ReloadersWorkShop
 
 						cPreferences.StaticPreferences.Deserialize(Formatter, Stream);
 
+						//----------------------------------------------------------------------------*
+						// Load the Extended Data Lists
+						//----------------------------------------------------------------------------*
+
+						fExtendedData = true;
+
 						m_GearList = (cGearList)Formatter.Deserialize(Stream);
+
+						m_ToolList = (cToolList)Formatter.Deserialize(Stream);
 						}
 					catch
 						{
@@ -2041,6 +2093,16 @@ namespace ReloadersWorkShop
 							MessageBox.Show("Error while restoring backup!!", "Restore Backup Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
 							fLoadOK = false;
+							}
+						else
+
+						if (fExtendedData)
+							{
+							if (m_GearList == null)
+								m_GearList = new ReloadersWorkShop.cGearList();
+
+							if (m_ToolList == null)
+								m_ToolList = new ReloadersWorkShop.cToolList();
 							}
 						else
 							{
@@ -2156,6 +2218,9 @@ namespace ReloadersWorkShop
 
 				if (m_GearList == null)
 					m_GearList = new cGearList();
+
+				if (m_ToolList == null)
+					m_ToolList = new cToolList();
 
 				//----------------------------------------------------------------------------*
 				// Set up default preferences
@@ -2665,6 +2730,8 @@ namespace ReloadersWorkShop
 
 				Formatter.Serialize(Stream, m_GearList);
 
+				Formatter.Serialize(Stream, m_ToolList);
+
 				//----------------------------------------------------------------------------*
 				// Close the stream
 				//----------------------------------------------------------------------------*
@@ -2943,6 +3010,12 @@ namespace ReloadersWorkShop
 			try
 				{
 				m_GearList.Sort(cGear.Comparer);
+				}
+			catch { }
+
+			try
+				{
+				m_ToolList.Sort(cTool.Comparer);
 				}
 			catch { }
 			}
@@ -3447,6 +3520,13 @@ namespace ReloadersWorkShop
 				CheckGear.Synch(Manufacturer);
 
 			//----------------------------------------------------------------------------*
+			// Tools
+			//----------------------------------------------------------------------------*
+
+			foreach (cTool Tool in m_ToolList)
+				Tool.Synch(Manufacturer);
+
+			//----------------------------------------------------------------------------*
 			// Preferences
 			//----------------------------------------------------------------------------*
 
@@ -3620,6 +3700,18 @@ namespace ReloadersWorkShop
 					Ammo.TransactionList = new cTransactionList();
 
 				Synch(Ammo);
+				}
+			}
+
+		//============================================================================*
+		// ToolList Property
+		//============================================================================*
+
+		public cToolList ToolList
+			{
+			get
+				{
+				return (m_ToolList);
 				}
 			}
 
