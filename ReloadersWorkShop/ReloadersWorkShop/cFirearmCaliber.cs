@@ -11,10 +11,6 @@
 
 using System;
 
-using System.Windows.Forms;
-
-using ReloadersWorkShop.Preferences;
-
 //============================================================================*
 // NameSpace
 //============================================================================*
@@ -26,7 +22,7 @@ namespace ReloadersWorkShop
 	//============================================================================*
 
 	[Serializable]
-	public class cFirearmCaliber
+	public partial class cFirearmCaliber
 		{
 		//----------------------------------------------------------------------------*
 		// Private Data Members
@@ -50,9 +46,26 @@ namespace ReloadersWorkShop
 
 		public cFirearmCaliber(cFirearmCaliber FirearmCaliber)
 			{
-			m_Caliber = FirearmCaliber.m_Caliber;
+			Copy(FirearmCaliber);
+			}
 
-			m_fPrimary = FirearmCaliber.m_fPrimary;
+		//============================================================================*
+		// Append()
+		//============================================================================*
+
+		public int Append(cFirearmCaliber FirearmCaliber, bool fCountOnly = false)
+			{
+			int nUpdateCount = 0;
+
+			if (!m_fPrimary && FirearmCaliber.m_fPrimary)
+				{
+				if (!fCountOnly)
+					m_fPrimary = FirearmCaliber.m_fPrimary;
+
+				nUpdateCount++;
+				}
+
+			return (nUpdateCount);
 			}
 
 		//============================================================================*
@@ -100,10 +113,21 @@ namespace ReloadersWorkShop
 			cFirearmCaliber FirearmCaliber = (cFirearmCaliber) obj;
 
 			//----------------------------------------------------------------------------*
-			// Compare Bullet
+			// Compare Caliber
 			//----------------------------------------------------------------------------*
 
 			return (m_Caliber.CompareTo(FirearmCaliber.m_Caliber));
+			}
+
+		//============================================================================*
+		// Copy()
+		//============================================================================*
+
+		public void Copy(cFirearmCaliber FirearmCaliber)
+			{
+			m_Caliber = FirearmCaliber.m_Caliber;
+
+			m_fPrimary = FirearmCaliber.m_fPrimary;
 			}
 
 		//============================================================================*
@@ -120,6 +144,15 @@ namespace ReloadersWorkShop
 				{
 				m_fPrimary = value;
 				}
+			}
+
+		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public bool ResolveIdentities(cDataFiles Datafiles)
+			{
+			return (false);
 			}
 
 		//============================================================================*
@@ -150,6 +183,17 @@ namespace ReloadersWorkShop
 				strString += " - Primary";
 
 			return (strString);
+			}
+
+		//============================================================================*
+		// Validate()
+		//============================================================================*
+
+		public bool Validate()
+			{
+			bool fOK = m_Caliber != null;
+
+			return (fOK);
 			}
 		}
 	}

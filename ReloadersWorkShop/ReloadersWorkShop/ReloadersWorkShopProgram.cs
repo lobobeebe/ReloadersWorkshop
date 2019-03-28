@@ -68,7 +68,7 @@ namespace ReloadersWorkShop
 
 			if (strGUID == null || strGUID != "1aa3257d-fa44-4f49-9546-076b2385cd35")
 				{
-				MessageBox.Show("You must use the launcher to start Reloader's WorkShop.  You can not execute it directly.", "Execution Out of Order", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show(String.Format("You must use the launcher to start {0}.  You can not execute it directly.", Application.ProductName), "Execution Out of Order", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
 				return;
 				}

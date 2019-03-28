@@ -23,7 +23,7 @@ namespace ReloadersWorkShop
 	//============================================================================*
 
 	[Serializable]
-	public class cPrimer : cSupply
+	public partial class cPrimer : cSupply
 		{
 		//============================================================================*
 		// Public Enumerations
@@ -52,8 +52,8 @@ namespace ReloadersWorkShop
 		// cPrimer() - Constructor
 		//============================================================================*
 
-		public cPrimer()
-			: base(cSupply.eSupplyTypes.Primers)
+		public cPrimer(bool fIdentity = false)
+			: base(cSupply.eSupplyTypes.Primers, fIdentity)
 			{
 			}
 
@@ -158,143 +158,6 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// CSVHeader Property
-		//============================================================================*
-
-		public static string CSVHeader
-			{
-			get
-				{
-				return ("Primers");
-				}
-			}
-
-		//============================================================================*
-		// CSVLine Property
-		//============================================================================*
-
-		public string CSVLine
-			{
-			get
-				{
-				string strLine = "";
-
-				strLine += Manufacturer.Name;
-				strLine += ",";
-
-				strLine += m_strModel;
-				strLine += ",";
-				strLine += cFirearm.FirearmTypeString(FirearmType);
-				strLine += ",";
-				strLine += CrossUse ? "Yes," : "-,";
-
-				strLine += m_eSize == ePrimerSize.Small ? "Small" : "Large";
-				strLine += ",";
-
-				strLine += m_fStandard ? "Yes," : "-,";
-				strLine += m_fMagnum ? "Yes," : "-,";
-				strLine += m_fBenchRest ? "Yes," : "-,";
-				strLine += m_fMilitary ? "Yes," : "-";
-
-				return (strLine);
-				}
-			}
-
-		//============================================================================*
-		// CSVLineHeader Property
-		//============================================================================*
-
-		public static string CSVLineHeader
-			{
-			get
-				{
-				return ("Manufacturer,Model,Firearm Type,Cross Use?,Size,Standard,Magnum,Bench Rest,Military");
-				}
-			}
-
-		//============================================================================*
-		// Export() - XML Document
-		//============================================================================*
-
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
-			{
-			XmlElement XMLThisElement = XMLDocument.CreateElement("Primer");
-			XMLParentElement.AppendChild(XMLThisElement);
-
-			// Manufacturer
-
-			XmlElement XMLElement = XMLDocument.CreateElement("Manufacturer");
-			XmlText XMLTextElement = XMLDocument.CreateTextNode(Manufacturer.Name);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Model
-
-			XMLElement = XMLDocument.CreateElement("Model");
-			XMLTextElement = XMLDocument.CreateTextNode(m_strModel);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Firearm Type
-
-			XMLElement = XMLDocument.CreateElement("FirearmType");
-			XMLTextElement = XMLDocument.CreateTextNode(cFirearm.FirearmTypeString(FirearmType));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Cross  Use
-
-			XMLElement = XMLDocument.CreateElement("CrossUse");
-			XMLTextElement = XMLDocument.CreateTextNode(CrossUse ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Size
-
-			XMLElement = XMLDocument.CreateElement("Size");
-			XMLTextElement = XMLDocument.CreateTextNode(m_eSize == ePrimerSize.Small ? "Small" : "Large");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Standard
-
-			XMLElement = XMLDocument.CreateElement("Standard");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fStandard ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Magnum
-
-			XMLElement = XMLDocument.CreateElement("Magnum");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fMagnum ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Bench Rest
-
-			XMLElement = XMLDocument.CreateElement("BenchRest");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fBenchRest ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Military
-
-			XMLElement = XMLDocument.CreateElement("Military");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fMilitary ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-			}
-
-		//============================================================================*
 		// Magnum Property
 		//============================================================================*
 
@@ -343,7 +206,34 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// SortSizeString Property
+		// PrimerSizeFromString Property
+		//============================================================================*
+
+		public static cPrimer.ePrimerSize PrimerSizeFromString(string strString)
+			{
+			switch (strString.Substring(0,5))
+				{
+				case "Small":
+					return (cPrimer.ePrimerSize.Small);
+
+				case "Large":
+					return (cPrimer.ePrimerSize.Large);
+				}
+
+			return (cPrimer.ePrimerSize.Small);
+			}
+
+		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public override bool ResolveIdentities(cDataFiles DataFiles)
+			{
+			return (base.ResolveIdentities(DataFiles));
+			}
+
+		//============================================================================*
+		// ShortSizeString Property
 		//============================================================================*
 
 		public string ShortSizeString
@@ -431,12 +321,38 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// ToShortSizeString()
+		//============================================================================*
+
+		public static string ToShortSizeString(cPrimer.ePrimerSize eSize)
+			{
+			string strString = "";
+
+			switch (eSize)
+				{
+				case ePrimerSize.Small:
+					strString = "Small";
+					break;
+
+				case ePrimerSize.Large:
+					strString = "Large";
+					break;
+				}
+
+			return (strString);
+			}
+
+		//============================================================================*
 		// ToShortString()
 		//============================================================================*
 
 		public string ToShortString()
 			{
-			return (String.Format("{0} {1}", (Manufacturer != null ? Manufacturer.ToString() : ""), (m_strModel != null ? m_strModel : "")));
+			string strString = String.Format("{0} {1}", (Manufacturer != null ? Manufacturer.ToString() : ""), (m_strModel != null ? m_strModel : ""));
+
+			strString = ToCrossUseString(strString);
+
+			return (strString);
 			}
 
 		//============================================================================*
@@ -456,43 +372,27 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// XMLHeader Property
+		// Validate()
 		//============================================================================*
 
-		public static string XMLHeader
+		public override bool Validate(bool fIdentityOK = false)
 			{
-			get
-				{
-				return ("Primers");
-				}
-			}
+			if (!base.Validate(fIdentityOK))
+				return (false);
 
-		//============================================================================*
-		// XMLLine Property
-		//============================================================================*
+			if (String.IsNullOrEmpty(m_strModel))
+				return (false);
 
-		public string XMLLine
-			{
-			get
-				{
-				string strLine = "";
+			if (fIdentityOK && Identity)
+				return (true);
 
-				return (strLine);
-				}
-			}
+			if (Identity)
+				return (false);
 
-		//============================================================================*
-		// XMLLineHeader Property
-		//============================================================================*
+			if (!m_fStandard && !m_fMagnum && !m_fMilitary && !m_fBenchRest)
+				return (false);
 
-		public static string XMLLineHeader
-			{
-			get
-				{
-				string strLine = "Firearm Type,Name,Headstamp,Handgun Type,Small Primer,Large Primer,Magnum Primer,Min Bullet Dia.,Max Bullet Dia.,Min Bullet Weight,Max Bullet Weight,Case Trim Length,Max Case Length,Max COAL,Max Neck Dia";
-
-				return (strLine);
-				}
+			return (true);
 			}
 		}
 	}

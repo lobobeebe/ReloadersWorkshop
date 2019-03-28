@@ -340,7 +340,7 @@ namespace ReloadersWorkShop
 
 		private void PopulateStatistics()
 			{
-			cTestStatistics Statistics = m_TestShotList.GetStatistics(m_nNumRounds);
+			cTestStatistics Statistics = new cTestStatistics(m_TestShotList);
 
 			AvgLabel.Text = String.Format("{0:F1} {1}", cDataFiles.StandardToMetric(Statistics.AverageVelocity, cDataFiles.eDataType.Velocity), cDataFiles.MetricString(cDataFiles.eDataType.Velocity));
 			MinLabel.Text = String.Format("{0:G0} {1}", cDataFiles.StandardToMetric(Statistics.MinVelocity, cDataFiles.eDataType.Velocity), cDataFiles.MetricString(cDataFiles.eDataType.Velocity));

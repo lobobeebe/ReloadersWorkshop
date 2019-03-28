@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cMainForm.CaliberTab.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -80,7 +80,7 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// Private Data Members
+		// InitializeCaliberTab()
 		//============================================================================*
 
 		public void InitializeCaliberTab()
@@ -92,6 +92,7 @@ namespace ReloadersWorkShop
 				//----------------------------------------------------------------------------*
 
 				m_CalibersListView = new cCaliberListView(m_DataFiles);
+				m_CalibersListView.ToolTip = "List of calibers in the database.";
 
 				CalibersTab.Controls.Add(m_CalibersListView);
 
@@ -112,6 +113,8 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 			// Operations that are always performed
 			//----------------------------------------------------------------------------*
+
+			m_CalibersListView.ShowToolTips = m_DataFiles.Preferences.ToolTips;
 
 			HideUncheckedCalibersCheckBox.Checked = m_DataFiles.Preferences.HideUncheckedCalibers;
 
@@ -178,7 +181,7 @@ namespace ReloadersWorkShop
 
 		protected void OnCaliberChecked(object sender, ItemCheckedEventArgs args)
 			{
-			if (!m_fInitialized)
+			if (!m_fInitialized || m_fPopulating || m_CalibersListView.Populating)
 				return;
 
 			cCaliber Caliber = (cCaliber)args.Item.Tag;
@@ -283,9 +286,12 @@ namespace ReloadersWorkShop
 
 			m_CalibersListView.HideUnchecked = HideUncheckedCalibersCheckBox.Checked;
 
-			PopulateSuppliesListView();
-
-			PopulateBallisticsCaliberCombo();
+			InitializeFirearmTab();
+			InitializeSuppliesTab();
+			InitializeLoadDataTab();
+			InitializeBatchTab();
+			InitializeAmmoTab();
+			InitializeBallisticsTab();
 
 			SetSupplyCount();
 			SetCaliberCount();
@@ -389,7 +395,11 @@ namespace ReloadersWorkShop
 
 		public void PopulateCalibersListView()
 			{
+			m_fPopulating = true;
+
 			m_CalibersListView.Populate();
+
+			m_fPopulating = false;
 
 			UpdateCaliberTabButtons();
 			}
@@ -417,7 +427,6 @@ namespace ReloadersWorkShop
 				CaliberCountLabel.Text += "    (All checked calibers are displayed)";
 			else
 				CaliberCountLabel.Text += "    (All calibers are displayed)";
-
 			}
 
 		//============================================================================*
@@ -436,32 +445,13 @@ namespace ReloadersWorkShop
 				// See if this is the same Caliber
 				//----------------------------------------------------------------------------*
 
-				if (CheckCaliber.Equals(OldCaliber))
+				if (CheckCaliber.CompareTo(OldCaliber) == 0)
 					{
 					//----------------------------------------------------------------------------*
 					// Update the current Caliber record
 					//----------------------------------------------------------------------------*
 
-					CheckCaliber.FirearmType = NewCaliber.FirearmType;
-					CheckCaliber.Name = NewCaliber.Name;
-					CheckCaliber.HeadStamp = NewCaliber.HeadStamp;
-
-					CheckCaliber.Pistol = NewCaliber.Pistol;
-
-					CheckCaliber.SmallPrimer = NewCaliber.SmallPrimer;
-					CheckCaliber.LargePrimer = NewCaliber.LargePrimer;
-					CheckCaliber.MagnumPrimer = NewCaliber.MagnumPrimer;
-
-					CheckCaliber.MinBulletDiameter = NewCaliber.MinBulletDiameter;
-					CheckCaliber.MaxBulletDiameter = NewCaliber.MaxBulletDiameter;
-					CheckCaliber.MinBulletWeight = NewCaliber.MinBulletWeight;
-					CheckCaliber.MaxBulletWeight = NewCaliber.MaxBulletWeight;
-					CheckCaliber.CaseTrimLength = NewCaliber.CaseTrimLength;
-					CheckCaliber.MaxCaseLength = NewCaliber.MaxCaseLength;
-					CheckCaliber.MaxCOL = NewCaliber.MaxCOL;
-					CheckCaliber.MaxNeckDiameter = NewCaliber.MaxNeckDiameter;
-					CheckCaliber.SAAMIPDF = NewCaliber.SAAMIPDF;
-					CheckCaliber.Checked = NewCaliber.Checked;
+					CheckCaliber.Copy(NewCaliber);
 
 					//----------------------------------------------------------------------------*
 					// Update the Caliber on the Caliber tab

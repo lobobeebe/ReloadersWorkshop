@@ -31,13 +31,15 @@ namespace ReloadersWorkShop
 		//============================================================================*
 
 		private cDataFiles m_DataFiles = null;
-		private string m_strFilePath = @"C:\Users\Public\Reloader's WorkShop\Exported Data\RWData.csv";
+		private string m_strFilePath = String.Format(@"C:\Users\Public\{0}\Exported Data\RWData.csv", Application.ProductName);
+
+		private bool m_fDev = false;
 
 		//============================================================================*
 		// cExportForm() - Constructor
 		//============================================================================*
 
-		public cExportForm(cDataFiles DataFiles)
+		public cExportForm(cDataFiles DataFiles, bool fDev = false)
 			{
 			InitializeComponent();
 
@@ -45,8 +47,16 @@ namespace ReloadersWorkShop
 				Directory.CreateDirectory(Path.GetDirectoryName(m_strFilePath));
 
 			m_DataFiles = DataFiles;
+			m_fDev = fDev;
 
 			SetClientSizeCore(ExportFileGroupBox.Location.X + ExportFileGroupBox.Width + 10, CancelFormButton.Location.Y + CancelFormButton.Height + 20);
+
+			if (!m_fDev)
+				{
+				DatabaseUpdateCheckBox.Visible = false;
+				DatabaseUpdateCheckBox.Enabled = false;
+				DatabaseUpdateCheckBox.Checked = false;
+				}
 
 			//----------------------------------------------------------------------------*
 			// Event Handlers
@@ -55,22 +65,22 @@ namespace ReloadersWorkShop
 			BrowseButton.Click += OnBrowseClicked;
 			ExportButton.Click += OnExportClicked;
 
-			LoadsCheckBox.Click += OnLoadsClicked;
-			BatchesCheckBox.Click += OnBatchesClicked;
+			FullDataDumpCheckBox.Click += OnFilterClicked;
+			DatabaseUpdateCheckBox.Click += OnFilterClicked;
+			LoadsCheckBox.Click += OnFilterClicked;
+			BatchesCheckBox.Click += OnFilterClicked;
 
 			ManufacturersCheckBox.Click += OnFilterClicked;
 			CalibersCheckBox.Click += OnFilterClicked;
 			FirearmsCheckBox.Click += OnFilterClicked;
-			AmmoCheckBox.Click += OnFilterClicked;
+			PartsCheckBox.Click += OnFilterClicked;
 
 			BulletsCheckBox.Click += OnFilterClicked;
 			CasesCheckBox.Click += OnFilterClicked;
 			PowdersCheckBox.Click += OnFilterClicked;
 			PrimersCheckBox.Click += OnFilterClicked;
 
-			BatchTestsCheckBox.Click += OnFilterClicked;
-			ChargeDataCheckBox.Click += OnFilterClicked;
-
+			AmmoCheckBox.Click += OnFilterClicked;
 			FileTypeCombo.SelectedIndexChanged += OnFileTypeSelected;
 
 			//----------------------------------------------------------------------------*
@@ -92,7 +102,7 @@ namespace ReloadersWorkShop
 			{
 			bool fExportOK = false;
 
-			switch ((cDataFiles.eExportType) FileTypeCombo.SelectedIndex)
+			switch ((cDataFiles.eExportType)FileTypeCombo.SelectedIndex)
 				{
 				case cDataFiles.eExportType.CSV:
 					StreamWriter Writer = null;
@@ -147,7 +157,6 @@ namespace ReloadersWorkShop
 
 							return;
 							}
-
 						}
 
 					break;
@@ -177,7 +186,7 @@ namespace ReloadersWorkShop
 					// Store the header
 					//----------------------------------------------------------------------------*
 
-					Writer.WriteLine("Reloader's WorkShop Data File Export");
+					Writer.WriteLine(String.Format("{0} Data File Export", Application.ProductName));
 					Writer.WriteLine();
 
 					//----------------------------------------------------------------------------*
@@ -212,7 +221,7 @@ namespace ReloadersWorkShop
 						m_DataFiles.LoadList.Export(Writer);
 
 					if (BatchesCheckBox.Checked)
-						m_DataFiles.BatchList.Export(Writer, BatchTestsCheckBox.Checked);
+						m_DataFiles.BatchList.Export(Writer);
 					}
 				}
 			catch
@@ -233,7 +242,7 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				switch ((cDataFiles.eExportType) FileTypeCombo.SelectedIndex)
+				switch ((cDataFiles.eExportType)FileTypeCombo.SelectedIndex)
 					{
 					case cDataFiles.eExportType.XML:
 						return ("XML Files (*.xml)|*.xml");
@@ -249,72 +258,27 @@ namespace ReloadersWorkShop
 		// ExportXML()
 		//============================================================================*
 
-		public XmlDocument ExportXML()
+		public cRWXMLDocument ExportXML()
 			{
-			XmlDocument XMLDocument = new XmlDocument();
-			XMLDocument.PreserveWhitespace = true;
+			cRWXMLDocument XMLDocument = new cRWXMLDocument(m_DataFiles);
 
-			//----------------------------------------------------------------------------*
-			// Create Declaration
-			//----------------------------------------------------------------------------*
+			XMLDocument.FullDataDump = FullDataDumpCheckBox.Checked;
 
-			XmlDeclaration xmlDeclaration = XMLDocument.CreateXmlDeclaration("1.0", "UTF-8", null);
-			XmlElement RootElement = XMLDocument.DocumentElement;
+			XMLDocument.IncludeAmmo = AmmoCheckBox.Checked;
+			XMLDocument.IncludeBatches = BatchesCheckBox.Checked;
+			XMLDocument.IncludeBullets = BulletsCheckBox.Checked;
+			XMLDocument.IncludeCalibers = CalibersCheckBox.Checked;
+			XMLDocument.IncludeCases = CasesCheckBox.Checked;
+			XMLDocument.IncludeFirearms = FirearmsCheckBox.Checked;
+			XMLDocument.IncludeLoads = LoadsCheckBox.Checked;
+			XMLDocument.IncludeManufacturers = ManufacturersCheckBox.Checked;
+			XMLDocument.IncludePowders = PowdersCheckBox.Checked;
+			XMLDocument.IncludePrimers = PrimersCheckBox.Checked;
+			XMLDocument.IncludeParts = PartsCheckBox.Checked;
 
-			XMLDocument.InsertBefore(xmlDeclaration, RootElement);
-
-			//----------------------------------------------------------------------------*
-			// Create the Main Element
-			//----------------------------------------------------------------------------*
-
-			XmlElement MainElement = XMLDocument.CreateElement("Body");
-			XMLDocument.AppendChild(MainElement);
-
-			XmlText XMLTextElement = XMLDocument.CreateTextNode("Reloader's WorkShop Data File Export");
-			MainElement.AppendChild(XMLTextElement);
-
-			if (ManufacturersCheckBox.Checked)
-				m_DataFiles.ManufacturerList.Export(XMLDocument, MainElement);
-
-			if (CalibersCheckBox.Checked)
-				m_DataFiles.CaliberList.Export(XMLDocument, MainElement);
-
-			if (FirearmsCheckBox.Checked)
-				m_DataFiles.FirearmList.Export(XMLDocument, MainElement);
-
-			if (AmmoCheckBox.Checked)
-				m_DataFiles.AmmoList.Export(XMLDocument, MainElement);
-
-			if (BulletsCheckBox.Checked)
-				m_DataFiles.BulletList.Export(XMLDocument, MainElement);
-
-			if (PowdersCheckBox.Checked)
-				m_DataFiles.PowderList.Export(XMLDocument, MainElement);
-
-			if (PrimersCheckBox.Checked)
-				m_DataFiles.PrimerList.Export(XMLDocument, MainElement);
-
-			if (CasesCheckBox.Checked)
-				m_DataFiles.CaseList.Export(XMLDocument, MainElement);
-
-			if (LoadsCheckBox.Checked)
-				m_DataFiles.LoadList.Export(XMLDocument, MainElement, ChargeDataCheckBox.Checked);
-
-			if (BatchesCheckBox.Checked)
-				m_DataFiles.BatchList.Export(XMLDocument, MainElement, BatchTestsCheckBox.Checked);
+			XMLDocument.Export(FullDataDumpCheckBox.Checked, DatabaseUpdateCheckBox.Checked);
 
 			return (XMLDocument);
-			}
-
-		//============================================================================*
-		// OnBatchesClicked()
-		//============================================================================*
-
-		private void OnBatchesClicked(Object sender, EventArgs e)
-			{
-			BatchTestsCheckBox.Enabled = BatchesCheckBox.Checked;
-
-			UpdateButtons();
 			}
 
 		//============================================================================*
@@ -329,7 +293,7 @@ namespace ReloadersWorkShop
 
 			SaveFileDialog FileDlg = new SaveFileDialog();
 
-			FileDlg.Title = "Export Reloader's WorkShop Data Files";
+			FileDlg.Title = String.Format("Export {0} Data Files", Application.ProductName);
 			FileDlg.AddExtension = true;
 			FileDlg.DefaultExt = Path.GetExtension(m_strFilePath);
 			FileDlg.InitialDirectory = Path.GetDirectoryName(m_strFilePath);
@@ -367,7 +331,7 @@ namespace ReloadersWorkShop
 
 		private void OnFileTypeSelected(Object sender, EventArgs e)
 			{
-			switch ((cDataFiles.eExportType) FileTypeCombo.SelectedIndex)
+			switch ((cDataFiles.eExportType)FileTypeCombo.SelectedIndex)
 				{
 				case cDataFiles.eExportType.CSV:
 					m_strFilePath = Path.ChangeExtension(m_strFilePath, "csv");
@@ -379,6 +343,8 @@ namespace ReloadersWorkShop
 				}
 
 			SetFileName();
+
+			UpdateButtons();
 			}
 
 		//============================================================================*
@@ -387,17 +353,6 @@ namespace ReloadersWorkShop
 
 		private void OnFilterClicked(Object sender, EventArgs e)
 			{
-			UpdateButtons();
-			}
-
-		//============================================================================*
-		// OnLoadsClicked()
-		//============================================================================*
-
-		private void OnLoadsClicked(Object sender, EventArgs e)
-			{
-			ChargeDataCheckBox.Enabled = LoadsCheckBox.Checked;
-
 			UpdateButtons();
 			}
 
@@ -427,6 +382,103 @@ namespace ReloadersWorkShop
 				fOK = false;
 
 			//----------------------------------------------------------------------------*
+			// Check Full Data Dump Button
+			//----------------------------------------------------------------------------*
+
+			XMLPreferencesLabel.Visible = FileTypeCombo.SelectedIndex == 1;
+			FullDataDumpCheckBox.Checked = FileTypeCombo.SelectedIndex == 1 ? FullDataDumpCheckBox.Checked : false;
+			FullDataDumpCheckBox.Enabled = FileTypeCombo.SelectedIndex == 1;
+
+			if (FullDataDumpCheckBox.Checked)
+				{
+				ManufacturersCheckBox.Checked = true;
+				CalibersCheckBox.Checked = true;
+				FirearmsCheckBox.Checked = true;
+				PartsCheckBox.Checked = true;
+
+				BulletsCheckBox.Checked = true;
+				CasesCheckBox.Checked = true;
+				PrimersCheckBox.Checked = true;
+				PowdersCheckBox.Checked = true;
+
+				AmmoCheckBox.Checked = true;
+				LoadsCheckBox.Checked = true;
+				BatchesCheckBox.Checked = true;
+
+				ManufacturersCheckBox.Enabled = false;
+				CalibersCheckBox.Enabled = false;
+				FirearmsCheckBox.Enabled = false;
+				PartsCheckBox.Enabled = false;
+
+				BulletsCheckBox.Enabled = false;
+				CasesCheckBox.Enabled = false;
+				PrimersCheckBox.Enabled = false;
+				PowdersCheckBox.Enabled = false;
+
+				AmmoCheckBox.Enabled = false;
+				LoadsCheckBox.Enabled = false;
+				BatchesCheckBox.Enabled = false;
+
+				DatabaseUpdateCheckBox.Enabled = false;
+				DatabaseUpdateCheckBox.Checked = false;
+				}
+			else
+				{
+				if (m_fDev && DatabaseUpdateCheckBox.Checked)
+					{
+					ManufacturersCheckBox.Checked = true;
+					CalibersCheckBox.Checked = true;
+					FirearmsCheckBox.Checked = false;
+					PartsCheckBox.Checked = false;
+
+					BulletsCheckBox.Checked = true;
+					CasesCheckBox.Checked = true;
+					PrimersCheckBox.Checked = true;
+					PowdersCheckBox.Checked = true;
+
+					AmmoCheckBox.Checked = false;
+					LoadsCheckBox.Checked = false;
+					BatchesCheckBox.Checked = false;
+
+					ManufacturersCheckBox.Enabled = false;
+					CalibersCheckBox.Enabled = false;
+					FirearmsCheckBox.Enabled = false;
+					PartsCheckBox.Enabled = false;
+
+					BulletsCheckBox.Enabled = false;
+					CasesCheckBox.Enabled = false;
+					PrimersCheckBox.Enabled = false;
+					PowdersCheckBox.Enabled = false;
+
+					AmmoCheckBox.Enabled = false;
+					LoadsCheckBox.Enabled = false;
+					BatchesCheckBox.Enabled = false;
+
+					FullDataDumpCheckBox.Enabled = false;
+					FullDataDumpCheckBox.Checked = false;
+					}
+				else
+					{
+					ManufacturersCheckBox.Enabled = true;
+					CalibersCheckBox.Enabled = true;
+					FirearmsCheckBox.Enabled = true;
+					PartsCheckBox.Enabled = true;
+
+					BulletsCheckBox.Enabled = true;
+					CasesCheckBox.Enabled = true;
+					PrimersCheckBox.Enabled = true;
+					PowdersCheckBox.Enabled = true;
+
+					AmmoCheckBox.Enabled = true;
+					LoadsCheckBox.Enabled = true;
+					BatchesCheckBox.Enabled = true;
+
+					FullDataDumpCheckBox.Enabled = true;
+					DatabaseUpdateCheckBox.Enabled = true;
+					}
+				}
+
+			//----------------------------------------------------------------------------*
 			// Check Directory
 			//----------------------------------------------------------------------------*
 
@@ -442,7 +494,7 @@ namespace ReloadersWorkShop
 
 			if (!ManufacturersCheckBox.Checked && !CalibersCheckBox.Checked && !FirearmsCheckBox.Checked && !AmmoCheckBox.Checked &&
 				!BulletsCheckBox.Checked && !CasesCheckBox.Checked && !PowdersCheckBox.Checked && !PrimersCheckBox.Checked &&
-				!LoadsCheckBox.Checked && !BatchesCheckBox.Checked)
+				!LoadsCheckBox.Checked && !BatchesCheckBox.Checked && !PartsCheckBox.Checked)
 				fOK = false;
 
 			//----------------------------------------------------------------------------*

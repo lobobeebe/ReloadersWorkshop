@@ -10,7 +10,6 @@
 //============================================================================*
 
 using System;
-using System.Xml;
 
 //============================================================================*
 // Application Specific Using Statements
@@ -35,7 +34,7 @@ namespace ReloadersWorkShop
 	//============================================================================*
 
 	[Serializable]
-	public class cCharge
+	public partial class cCharge
 		{
 		//----------------------------------------------------------------------------*
 		// Private Data Members
@@ -137,96 +136,6 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// CSVHeader Property
-		//============================================================================*
-
-		public static string CSVHeader
-			{
-			get
-				{
-				return ("Charges");
-				}
-			}
-
-		//============================================================================*
-		// CSVLine Property
-		//============================================================================*
-
-		public string CSVLine
-			{
-			get
-				{
-				string strLine = ",";
-
-				strLine += m_dPowderWeight;
-				strLine += ",";
-				strLine += m_dFillRatio;
-				strLine += ",";
-				strLine += m_fFavorite ? "Yes" : "-";
-				strLine += ",";
-				strLine += m_fReject ? "Yes" : "-";
-
-				return (strLine);
-				}
-			}
-
-		//============================================================================*
-		// CSVLineHeader Property
-		//============================================================================*
-
-		public static string CSVLineHeader
-			{
-			get
-				{
-				return ("Powder Weight,Fill Ratio,Favorite,Reject");
-				}
-			}
-
-		//============================================================================*
-		// Export() - XML Document
-		//============================================================================*
-
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
-			{
-			XmlElement XMLThisElement = XMLDocument.CreateElement("Charge");
-			XMLParentElement.AppendChild(XMLThisElement);
-
-			// PowderWeight
-
-			XmlElement XMLElement = XMLDocument.CreateElement("PowderWeight");
-			XmlText XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dPowderWeight));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Fill Ratio
-
-			XMLElement = XMLDocument.CreateElement("FillRatio");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dFillRatio));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Favorite
-
-			XMLElement = XMLDocument.CreateElement("Favorite");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fFavorite ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Reject
-
-			XMLElement = XMLDocument.CreateElement("Reject");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fReject ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			TestList.Export(XMLDocument, XMLThisElement);
-			}
-
-		//============================================================================*
 		// Favorite Property
 		//============================================================================*
 
@@ -256,15 +165,6 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// RemoveTest()
-		//============================================================================*
-
-		public void RemoveTest(cChargeTest ChargeTest)
-			{
-			m_TestList.Remove(ChargeTest);
-			}
-
-		//============================================================================*
 		// PowderWeight Property
 		//============================================================================*
 
@@ -285,16 +185,22 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public bool ResolveIdentities(cDataFiles DataFiles)
+			{
+			return(m_TestList.ResolveIdentities(DataFiles, this));
+			}
+
+		//============================================================================*
 		// SetTestData()
 		//============================================================================*
 
 		public void SetTestData()
 			{
 			foreach (cChargeTest ChargeTest in TestList)
-				{
-				ChargeTest.Charge = this;
 				ChargeTest.PowderWeight = m_dPowderWeight;
-				}
 			}
 
 		//============================================================================*
@@ -327,12 +233,21 @@ namespace ReloadersWorkShop
 		public override string ToString()
 			{
 			string strFormat = "{0:F";
-			strFormat += String.Format("{0:G0}", cPreferences.PowderWeightDecimals);
+			strFormat += String.Format("{0:G0}", cPreferences.StaticPreferences.PowderWeightDecimals);
 			strFormat += "}{1}";
 
-			string strString = String.Format(strFormat, Math.Round(cPreferences.MetricPowderWeights ? cConversions.GrainsToGrams(m_dPowderWeight) :  m_dPowderWeight, cPreferences.PowderWeightDecimals), (m_dFillRatio > 100.0 ? "C" : ""));
+			string strString = String.Format(strFormat, Math.Round(cPreferences.StaticPreferences.MetricPowderWeights ? cConversions.GrainsToGrams(m_dPowderWeight) :  m_dPowderWeight, cPreferences.StaticPreferences.PowderWeightDecimals), (m_dFillRatio > 100.0 ? "C" : ""));
 
 			return (strString);
+			}
+
+		//============================================================================*
+		// Validate()
+		//============================================================================*
+
+		public bool Validate()
+			{
+			return (m_dPowderWeight != 0.0);
 			}
 		}
 	}

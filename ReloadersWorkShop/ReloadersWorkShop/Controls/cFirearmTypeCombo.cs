@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cFirearmTypeCombo.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -10,8 +10,15 @@
 //============================================================================*
 
 using System;
-using System.Drawing;
 using System.Windows.Forms;
+
+//============================================================================*
+// Application Specific Using Statements
+//============================================================================*
+
+using CommonLib.Controls;
+
+using ReloadersWorkShop.Preferences;
 
 //============================================================================*
 // NameSpace
@@ -23,7 +30,7 @@ namespace ReloadersWorkShop.Controls
 	// cFirearmTypeCombo Class
 	//============================================================================*
 
-	public class cFirearmTypeCombo : ComboBox
+	public class cFirearmTypeCombo : cComboBox
 		{
 		//============================================================================*
 		// Private Data Members
@@ -31,36 +38,49 @@ namespace ReloadersWorkShop.Controls
 
 		private cFirearm.eFireArmType m_eValue = cFirearm.eFireArmType.Handgun;
 
+		private bool m_fIncludeAny = false;
 		private bool m_fIncludeShotgun = false;
 
-		private string m_strToolTip = "";
-
-		private bool m_fPopulating = false;
+        private bool m_fPopulating = false;
 
 		//============================================================================*
-		// cFirearmTypeCombo() - DefaultConstructor
+		// cFirearmTypeCombo() - Default Constructor
 		//============================================================================*
 
 		public cFirearmTypeCombo()
 			{
-			DropDownStyle = ComboBoxStyle.DropDownList;
-			DropDownWidth = 100;
-
-			Populate();
+			Initialize();
 			}
 
 		//============================================================================*
 		// cFirearmTypeCombo() - Constructor
 		//============================================================================*
 
-		public cFirearmTypeCombo(bool fIncludeShotgun = false)
+		public cFirearmTypeCombo(bool fIncludeShotgun = false, bool  fIncludeAny = false)
 			{
-			DropDownStyle = ComboBoxStyle.DropDownList;
-			DropDownWidth = 100;
+			Initialize();
 
 			m_fIncludeShotgun = fIncludeShotgun;
+			m_fIncludeAny = fIncludeAny;
+			}
 
-			Populate();
+		//============================================================================*
+		// IncludeAny Property
+		//============================================================================*
+
+		public bool IncludeAny
+			{
+			get
+				{
+				return (m_fIncludeAny);
+				}
+
+			set
+				{
+				m_fIncludeAny = value;
+
+				Populate();
+				}
 			}
 
 		//============================================================================*
@@ -69,8 +89,11 @@ namespace ReloadersWorkShop.Controls
 
 		public bool IncludeShotgun
 			{
-			get {  return(m_fIncludeShotgun); }
-			
+			get
+				{
+				return (m_fIncludeShotgun);
+				}
+
 			set
 				{
 				m_fIncludeShotgun = value;
@@ -79,14 +102,31 @@ namespace ReloadersWorkShop.Controls
 				}
 			}
 
+
+		//============================================================================*
+		// Initialize()
+		//============================================================================*
+
+		private  void Initialize()
+			{
+			DropDownStyle = ComboBoxStyle.DropDownList;
+			DropDownWidth = 100;
+
+			ShowToolTips = cPreferences.StaticPreferences.ToolTips;
+
+			ToolTip = "Select a firearm type.";
+			}
+
 		//============================================================================*
 		// OnDropDown()
 		//============================================================================*
 
 		protected override void OnDropDown(EventArgs e)
 			{
-			while (Items.Count > (m_fIncludeShotgun ? 3 : 2))
-				Items.RemoveAt(m_fIncludeShotgun ? 3 : 2);
+			int nCount = 2 + (m_fIncludeAny ? 1 : 0) + (m_fIncludeShotgun ? 1 : 0);
+
+			while (Items.Count > nCount)
+				Items.RemoveAt(nCount);
 
 			base.OnDropDown(e);
 			}
@@ -100,7 +140,7 @@ namespace ReloadersWorkShop.Controls
 			if (m_fPopulating)
 				return;
 
-			m_eValue = (cFirearm.eFireArmType)SelectedIndex;
+			m_eValue = (cFirearm.eFireArmType) SelectedIndex;
 
 			base.OnSelectedIndexChanged(e);
 			}
@@ -115,40 +155,38 @@ namespace ReloadersWorkShop.Controls
 
 			Items.Clear();
 
+			if (m_fIncludeAny)
+				Items.Add("Any Firearm Type");
+
 			Items.Add("Handgun");
 			Items.Add("Rifle");
 
 			if (m_fIncludeShotgun)
 				Items.Add("Shotgun");
 
-			SelectedIndex = (int)m_eValue;
+			m_eValue = (cFirearm.eFireArmType) 0;
+
+			SelectedIndex = 0;
 
 			m_fPopulating = false;
 			}
 
-		//============================================================================*
-		// ToolTip Property
-		//============================================================================*
+        //============================================================================*
+        // Value Property
+        //============================================================================*
 
-		public string ToolTip
+        public cFirearm.eFireArmType Value
 			{
-			get { return (m_strToolTip); }
-			set { m_strToolTip = value; }
-			}
-
-		//============================================================================*
-		// Value Property
-		//============================================================================*
-
-		public cFirearm.eFireArmType Value
-			{
-			get { return (m_eValue); }
+			get
+				{
+				return (m_eValue - (m_fIncludeAny ? 1 : 0));
+				}
 
 			set
 				{
 				m_eValue = value;
 
-				SelectedIndex = (int)m_eValue;
+				SelectedIndex = (int) m_eValue;
 				}
 			}
 		}

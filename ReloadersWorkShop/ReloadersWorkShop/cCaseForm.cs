@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cCaseForm.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -164,7 +164,7 @@ namespace ReloadersWorkShop
             // Set Labels for inventory tracking if needed
             //----------------------------------------------------------------------------*
 
-            if (cPreferences.TrackInventory)
+            if (m_DataFiles.Preferences.TrackInventory)
                 {
                 QuantityLabel.Text = "Qty on Hand:";
 
@@ -345,7 +345,7 @@ namespace ReloadersWorkShop
             if (!m_fInitialized)
                 return;
 
-            if (FirearmTypeCombo.SelectedIndex != (int) m_Case.FirearmType)
+            if (FirearmTypeCombo.Value != m_Case.FirearmType)
                 {
                 PopulateCaliberCombo();
 
@@ -588,7 +588,7 @@ namespace ReloadersWorkShop
 
             CostTextBox.Value = m_DataFiles.SupplyCost(m_Case);
 
-            if (cPreferences.TrackInventory)
+            if (m_DataFiles.Preferences.TrackInventory)
                 CostTextBox.Text = String.Format("{0}{1:F2}", m_DataFiles.Preferences.Currency, m_DataFiles.SupplyCost(m_Case));
 
             SetCostEach();

@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cTestStatistics.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -29,19 +29,62 @@ namespace ReloadersWorkShop
 		//----------------------------------------------------------------------------*
 
 		private int m_nNumShots;
-        private int m_nNumRounds;
-        private double m_dAvg = 0.0;
-		private int m_nMin = 0;
-		private int m_nMax = 0;
+        private double m_dAverageVelocity = 0.0;
+		private int m_nMinVelocity = 0;
+		private int m_nMaxVelocity = 0;
 		private double m_dVariance = 0.0;
 		private double m_dStdDev = 0.0;
 
 		//============================================================================*
-		// cTestStatistics() - Constructor
+		// cTestStatistics() - Default Constructor
 		//============================================================================*
 
 		public cTestStatistics()
 			{
+			}
+
+		//============================================================================*
+		// cTestStatistics() - From cTestShotList
+		//============================================================================*
+
+		public cTestStatistics(cTestShotList TestShotList)
+			{
+			Reset();
+
+			if (TestShotList == null)
+				return;
+
+			int nTotalVelocity = 0;
+
+			foreach (cTestShot TestShot in TestShotList)
+				{
+				if (TestShot.MuzzleVelocity > 0 && !TestShot.Misfire && !TestShot.Squib)
+					{
+					m_nNumShots++;
+					nTotalVelocity += TestShot.MuzzleVelocity;
+
+					if (m_nMinVelocity == 0 || TestShot.MuzzleVelocity < m_nMinVelocity)
+						m_nMinVelocity = TestShot.MuzzleVelocity;
+
+					if (m_nMaxVelocity == 0 || TestShot.MuzzleVelocity > m_nMaxVelocity)
+						m_nMaxVelocity = TestShot.MuzzleVelocity;
+					}
+				}
+
+			if (m_nNumShots > 0 && nTotalVelocity > 0)
+				{
+				m_dAverageVelocity = (double) nTotalVelocity / (double) m_nNumShots;
+
+				foreach (cTestShot TestShot in TestShotList)
+					{
+					if (TestShot.MuzzleVelocity > 0 && !TestShot.Misfire && !TestShot.Squib)
+						m_dVariance += (((double) TestShot.MuzzleVelocity - m_dAverageVelocity) * ((double) TestShot.MuzzleVelocity - m_dAverageVelocity));
+					}
+
+				m_dVariance /= (double) (m_nNumShots - 1);
+
+				m_dStdDev = Math.Sqrt(m_dVariance);
+				}
 			}
 
 		//============================================================================*
@@ -51,10 +94,9 @@ namespace ReloadersWorkShop
 		public cTestStatistics(cTestStatistics TestStatistics)
 			{
 			m_nNumShots = TestStatistics.m_nNumShots;
-            m_nNumRounds = TestStatistics.m_nNumRounds;
-            m_dAvg = TestStatistics.m_dAvg;
-			m_nMin = TestStatistics.m_nMin;
-			m_nMax = TestStatistics.m_nMax;
+            m_dAverageVelocity = TestStatistics.m_dAverageVelocity;
+			m_nMinVelocity = TestStatistics.m_nMinVelocity;
+			m_nMaxVelocity = TestStatistics.m_nMaxVelocity;
 			m_dVariance = TestStatistics.m_dVariance;
 			m_dStdDev = TestStatistics.m_dStdDev;
 			}
@@ -65,8 +107,8 @@ namespace ReloadersWorkShop
 
 		public double AverageVelocity
 			{
-			get { return (m_dAvg); }
-			set { m_dAvg = value; }
+			get { return (m_dAverageVelocity); }
+			set { m_dAverageVelocity = value; }
 			}
 
 		//============================================================================*
@@ -108,7 +150,7 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				return (m_nMax - m_nMin);
+				return (m_nMaxVelocity - m_nMinVelocity);
 				}
 			}
 
@@ -118,8 +160,8 @@ namespace ReloadersWorkShop
 
 		public int MaxVelocity
 			{
-			get { return (m_nMax); }
-			set { m_nMax = value; }
+			get { return (m_nMaxVelocity); }
+			set { m_nMaxVelocity = value; }
 			}
 
 		//============================================================================*
@@ -128,25 +170,9 @@ namespace ReloadersWorkShop
 
 		public int MinVelocity
 			{
-			get { return (m_nMin); }
-			set { m_nMin = value; }
+			get { return (m_nMinVelocity); }
+			set { m_nMinVelocity = value; }
 			}
-
-        //============================================================================*
-        // NumRounds Property
-        //============================================================================*
-
-        public int NumRounds
-            {
-            get
-                {
-                return (m_nNumRounds);
-                }
-            set
-                {
-                m_nNumRounds = value;
-                }
-            }
 
         //============================================================================*
         // NumShots Property
@@ -158,45 +184,29 @@ namespace ReloadersWorkShop
 			set { m_nNumShots = value; }
 			}
 
-        //============================================================================*
-        // Population Property
-        //============================================================================*
+		//============================================================================*
+		// Reset()
+		//============================================================================*
 
-        public bool  Population
-            {
-            get
-                {
-                if (m_nNumShots == m_nNumRounds)
-                    return (true);
+		public void Reset()
+			{
+			m_nNumShots = 0;
+			m_dAverageVelocity = 0.0;
+			m_nMinVelocity = 0;
+			m_nMaxVelocity = 0;
+			m_dVariance = 0.0;
+			m_dStdDev = 0.0;
+			}
 
-                return (false);
-                }
-            }
+		//============================================================================*
+		// StdDev Property
+		//============================================================================*
 
-        //============================================================================*
-        // StdDev Property
-        //============================================================================*
-
-        public double StdDev
+		public double StdDev
 			{
 			get { return (m_dStdDev); }
 			set { m_dStdDev = value; }
 			}
-
-        //============================================================================*
-        // Summary Property
-        //============================================================================*
-
-        public bool Summary
-            {
-            get
-                {
-                if (m_nNumShots == m_nNumRounds)
-                    return (false);
-
-                return (true);
-                }
-            }
 
         //============================================================================*
         // Variance Property

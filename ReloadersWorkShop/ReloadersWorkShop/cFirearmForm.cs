@@ -13,9 +13,6 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-using ReloadersWorkShop.Controls;
-using ReloadersWorkShop.Preferences;
-
 //============================================================================*
 // NameSpace
 //============================================================================*
@@ -36,6 +33,7 @@ namespace ReloadersWorkShop
 		private const string cm_strManufacturerToolTip = "Manufacturer of this firearm.";
 		private const string cm_strModelToolTip = "Manufacturer's model number for this firearm.";
 		private const string cm_strSerialNumberToolTip = "Serial #, or ID, of this firearm.";
+		private const string cm_strDescriptionToolTip = "A brief description of this firearm.";
 		private const string cm_strPurchaseDateToolTip = "The date you purchsed or acquired this firearm.";
 		private const string cm_strPriceToolTip = "The amount you paid for this firearm.";
 
@@ -48,7 +46,6 @@ namespace ReloadersWorkShop
 
 		private const string cm_strScopedToolTip = "Check if this firearm has a scope.";
 		private const string cm_strScopeClickToolTip = "The distance, in MOA or Mils, that each click of the scope turrets will move the impact point.";
-		private const string cm_strTurretTypeToolTip = "The type of adjustment of the turrets on this firearm's scope.";
 
 		private const string cm_strHeadSpaceToolTip = "The headspace to which ammo for this firearm should be sized.";
 		private const string cm_strNeckToolTip = "The neck size to which ammo for this firearm should be sized.";
@@ -58,9 +55,6 @@ namespace ReloadersWorkShop
 		private const string cm_strAddBulletButtonToolTip = "Click to add new bullet specific data for this firearm.";
 		private const string cm_strRemoveBulletButtonToolTip = "Click to remove bullet specific data from the list.";
 		private const string cm_strEditBulletButtonToolTip = "Click to edit the selected bullet specific data.";
-
-		private const string cm_strFirearmOKButtonToolTip = "Click to add or update the firearm with the above data.";
-		private const string cm_strFirearmCancelButtonToolTip = "Click to cancel changes and return to the main window.";
 
 		//----------------------------------------------------------------------------*
 		// Private Data Members
@@ -163,6 +157,7 @@ namespace ReloadersWorkShop
 				ModelTextBox.TextChanged += OnModelChanged;
 
 				SerialNumberTextBox.TextChanged += OnSerialNumberChanged;
+				DescriptionTextBox.TextChanged += OnDescriptionChanged;
 
 				BarrelLengthTextBox.TextChanged += OnBarrelLengthChanged;
 				TwistTextBox.TextChanged += OnTwistChanged;
@@ -170,7 +165,7 @@ namespace ReloadersWorkShop
 				SightHeightTextBox.TextChanged += OnSightHeightChanged;
 
 				ScopedCheckBox.Click += OnScopedClicked;
-				TurretTypeComboBox.SelectedIndexChanged += OnTurretTypeSelected;
+				TurretTypeCombo.SelectedIndexChanged += OnTurretTypeSelected;
 				ScopeClickTextBox.TextChanged += OnScopeClickChanged;
 
 				HeadSpaceTextBox.TextChanged += OnHeadSpaceChanged;
@@ -192,12 +187,13 @@ namespace ReloadersWorkShop
 				{
 				ModelTextBox.ReadOnly = true;
 				SerialNumberTextBox.ReadOnly = true;
+				DescriptionTextBox.ReadOnly = true;
 				BarrelLengthTextBox.ReadOnly = true;
 				TwistTextBox.ReadOnly = true;
 				ZeroRangeTextBox.ReadOnly = true;
 				SightHeightTextBox.ReadOnly = true;
 				ScopeClickTextBox.ReadOnly = true;
-				TurretTypeComboBox.Enabled = false;
+				TurretTypeCombo.Enabled = false;
 				HeadSpaceTextBox.ReadOnly = true;
 				NeckTextBox.ReadOnly = true;
 
@@ -219,6 +215,8 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			FirearmTypeCombo.Value = m_Firearm.FirearmType;
+
+			cCaliber.CurrentFirearmType = m_Firearm.FirearmType;
 
 			PopulateComboBoxes();
 
@@ -371,6 +369,16 @@ namespace ReloadersWorkShop
 
 			if (m_Firearm.AddCaliber(Caliber))
 				{
+				if (String.IsNullOrEmpty(m_Firearm.Description) || 
+					m_Firearm.Description == "Handgun" || 
+					m_Firearm.Description == "Pistol" || 
+					m_Firearm.Description == "Revolver")
+					{
+					m_Firearm.SetDefaultDescription();
+
+					DescriptionTextBox.Value = m_Firearm.Description;
+					}
+
 				PopulateCaliberList();
 
 				PopulateCaliberCombo();
@@ -419,6 +427,22 @@ namespace ReloadersWorkShop
 			{
 			if (!m_fInitialized)
 				return;
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
+		// OnDescriptionChanged()
+		//============================================================================*
+
+		protected void OnDescriptionChanged(object sender, EventArgs e)
+			{
+			if (!m_fInitialized)
+				return;
+
+			m_Firearm.Description = @DescriptionTextBox.Value;
+
+			m_fChanged = true;
 
 			UpdateButtons();
 			}
@@ -527,6 +551,8 @@ namespace ReloadersWorkShop
 
 			m_Firearm.FirearmType = FirearmTypeCombo.Value;
 
+			cCaliber.CurrentFirearmType = m_Firearm.FirearmType;
+
 			if (m_Firearm.FirearmType == cFirearm.eFireArmType.Shotgun)
 				UsableCartridgeGroup.Text = "Usable ShotShells";
 			else
@@ -573,6 +599,13 @@ namespace ReloadersWorkShop
 
 			PopulateCaliberList();
 
+			if (String.IsNullOrEmpty(m_Firearm.Description) || m_Firearm.Description == "Handgun")
+				{
+				m_Firearm.SetDefaultDescription();
+
+				DescriptionTextBox.Value = m_Firearm.Description;
+				}
+
 			m_fChanged = true;
 
 			UpdateButtons();
@@ -603,7 +636,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_Firearm.Model = ModelTextBox.Value;
+			m_Firearm.PartNumber = @ModelTextBox.Value;
 
 			m_fChanged = true;
 
@@ -680,6 +713,13 @@ namespace ReloadersWorkShop
 
 			PopulateCaliberList();
 
+			if (String.IsNullOrEmpty(m_Firearm.Description) || m_Firearm.Description == "Handgun")
+				{
+				m_Firearm.SetDefaultDescription();
+
+				DescriptionTextBox.Value = m_Firearm.Description;
+				}
+
 			UpdateButtons();
 			}
 
@@ -695,17 +735,9 @@ namespace ReloadersWorkShop
 			ScopedCheckBox.Checked = ScopedCheckBox.Checked ? false : true;
 
 			ScopeClickTextBox.Enabled = ScopedCheckBox.Checked;
-			TurretTypeComboBox.Enabled = ScopedCheckBox.Checked;
+			TurretTypeCombo.Enabled = ScopedCheckBox.Checked;
 
 			m_Firearm.Scoped = ScopedCheckBox.Checked;
-
-			if (!m_Firearm.Scoped)
-				{
-				m_Firearm.ScopeManufacturer = null;
-				m_Firearm.ScopeModel = "";
-				m_Firearm.ScopeObjective = 0;
-				m_Firearm.ScopePower = "";
-				}
 
 			m_fChanged = true;
 
@@ -737,7 +769,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_Firearm.SerialNumber = SerialNumberTextBox.Value;
+			m_Firearm.SerialNumber = @SerialNumberTextBox.Value;
 
 			m_fChanged = true;
 
@@ -769,7 +801,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_Firearm.TurretType = (cFirearm.eTurretType) TurretTypeComboBox.SelectedIndex;
+			m_Firearm.TurretType = TurretTypeCombo.Value;
 
 			m_fChanged = true;
 
@@ -801,7 +833,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_Firearm.ZeroRange = (int) cDataFiles.MetricToStandard(ZeroRangeTextBox.Value, cDataFiles.eDataType.Range);
+			m_Firearm.ZeroRange = cDataFiles.MetricToStandard(ZeroRangeTextBox.Value, cDataFiles.eDataType.Range);
 
 			m_fChanged = true;
 
@@ -840,7 +872,9 @@ namespace ReloadersWorkShop
 					{
 					if (PrimaryCaliber != null)
 						{
-						if (Caliber.MinBulletDiameter >= PrimaryCaliber.MaxBulletDiameter && Caliber.MaxBulletDiameter <= PrimaryCaliber.MaxBulletDiameter)
+						if (Caliber.MinBulletDiameter >= PrimaryCaliber.MinBulletDiameter && 
+							Caliber.MaxBulletDiameter <= PrimaryCaliber.MaxBulletDiameter &&
+							(PrimaryCaliber.FirearmType == cFirearm.eFireArmType.Handgun ? PrimaryCaliber.Pistol == Caliber.Pistol : true))
 							CaliberCombo.Items.Add(Caliber);
 						}
 					else
@@ -885,8 +919,9 @@ namespace ReloadersWorkShop
 
 		private void PopulateFirearmData()
 			{
-			ModelTextBox.Value = m_Firearm.Model;
+			ModelTextBox.Value = m_Firearm.PartNumber;
 			SerialNumberTextBox.Value = m_Firearm.SerialNumber;
+			DescriptionTextBox.Value = m_Firearm.Description;
 
 			BarrelLengthTextBox.Value = cDataFiles.StandardToMetric(m_Firearm.BarrelLength, cDataFiles.eDataType.Firearm);
 			TwistTextBox.Value = cDataFiles.StandardToMetric(m_Firearm.Twist, cDataFiles.eDataType.Firearm);
@@ -896,8 +931,8 @@ namespace ReloadersWorkShop
 			ScopeClickTextBox.Value = m_Firearm.ScopeClick;
 			ScopeClickTextBox.Enabled = m_Firearm.Scoped;
 
-			TurretTypeComboBox.SelectedIndex = (int) m_Firearm.TurretType;
-			TurretTypeComboBox.Enabled = m_Firearm.Scoped;
+			TurretTypeCombo.Value = m_Firearm.TurretType;
+			TurretTypeCombo.Enabled = m_Firearm.Scoped;
 
 			HeadSpaceTextBox.Value = cDataFiles.StandardToMetric(m_Firearm.HeadSpace, cDataFiles.eDataType.Dimension);
 			HeadSpaceTextBox.Enabled = FirearmTypeCombo.Value == cFirearm.eFireArmType.Rifle;
@@ -905,7 +940,7 @@ namespace ReloadersWorkShop
 			NeckTextBox.Value = cDataFiles.StandardToMetric(m_Firearm.Neck, cDataFiles.eDataType.Dimension);
 			NeckTextBox.Enabled = FirearmTypeCombo.Value == cFirearm.eFireArmType.Rifle;
 
-			ZeroRangeTextBox.Value = (int) cDataFiles.StandardToMetric(m_Firearm.ZeroRange, cDataFiles.eDataType.Range);
+			ZeroRangeTextBox.Value = (int) Math.Round(cDataFiles.StandardToMetric(m_Firearm.ZeroRange, cDataFiles.eDataType.Range), 0);
 
 			m_BulletListView.Populate();
 
@@ -1034,6 +1069,7 @@ namespace ReloadersWorkShop
 			ModelTextBox.ToolTip = cm_strModelToolTip;
 
 			SerialNumberTextBox.ToolTip = cm_strSerialNumberToolTip;
+			DescriptionTextBox.ToolTip = cm_strDescriptionToolTip;
 
 			m_CaliberListToolTip.ShowAlways = true;
 			m_CaliberListToolTip.RemoveAll();
@@ -1054,10 +1090,6 @@ namespace ReloadersWorkShop
 
 			ScopeClickTextBox.ToolTip = cm_strScopeClickToolTip;
 
-			m_TurretTypeToolTip.ShowAlways = true;
-			m_TurretTypeToolTip.RemoveAll();
-			m_TurretTypeToolTip.SetToolTip(TurretTypeComboBox, cm_strTurretTypeToolTip);
-
 			HeadSpaceTextBox.ToolTip = cm_strHeadSpaceToolTip;
 			NeckTextBox.ToolTip = cm_strNeckToolTip;
 
@@ -1076,14 +1108,6 @@ namespace ReloadersWorkShop
 			m_RemoveBulletButtonToolTip.ShowAlways = true;
 			m_RemoveBulletButtonToolTip.RemoveAll();
 			m_RemoveBulletButtonToolTip.SetToolTip(RemoveBulletButton, cm_strRemoveBulletButtonToolTip);
-
-			m_FirearmOKButtonToolTip.ShowAlways = true;
-			m_FirearmOKButtonToolTip.RemoveAll();
-			m_FirearmOKButtonToolTip.SetToolTip(OKButton, cm_strFirearmOKButtonToolTip);
-
-			m_FirearmCancelButtonToolTip.ShowAlways = true;
-			m_FirearmCancelButtonToolTip.RemoveAll();
-			m_FirearmCancelButtonToolTip.SetToolTip(FirearmCancelButton, cm_strFirearmCancelButtonToolTip);
 			}
 
 		//============================================================================*
@@ -1197,6 +1221,13 @@ namespace ReloadersWorkShop
 				fEnableOK = false;
 
 			//----------------------------------------------------------------------------*
+			// Check Description
+			//----------------------------------------------------------------------------*
+
+			if (!DescriptionTextBox.ValueOK)
+				fEnableOK = false;
+
+			//----------------------------------------------------------------------------*
 			// Check for duplicates
 			//----------------------------------------------------------------------------*
 
@@ -1208,7 +1239,7 @@ namespace ReloadersWorkShop
 					{
 					if ((CheckFirearm.Manufacturer.Equals((cManufacturer) ManufacturerCombo.SelectedItem)) &&
 						(CheckFirearm.FirearmType == (cFirearm.eFireArmType) FirearmTypeCombo.SelectedIndex) &&
-						(CheckFirearm.Model != m_Firearm.Model && CheckFirearm.Model.ToUpper() == ModelTextBox.Value.ToUpper()) &&
+						(CheckFirearm.PartNumber != m_Firearm.PartNumber && CheckFirearm.PartNumber.ToUpper() == ModelTextBox.Value.ToUpper()) &&
 						(CheckFirearm.SerialNumber != m_Firearm.SerialNumber && CheckFirearm.SerialNumber.ToUpper() == SerialNumberTextBox.Value.ToUpper()))
 						{
 						fDuplicate = true;
@@ -1361,7 +1392,7 @@ namespace ReloadersWorkShop
 			// FirearmDetailButton
 			//----------------------------------------------------------------------------*
 
-			if (m_Firearm.Manufacturer != null && !String.IsNullOrEmpty(m_Firearm.Model) && !String.IsNullOrEmpty(m_Firearm.SerialNumber))
+			if (m_Firearm.Manufacturer != null && !String.IsNullOrEmpty(m_Firearm.PartNumber) && !String.IsNullOrEmpty(m_Firearm.SerialNumber))
 				FirearmDetailsButton.Enabled = true;
 			else
 				FirearmDetailsButton.Enabled = false;

@@ -23,7 +23,7 @@ namespace ReloadersWorkShop
 	//============================================================================*
 
 	[Serializable]
-	public class cLoad : IComparable
+	public partial class cLoad : IComparable
 		{
 		//----------------------------------------------------------------------------*
 		// Private Data Members
@@ -31,25 +31,24 @@ namespace ReloadersWorkShop
 
 		private cFirearm.eFireArmType m_eFirearmType = cFirearm.eFireArmType.Handgun;
 		private cCaliber m_Caliber;
-
 		private cBullet m_Bullet = null;
-
 		private cPowder m_Powder = null;
-
 		private cCase m_Case = null;
-
 		private cPrimer m_Primer = null;
 
 		private cChargeList m_ChargeList = new cChargeList();
 
 		private bool m_fChecked = false;
 
+		private bool m_fIdentity = false;
+
 		//============================================================================*
 		// cLoad() - Constructor
 		//============================================================================*
 
-		public cLoad()
+		public cLoad(bool fIdentity = false)
 			{
+			m_fIdentity = fIdentity;
 			}
 
 		//============================================================================*
@@ -65,6 +64,7 @@ namespace ReloadersWorkShop
 			m_Case = Load.m_Case;
 			m_Primer = Load.m_Primer;
 			m_fChecked = Load.m_fChecked;
+			m_fIdentity = Load.m_fIdentity;
 
 			m_ChargeList = new cChargeList(Load.m_ChargeList);
 			}
@@ -75,39 +75,13 @@ namespace ReloadersWorkShop
 
 		public void AddCharge(cCharge NewCharge)
 			{
-			cCharge Charge = null;
+			cCharge Charge = m_ChargeList.AddCharge(NewCharge);
 
-			foreach (cCharge CheckCharge in m_ChargeList)
+			if (Charge.CompareTo(NewCharge) != 0)
 				{
-				//----------------------------------------------------------------------------*
-				// See if charge already exists
-				//----------------------------------------------------------------------------*
-
-				if (CheckCharge.CompareTo(NewCharge) == 0)
-					{
-					Charge = CheckCharge;
-
-					break;
-					}
+				foreach (cChargeTest ChargeTest in NewCharge.TestList)
+					Charge.AddTest(ChargeTest);
 				}
-
-			//----------------------------------------------------------------------------*
-			// If not, add it and exit
-			//----------------------------------------------------------------------------*
-
-			if (Charge == null)
-				{
-				m_ChargeList.Add(NewCharge);
-
-				return;
-				}
-
-			//----------------------------------------------------------------------------*
-			// Otherwise, add the new charge's test data to the existing charge
-			//----------------------------------------------------------------------------*
-
-			foreach (cChargeTest ChargeTest in NewCharge.TestList)
-				Charge.AddTest(ChargeTest);
 			}
 
 		//============================================================================*
@@ -116,8 +90,14 @@ namespace ReloadersWorkShop
 
 		public cBullet Bullet
 			{
-			get { return (m_Bullet); }
-			set { m_Bullet = value; }
+			get
+				{
+				return (m_Bullet);
+				}
+			set
+				{
+				m_Bullet = value;
+				}
 			}
 
 		//============================================================================*
@@ -126,8 +106,14 @@ namespace ReloadersWorkShop
 
 		public cCaliber Caliber
 			{
-			get { return (m_Caliber); }
-			set { m_Caliber = value; }
+			get
+				{
+				return (m_Caliber);
+				}
+			set
+				{
+				m_Caliber = value;
+				}
 			}
 
 		//============================================================================*
@@ -136,8 +122,14 @@ namespace ReloadersWorkShop
 
 		public cCase Case
 			{
-			get { return (m_Case); }
-			set { m_Case = value; }
+			get
+				{
+				return (m_Case);
+				}
+			set
+				{
+				m_Case = value;
+				}
 			}
 
 		//============================================================================*
@@ -146,8 +138,14 @@ namespace ReloadersWorkShop
 
 		public cChargeList ChargeList
 			{
-			get { return (m_ChargeList); }
-			set { m_ChargeList = value; }
+			get
+				{
+				return (m_ChargeList);
+				}
+			set
+				{
+				m_ChargeList = value;
+				}
 			}
 
 		//============================================================================*
@@ -156,8 +154,14 @@ namespace ReloadersWorkShop
 
 		public bool Checked
 			{
-			get { return (m_fChecked); }
-			set { m_fChecked = value; }
+			get
+				{
+				return (m_fChecked);
+				}
+			set
+				{
+				m_fChecked = value;
+				}
 			}
 
 		//============================================================================*
@@ -176,7 +180,7 @@ namespace ReloadersWorkShop
 			else
 				{
 				if (Load2 == null)
-					return(1);
+					return (1);
 				}
 
 			return (Load1.CompareTo(Load2));
@@ -263,131 +267,31 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// CSVHeader Property
-		//============================================================================*
-
-		public static string CSVHeader
-			{
-			get
-				{
-				return ("Loads");
-				}
-			}
-
-		//============================================================================*
-		// CSVLine Property
-		//============================================================================*
-
-		public string CSVLine
-			{
-			get
-				{
-				string strLine = "";
-
-				strLine += cFirearm.FirearmTypeString(FirearmType);
-				strLine += ",";
-				strLine += m_Caliber;
-				strLine += ",";
-
-				strLine += m_Bullet.ToString();
-				strLine += ",";
-
-				strLine += m_Powder.ToString();
-				strLine += ",";
-
-				strLine += m_Case.ToString();
-				strLine += ",";
-
-				strLine += m_Primer.ToString();
-				strLine += ",";
-
-				return (strLine);
-				}
-			}
-
-		//============================================================================*
-		// CSVLineHeader Property
-		//============================================================================*
-
-		public static string CSVLineHeader
-			{
-			get
-				{
-				return ("Firearm Type,Caliber,Bullet,Powder,Case,Primer");
-				}
-			}
-
-		//============================================================================*
-		// Export() - XML Document
-		//============================================================================*
-
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement, bool fIncludeCharges = true)
-			{
-			XmlElement XMLThisElement = XMLDocument.CreateElement("Load");
-			XMLParentElement.AppendChild(XMLThisElement);
-
-			cCaliber.CurrentFirearmType = FirearmType;
-
-			// Caliber
-
-			XmlElement XMLElement = XMLDocument.CreateElement("Caliber");
-			XmlText XMLTextElement = XMLDocument.CreateTextNode(m_Caliber.Name);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Firearm Type
-
-			XMLElement = XMLDocument.CreateElement("FirearmType");
-			XMLTextElement = XMLDocument.CreateTextNode(cFirearm.FirearmTypeString(FirearmType));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Bullet
-
-			XMLElement = XMLDocument.CreateElement("Bullet");
-			XMLTextElement = XMLDocument.CreateTextNode(m_Bullet.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Powder
-
-			XMLElement = XMLDocument.CreateElement("Powder");
-			XMLTextElement = XMLDocument.CreateTextNode(m_Powder.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Primer
-
-			XMLElement = XMLDocument.CreateElement("Primer");
-			XMLTextElement = XMLDocument.CreateTextNode(m_Primer.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Case
-
-			XMLElement = XMLDocument.CreateElement("Case");
-			XMLTextElement = XMLDocument.CreateTextNode(m_Case.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			if (m_ChargeList.Count > 0 && fIncludeCharges)
-				m_ChargeList.Export(XMLDocument, XMLThisElement);
-			}
-
-		//============================================================================*
 		// FirearmType Property
 		//============================================================================*
 
 		public cFirearm.eFireArmType FirearmType
 			{
-			get { return (m_eFirearmType); }
-			set { m_eFirearmType = value; }
+			get
+				{
+				return (m_eFirearmType);
+				}
+			set
+				{
+				m_eFirearmType = value;
+				}
+			}
+
+		//============================================================================*
+		// Identity Property
+		//============================================================================*
+
+		public bool Identity
+			{
+			get
+				{
+				return (m_fIdentity);
+				}
 			}
 
 		//============================================================================*
@@ -396,8 +300,14 @@ namespace ReloadersWorkShop
 
 		public cPowder Powder
 			{
-			get { return (m_Powder); }
-			set { m_Powder = value; }
+			get
+				{
+				return (m_Powder);
+				}
+			set
+				{
+				m_Powder = value;
+				}
 			}
 
 		//============================================================================*
@@ -406,8 +316,126 @@ namespace ReloadersWorkShop
 
 		public cPrimer Primer
 			{
-			get { return (m_Primer); }
-			set { m_Primer = value; }
+			get
+				{
+				return (m_Primer);
+				}
+			set
+				{
+				m_Primer = value;
+				}
+			}
+
+		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public bool ResolveIdentities(cDataFiles DataFiles)
+			{
+			bool fChanged = false;
+
+			//----------------------------------------------------------------------------*
+			// Caliber
+			//----------------------------------------------------------------------------*
+
+			if (m_Caliber.Identity)
+				{
+				foreach (cCaliber Caliber in DataFiles.CaliberList)
+					{
+					if (!Caliber.Identity && Caliber.CompareTo(m_Caliber) == 0)
+						{
+						m_Caliber = Caliber;
+
+						fChanged = true;
+
+						break;
+						}
+					}
+				}
+
+			//----------------------------------------------------------------------------*
+			// Bullet
+			//----------------------------------------------------------------------------*
+
+			if (m_Bullet.Identity)
+				{
+				foreach (cBullet Bullet in DataFiles.BulletList)
+					{
+					if (!Bullet.Identity && m_Bullet.CompareTo(Bullet) == 0)
+						{
+						m_Bullet = Bullet;
+
+						fChanged = true;
+
+						break;
+						}
+					}
+				}
+
+			//----------------------------------------------------------------------------*
+			// Case
+			//----------------------------------------------------------------------------*
+
+			if (m_Case.Identity)
+				{
+				foreach (cCase Case in DataFiles.CaseList)
+					{
+					if (!Case.Identity && m_Case.CompareTo(Case) == 0)
+						{
+						m_Case = Case;
+
+						fChanged = true;
+
+						break;
+						}
+					}
+				}
+
+			//----------------------------------------------------------------------------*
+			// Powder
+			//----------------------------------------------------------------------------*
+
+			if (m_Powder.Identity)
+				{
+				foreach (cPowder Powder in DataFiles.PowderList)
+					{
+					if (!Powder.Identity && m_Powder.CompareTo(Powder) == 0)
+						{
+						m_Powder = Powder;
+
+						fChanged = true;
+
+						break;
+						}
+					}
+				}
+
+			//----------------------------------------------------------------------------*
+			// Primer
+			//----------------------------------------------------------------------------*
+
+			if (m_Primer.Identity)
+				{
+				foreach (cPrimer Primer in DataFiles.PrimerList)
+					{
+					if (!Primer.Identity && m_Primer.CompareTo(Primer) == 0)
+						{
+						m_Primer = Primer;
+
+						fChanged = true;
+
+						break;
+						}
+					}
+				}
+
+			//----------------------------------------------------------------------------*
+			// Charge List
+			//----------------------------------------------------------------------------*
+
+			fChanged = m_ChargeList.ResolveIdentities(DataFiles) ? true : fChanged;
+
+			return (fChanged);
 			}
 
 		//============================================================================*
@@ -420,10 +448,10 @@ namespace ReloadersWorkShop
 				{
 				m_Bullet = Bullet;
 
-				return(true);
+				return (true);
 				}
 
-			return(false);
+			return (false);
 			}
 
 		//============================================================================*
@@ -485,7 +513,7 @@ namespace ReloadersWorkShop
 				return (true);
 				}
 
-			return(false);
+			return (false);
 			}
 
 		//============================================================================*
@@ -501,7 +529,7 @@ namespace ReloadersWorkShop
 				return (true);
 				}
 
-			return(false);
+			return (false);
 			}
 
 		//============================================================================*
@@ -537,43 +565,39 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// XMLHeader Property
+		// Validate()
 		//============================================================================*
 
-		public static string XMLHeader
+		public bool Validate(bool fIdentityOK = false)
 			{
-			get
-				{
-				return ("Cases");
-				}
-			}
+			if (m_Caliber == null || m_Bullet == null || m_Powder == null || m_Case == null || m_Primer == null)
+				return (false);
 
-		//============================================================================*
-		// XMLLine Property
-		//============================================================================*
+			if (!m_Caliber.Validate(fIdentityOK))
+				return (false);
 
-		public string XMLLine
-			{
-			get
-				{
-				string strLine = "";
+			if (!m_Bullet.Validate(fIdentityOK))
+				return (false);
 
-				return (strLine);
-				}
-			}
+			if (!m_Case.Validate(fIdentityOK))
+				return (false);
 
-		//============================================================================*
-		// XMLLineHeader Property
-		//============================================================================*
+			if (!m_Powder.Validate(fIdentityOK))
+				return (false);
 
-		public static string XMLLineHeader
-			{
-			get
-				{
-				string strLine = "Firearm Type,Name,Headstamp,Handgun Type,Small Primer,Large Primer,Magnum Primer,Min Bullet Dia.,Max Bullet Dia.,Min Bullet Weight,Max Bullet Weight,Case Trim Length,Max Case Length,Max COAL,Max Neck Dia";
+			if (!m_Primer.Validate(fIdentityOK))
+				return (false);
 
-				return (strLine);
-				}
+			if (Identity && fIdentityOK)
+				return (true);
+
+			if (Identity)
+				return (false);
+
+			if (m_ChargeList.Count <= 0)
+				return (false);
+
+			return (true);
 			}
 		}
 	}

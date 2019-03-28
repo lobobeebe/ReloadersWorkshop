@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cMainForm.LoadDataTab.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -10,11 +10,9 @@
 //============================================================================*
 
 using System;
-using System.Drawing;
-using System.Drawing.Printing;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
+using System.Xml;
 
 //============================================================================*
 // Application Specific Using Statements
@@ -89,6 +87,10 @@ namespace ReloadersWorkShop
 
 		private void CreateShareFile()
 			{
+			//----------------------------------------------------------------------------*
+			// Gather all the needed info to store the loads to be shared
+			//----------------------------------------------------------------------------*
+
 			cManufacturerList ShareManufacturerList = new cManufacturerList();
 			cCaliberList ShareCaliberList = new cCaliberList();
 			cBulletList ShareBulletList = new cBulletList();
@@ -102,9 +104,9 @@ namespace ReloadersWorkShop
 				{
 				cLoad Load = (cLoad)Item.Tag;
 
-				if (Load != null)
+				if (Load != null && Load.Bullet != null && Load.Case != null && Load.Powder != null && Load.Primer != null)
 					{
-					foreach (cBulletCaliber BulletCaliber in Load.Bullet.CaliberList)
+					foreach (cBulletCaliber BulletCaliber in Load.Bullet.BulletCaliberList)
 						ShareCaliberList.AddCaliber(BulletCaliber.Caliber);
 
 					ShareManufacturerList.AddManufacturer(Load.Bullet.Manufacturer);
@@ -123,197 +125,46 @@ namespace ReloadersWorkShop
 					}
 				}
 
-			Stream Stream = null;
-
 			//----------------------------------------------------------------------------*
-			// Save Data
+			// Now create a cRWXMLDocument and export the load data to it
 			//----------------------------------------------------------------------------*
 
-			try
-				{
-				SaveFileDialog FileDlg = new SaveFileDialog();
+			cRWXMLDocument XMLDocument = new cRWXMLDocument(m_DataFiles);
 
-				FileDlg.Title = "Save Reloader's WorkShop Share File";
-				FileDlg.AddExtension = true;
-				FileDlg.DefaultExt = "rws";
+			XmlElement MainElement = XMLDocument.CreateElement("Body");
+			XMLDocument.AppendChild(MainElement);
 
-				if (m_DataFiles.Preferences.ShareFilePath == null)
-					FileDlg.InitialDirectory = Environment.SpecialFolder.MyDocuments.ToString();
-				else
-					FileDlg.InitialDirectory = m_DataFiles.Preferences.ShareFilePath;
+			XmlText XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0} Load Data Share File Export", Application.ProductName));
+			MainElement.AppendChild(XMLTextElement);
 
-				FileDlg.Filter = "Reloader's WorkShop Share Files (*.rws)|*.rws";
-				FileDlg.CheckPathExists = true;
+			ShareManufacturerList.Export(XMLDocument, MainElement);
+			ShareBulletList.Export(XMLDocument, MainElement, false);
+			ShareCaliberList.Export(XMLDocument, MainElement);
+			ShareCaseList.Export(XMLDocument, MainElement, false);
+			SharePowderList.Export(XMLDocument, MainElement, false);
+			SharePrimerList.Export(XMLDocument, MainElement, false);
 
-				DialogResult rc = FileDlg.ShowDialog();
-
-				if (rc == DialogResult.Cancel)
-					return;
-
-				string strPath = FileDlg.FileName;
-
-				m_DataFiles.Preferences.ShareFilePath = Path.GetDirectoryName(strPath);
-
-				//----------------------------------------------------------------------------*
-				// Open data file and create formatter
-				//----------------------------------------------------------------------------*
-
-				Stream = File.Open(strPath, FileMode.Create);
-
-				BinaryFormatter Formatter = new BinaryFormatter();
-
-				//----------------------------------------------------------------------------*
-				// Serialize the data members
-				//----------------------------------------------------------------------------*
-
-				Formatter.Serialize(Stream, ShareManufacturerList);
-				Formatter.Serialize(Stream, ShareCaliberList);
-				Formatter.Serialize(Stream, ShareBulletList);
-				Formatter.Serialize(Stream, ShareCaseList);
-				Formatter.Serialize(Stream, SharePowderList);
-				Formatter.Serialize(Stream, SharePrimerList);
-				Formatter.Serialize(Stream, ShareLoadList);
-
-				//----------------------------------------------------------------------------*
-				// Close the stream
-				//----------------------------------------------------------------------------*
-
-				Stream.Close();
-
-				Stream = null;
-
-				MessageBox.Show("Your share file has been created successfully.  \n\nThis file can be emailed or otherwise sent to a friend who is also using Reloader's WorkShop.", "Share File Created", MessageBoxButtons.OK, MessageBoxIcon.Information);
-				}
-			catch (Exception e1)
-				{
-				MessageBox.Show(e1.Message);
-				}
-			finally
-				{
-				if (Stream != null)
-					Stream.Close();
-				}
-			}
-
-		//============================================================================*
-		// ImportShareFile()
-		//============================================================================*
-
-		private void ImportShareFile()
-			{
-			cManufacturerList ShareManufacturerList = new cManufacturerList();
-			cCaliberList ShareCaliberList = new cCaliberList();
-			cBulletList ShareBulletList = new cBulletList();
-			cCaseList ShareCaseList = new cCaseList();
-			cPowderList SharePowderList = new cPowderList();
-			cPrimerList SharePrimerList = new cPrimerList();
-
-			cLoadList ShareLoadList = new cLoadList();
-
-			Stream Stream = null;
+			ShareLoadList.Export(XMLDocument, MainElement);
 
 			//----------------------------------------------------------------------------*
-			// Load Data
+			// Save the Exported XML Share File
 			//----------------------------------------------------------------------------*
 
-			try
+			SaveFileDialog SaveDialog = new SaveFileDialog();
+
+			SaveDialog.AddExtension = true;
+			SaveDialog.CheckPathExists = true;
+			SaveDialog.DefaultExt = "xml";
+			SaveDialog.FileName = String.Format("{0} Load Data Share File - {1}{2}{3}", Application.ProductName, DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+			SaveDialog.Filter = "XML Files {*.xml)|*.xml";
+			SaveDialog.InitialDirectory = Path.Combine(m_DataFiles.GetDataPath(), "Share");
+			SaveDialog.OverwritePrompt = true;
+			SaveDialog.Title = String.Format("Export Load Data");
+			SaveDialog.ValidateNames = true;
+
+			if (SaveDialog.ShowDialog() == DialogResult.OK)
 				{
-				OpenFileDialog FileDlg = new OpenFileDialog();
-
-				FileDlg.Title = "Import Reloader's WorkShop Share File";
-				FileDlg.AddExtension = true;
-				FileDlg.DefaultExt = "rws";
-
-				if (m_DataFiles.Preferences.ShareFilePath == null)
-					FileDlg.InitialDirectory = Environment.SpecialFolder.MyDocuments.ToString();
-				else
-					FileDlg.InitialDirectory = m_DataFiles.Preferences.ShareFilePath;
-
-				FileDlg.Filter = "Reloader's WorkShop Share Files (*.rws)|*.rws";
-				FileDlg.CheckPathExists = true;
-
-				DialogResult rc = FileDlg.ShowDialog();
-
-				if (rc == DialogResult.Cancel)
-					return;
-
-				string strPath = FileDlg.FileName;
-
-				m_DataFiles.Preferences.ShareFilePath = Path.GetDirectoryName(strPath);
-
-				//----------------------------------------------------------------------------*
-				// Open data file and create formatter
-				//----------------------------------------------------------------------------*
-
-				Stream = File.Open(strPath, FileMode.Open);
-
-				BinaryFormatter Formatter = new BinaryFormatter();
-
-				//----------------------------------------------------------------------------*
-				// Deserialize the data members
-				//----------------------------------------------------------------------------*
-
-				ShareManufacturerList = (cManufacturerList)Formatter.Deserialize(Stream);
-				ShareCaliberList = (cCaliberList)Formatter.Deserialize(Stream);
-				ShareBulletList = (cBulletList)Formatter.Deserialize(Stream);
-				ShareCaseList = (cCaseList)Formatter.Deserialize(Stream);
-				SharePowderList = (cPowderList)Formatter.Deserialize(Stream);
-				SharePrimerList = (cPrimerList)Formatter.Deserialize(Stream);
-				ShareLoadList = (cLoadList)Formatter.Deserialize(Stream);
-
-				//----------------------------------------------------------------------------*
-				// Add the imported data to the database
-				//----------------------------------------------------------------------------*
-
-				string strMerge = "";
-
-				strMerge += m_DataFiles.MergeManufacturers(ShareManufacturerList);
-
-				strMerge += m_DataFiles.MergeCalibers(ShareCaliberList);
-
-				strMerge += m_DataFiles.MergeBullets(ShareBulletList);
-
-				strMerge += m_DataFiles.MergeCases(ShareCaseList);
-
-				strMerge += m_DataFiles.MergePowders(SharePowderList);
-
-				strMerge += m_DataFiles.MergePrimers(SharePrimerList);
-
-				strMerge += m_DataFiles.MergeLoads(ShareLoadList);
-
-				m_DataFiles.SynchDataLists();
-
-				//----------------------------------------------------------------------------*
-				// Update the Listviews
-				//----------------------------------------------------------------------------*
-
-				InitializeAllTabs();
-
-				//----------------------------------------------------------------------------*
-				// Show the import results
-				//----------------------------------------------------------------------------*
-
-				string strMessage = "The share file has been imported successfully.\n\n";
-
-				if (strMerge.Length == 0)
-					strMerge = "No new data was imported.  The share file was either empty or your data file already contained the data contained in the share file.";
-
-				strMessage += strMerge;
-
-				MessageBox.Show(strMessage, "Share File Imported", MessageBoxButtons.OK, MessageBoxIcon.Information);
-				}
-			catch
-				{
-				MessageBox.Show("Unable to merge share file! The file may not be a valid Reloader's WorkShop Share File.  Check with the source of the file for more information on what version of Reloader's WorkShop was used to create the file.", "Share File Import Error", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Exclamation);
-				}
-			finally
-				{
-				//----------------------------------------------------------------------------*
-				// Close the stream
-				//----------------------------------------------------------------------------*
-
-				if (Stream != null)
-					Stream.Close();
+				XMLDocument.Save(SaveDialog.OpenFile());
 				}
 			}
 
@@ -351,7 +202,6 @@ namespace ReloadersWorkShop
 				EvaluateLoadButton.Click += OnEvaluateLoad;
 
 				ShareFileButton.Click += OnCreateShareFile;
-				ImportShareFileButton.Click += OnImportShareFile;
 				LoadShoppingListButton.Click += OnShoppingListClicked;
 
 				LoadDataSelectAllButton.Click += OnLoadDataSelectAllClicked;
@@ -470,15 +320,6 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// OnImportSharefile()
-		//============================================================================*
-
-		protected void OnImportShareFile(object sender, EventArgs args)
-			{
-			ImportShareFile();
-			}
-
-		//============================================================================*
 		// OnLoad()
 		//============================================================================*
 
@@ -540,7 +381,7 @@ namespace ReloadersWorkShop
 
 		protected void OnLoadDataChecked(object sender, ItemCheckedEventArgs args)
 			{
-			if (!m_fInitialized || m_fPopulating)
+			if (!m_fInitialized || m_fPopulating || m_LoadDataListView.Populating)
 				return;
 
 			(args.Item.Tag as cLoad).Checked = args.Item.Checked;
@@ -745,9 +586,13 @@ namespace ReloadersWorkShop
 
 		private void PopulateLoadDataBulletCombo()
 			{
+			cCaliber.CurrentFirearmType = LoadDataFirearmTypeCombo.Value;
+
 			m_fPopulating = true;
 
 			LoadDataBulletCombo.Items.Clear();
+
+			cFirearm.eFireArmType eFirearmType = LoadDataFirearmTypeCombo.Value;
 
 			cCaliber Caliber = null;
 
@@ -758,48 +603,21 @@ namespace ReloadersWorkShop
 
 			cBullet SelectBullet = null;
 
-			foreach (cBullet CheckBullet in m_DataFiles.BulletList)
+			foreach (cLoad Load in m_DataFiles.LoadList)
 				{
-				if (CheckBullet.FirearmType == LoadDataFirearmTypeCombo.Value &&
-					(Caliber == null || CheckBullet.HasCaliber(Caliber)))
+				if ((Caliber == null || Load.Caliber.CompareTo(Caliber) == 0) &&
+					(eFirearmType == cFirearm.eFireArmType.None || Load.FirearmType == eFirearmType))
 					{
-					bool fOK = false;
-
-					foreach (cLoad CheckLoad in m_DataFiles.LoadList)
+					if ((Load.Bullet.CrossUse || Load.Bullet.FirearmType == eFirearmType) &&
+						(Caliber == null || Load.Bullet.HasCaliber(Caliber)))
 						{
-						if (CheckLoad.Bullet.Equals(CheckBullet))
+						if (LoadDataBulletCombo.Items.IndexOf(Load.Bullet) < 0)
 							{
-							fOK = true;
+							LoadDataBulletCombo.Items.Add(Load.Bullet);
 
-							break;
+							if (Load.Bullet.CompareTo(m_DataFiles.Preferences.LastLoadDataBulletSelected) == 0)
+								SelectBullet = Load.Bullet;
 							}
-						}
-
-					if (fOK)
-						{
-						bool fBulletUsed = false;
-
-						foreach (cLoad Load in m_DataFiles.LoadList)
-							{
-							if (Load.Bullet.CompareTo(CheckBullet) == 0)
-								{
-								fBulletUsed = true;
-
-								break;
-								}
-							}
-
-						fOK = fBulletUsed;
-						}
-
-					if (fOK)
-						{
-						cCaliber.CurrentFirearmType = CheckBullet.FirearmType;
-
-						LoadDataBulletCombo.Items.Add(CheckBullet);
-
-						if (CheckBullet.CompareTo(m_DataFiles.Preferences.LastLoadDataBulletSelected) == 0)
-							SelectBullet = CheckBullet;
 						}
 					}
 				}
@@ -811,6 +629,9 @@ namespace ReloadersWorkShop
 				if (LoadDataBulletCombo.Items.Count > 0)
 					LoadDataBulletCombo.SelectedIndex = 0;
 				}
+
+			if (LoadDataBulletCombo.SelectedIndex < 0)
+				LoadDataBulletCombo.SelectedIndex = 0;
 
 			m_fPopulating = false;
 
@@ -839,7 +660,8 @@ namespace ReloadersWorkShop
 
 					foreach (cLoad Load in m_DataFiles.LoadList)
 						{
-						if (CheckCaliber.Equals(Load.Caliber))
+						if (CheckCaliber.CompareTo(Load.Caliber) == 0 &&
+							(!m_DataFiles.Preferences.HideUncheckedCalibers || CheckCaliber.Checked))
 							{
 							fCaliberUsed = true;
 
@@ -904,50 +726,43 @@ namespace ReloadersWorkShop
 
 		private void PopulateLoadDataPowderCombo()
 			{
+			cCaliber.CurrentFirearmType = LoadDataFirearmTypeCombo.Value;
+
 			m_fPopulating = true;
 
 			LoadDataPowderCombo.Items.Clear();
 
-			cPowder SelectPowder = null;
-
-			cBullet Bullet = null;
-
-			if (LoadDataBulletCombo.SelectedIndex > 0)
-				Bullet = (cBullet)LoadDataBulletCombo.SelectedItem;
+			cFirearm.eFireArmType eFirearmType = LoadDataFirearmTypeCombo.Value;
 
 			cCaliber Caliber = null;
 
 			if (LoadDataCaliberCombo.SelectedIndex > 0)
 				Caliber = (cCaliber)LoadDataCaliberCombo.SelectedItem;
 
+			cBullet Bullet = null;
+
+			if (LoadDataBulletCombo.SelectedIndex > 0)
+				Bullet = (cBullet)LoadDataBulletCombo.SelectedItem;
+
 			LoadDataPowderCombo.Items.Add("Any Powder");
 
-			foreach (cPowder CheckPowder in m_DataFiles.PowderList)
+			cPowder SelectPowder = null;
+
+			foreach (cLoad Load in m_DataFiles.LoadList)
 				{
-				if ((LoadDataFirearmTypeCombo.Value == cFirearm.eFireArmType.None || CheckPowder.FirearmType == LoadDataFirearmTypeCombo.Value))
+				if ((Caliber == null || Load.Caliber.CompareTo(Caliber) == 0) &&
+					(eFirearmType == cFirearm.eFireArmType.None || Load.FirearmType == eFirearmType) &&
+					(Bullet == null || Load.Bullet.CompareTo(Bullet) == 0))
 					{
-					bool fPowderUsed = false;
-
-					foreach (cLoad Load in m_DataFiles.LoadList)
+					if (Load.Powder.CrossUse || Load.Powder.FirearmType == eFirearmType)
 						{
-						if (Load.Powder.Equals(CheckPowder) &&
-							(Bullet == null || Load.Bullet.CompareTo(Bullet) == 0) &&
-							(Caliber == null || Load.Caliber.CompareTo(Caliber) == 0))
+						if (LoadDataPowderCombo.Items.IndexOf(Load.Powder) < 0)
 							{
-							fPowderUsed = true;
+							LoadDataPowderCombo.Items.Add(Load.Powder);
 
-							break;
+							if (Load.Powder.CompareTo(m_DataFiles.Preferences.LastLoadDataPowderSelected) == 0)
+								SelectPowder = Load.Powder;
 							}
-						}
-
-					if (fPowderUsed)
-						{
-						cCaliber.CurrentFirearmType = CheckPowder.FirearmType;
-
-						LoadDataPowderCombo.Items.Add(CheckPowder);
-
-						if (CheckPowder.CompareTo(m_DataFiles.Preferences.LastLoadDataPowderSelected) == 0)
-							SelectPowder = CheckPowder;
 						}
 					}
 				}
@@ -959,6 +774,9 @@ namespace ReloadersWorkShop
 				if (LoadDataPowderCombo.Items.Count > 0)
 					LoadDataPowderCombo.SelectedIndex = 0;
 				}
+
+			if (LoadDataPowderCombo.SelectedIndex < 0)
+				LoadDataPowderCombo.SelectedIndex = 0;
 
 			m_fPopulating = false;
 

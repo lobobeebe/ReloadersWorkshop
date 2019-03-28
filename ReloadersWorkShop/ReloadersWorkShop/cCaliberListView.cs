@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cCaliberListView.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -39,17 +39,18 @@ namespace ReloadersWorkShop
 			{
 			new cListViewColumn(0, "NameHeader","Caliber", HorizontalAlignment.Left, 160),
 			new cListViewColumn(1, "TypeHeader", "Type", HorizontalAlignment.Left, 100),
-			new cListViewColumn(2, "HeadStampHeader", "Head Stamp", HorizontalAlignment.Left, 120),
-			new cListViewColumn(3, "PrimerSizeHeader", "Primer Size", HorizontalAlignment.Left, 100),
-			new cListViewColumn(4, "MagnumHeader", "Magnum", HorizontalAlignment.Center, 95),
-			new cListViewColumn(5, "MinDiameterHeader", "Min Bullet Diameter", HorizontalAlignment.Center, 150),
-			new cListViewColumn(6, "MaxDiameterHeader", "Max Bullet Diameter", HorizontalAlignment.Center, 150),
-			new cListViewColumn(7, "MinWeightHeader", "Min Bullet Weight", HorizontalAlignment.Center, 150),
-			new cListViewColumn(8, "MaxWeightHeader", "Max Bullet Weight", HorizontalAlignment.Center, 150),
-			new cListViewColumn(9, "CaseTrimHeader", "Min Case/Shell Length", HorizontalAlignment.Center, 150),
-			new cListViewColumn(10, "MaxCaseLengthHeader", "Max Case/Shell Length", HorizontalAlignment.Center, 150),
-			new cListViewColumn(11, "MaxCOLHeader", "Max COAL", HorizontalAlignment.Center, 120),
-			new cListViewColumn(12, "MaxneckDiameterHeader", "Max Neck Diameter", HorizontalAlignment.Center, 120)
+			new cListViewColumn(2, "CrossUseHeader", "Cross Use", HorizontalAlignment.Center, 95),
+			new cListViewColumn(3, "HeadStampHeader", "Head Stamp", HorizontalAlignment.Left, 120),
+			new cListViewColumn(4, "PrimerSizeHeader", "Primer Size", HorizontalAlignment.Left, 100),
+			new cListViewColumn(5, "MagnumHeader", "Magnum", HorizontalAlignment.Center, 95),
+			new cListViewColumn(6, "MinDiameterHeader", "Min Bullet Diameter", HorizontalAlignment.Center, 150),
+			new cListViewColumn(7, "MaxDiameterHeader", "Max Bullet Diameter", HorizontalAlignment.Center, 150),
+			new cListViewColumn(8, "MinWeightHeader", "Min Bullet Weight", HorizontalAlignment.Center, 150),
+			new cListViewColumn(9, "MaxWeightHeader", "Max Bullet Weight", HorizontalAlignment.Center, 150),
+			new cListViewColumn(10, "CaseTrimHeader", "Min Case/Shell Length", HorizontalAlignment.Center, 150),
+			new cListViewColumn(11, "MaxCaseLengthHeader", "Max Case/Shell Length", HorizontalAlignment.Center, 150),
+			new cListViewColumn(12, "MaxCOLHeader", "Max COAL", HorizontalAlignment.Center, 120),
+			new cListViewColumn(13, "MaxNeckDiameterHeader", "Max Neck Diameter", HorizontalAlignment.Center, 120)
 			};
 
 		//============================================================================*
@@ -67,6 +68,8 @@ namespace ReloadersWorkShop
 
 			CheckBoxes = true;
 			GridLines = true;
+
+			Font = new System.Drawing.Font(Font, System.Drawing.FontStyle.Bold);
 
 			SetColumns();
 
@@ -102,7 +105,7 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			if (!VerifyCaliber(Caliber))
-				return(null);
+				return (null);
 
 			//----------------------------------------------------------------------------*
 			// Create the new Item
@@ -110,7 +113,7 @@ namespace ReloadersWorkShop
 
 			ListViewItem Item = new ListViewItem();
 
-			SetCaliberData(Item,  Caliber);
+			SetCaliberData(Item, Caliber);
 
 			//----------------------------------------------------------------------------*
 			// Add the item to the list and exit
@@ -199,13 +202,8 @@ namespace ReloadersWorkShop
 
 			Cursor = Cursors.WaitCursor;
 
-			m_strDimensionFormat = "{0:F";
-			m_strDimensionFormat += String.Format("{0:G0}", cPreferences.DimensionDecimals);
-			m_strDimensionFormat += "}";
-
-			m_strBulletWeightFormat = "{0:F";
-			m_strBulletWeightFormat += String.Format("{0:G0}", cPreferences.BulletWeightDecimals);
-			m_strBulletWeightFormat += "}";
+			m_strDimensionFormat = m_DataFiles.Preferences.FormatString(cDataFiles.eDataType.Dimension);
+			m_strBulletWeightFormat = m_DataFiles.Preferences.FormatString(cDataFiles.eDataType.BulletWeight);
 
 			Items.Clear();
 
@@ -285,19 +283,26 @@ namespace ReloadersWorkShop
 			else
 				Item.SubItems.Add("-");
 
+			Item.SubItems.Add(Caliber.CrossUse ? "Y" : "");
+
 			Item.SubItems.Add(Caliber.HeadStamp);
 
 			string strPrimerSize = "";
 
-			if (Caliber.SmallPrimer)
-				strPrimerSize += "Small";
-
-			if (Caliber.LargePrimer)
+			if (Caliber.Rimfire)
+				strPrimerSize = "Rimfire";
+			else
 				{
-				if (strPrimerSize.Length > 0)
-					strPrimerSize += "/";
+				if (Caliber.SmallPrimer)
+					strPrimerSize += "Small";
 
-				strPrimerSize += "Large";
+				if (Caliber.LargePrimer)
+					{
+					if (strPrimerSize.Length > 0)
+						strPrimerSize += "/";
+
+					strPrimerSize += "Large";
+					}
 				}
 
 			Item.SubItems.Add(strPrimerSize);
@@ -330,14 +335,14 @@ namespace ReloadersWorkShop
 
 		public void SetColumns()
 			{
-			m_arColumns[5].Text = String.Format("Min Bullet Diameter ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
-			m_arColumns[6].Text = String.Format("Max Bullet Diameter ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
-			m_arColumns[7].Text = String.Format("Min Bullet Weight ({0})", cDataFiles.MetricString(cDataFiles.eDataType.BulletWeight));
-			m_arColumns[8].Text = String.Format("Max Bullet Weight ({0})", cDataFiles.MetricString(cDataFiles.eDataType.BulletWeight));
-			m_arColumns[9].Text = String.Format("Min Case Length ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
-			m_arColumns[10].Text = String.Format("Max Case Length ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
-			m_arColumns[11].Text = String.Format("Max COAL ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
-			m_arColumns[12].Text = String.Format("Max Neck Diameter ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
+			m_arColumns[6].Text = String.Format("Min Bullet Diameter ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
+			m_arColumns[7].Text = String.Format("Max Bullet Diameter ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
+			m_arColumns[8].Text = String.Format("Min Bullet Weight ({0})", cDataFiles.MetricString(cDataFiles.eDataType.BulletWeight));
+			m_arColumns[9].Text = String.Format("Max Bullet Weight ({0})", cDataFiles.MetricString(cDataFiles.eDataType.BulletWeight));
+			m_arColumns[10].Text = String.Format("Min Case Length ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
+			m_arColumns[11].Text = String.Format("Max Case Length ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
+			m_arColumns[12].Text = String.Format("Max COAL ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
+			m_arColumns[13].Text = String.Format("Max Neck Diameter ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
 
 			PopulateColumns(m_arColumns);
 			}
@@ -370,7 +375,7 @@ namespace ReloadersWorkShop
 
 		public void UpdateCaliber(cCaliber Caliber, bool fSelect = false)
 			{
-			foreach(ListViewItem Item in Items)
+			foreach (ListViewItem Item in Items)
 				{
 				if ((Item.Tag as cCaliber).Equals(Caliber))
 					{
@@ -397,7 +402,7 @@ namespace ReloadersWorkShop
 			if (m_DataFiles.Preferences.HideUncheckedCalibers && !Caliber.Checked)
 				return (false);
 
-			return(true);
+			return (true);
 			}
 		}
 	}

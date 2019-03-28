@@ -31,7 +31,6 @@
 			this.FiltersGroupBox = new System.Windows.Forms.GroupBox();
 			this.FiredCheckBox = new System.Windows.Forms.CheckBox();
 			this.PurchaseLocationCombo = new System.Windows.Forms.ComboBox();
-			this.ManufacturerCombo = new System.Windows.Forms.ComboBox();
 			this.PurchasesCheckBox = new System.Windows.Forms.CheckBox();
 			this.AdjustmentsCheckBox = new System.Windows.Forms.CheckBox();
 			this.label2 = new System.Windows.Forms.Label();
@@ -39,6 +38,7 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.EndDatePicker = new System.Windows.Forms.DateTimePicker();
 			this.StartDatePicker = new System.Windows.Forms.DateTimePicker();
+			this.ManufacturerCombo = new System.Windows.Forms.ComboBox();
 			this.ReloadsCheckBox = new System.Windows.Forms.CheckBox();
 			this.FactoryAmmoCheckBox = new System.Windows.Forms.CheckBox();
 			this.PowderCheckBox = new System.Windows.Forms.CheckBox();
@@ -99,16 +99,6 @@
 			this.PurchaseLocationCombo.Name = "PurchaseLocationCombo";
 			this.PurchaseLocationCombo.Size = new System.Drawing.Size(197, 21);
 			this.PurchaseLocationCombo.TabIndex = 10;
-			// 
-			// ManufacturerCombo
-			// 
-			this.ManufacturerCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.ManufacturerCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.ManufacturerCombo.FormattingEnabled = true;
-			this.ManufacturerCombo.Location = new System.Drawing.Point(25, 120);
-			this.ManufacturerCombo.Name = "ManufacturerCombo";
-			this.ManufacturerCombo.Size = new System.Drawing.Size(204, 21);
-			this.ManufacturerCombo.TabIndex = 6;
 			// 
 			// PurchasesCheckBox
 			// 
@@ -195,6 +185,16 @@
 			this.StartDatePicker.Size = new System.Drawing.Size(104, 20);
 			this.StartDatePicker.TabIndex = 7;
 			// 
+			// ManufacturerCombo
+			// 
+			this.ManufacturerCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ManufacturerCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ManufacturerCombo.FormattingEnabled = true;
+			this.ManufacturerCombo.Location = new System.Drawing.Point(25, 120);
+			this.ManufacturerCombo.Name = "ManufacturerCombo";
+			this.ManufacturerCombo.Size = new System.Drawing.Size(204, 21);
+			this.ManufacturerCombo.TabIndex = 6;
+			// 
 			// ReloadsCheckBox
 			// 
 			this.ReloadsCheckBox.AutoCheck = false;
@@ -275,6 +275,7 @@
 			// 
 			// PrintButton
 			// 
+			this.PrintButton.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.PrintButton.Location = new System.Drawing.Point(224, 208);
 			this.PrintButton.Name = "PrintButton";
 			this.PrintButton.Size = new System.Drawing.Size(75, 23);
@@ -355,6 +356,7 @@
 			// 
 			// cCostAnalysisForm
 			// 
+			this.AcceptButton = this.PrintButton;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.AnalysisCancelButton;

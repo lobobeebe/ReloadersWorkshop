@@ -62,7 +62,7 @@ namespace ReloadersWorkShop
 		private bool m_fDisposed = false;
 
 		private int m_nBatchID = 0;
-		private int m_nRange = 100;
+		private double m_dRange = 100.0;
 
 		private double m_dBulletDiameter = 0.0;
 		private cCaliber m_Caliber = null;
@@ -132,7 +132,7 @@ namespace ReloadersWorkShop
 		public cTarget(cTarget Target)
 			{
 			m_nBatchID = Target.m_nBatchID;
-			m_nRange = Target.m_nRange;
+			m_dRange = Target.m_dRange;
 
 			m_nRotation = Target.m_nRotation;
 			m_dBulletDiameter = Target.m_dBulletDiameter;
@@ -682,7 +682,7 @@ namespace ReloadersWorkShop
 		public string GroupBoxString()
 			{
 			string strGroupFormat = "{0:F";
-			strGroupFormat += String.Format("{0:G0}", cPreferences.GroupDecimals);
+			strGroupFormat += String.Format("{0:G0}", cPreferences.StaticPreferences.GroupDecimals);
 			strGroupFormat += "} {1}";
 
 			Rectangle GroupBoxRect = GroupBox;
@@ -690,7 +690,7 @@ namespace ReloadersWorkShop
 			double dWidth = 0.0;
 			double dHeight = 0.0;
 
-			if (cPreferences.MetricGroups)
+			if (cPreferences.StaticPreferences.MetricGroups)
 				{
 				if (PixelsPerCentimeter > 0.0)
 					{
@@ -776,8 +776,8 @@ namespace ReloadersWorkShop
 				{
 				double dMOA = 0.0;
 
-				if (m_nRange > 0)
-					dMOA = GroupSize / ((m_nRange / 100.0) * 1.047);
+				if (m_dRange > 0.0)
+					dMOA = GroupSize / ((m_dRange / 100.0) * 1.047);
 
 				return (dMOA);
 				}
@@ -890,12 +890,12 @@ namespace ReloadersWorkShop
 		public string MeanOffsetString()
 			{
 			string strGroupFormat = "{0:F";
-			strGroupFormat += String.Format("{0:G0}", cPreferences.GroupDecimals);
+			strGroupFormat += String.Format("{0:G0}", cPreferences.StaticPreferences.GroupDecimals);
 			strGroupFormat += "} {1}";
 
 			string strOffset = String.Format(strGroupFormat, Math.Abs(cDataFiles.StandardToMetric(MeanOffset.X, cDataFiles.eDataType.GroupSize)), cDataFiles.MetricString(cDataFiles.eDataType.GroupSize));
 
-			if (Math.Round(MeanOffset.X, cPreferences.DimensionDecimals) == 0.0)
+			if (Math.Round(MeanOffset.X, cPreferences.StaticPreferences.DimensionDecimals) == 0.0)
 				strOffset += " Horiz.";
 			else
 				{
@@ -909,7 +909,7 @@ namespace ReloadersWorkShop
 
 			strOffset += String.Format(strGroupFormat, Math.Abs(cDataFiles.StandardToMetric(MeanOffset.Y, cDataFiles.eDataType.GroupSize)), cDataFiles.MetricString(cDataFiles.eDataType.GroupSize));
 
-			if (Math.Round(MeanOffset.Y, cPreferences.DimensionDecimals) == 0.0)
+			if (Math.Round(MeanOffset.Y, cPreferences.StaticPreferences.DimensionDecimals) == 0.0)
 				strOffset += " Vert.";
 			else
 				{
@@ -1046,8 +1046,8 @@ namespace ReloadersWorkShop
 			{
             double dMOA = 0.0;
 
-            if (m_nRange > 0)
-                dMOA = OffsetLength(Shot) / ((m_nRange / 100.0) * 1.047);
+            if (m_dRange > 0)
+                dMOA = OffsetLength(Shot) / ((m_dRange / 100.0) * 1.047);
 
             return (dMOA);
 			}
@@ -1064,7 +1064,7 @@ namespace ReloadersWorkShop
 			double dYOffset = OffsetY(Shot);
 
 			string strGroupFormat = "{0:F";
-			strGroupFormat += String.Format("{0:G0}", cPreferences.GroupDecimals);
+			strGroupFormat += String.Format("{0:G0}", cPreferences.StaticPreferences.GroupDecimals);
 			strGroupFormat += "}";
 
 			strOffset = String.Format(strGroupFormat, Math.Abs(cDataFiles.StandardToMetric(dXOffset, cDataFiles.eDataType.GroupSize)));
@@ -1151,15 +1151,15 @@ namespace ReloadersWorkShop
 		// Range Property
 		//============================================================================*
 
-		public int Range
+		public double Range
 			{
 			get
 				{
-				return (m_nRange);
+				return (m_dRange);
 				}
 			set
 				{
-				m_nRange = value;
+				m_dRange = value;
 				}
 			}
 

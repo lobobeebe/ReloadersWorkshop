@@ -57,6 +57,7 @@
 			this.BatchTestOKButton = new System.Windows.Forms.Button();
 			this.BatchTestCancelButton = new System.Windows.Forms.Button();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.TargetCalculatorButton = new System.Windows.Forms.Button();
 			this.label28 = new System.Windows.Forms.Label();
 			this.BestGroupTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			this.BestGroupRangeTextBox = new CommonLib.Controls.cIntegerValueTextBox();
@@ -106,7 +107,6 @@
 			this.label25 = new System.Windows.Forms.Label();
 			this.label19 = new System.Windows.Forms.Label();
 			this.PressureTextBox = new CommonLib.Controls.cDoubleValueTextBox();
-			this.TargetCalculatorButton = new System.Windows.Forms.Button();
 			label1 = new System.Windows.Forms.Label();
 			label2 = new System.Windows.Forms.Label();
 			label16 = new System.Windows.Forms.Label();
@@ -506,6 +506,17 @@
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Test Data";
 			// 
+			// TargetCalculatorButton
+			// 
+			this.TargetCalculatorButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TargetCalculatorButton.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.TargetCalculatorButton.Location = new System.Drawing.Point(175, 50);
+			this.TargetCalculatorButton.Name = "TargetCalculatorButton";
+			this.TargetCalculatorButton.Size = new System.Drawing.Size(75, 42);
+			this.TargetCalculatorButton.TabIndex = 5;
+			this.TargetCalculatorButton.Text = "Target Calculator";
+			this.TargetCalculatorButton.UseVisualStyleBackColor = true;
+			// 
 			// label28
 			// 
 			this.label28.AutoSize = true;
@@ -700,6 +711,7 @@
 			this.LocationTextBox.Size = new System.Drawing.Size(166, 20);
 			this.LocationTextBox.TabIndex = 2;
 			this.LocationTextBox.ToolTip = "";
+			this.LocationTextBox.ValidChars = "";
 			this.LocationTextBox.Value = "";
 			// 
 			// TwistLabel
@@ -1145,24 +1157,13 @@
 			this.PressureTextBox.Value = 0D;
 			this.PressureTextBox.ZeroAllowed = true;
 			// 
-			// TargetCalculatorButton
-			// 
-			this.TargetCalculatorButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.TargetCalculatorButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.TargetCalculatorButton.Location = new System.Drawing.Point(175, 50);
-			this.TargetCalculatorButton.Name = "TargetCalculatorButton";
-			this.TargetCalculatorButton.Size = new System.Drawing.Size(75, 42);
-			this.TargetCalculatorButton.TabIndex = 5;
-			this.TargetCalculatorButton.Text = "Target Calculator";
-			this.TargetCalculatorButton.UseVisualStyleBackColor = true;
-			// 
 			// cBatchTestForm
 			// 
 			this.AcceptButton = this.BatchTestOKButton;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.BatchTestCancelButton;
-			this.ClientSize = new System.Drawing.Size(658, 591);
+			this.ClientSize = new System.Drawing.Size(670, 587);
 			this.ControlBox = false;
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.BatchTestDeleteButton);

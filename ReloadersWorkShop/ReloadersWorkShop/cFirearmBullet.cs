@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cFirearmBullet.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -10,10 +10,7 @@
 //============================================================================*
 
 using System;
-
-using System.Windows.Forms;
-
-using ReloadersWorkShop.Preferences;
+using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -26,7 +23,7 @@ namespace ReloadersWorkShop
 	//============================================================================*
 
 	[Serializable]
-	public class cFirearmBullet
+	public partial class cFirearmBullet
 		{
 		//============================================================================*
 		// Private Data Members
@@ -35,6 +32,7 @@ namespace ReloadersWorkShop
 		private cCaliber m_Caliber = new cCaliber();
 
 		private cBullet m_Bullet = null;
+
 		private double m_dCOL = 0.0;
 		private double m_dCBTO = 0.0;
 		private double m_dJump = 0.0;
@@ -57,14 +55,49 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Append()
+		//============================================================================*
+
+		public int Append(cFirearmBullet FirearmBullet, bool fCountOnly = false)
+			{
+			int nUpdateCount = 0;
+
+			if (m_dCOL == 0.0 && FirearmBullet.m_dCOL != 0.0)
+				{
+				if (!fCountOnly)
+					m_dCOL = FirearmBullet.m_dCOL;
+
+				nUpdateCount++;
+				}
+
+			if (m_dCBTO == 0.0 && FirearmBullet.m_dCBTO != 0.0)
+				{
+				if (!fCountOnly)
+					m_dCBTO = FirearmBullet.m_dCBTO;
+
+				nUpdateCount++;
+				}
+
+			if (m_dJump == 0.0 && FirearmBullet.m_dJump != 0.0)
+				{
+				if (!fCountOnly)
+					m_dJump = FirearmBullet.m_dJump;
+
+				nUpdateCount++;
+				}
+
+			return (nUpdateCount);
+			}
+
+		//============================================================================*
 		// Copy()
 		//============================================================================*
 
 		public void Copy(cFirearmBullet FirearmBullet)
 			{
 			m_Caliber = FirearmBullet.m_Caliber;
+			m_Bullet = FirearmBullet.m_Bullet;
 
-			m_Bullet = new cBullet(FirearmBullet.m_Bullet);
 			m_dCOL = FirearmBullet.m_dCOL;
 			m_dCBTO = FirearmBullet.m_dCBTO;
 			m_dJump = FirearmBullet.m_dJump;
@@ -193,6 +226,30 @@ namespace ReloadersWorkShop
 			string strString = String.Format("{0}", m_Bullet.ToWeightString());
 
 			return (strString);
+			}
+
+		//============================================================================*
+		// Validate()
+		//============================================================================*
+
+		public bool Validate(bool fIdentityOK = false)
+			{
+			if (m_Caliber == null)
+				return (false);
+
+			if (!fIdentityOK && m_Caliber.Identity)
+				return (false);
+
+			if (m_Bullet == null)
+				return (false);
+
+			if (!fIdentityOK && m_Bullet.Identity)
+				return (false);
+
+			if (m_dCBTO == 0.0 && m_dCOL == 0.0)
+				return (false);
+
+			return (true);
 			}
 		}
 	}

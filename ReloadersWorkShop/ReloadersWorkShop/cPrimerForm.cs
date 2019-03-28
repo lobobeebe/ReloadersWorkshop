@@ -1,7 +1,7 @@
-﻿
+﻿//============================================================================*
 // cPrimerForm.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -169,7 +169,14 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			if (!m_fViewOnly)
-				cControls.PopulatePrimerSizeCombo(SizeCombo, m_Primer);
+				{
+				SizeCombo.Items.Clear();
+
+				SizeCombo.Items.Add("Small");
+				SizeCombo.Items.Add("Large");
+
+				SizeCombo.SelectedIndex = (int) m_Primer.Size;
+				}
 			else
 				{
 				SizeCombo.Items.Clear();
@@ -183,7 +190,7 @@ namespace ReloadersWorkShop
 			// Set Labels for inventory tracking if needed
 			//----------------------------------------------------------------------------*
 
-			if (cPreferences.TrackInventory)
+			if (m_DataFiles.Preferences.TrackInventory)
 				{
 				QuantityLabel.Text = "Qty on Hand:";
 
@@ -421,7 +428,7 @@ namespace ReloadersWorkShop
 
 			CostTextBox.Value = m_DataFiles.SupplyCost(m_Primer);
 
-			if (cPreferences.TrackInventory)
+			if (m_DataFiles.Preferences.TrackInventory)
 				CostTextBox.Text = String.Format("{0}{1:F2}", m_DataFiles.Preferences.Currency, m_DataFiles.SupplyCost(m_Primer));
 
 			m_fPopulating = false;

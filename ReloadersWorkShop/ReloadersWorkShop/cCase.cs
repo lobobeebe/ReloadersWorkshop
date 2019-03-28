@@ -23,7 +23,7 @@ namespace ReloadersWorkShop
 	//============================================================================*
 
 	[Serializable]
-	public class cCase : cSupply
+	public partial class cCase : cSupply
 		{
 		//============================================================================*
 		// Private Data Members
@@ -40,8 +40,8 @@ namespace ReloadersWorkShop
 		// cCase() - Constructor
 		//============================================================================*
 
-		public cCase()
-			: base(cSupply.eSupplyTypes.Cases)
+		public cCase(bool fIdentity = false)
+			: base(cSupply.eSupplyTypes.Cases, fIdentity)
 			{
 			}
 
@@ -53,6 +53,49 @@ namespace ReloadersWorkShop
 			: base(Case)
 			{
 			Copy(Case, false);
+			}
+
+		//============================================================================*
+		// Append()
+		//============================================================================*
+
+		public int Append(cCase Case, bool fCountOnly = false)
+			{
+			int nUpdateCount = base.Append(Case, fCountOnly);
+
+			if (!m_fMatch && Case.m_fMatch)
+				{
+				if (fCountOnly)
+					m_fMatch = Case.m_fMatch;
+
+				nUpdateCount++;
+				}
+
+			if (!m_fMilitary && Case.m_fMilitary)
+				{
+				if (fCountOnly)
+					m_fMilitary = Case.m_fMilitary;
+
+				nUpdateCount++;
+				}
+
+			if (!m_fLargePrimer && Case.m_fLargePrimer)
+				{
+				if (fCountOnly)
+					m_fLargePrimer = Case.m_fLargePrimer;
+
+				nUpdateCount++;
+				}
+
+			if (!m_fSmallPrimer && Case.m_fSmallPrimer)
+				{
+				if (fCountOnly)
+					m_fSmallPrimer = Case.m_fSmallPrimer;
+
+				nUpdateCount++;
+				}
+
+			return (nUpdateCount);
 			}
 
 		//============================================================================*
@@ -126,33 +169,19 @@ namespace ReloadersWorkShop
 
 				if (rc == 0)
 					{
-					rc = m_Caliber.CompareTo(Case.m_Caliber);
-
-					//----------------------------------------------------------------------------*
-					// Large Primer
-					//----------------------------------------------------------------------------*
-
-					if (rc == 0)
+					if (m_Caliber == null)
 						{
-						rc = m_fLargePrimer.CompareTo(Case.m_fLargePrimer);
-
-						//----------------------------------------------------------------------------*
-						// Small Primer
-						//----------------------------------------------------------------------------*
-
-						if (rc == 0)
-							{
-							rc = m_fSmallPrimer.CompareTo(Case.m_fSmallPrimer);
-
-							//----------------------------------------------------------------------------*
-							// Match
-							//----------------------------------------------------------------------------*
-
-							if (rc == 0)
-								{
-								rc = m_fMatch.CompareTo(Case.m_fMatch);
-								}
-							}
+						if (Case.m_Caliber == null)
+							rc = 0;
+						else
+							rc = -1;
+						}
+					else
+						{
+						if (Case.m_Caliber == null)
+							rc = 1;
+						else
+							rc = m_Caliber.CompareTo(Case.m_Caliber);
 						}
 					}
 				}
@@ -178,148 +207,6 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// CSVHeader Property
-		//============================================================================*
-
-		public static string CSVHeader
-			{
-			get
-				{
-				return ("Cases");
-				}
-			}
-
-		//============================================================================*
-		// CSVLine Property
-		//============================================================================*
-
-		public string CSVLine
-			{
-			get
-				{
-				string strLine = "";
-
-				strLine += Manufacturer.Name;
-				strLine += ",";
-				strLine += m_strPartNumber;
-				strLine += ",";
-
-				strLine += cFirearm.FirearmTypeString(FirearmType);
-				strLine += ",";
-				strLine += CrossUse ? "Yes," : "-,";
-
-				strLine += m_Caliber.Name;
-				strLine += ",";
-				strLine += m_fMatch ? "Yes," : "-,";
-				strLine += ",";
-				strLine += m_fMilitary ? "Yes," : "-,";
-				strLine += ",";
-				strLine += m_fLargePrimer ? "Yes," : "-,";
-				strLine += ",";
-				strLine += m_fSmallPrimer ? "Yes," : "-,";
-
-				return (strLine);
-				}
-			}
-
-		//============================================================================*
-		// CSVLineHeader Property
-		//============================================================================*
-
-		public static string CSVLineHeader
-			{
-			get
-				{
-				return ("Manufacturer,Part Number,Firearm Type,Cross Use?,Caliber,Match,Military,Large Primer,Small Primer");
-				}
-			}
-
-		//============================================================================*
-		// Export() - XML Document
-		//============================================================================*
-
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
-			{
-			XmlElement XMLThisElement = XMLDocument.CreateElement("Case");
-			XMLParentElement.AppendChild(XMLThisElement);
-
-			// Manufacturer
-
-			XmlElement XMLElement = XMLDocument.CreateElement("Manufacturer");
-			XmlText XMLTextElement = XMLDocument.CreateTextNode(Manufacturer.Name);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Part Number
-
-			if (!String.IsNullOrEmpty(m_strPartNumber))
-				{
-				XMLElement = XMLDocument.CreateElement("PartNumber");
-				XMLTextElement = XMLDocument.CreateTextNode(m_strPartNumber);
-				XMLElement.AppendChild(XMLTextElement);
-
-				XMLThisElement.AppendChild(XMLElement);
-				}
-
-			// Firearm Type
-
-			XMLElement = XMLDocument.CreateElement("FirearmType");
-			XMLTextElement = XMLDocument.CreateTextNode(cFirearm.FirearmTypeString(FirearmType));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Cross Use
-
-			XMLElement = XMLDocument.CreateElement("CrossUse");
-			XMLTextElement = XMLDocument.CreateTextNode(CrossUse ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Caliber
-
-			XMLElement = XMLDocument.CreateElement("Caliber");
-			XMLTextElement = XMLDocument.CreateTextNode(m_Caliber.Name);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Match
-
-			XMLElement = XMLDocument.CreateElement("Match");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fMatch ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Military
-
-			XMLElement = XMLDocument.CreateElement("Military");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fMilitary ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Large Primer
-
-			XMLElement = XMLDocument.CreateElement("LargePrimer");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fLargePrimer ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Small Primer
-
-			XMLElement = XMLDocument.CreateElement("SmallPrimer");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fSmallPrimer ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-			}
-
-		//============================================================================*
 		// HeadStamp Property
 		//============================================================================*
 
@@ -329,7 +216,7 @@ namespace ReloadersWorkShop
 				{
 				string strHeadStamp = "";
 
-				if (Manufacturer != null && Manufacturer.HeadStamp != null && Manufacturer.HeadStamp.Length > 0)
+				if (Manufacturer != null && !String.IsNullOrEmpty( Manufacturer.HeadStamp))
 					strHeadStamp += Manufacturer.HeadStamp;
 
 				if (m_fMatch)
@@ -396,6 +283,32 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public override bool ResolveIdentities(cDataFiles DataFiles)
+			{
+			bool fChanged = base.ResolveIdentities(DataFiles);
+
+			if (m_Caliber.Identity)
+				{
+				foreach (cCaliber Caliber in DataFiles.CaliberList)
+					{
+					if (!Caliber.Identity && Caliber.CompareTo(m_Caliber) == 0)
+						{
+						m_Caliber = Caliber;
+
+						fChanged = true;
+
+						break;
+						}
+					}
+				}
+
+			return (fChanged);
+			}
+
+		//============================================================================*
 		// SmallPrimer Property
 		//============================================================================*
 
@@ -453,11 +366,15 @@ namespace ReloadersWorkShop
 			{
 			string strString = String.Format("{0}", Manufacturer.Name);
 
+			strString += (" " + m_strPartNumber);
+
 			if (!string.IsNullOrEmpty(Manufacturer.HeadStamp) && Manufacturer.HeadStamp != Manufacturer.Name)
 				strString += String.Format(" ({0})", Manufacturer.HeadStamp);
 
 			if (m_fMatch)
 				strString += " Match";
+
+			strString = ToCrossUseString(strString);
 
 			return (strString);
 			}
@@ -477,6 +394,9 @@ namespace ReloadersWorkShop
 
 			if (!String.IsNullOrEmpty(Manufacturer.HeadStamp) && Manufacturer.HeadStamp != Manufacturer.Name)
 				strHeadStamp += String.Format("({0}", (Manufacturer != null) ? Manufacturer.HeadStamp : "");
+
+			if (!String.IsNullOrEmpty(m_strPartNumber))
+				strString += " " + m_strPartNumber;
 
 			if (m_fMatch)
 				strString += " Match";
@@ -504,43 +424,18 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// XMLHeader Property
+		// Validate()
 		//============================================================================*
 
-		public static string XMLHeader
+		public override bool Validate(bool fIdentityOK = false)
 			{
-			get
-				{
-				return ("Cases");
-				}
-			}
+			if (!base.Validate(fIdentityOK))
+				return (false);
 
-		//============================================================================*
-		// XMLLine Property
-		//============================================================================*
+			if (m_Caliber == null)
+				return (false);
 
-		public string XMLLine
-			{
-			get
-				{
-				string strLine = "";
-
-				return (strLine);
-				}
-			}
-
-		//============================================================================*
-		// XMLLineHeader Property
-		//============================================================================*
-
-		public static string XMLLineHeader
-			{
-			get
-				{
-				string strLine = "Firearm Type,Name,Headstamp,Handgun Type,Small Primer,Large Primer,Magnum Primer,Min Bullet Dia.,Max Bullet Dia.,Min Bullet Weight,Max Bullet Weight,Case Trim Length,Max Case Length,Max COAL,Max Neck Dia";
-
-				return (strLine);
-				}
+			return (true);
 			}
 		}
 	}

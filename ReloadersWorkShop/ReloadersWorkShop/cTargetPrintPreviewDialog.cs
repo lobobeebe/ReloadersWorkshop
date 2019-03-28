@@ -61,7 +61,7 @@ namespace ReloadersWorkShop
 				ClientSize = m_DataFiles.Preferences.TargetPrintSize;
 				}
 
-			Text = "Reloader's WorkShop Target Calculator - Print Preview";
+			Text = String.Format("{0} Target Calculator - Print Preview", Application.ProductName);
 
 			PrintDocument TargetPrintDocument = new PrintDocument();
 			TargetPrintDocument.PrintPage += OnPrintPage;
@@ -126,7 +126,7 @@ namespace ReloadersWorkShop
 			// Draw the page header
 			//----------------------------------------------------------------------------*
 
-			nY = cPrintObject.PrintReportTitle("Target Detail", PageRect, e.Graphics);
+			nY = cPrintObject.PrintReportTitle("Target Detail", e, PageRect);
 
 			//----------------------------------------------------------------------------*
 			// Event
@@ -252,7 +252,7 @@ namespace ReloadersWorkShop
 
 			strText = String.Format("{0:D0} Shot{1} at ", m_Target.NumShots, m_Target.NumShots > 1 ? "s" : "");
 
-			strText += String.Format("{0:D0} {1}", m_Target.Range, m_DataFiles.MetricLongString(cDataFiles.eDataType.Range));
+			strText += String.Format("{0:N0} {1}", m_Target.Range, m_DataFiles.MetricLongString(cDataFiles.eDataType.Range));
 
 			TextSize = e.Graphics.MeasureString(strText, HeaderFont);
 
@@ -267,7 +267,7 @@ namespace ReloadersWorkShop
 			strText = "Group Size: ";
 
 			string strGroupFormat = "{0:F";
-			strGroupFormat += String.Format("{0:G0}", cPreferences.GroupDecimals);
+			strGroupFormat += String.Format("{0:G0}", m_DataFiles.Preferences.GroupDecimals);
 			strGroupFormat += "}";
 
 			strText += String.Format(strGroupFormat, m_Target.GroupSize);

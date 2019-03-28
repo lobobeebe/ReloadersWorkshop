@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cAmmoTest.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -22,7 +22,7 @@ namespace ReloadersWorkShop
 	//============================================================================*
 
 	[Serializable]
-	public class cAmmoTest
+	public partial class cAmmoTest
 		{
 		//----------------------------------------------------------------------------*
 		// Private Data Members
@@ -40,7 +40,7 @@ namespace ReloadersWorkShop
 		private double m_dTwist = 0;
 		private int m_nNumRounds = 0;
 		private double m_dBestGroup = 0.0;
-		private int m_nBestGroupRange = 0;
+		private double m_dBestGroupRange = 0.0;
 		private string m_strNotes;
 
 		private int m_nMuzzleVelocity = 0;
@@ -61,6 +61,82 @@ namespace ReloadersWorkShop
 
 		public cAmmoTest(cAmmoTest AmmoTest)
 			{
+			Copy(AmmoTest);
+			}
+
+		//============================================================================*
+		// Append()
+		//============================================================================*
+
+		public int Append(cAmmoTest AmmoTest, bool fCountOnly = false)
+			{
+			int nUpdateCount = 0;
+
+			if (m_dBarrelLength == 0.0 && AmmoTest.m_dBarrelLength != 0.0)
+				{
+				if (!fCountOnly)
+					m_dBarrelLength =  AmmoTest.m_dBarrelLength;
+
+				nUpdateCount++;
+				}
+
+			if (m_dTwist == 0.0 && AmmoTest.m_dTwist != 0.0)
+				{
+				if (!fCountOnly)
+					m_dTwist = AmmoTest.m_dTwist;
+
+				nUpdateCount++;
+				}
+
+			if (m_nNumRounds == 0 && AmmoTest.m_nNumRounds != 0)
+				{
+				if (!fCountOnly)
+					m_nNumRounds = AmmoTest.m_nNumRounds;
+
+				nUpdateCount++;
+				}
+
+			if (m_nMuzzleVelocity == 0 && AmmoTest.m_nMuzzleVelocity != 0)
+				{
+				if (!fCountOnly)
+					m_nMuzzleVelocity = AmmoTest.m_nMuzzleVelocity;
+
+				nUpdateCount++;
+				}
+
+			if (m_dBestGroup == 0.0 && AmmoTest.m_dBestGroup != 0.0)
+				{
+				if (!fCountOnly)
+					m_dBestGroup = AmmoTest.m_dBestGroup;
+
+				nUpdateCount++;
+				}
+
+			if (m_dBestGroupRange == 0.0 && AmmoTest.m_dBestGroupRange != 0.0)
+				{
+				if (!fCountOnly)
+					m_dBestGroupRange = AmmoTest.m_dBestGroupRange;
+
+				nUpdateCount++;
+				}
+
+			if (String.IsNullOrEmpty(m_strNotes) && !String.IsNullOrEmpty(AmmoTest.m_strNotes))
+				{
+				if (!fCountOnly)
+					m_strNotes = AmmoTest.m_strNotes;
+
+				nUpdateCount++;
+				}
+
+			return (nUpdateCount);
+			}
+
+		//============================================================================*
+		// Copy()
+		//============================================================================*
+
+		public void Copy(cAmmoTest AmmoTest)
+			{
 			m_Ammo = AmmoTest.m_Ammo;
 			m_Firearm = AmmoTest.m_Firearm;
 
@@ -70,7 +146,7 @@ namespace ReloadersWorkShop
 			m_nNumRounds = AmmoTest.m_nNumRounds;
 			m_nMuzzleVelocity = AmmoTest.m_nMuzzleVelocity;
 			m_dBestGroup = AmmoTest.m_dBestGroup;
-			m_nBestGroupRange = AmmoTest.m_nBestGroupRange;
+			m_dBestGroupRange = AmmoTest.m_dBestGroupRange;
 			m_strNotes = AmmoTest.m_strNotes;
 
 			m_TestShotList = new cTestShotList(AmmoTest.TestShotList);
@@ -98,8 +174,14 @@ namespace ReloadersWorkShop
 
 		public double BarrelLength
 			{
-			get { return (m_dBarrelLength); }
-			set { m_dBarrelLength = value; }
+			get
+				{
+				return (m_dBarrelLength);
+				}
+			set
+				{
+				m_dBarrelLength = value;
+				}
 			}
 
 		//============================================================================*
@@ -108,18 +190,30 @@ namespace ReloadersWorkShop
 
 		public double BestGroup
 			{
-			get { return (m_dBestGroup); }
-			set { m_dBestGroup = value; }
+			get
+				{
+				return (m_dBestGroup);
+				}
+			set
+				{
+				m_dBestGroup = value;
+				}
 			}
 
 		//============================================================================*
 		// BestGroupRange Property
 		//============================================================================*
 
-		public int BestGroupRange
+		public double BestGroupRange
 			{
-			get { return (m_nBestGroupRange); }
-			set { m_nBestGroupRange = value; }
+			get
+				{
+				return (m_dBestGroupRange);
+				}
+			set
+				{
+				m_dBestGroupRange = value;
+				}
 			}
 
 		//============================================================================*
@@ -154,33 +248,77 @@ namespace ReloadersWorkShop
 				return (1);
 
 			//----------------------------------------------------------------------------*
+			// Date
+			//----------------------------------------------------------------------------*
+
+			int rc = m_TestDate.CompareTo(AmmoTest.m_TestDate);
+
+			//----------------------------------------------------------------------------*
 			// Firearm
-			//----------------------------------------------------------------------------*
-
-			int rc = 0;
-			
-			if (m_Firearm == null)
-				{
-				if (AmmoTest.Firearm != null)
-					return(-1);
-				else
-					return(0);
-				}
-			else
-				{
-				if (AmmoTest.Firearm == null)
-					return(1);
-				else
-					rc = m_Firearm.CompareTo(AmmoTest.m_Firearm);
-				}
-
-			//----------------------------------------------------------------------------*
-			// NumRounds
 			//----------------------------------------------------------------------------*
 
 			if (rc == 0)
 				{
-				rc = m_nNumRounds.CompareTo(AmmoTest.m_nNumRounds);
+				if (m_Firearm == null)
+					{
+					if (AmmoTest.m_Firearm != null)
+						rc = -1;
+					else
+						rc = 0;
+					}
+				else
+					{
+					if (AmmoTest.m_Firearm == null)
+						rc = 1;
+					else
+						rc = m_Firearm.CompareTo(AmmoTest.m_Firearm);
+					}
+
+				//----------------------------------------------------------------------------*
+				// NumRounds
+				//----------------------------------------------------------------------------*
+
+				if (rc == 0)
+					{
+					rc = m_nNumRounds.CompareTo(AmmoTest.m_nNumRounds);
+
+					//----------------------------------------------------------------------------*
+					// Detail Data
+					//----------------------------------------------------------------------------*
+
+					if (rc == 0)
+						{
+						rc = m_nMuzzleVelocity.CompareTo(AmmoTest.m_nMuzzleVelocity);
+
+						if (rc == 0)
+							{
+							rc = m_dBarrelLength.CompareTo(AmmoTest.m_dBarrelLength);
+
+							if (rc == 0)
+								{
+								rc = m_dTwist.CompareTo(AmmoTest.m_dTwist);
+
+								if (rc == 0)
+									{
+									rc = m_dBestGroup.CompareTo(AmmoTest.m_dBestGroup);
+
+									if (rc == 0)
+										{
+										rc = m_dBestGroupRange.CompareTo(AmmoTest.m_dBestGroupRange);
+
+										if (rc == 0)
+											{
+											if (m_strNotes == null)
+												m_strNotes = "";
+
+											rc = m_strNotes.CompareTo(AmmoTest.m_strNotes);
+											}
+										}
+									}
+								}
+							}
+						}
+					}
 				}
 
 			return (rc);
@@ -192,55 +330,14 @@ namespace ReloadersWorkShop
 
 		public cFirearm Firearm
 			{
-			get { return (m_Firearm); }
-			set { m_Firearm = value; }
-			}
-
-		//============================================================================*
-		// GetStatistics()
-		//============================================================================*
-
-		static public cTestStatistics GetStatistics(cTestShotList TestShotList)
-			{
-			cTestStatistics Statistics = new cTestStatistics();
-
-			if (TestShotList == null)
-				return (Statistics);
-
-			int nTotalVelocity = 0;
-
-			foreach (cTestShot TestShot in TestShotList)
+			get
 				{
-				if (TestShot.MuzzleVelocity > 0 && !TestShot.Misfire && !TestShot.Squib)
-					{
-					Statistics.NumShots++;
-					nTotalVelocity += TestShot.MuzzleVelocity;
-
-					if (Statistics.MinVelocity == 0 || TestShot.MuzzleVelocity < Statistics.MinVelocity)
-						Statistics.MinVelocity = TestShot.MuzzleVelocity;
-
-					if (Statistics.MaxVelocity == 0 || TestShot.MuzzleVelocity > Statistics.MaxVelocity)
-						Statistics.MaxVelocity = TestShot.MuzzleVelocity;
-					}
+				return (m_Firearm);
 				}
-
-
-			if (Statistics.NumShots > 0 && nTotalVelocity > 0)
+			set
 				{
-				Statistics.AverageVelocity = (double)nTotalVelocity / (double)Statistics.NumShots;
-
-				foreach (cTestShot TestShot in TestShotList)
-					{
-					if (TestShot.MuzzleVelocity > 0 && !TestShot.Misfire && !TestShot.Squib)
-						Statistics.Variance += (((double)TestShot.MuzzleVelocity - Statistics.AverageVelocity) * ((double)TestShot.MuzzleVelocity - Statistics.AverageVelocity));
-					}
-
-				Statistics.Variance /= (double)Statistics.NumShots;
-
-				Statistics.StdDev = Math.Sqrt(Statistics.Variance);
+				m_Firearm = value;
 				}
-
-			return (Statistics);
 			}
 
 		//============================================================================*
@@ -264,7 +361,10 @@ namespace ReloadersWorkShop
 				return (m_nMuzzleVelocity);
 				}
 
-			set { m_nMuzzleVelocity = value; }
+			set
+				{
+				m_nMuzzleVelocity = value;
+				}
 			}
 
 		//============================================================================*
@@ -273,8 +373,14 @@ namespace ReloadersWorkShop
 
 		public string Notes
 			{
-			get { return (m_strNotes); }
-			set { m_strNotes = value; }
+			get
+				{
+				return (m_strNotes);
+				}
+			set
+				{
+				m_strNotes = value;
+				}
 			}
 
 		//============================================================================*
@@ -283,8 +389,14 @@ namespace ReloadersWorkShop
 
 		public int NumRounds
 			{
-			get { return (m_nNumRounds); }
-			set { m_nNumRounds = value; }
+			get
+				{
+				return (m_nNumRounds);
+				}
+			set
+				{
+				m_nNumRounds = value;
+				}
 			}
 
 		//============================================================================*
@@ -308,6 +420,47 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public bool ResolveIdentities(cDataFiles Datafiles)
+			{
+			bool fChanged = false;
+
+			if (m_Ammo != null && m_Ammo.Identity)
+				{
+				foreach (cAmmo Ammo in Datafiles.AmmoList)
+					{
+					if (m_Ammo.CompareTo(Ammo) == 0)
+						{
+						m_Ammo = Ammo;
+
+						fChanged = true;
+
+						break;
+						}
+					}
+				}
+
+			if (m_Firearm != null && m_Firearm.Identity)
+				{
+				foreach (cFirearm Firearm in Datafiles.FirearmList)
+					{
+					if (m_Firearm.CompareTo(Firearm) == 0)
+						{
+						m_Firearm = Firearm;
+
+						fChanged = true;
+
+						break;
+						}
+					}
+				}
+
+			return (fChanged);
+			}
+
+		//============================================================================*
 		// Synch() - AmmoTest
 		//============================================================================*
 
@@ -323,8 +476,14 @@ namespace ReloadersWorkShop
 
 		public DateTime TestDate
 			{
-			get { return (m_TestDate); }
-			set { m_TestDate = value; }
+			get
+				{
+				return (m_TestDate);
+				}
+			set
+				{
+				m_TestDate = value;
+				}
 			}
 
 		//============================================================================*
@@ -333,8 +492,14 @@ namespace ReloadersWorkShop
 
 		public cTestShotList TestShotList
 			{
-			get { return (m_TestShotList); }
-			set { m_TestShotList = value; }
+			get
+				{
+				return (m_TestShotList);
+				}
+			set
+				{
+				m_TestShotList = value;
+				}
 			}
 
 		//============================================================================*
@@ -354,8 +519,26 @@ namespace ReloadersWorkShop
 
 		public double Twist
 			{
-			get { return (m_dTwist); }
-			set { m_dTwist = value; }
+			get
+				{
+				return (m_dTwist);
+				}
+			set
+				{
+				m_dTwist = value;
+				}
+			}
+
+		//============================================================================*
+		// Validate()
+		//============================================================================*
+
+		public bool Validate()
+			{
+			if (m_Ammo == null)
+				return (false);
+
+			return (true);
 			}
 		}
 	}

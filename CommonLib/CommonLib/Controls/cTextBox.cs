@@ -41,6 +41,8 @@ namespace CommonLib.Controls
 
 		private ToolTip m_ToolTip = null;
 
+		private string m_strValidChars = "";
+
 		//============================================================================*
 		// cTextBox() - Constructor
 		//============================================================================*
@@ -70,6 +72,40 @@ namespace CommonLib.Controls
 			base.OnGotFocus(e);
 
 			Select(0, Text.Length);
+			}
+
+		//============================================================================*
+		// OnKeyPress()
+		//============================================================================*
+
+		protected override void OnKeyPress(KeyPressEventArgs e)
+			{
+			//----------------------------------------------------------------------------*
+			// See if it's a paste
+			//----------------------------------------------------------------------------*
+
+			if (e.KeyChar == 22)
+				{
+				base.OnKeyPress(e);
+
+				return;
+				}
+
+			//----------------------------------------------------------------------------*
+			// Make sure it's a valid character
+			//----------------------------------------------------------------------------*
+
+			if (e.KeyChar != 8)
+				{
+				if (!String.IsNullOrEmpty(m_strValidChars) && m_strValidChars.IndexOf(e.KeyChar) < 0)
+					{
+					Console.Beep(1000, 100);
+
+					e.Handled = true;
+					}
+				}
+
+			base.OnKeyPress(e);
 			}
 
 		//============================================================================*
@@ -120,8 +156,14 @@ namespace CommonLib.Controls
 
 		protected bool Populating
 			{
-			get { return (m_fPopulating); }
-			set { m_fPopulating = value; }
+			get
+				{
+				return (m_fPopulating);
+				}
+			set
+				{
+				m_fPopulating = value;
+				}
 			}
 
 		//============================================================================*
@@ -130,8 +172,15 @@ namespace CommonLib.Controls
 
 		public bool Required
 			{
-			get { return (m_fRequired); }
-			set { m_fRequired = value; }
+			get
+				{
+				return (m_fRequired);
+				}
+			set
+				{
+				m_fRequired = value;
+				Verify();
+				}
 			}
 
 		//============================================================================*
@@ -140,7 +189,10 @@ namespace CommonLib.Controls
 
 		public string ToolTip
 			{
-			get { return (m_strToolTip); }
+			get
+				{
+				return (m_strToolTip);
+				}
 
 			set
 				{
@@ -162,12 +214,32 @@ namespace CommonLib.Controls
 			}
 
 		//============================================================================*
+		// ValidChars Property
+		//============================================================================*
+
+		public string ValidChars
+			{
+			get
+				{
+				return (m_strValidChars);
+				}
+
+			set
+				{
+				m_strValidChars = value;
+				}
+			}
+
+		//============================================================================*
 		// Value Property
 		//============================================================================*
 
 		public string Value
 			{
-			get { return (m_strValue); }
+			get
+				{
+				return (m_strValue);
+				}
 
 			set
 				{
@@ -185,8 +257,14 @@ namespace CommonLib.Controls
 
 		public bool ValueOK
 			{
-			get { return (m_fValueOK); }
-			protected set { m_fValueOK = value; }
+			get
+				{
+				return (m_fValueOK);
+				}
+			protected set
+				{
+				m_fValueOK = value;
+				}
 			}
 
 		//============================================================================*
@@ -199,14 +277,31 @@ namespace CommonLib.Controls
 
 			m_fValueOK = true;
 
-			if (Enabled && m_fRequired && m_strValue.Length == 0)
+			if (Enabled && m_fRequired && String.IsNullOrEmpty(m_strValue))
 				{
-				BackColor = Color.LightPink;
-
 				m_fValueOK = false;
 
 				strToolTip += "\n\nThis field must not be left blank.";
 				}
+			else
+				{
+				if (!String.IsNullOrEmpty(m_strValidChars))
+					{
+					foreach (char chChar in m_strValue)
+						{
+						if (m_strValidChars.IndexOf(chChar) < 0)
+							{
+							m_fValueOK = false;
+
+							strToolTip += "\n\nThis field contains invalid characters. Valid characters are ";
+							strToolTip += m_strValidChars;
+							}
+						}
+					}
+				}
+
+			if (!m_fValueOK)
+				BackColor = Color.LightPink;
 			else
 				BackColor = SystemColors.Window;
 

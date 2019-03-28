@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cCopyChargeListForm.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -10,11 +10,7 @@
 //============================================================================*
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 using ReloadersWorkShop.Preferences;

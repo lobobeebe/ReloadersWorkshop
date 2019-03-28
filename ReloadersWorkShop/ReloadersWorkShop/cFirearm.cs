@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cFirearm.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -10,7 +10,6 @@
 //============================================================================*
 
 using System;
-using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -23,7 +22,7 @@ namespace ReloadersWorkShop
 	//============================================================================*
 
 	[Serializable]
-	public class cFirearm : IComparable
+	public partial class cFirearm : cGear, IComparable
 		{
 		//============================================================================*
 		// Public Enumerations
@@ -44,6 +43,14 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Private Constant Data Members
+		//============================================================================*
+
+		private const string cm_strHandgun = "Handgun";
+		private const string cm_strRifle = "Rifle";
+		private const string cm_strShotgun = "Shotgun";
+
+		//============================================================================*
 		// Private Data Members
 		//============================================================================*
 
@@ -52,15 +59,12 @@ namespace ReloadersWorkShop
 		//----------------------------------------------------------------------------*
 
 		private eFireArmType m_eFirearmType = eFireArmType.Handgun;
-		private cManufacturer m_Manufacturer = null;
-		private string m_strModel = "";
-		private string m_strSerialNumber = "";
 
 		//----------------------------------------------------------------------------*
 		// Specs
 		//----------------------------------------------------------------------------*
 
-		private int m_nZeroRange = 25;
+		private double m_dZeroRange = 25.0;
 		private double m_dBarrelLength = 0.0;
 		private double m_dTwist = 1.0;
 		private double m_dSightHeight = 0.8;
@@ -72,6 +76,9 @@ namespace ReloadersWorkShop
 		private double m_dHeadSpace = 0.0;
 		private double m_dNeck = 0.0;
 
+		private double m_dTransferFees = 0.0;
+		private double m_dOtherFees = 0.0;
+
 		private cFirearmCaliberList m_FirearmCaliberList = new cFirearmCaliberList();
 
 		private cFirearmBulletList m_FirearmBulletList = new cFirearmBulletList();
@@ -82,10 +89,6 @@ namespace ReloadersWorkShop
 
 		private string m_strImageFile = "";
 
-		private string m_strSource = "";
-		private DateTime m_PurchaseDate;
-		private double m_dPrice;
-
 		private string m_strReceiverFinish = "";
 		private String m_strBarrelFinish = "";
 
@@ -93,23 +96,8 @@ namespace ReloadersWorkShop
 		private string m_strAction = "";
 		private string m_strHammer = "";
 
-		private cManufacturer m_ScopeManufacturer = null;
-		private string m_strScopeModel = "";
-		private string m_strScopePower = "";
-		private int m_nScopeObjective = 0;
-
-		private cManufacturer m_StockManufacturer = null;
-		private string m_strStockModel = "";
-		private string m_strStockFinish = "";
-
 		private string m_strMagazine = "";
 		private int m_nCapacity = 1;
-
-		private cManufacturer m_TriggerManufacturer = null;
-		private string m_strTriggerModel = "";
-		private double m_dTriggerPull = 0.0;
-
-		private string m_strNotes = "";
 
 		//----------------------------------------------------------------------------*
 		// Miscellaneous
@@ -117,14 +105,12 @@ namespace ReloadersWorkShop
 
 		private bool m_fChecked = false;
 
-		private bool m_fPrinted = false;
-
-
 		//============================================================================*
 		// cFirearm() - Constructor
 		//============================================================================*
 
-		public cFirearm()
+		public cFirearm(bool fIdentity = false)
+			: base(cGear.eGearTypes.Firearm, fIdentity)
 			{
 			}
 
@@ -133,82 +119,9 @@ namespace ReloadersWorkShop
 		//============================================================================*
 
 		public cFirearm(cFirearm Firearm)
+			: base(Firearm)
 			{
 			Copy(Firearm);
-			}
-
-		//============================================================================*
-		// Copy()
-		//============================================================================*
-
-		public void Copy(cFirearm Firearm)
-			{
-			//----------------------------------------------------------------------------*
-			// General
-			//----------------------------------------------------------------------------*
-
-			m_eFirearmType = Firearm.m_eFirearmType;
-			m_Manufacturer = Firearm.m_Manufacturer;
-			m_strModel = Firearm.m_strModel;
-			m_strSerialNumber = Firearm.m_strSerialNumber;
-
-			//----------------------------------------------------------------------------*
-			// Specs
-			//----------------------------------------------------------------------------*
-
-			m_dBarrelLength = Firearm.m_dBarrelLength;
-
-			m_fScoped = Firearm.m_fScoped;
-			m_dTwist = Firearm.m_dTwist;
-			m_eTurretType = Firearm.m_eTurretType;
-
-			m_dSightHeight = Firearm.m_dSightHeight;
-			m_dScopeClick = Firearm.m_dScopeClick;
-
-			m_nZeroRange = Firearm.m_nZeroRange;
-
-			m_dHeadSpace = Firearm.m_dHeadSpace;
-			m_dNeck = Firearm.m_dNeck;
-
-			m_FirearmCaliberList = new cFirearmCaliberList(Firearm.m_FirearmCaliberList);
-
-			m_FirearmBulletList = new cFirearmBulletList(Firearm.m_FirearmBulletList);
-
-			//----------------------------------------------------------------------------*
-			// Details
-			//----------------------------------------------------------------------------*
-
-			m_strImageFile = Firearm.m_strImageFile;
-
-			m_strSource = Firearm.m_strSource;
-
-			m_PurchaseDate = Firearm.m_PurchaseDate;
-			m_dPrice = Firearm.m_dPrice;
-
-			m_strReceiverFinish = Firearm.m_strReceiverFinish;
-			m_strBarrelFinish = Firearm.m_strBarrelFinish;
-
-			m_strType = Firearm.m_strType;
-			m_strAction = Firearm.m_strAction;
-			m_strHammer = Firearm.m_strHammer;
-
-			m_ScopeManufacturer = Firearm.m_ScopeManufacturer;
-			m_strScopeModel = Firearm.m_strScopeModel;
-			m_strScopePower = Firearm.m_strScopePower;
-			m_nScopeObjective = Firearm.m_nScopeObjective;
-
-			m_StockManufacturer = Firearm.m_StockManufacturer;
-			m_strStockModel = Firearm.m_strStockModel;
-			m_strStockFinish = Firearm.m_strStockFinish;
-
-			m_strMagazine = Firearm.m_strMagazine;
-			m_nCapacity = Firearm.m_nCapacity;
-
-			m_TriggerManufacturer = Firearm.m_TriggerManufacturer;
-			m_strTriggerModel = Firearm.m_strTriggerModel;
-			m_dTriggerPull = Firearm.m_dTriggerPull;
-
-			m_strNotes = Firearm.m_strNotes;
 			}
 
 		//============================================================================*
@@ -265,6 +178,165 @@ namespace ReloadersWorkShop
 			return (false);
 			}
 
+		//============================================================================*
+		// Append()
+		//============================================================================*
+
+		public int Append(cFirearm Firearm, bool fCountOnly = false)
+			{
+			int nUpdateCount = base.Append(Firearm);
+
+			if (m_dBarrelLength == 0.0 && Firearm.m_dBarrelLength != 0.0)
+				{
+				if (!fCountOnly)
+					m_dBarrelLength = Firearm.m_dBarrelLength;
+
+				nUpdateCount++;
+				}
+
+			if (!m_fScoped && Firearm.m_fScoped)
+				{
+				if (!fCountOnly)
+					m_fScoped = Firearm.m_fScoped;
+
+				nUpdateCount++;
+				}
+
+			if (m_dTwist == 0.0 && Firearm.m_dTwist != 0.0)
+				{
+				if (!fCountOnly)
+					m_dTwist = Firearm.m_dTwist;
+
+				nUpdateCount++;
+				}
+
+			if (m_dSightHeight == 0.0 && Firearm.m_dSightHeight != 0.0)
+				{
+				if (!fCountOnly)
+					m_dSightHeight = Firearm.m_dSightHeight;
+
+				nUpdateCount++;
+				}
+
+			if (m_dScopeClick == 0.0 && Firearm.m_dScopeClick != 0.0)
+				{
+				if (!fCountOnly)
+					m_dScopeClick = Firearm.m_dScopeClick;
+
+				nUpdateCount++;
+				}
+
+			if (m_dZeroRange == 0.0 && Firearm.m_dZeroRange != 0.0)
+				{
+				if (!fCountOnly)
+					m_dZeroRange = Firearm.m_dZeroRange;
+
+				nUpdateCount++;
+				}
+
+			if (m_dHeadSpace == 0.0 && Firearm.m_dHeadSpace != 0.0)
+				{
+				if (!fCountOnly)
+					m_dHeadSpace = Firearm.m_dHeadSpace;
+
+				nUpdateCount++;
+				}
+
+			if (m_dNeck == 0.0 && Firearm.m_dNeck != 0.0)
+				{
+				if (!fCountOnly)
+					m_dNeck = Firearm.m_dNeck;
+
+				nUpdateCount++;
+				}
+
+			//----------------------------------------------------------------------------*
+			// Details
+			//----------------------------------------------------------------------------*
+
+			if (String.IsNullOrEmpty(m_strImageFile) && !String.IsNullOrEmpty(Firearm.m_strImageFile))
+				{
+				if (!fCountOnly)
+					m_strImageFile = Firearm.m_strImageFile;
+
+				nUpdateCount++;
+				}
+
+			if (m_dTransferFees == 0.0 && Firearm.m_dTransferFees != 0.0)
+				{
+				if (!fCountOnly)
+					m_dTransferFees = Firearm.m_dTransferFees;
+
+				nUpdateCount++;
+				}
+
+			if (m_dOtherFees == 0.0 && Firearm.m_dOtherFees != 0.0)
+				{
+				if (!fCountOnly)
+					m_dOtherFees = Firearm.m_dOtherFees;
+
+				nUpdateCount++;
+				}
+
+			if (String.IsNullOrEmpty(m_strReceiverFinish) && !String.IsNullOrEmpty(Firearm.m_strReceiverFinish))
+				{
+				if (!fCountOnly)
+					m_strReceiverFinish = Firearm.m_strReceiverFinish;
+
+				nUpdateCount++;
+				}
+
+			if (String.IsNullOrEmpty(m_strBarrelFinish) && !String.IsNullOrEmpty(Firearm.m_strBarrelFinish))
+				{
+				if (!fCountOnly)
+					m_strBarrelFinish = Firearm.m_strBarrelFinish;
+
+				nUpdateCount++;
+				}
+
+			if (String.IsNullOrEmpty(m_strType) && !String.IsNullOrEmpty(Firearm.m_strType))
+				{
+				if (!fCountOnly)
+					m_strType = Firearm.m_strType;
+
+				nUpdateCount++;
+				}
+
+			if (String.IsNullOrEmpty(m_strAction) && !String.IsNullOrEmpty(Firearm.m_strAction))
+				{
+				if (!fCountOnly)
+					m_strAction = Firearm.m_strAction;
+
+				nUpdateCount++;
+				}
+
+			if (String.IsNullOrEmpty(m_strHammer) && !String.IsNullOrEmpty(Firearm.m_strHammer))
+				{
+				if (!fCountOnly)
+					m_strHammer = Firearm.m_strHammer;
+
+				nUpdateCount++;
+				}
+
+			if (String.IsNullOrEmpty(m_strMagazine) && !String.IsNullOrEmpty(Firearm.m_strMagazine))
+				{
+				if (!fCountOnly)
+					m_strMagazine = Firearm.m_strMagazine;
+
+				nUpdateCount++;
+				}
+
+			if (m_nCapacity == 0 && Firearm.m_nCapacity != 0)
+				{
+				if (!fCountOnly)
+					m_nCapacity = Firearm.m_nCapacity;
+
+				nUpdateCount++;
+				}
+
+			return (nUpdateCount);
+			}
+	
 		//============================================================================*
 		// BarrelFinish Property
 		//============================================================================*
@@ -390,343 +462,79 @@ namespace ReloadersWorkShop
 		// CompareTo()
 		//============================================================================*
 
-		public int CompareTo(Object obj)
+		public override int CompareTo(Object obj)
 			{
 			if (obj == null)
 				return (1);
 
 			cFirearm Firearm = (cFirearm) obj;
 
+			int rc = base.CompareTo(Firearm);
+
 			//----------------------------------------------------------------------------*
 			// Firearm Type
 			//----------------------------------------------------------------------------*
 
-			int rc = m_eFirearmType.CompareTo(Firearm.m_eFirearmType);
-
-			//----------------------------------------------------------------------------*
-			// Manufacturer
-			//----------------------------------------------------------------------------*
-
 			if (rc == 0)
-				{
-				rc = m_Manufacturer.CompareTo(Firearm.m_Manufacturer);
-
-				//----------------------------------------------------------------------------*
-				// Model
-				//----------------------------------------------------------------------------*
-
-				if (rc == 0)
-					{
-					rc = m_strModel.ToUpper().CompareTo(Firearm.m_strModel.ToUpper());
-
-					//----------------------------------------------------------------------------*
-					// Serial Number
-					//----------------------------------------------------------------------------*
-
-					if (rc == 0)
-						{
-						if (m_strSerialNumber != null)
-							rc = m_strSerialNumber.CompareTo(Firearm.m_strSerialNumber);
-						}
-					}
-				}
+				rc = m_eFirearmType.CompareTo(Firearm.m_eFirearmType);
 
 			return (rc);
 			}
 
 		//============================================================================*
-		// CSVHeader Property
+		// Copy()
 		//============================================================================*
 
-		public static string CSVHeader
+		public void Copy(cFirearm Firearm)
 			{
-			get
-				{
-				return ("Firearms");
-				}
-			}
-
-		//============================================================================*
-		// CSVLine Property
-		//============================================================================*
-
-		public string CSVLine
-			{
-			get
-				{
-				string strLine = "";
-
-				//----------------------------------------------------------------------------*
-				// General
-				//----------------------------------------------------------------------------*
-
-				strLine += m_Manufacturer.Name;
-				strLine += ",";
-				strLine += m_strModel;
-				strLine += ",";
-				strLine += m_strSerialNumber;
-				strLine += ",";
-				strLine += cFirearm.FirearmTypeString(m_eFirearmType);
-				strLine += ",";
-
-				strLine += m_dBarrelLength;
-				strLine += ",";
-				strLine += m_dTwist;
-				strLine += ",";
-				strLine += m_dSightHeight;
-
-				strLine += m_fScoped ? ",Yes," : ",-,";
-				strLine += m_dScopeClick;
-				strLine += ",";
-				strLine += m_eTurretType == eTurretType.MOA ? "MOA," : "Mils,";
-
-				strLine += m_nZeroRange;
-				strLine += ",";
-				strLine += m_dHeadSpace;
-				strLine += ",";
-				strLine += m_dNeck;
-				strLine += ",";
-
-				strLine += m_strSource;
-				strLine += ",";
-				strLine += m_PurchaseDate;
-				strLine += ",";
-				strLine += m_dPrice;
-				strLine += ",";
-
-				strLine += m_strReceiverFinish;
-				strLine += ",";
-				strLine += m_strBarrelFinish;
-				strLine += ",";
+			base.Copy(Firearm);
 
-				strLine += m_strType;
-				strLine += ",";
-				strLine += m_strAction;
-				strLine += ",";
-				strLine += m_strHammer;
-				strLine += ",";
-				strLine += m_strMagazine;
-				strLine += ",";
-				strLine += m_nCapacity;
+			//----------------------------------------------------------------------------*
+			// General
+			//----------------------------------------------------------------------------*
 
-				strLine += m_strNotes;
+			m_eFirearmType = Firearm.m_eFirearmType;
 
-				return (strLine);
-				}
-			}
+			//----------------------------------------------------------------------------*
+			// Specs
+			//----------------------------------------------------------------------------*
 
-		//============================================================================*
-		// CSVLineHeader Property
-		//============================================================================*
+			m_dBarrelLength = Firearm.m_dBarrelLength;
 
-		public static string CSVLineHeader
-			{
-			get
-				{
-				return("Manufacturer,Model,Serial Number,Firearm Type,Barrel Length,Twist,Sight Height,Scoped,Scope Click, Turret Type,Zero Range,HeadSpace,Neck,Source,Purchase Date,Price,Receiver Finish,Barrel Finish,Type,Action,Hammer,Magazine,Capacity,Notes");
-				}
-			}
+			m_fScoped = Firearm.m_fScoped;
+			m_dTwist = Firearm.m_dTwist;
+			m_eTurretType = Firearm.m_eTurretType;
 
-		//============================================================================*
-		// Export() - XML Document
-		//============================================================================*
+			m_dSightHeight = Firearm.m_dSightHeight;
+			m_dScopeClick = Firearm.m_dScopeClick;
 
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
-			{
-			XmlElement XMLThisElement = XMLDocument.CreateElement("Caliber");
-			XMLParentElement.AppendChild(XMLThisElement);
+			m_dZeroRange = Firearm.m_dZeroRange;
 
-			// Manufacturer
+			m_dHeadSpace = Firearm.m_dHeadSpace;
+			m_dNeck = Firearm.m_dNeck;
 
-			XmlElement XMLElement = XMLDocument.CreateElement("Manufacturer");
-			XmlText XMLTextElement = XMLDocument.CreateTextNode(m_Manufacturer.Name);
-			XMLElement.AppendChild(XMLTextElement);
+			m_FirearmCaliberList = new cFirearmCaliberList(Firearm.m_FirearmCaliberList);
 
-			XMLThisElement.AppendChild(XMLElement);
+			m_FirearmBulletList = new cFirearmBulletList(Firearm.m_FirearmBulletList);
 
-			// Model
+			//----------------------------------------------------------------------------*
+			// Details
+			//----------------------------------------------------------------------------*
 
-			XMLElement = XMLDocument.CreateElement("Model");
-			XMLTextElement = XMLDocument.CreateTextNode(m_strModel);
-			XMLElement.AppendChild(XMLTextElement);
+			m_strImageFile = Firearm.m_strImageFile;
 
-			XMLThisElement.AppendChild(XMLElement);
+			m_dTransferFees = Firearm.m_dTransferFees;
+			m_dOtherFees = Firearm.m_dOtherFees;
 
-			// Serial Number
+			m_strReceiverFinish = Firearm.m_strReceiverFinish;
+			m_strBarrelFinish = Firearm.m_strBarrelFinish;
 
-			XMLElement = XMLDocument.CreateElement("SerialNumber");
-			XMLTextElement = XMLDocument.CreateTextNode(m_strSerialNumber);
-			XMLElement.AppendChild(XMLTextElement);
+			m_strType = Firearm.m_strType;
+			m_strAction = Firearm.m_strAction;
+			m_strHammer = Firearm.m_strHammer;
 
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Firearm Type
-
-			XMLElement = XMLDocument.CreateElement("FirearmType");
-			XMLTextElement = XMLDocument.CreateTextNode(cFirearm.FirearmTypeString(m_eFirearmType));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Barrel Length
-
-			XMLElement = XMLDocument.CreateElement("BarrelLength");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dBarrelLength));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Twist
-
-			XMLElement = XMLDocument.CreateElement("Twist");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dTwist));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Sight Height
-
-			XMLElement = XMLDocument.CreateElement("SightHeight");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dSightHeight));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Scoped?
-
-			XMLElement = XMLDocument.CreateElement("Scoped?");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fScoped ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Scope Click
-
-			XMLElement = XMLDocument.CreateElement("ScopeClick");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dScopeClick));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Turret Type
-
-			XMLElement = XMLDocument.CreateElement("TurretType");
-			XMLTextElement = XMLDocument.CreateTextNode(m_eTurretType == eTurretType.MOA ? "MOA," : "Mils,");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Zero Range
-
-			XMLElement = XMLDocument.CreateElement("ZeroRange");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nZeroRange));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Headspace
-
-			XMLElement = XMLDocument.CreateElement("Headspace");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dHeadSpace));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Neck Diameter
-
-			XMLElement = XMLDocument.CreateElement("Neck Size");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dNeck));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Source
-
-			XMLElement = XMLDocument.CreateElement("Source");
-			XMLTextElement = XMLDocument.CreateTextNode(m_strSource);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Date Purchased
-
-			XMLElement = XMLDocument.CreateElement("DatePurchased");
-			XMLTextElement = XMLDocument.CreateTextNode(m_PurchaseDate.ToShortDateString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Price
-
-			XMLElement = XMLDocument.CreateElement("Price");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dPrice));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Receiver Finish
-
-			XMLElement = XMLDocument.CreateElement("ReceiverFinish");
-			XMLTextElement = XMLDocument.CreateTextNode(m_strReceiverFinish);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Barrel Finish
-
-			XMLElement = XMLDocument.CreateElement("BarrelFinish");
-			XMLTextElement = XMLDocument.CreateTextNode(m_strBarrelFinish);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Type
-
-			XMLElement = XMLDocument.CreateElement("Type");
-			XMLTextElement = XMLDocument.CreateTextNode(m_strType);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Action
-
-			XMLElement = XMLDocument.CreateElement("Action");
-			XMLTextElement = XMLDocument.CreateTextNode(m_strAction);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Hammer
-
-			XMLElement = XMLDocument.CreateElement("Hammer");
-			XMLTextElement = XMLDocument.CreateTextNode(m_strHammer);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Magazine
-
-			XMLElement = XMLDocument.CreateElement("Magazine");
-			XMLTextElement = XMLDocument.CreateTextNode(m_strMagazine);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Capacity
-
-			XMLElement = XMLDocument.CreateElement("Capacity");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nCapacity));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Notes
-
-			XMLElement = XMLDocument.CreateElement("Notes");
-			XMLTextElement = XMLDocument.CreateTextNode(m_strNotes);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
+			m_strMagazine = Firearm.m_strMagazine;
+			m_nCapacity = Firearm.m_nCapacity;
 			}
 
 		//============================================================================*
@@ -758,7 +566,30 @@ namespace ReloadersWorkShop
 			set
 				{
 				m_eFirearmType = value;
+
+				SetDefaultDescription();
 				}
+			}
+
+		//============================================================================*
+		// FirearmTypeFromString()
+		//============================================================================*
+
+		public static cFirearm.eFireArmType FirearmTypeFromString(string strFirearmType)
+			{
+			switch (strFirearmType)
+				{
+				case cm_strHandgun:
+					return (cFirearm.eFireArmType.Handgun);
+
+				case cm_strRifle:
+					return (cFirearm.eFireArmType.Rifle);
+
+				case cm_strShotgun:
+					return (cFirearm.eFireArmType.Shotgun);
+				}
+
+			return (cFirearm.eFireArmType.None);
 			}
 
 		//============================================================================*
@@ -770,13 +601,13 @@ namespace ReloadersWorkShop
 			switch (eFirearmType)
 				{
 				case cFirearm.eFireArmType.Handgun:
-					return ("Handgun");
+					return (cm_strHandgun);
 
 				case cFirearm.eFireArmType.Rifle:
-					return ("Rifle");
+					return (cm_strRifle);
 
 				case cFirearm.eFireArmType.Shotgun:
-					return ("Shotgun");
+					return (cm_strShotgun);
 				}
 
 			return ("Unknown");
@@ -879,10 +710,10 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				if (Manufacturer == null || String.IsNullOrEmpty(m_strModel) || String.IsNullOrEmpty(m_strSerialNumber))
+				if (Manufacturer == null || String.IsNullOrEmpty(PartNumber) || String.IsNullOrEmpty(SerialNumber))
 					return ("");
 
-				string strFileName = String.Format("{0} {1} ({2})", Manufacturer.ToString(), m_strModel, m_strSerialNumber);
+				string strFileName = String.Format("{0} {1} ({2})", Manufacturer.ToString(), PartNumber, SerialNumber);
 
 				strFileName = strFileName.Replace('/', '-');
 				strFileName = strFileName.Replace('\\', '-');
@@ -932,59 +763,6 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// Manufacturer Property
-		//============================================================================*
-
-		public cManufacturer Manufacturer
-			{
-			get
-				{
-				return (m_Manufacturer);
-				}
-			set
-				{
-				m_Manufacturer = value;
-				}
-			}
-
-		//============================================================================*
-		// Model Property
-		//============================================================================*
-
-		public string Model
-			{
-			get
-				{
-				return (m_strModel);
-				}
-			set
-				{
-				m_strModel = value;
-				}
-			}
-
-		//============================================================================*
-		// Name()
-		//============================================================================*
-
-		public static string Name(eFireArmType FirearmType)
-			{
-			switch (FirearmType)
-				{
-				case eFireArmType.Handgun:
-					return ("Handgun");
-
-				case eFireArmType.Rifle:
-					return ("Rifle");
-
-				case eFireArmType.Shotgun:
-					return ("Shotgun");
-				}
-
-			return ("Unknown");
-			}
-
-		//============================================================================*
 		// Neck Property
 		//============================================================================*
 
@@ -1003,36 +781,18 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// Notes Property
+		// OtherFees Property
 		//============================================================================*
 
-		public string Notes
+		public double OtherFees
 			{
 			get
 				{
-				return (m_strNotes);
+				return (m_dOtherFees);
 				}
 			set
 				{
-				m_strNotes = value;
-				}
-			}
-
-		//============================================================================*
-		// Price Property
-		//============================================================================*
-
-		public double Price
-			{
-			get
-				{
-				return (m_dPrice);
-				}
-
-			set
-				{
-				if (value >= 0.00)
-					m_dPrice = value;
+				m_dOtherFees = value;
 				}
 			}
 
@@ -1073,39 +833,6 @@ namespace ReloadersWorkShop
 					else
 						FirearmCaliber.Primary = false;
 					}
-				}
-			}
-
-		//============================================================================*
-		// Printed Property
-		//============================================================================*
-
-		public bool Printed
-			{
-			get
-				{
-				return (m_fPrinted);
-				}
-			set
-				{
-				m_fPrinted = value;
-				}
-			}
-
-		//============================================================================*
-		// PurchaseDate Property
-		//============================================================================*
-
-		public DateTime PurchaseDate
-			{
-			get
-				{
-				return (m_PurchaseDate);
-				}
-
-			set
-				{
-				m_PurchaseDate = value;
 				}
 			}
 
@@ -1189,6 +916,16 @@ namespace ReloadersWorkShop
 				}
 			}
 
+
+		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public override bool ResolveIdentities(cDataFiles Datafiles)
+			{
+			return (false);
+			}
+
 		//============================================================================*
 		// ScopeClick Property
 		//============================================================================*
@@ -1202,70 +939,6 @@ namespace ReloadersWorkShop
 			set
 				{
 				m_dScopeClick = value;
-				}
-			}
-
-		//============================================================================*
-		// ScopeManufacturer Property
-		//============================================================================*
-
-		public cManufacturer ScopeManufacturer
-			{
-			get
-				{
-				return (m_ScopeManufacturer);
-				}
-			set
-				{
-				m_ScopeManufacturer = value;
-				}
-			}
-
-		//============================================================================*
-		// ScopeModel Property
-		//============================================================================*
-
-		public string ScopeModel
-			{
-			get
-				{
-				return (m_strScopeModel);
-				}
-			set
-				{
-				m_strScopeModel = value;
-				}
-			}
-
-		//============================================================================*
-		// ScopeObjective Property
-		//============================================================================*
-
-		public int ScopeObjective
-			{
-			get
-				{
-				return (m_nScopeObjective);
-				}
-			set
-				{
-				m_nScopeObjective = value;
-				}
-			}
-
-		//============================================================================*
-		// ScopePower Property
-		//============================================================================*
-
-		public string ScopePower
-			{
-			get
-				{
-				return (m_strScopePower);
-				}
-			set
-				{
-				m_strScopePower = value;
 				}
 			}
 
@@ -1286,18 +959,41 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// SerialNumber Property
+		// SetDefaultDescription()
 		//============================================================================*
 
-		public string SerialNumber
+		public override void SetDefaultDescription()
 			{
-			get
+			if (!String.IsNullOrEmpty(Description) &&
+				Description != "Handgun" &&
+				Description != "Pistol" &&
+				Description != "Revolver" &&
+				Description != "Rifle" &&
+				Description != "Shotgun" &&
+				Description != "Other Firearm Type")
+				return;
+
+			switch (m_eFirearmType)
 				{
-				return (m_strSerialNumber);
-				}
-			set
-				{
-				m_strSerialNumber = value;
+				case eFireArmType.Handgun:
+					Description = "Handgun";
+
+					if (PrimaryCaliber != null)
+						Description = PrimaryCaliber.Pistol ? "Pistol" : "Revolver";
+
+					break;
+
+				case eFireArmType.Rifle:
+					Description = "Rifle";
+					break;
+
+				case eFireArmType.Shotgun:
+					Description = "Shotgun";
+					break;
+
+				default:
+					Description = "Other Firearm Type";
+					break;
 				}
 			}
 
@@ -1314,70 +1010,6 @@ namespace ReloadersWorkShop
 			set
 				{
 				m_dSightHeight = value;
-				}
-			}
-
-		//============================================================================*
-		// Source Property
-		//============================================================================*
-
-		public string Source
-			{
-			get
-				{
-				return (m_strSource);
-				}
-			set
-				{
-				m_strSource = value;
-				}
-			}
-
-		//============================================================================*
-		// StockFinish Property
-		//============================================================================*
-
-		public string StockFinish
-			{
-			get
-				{
-				return (m_strStockFinish);
-				}
-			set
-				{
-				m_strStockFinish = value;
-				}
-			}
-
-		//============================================================================*
-		// StockManufacturer Property
-		//============================================================================*
-
-		public cManufacturer StockManufacturer
-			{
-			get
-				{
-				return (m_StockManufacturer);
-				}
-			set
-				{
-				m_StockManufacturer = value;
-				}
-			}
-
-		//============================================================================*
-		// StockModel Property
-		//============================================================================*
-
-		public string StockModel
-			{
-			get
-				{
-				return (m_strStockModel);
-				}
-			set
-				{
-				m_strStockModel = value;
 				}
 			}
 
@@ -1418,55 +1050,12 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// Synch() - Manufacturer
-		//============================================================================*
-
-		public bool Synch(cManufacturer Manufacturer)
-			{
-			bool fSynched = false;
-
-			if (m_Manufacturer != null)
-				{
-				if (m_Manufacturer.CompareTo(Manufacturer) == 0)
-					{
-					m_Manufacturer = Manufacturer;
-
-					fSynched = true;
-					}
-
-				if (m_ScopeManufacturer != null && m_ScopeManufacturer.CompareTo(Manufacturer) == 0)
-					{
-					m_ScopeManufacturer = Manufacturer;
-
-					fSynched = true;
-					}
-
-				if (m_StockManufacturer != null && m_StockManufacturer.CompareTo(Manufacturer) == 0)
-					{
-					m_StockManufacturer = Manufacturer;
-
-					fSynched = true;
-					}
-
-
-				if (m_TriggerManufacturer != null && m_TriggerManufacturer.CompareTo(Manufacturer) == 0)
-					{
-					m_TriggerManufacturer = Manufacturer;
-
-					fSynched = true;
-					}
-				}
-
-			return (fSynched);
-			}
-
-		//============================================================================*
 		// ToShortString()
 		//============================================================================*
 
 		public string ToShortString()
 			{
-			return (String.Format("{0} {1}", (m_Manufacturer != null) ? m_Manufacturer.Name : "", m_strModel));
+			return (String.Format("{0} {1}", (Manufacturer != null) ? Manufacturer.Name : "", PartNumber));
 			}
 
 		//============================================================================*
@@ -1475,7 +1064,7 @@ namespace ReloadersWorkShop
 
 		public override string ToString()
 			{
-			return (String.Format("{0} {1} ({2})", (m_Manufacturer != null) ? m_Manufacturer.Name : "", m_strModel, m_strSerialNumber));
+			return (String.Format("{0} {1} ({2})", (Manufacturer != null) ? @Manufacturer.Name : "", @PartNumber, @SerialNumber));
 			}
 
 		//============================================================================*
@@ -1488,50 +1077,18 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// TriggerManufacturer Property
+		// TransferFees Property
 		//============================================================================*
 
-		public cManufacturer TriggerManufacturer
+		public double TransferFees
 			{
 			get
 				{
-				return (m_TriggerManufacturer);
+				return (m_dTransferFees);
 				}
 			set
 				{
-				m_TriggerManufacturer = value;
-				}
-			}
-
-		//============================================================================*
-		// TriggerModel Property
-		//============================================================================*
-
-		public string TriggerModel
-			{
-			get
-				{
-				return (m_strTriggerModel);
-				}
-			set
-				{
-				m_strTriggerModel = value;
-				}
-			}
-
-		//============================================================================*
-		// TriggerPull Property
-		//============================================================================*
-
-		public double TriggerPull
-			{
-			get
-				{
-				return (m_dTriggerPull);
-				}
-			set
-				{
-				m_dTriggerPull = value;
+				m_dTransferFees = value;
 				}
 			}
 
@@ -1576,27 +1133,21 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// TurretTypeFromString Property
+		//============================================================================*
+
+		public static cFirearm.eTurretType TurretTypeFromString(string strType)
+			{
+			return ((strType == "MOA" ? cFirearm.eTurretType.MOA : cFirearm.eTurretType.MilDot));
+			}
+
+		//============================================================================*
 		// TurretTypeString Property
 		//============================================================================*
 
-		public string TurretTypeString
+		public static string TurretTypeString(cFirearm.eTurretType eType)
 			{
-			get
-				{
-				if (m_fScoped)
-					{
-					switch (m_eTurretType)
-						{
-						case eTurretType.MOA:
-							return ("MOA");
-
-						case eTurretType.MilDot:
-							return ("Mil");
-						}
-					}
-
-				return ("-");
-				}
+			return (eType == cFirearm.eTurretType.MOA ? "MOA" : "Mil");
 			}
 
 		//============================================================================*
@@ -1632,58 +1183,48 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// XMLHeader Property
+		// Validate()
 		//============================================================================*
 
-		public static string XMLHeader
+		public override bool Validate(bool fIdentityOK = false)
 			{
-			get
-				{
-				return ("Firearms");
-				}
-			}
+			if (m_eFirearmType == cFirearm.eFireArmType.None)
+				return (false);
 
-		//============================================================================*
-		// XMLLine Property
-		//============================================================================*
+			if (!base.Validate(fIdentityOK))
+				return (false);
 
-		public string XMLLine
-			{
-			get
-				{
-				string strLine = "";
+			if (fIdentityOK && Identity)
+				return (true);
 
-				return (strLine);
-				}
-			}
+			if (Identity)
+				return (false);
 
-		//============================================================================*
-		// XMLLineHeader Property
-		//============================================================================*
+			if (m_dBarrelLength <= 0.0)
+				return (false);
 
-		public static string XMLLineHeader
-			{
-			get
-				{
-				string strLine = "";
+			if (m_dTwist <= 0.0 && m_eFirearmType != eFireArmType.Shotgun)
+				return (false);
 
-				return (strLine);
-				}
+			if (m_FirearmCaliberList.Count == 0)
+				return (false);
+
+			return (true);
 			}
 
 		//============================================================================*
 		// ZeroRange Property
 		//============================================================================*
 
-		public int ZeroRange
+		public double ZeroRange
 			{
 			get
 				{
-				return (m_nZeroRange);
+				return (m_dZeroRange);
 				}
 			set
 				{
-				m_nZeroRange = value;
+				m_dZeroRange = value;
 				}
 			}
 		}

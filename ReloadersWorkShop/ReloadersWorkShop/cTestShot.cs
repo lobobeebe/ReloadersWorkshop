@@ -10,8 +10,6 @@
 //============================================================================*
 
 using System;
-using System.IO;
-using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -24,7 +22,7 @@ namespace ReloadersWorkShop
 	//============================================================================*
 
 	[Serializable]
-	public class cTestShot
+	public partial class cTestShot
 		{
 		//============================================================================*
 		// Private Data Members
@@ -71,7 +69,7 @@ namespace ReloadersWorkShop
 			else
 				{
 				if (TestShot2 == null)
-					return(1);
+					return (1);
 				}
 
 			return (TestShot1.CompareTo(TestShot2));
@@ -107,110 +105,16 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// CSVHeader Property
-		//============================================================================*
-
-		public static string CSVHeader
-			{
-			get
-				{
-				return ("TestShot");
-				}
-			}
-
-		//============================================================================*
-		// CSVLine Property
-		//============================================================================*
-
-		public string CSVLine
-			{
-			get
-				{
-				string strLine = ",,";
-
-				strLine += m_nMuzzleVelocity;
-				strLine += ",";
-				strLine += m_nPressure;
-				strLine += ",";
-				strLine += m_fMisfire ? "Yes" : "-";
-				strLine += ",";
-				strLine += m_fSquib ? "Yes" : "-";
-
-				return (strLine);
-				}
-			}
-
-		//============================================================================*
-		// CSVLineHeader Property
-		//============================================================================*
-
-		public static string CSVLineHeader
-			{
-			get
-				{
-				return ("Muzzle Velocity,Pressure,Misfire,Squib");
-				}
-			}
-
-		//============================================================================*
-		// Export() - CSV
-		//============================================================================*
-
-		public void Export(StreamWriter Writer)
-			{
-			Writer.WriteLine(CSVLine);
-			}
-
-		//============================================================================*
-		// Export() - XML Document
-		//============================================================================*
-
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
-			{
-			XmlElement XMLThisElement = XMLDocument.CreateElement("TestShot");
-			XMLParentElement.AppendChild(XMLThisElement);
-
-			// Muzzle Velocity
-
-			XmlElement XMLElement = XMLDocument.CreateElement("MuzzleVelocity");
-			XmlText XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nMuzzleVelocity));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Pressure
-
-			XMLElement = XMLDocument.CreateElement("Pressure");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nPressure));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Misfire
-
-			XMLElement = XMLDocument.CreateElement("Misfire");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fMisfire ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Squib
-
-			XMLElement = XMLDocument.CreateElement("Squib");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fSquib ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-			}
-
-		//============================================================================*
 		// Misfire Property
 		//============================================================================*
 
 		public bool Misfire
 			{
-			get { return (m_fMisfire); }
-			set 
+			get
+				{
+				return (m_fMisfire);
+				}
+			set
 				{
 				m_fMisfire = value;
 
@@ -225,8 +129,14 @@ namespace ReloadersWorkShop
 
 		public int MuzzleVelocity
 			{
-			get { return (m_nMuzzleVelocity); }
-			set { m_nMuzzleVelocity = value; }
+			get
+				{
+				return (m_nMuzzleVelocity);
+				}
+			set
+				{
+				m_nMuzzleVelocity = value;
+				}
 			}
 
 		//============================================================================*
@@ -235,8 +145,14 @@ namespace ReloadersWorkShop
 
 		public int Pressure
 			{
-			get { return (m_nPressure); }
-			set { m_nPressure = value; }
+			get
+				{
+				return (m_nPressure);
+				}
+			set
+				{
+				m_nPressure = value;
+				}
 			}
 
 		//============================================================================*
@@ -245,7 +161,10 @@ namespace ReloadersWorkShop
 
 		public bool Squib
 			{
-			get { return (m_fSquib); }
+			get
+				{
+				return (m_fSquib);
+				}
 			set
 				{
 				m_fSquib = value;
@@ -253,22 +172,6 @@ namespace ReloadersWorkShop
 				if (m_fSquib)
 					m_fMisfire = false;
 				}
-			}
-
-		//============================================================================*
-		// Synch() - Load
-		//============================================================================*
-
-		public bool Synch(cLoad Load)
-			{
-/*			if (m_Load != null && m_Load.CompareTo(Load) == 0)
-				{
-				m_Load = Load;
-
-				return (true);
-				}
-*/
-			return (false);
 			}
 
 		//============================================================================*
@@ -280,6 +183,21 @@ namespace ReloadersWorkShop
 			string strLoadString = String.Format("Muzzle Velocity: {0}, Pressure: {1}, Misfire: {2}, Squib: {3}", m_nMuzzleVelocity, m_nPressure, m_fMisfire ? "Yes" : "No", m_fSquib ? "Yes" : "No");
 
 			return (strLoadString);
+			}
+
+		//============================================================================*
+		// Validate()
+		//============================================================================*
+
+		public bool Validate()
+			{
+			if (m_nMuzzleVelocity < 0)
+				return (false);
+
+			if (m_nPressure < 0)
+				return (false);
+
+			return (true);
 			}
 		}
 	}

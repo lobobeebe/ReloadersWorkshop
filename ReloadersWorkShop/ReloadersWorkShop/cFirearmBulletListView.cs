@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cFirearmBulletListView.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -59,6 +59,8 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 			// Set Properties
 			//----------------------------------------------------------------------------*
+
+			Font = new System.Drawing.Font(Font, System.Drawing.FontStyle.Bold);
 
 			//----------------------------------------------------------------------------*
 			// Set column measurements
@@ -157,9 +159,7 @@ namespace ReloadersWorkShop
 			{
 			Populating = true;
 
-			m_strDimensionFormat = "{0:F";
-			m_strDimensionFormat += String.Format("{0:G0}", cPreferences.DimensionDecimals);
-			m_strDimensionFormat += "}";
+			m_strDimensionFormat = m_DataFiles.Preferences.FormatString(cDataFiles.eDataType.Dimension);
 
 			Items.Clear();
 

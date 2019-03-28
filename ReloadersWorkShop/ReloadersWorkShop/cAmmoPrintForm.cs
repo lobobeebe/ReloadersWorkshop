@@ -45,6 +45,9 @@ namespace ReloadersWorkShop
 		private int m_nStartLabel = 0;
 		private int m_nNumCopies = 0;
 
+		private string m_strBulletWeightFormat = "{0:F1}";
+		private string m_strDimensionFormat = "{0:F1}";
+
 		//============================================================================*
 		// cFactoryAmmoPrintForm() - Constructor
 		//============================================================================*
@@ -148,7 +151,7 @@ namespace ReloadersWorkShop
 				}
 
 			//----------------------------------------------------------------------------*
-			// Fill i the label numbers and fill in the startng label with gray
+			// Fill in the label numbers and fill in the startng label with gray
 			//----------------------------------------------------------------------------*
 
 			Rectangle LabelRect = new Rectangle(0, 0, 0, 0);
@@ -257,6 +260,9 @@ namespace ReloadersWorkShop
 			{
 			cCaliber.CurrentFirearmType = m_Ammo.FirearmType;
 
+			m_strBulletWeightFormat = m_DataFiles.Preferences.FormatString(cDataFiles.eDataType.BulletWeight);
+			m_strDimensionFormat = m_DataFiles.Preferences.FormatString(cDataFiles.eDataType.Dimension);
+
 			//----------------------------------------------------------------------------*
 			// Print the label header
 			//----------------------------------------------------------------------------*
@@ -280,7 +286,13 @@ namespace ReloadersWorkShop
 
 			Graphics.DrawString(String.Format("{0}", m_Ammo.ToShortString()), LabelHeaderFont, Brushes.Black, dX, dY);
 
-			dY += ((float)LabelHeaderFont.Height * (float)2.0);
+			dY += (float) LabelHeaderFont.Height;
+
+			// Model
+
+			Graphics.DrawString(String.Format("{0}", m_Ammo.Type), LabelHeaderFont, Brushes.Black, dX, dY);
+
+			dY += ((float) LabelHeaderFont.Height * (float) 2.0);
 
 			// Caliber
 
@@ -310,7 +322,7 @@ namespace ReloadersWorkShop
 
 			dY -= (int)(BoldSize.Height - LabelSize.Height);
 
-			string strString = String.Format("{0:G0} {1}", cDataFiles.StandardToMetric(m_Ammo.BulletWeight, cDataFiles.eDataType.BulletWeight), cDataFiles.MetricString(cDataFiles.eDataType.BulletWeight));
+			string strString = String.Format(m_strBulletWeightFormat + " {1}", cDataFiles.StandardToMetric(m_Ammo.BulletWeight, cDataFiles.eDataType.BulletWeight), cDataFiles.MetricString(cDataFiles.eDataType.BulletWeight));
 
 			Graphics.DrawString(strString, LabelBoldFont, Brushes.Black, dDataX, dY);
 
@@ -330,7 +342,7 @@ namespace ReloadersWorkShop
 
 			dY -= (int)(BoldSize.Height - LabelSize.Height);
 
-			strString = String.Format("{0:F3} {1}", cDataFiles.StandardToMetric(m_Ammo.BulletDiameter, cDataFiles.eDataType.Dimension), cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
+			strString = String.Format(m_strDimensionFormat + " {1}", cDataFiles.StandardToMetric(m_Ammo.BulletDiameter, cDataFiles.eDataType.Dimension), cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
 
 			Graphics.DrawString(strString, LabelBoldFont, Brushes.Black, dX, dY);
 
@@ -425,7 +437,7 @@ namespace ReloadersWorkShop
 
 				foreach (cAmmoTest AmmoTest in m_Ammo.TestList)
 					{
-					cTestStatistics Statistics = AmmoTest.TestShotList.GetStatistics(AmmoTest.NumRounds);
+					cTestStatistics Statistics = new cTestStatistics(AmmoTest.TestShotList);
 
 					dX = LabelRect.X;
 
@@ -751,11 +763,20 @@ namespace ReloadersWorkShop
 
 			Rectangle PrinterBounds = e.PageBounds;
 
-			int nXDPI = (int)((double)PrinterBounds.Width / 8.5);
-			int nYDPI = (int)((double)PrinterBounds.Height / 11);
+			double dPageWidth = 8.5;
+			double dPageHeight = 11.0;
 
-			PrinterBounds.Width -= (int)(e.PageSettings.HardMarginX * 2.0);
-			PrinterBounds.Height -= (int)(e.PageSettings.HardMarginY * 2.0);
+			if (PaperComboBox.SelectedIndex == 1 || PaperComboBox.SelectedIndex == 2)
+				{
+				dPageWidth = 4.0;
+				dPageHeight = 6.0;
+				}
+
+			int nXDPI = (int) ((double) PrinterBounds.Width / dPageWidth);
+			int nYDPI = (int) ((double) PrinterBounds.Height / dPageHeight);
+
+			PrinterBounds.Width -= (int) (e.PageSettings.HardMarginX * 2.0);
+			PrinterBounds.Height -= (int) (e.PageSettings.HardMarginY * 2.0);
 
 			while (nRepeat > 0)
 				{

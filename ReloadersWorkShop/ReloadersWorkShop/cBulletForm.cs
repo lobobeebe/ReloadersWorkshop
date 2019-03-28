@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cBulletForm.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -11,10 +11,8 @@
 
 using System;
 using System.Drawing;
-using System.Windows;
 using System.Windows.Forms;
 
-using ReloadersWorkShop.Controls;
 using ReloadersWorkShop.Preferences;
 
 //============================================================================*
@@ -146,7 +144,7 @@ namespace ReloadersWorkShop
 
                     m_Bullet.ResetAllInventoryData();
 
-                    m_Bullet.CaliberList.Clear();
+                    m_Bullet.BulletCaliberList.Clear();
                     }
                 }
             else
@@ -208,8 +206,6 @@ namespace ReloadersWorkShop
                 AddCaliberButton.Click += OnAddCaliber;
                 EditCaliberButton.Click += OnEditCaliber;
                 RemoveCaliberButton.Click += OnRemoveCaliber;
-
-                BulletOKButton.Click += OnOKClicked;
                 }
             else
                 {
@@ -235,7 +231,7 @@ namespace ReloadersWorkShop
             // Set Labels for inventory tracking if needed
             //----------------------------------------------------------------------------*
 
-            if (cPreferences.TrackInventory)
+            if (m_DataFiles.Preferences.TrackInventory)
                 {
                 QuantityLabel.Text = "Qty on Hand:";
 
@@ -325,7 +321,7 @@ namespace ReloadersWorkShop
             // If the Caliber already exists, update the existing one and exit
             //----------------------------------------------------------------------------*
 
-            foreach (cBulletCaliber CheckBulletCaliber in m_Bullet.CaliberList)
+            foreach (cBulletCaliber CheckBulletCaliber in m_Bullet.BulletCaliberList)
                 {
                 if (CheckBulletCaliber.CompareTo(BulletCaliber) == 0)
                     {
@@ -341,7 +337,7 @@ namespace ReloadersWorkShop
             // Add the new caliber to the list
             //----------------------------------------------------------------------------*
 
-            m_Bullet.CaliberList.Add(BulletCaliber);
+            m_Bullet.BulletCaliberList.Add(BulletCaliber);
 
             SetBulletMinMax();
 
@@ -595,14 +591,6 @@ namespace ReloadersWorkShop
             }
 
         //============================================================================*
-        // OnOKClicked()
-        //============================================================================*
-
-        private void OnOKClicked(object sender, EventArgs e)
-            {
-            }
-
-        //============================================================================*
         // OnPartNumberTextChanged()
         //============================================================================*
 
@@ -672,7 +660,7 @@ namespace ReloadersWorkShop
 
                 m_BulletCalibersListView.Items.Remove(m_BulletCalibersListView.SelectedItems[0]);
 
-                m_Bullet.CaliberList.Remove(Caliber);
+                m_Bullet.BulletCaliberList.Remove(Caliber);
 
                 m_fChanged = true;
 
@@ -854,7 +842,7 @@ namespace ReloadersWorkShop
 
             CostTextBox.Value = m_DataFiles.SupplyCost(m_Bullet);
 
-            if (cPreferences.TrackInventory)
+            if (m_DataFiles.Preferences.TrackInventory)
                 CostTextBox.Text = String.Format("{0}{1:F2}", m_DataFiles.Preferences.Currency, m_DataFiles.SupplyCost(m_Bullet));
 
             SetCostEach();
@@ -909,9 +897,9 @@ namespace ReloadersWorkShop
             // Get bullet caliber min/max values
             //----------------------------------------------------------------------------*
 
-            if (m_Bullet.CaliberList.Count > 0)
+            if (m_Bullet.BulletCaliberList.Count > 0)
                 {
-                foreach (cBulletCaliber BulletCaliber in m_Bullet.CaliberList)
+                foreach (cBulletCaliber BulletCaliber in m_Bullet.BulletCaliberList)
                     {
                     if (dMinWeight > BulletCaliber.Caliber.MinBulletWeight)
                         dMinWeight = BulletCaliber.Caliber.MinBulletWeight;
@@ -1173,7 +1161,7 @@ namespace ReloadersWorkShop
             // Find the Bullet Caliber
             //----------------------------------------------------------------------------*
 
-            foreach (cBulletCaliber CheckBulletCaliber in m_Bullet.CaliberList)
+            foreach (cBulletCaliber CheckBulletCaliber in m_Bullet.BulletCaliberList)
                 {
                 //----------------------------------------------------------------------------*
                 // See if this is the same Caliber
@@ -1181,13 +1169,11 @@ namespace ReloadersWorkShop
 
                 if (CheckBulletCaliber.CompareTo(OldBulletCaliber) == 0)
                     {
-                    //----------------------------------------------------------------------------*
-                    // Update the current Caliber record
-                    //----------------------------------------------------------------------------*
+					//----------------------------------------------------------------------------*
+					// Update the current Caliber record
+					//----------------------------------------------------------------------------*
 
-                    CheckBulletCaliber.Caliber = NewBulletCaliber.Caliber;
-                    CheckBulletCaliber.COL = NewBulletCaliber.COL;
-                    CheckBulletCaliber.CBTO = NewBulletCaliber.CBTO;
+					CheckBulletCaliber.Copy(NewBulletCaliber);
 
                     //----------------------------------------------------------------------------*
                     // Update the Caliber on the Caliber tab
@@ -1230,7 +1216,7 @@ namespace ReloadersWorkShop
             // Check FirearmType
             //----------------------------------------------------------------------------*
 
-            if (m_Bullet.CaliberList.Count > 0)
+            if (m_Bullet.BulletCaliberList.Count > 0)
                 FirearmTypeCombo.Enabled = false;
 
             //----------------------------------------------------------------------------*
@@ -1399,7 +1385,7 @@ namespace ReloadersWorkShop
                 }
             else
                 {
-                foreach (cBulletCaliber CheckBulletCaliber in m_Bullet.CaliberList)
+                foreach (cBulletCaliber CheckBulletCaliber in m_Bullet.BulletCaliberList)
                     {
                     if (CheckBulletCaliber.Caliber.MinBulletDiameter < dMinAllowedDiameter)
                         dMinAllowedDiameter = CheckBulletCaliber.Caliber.MinBulletDiameter;
@@ -1498,7 +1484,7 @@ namespace ReloadersWorkShop
 
             strToolTip = cm_strCaliberListToolTip;
 
-            if (m_Bullet.CaliberList.Count == 0)
+            if (m_Bullet.BulletCaliberList.Count == 0)
                 {
                 fEnableOK = false;
 
@@ -1528,23 +1514,23 @@ namespace ReloadersWorkShop
             // Add, Edit, and Remove Caliber Buttons
             //----------------------------------------------------------------------------*
 
-            int fCaliberCount = 0;
+            int nCaliberCount = 0;
 
             if (ManufacturerCombo.SelectedIndex != -1)
                 {
                 foreach (cCaliber CheckCaliber in m_DataFiles.CaliberList)
                     {
-                    if (CheckCaliber.FirearmType != FirearmTypeCombo.Value)
+                    if (CheckCaliber.FirearmType != m_Bullet.FirearmType || CheckCaliber.Rimfire)
                         continue;
 
                     bool fAdd = true;
 
-                    if (Math.Round(dBulletDiameter, 3) >= Math.Round(CheckCaliber.MinBulletDiameter, 3) &&
-                        Math.Round(dBulletDiameter, 3) <= Math.Round(CheckCaliber.MaxBulletDiameter, 3) &&
-                        Math.Round(dWeight, 3) >= Math.Round(CheckCaliber.MinBulletWeight, 3) &&
-                        Math.Round(dWeight, 3) <= Math.Round(CheckCaliber.MaxBulletWeight, 3))
+                    if (dBulletDiameter >= cDataFiles.StandardToMetric(CheckCaliber.MinBulletDiameter, cDataFiles.eDataType.Dimension) &&
+                        dBulletDiameter <= cDataFiles.StandardToMetric(CheckCaliber.MaxBulletDiameter, cDataFiles.eDataType.Dimension) &&
+                        dWeight >= cDataFiles.StandardToMetric(CheckCaliber.MinBulletWeight, cDataFiles.eDataType.BulletWeight) &&
+                        dWeight <= cDataFiles.StandardToMetric(CheckCaliber.MaxBulletWeight, cDataFiles.eDataType.BulletWeight))
                         {
-                        foreach (cBulletCaliber BulletCaliber in m_Bullet.CaliberList)
+                        foreach (cBulletCaliber BulletCaliber in m_Bullet.BulletCaliberList)
                             {
                             if (BulletCaliber.Caliber.CompareTo(CheckCaliber) == 0)
                                 {
@@ -1555,14 +1541,14 @@ namespace ReloadersWorkShop
                             }
 
                         if (fAdd)
-                            fCaliberCount++;
+                            nCaliberCount++;
                         }
                     }
                 }
 
             strToolTip = cm_strAddCaliberButtonToolTip;
 
-            if (fCaliberCount == 0)
+            if (nCaliberCount == 0)
                 {
                 string strCaliberToolTip = cm_strCaliberListToolTip;
                 strCaliberToolTip += "\n\nThere are no calibers that can accomodate a bullet with this firearm Type, Diameter, and Weight.";

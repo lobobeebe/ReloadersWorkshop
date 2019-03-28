@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cBatchListView.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -61,6 +61,8 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			CheckBoxes = true;
+
+			Font = new System.Drawing.Font(Font, System.Drawing.FontStyle.Bold);
 
 			//----------------------------------------------------------------------------*
 			// Event Handlers
@@ -151,6 +153,12 @@ namespace ReloadersWorkShop
 				if (Batch.Archived && !m_DataFiles.Preferences.ShowArchivedBatches)
 					continue;
 
+				if (m_DataFiles.Preferences.HideUncheckedCalibers && !Batch.Load.Caliber.Checked)
+					continue;
+
+				if (m_DataFiles.Preferences.HideUncheckedSupplies && (!Batch.Load.Bullet.Checked || !Batch.Load.Case.Checked || !Batch.Load.Powder.Checked || !Batch.Load.Primer.Checked))
+					continue;
+
 				ListViewItem Item = AddBatch(Batch, eFireArmType, Caliber, Bullet, Powder);
 
 				if (Item != null && m_DataFiles.Preferences.LastBatchSelected != null && m_DataFiles.Preferences.LastBatchSelected.CompareTo(Batch) == 0)
@@ -188,13 +196,7 @@ namespace ReloadersWorkShop
 			{
 			Item.SubItems.Clear();
 
-			Item.Text = String.Format("{0:N0}", Batch.BatchID);
-
-			if (Batch.Archived)
-				Item.Text += " - Archived";
-
-			if (cPreferences.TrackInventory && !Batch.TrackInventory)
-				Item.Text += " *";
+			Item.Text = Batch.BatchIDString;
 
 			Item.Checked = Batch.Checked;
 
@@ -221,13 +223,11 @@ namespace ReloadersWorkShop
 					}
 				}
 
-			string strPowderWeightFormat = "{0:F";
-			strPowderWeightFormat += String.Format("{0:G0}", cPreferences.PowderWeightDecimals);
-			strPowderWeightFormat += "}";
+			string strPowderWeightFormat = m_DataFiles.Preferences.FormatString(cDataFiles.eDataType.PowderWeight);
 
 			if (fCompressed)
 				strPowderWeightFormat += "C";
-			 
+
 			strPowderWeightFormat += " {1} of {2}";
 
 			Item.SubItems.Add(String.Format(strPowderWeightFormat, cDataFiles.StandardToMetric(Batch.PowderWeight, cDataFiles.eDataType.PowderWeight), cDataFiles.MetricString(cDataFiles.eDataType.PowderWeight), Batch.Load.Powder.ToString()));
@@ -267,7 +267,7 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			if (Item == null)
-				return(null);
+				return (null);
 
 			//----------------------------------------------------------------------------*
 			// Otherwise, update the Item Data

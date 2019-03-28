@@ -193,7 +193,7 @@ namespace ReloadersWorkShop
 			// Fill in load data
 			//----------------------------------------------------------------------------*
 
-			FirearmTypeLabel.Text = cFirearm.Name(m_Load.FirearmType);
+			FirearmTypeLabel.Text = cFirearm.FirearmTypeString(m_Load.FirearmType);
 
 			if (m_Load != null)
 				{
@@ -514,11 +514,11 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			string strFirearmFormat = "{0:F";
-			strFirearmFormat += String.Format("{0:G0}", cPreferences.FirearmDecimals);
+			strFirearmFormat += String.Format("{0:G0}", m_DataFiles.Preferences.FirearmDecimals);
 			strFirearmFormat += "}";
 
 			string strGroupFormat = "{0:F";
-			strGroupFormat += String.Format("{0:G0}", cPreferences.GroupDecimals);
+			strGroupFormat += String.Format("{0:G0}", m_DataFiles.Preferences.GroupDecimals);
 			strGroupFormat += "}";
 
 			//----------------------------------------------------------------------------*
@@ -559,9 +559,8 @@ namespace ReloadersWorkShop
 					{
 					ChargeTestListView.Items.Add(Item);
 					}
-				catch (Exception e)
+				catch
 					{
-					cControls.InternalErrorMessageBox(e);
 					}
 
 				UpdateButtons();

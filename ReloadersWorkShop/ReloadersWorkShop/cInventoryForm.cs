@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cInventoryForm.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -11,11 +11,7 @@
 
 using System;
 using System.Drawing;
-using System.Windows;
 using System.Windows.Forms;
-
-using ReloadersWorkShop.Controls;
-using ReloadersWorkShop.Preferences;
 
 //============================================================================*
 // NameSpace
@@ -66,7 +62,7 @@ namespace ReloadersWorkShop
 			// Create the Transaction List View
 			//----------------------------------------------------------------------------*
 
-			m_TransactionListView = new cTransactionListView(m_Supply.TransactionList, m_DataFiles);
+			m_TransactionListView = new cTransactionListView(m_Supply.TransactionList, m_DataFiles, m_Supply);
 
 			m_TransactionListView.Location = new Point(6, 20);
 			m_TransactionListView.Size = new Size(TotalsGroupBox.Width - 12, AddActivityButton.Location.Y - 26);
@@ -89,8 +85,6 @@ namespace ReloadersWorkShop
 				AddActivityButton.Click += OnAddActivityClicked;
 				EditActivityButton.Click += OnEditActivityClicked;
 				RemoveActivityButton.Click += OnRemoveActivityClicked;
-
-				CloseButton.Click += OnCloseButtonClicked;
 				}
 			else
 				{
@@ -177,18 +171,6 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// OnCloseButtonClicked()
-		//============================================================================*
-
-		private void OnCloseButtonClicked(object sender, EventArgs e)
-			{
-			if (m_Supply.SupplyType == cSupply.eSupplyTypes.Powder)
-				m_Supply.MinimumStockLevel = cDataFiles.MetricToStandard(MinimumStockLevelTextBox.Value, cDataFiles.eDataType.CanWeight) * 7000.0;
-			else
-				m_Supply.MinimumStockLevel = MinimumStockLevelTextBox.Value;
-			}
-
-		//============================================================================*
 		// OnEditActivityClicked()
 		//============================================================================*
 
@@ -232,7 +214,10 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_Supply.MinimumStockLevel = MinimumStockLevelTextBox.Value;
+			if (m_Supply.SupplyType == cSupply.eSupplyTypes.Powder)
+				m_Supply.MinimumStockLevel = cDataFiles.MetricToStandard(MinimumStockLevelTextBox.Value, cDataFiles.eDataType.CanWeight) * 7000.0;
+			else
+				m_Supply.MinimumStockLevel = MinimumStockLevelTextBox.Value;
 
 			m_fChanged = true;
 
@@ -311,12 +296,12 @@ namespace ReloadersWorkShop
 
 				string strQtyformat = "{0:F3} {1}{2}";
 
-				QuantityLabel.Text = String.Format(strQtyformat, dQuantityOnHand, (cPreferences.MetricCanWeights ? "kilo" : "lb"), (dQuantityOnHand != 1.0 ? "s" : ""));
-				LastPurchaseQtyLabel.Text = String.Format(strQtyformat, dLastPurchaseQty, (cPreferences.MetricCanWeights ? "kilo" : "lb"), (dLastPurchaseQty != 1.0 ? "s" : ""));
-				TotalPurchasedLabel.Text = String.Format(strQtyformat, dTotalPurchaseQty, (cPreferences.MetricCanWeights ? "kilo" : "lb"), (dTotalPurchaseQty != 1.0 ? "s" : ""));
+				QuantityLabel.Text = String.Format(strQtyformat, dQuantityOnHand, (m_DataFiles.Preferences.MetricCanWeights ? "kilo" : "lb"), (dQuantityOnHand != 1.0 ? "s" : ""));
+				LastPurchaseQtyLabel.Text = String.Format(strQtyformat, dLastPurchaseQty, (m_DataFiles.Preferences.MetricCanWeights ? "kilo" : "lb"), (dLastPurchaseQty != 1.0 ? "s" : ""));
+				TotalPurchasedLabel.Text = String.Format(strQtyformat, dTotalPurchaseQty, (m_DataFiles.Preferences.MetricCanWeights ? "kilo" : "lb"), (dTotalPurchaseQty != 1.0 ? "s" : ""));
 
-				TotalAdjustLabel.Text = String.Format(strQtyformat, dTotalAdjustQty, (cPreferences.MetricCanWeights ? "kilo" : "lb"), (dTotalAdjustQty != 1.0 ? "s" : ""));
-				TotalUsedLabel.Text = String.Format(strQtyformat, dTotalUsedQty, (cPreferences.MetricCanWeights ? "kilo" : "lb"), (dTotalUsedQty != 1.0 ? "s" : ""));
+				TotalAdjustLabel.Text = String.Format(strQtyformat, dTotalAdjustQty, (m_DataFiles.Preferences.MetricCanWeights ? "kilo" : "lb"), (dTotalAdjustQty != 1.0 ? "s" : ""));
+				TotalUsedLabel.Text = String.Format(strQtyformat, dTotalUsedQty, (m_DataFiles.Preferences.MetricCanWeights ? "kilo" : "lb"), (dTotalUsedQty != 1.0 ? "s" : ""));
 				}
 			else
 				{
@@ -340,7 +325,7 @@ namespace ReloadersWorkShop
 
 			if (m_Supply.SupplyType == cSupply.eSupplyTypes.Powder)
 				{
-				MinimumStockLevelTextBox.Value = cDataFiles.StandardToMetric(m_Supply.MinimumStockLevel, cDataFiles.eDataType.CanWeight) / (cPreferences.MetricCanWeights ? 1000.0 :  7000.0);
+				MinimumStockLevelTextBox.Value = cDataFiles.StandardToMetric(m_Supply.MinimumStockLevel, cDataFiles.eDataType.CanWeight) / (m_DataFiles.Preferences.MetricCanWeights ? 1000.0 :  7000.0);
 				MinimumStockLevelMeasurementLabel.Visible = true;
 				cDataFiles.SetMetricLabel(MinimumStockLevelMeasurementLabel, cDataFiles.eDataType.CanWeight);
 				}

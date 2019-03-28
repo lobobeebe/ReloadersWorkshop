@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cBatchLoadListView.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -48,11 +48,12 @@ namespace ReloadersWorkShop
 		// cBatchLoadListView() - Constructor
 		//============================================================================*
 
-		public cBatchLoadListView(cDataFiles DataFiles, cBatch Batch)
+		public cBatchLoadListView(cDataFiles DataFiles, cBatch Batch, bool fShowBatchLoad)
 			: base(DataFiles, cPreferences.eApplicationListView.BatchLoadListView)
 			{
 			m_DataFiles = DataFiles;
 			m_Batch = Batch;
+			m_fShowBatchLoad = fShowBatchLoad;
 
 			//----------------------------------------------------------------------------*
 			// Set Properties
@@ -142,11 +143,9 @@ namespace ReloadersWorkShop
 		// Populate()
 		//============================================================================*
 
-		public void Populate(cFirearm.eFireArmType eFirearmType, cCaliber Caliber, cBullet Bullet, cPowder Powder, bool fShowBatchLoad)
+		public void Populate(cFirearm.eFireArmType eFirearmType, cCaliber Caliber, cBullet Bullet, cPowder Powder)
 			{
 			Populating = true;
-
-			m_fShowBatchLoad = fShowBatchLoad;
 
 			Items.Clear();
 
@@ -258,7 +257,7 @@ namespace ReloadersWorkShop
 			// See if we need to show this load regardless of other considerations
 			//----------------------------------------------------------------------------*
 
-			if (m_Batch.Load != null && m_Batch.Load.CompareTo(Load) == 0)
+			if (m_fShowBatchLoad && m_Batch.Load.CompareTo(Load) == 0)
 				return(true);
 
 			//----------------------------------------------------------------------------*

@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cMainForm.BallisticsTab.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -581,7 +581,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_BallisticsData.MaxRange = (int) cDataFiles.MetricToStandard(BallisticsMaxRangeTextBox.Value, cDataFiles.eDataType.Range);
+			m_BallisticsData.MaxRange = cDataFiles.MetricToStandard(BallisticsMaxRangeTextBox.Value, cDataFiles.eDataType.Range);
 			m_DataFiles.Preferences.BallisticsData.MaxRange = (int) cDataFiles.MetricToStandard(BallisticsMaxRangeTextBox.Value, cDataFiles.eDataType.Range);
 
 			SetBallisticsMinMax();
@@ -1460,7 +1460,7 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			string strPowderWeightFormat = "{0:F";
-			strPowderWeightFormat += String.Format("{0:G0}", cPreferences.PowderWeightDecimals);
+			strPowderWeightFormat += String.Format("{0:G0}", m_DataFiles.Preferences.PowderWeightDecimals);
 			strPowderWeightFormat += "}";
 
 			//----------------------------------------------------------------------------*
@@ -1647,7 +1647,7 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			string strBullseyeFormat = " - {0:F";
-			strBullseyeFormat += String.Format("{0:G0}", cPreferences.GroupDecimals);
+			strBullseyeFormat += String.Format("{0:G0}", m_DataFiles.Preferences.GroupDecimals);
 			strBullseyeFormat += "} ";
 			strBullseyeFormat += cDataFiles.MetricString(cDataFiles.eDataType.GroupSize);
 
@@ -1679,7 +1679,7 @@ namespace ReloadersWorkShop
 			// Show Speed of Sound Label
 			//----------------------------------------------------------------------------*
 
-			double dSpeedOfSound = cPreferences.MetricVelocities ? m_BallisticsData.SpeedOfSoundInMS : m_BallisticsData.SpeedOfSoundInFPS;
+			double dSpeedOfSound = m_DataFiles.Preferences.MetricVelocities ? m_BallisticsData.SpeedOfSoundInMS : m_BallisticsData.SpeedOfSoundInFPS;
 
 			BallisticsSoundSpeedLabel.Text = String.Format("{0:F1} {1}", dSpeedOfSound, cDataFiles.MetricString(cDataFiles.eDataType.Velocity));
 
@@ -2136,7 +2136,7 @@ namespace ReloadersWorkShop
 						ListViewItem Item = new ListViewItem(String.Format("{0:N0}", nRange));
 
 						string strGroupFormat = "{0:F";
-						strGroupFormat += String.Format("{0:G0}", cPreferences.GroupDecimals);
+						strGroupFormat += String.Format("{0:G0}", m_DataFiles.Preferences.GroupDecimals);
 						strGroupFormat += "}";
 
 						Item.SubItems.Add(String.Format(strGroupFormat, cDataFiles.StandardToMetric(m_BallisticsData.BulletPath, cDataFiles.eDataType.GroupSize)));
@@ -3012,7 +3012,7 @@ namespace ReloadersWorkShop
 			BallisticsBulletWeightTextBox.MinValue = cDataFiles.StandardToMetric(dWeightMin,  cDataFiles.eDataType.BulletWeight);
 			BallisticsBulletWeightTextBox.MaxValue = cDataFiles.StandardToMetric(dWeightMax,  cDataFiles.eDataType.BulletWeight);
             BallisticsBulletLengthTextBox.MinValue = 0.0;
-			BallisticsBulletLengthTextBox.MaxValue = cPreferences.MetricDimensions ? cConversions.InchesToMillimeters(3.0) : 3.0;
+			BallisticsBulletLengthTextBox.MaxValue = m_DataFiles.Preferences.MetricDimensions ? cConversions.InchesToMillimeters(3.0) : 3.0;
 
 			//----------------------------------------------------------------------------*
 			// Set Muzzle Velocity Min/Max
@@ -3083,7 +3083,7 @@ namespace ReloadersWorkShop
 				BallisticsZeroRangeTextBox.Enabled = true;
 
 				BallisticsSightHeightTextBox.MinValue = 0.0;
-				BallisticsSightHeightTextBox.MaxValue = cPreferences.MetricFirearms ? cConversions.InchesToCentimeters(5.0) : 5.0;
+				BallisticsSightHeightTextBox.MaxValue = m_DataFiles.Preferences.MetricFirearms ? cConversions.InchesToCentimeters(5.0) : 5.0;
 
 				BallisticsSightHeightTextBox.Enabled = true;
 
@@ -3093,8 +3093,8 @@ namespace ReloadersWorkShop
 				BallisticsScopeClickTextBox.MaxValue = 1.0;
 				BallisticsScopeClickTextBox.Enabled = true;
 
-				BallisticsTwistTextBox.MinValue = cPreferences.MetricFirearms ? cConversions.InchesToCentimeters(5.0) : 5.0;
-				BallisticsTwistTextBox.MaxValue = cPreferences.MetricFirearms ? cConversions.InchesToCentimeters(78.0) : 78.0;
+				BallisticsTwistTextBox.MinValue = m_DataFiles.Preferences.MetricFirearms ? cConversions.InchesToCentimeters(5.0) : 5.0;
+				BallisticsTwistTextBox.MaxValue = m_DataFiles.Preferences.MetricFirearms ? cConversions.InchesToCentimeters(78.0) : 78.0;
 				BallisticsTwistTextBox.Enabled = true;
 				}
 
@@ -3108,23 +3108,23 @@ namespace ReloadersWorkShop
 			// Set Environmental Data Min/Max
 			//----------------------------------------------------------------------------*
 
-			BallisticsTemperatureTextBox.MinValue = cPreferences.MetricTemperatures ? cConversions.FahrenheitToCelsius(0) : 0;
-			BallisticsTemperatureTextBox.MaxValue = cPreferences.MetricTemperatures ? cConversions.FahrenheitToCelsius(120) : 120;
+			BallisticsTemperatureTextBox.MinValue = m_DataFiles.Preferences.MetricTemperatures ? cConversions.FahrenheitToCelsius(0) : 0;
+			BallisticsTemperatureTextBox.MaxValue = m_DataFiles.Preferences.MetricTemperatures ? cConversions.FahrenheitToCelsius(120) : 120;
 
 			BallisticsAltitudeTextBox.MinValue = 0;
-			BallisticsAltitudeTextBox.MaxValue = cPreferences.MetricAltitudes ? (int) cConversions.FeetToMeters(15000) : 15000;
+			BallisticsAltitudeTextBox.MaxValue = m_DataFiles.Preferences.MetricAltitudes ? (int) cConversions.FeetToMeters(15000) : 15000;
 
 			BallisticsHumidityTextBox.MinValue = 0;
 			BallisticsHumidityTextBox.MaxValue = 100;
 
 			BallisticsWindSpeedTextBox.MinValue = 0;
-			BallisticsWindSpeedTextBox.MaxValue = cPreferences.MetricVelocities ? (int) cConversions.MPHToKPH(30) : 30;
+			BallisticsWindSpeedTextBox.MaxValue = m_DataFiles.Preferences.MetricVelocities ? (int) cConversions.MPHToKPH(30) : 30;
 
 			BallisticsWindDirectionTextBox.MinValue = 0;
 			BallisticsWindDirectionTextBox.MaxValue = 359;
 
-			BallisticsPressureTextBox.MinValue = cPreferences.MetricPressures ? cConversions.InHgToMillibars(25) : 25;
-			BallisticsPressureTextBox.MaxValue = cPreferences.MetricPressures ? cConversions.InHgToMillibars(33) : 33;
+			BallisticsPressureTextBox.MinValue = m_DataFiles.Preferences.MetricPressures ? cConversions.InHgToMillibars(25) : 25;
+			BallisticsPressureTextBox.MaxValue = m_DataFiles.Preferences.MetricPressures ? cConversions.InHgToMillibars(33) : 33;
 
 			//----------------------------------------------------------------------------*
 			// Set Range Data Min/Max
@@ -3355,7 +3355,7 @@ namespace ReloadersWorkShop
 			cDataFiles.SetMetricLabel(BulletDiameterMeasurementLabel, cDataFiles.eDataType.Dimension);
 
 			cDataFiles.SetInputParameters(BallisticsBulletWeightTextBox, cDataFiles.eDataType.BulletWeight);
-			cDataFiles.SetMetricLabel(BulletWeightMeasurementLabel, cDataFiles.eDataType.Dimension);
+			cDataFiles.SetMetricLabel(BulletWeightMeasurementLabel, cDataFiles.eDataType.BulletWeight);
 
 			cDataFiles.SetInputParameters(BallisticsBulletLengthTextBox, cDataFiles.eDataType.Dimension);
 			cDataFiles.SetMetricLabel(BulletLengthMeasurementLabel, cDataFiles.eDataType.Dimension);
@@ -3370,11 +3370,11 @@ namespace ReloadersWorkShop
 			cDataFiles.SetInputParameters(BallisticsSightHeightTextBox, cDataFiles.eDataType.Firearm);
 			cDataFiles.SetMetricLabel(SightHeightMeasurementLabel,cDataFiles.eDataType.Firearm);
 
-			BallisticsScopeClickTextBox.NumDecimals = cPreferences.FirearmDecimals;
-			BallisticsScopeClickTextBox.MaxLength = 2 + cPreferences.FirearmDecimals;
+			BallisticsScopeClickTextBox.NumDecimals = m_DataFiles.Preferences.FirearmDecimals;
+			BallisticsScopeClickTextBox.MaxLength = 2 + m_DataFiles.Preferences.FirearmDecimals;
 
-			BallisticsTwistTextBox.NumDecimals = cPreferences.FirearmDecimals;
-			BallisticsTwistTextBox.MaxLength = 3 + cPreferences.FirearmDecimals;
+			BallisticsTwistTextBox.NumDecimals = m_DataFiles.Preferences.FirearmDecimals;
+			BallisticsTwistTextBox.MaxLength = 3 + m_DataFiles.Preferences.FirearmDecimals;
 			cDataFiles.SetMetricLabel(TwistMeasurementLabel,cDataFiles.eDataType.Firearm);
 
 			//----------------------------------------------------------------------------*
@@ -3464,11 +3464,11 @@ namespace ReloadersWorkShop
 			m_RestoreReferenceBulletToolTip.ShowAlways = true;
 			m_RestoreReferenceBulletToolTip.RemoveAll();
 			m_RestoreReferenceBulletToolTip.SetToolTip(RestoreReferenceBulletButton, cm_strRestoreReferenceBulletToolTip);
-
+/*
 			m_BallisticsKestrelToolTip.ShowAlways = true;
 			m_BallisticsKestrelToolTip.RemoveAll();
 			m_BallisticsKestrelToolTip.SetToolTip(BallisticsKestrelButton, cm_strBallisticsKestrelToolTip);
-
+*/
 			m_CompareReferenceBulletToolTip.ShowAlways = true;
 			m_CompareReferenceBulletToolTip.RemoveAll();
 			m_CompareReferenceBulletToolTip.SetToolTip(RestoreReferenceBulletButton, cm_strCompareReferenceBulletToolTip);

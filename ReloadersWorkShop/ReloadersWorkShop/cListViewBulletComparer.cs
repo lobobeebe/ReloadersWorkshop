@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cListViewBulletComparer.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -125,7 +125,7 @@ namespace ReloadersWorkShop
 				// Diameter
 				//----------------------------------------------------------------------------*
 
-				case 3:
+				case 4:
 					double dDiameter1 = Bullet1.Diameter;
 					double dDiameter2 = Bullet2.Diameter;
 
@@ -149,7 +149,7 @@ namespace ReloadersWorkShop
 				// Weight
 				//----------------------------------------------------------------------------*
 
-				case 4:
+				case 5:
 					double nWeight1 = Bullet1.Weight;
 					double nWeight2 = Bullet2.Weight;
 
@@ -170,10 +170,106 @@ namespace ReloadersWorkShop
 					break;
 
 				//----------------------------------------------------------------------------*
-				// Top Punch
+				// Length
+				//----------------------------------------------------------------------------*
+
+				case 6:
+					double nLength1 = Bullet1.Length;
+					double nLength2 = Bullet2.Length;
+
+					rc = nLength1.CompareTo(nLength2);
+
+					if (rc == 0)
+						{
+						rc = Bullet1.Manufacturer.CompareTo(Bullet2.Manufacturer);
+
+						if (rc == 0)
+							{
+							rc = cDataFiles.ComparePartNumbers(Bullet1.PartNumber, Bullet2.PartNumber);
+							}
+						}
+
+					fSpecial = true;
+
+					break;
+
+				//----------------------------------------------------------------------------*
+				// BC
+				//----------------------------------------------------------------------------*
+
+				case 7:
+					double dBC1 = Bullet1.BallisticCoefficient;
+					double dBC2 = Bullet2.BallisticCoefficient;
+
+					rc = dBC1.CompareTo(dBC2);
+
+					if (rc == 0)
+						{
+						rc = Bullet1.Manufacturer.CompareTo(Bullet2.Manufacturer);
+
+						if (rc == 0)
+							{
+							rc = cDataFiles.ComparePartNumbers(Bullet1.PartNumber, Bullet2.PartNumber);
+							}
+						}
+
+					fSpecial = true;
+
+					break;
+
+				//----------------------------------------------------------------------------*
+				// SD
+				//----------------------------------------------------------------------------*
+
+				case 8:
+					double dSD1 = Bullet1.SectionalDensity;
+					double dSD2 = Bullet2.SectionalDensity;
+
+					rc = dSD1.CompareTo(dSD2);
+
+					if (rc == 0)
+						{
+						rc = Bullet1.Manufacturer.CompareTo(Bullet2.Manufacturer);
+
+						if (rc == 0)
+							{
+							rc = cDataFiles.ComparePartNumbers(Bullet1.PartNumber, Bullet2.PartNumber);
+							}
+						}
+
+					fSpecial = true;
+
+					break;
+
+				//----------------------------------------------------------------------------*
+				// Num Calibers
 				//----------------------------------------------------------------------------*
 
 				case 9:
+					double dNumCalibers1 = Bullet1.BulletCaliberList.Count;
+					double dNumCalibers2 = Bullet2.BulletCaliberList.Count;
+
+					rc = dNumCalibers1.CompareTo(dNumCalibers2);
+
+					if (rc == 0)
+						{
+						rc = Bullet1.Manufacturer.CompareTo(Bullet2.Manufacturer);
+
+						if (rc == 0)
+							{
+							rc = cDataFiles.ComparePartNumbers(Bullet1.PartNumber, Bullet2.PartNumber);
+							}
+						}
+
+					fSpecial = true;
+
+					break;
+
+				//----------------------------------------------------------------------------*
+				// Top Punch
+				//----------------------------------------------------------------------------*
+
+				case 11:
 					int nPunch1 = Bullet1.TopPunch;
 					int nPunch2 = Bullet2.TopPunch;
 
@@ -187,11 +283,11 @@ namespace ReloadersWorkShop
 				// Quantity
 				//----------------------------------------------------------------------------*
 
-				case 10:
+				case 12:
 					double dQuantity1 = Bullet1.Quantity;
 					double dQuantity2 = Bullet2.Quantity;
 
-					if (cPreferences.TrackInventory)
+					if (m_DataFiles.Preferences.TrackInventory)
 						{
 						dQuantity1 = Bullet1.QuantityOnHand;
 						dQuantity2 = Bullet2.QuantityOnHand;
@@ -207,9 +303,16 @@ namespace ReloadersWorkShop
 				// Cost
 				//----------------------------------------------------------------------------*
 
-				case 11:
-					double dCost1 = m_DataFiles.SupplyCostEach(Bullet1);
-					double dCost2 = m_DataFiles.SupplyCostEach(Bullet2);
+				case 13:
+					double dCost1 = 0.0;
+
+					if ((Object1 as ListViewItem).Text != "-")
+						Double.TryParse((Object1 as ListViewItem).SubItems[13].Text, out dCost1);
+
+					double dCost2 = 0.0;
+
+					if ((Object2 as ListViewItem).Text != "-")
+						Double.TryParse((Object2 as ListViewItem).SubItems[13].Text, out dCost2);
 
 					rc = dCost1.CompareTo(dCost2);
 

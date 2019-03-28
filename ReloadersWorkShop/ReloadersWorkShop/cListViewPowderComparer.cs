@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cListViewPowderComparer.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -166,11 +166,11 @@ namespace ReloadersWorkShop
 				// Quantity
 				//----------------------------------------------------------------------------*
 
-				case 3:
+				case 4:
 					double dQuantity1 = Powder1.Quantity;
 					double dQuantity2 = Powder2.Quantity;
 
-					if (cPreferences.TrackInventory)
+					if (m_DataFiles.Preferences.TrackInventory)
 						{
 						dQuantity1 = Powder1.QuantityOnHand;
 						dQuantity2 = Powder2.QuantityOnHand;
@@ -186,9 +186,16 @@ namespace ReloadersWorkShop
 				// Cost
 				//----------------------------------------------------------------------------*
 
-				case 4:
-					double dCost1 = m_DataFiles.SupplyCostEach(Powder1);
-					double dCost2 = m_DataFiles.SupplyCostEach(Powder2);
+				case 5:
+					double dCost1 = 0.0;
+
+					if ((Object1 as ListViewItem).Text != "-")
+						Double.TryParse((Object1 as ListViewItem).SubItems[5].Text, out dCost1);
+
+					double dCost2 = 0.0;
+
+					if ((Object2 as ListViewItem).Text != "-")
+						Double.TryParse((Object2 as ListViewItem).SubItems[5].Text, out dCost2);
 
 					rc = dCost1.CompareTo(dCost2);
 

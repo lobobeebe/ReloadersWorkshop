@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cCaliberForm.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -17,9 +17,6 @@ using System.Windows.Forms;
 //============================================================================*
 // Application Specific Using Statements
 //============================================================================*
-
-using ReloadersWorkShop.Controls;
-//using ReloadersWorkShop.Preferences;
 
 //============================================================================*
 // NameSpace
@@ -39,9 +36,11 @@ namespace ReloadersWorkShop
 
 		private const string cm_strFirearmTypeToolTip = "Type of firearm for which this caliber is designed.";
 		private const string cm_strNameToolTip = "Name of this caliber.";
+		private const string cm_strCrossUseToolTip = "Check this box if cartridges of this caliber can be used in both handguns and rifles.";
 		private const string cm_strHeadStampToolTip = "HeadStamp description (or abbreviated name) of this caliber.";
 		private const string cm_strPrimerSizeToolTip = "Size of the primer used in cartridges of this caliber.";
 		private const string cm_strMagnumToolTip = "Indicates whether this is a magnum caliber.";
+		private const string cm_strRimfireToolTip = "Indicates whether this is a rimfire caliber.";
 
 		private const string cm_strPistolToolTip = "Indicates that this is a pistol caliber.";
 		private const string cm_strRevolverToolTip = "Indicates that this is a revolver caliber.";
@@ -57,8 +56,6 @@ namespace ReloadersWorkShop
 		private const string cm_strMaxCOLToolTip = "Maximum Cartridge Overall Length (COAL) of cartridges in this caliber.";
 		private const string cm_strMaxNeckDiameterToolTip = "Maximum neck diameter of cartridges of this caliber.";
 
-		private const string cm_strCaliberOKButtonToolTip = "Click to add or update the caliber with the above data.";
-		private const string cm_strCaliberCancelButtonToolTip = "Click to cancel changes and return to the main window.";
 		private const string cm_strSAAMIPDFToolTip = "Name of the SAAMI PDF file containg the drawing for cartridges of this caliber.\nYou do not need to specify the full URL, just the PDf file name.  You may leave the .pdf extension off as well.";
 
 		//----------------------------------------------------------------------------*
@@ -73,14 +70,14 @@ namespace ReloadersWorkShop
 
 		private ToolTip m_FirearmTypeToolTip = new ToolTip();
 
+		private ToolTip m_CrossUseToolTip = new ToolTip();
+
 		private ToolTip m_PistolToolTip = new ToolTip();
 		private ToolTip m_RevolverToolTip = new ToolTip();
 
 		private ToolTip m_PrimerSizeToolTip = new ToolTip();
 		private ToolTip m_MagnumToolTip = new ToolTip();
-
-		private ToolTip m_CaliberOKButtonToolTip = new ToolTip();
-		private ToolTip m_CaliberCancelButtonToolTip = new ToolTip();
+		private ToolTip m_RimfireToolTip = new ToolTip();
 
 		private cDataFiles m_DataFiles = null;
 
@@ -102,19 +99,19 @@ namespace ReloadersWorkShop
 
 				m_Caliber = new cCaliber();
 
-				CaliberOKButton.Text = "Add";
+				OKButton.ButtonType = CommonLib.Controls.cOKButton.eButtonTypes.Add;
 				}
 			else
 				{
 				m_Caliber = new cCaliber(Caliber);
 
 				if (!m_fViewOnly)
-					CaliberOKButton.Text = "Update";
+					OKButton.ButtonType = CommonLib.Controls.cOKButton.eButtonTypes.Update;
 				else
-					CaliberCancelButton.Text = "Close";
+					FormCancelButton.ButtonType = CommonLib.Controls.cCancelButton.eButtonTypes.Close;
 				}
 
-			SetClientSizeCore(GeneralGroupBox.Location.X + GeneralGroupBox.Width + 10, CaliberCancelButton.Location.Y + CaliberCancelButton.Height + 20);
+			SetClientSizeCore(GeneralGroupBox.Location.X + GeneralGroupBox.Width + 10, FormCancelButton.Location.Y + FormCancelButton.Height + 20);
 
 			//----------------------------------------------------------------------------*
 			// Set Control Event Handlers
@@ -127,12 +124,15 @@ namespace ReloadersWorkShop
 				NameTextBox.TextChanged += OnNameChanged;
 				HeadStampTextBox.TextChanged += OnHeadStampChanged;
 
+				CrossUseCheckBox.Click += OnCrossUseClicked;
+
 				PistolRadioButton.Click += OnPistolClicked;
 				RevolverRadioButton.Click += OnRevolverClicked;
 
 				SmallPrimerCheckBox.Click += OnSmallPrimerClicked;
 				LargePrimerCheckBox.Click += OnLargePrimerClicked;
 				MagnumPrimerCheckBox.Click += OnMagnumClicked;
+				RimfireCheckBox.Click += OnRimfireClicked;
 
 				CaseTrimLengthTextBox.TextChanged += OnCaseTrimLengthChanged;
 				MaxBulletDiameterTextBox.TextChanged += OnMaxBulletDiameterChanged;
@@ -163,7 +163,7 @@ namespace ReloadersWorkShop
 				MaxNeckDiameterTextBox.ReadOnly = true;
 				SAAMIPDFTextBox.ReadOnly = true;
 
-				CaliberOKButton.Visible = false;
+				OKButton.Visible = false;
 				}
 
 			SetInputParameters();
@@ -201,11 +201,11 @@ namespace ReloadersWorkShop
 					{
 					strTitle = "View";
 
-					int nButtonX = (this.Size.Width / 2) - (CaliberCancelButton.Width / 2);
+					int nButtonX = (this.Size.Width / 2) - (FormCancelButton.Width / 2);
 
-					CaliberCancelButton.Location = new Point(nButtonX, CaliberCancelButton.Location.Y);
+					FormCancelButton.Location = new Point(nButtonX, FormCancelButton.Location.Y);
 
-					CaliberCancelButton.Text = "Close";
+					FormCancelButton.Text = "Close";
 					}
 				}
 
@@ -222,7 +222,7 @@ namespace ReloadersWorkShop
 				FirearmTypeCombo.Focus();
 				}
 			else
-				CaliberCancelButton.Focus();
+				FormCancelButton.Focus();
 
 			m_fInitialized = true;
 
@@ -462,18 +462,18 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-            if (MaxCOLTextBox.Value < CaseTrimLengthTextBox.Value)
+			if (MaxCOLTextBox.Value < CaseTrimLengthTextBox.Value)
 				MaxCOLTextBox.Value = CaseTrimLengthTextBox.Value;
 
-            if (m_Caliber.FirearmType != cFirearm.eFireArmType.Shotgun)
+			if (m_Caliber.FirearmType != cFirearm.eFireArmType.Shotgun)
 				{
-                if (MaxCaseLengthTextBox.Value < CaseTrimLengthTextBox.Value + cDataFiles.StandardToMetric(0.005, cDataFiles.eDataType.Dimension))
+				if (MaxCaseLengthTextBox.Value < CaseTrimLengthTextBox.Value + cDataFiles.StandardToMetric(0.005, cDataFiles.eDataType.Dimension))
 					MaxCaseLengthTextBox.Value = CaseTrimLengthTextBox.Value + cDataFiles.StandardToMetric(0.005, cDataFiles.eDataType.Dimension);
 
 				MaxCOLTextBox.MinValue = CaseTrimLengthTextBox.Value;
-                MaxCOLTextBox.MaxValue = MaxCOLTextBox.MinValue + cDataFiles.StandardToMetric(1.5, cDataFiles.eDataType.Dimension);
+				MaxCOLTextBox.MaxValue = MaxCOLTextBox.MinValue + cDataFiles.StandardToMetric(1.5, cDataFiles.eDataType.Dimension);
 
-                m_Caliber.MaxCOL = cDataFiles.MetricToStandard(MaxCOLTextBox.Value, cDataFiles.eDataType.Dimension);
+				m_Caliber.MaxCOL = cDataFiles.MetricToStandard(MaxCOLTextBox.Value, cDataFiles.eDataType.Dimension);
 				}
 			else
 				{
@@ -486,10 +486,28 @@ namespace ReloadersWorkShop
 				}
 
 			MaxCaseLengthTextBox.MinValue = CaseTrimLengthTextBox.Value;
-            MaxCaseLengthTextBox.MaxValue = MaxCaseLengthTextBox.MinValue + cDataFiles.StandardToMetric(0.020, cDataFiles.eDataType.Dimension);
+			MaxCaseLengthTextBox.MaxValue = MaxCaseLengthTextBox.MinValue + cDataFiles.StandardToMetric(0.020, cDataFiles.eDataType.Dimension);
 
-            m_Caliber.CaseTrimLength = cDataFiles.MetricToStandard(CaseTrimLengthTextBox.Value, cDataFiles.eDataType.Dimension);
+			m_Caliber.CaseTrimLength = cDataFiles.MetricToStandard(CaseTrimLengthTextBox.Value, cDataFiles.eDataType.Dimension);
 			m_Caliber.MaxCaseLength = cDataFiles.MetricToStandard(MaxCaseLengthTextBox.Value, cDataFiles.eDataType.Dimension);
+
+			m_fChanged = true;
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
+		// OnCrossUseClicked()
+		//============================================================================*
+
+		private void OnCrossUseClicked(object sender, EventArgs e)
+			{
+			if (!m_fInitialized)
+				return;
+
+			CrossUseCheckBox.Checked = ((CrossUseCheckBox.Checked) ? false : true);
+
+			m_Caliber.CrossUse = CrossUseCheckBox.Checked;
 
 			m_fChanged = true;
 
@@ -764,6 +782,31 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// OnRimfireClicked()
+		//============================================================================*
+
+		private void OnRimfireClicked(object sender, EventArgs e)
+			{
+			if (!m_fInitialized)
+				return;
+
+			RimfireCheckBox.Checked = (RimfireCheckBox.Checked ? false : true);
+
+			m_Caliber.Rimfire = RimfireCheckBox.Checked;
+
+			if (m_Caliber.Rimfire)
+				{
+				m_Caliber.SmallPrimer = false;
+				m_Caliber.LargePrimer = false;
+				m_Caliber.MagnumPrimer = false;
+				}
+
+			m_fChanged = true;
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
 		// OnSAAMIPDFChanged()
 		//============================================================================*
 
@@ -772,7 +815,8 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_Caliber.SAAMIPDF = SAAMIPDFTextBox.Value;
+			m_Caliber.SAAMIPDFPage = SAAMIPDFTextBox.Value;
+			m_Caliber.SAAMIPDF = null;
 
 			m_fChanged = true;
 
@@ -822,7 +866,10 @@ namespace ReloadersWorkShop
 			NameTextBox.Value = m_Caliber.Name;
 			HeadStampTextBox.Value = m_Caliber.HeadStamp;
 
-			SAAMIPDFTextBox.Value = m_Caliber.SAAMIPDF;
+			if (m_Caliber.SAAMIPDFPage == 0 && !String.IsNullOrEmpty(m_Caliber.SAAMIPDF))
+				m_Caliber.SAAMIPDFPage = 3;
+
+			SAAMIPDFTextBox.Value = m_Caliber.SAAMIPDFPage;
 
 			PistolRadioButton.Checked = m_Caliber.Pistol;
 			RevolverRadioButton.Checked = !m_Caliber.Pistol;
@@ -830,6 +877,7 @@ namespace ReloadersWorkShop
 			SmallPrimerCheckBox.Checked = m_Caliber.SmallPrimer;
 			LargePrimerCheckBox.Checked = m_Caliber.LargePrimer;
 			MagnumPrimerCheckBox.Checked = m_Caliber.MagnumPrimer;
+			RimfireCheckBox.Checked = m_Caliber.Rimfire;
 
 			MinBulletDiameterTextBox.Value = cDataFiles.StandardToMetric(m_Caliber.MinBulletDiameter, cDataFiles.eDataType.Dimension);
 			MaxBulletDiameterTextBox.Value = cDataFiles.StandardToMetric(m_Caliber.MaxBulletDiameter, cDataFiles.eDataType.Dimension);
@@ -926,6 +974,9 @@ namespace ReloadersWorkShop
 
 		private void SetStaticToolTips()
 			{
+			OKButton.ShowToolTips = m_DataFiles.Preferences.ToolTips;
+			FormCancelButton.ShowToolTips = m_DataFiles.Preferences.ToolTips;
+
 			if (!m_DataFiles.Preferences.ToolTips)
 				return;
 
@@ -934,6 +985,10 @@ namespace ReloadersWorkShop
 
 			NameTextBox.ToolTip = m_DataFiles.Preferences.ToolTips ? cm_strNameToolTip : "";
 			HeadStampTextBox.ToolTip = m_DataFiles.Preferences.ToolTips ? cm_strHeadStampToolTip : "";
+
+			m_CrossUseToolTip.ShowAlways = true;
+			m_CrossUseToolTip.RemoveAll();
+			m_CrossUseToolTip.SetToolTip(CrossUseCheckBox, cm_strCrossUseToolTip);
 
 			m_PistolToolTip.ShowAlways = true;
 			m_PistolToolTip.RemoveAll();
@@ -952,6 +1007,10 @@ namespace ReloadersWorkShop
 			m_MagnumToolTip.RemoveAll();
 			m_MagnumToolTip.SetToolTip(MagnumPrimerCheckBox, cm_strMagnumToolTip);
 
+			m_RimfireToolTip.ShowAlways = true;
+			m_RimfireToolTip.RemoveAll();
+			m_RimfireToolTip.SetToolTip(RimfireCheckBox, cm_strRimfireToolTip);
+
 			MinBulletDiameterTextBox.ToolTip = cm_strMinBulletDiameterToolTip;
 			MaxBulletDiameterTextBox.ToolTip = cm_strMaxBulletDiameterToolTip;
 			MinBulletWeightTextBox.ToolTip = cm_strMinBulletWeightToolTip;
@@ -962,14 +1021,6 @@ namespace ReloadersWorkShop
 			MaxNeckDiameterTextBox.ToolTip = cm_strMaxNeckDiameterToolTip;
 
 			SAAMIPDFTextBox.ToolTip = cm_strSAAMIPDFToolTip;
-
-			m_CaliberOKButtonToolTip.ShowAlways = true;
-			m_CaliberOKButtonToolTip.RemoveAll();
-			m_CaliberOKButtonToolTip.SetToolTip(CaliberOKButton, cm_strCaliberOKButtonToolTip);
-
-			m_CaliberCancelButtonToolTip.ShowAlways = true;
-			m_CaliberCancelButtonToolTip.RemoveAll();
-			m_CaliberCancelButtonToolTip.SetToolTip(CaliberCancelButton, cm_strCaliberCancelButtonToolTip);
 			}
 
 		//============================================================================*
@@ -1065,33 +1116,7 @@ namespace ReloadersWorkShop
 			// Check SAAMI PDF
 			//----------------------------------------------------------------------------*
 
-			if (SAAMIPDFTextBox.Value != null && SAAMIPDFTextBox.Value.Length > 0)
-				{
-				TestSAAMIPDFButton.Enabled = true;
-
-				string strFilePath = m_DataFiles.GetDataPath() + "\\SAAMI";
-				strFilePath = Path.Combine(strFilePath, m_Caliber.SAAMIPDF);
-				strFilePath = Path.ChangeExtension(strFilePath, ".pdf");
-
-				Bitmap TestBitmap = null;
-
-				if (File.Exists(strFilePath))
-					TestBitmap = (Bitmap)Properties.Resources.ResourceManager.GetObject("CheckMark");
-				else
-					{
-					TestBitmap = (Bitmap)Properties.Resources.ResourceManager.GetObject("Reject");
-
-					fEnableOK = false;
-					}
-
-				SAAMIOKImage.Image = TestBitmap;
-				}
-			else
-				{
-				TestSAAMIPDFButton.Enabled = false;
-
-				SAAMIOKImage.Image = null;
-				}
+			TestSAAMIPDFButton.Enabled = SAAMIPDFTextBox.Value != 0;
 
 			//----------------------------------------------------------------------------*
 			// Check Pistol/Revolver
@@ -1141,19 +1166,38 @@ namespace ReloadersWorkShop
 
 			strToolTip = cm_strPrimerSizeToolTip;
 
-			if (!SmallPrimerCheckBox.Checked && !LargePrimerCheckBox.Checked)
+			if (m_Caliber.Rimfire)
+				{
+				SmallPrimerCheckBox.Checked = false;
+				LargePrimerCheckBox.Checked = false;
+				MagnumPrimerCheckBox.Checked = false;
+
+				SmallPrimerCheckBox.Enabled = false;
+				LargePrimerCheckBox.Enabled = false;
+				MagnumPrimerCheckBox.Enabled = false;
+				}
+			else
+				{
+				SmallPrimerCheckBox.Enabled = true;
+				LargePrimerCheckBox.Enabled = true;
+				MagnumPrimerCheckBox.Enabled = true;
+				}
+
+			if (!SmallPrimerCheckBox.Checked && !LargePrimerCheckBox.Checked && !RimfireCheckBox.Checked)
 				{
 				fEnableOK = false;
 
 				SmallPrimerCheckBox.BackColor = Color.LightPink;
 				LargePrimerCheckBox.BackColor = Color.LightPink;
+				RimfireCheckBox.BackColor = Color.LightPink;
 
-				strToolTip += "\n\nYou must select either a small or large primer size.";
+				strToolTip += "\n\nYou must select either a small or large primer size, or Rimfire.";
 				}
 			else
 				{
 				SmallPrimerCheckBox.BackColor = SystemColors.Control;
 				LargePrimerCheckBox.BackColor = SystemColors.Control;
+				RimfireCheckBox.BackColor = SystemColors.Control;
 				}
 
 			if (m_DataFiles.Preferences.ToolTips)
@@ -1176,7 +1220,7 @@ namespace ReloadersWorkShop
 
 			foreach (cBullet Bullet in m_DataFiles.BulletList)
 				{
-				foreach (cBulletCaliber BulletCaliber in Bullet.CaliberList)
+				foreach (cBulletCaliber BulletCaliber in Bullet.BulletCaliberList)
 					{
 					if (BulletCaliber.CompareTo(m_Caliber) == 0)
 						{
@@ -1205,6 +1249,7 @@ namespace ReloadersWorkShop
 
 			if (!MinBulletDiameterTextBox.ValueOK)
 				fEnableOK = false;
+
 			//----------------------------------------------------------------------------*
 			// Check Max Bullet Diameter
 			//----------------------------------------------------------------------------*
@@ -1251,7 +1296,7 @@ namespace ReloadersWorkShop
 			// Set Caliber OK Button
 			//----------------------------------------------------------------------------*
 
-			CaliberOKButton.Enabled = fEnableOK;
+			OKButton.Enabled = fEnableOK;
 			}
 		}
 	}

@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cEvaluationListView.cs
 //
-// Copyright © 2013-2015, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -58,15 +58,16 @@ namespace ReloadersWorkShop
 			new cListViewColumn(1, "CaliberHeader","Caliber", HorizontalAlignment.Left, 120),
 			new cListViewColumn(2, "BulletHeader","Bullet", HorizontalAlignment.Left, 200),
 			new cListViewColumn(3, "PowderHeader", "Powder", HorizontalAlignment.Left, 160),
-			new cListViewColumn(4, "PrimerHeader", "Primer", HorizontalAlignment.Left, 160),
-			new cListViewColumn(5, "CaseHeader", "Case", HorizontalAlignment.Left, 160),
-			new cListViewColumn(6, "ChargeHeader", "Charge", HorizontalAlignment.Center, 80),
-			new cListViewColumn(7, "BestGroupHeader", "Best Group", HorizontalAlignment.Center, 80),
-			new cListViewColumn(8, "MOAHeader", "MOA", HorizontalAlignment.Center, 80),
-			new cListViewColumn(9, "RangeHeader", "Range", HorizontalAlignment.Center, 80),
-			new cListViewColumn(10, "VelocityHeader", "Muzzle Velociy", HorizontalAlignment.Center, 80),
-			new cListViewColumn(11, "DeviationHeader", "Max Deviation", HorizontalAlignment.Center, 100),
-			new cListViewColumn(12, "StdDeviationHeader", "Std Deviation", HorizontalAlignment.Center, 100),
+			new cListViewColumn(4, "ChargeHeader", "Charge", HorizontalAlignment.Center, 80),
+			new cListViewColumn(5, "PrimerHeader", "Primer", HorizontalAlignment.Left, 160),
+			new cListViewColumn(6, "CaseHeader", "Case", HorizontalAlignment.Left, 160),
+			new cListViewColumn(7, "NumRoundsHeader", "Num Rounds", HorizontalAlignment.Center, 80),
+			new cListViewColumn(8, "BestGroupHeader", "Best Group", HorizontalAlignment.Center, 80),
+			new cListViewColumn(9, "MOAHeader", "MOA", HorizontalAlignment.Center, 80),
+			new cListViewColumn(10, "RangeHeader", "Range", HorizontalAlignment.Center, 80),
+			new cListViewColumn(11, "VelocityHeader", "Muzzle Velociy", HorizontalAlignment.Center, 80),
+			new cListViewColumn(12, "DeviationHeader", "Max Deviation", HorizontalAlignment.Center, 100),
+			new cListViewColumn(13, "StdDeviationHeader", "Std Deviation", HorizontalAlignment.Center, 100),
 			};
 
 		//============================================================================*
@@ -300,13 +301,8 @@ namespace ReloadersWorkShop
 			// Create the format strings
 			//----------------------------------------------------------------------------*
 
-			string strChargeFormat = "{0:F";
-			strChargeFormat += String.Format("{0:G0}", cPreferences.PowderWeightDecimals);
-			strChargeFormat += "}";
-
-			string strGroupFormat = "{0:F";
-			strGroupFormat += String.Format("{0:G0}", cPreferences.GroupDecimals);
-			strGroupFormat += "}";
+			string strChargeFormat = m_DataFiles.Preferences.FormatString(cDataFiles.eDataType.PowderWeight);
+			string strGroupFormat = m_DataFiles.Preferences.FormatString(cDataFiles.eDataType.GroupSize);
 
 			//----------------------------------------------------------------------------*
 			// Loop through the charges
@@ -340,9 +336,19 @@ namespace ReloadersWorkShop
 					Item.SubItems.Add(Load.Caliber.ToString());
 					Item.SubItems.Add(Load.Bullet.ToString());
 					Item.SubItems.Add(Load.Powder.ToString());
+					Item.SubItems.Add(String.Format(strChargeFormat, cDataFiles.StandardToMetric(Charge.PowderWeight, cDataFiles.eDataType.PowderWeight)));
 					Item.SubItems.Add(Load.Primer.ToShortString());
 					Item.SubItems.Add(Load.Case.ToShortString());
-					Item.SubItems.Add(String.Format(strChargeFormat, cDataFiles.StandardToMetric(Charge.PowderWeight, cDataFiles.eDataType.PowderWeight)));
+
+					cBatch Batch = null;
+
+					if (ChargeTest.BatchID != 0)
+						Batch = m_DataFiles.GetBatchByID(ChargeTest.BatchID);
+
+					if (Batch == null || Batch.BatchTest == null)
+						Item.SubItems.Add("-");
+					else
+						Item.SubItems.Add(String.Format("{0:G0}", Batch.BatchTest.NumRounds));
 
 					if (ChargeTest.BestGroup == 0.0)
 						Item.SubItems.Add("-");
@@ -365,8 +371,6 @@ namespace ReloadersWorkShop
 					else
 						Item.SubItems.Add(String.Format("{0:N0}", cDataFiles.StandardToMetric(ChargeTest.MuzzleVelocity, cDataFiles.eDataType.Velocity)));
 
-					cBatch Batch = m_DataFiles.GetBatchByID(ChargeTest.BatchID);
-
 					if (Batch == null || Batch.BatchTest == null || Batch.BatchTest.TestShotList == null)
 						{
 						Item.SubItems.Add("-");
@@ -374,7 +378,7 @@ namespace ReloadersWorkShop
 						}
 					else
 						{
-						cTestStatistics Statistics = Batch.BatchTest.TestShotList.GetStatistics(Batch.NumRounds);
+						cTestStatistics Statistics = new cTestStatistics(Batch.BatchTest.TestShotList);
 
 						if (Statistics.MaxDeviation == 0)
 							Item.SubItems.Add("-");

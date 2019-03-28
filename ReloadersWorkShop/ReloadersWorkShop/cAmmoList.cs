@@ -1,7 +1,7 @@
 ﻿//============================================================================*
-// cFactoryAmmoList.cs
+// cAmmoList.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -11,7 +11,6 @@
 
 using System;
 using System.IO;
-using System.Collections.Generic;
 using System.Xml;
 
 //============================================================================*
@@ -25,8 +24,46 @@ namespace ReloadersWorkShop
 	//============================================================================*
 
 	[Serializable]
-	public class cAmmoList : List<cAmmo>
+	public class cAmmoList : cSupplyList
 		{
+		//============================================================================*
+		// Private Data Members
+		//============================================================================*
+
+		private int m_nImportCount = 0;
+		private int m_nNewCount = 0;
+		private int m_nUpdateCount = 0;
+
+		//============================================================================*
+		// AddSupply()
+		//============================================================================*
+
+		public override bool AddSupply(cSupply Supply, bool fCountOnly = false)
+			{
+			if (Supply.SupplyType != cSupply.eSupplyTypes.Ammo)
+				return (false);
+
+			m_nImportCount++;
+
+			cAmmo Ammo = (cAmmo) Supply;
+
+			foreach (cAmmo CheckAmmo in this)
+				{
+				if (CheckAmmo.CompareTo(Ammo) == 0)
+					{
+					m_nUpdateCount += CheckAmmo.Append(Ammo, fCountOnly);
+
+					return (false);
+					}
+				}
+
+			base.AddSupply(Ammo, fCountOnly);
+
+			m_nNewCount++;
+
+			return (true);
+			}
+
 		//============================================================================*
 		// Export()
 		//============================================================================*
@@ -38,7 +75,7 @@ namespace ReloadersWorkShop
 
 			string strLine = "";
 
-			Writer.WriteLine(cAmmo.CSVHeader);
+			Writer.WriteLine(ExportName);
 			Writer.WriteLine();
 
 			Writer.WriteLine(cAmmo.CSVLineHeader);
@@ -58,12 +95,11 @@ namespace ReloadersWorkShop
 		// Export()
 		//============================================================================*
 
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+		public void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement)
 			{
 			if (Count > 0)
 				{
-				XmlElement XMLElement = XMLDocument.CreateElement(string.Empty, "Ammunition", string.Empty);
-				XMLParentElement.AppendChild(XMLElement);
+				XmlElement XMLElement = XMLDocument.CreateElement(ExportName, XMLParentElement);
 
 				foreach (cAmmo Ammo in this)
 					Ammo.Export(XMLDocument, XMLElement);
@@ -71,13 +107,114 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// RecalulateInventory()
+		// ExportName Property
 		//============================================================================*
 
-		public void RecalulateInventory(cDataFiles DataFiles)
+		public static string ExportName
 			{
-			foreach (cSupply Supply in this)
-				Supply.RecalculateInventory(DataFiles);
+			get
+				{
+				return ("AmmoList");
+				}
+			}
+
+		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles, bool fCountOnly = false)
+			{
+			m_nImportCount = 0;
+			m_nNewCount = 0;
+			m_nUpdateCount = 0;
+
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "Ammo":
+						cAmmo Ammo = new cAmmo();
+
+						if (Ammo.Import(XMLDocument, XMLNode, DataFiles))
+							AddSupply(Ammo, fCountOnly);
+
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+			}
+
+		//============================================================================*
+		// ImportCount Property
+		//============================================================================*
+
+		public int ImportCount
+			{
+			get
+				{
+				return (m_nImportCount);
+				}
+			}
+
+		//============================================================================*
+		// NewAmmoTestCount Property
+		//============================================================================*
+
+		public int NewAmmoTestCount
+			{
+			get
+				{
+				int nNewAmmoTestCount = 0;
+
+				foreach (cAmmo Ammo in this)
+					nNewAmmoTestCount += Ammo.TestList.NewCount;
+
+				return (nNewAmmoTestCount);
+				}
+			}
+
+		//============================================================================*
+		// NewCount Property
+		//============================================================================*
+
+		public int NewCount
+			{
+			get
+				{
+				return (m_nNewCount);
+				}
+			}
+
+		//============================================================================*
+		// UpdateCount Property
+		//============================================================================*
+
+		public int UpdateCount
+			{
+			get
+				{
+				return (m_nUpdateCount);
+				}
+			}
+
+		//============================================================================*
+		// UpdatedAmmoTestCount Property
+		//============================================================================*
+
+		public int UpdatedAmmoTestCount
+			{
+			get
+				{
+				int nUpdatedAmmoTestCount = 0;
+
+				foreach (cAmmo Ammo in this)
+					nUpdatedAmmoTestCount += Ammo.TestList.UpdateCount;
+
+				return (nUpdatedAmmoTestCount);
+				}
 			}
 		}
 	}

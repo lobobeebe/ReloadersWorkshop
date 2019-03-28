@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cChargeTest.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -23,13 +23,12 @@ namespace ReloadersWorkShop
 	//============================================================================*
 
 	[Serializable]
-	public class cChargeTest
+	public partial class cChargeTest
 		{
 		//----------------------------------------------------------------------------*
 		// Private Data Members
 		//----------------------------------------------------------------------------*
 
-		private cCharge m_Charge = null;
 		private DateTime m_TestDate = DateTime.Today;
 		private string m_strSource = "";
 		private cFirearm m_Firearm = null;
@@ -38,7 +37,7 @@ namespace ReloadersWorkShop
 		private int m_nMuzzleVelocity = 0;
 		private int m_nPressure = 0;
 		private double m_dBestGroup = 0.0;
-		private int m_nBestGroupRange = 0;
+		private double m_dBestGroupRange = 0;
 		private string m_strNotes = "";
 		private bool m_fBatchTest = false;
 		private int m_nBatchID = 0;
@@ -134,31 +133,15 @@ namespace ReloadersWorkShop
 		// BestGroupRange Property
 		//============================================================================*
 
-		public int BestGroupRange
+		public double BestGroupRange
 			{
 			get
 				{
-				return (m_nBestGroupRange);
+				return (m_dBestGroupRange);
 				}
 			set
 				{
-				m_nBestGroupRange = value;
-				}
-			}
-
-		//============================================================================*
-		// Charge Property
-		//============================================================================*
-
-		public cCharge Charge
-			{
-			get
-				{
-				return (m_Charge);
-				}
-			set
-				{
-				m_Charge = value;
+				m_dBestGroupRange = value;
 				}
 			}
 
@@ -277,21 +260,15 @@ namespace ReloadersWorkShop
 			if (BatchTest != null)
 				return;
 
-			m_Charge = null;
-
 			foreach (cCharge Charge in BatchTest.Batch.Load.ChargeList)
 				{
 				if (Charge.PowderWeight == BatchTest.Batch.PowderWeight)
-					{
-					m_Charge = Charge;
-
 					break;
-					}
 				}
 
 			m_dBarrelLength = BatchTest.Firearm.BarrelLength;
 			m_dBestGroup = BatchTest.BestGroup;
-			m_nBestGroupRange = BatchTest.BestGroupRange;
+			m_dBestGroupRange = BatchTest.BestGroupRange;
 			m_Firearm = BatchTest.Firearm;
 			m_nMuzzleVelocity = BatchTest.MuzzleVelocity;
 			m_strNotes = BatchTest.Notes;
@@ -316,8 +293,6 @@ namespace ReloadersWorkShop
 
 		public void Copy(cChargeTest ChargeTest)
 			{
-			m_Charge = ChargeTest.m_Charge;
-
 			m_TestDate = ChargeTest.m_TestDate;
 			m_strSource = ChargeTest.m_strSource;
 
@@ -329,122 +304,13 @@ namespace ReloadersWorkShop
 			m_nPressure = ChargeTest.m_nPressure;
 
 			m_dBestGroup = ChargeTest.m_dBestGroup;
-			m_nBestGroupRange = ChargeTest.m_nBestGroupRange;
+			m_dBestGroupRange = ChargeTest.m_dBestGroupRange;
 			m_strNotes = ChargeTest.m_strNotes;
 
 			m_fBatchTest = ChargeTest.m_fBatchTest;
 			m_nBatchID = ChargeTest.m_nBatchID;
 
 			m_dPowderWeight = ChargeTest.m_dPowderWeight;
-			}
-
-		//============================================================================*
-		// Export() - XML Document
-		//============================================================================*
-
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
-			{
-			XmlElement XMLThisElement = XMLDocument.CreateElement("ChargeTest");
-			XMLParentElement.AppendChild(XMLThisElement);
-
-			// Test Date
-
-			XmlElement XMLElement = XMLDocument.CreateElement("TestDate");
-			XmlText XMLTextElement = XMLDocument.CreateTextNode(m_TestDate.ToShortDateString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Source
-
-			XMLElement = XMLDocument.CreateElement("Source");
-			XMLTextElement = XMLDocument.CreateTextNode(m_strSource);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Firearm
-
-			if (m_Firearm != null)
-				{
-				XMLElement = XMLDocument.CreateElement("Firearm");
-				XMLTextElement = XMLDocument.CreateTextNode(m_Firearm.ToString());
-				XMLElement.AppendChild(XMLTextElement);
-
-				XMLThisElement.AppendChild(XMLElement);
-				}
-
-			// Barrel Length
-
-			XMLElement = XMLDocument.CreateElement("BarrelLength");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dBarrelLength));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Twist
-
-			XMLElement = XMLDocument.CreateElement("Twist");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dTwist));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Muzzle Velocity
-
-			XMLElement = XMLDocument.CreateElement("MuzzleVelocity");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nMuzzleVelocity));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Pressure
-
-			XMLElement = XMLDocument.CreateElement("Pressure");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nPressure));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Best Group
-
-			XMLElement = XMLDocument.CreateElement("BestGroup");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dBestGroup));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Best Group Range
-
-			XMLElement = XMLDocument.CreateElement("BestGroupRange");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nBestGroupRange));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Notes
-
-			XMLElement = XMLDocument.CreateElement("Notes");
-			XMLTextElement = XMLDocument.CreateTextNode(m_strNotes);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Batch Test
-
-			XMLElement = XMLDocument.CreateElement("BatchTest");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fBatchTest ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Batch ID
-
-			XMLElement = XMLDocument.CreateElement("BatchID");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nBatchID));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
 			}
 
 		//============================================================================*
@@ -532,6 +398,32 @@ namespace ReloadersWorkShop
 				{
 				m_nPressure = value;
 				}
+			}
+
+		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public bool ResolveIdentities(cDataFiles DataFiles)
+			{
+			bool fChanged = false;
+
+			if (m_Firearm.Identity)
+				{
+				foreach (cFirearm Firearm in DataFiles.FirearmList)
+					{
+					if (!Firearm.Identity && Firearm.CompareTo(m_Firearm) == 0)
+						{
+						m_Firearm = Firearm;
+
+						fChanged = true;
+
+						break;
+						}
+					}
+				}
+
+			return (fChanged);
 			}
 
 		//============================================================================*
@@ -623,6 +515,15 @@ namespace ReloadersWorkShop
 				if (m_Firearm == null)
 					m_dTwist = value;
 				}
+			}
+
+		//============================================================================*
+		// Validate()
+		//============================================================================*
+
+		public bool Validate()
+			{
+			return (true);
 			}
 		}
 	}

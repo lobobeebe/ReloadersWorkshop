@@ -28,22 +28,45 @@ namespace ReloadersWorkShop
 	public class cBatchList : List<cBatch>
 		{
 		//============================================================================*
+		// AddBatch()
+		//============================================================================*
+
+		public bool AddBatch(cBatch Batch)
+			{
+			foreach (cBatch CheckBatch in this)
+				{
+				if (CheckBatch.CompareTo(Batch) == 0)
+					return (false);
+				}
+
+			Add(Batch);
+
+			return (true);
+			}
+
+		//============================================================================*
 		// Export()
 		//============================================================================*
 
-		public void Export(StreamWriter Writer, bool fBatchTests)
+		public void Export(StreamWriter Writer)
 			{
 			if (Count <= 0)
 				return;
 
-			Writer.WriteLine("Batches");
+			string strLine = "";
+
+			Writer.WriteLine(ExportName);
 			Writer.WriteLine();
 
 			Writer.WriteLine(cBatch.CSVLineHeader);
 			Writer.WriteLine();
 
 			foreach (cBatch Batch in this)
-				Batch.Export(Writer, fBatchTests);
+				{
+				strLine = Batch.CSVLine;
+
+				Writer.WriteLine(strLine);
+				}
 
 			Writer.WriteLine();
 			}
@@ -52,16 +75,68 @@ namespace ReloadersWorkShop
 		// Export()
 		//============================================================================*
 
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement, bool fIncludeTests = true)
+		public void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement, bool fIncludeTests = true)
 			{
 			if (Count > 0)
 				{
-				XmlElement XMLElement = XMLDocument.CreateElement("Batches");
+				XmlElement XMLElement = XMLDocument.CreateElement(ExportName);
 				XMLParentElement.AppendChild(XMLElement);
 
 				foreach (cBatch Batch in this)
-					Batch.Export(XMLDocument, XMLElement, fIncludeTests);
+					Batch.Export(XMLDocument, XMLElement);
 				}
+			}
+
+		//============================================================================*
+		// ExportName()
+		//============================================================================*
+
+		public string ExportName
+			{
+			get
+				{
+				return ("BatchList");
+				}
+			}
+
+
+		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode,  cDataFiles  DataFiles)
+			{
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "Batch":
+						cBatch Batch = new cBatch();
+
+						if (Batch.Import(XMLDocument, XMLNode, DataFiles))
+							AddBatch(Batch);
+
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+			}
+
+		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public bool ResolveIdentities(cDataFiles Datafiles)
+			{
+			bool fChanged = false;
+
+			foreach (cBatch Batch in this)
+				fChanged = Batch.ResolveIdentities(Datafiles) ? true : fChanged;
+
+			return (fChanged);
 			}
 		}
 	}

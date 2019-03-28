@@ -33,10 +33,11 @@
 			System.Windows.Forms.Label label53;
 			System.Windows.Forms.Label label50;
 			System.Windows.Forms.Label label49;
-			this.TaxRatePercentLabel = new System.Windows.Forms.Label();
+			System.Windows.Forms.Label TaxRatePercentLabel;
 			this.TaxRateLabel = new System.Windows.Forms.Label();
 			this.CostCalculationsLabel = new System.Windows.Forms.Label();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.AutoCheckNonZeroCheckBox = new System.Windows.Forms.CheckBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.MetricPressuresRadioButton = new System.Windows.Forms.RadioButton();
@@ -103,6 +104,9 @@
 			this.DimensionFourDecimalsRadioButton = new System.Windows.Forms.RadioButton();
 			this.DimensionThreeDecimalsRadioButton = new System.Windows.Forms.RadioButton();
 			this.InventoryGroupBox = new System.Windows.Forms.GroupBox();
+			this.ReloadKeepDaysLabel1 = new System.Windows.Forms.Label();
+			this.ReloadKeepDaysTextBox = new CommonLib.Controls.cIntegerValueTextBox();
+			this.ReloadKeepDaysLabel = new System.Windows.Forms.Label();
 			this.IncludeTaxShippingCheckBox = new System.Windows.Forms.CheckBox();
 			this.TrackReloadsCheckBox = new System.Windows.Forms.CheckBox();
 			this.TrackInventoryCheckBox = new System.Windows.Forms.CheckBox();
@@ -120,12 +124,12 @@
 			this.RestoreBackupButton = new System.Windows.Forms.Button();
 			this.BackupButton = new System.Windows.Forms.Button();
 			this.CloseButton = new System.Windows.Forms.Button();
-			this.AutoCheckNonZeroCheckBox = new System.Windows.Forms.CheckBox();
 			label55 = new System.Windows.Forms.Label();
 			label52 = new System.Windows.Forms.Label();
 			label53 = new System.Windows.Forms.Label();
 			label50 = new System.Windows.Forms.Label();
 			label49 = new System.Windows.Forms.Label();
+			TaxRatePercentLabel = new System.Windows.Forms.Label();
 			this.groupBox3.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -195,14 +199,14 @@
 			// 
 			// TaxRatePercentLabel
 			// 
-			this.TaxRatePercentLabel.AutoSize = true;
-			this.TaxRatePercentLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.TaxRatePercentLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
-			this.TaxRatePercentLabel.Location = new System.Drawing.Point(201, 128);
-			this.TaxRatePercentLabel.Name = "TaxRatePercentLabel";
-			this.TaxRatePercentLabel.Size = new System.Drawing.Size(15, 13);
-			this.TaxRatePercentLabel.TabIndex = 14;
-			this.TaxRatePercentLabel.Text = "%";
+			TaxRatePercentLabel.AutoSize = true;
+			TaxRatePercentLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			TaxRatePercentLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
+			TaxRatePercentLabel.Location = new System.Drawing.Point(201, 128);
+			TaxRatePercentLabel.Name = "TaxRatePercentLabel";
+			TaxRatePercentLabel.Size = new System.Drawing.Size(15, 13);
+			TaxRatePercentLabel.TabIndex = 14;
+			TaxRatePercentLabel.Text = "%";
 			// 
 			// TaxRateLabel
 			// 
@@ -244,6 +248,19 @@
 			this.groupBox3.TabIndex = 0;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Data Entry";
+			// 
+			// AutoCheckNonZeroCheckBox
+			// 
+			this.AutoCheckNonZeroCheckBox.AutoCheck = false;
+			this.AutoCheckNonZeroCheckBox.AutoSize = true;
+			this.AutoCheckNonZeroCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.AutoCheckNonZeroCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.AutoCheckNonZeroCheckBox.Location = new System.Drawing.Point(242, 22);
+			this.AutoCheckNonZeroCheckBox.Name = "AutoCheckNonZeroCheckBox";
+			this.AutoCheckNonZeroCheckBox.Size = new System.Drawing.Size(245, 17);
+			this.AutoCheckNonZeroCheckBox.TabIndex = 28;
+			this.AutoCheckNonZeroCheckBox.Text = "Auto Check Supplies with Non-Zero Quantities";
+			this.AutoCheckNonZeroCheckBox.UseVisualStyleBackColor = true;
 			// 
 			// label1
 			// 
@@ -1164,13 +1181,16 @@
 			// InventoryGroupBox
 			// 
 			this.InventoryGroupBox.BackColor = System.Drawing.SystemColors.Control;
+			this.InventoryGroupBox.Controls.Add(this.ReloadKeepDaysLabel1);
+			this.InventoryGroupBox.Controls.Add(this.ReloadKeepDaysTextBox);
+			this.InventoryGroupBox.Controls.Add(this.ReloadKeepDaysLabel);
 			this.InventoryGroupBox.Controls.Add(this.IncludeTaxShippingCheckBox);
 			this.InventoryGroupBox.Controls.Add(this.TrackReloadsCheckBox);
 			this.InventoryGroupBox.Controls.Add(this.TrackInventoryCheckBox);
 			this.InventoryGroupBox.Controls.Add(this.TaxRateTextBox);
 			this.InventoryGroupBox.Controls.Add(this.CurrencyTextBox);
 			this.InventoryGroupBox.Controls.Add(label55);
-			this.InventoryGroupBox.Controls.Add(this.TaxRatePercentLabel);
+			this.InventoryGroupBox.Controls.Add(TaxRatePercentLabel);
 			this.InventoryGroupBox.Controls.Add(this.TaxRateLabel);
 			this.InventoryGroupBox.Controls.Add(this.AverageCostsRadioButton);
 			this.InventoryGroupBox.Controls.Add(this.UseLastPurchaseRadioButton);
@@ -1179,10 +1199,50 @@
 			this.InventoryGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
 			this.InventoryGroupBox.Location = new System.Drawing.Point(599, 12);
 			this.InventoryGroupBox.Name = "InventoryGroupBox";
-			this.InventoryGroupBox.Size = new System.Drawing.Size(331, 179);
+			this.InventoryGroupBox.Size = new System.Drawing.Size(354, 179);
 			this.InventoryGroupBox.TabIndex = 1;
 			this.InventoryGroupBox.TabStop = false;
 			this.InventoryGroupBox.Text = "Inventory";
+			// 
+			// ReloadKeepDaysLabel1
+			// 
+			this.ReloadKeepDaysLabel1.AutoSize = true;
+			this.ReloadKeepDaysLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ReloadKeepDaysLabel1.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.ReloadKeepDaysLabel1.Location = new System.Drawing.Point(308, 44);
+			this.ReloadKeepDaysLabel1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.ReloadKeepDaysLabel1.Name = "ReloadKeepDaysLabel1";
+			this.ReloadKeepDaysLabel1.Size = new System.Drawing.Size(29, 13);
+			this.ReloadKeepDaysLabel1.TabIndex = 20;
+			this.ReloadKeepDaysLabel1.Text = "days";
+			// 
+			// ReloadKeepDaysTextBox
+			// 
+			this.ReloadKeepDaysTextBox.BackColor = System.Drawing.Color.LightPink;
+			this.ReloadKeepDaysTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ReloadKeepDaysTextBox.Location = new System.Drawing.Point(271, 41);
+			this.ReloadKeepDaysTextBox.MaxLength = 3;
+			this.ReloadKeepDaysTextBox.MaxValue = 999;
+			this.ReloadKeepDaysTextBox.MinValue = 1;
+			this.ReloadKeepDaysTextBox.Name = "ReloadKeepDaysTextBox";
+			this.ReloadKeepDaysTextBox.Required = false;
+			this.ReloadKeepDaysTextBox.Size = new System.Drawing.Size(32, 20);
+			this.ReloadKeepDaysTextBox.TabIndex = 18;
+			this.ReloadKeepDaysTextBox.Text = "0";
+			this.ReloadKeepDaysTextBox.ToolTip = "";
+			this.ReloadKeepDaysTextBox.Value = 0;
+			// 
+			// ReloadKeepDaysLabel
+			// 
+			this.ReloadKeepDaysLabel.AutoSize = true;
+			this.ReloadKeepDaysLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ReloadKeepDaysLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.ReloadKeepDaysLabel.Location = new System.Drawing.Point(175, 44);
+			this.ReloadKeepDaysLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.ReloadKeepDaysLabel.Name = "ReloadKeepDaysLabel";
+			this.ReloadKeepDaysLabel.Size = new System.Drawing.Size(91, 13);
+			this.ReloadKeepDaysLabel.TabIndex = 19;
+			this.ReloadKeepDaysLabel.Text = "Keep Zero Qty for";
 			// 
 			// IncludeTaxShippingCheckBox
 			// 
@@ -1299,7 +1359,7 @@
 			this.groupBox1.ForeColor = System.Drawing.SystemColors.HotTrack;
 			this.groupBox1.Location = new System.Drawing.Point(599, 197);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(331, 194);
+			this.groupBox1.Size = new System.Drawing.Size(354, 194);
 			this.groupBox1.TabIndex = 2;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Auto Save && Backup";
@@ -1348,7 +1408,7 @@
 			// 
 			this.BackupFolderButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BackupFolderButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.BackupFolderButton.Location = new System.Drawing.Point(301, 123);
+			this.BackupFolderButton.Location = new System.Drawing.Point(322, 123);
 			this.BackupFolderButton.Margin = new System.Windows.Forms.Padding(2);
 			this.BackupFolderButton.Name = "BackupFolderButton";
 			this.BackupFolderButton.Size = new System.Drawing.Size(27, 19);
@@ -1364,7 +1424,7 @@
 			this.BackupFolderTextBox.MaxLength = 240;
 			this.BackupFolderTextBox.Name = "BackupFolderTextBox";
 			this.BackupFolderTextBox.ReadOnly = true;
-			this.BackupFolderTextBox.Size = new System.Drawing.Size(287, 19);
+			this.BackupFolderTextBox.Size = new System.Drawing.Size(308, 19);
 			this.BackupFolderTextBox.TabIndex = 3;
 			// 
 			// label48
@@ -1413,25 +1473,12 @@
 			this.CloseButton.Text = "Close";
 			this.CloseButton.UseVisualStyleBackColor = true;
 			// 
-			// AutoCheckNonZeroCheckBox
-			// 
-			this.AutoCheckNonZeroCheckBox.AutoCheck = false;
-			this.AutoCheckNonZeroCheckBox.AutoSize = true;
-			this.AutoCheckNonZeroCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.AutoCheckNonZeroCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.AutoCheckNonZeroCheckBox.Location = new System.Drawing.Point(242, 22);
-			this.AutoCheckNonZeroCheckBox.Name = "AutoCheckNonZeroCheckBox";
-			this.AutoCheckNonZeroCheckBox.Size = new System.Drawing.Size(245, 17);
-			this.AutoCheckNonZeroCheckBox.TabIndex = 28;
-			this.AutoCheckNonZeroCheckBox.Text = "Auto Check Supplies with Non-Zero Quantities";
-			this.AutoCheckNonZeroCheckBox.UseVisualStyleBackColor = true;
-			// 
 			// cPreferencesForm
 			// 
 			this.AcceptButton = this.CloseButton;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(973, 505);
+			this.ClientSize = new System.Drawing.Size(961, 493);
 			this.ControlBox = false;
 			this.Controls.Add(this.CloseButton);
 			this.Controls.Add(this.groupBox1);
@@ -1523,7 +1570,6 @@
 		private System.Windows.Forms.RadioButton FirearmZeroDecimalsRadioButton;
 		private System.Windows.Forms.RadioButton FirearmOneDecimalRadioButton;
 		private System.Windows.Forms.Label CostCalculationsLabel;
-		private System.Windows.Forms.Label TaxRatePercentLabel;
 		private System.Windows.Forms.Label TaxRateLabel;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.RadioButton CanWeightThreeDecimalsRadioButton;
@@ -1549,5 +1595,8 @@
 		private System.Windows.Forms.RadioButton ShotWeightOneDecimalRadioButton;
 		private System.Windows.Forms.RadioButton ShotWeightThreeDecimalsRadioButton;
 		private System.Windows.Forms.CheckBox AutoCheckNonZeroCheckBox;
+		private CommonLib.Controls.cIntegerValueTextBox ReloadKeepDaysTextBox;
+		private System.Windows.Forms.Label ReloadKeepDaysLabel1;
+		private System.Windows.Forms.Label ReloadKeepDaysLabel;
 		}
 	}

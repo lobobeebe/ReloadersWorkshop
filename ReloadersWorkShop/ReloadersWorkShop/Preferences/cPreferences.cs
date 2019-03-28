@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cPreferences.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -12,6 +12,7 @@
 using System;
 using System.Drawing;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 
 using ReloadersWorkShop.Ballistics;
@@ -27,7 +28,7 @@ namespace ReloadersWorkShop.Preferences
 	//============================================================================*
 
 	[Serializable]
-	public class cPreferences
+	public partial class cPreferences
 		{
 		//============================================================================*
 		// Public Enumerations
@@ -55,47 +56,13 @@ namespace ReloadersWorkShop.Preferences
 			TransactionsListView,
 			AmmoListView,
 			EvaluationListView,
-			AmmoTestListView
+			AmmoTestListView,
+			FirearmAccessoriesListView,
+			ToolsListView
 			}
 
 		//============================================================================*
-		// Private Static Data Members
-		//============================================================================*
-
-		// Measurements Settings
-
-		private static bool sm_fMetricBulletWeights = false;
-		private static bool sm_fMetricCanWeights = false;
-		private static bool sm_fMetricDimensions = false;
-		private static bool sm_fMetricFirearms = false;
-		private static bool sm_fMetricGroups = false;
-		private static bool sm_fMetricPowderWeights = false;
-		private static bool sm_fMetricRanges = false;
-		private static bool sm_fMetricShotWeights = false;
-		private static bool sm_fMetricVelocities = false;
-
-		// Inventory system
-
-		private static bool sm_fTrackInventory = false;
-
-		// Atmospheric Settings
-
-		private static bool sm_fMetricAltitudes = false;
-		private static bool sm_fMetricPressures = false;
-		private static bool sm_fMetricTemperatures = false;
-
-		// Decimals
-
-		private static int sm_nBulletWeightDecimals = 1;
-		private static int sm_nCanWeightDecimals = 0;
-		private static int sm_nDimensionDecimals = 3;
-		private static int sm_nFirearmDecimals = 2;
-		private static int sm_nGroupDecimals = 2;
-		private static int sm_nPowderWeightDecimals = 1;
-		private static int sm_nShotWeightDecimals = 1;
-
-		//============================================================================*
-		// Private Placeholder Members for Statics
+		// Private Data Members - Formatting
 		//============================================================================*
 
 		// Measurements Settings
@@ -134,6 +101,8 @@ namespace ReloadersWorkShop.Preferences
 		// Private Data Members
 		//============================================================================*
 
+		private static cPreferences sm_StaticPreferences;
+
 		private bool m_fDev = false;
 
 		// Last Tab Selected on Main Tab Control
@@ -151,9 +120,17 @@ namespace ReloadersWorkShop.Preferences
 
 		private bool m_fAmmoPrintAll = true;
 		private bool m_fAmmoPrintChecked = false;
-		private bool m_fAmmoPrintNonZero = false;
-		private bool m_fAmmoPrintBelowStock = false;
-		private bool m_fAmmoPrintFactoryOnly = false;
+		private bool m_fAmmoNonZeroFilter = false;
+		private bool m_fAmmoMinStockFilter = false;
+		private bool m_fAmmoFactoryFilter = false;
+		private bool m_fAmmoFactoryReloadFilter = false;
+		private bool m_fAmmoMyReloadFilter = false;
+
+		private bool m_fAmmoShowCostPerBox = true;
+
+		private int m_nReloadKeepDays = 30;
+
+		private cFirearm.eFireArmType m_eLastAmmoFirearmType = cFirearm.eFireArmType.Handgun;
 
 		// Ammo List Settings
 
@@ -374,6 +351,24 @@ namespace ReloadersWorkShop.Preferences
 		private Point m_FirearmListPreviewLocation = new Point(100, 100);
 		private Size m_FirearmListPreviewSize = new Size(425, 550);
 
+		// Firearm Accessory List Settings
+
+		private bool m_fFirearmAccessoryShowAll = true;
+		private bool m_fFirearmAccessoryShowGroups = true;
+
+		private bool m_fFirearmAccessoryScopeFilter = true;
+		private bool m_fFirearmAccessoryLaserFilter = true;
+		private bool m_fFirearmAccessoryRedDotFilter = true;
+		private bool m_fFirearmAccessoryMagnifierFilter = true;
+		private bool m_fFirearmAccessoryLightFilter = true;
+		private bool m_fFirearmAccessoryTriggerFilter = true;
+		private bool m_fFirearmAccessoryFurnitureFilter = true;
+		private bool m_fFirearmAccessoryBipodFilter = true;
+		private bool m_fFirearmAccessoryPartsFilter = true;
+		private bool m_fFirearmAccessoryOtherFilter = true;
+
+		private cGear m_LastFirearmAccessorySelected = null;
+
 		// Hide Unchecked Button States
 
 		private bool m_fHideUncheckedCalibers = false;
@@ -486,6 +481,26 @@ namespace ReloadersWorkShop.Preferences
 
 		private string m_strTargetFolder = "";
 
+		// Tools List Settings
+
+		private cTool m_LastTool = null;
+		private cTool m_LastToolSelected = null;
+
+		private int m_nToolsSortColumn = 0;
+		private SortOrder m_ToolsSortOrder = SortOrder.Ascending;
+
+		private bool m_fToolsPressesFilter = true;
+		private bool m_fToolsPressAccessoriesFilter = true;
+		private bool m_fToolsDiesFilter = true;
+		private bool m_fToolsDieAccessoriesFilter = true;
+		private bool m_fToolsPowderToolsFilter = true;
+		private bool m_fToolsCasePrepFilter = true;
+		private bool m_fToolsMeasurementToolsFilter = true;
+		private bool m_fToolsCastingFilter = true;
+		private bool m_fToolsGunsmithingFilter = true;
+		private bool m_fToolsBooksFilter = true;
+		private bool m_fToolsOtherFilter = true;
+
 		// Transaction Form Settings
 
 		private cTransaction m_LastTransaction = null;
@@ -509,8 +524,8 @@ namespace ReloadersWorkShop.Preferences
 
 			ShareFilePath = BackupFolder;
 
-			BackupFolder = Path.Combine(BackupFolder, @"Reloader's WorkShop\Backup");
-			ShareFilePath = Path.Combine(ShareFilePath, @"Reloader's WorkShop\Share");
+			BackupFolder = Path.Combine(BackupFolder, String.Format(@"{0}\Backup", Application.ProductName));
+			ShareFilePath = Path.Combine(ShareFilePath, String.Format(@"{0}\Share", Application.ProductName));
 			}
 
 		//============================================================================*
@@ -578,18 +593,18 @@ namespace ReloadersWorkShop.Preferences
 			}
 
 		//============================================================================*
-		// AmmoPrintBelowStock Property
+		// AmmoMinStockFilter Property
 		//============================================================================*
 
-		public bool AmmoPrintBelowStock
+		public bool AmmoMinStockFilter
 			{
 			get
 				{
-				return (m_fAmmoPrintBelowStock);
+				return (m_fAmmoMinStockFilter);
 				}
 			set
 				{
-				m_fAmmoPrintBelowStock = value;
+				m_fAmmoMinStockFilter = value;
 				}
 			}
 
@@ -610,18 +625,50 @@ namespace ReloadersWorkShop.Preferences
 			}
 
 		//============================================================================*
-		// AmmoPrintFactoryOnly Property
+		// AmmoFactoryFilter Property
 		//============================================================================*
 
-		public bool AmmoPrintFactoryOnly
+		public bool AmmoFactoryFilter
 			{
 			get
 				{
-				return (m_fAmmoPrintFactoryOnly);
+				return (m_fAmmoFactoryFilter);
 				}
 			set
 				{
-				m_fAmmoPrintFactoryOnly = value;
+				m_fAmmoFactoryFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// AmmoFactoryReloadFilter Property
+		//============================================================================*
+
+		public bool AmmoFactoryReloadFilter
+			{
+			get
+				{
+				return (m_fAmmoFactoryReloadFilter);
+				}
+			set
+				{
+				m_fAmmoFactoryReloadFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// AmmoMyReloadFilter Property
+		//============================================================================*
+
+		public bool AmmoMyReloadFilter
+			{
+			get
+				{
+				return (m_fAmmoMyReloadFilter);
+				}
+			set
+				{
+				m_fAmmoMyReloadFilter = value;
 				}
 			}
 
@@ -629,15 +676,31 @@ namespace ReloadersWorkShop.Preferences
 		// AmmoPrintNonZero Property
 		//============================================================================*
 
-		public bool AmmoPrintNonZero
+		public bool AmmoNonZeroFilter
 			{
 			get
 				{
-				return (m_fAmmoPrintNonZero);
+				return (m_fAmmoNonZeroFilter);
 				}
 			set
 				{
-				m_fAmmoPrintNonZero = value;
+				m_fAmmoNonZeroFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// AmmoShowCostPerBox Property
+		//============================================================================*
+
+		public bool AmmoShowCostPerBox
+			{
+			get
+				{
+				return (m_fAmmoShowCostPerBox);
+				}
+			set
+				{
+				m_fAmmoShowCostPerBox = value;
 				}
 			}
 
@@ -1269,15 +1332,15 @@ namespace ReloadersWorkShop.Preferences
 		// BulletWeightDecimals Property
 		//============================================================================*
 
-		public static int BulletWeightDecimals
+		public int BulletWeightDecimals
 			{
 			get
 				{
-				return (sm_nBulletWeightDecimals);
+				return (m_nBulletWeightDecimals);
 				}
 			set
 				{
-				sm_nBulletWeightDecimals = value;
+				m_nBulletWeightDecimals = value;
 				}
 			}
 
@@ -1317,15 +1380,15 @@ namespace ReloadersWorkShop.Preferences
 		// CanWeightDecimals Property
 		//============================================================================*
 
-		public static int CanWeightDecimals
+		public int CanWeightDecimals
 			{
 			get
 				{
-				return (sm_nCanWeightDecimals);
+				return (m_nCanWeightDecimals);
 				}
 			set
 				{
-				sm_nCanWeightDecimals = value;
+				m_nCanWeightDecimals = value;
 				}
 			}
 
@@ -1557,15 +1620,15 @@ namespace ReloadersWorkShop.Preferences
 		// DimensionDecimals Property
 		//============================================================================*
 
-		public static int DimensionDecimals
+		public int DimensionDecimals
 			{
 			get
 				{
-				return (sm_nDimensionDecimals);
+				return (m_nDimensionDecimals);
 				}
 			set
 				{
-				sm_nDimensionDecimals = value;
+				m_nDimensionDecimals = value;
 				}
 			}
 
@@ -1599,6 +1662,25 @@ namespace ReloadersWorkShop.Preferences
 				{
 				m_strDateFormat = value;
 				}
+			}
+
+		//============================================================================*
+		// Deserialize()
+		//============================================================================*
+
+		public void Deserialize(BinaryFormatter Formatter, Stream Stream)
+			{
+			try
+				{
+				sm_StaticPreferences = (cPreferences) Formatter.Deserialize(Stream);
+				}
+			catch
+				{
+				sm_StaticPreferences = new cPreferences();
+				}
+
+			if (BallisticsData == null)
+				BallisticsData = new cBallistics();
 			}
 
 		//============================================================================*
@@ -1810,6 +1892,198 @@ namespace ReloadersWorkShop.Preferences
 			}
 
 		//============================================================================*
+		// FirearmAccessoryBipodFilter Property
+		//============================================================================*
+
+		public bool FirearmAccessoryBipodFilter
+			{
+			get
+				{
+				return (m_fFirearmAccessoryBipodFilter);
+				}
+			set
+				{
+				m_fFirearmAccessoryBipodFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// FirearmAccessoryFurnitureFilter Property
+		//============================================================================*
+
+		public bool FirearmAccessoryFurnitureFilter
+			{
+			get
+				{
+				return (m_fFirearmAccessoryFurnitureFilter);
+				}
+			set
+				{
+				m_fFirearmAccessoryFurnitureFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// FirearmAccessoryLaserFilter Property
+		//============================================================================*
+
+		public bool FirearmAccessoryLaserFilter
+			{
+			get
+				{
+				return (m_fFirearmAccessoryLaserFilter);
+				}
+			set
+				{
+				m_fFirearmAccessoryLaserFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// FirearmAccessoryLightFilter Property
+		//============================================================================*
+
+		public bool FirearmAccessoryLightFilter
+			{
+			get
+				{
+				return (m_fFirearmAccessoryLightFilter);
+				}
+			set
+				{
+				m_fFirearmAccessoryLightFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// FirearmAccessoryMagnifierFilter Property
+		//============================================================================*
+
+		public bool FirearmAccessoryMagnifierFilter
+			{
+			get
+				{
+				return (m_fFirearmAccessoryMagnifierFilter);
+				}
+			set
+				{
+				m_fFirearmAccessoryMagnifierFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// FirearmAccessoryOtherFilter Property
+		//============================================================================*
+
+		public bool FirearmAccessoryOtherFilter
+			{
+			get
+				{
+				return (m_fFirearmAccessoryOtherFilter);
+				}
+			set
+				{
+				m_fFirearmAccessoryOtherFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// FirearmAccessoryPartsFilter Property
+		//============================================================================*
+
+		public bool FirearmAccessoryPartsFilter
+			{
+			get
+				{
+				return (m_fFirearmAccessoryPartsFilter);
+				}
+			set
+				{
+				m_fFirearmAccessoryPartsFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// FirearmAccessoryRedDotFilter Property
+		//============================================================================*
+
+		public bool FirearmAccessoryRedDotFilter
+			{
+			get
+				{
+				return (m_fFirearmAccessoryRedDotFilter);
+				}
+			set
+				{
+				m_fFirearmAccessoryRedDotFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// FirearmAccessoryScopeFilter Property
+		//============================================================================*
+
+		public bool FirearmAccessoryScopeFilter
+			{
+			get
+				{
+				return (m_fFirearmAccessoryScopeFilter);
+				}
+			set
+				{
+				m_fFirearmAccessoryScopeFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// FirearmAccessoryShowAll Property
+		//============================================================================*
+
+		public bool FirearmAccessoryShowAll
+			{
+			get
+				{
+				return (m_fFirearmAccessoryShowAll);
+				}
+			set
+				{
+				m_fFirearmAccessoryShowAll = value;
+				}
+			}
+
+		//============================================================================*
+		// FirearmAccessoryShowGroups Property
+		//============================================================================*
+
+		public bool FirearmAccessoryShowGroups
+			{
+			get
+				{
+				return (m_fFirearmAccessoryShowGroups);
+				}
+			set
+				{
+				m_fFirearmAccessoryShowGroups = value;
+				}
+			}
+
+		//============================================================================*
+		// FirearmAccessoryTriggerFilter Property
+		//============================================================================*
+
+		public bool FirearmAccessoryTriggerFilter
+			{
+			get
+				{
+				return (m_fFirearmAccessoryTriggerFilter);
+				}
+			set
+				{
+				m_fFirearmAccessoryTriggerFilter = value;
+				}
+			}
+
+		//============================================================================*
 		// FirearmSortColumn Property
 		//============================================================================*
 
@@ -1839,6 +2113,40 @@ namespace ReloadersWorkShop.Preferences
 				{
 				m_FirearmSortOrder = value;
 				}
+			}
+
+		//============================================================================*
+		// FormatString Property
+		//============================================================================*
+
+		public string FormatString(cDataFiles.eDataType eDataType, int nParmNum = 0)
+			{
+			string strFormat = "{";
+
+			strFormat += String.Format("{0}:F", nParmNum);
+
+			switch (eDataType)
+				{
+				case cDataFiles.eDataType.BulletWeight:
+					strFormat += String.Format("{0:G0}", m_nBulletWeightDecimals);
+					break;
+				case cDataFiles.eDataType.CanWeight:
+					strFormat += String.Format("{0:G0}", m_nCanWeightDecimals);
+					break;
+				case cDataFiles.eDataType.Dimension:
+					strFormat += String.Format("{0:G0}", m_nDimensionDecimals);
+					break;
+				case cDataFiles.eDataType.GroupSize:
+					strFormat += String.Format("{0:G0}", m_nGroupDecimals);
+					break;
+				case cDataFiles.eDataType.PowderWeight:
+					strFormat += String.Format("{0:G0}", m_nPowderWeightDecimals);
+					break;
+				}
+
+			strFormat += "}";
+
+			return (strFormat);
 			}
 
 		//============================================================================*
@@ -1892,15 +2200,15 @@ namespace ReloadersWorkShop.Preferences
 		// GroupDecimals Property
 		//============================================================================*
 
-		public static int GroupDecimals
+		public int GroupDecimals
 			{
 			get
 				{
-				return (sm_nGroupDecimals);
+				return (m_nGroupDecimals);
 				}
 			set
 				{
-				sm_nGroupDecimals = value;
+				m_nGroupDecimals = value;
 				}
 			}
 
@@ -2029,6 +2337,22 @@ namespace ReloadersWorkShop.Preferences
 			set
 				{
 				m_LastAmmoCaliber = value;
+				}
+			}
+
+		//============================================================================*
+		// LastAmmoFirearmType Property
+		//============================================================================*
+
+		public cFirearm.eFireArmType LastAmmoFirearmType
+			{
+			get
+				{
+				return (m_eLastAmmoFirearmType);
+				}
+			set
+				{
+				m_eLastAmmoFirearmType = value;
 				}
 			}
 
@@ -2481,6 +2805,22 @@ namespace ReloadersWorkShop.Preferences
 			}
 
 		//============================================================================*
+		// LastFirearmAccessorySelected Property
+		//============================================================================*
+
+		public cGear LastFirearmAccessorySelected
+			{
+			get
+				{
+				return (m_LastFirearmAccessorySelected);
+				}
+			set
+				{
+				m_LastFirearmAccessorySelected = value;
+				}
+			}
+
+		//============================================================================*
 		// LastFirearmBullet Property
 		//============================================================================*
 
@@ -2753,6 +3093,38 @@ namespace ReloadersWorkShop.Preferences
 			}
 
 		//============================================================================*
+		// LastTool Property
+		//============================================================================*
+
+		public cTool LastTool
+			{
+			get
+				{
+				return (m_LastTool);
+				}
+			set
+				{
+				m_LastTool = value;
+				}
+			}
+
+		//============================================================================*
+		// LastToolSelected Property
+		//============================================================================*
+
+		public cTool LastToolSelected
+			{
+			get
+				{
+				return (m_LastToolSelected);
+				}
+			set
+				{
+				m_LastToolSelected = value;
+				}
+			}
+
+		//============================================================================*
 		// LastTransaction Property
 		//============================================================================*
 
@@ -2788,15 +3160,15 @@ namespace ReloadersWorkShop.Preferences
 		// FirearmDecimals Property
 		//============================================================================*
 
-		public static int FirearmDecimals
+		public int FirearmDecimals
 			{
 			get
 				{
-				return (sm_nFirearmDecimals);
+				return (m_nFirearmDecimals);
 				}
 			set
 				{
-				sm_nFirearmDecimals = value;
+				m_nFirearmDecimals = value;
 				}
 			}
 
@@ -2932,15 +3304,15 @@ namespace ReloadersWorkShop.Preferences
 		// MetricAltitudes Property
 		//============================================================================*
 
-		public static bool MetricAltitudes
+		public bool MetricAltitudes
 			{
 			get
 				{
-				return (sm_fMetricAltitudes);
+				return (m_fMetricAltitudes);
 				}
 			set
 				{
-				sm_fMetricAltitudes = value;
+				m_fMetricAltitudes = value;
 				}
 			}
 
@@ -2948,15 +3320,15 @@ namespace ReloadersWorkShop.Preferences
 		// MetricBulletWeights Property
 		//============================================================================*
 
-		public static bool MetricBulletWeights
+		public bool MetricBulletWeights
 			{
 			get
 				{
-				return (sm_fMetricBulletWeights);
+				return (m_fMetricBulletWeights);
 				}
 			set
 				{
-				sm_fMetricBulletWeights = value;
+				m_fMetricBulletWeights = value;
 				}
 			}
 
@@ -2964,15 +3336,15 @@ namespace ReloadersWorkShop.Preferences
 		// MetricCanWeights Property
 		//============================================================================*
 
-		public static bool MetricCanWeights
+		public bool MetricCanWeights
 			{
 			get
 				{
-				return (sm_fMetricCanWeights);
+				return (m_fMetricCanWeights);
 				}
 			set
 				{
-				sm_fMetricCanWeights = value;
+				m_fMetricCanWeights = value;
 				}
 			}
 
@@ -2980,15 +3352,15 @@ namespace ReloadersWorkShop.Preferences
 		// MetricDimensions Property
 		//============================================================================*
 
-		public static bool MetricDimensions
+		public bool MetricDimensions
 			{
 			get
 				{
-				return (sm_fMetricDimensions);
+				return (m_fMetricDimensions);
 				}
 			set
 				{
-				sm_fMetricDimensions = value;
+				m_fMetricDimensions = value;
 				}
 			}
 
@@ -2996,15 +3368,15 @@ namespace ReloadersWorkShop.Preferences
 		// MetricFirearms Property
 		//============================================================================*
 
-		public static bool MetricFirearms
+		public bool MetricFirearms
 			{
 			get
 				{
-				return (sm_fMetricFirearms);
+				return (m_fMetricFirearms);
 				}
 			set
 				{
-				sm_fMetricFirearms = value;
+				m_fMetricFirearms = value;
 				}
 			}
 
@@ -3012,15 +3384,15 @@ namespace ReloadersWorkShop.Preferences
 		// MetricGroups Property
 		//============================================================================*
 
-		public static bool MetricGroups
+		public bool MetricGroups
 			{
 			get
 				{
-				return (sm_fMetricGroups);
+				return (m_fMetricGroups);
 				}
 			set
 				{
-				sm_fMetricGroups = value;
+				m_fMetricGroups = value;
 				}
 			}
 
@@ -3028,15 +3400,15 @@ namespace ReloadersWorkShop.Preferences
 		// MetricPowderWeights Property
 		//============================================================================*
 
-		public static bool MetricPowderWeights
+		public bool MetricPowderWeights
 			{
 			get
 				{
-				return (sm_fMetricPowderWeights);
+				return (m_fMetricPowderWeights);
 				}
 			set
 				{
-				sm_fMetricPowderWeights = value;
+				m_fMetricPowderWeights = value;
 				}
 			}
 
@@ -3044,15 +3416,15 @@ namespace ReloadersWorkShop.Preferences
 		// MetricPressures Property
 		//============================================================================*
 
-		public static bool MetricPressures
+		public bool MetricPressures
 			{
 			get
 				{
-				return (sm_fMetricPressures);
+				return (m_fMetricPressures);
 				}
 			set
 				{
-				sm_fMetricPressures = value;
+				m_fMetricPressures = value;
 				}
 			}
 
@@ -3060,15 +3432,15 @@ namespace ReloadersWorkShop.Preferences
 		// MetricRanges Property
 		//============================================================================*
 
-		public static bool MetricRanges
+		public bool MetricRanges
 			{
 			get
 				{
-				return (sm_fMetricRanges);
+				return (m_fMetricRanges);
 				}
 			set
 				{
-				sm_fMetricRanges = value;
+				m_fMetricRanges = value;
 				}
 			}
 
@@ -3076,15 +3448,15 @@ namespace ReloadersWorkShop.Preferences
 		// MetricShotWeights Property
 		//============================================================================*
 
-		public static bool MetricShotWeights
+		public bool MetricShotWeights
 			{
 			get
 				{
-				return (sm_fMetricShotWeights);
+				return (m_fMetricShotWeights);
 				}
 			set
 				{
-				sm_fMetricShotWeights = value;
+				m_fMetricShotWeights = value;
 				}
 			}
 
@@ -3092,15 +3464,15 @@ namespace ReloadersWorkShop.Preferences
 		// MetricTemperatures Property
 		//============================================================================*
 
-		public static bool MetricTemperatures
+		public bool MetricTemperatures
 			{
 			get
 				{
-				return (sm_fMetricTemperatures);
+				return (m_fMetricTemperatures);
 				}
 			set
 				{
-				sm_fMetricTemperatures = value;
+				m_fMetricTemperatures = value;
 				}
 			}
 
@@ -3108,15 +3480,15 @@ namespace ReloadersWorkShop.Preferences
 		// MetricVelocities Property
 		//============================================================================*
 
-		public static bool MetricVelocities
+		public bool MetricVelocities
 			{
 			get
 				{
-				return (sm_fMetricVelocities);
+				return (m_fMetricVelocities);
 				}
 			set
 				{
-				sm_fMetricVelocities = value;
+				m_fMetricVelocities = value;
 				}
 			}
 
@@ -3172,15 +3544,15 @@ namespace ReloadersWorkShop.Preferences
 		// PowderWeightDecimals Property
 		//============================================================================*
 
-		public static int PowderWeightDecimals
+		public int PowderWeightDecimals
 			{
 			get
 				{
-				return (sm_nPowderWeightDecimals);
+				return (m_nPowderWeightDecimals);
 				}
 			set
 				{
-				sm_nPowderWeightDecimals = value;
+				m_nPowderWeightDecimals = value;
 				}
 			}
 
@@ -3217,81 +3589,47 @@ namespace ReloadersWorkShop.Preferences
 			}
 
 		//============================================================================*
-		// RecordStatics()
+		// ReloadKeepDays Property
 		//============================================================================*
 
-		public void RecordStatics()
+		public int ReloadKeepDays
 			{
-		// Measurements Settings
-
-		m_fMetricBulletWeights = sm_fMetricBulletWeights;
-		m_fMetricCanWeights = sm_fMetricCanWeights;
-		m_fMetricDimensions = sm_fMetricDimensions;
-		m_fMetricFirearms = sm_fMetricFirearms;
-		m_fMetricGroups = sm_fMetricGroups;
-		m_fMetricPowderWeights = sm_fMetricPowderWeights;
-		m_fMetricRanges = sm_fMetricRanges;
-		m_fMetricShotWeights = sm_fMetricShotWeights;
-		m_fMetricVelocities = sm_fMetricVelocities;
-
-		// Inventory system
-
-		m_fTrackInventory = sm_fTrackInventory;
-
-		// Atmospheric Settings
-
-		m_fMetricAltitudes = sm_fMetricAltitudes;
-		m_fMetricPressures = sm_fMetricPressures;
-		m_fMetricTemperatures = sm_fMetricTemperatures;
-
-		// Decimals
-
-		m_nBulletWeightDecimals = sm_nBulletWeightDecimals;
-		m_nCanWeightDecimals = sm_nCanWeightDecimals;
-		m_nDimensionDecimals = sm_nDimensionDecimals;
-		m_nFirearmDecimals = sm_nFirearmDecimals;
-		m_nGroupDecimals = sm_nGroupDecimals;
-		m_nPowderWeightDecimals = sm_nPowderWeightDecimals;
-		m_nShotWeightDecimals = sm_nShotWeightDecimals;
-		}
+			get
+				{
+				return (m_nReloadKeepDays);
+				}
+			set
+				{
+				m_nReloadKeepDays = value;
+				}
+			}
 
 		//============================================================================*
-		// ResetStatics()
+		// Reset()
 		//============================================================================*
 
-		public void ResetStatics()
+		public static void Reset()
 			{
-			// Measurements Settings
+			sm_StaticPreferences = new Preferences.cPreferences();
 
-			sm_fMetricBulletWeights = m_fMetricBulletWeights;
-			sm_fMetricCanWeights = m_fMetricCanWeights;
-			sm_fMetricDimensions = m_fMetricDimensions;
-			sm_fMetricFirearms = m_fMetricFirearms;
-			sm_fMetricGroups = m_fMetricGroups;
-			sm_fMetricPowderWeights = m_fMetricPowderWeights;
-			sm_fMetricRanges = m_fMetricRanges;
-			sm_fMetricShotWeights = m_fMetricShotWeights;
-			sm_fMetricVelocities = m_fMetricVelocities;
+			sm_StaticPreferences.Dev = false;
+			sm_StaticPreferences.LastMainTabSelected = "ManufacturersTab";
+			}
 
-			// Inventory system
+		//============================================================================*
+		// Serialize()
+		//============================================================================*
 
-			sm_fTrackInventory = m_fTrackInventory;
-
-			// Atmospheric Settings
-
-			sm_fMetricAltitudes = m_fMetricAltitudes;
-			sm_fMetricPressures = m_fMetricPressures;
-			sm_fMetricTemperatures = m_fMetricTemperatures;
-
-			// Decimals
-
-			sm_nBulletWeightDecimals = m_nBulletWeightDecimals;
-			sm_nCanWeightDecimals = m_nCanWeightDecimals;
-			sm_nDimensionDecimals = m_nDimensionDecimals;
-			sm_nFirearmDecimals = m_nFirearmDecimals;
-			sm_nGroupDecimals = m_nGroupDecimals;
-			sm_nPowderWeightDecimals = m_nPowderWeightDecimals;
-			sm_nShotWeightDecimals = m_nShotWeightDecimals;
+		public void Serialize(BinaryFormatter Formatter, Stream Stream)
+			{
+			try
+				{
+				Formatter.Serialize(Stream, this);
+				}
+			catch
+				{
+				// TODO: Do something here
+				}
 			}
 
 		//============================================================================*
@@ -3424,15 +3762,15 @@ namespace ReloadersWorkShop.Preferences
 		// ShotWeightDecimals Property
 		//============================================================================*
 
-		public static int ShotWeightDecimals
+		public int ShotWeightDecimals
 			{
 			get
 				{
-				return (sm_nShotWeightDecimals);
+				return (m_nShotWeightDecimals);
 				}
 			set
 				{
-				sm_nShotWeightDecimals = value;
+				m_nShotWeightDecimals = value;
 				}
 			}
 
@@ -3561,6 +3899,29 @@ namespace ReloadersWorkShop.Preferences
 			set
 				{
 				m_fShowWindDriftRangeMarkers = value;
+				}
+			}
+
+		//============================================================================*
+		// StaticPreferences Property
+		//============================================================================*
+
+		public static cPreferences StaticPreferences
+			{
+			get
+				{
+				if (sm_StaticPreferences == null)
+					{
+					sm_StaticPreferences = new cPreferences();
+
+					sm_StaticPreferences.Maximized = false;
+					sm_StaticPreferences.MainFormLocation = new Point(0, 0);
+					sm_StaticPreferences.MainFormSize = new Size(1024, 768);
+
+					sm_StaticPreferences.BallisticsData = new cBallistics();
+					}
+
+				return (sm_StaticPreferences);
 				}
 			}
 
@@ -3741,7 +4102,7 @@ namespace ReloadersWorkShop.Preferences
 			}
 
 		//============================================================================*
-		// FirearmListPreviewSize Property
+		// TargetPrintSize Property
 		//============================================================================*
 
 		public Size TargetPrintSize
@@ -3965,6 +4326,214 @@ namespace ReloadersWorkShop.Preferences
 			}
 
 		//============================================================================*
+		// ToolsSortOrder Property
+		//============================================================================*
+
+		public SortOrder ToolsSortOrder
+			{
+			get
+				{
+				return (m_ToolsSortOrder);
+				}
+			set
+				{
+				m_ToolsSortOrder = value;
+				}
+			}
+
+		//============================================================================*
+		// ToolsBooksFilter Property
+		//============================================================================*
+
+		public bool ToolsBooksFilter
+			{
+			get
+				{
+				return (m_fToolsBooksFilter);
+				}
+			set
+				{
+				m_fToolsBooksFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// ToolsCasePrepFilter Property
+		//============================================================================*
+
+		public bool ToolsCasePrepFilter
+			{
+			get
+				{
+				return (m_fToolsCasePrepFilter);
+				}
+			set
+				{
+				m_fToolsCasePrepFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// ToolsCastingFilter Property
+		//============================================================================*
+
+		public bool ToolsCastingFilter
+			{
+			get
+				{
+				return (m_fToolsCastingFilter);
+				}
+			set
+				{
+				m_fToolsCastingFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// ToolsDiesFilter Property
+		//============================================================================*
+
+		public bool ToolsDiesFilter
+			{
+			get
+				{
+				return (m_fToolsDiesFilter);
+				}
+			set
+				{
+				m_fToolsDiesFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// ToolsDieAccessoriesFilter Property
+		//============================================================================*
+
+		public bool ToolsDieAccessoriesFilter
+			{
+			get
+				{
+				return (m_fToolsDieAccessoriesFilter);
+				}
+			set
+				{
+				m_fToolsDieAccessoriesFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// ToolsGunsmithingFilter Property
+		//============================================================================*
+
+		public bool ToolsGunsmithingFilter
+			{
+			get
+				{
+				return (m_fToolsGunsmithingFilter);
+				}
+			set
+				{
+				m_fToolsGunsmithingFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// ToolsMeasurementToolsFilter Property
+		//============================================================================*
+
+		public bool ToolsMeasurementToolsFilter
+			{
+			get
+				{
+				return (m_fToolsMeasurementToolsFilter);
+				}
+			set
+				{
+				m_fToolsMeasurementToolsFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// ToolsOtherFilter Property
+		//============================================================================*
+
+		public bool ToolsOtherFilter
+			{
+			get
+				{
+				return (m_fToolsOtherFilter);
+				}
+			set
+				{
+				m_fToolsOtherFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// ToolsPowderToolsFilter Property
+		//============================================================================*
+
+		public bool ToolsPowderToolsFilter
+			{
+			get
+				{
+				return (m_fToolsPowderToolsFilter);
+				}
+			set
+				{
+				m_fToolsPowderToolsFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// ToolsPressesFilter Property
+		//============================================================================*
+
+		public bool ToolsPressesFilter
+			{
+			get
+				{
+				return (m_fToolsPressesFilter);
+				}
+			set
+				{
+				m_fToolsPressesFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// ToolsPressAccessoriesFilter Property
+		//============================================================================*
+
+		public bool ToolsPressAccessoriesFilter
+			{
+			get
+				{
+				return (m_fToolsPressAccessoriesFilter);
+				}
+			set
+				{
+				m_fToolsPressAccessoriesFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// ToolsSortColumn Property
+		//============================================================================*
+
+		public int ToolsSortColumn
+			{
+			get
+				{
+				return (m_nToolsSortColumn);
+				}
+			set
+				{
+				m_nToolsSortColumn = value;
+				}
+			}
+
+		//============================================================================*
 		// ToolTips Property
 		//============================================================================*
 
@@ -3984,15 +4553,15 @@ namespace ReloadersWorkShop.Preferences
 		// TrackInventory Property
 		//============================================================================*
 
-		public static  bool TrackInventory
+		public bool TrackInventory
 			{
 			get
 				{
-				return (sm_fTrackInventory);
+				return (m_fTrackInventory);
 				}
 			set
 				{
-				sm_fTrackInventory = value;
+				m_fTrackInventory = value;
 				}
 			}
 

@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cMainForm.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -142,7 +142,10 @@ namespace CreateActivationKey
 			{
 			bool fValidKey = true;
 
-			string strKey = cRWRegistry.CreateKey(NameTextBox.Value, EmailTextBox.Value, VersionTextBox.Value);
+			string strName = NameTextBox.Value.Trim();
+			string strEmail = EmailTextBox.Value.Trim();
+
+			string strKey = cRWRegistry.CreateKey(strName, strEmail, VersionTextBox.Value);
 
 			if (string.IsNullOrEmpty(strKey))
 				KeyLabel.Text = "Invalid Parms!";

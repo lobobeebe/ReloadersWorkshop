@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cSupplyList.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -22,6 +22,7 @@ namespace ReloadersWorkShop
 	// cSupplyList Class
 	//============================================================================*
 
+	[Serializable]
 	public class cSupplyList : List<cSupply>
 		{
 		//============================================================================*
@@ -37,23 +38,28 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// Add()
+		// AddSuply()
 		//============================================================================*
 
-		public void AddSupply(cSupply Supply)
+		public virtual bool AddSupply(cSupply Supply, bool fCountOnly = false)
 			{
-			Supply.Printed = false;
+			if (!fCountOnly)
+				{
+				Supply.Printed = false;
 
-			base.Add(Supply);
+				base.Add(Supply);
+				}
+
+			return (true);
 			}
 
 		//============================================================================*
 		// RecalulateInventory()
 		//============================================================================*
 
-		public void RecalulateInventory(cDataFiles DataFiles)
+		public virtual void RecalulateInventory(cDataFiles DataFiles)
 			{
-			foreach(cSupply Supply in this)
+			foreach (cSupply Supply in this)
 				Supply.RecalculateInventory(DataFiles);
 			}
 		}

@@ -1,7 +1,7 @@
-﻿
+﻿//============================================================================*
 // cLoadDataListView.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -66,6 +66,8 @@ namespace ReloadersWorkShop
 
 			AllowColumnReorder = false;
 			CheckBoxes = true;
+
+			Font = new System.Drawing.Font(Font, System.Drawing.FontStyle.Bold);
 
 			//----------------------------------------------------------------------------*
 			// Event Handlers
@@ -401,11 +403,6 @@ namespace ReloadersWorkShop
 					Column.Width = 100;
 					}
 
-//				string strPowderWeightFormat = "{0:F";
-//				strPowderWeightFormat += String.Format("{0:G0}", m_DataFiles.Preferences.PowderWeightDecimals);
-//				strPowderWeightFormat += "}";
-
-//				Item.SubItems.Add(String.Format(strPowderWeightFormat, cDataFiles.StandardToMetric(Charge.PowderWeight, cDataFiles.eDataType.PowderWeight)));
 				Item.SubItems.Add(String.Format(Charge.ToString()));
 
 				nColumnCount++;

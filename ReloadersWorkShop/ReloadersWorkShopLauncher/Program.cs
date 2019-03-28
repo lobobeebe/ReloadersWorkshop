@@ -1,7 +1,7 @@
 ﻿//============================================================================*
-// ReloadersWorkShopLauncher.cs
+// Program.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -12,12 +12,8 @@
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Net;
 using System.Threading;
-using System.Windows;
 using System.Windows.Forms;
-
-//using System.Runtime.InteropServices;
 
 using RWCommonLib.Registry;
 using RWCommonLib.Updates;

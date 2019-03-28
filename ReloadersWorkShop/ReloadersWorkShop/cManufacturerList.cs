@@ -24,18 +24,35 @@ namespace ReloadersWorkShop
 	public class cManufacturerList : List<cManufacturer>
 		{
 		//============================================================================*
+		// Private Data Members
+		//============================================================================*
+
+		private int m_nImportCount = 0;
+		private int m_nNewCount = 0;
+		private int m_nUpdateCount = 0;
+
+		//============================================================================*
 		// AddManufacturer()
 		//============================================================================*
 
-		public bool AddManufacturer(cManufacturer Manufacturer)
+		public bool AddManufacturer(cManufacturer Manufacturer, bool fCountOnly = false)
 			{
+			m_nImportCount++;
+
 			foreach (cManufacturer CheckManufacturer in this)
 				{
 				if (CheckManufacturer.CompareTo(Manufacturer) == 0)
+					{
+					m_nUpdateCount += CheckManufacturer.Append(Manufacturer, fCountOnly);
+
 					return (false);
+					}
 				}
 
-			Add(Manufacturer);
+			if (!fCountOnly)
+				Add(Manufacturer);
+
+			m_nNewCount++;
 
 			return (true);
 			}
@@ -49,7 +66,7 @@ namespace ReloadersWorkShop
 			if (Count <= 0)
 				return;
 
-			Writer.WriteLine(cManufacturer.CSVHeader);
+			Writer.WriteLine(ExportName);
 			Writer.WriteLine();
 
 			string strLine = "";
@@ -71,17 +88,92 @@ namespace ReloadersWorkShop
 		// Export()
 		//============================================================================*
 
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+		public void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement)
 			{
 			if (Count > 0)
 				{
-				XmlElement XMLElement = XMLDocument.CreateElement(string.Empty, "Manufacturers", string.Empty);
-				XMLParentElement.AppendChild(XMLElement);
+				XmlElement XMLElement = XMLDocument.CreateElement(ExportName, XMLParentElement);
 
 				foreach (cManufacturer Manufacturer in this)
-					{
 					Manufacturer.Export(XMLDocument, XMLElement);
+				}
+			}
+
+		//============================================================================*
+		// ExportName Property
+		//============================================================================*
+
+		public static string ExportName
+			{
+			get
+				{
+				return ("ManufacturerList");
+				}
+			}
+
+		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode)
+			{
+			m_nImportCount = 0;
+			m_nNewCount = 0;
+			m_nUpdateCount = 0;
+
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "Manufacturer":
+						cManufacturer Manufacturer = new cManufacturer();
+
+						Manufacturer.Import(XMLDocument, XMLNode);
+
+						AddManufacturer(Manufacturer);
+
+						break;
 					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+			}
+
+		//============================================================================*
+		// ImportCount Property
+		//============================================================================*
+
+		public int ImportCount
+			{
+			get
+				{
+				return (m_nImportCount);
+				}
+			}
+
+		//============================================================================*
+		// NewCount Property
+		//============================================================================*
+
+		public int NewCount
+			{
+			get
+				{
+				return (m_nNewCount);
+				}
+			}
+
+		//============================================================================*
+		// UpdateCount Property
+		//============================================================================*
+
+		public int UpdateCount
+			{
+			get
+				{
+				return (m_nUpdateCount);
 				}
 			}
 		}

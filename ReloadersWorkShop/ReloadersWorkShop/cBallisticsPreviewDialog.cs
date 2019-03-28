@@ -79,7 +79,7 @@ namespace ReloadersWorkShop
 				ClientSize = m_DataFiles.Preferences.BallisticsPreviewSize;
 				}
 
-			Text = "Reloader's WorkShop Ballistics Table - Print Preview";
+			Text = String.Format("{0} Ballistics Table - Print Preview", Application.ProductName);
 
 			PrintDocument BallisticsDocument = new PrintDocument();
 			BallisticsDocument.PrintPage += OnPrintPage;
@@ -175,17 +175,17 @@ namespace ReloadersWorkShop
 			float nX = PageRect.Left;
 
 			string strDimensionFormat = "{0:F";
-			strDimensionFormat += String.Format("{0:G0}", cPreferences.DimensionDecimals);
+			strDimensionFormat += String.Format("{0:G0}", m_DataFiles.Preferences.DimensionDecimals);
 			strDimensionFormat += "} ";
 			strDimensionFormat += cDataFiles.MetricString(cDataFiles.eDataType.Dimension);
 
 			string strFirearmFormat = "{0:F";
-			strFirearmFormat += String.Format("{0:G0}", cPreferences.FirearmDecimals);
+			strFirearmFormat += String.Format("{0:G0}", m_DataFiles.Preferences.FirearmDecimals);
 			strFirearmFormat += "} ";
 			strFirearmFormat += cDataFiles.MetricString(cDataFiles.eDataType.Firearm);
 
 			string strBulletWeightFormat = "{0:F";
-			strBulletWeightFormat += String.Format("{0:G0}", cPreferences.BulletWeightDecimals);
+			strBulletWeightFormat += String.Format("{0:G0}", m_DataFiles.Preferences.BulletWeightDecimals);
 			strBulletWeightFormat += "} ";
 			strBulletWeightFormat += cDataFiles.MetricString(cDataFiles.eDataType.BulletWeight);
 
@@ -193,23 +193,8 @@ namespace ReloadersWorkShop
 			// Draw the page header
 			//----------------------------------------------------------------------------*
 
-			nY = cPrintObject.PrintReportTitle("Ballistics Table", PageRect, e.Graphics);
-			/*
-			strText = "Reloader's WorkShop";
-			TextSize = e.Graphics.MeasureString(strText, TitleFont);
+			nY = cPrintObject.PrintReportTitle("Ballistics Table", e, PageRect);
 
-			e.Graphics.DrawString(strText, TitleFont, Brushes.Black, (PageRect.Width / 2) - (TextSize.Width / 2), nY);
-
-			nY += TextSize.Height;
-
-			strText = "Ballistics Table";
-
-			TextSize = e.Graphics.MeasureString(strText, TitleFont);
-
-			e.Graphics.DrawString(strText, TitleFont, Brushes.Black, (PageRect.Width / 2) - (TextSize.Width / 2), nY);
-
-			nY += TextSize.Height;
-*/
 			//----------------------------------------------------------------------------*
 			// Draw the input data section header if needed
 			//----------------------------------------------------------------------------*

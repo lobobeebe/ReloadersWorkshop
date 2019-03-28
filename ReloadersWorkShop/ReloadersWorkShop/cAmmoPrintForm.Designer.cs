@@ -80,9 +80,11 @@
 			this.NumLabelsTextBox.MaxValue = 99;
 			this.NumLabelsTextBox.MinValue = 1;
 			this.NumLabelsTextBox.Name = "NumLabelsTextBox";
+			this.NumLabelsTextBox.Required = false;
 			this.NumLabelsTextBox.Size = new System.Drawing.Size(38, 20);
 			this.NumLabelsTextBox.TabIndex = 1;
 			this.NumLabelsTextBox.Text = "0";
+			this.NumLabelsTextBox.ToolTip = "";
 			this.NumLabelsTextBox.Value = 0;
 			// 
 			// PaperComboBox
@@ -173,6 +175,7 @@
 			// 
 			// PrintButton
 			// 
+			this.PrintButton.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.PrintButton.Location = new System.Drawing.Point(160, 490);
 			this.PrintButton.Name = "PrintButton";
 			this.PrintButton.Size = new System.Drawing.Size(75, 23);

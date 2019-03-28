@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cAmmoTestListView.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -153,9 +153,7 @@ namespace ReloadersWorkShop
 			// Create the format strings
 			//----------------------------------------------------------------------------*
 
-			m_strGroupFormat = "{0:F";
-			m_strGroupFormat += String.Format("{0:G0}", cPreferences.GroupDecimals);
-			m_strGroupFormat += "}";
+			m_strGroupFormat = m_DataFiles.Preferences.FormatString(cDataFiles.eDataType.GroupSize);
 
 			//----------------------------------------------------------------------------*
 			// Reset the list view
@@ -197,9 +195,9 @@ namespace ReloadersWorkShop
 			Item.SubItems.Add(String.Format(m_strGroupFormat, cDataFiles.StandardToMetric(AmmoTest.BestGroup, cDataFiles.eDataType.GroupSize)));
 
 			double dBestGroup = AmmoTest.BestGroup;
-			int nBestGroupRange = AmmoTest.BestGroupRange;
+			double  dBestGroupRange = AmmoTest.BestGroupRange;
 
-			double dMOA = (dBestGroup != 0.0 && nBestGroupRange != 0) ? dBestGroup / (((double) nBestGroupRange / 100.0) * 1.047) : 0.0;
+			double dMOA = (dBestGroup != 0.0 && dBestGroupRange != 0.0) ? dBestGroup / ((dBestGroupRange / 100.0) * 1.047) : 0.0;
 
 			Item.SubItems.Add(String.Format("{0:F3}", dMOA));
 

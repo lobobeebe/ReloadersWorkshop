@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cLoadForm.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -277,6 +277,18 @@ namespace ReloadersWorkShop
 		private void OnAddCharge(object sender, EventArgs args)
 			{
 			//----------------------------------------------------------------------------*
+			// Issue a warning if this is the first charge
+			//----------------------------------------------------------------------------*
+
+			if (m_Load.ChargeList.Count == 0)
+				{
+				DialogResult rc = MessageBox.Show("Warning: Adding charge data to this load will lock the firearm type, caliber, and components for this load.  Make sure these are correct before adding charges.\n\nDo you wish to continue?", "Load Data Lock Verification", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+
+				if (rc != DialogResult.Yes)
+					return;
+				}
+
+			//----------------------------------------------------------------------------*
 			// Get the current load info
 			//----------------------------------------------------------------------------*
 
@@ -356,7 +368,7 @@ namespace ReloadersWorkShop
 
 			cCaliber Caliber = (cCaliber) CaliberCombo.SelectedItem;
 
-			if (m_Load.Caliber != null && m_Load.Caliber.Equals(Caliber))
+			if (m_Load.Caliber != null && m_Load.Caliber.CompareTo(Caliber) == 0)
 				return;
 
 			m_fChanged = true;
@@ -389,7 +401,7 @@ namespace ReloadersWorkShop
 
 			cCase Case = (cCase) CaseCombo.SelectedItem;
 
-			if (m_Load.Case != null && m_Load.Case.Equals(Case))
+			if (m_Load.Case != null && m_Load.Case.CompareTo(Case) == 0)
 				return;
 
 			m_fChanged = true;
@@ -501,7 +513,7 @@ namespace ReloadersWorkShop
 
 					m_Load.ChargeList.Remove(OldCharge);
 
-					m_Load.ChargeList.Add(Charge);
+					m_Load.ChargeList.AddCharge(Charge);
 
 					m_fChanged = true;
 
@@ -570,7 +582,7 @@ namespace ReloadersWorkShop
 
 			cPowder Powder = (cPowder) PowderCombo.SelectedItem;
 
-			if (m_Load.Powder != null && m_Load.Powder.Equals(Powder))
+			if (m_Load.Powder != null && m_Load.Powder.CompareTo(Powder) == 0)
 				return;
 
 			m_fChanged = true;
@@ -595,7 +607,7 @@ namespace ReloadersWorkShop
 
 			cPrimer Primer = (cPrimer) PrimerCombo.SelectedItem;
 
-			if (m_Load.Primer != null && m_Load.Primer.Equals(Primer))
+			if (m_Load.Primer != null && m_Load.Primer.CompareTo(Primer) == 0)
 				return;
 
 			m_fChanged = true;
@@ -696,7 +708,7 @@ namespace ReloadersWorkShop
 
 				foreach (cBullet Bullet in m_DataFiles.BulletList)
 					{
-					if ((m_Load.Bullet != null && m_Load.Bullet.Equals(Bullet)) ||
+					if ((m_Load.Bullet != null && m_Load.Bullet.CompareTo(Bullet) == 0) ||
 						(Bullet.CrossUse || Bullet.FirearmType == (cFirearm.eFireArmType) FirearmTypeCombo.SelectedIndex) &&
 						(!m_DataFiles.Preferences.HideUncheckedSupplies || Bullet.Checked) &&
 						(CaliberCombo.SelectedIndex >= 0 && Bullet.HasCaliber((cCaliber) CaliberCombo.SelectedItem)))
@@ -757,13 +769,13 @@ namespace ReloadersWorkShop
 
 				foreach (cCaliber Caliber in m_DataFiles.CaliberList)
 					{
-					if ((m_Load.Caliber != null && m_Load.Caliber.Equals(Caliber)) ||
+					if ((m_Load.Caliber != null && m_Load.Caliber.CompareTo(Caliber) == 0) ||
 						((Caliber.FirearmType == (cFirearm.eFireArmType) FirearmTypeCombo.SelectedIndex) &&
-						(!m_DataFiles.Preferences.HideUncheckedCalibers || Caliber.Checked)))
+						(!m_DataFiles.Preferences.HideUncheckedCalibers || Caliber.Checked)) && !Caliber.Rimfire)
 						{
 						CaliberCombo.Items.Add(Caliber);
 
-						if (m_Load.Caliber != null && m_Load.Caliber.Equals(Caliber))
+						if (m_Load.Caliber != null && m_Load.Caliber.CompareTo(Caliber) == 0)
 							SelectCaliber = Caliber;
 						}
 					}
@@ -813,13 +825,13 @@ namespace ReloadersWorkShop
 
 				foreach (cCase Case in m_DataFiles.CaseList)
 					{
-					if ((m_Load.Case != null && m_Load.Case.Equals(Case)) ||
-						((CaliberCombo.SelectedIndex >= 0 && Case.Caliber.Equals((cCaliber) CaliberCombo.SelectedItem)) &&
+					if ((m_Load.Case != null && m_Load.Case.CompareTo(Case) == 0) ||
+						((CaliberCombo.SelectedIndex >= 0 && Case.Caliber.CompareTo((cCaliber) CaliberCombo.SelectedItem) == 0) &&
 						(!m_DataFiles.Preferences.HideUncheckedSupplies || Case.Checked)))
 						{
 						CaseCombo.Items.Add(Case);
 
-						if (m_Load.Case != null && m_Load.Case.Equals(Case))
+						if (m_Load.Case != null && m_Load.Case.CompareTo(Case) == 0)
 							SelectCase = Case;
 						}
 					}
@@ -867,13 +879,13 @@ namespace ReloadersWorkShop
 
 				foreach (cPowder Powder in m_DataFiles.PowderList)
 					{
-					if ((m_Load.Powder != null && m_Load.Powder.Equals(Powder)) ||
+					if ((m_Load.Powder != null && m_Load.Powder.CompareTo(Powder) == 0) ||
 						(Powder.CrossUse || (FirearmTypeCombo.SelectedIndex >= 0 && Powder.FirearmType == (cFirearm.eFireArmType) FirearmTypeCombo.SelectedIndex)) &&
 						(!m_DataFiles.Preferences.HideUncheckedSupplies || Powder.Checked))
 						{
 						PowderCombo.Items.Add(Powder);
 
-						if (m_Load.Powder != null && m_Load.Powder.Equals(Powder))
+						if (m_Load.Powder != null && m_Load.Powder.CompareTo(Powder) == 0)
 							SelectPowder = Powder;
 						}
 					}
@@ -930,7 +942,7 @@ namespace ReloadersWorkShop
 
 					foreach (cPrimer Primer in m_DataFiles.PrimerList)
 						{
-						if ((m_Load.Primer != null && m_Load.Primer.Equals(Primer)) ||
+						if ((m_Load.Primer != null && m_Load.Primer.CompareTo(Primer) == 0) ||
 
 							((Primer.CrossUse || Primer.FirearmType == (cFirearm.eFireArmType) FirearmTypeCombo.SelectedIndex) &&
 
@@ -942,7 +954,7 @@ namespace ReloadersWorkShop
 							{
 							PrimerCombo.Items.Add(Primer);
 
-							if (m_Load.Primer != null && m_Load.Primer.Equals(Primer))
+							if (m_Load.Primer != null && m_Load.Primer.CompareTo(Primer) == 0)
 								SelectPrimer = Primer;
 							}
 						}
@@ -1143,7 +1155,7 @@ namespace ReloadersWorkShop
 		private void SetCaseDimensions()
 			{
 			string strDimensionFormat = "{0:F";
-			strDimensionFormat += String.Format("{0:G0}", cPreferences.DimensionDecimals);
+			strDimensionFormat += String.Format("{0:G0}", m_DataFiles.Preferences.DimensionDecimals);
 			strDimensionFormat += "} {1}";
 
 			cCaliber Caliber = (cCaliber) CaliberCombo.SelectedItem;
@@ -1435,6 +1447,7 @@ namespace ReloadersWorkShop
 				if (!m_fUserViewOnly)
 					{
 					int nNumBatches = 0;
+					bool fEnableComponents = true;
 
 					foreach (cBatch CheckBatch in m_DataFiles.BatchList)
 						{
@@ -1448,15 +1461,30 @@ namespace ReloadersWorkShop
 
 						m_fViewOnly = true;
 
-						FirearmTypeCombo.Enabled = false;
-						CaliberCombo.Enabled = false;
-						BulletCombo.Enabled = false;
-						PowderCombo.Enabled = false;
-						PrimerCombo.Enabled = false;
-						CaseCombo.Enabled = false;
+						fEnableComponents = false;
 						}
 					else
-						ErrorMessageLabel.Text = "";
+						{
+						if (m_Load.ChargeList.Count > 0)
+							ErrorMessageLabel.Text = String.Format("This load has {0:N0} charge{1}.  Load components may not be modified once charge data has been entered.", m_Load.ChargeList.Count, m_Load.ChargeList.Count != 1 ? "s" : "");
+						else
+							ErrorMessageLabel.Text = "";
+
+						fEnableComponents = m_Load.ChargeList.Count == 0;
+						}
+
+					FirearmTypeCombo.Enabled = fEnableComponents;
+					CaliberCombo.Enabled = fEnableComponents;
+					BulletCombo.Enabled = fEnableComponents;
+					PowderCombo.Enabled = fEnableComponents;
+					PrimerCombo.Enabled = fEnableComponents;
+					CaseCombo.Enabled = fEnableComponents;
+					}
+				else
+					{
+					ErrorMessageLabel.Visible = false;
+
+					FirearmTypeCombo.Enabled = false;
 					}
 				}
 

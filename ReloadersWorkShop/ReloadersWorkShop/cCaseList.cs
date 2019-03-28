@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cCaseList.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -24,18 +24,35 @@ namespace ReloadersWorkShop
 	public class cCaseList : List<cCase>
 		{
 		//============================================================================*
+		// Private Data Members
+		//============================================================================*
+
+		private int m_nImportCount = 0;
+		private int m_nNewCount = 0;
+		private int m_nUpdateCount = 0;
+
+		//============================================================================*
 		// AddCase()
 		//============================================================================*
 
-		public bool AddCase(cCase Case)
+		public bool AddCase(cCase Case, bool fCountOnly = false)
 			{
+			m_nImportCount++;
+
 			foreach (cCase CheckCase in this)
 				{
 				if (CheckCase.CompareTo(Case) == 0)
+					{
+					m_nUpdateCount += CheckCase.Append(Case, fCountOnly);
+
 					return (false);
+					}
 				}
 
-			Add(Case);
+			if (!fCountOnly)
+				Add(Case);
+
+			m_nNewCount++;
 
 			return (true);
 			}
@@ -51,7 +68,7 @@ namespace ReloadersWorkShop
 
 			string strLine = "";
 
-			Writer.WriteLine(cCase.CSVHeader);
+			Writer.WriteLine(ExportName);
 			Writer.WriteLine();
 
 			Writer.WriteLine(cCase.CSVLineHeader);
@@ -71,17 +88,27 @@ namespace ReloadersWorkShop
 		// Export()
 		//============================================================================*
 
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+		public void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement, bool fIncludeTransactions = true)
 			{
 			if (Count > 0)
 				{
-				XmlElement XMLElement = XMLDocument.CreateElement(string.Empty, "Cases", string.Empty);
+				XmlElement XMLElement = XMLDocument.CreateElement(ExportName);
 				XMLParentElement.AppendChild(XMLElement);
 
 				foreach (cCase Case in this)
-					{
-					Case.Export(XMLDocument, XMLElement);
-					}
+					Case.Export(XMLDocument, XMLElement, false, fIncludeTransactions);
+				}
+			}
+
+		//============================================================================*
+		// ExportName Property
+		//============================================================================*
+
+		public string ExportName
+			{
+			get
+				{
+				return ("Cases");
 				}
 			}
 
@@ -106,6 +133,59 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles, bool fCountOnly = false)
+			{
+			m_nImportCount = 0;
+			m_nNewCount = 0;
+			m_nUpdateCount = 0;
+
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
+				{
+				switch (XMLNode.Name)
+					{
+					case "Case":
+						cCase Case = new cCase();
+
+						if (Case.Import(XMLDocument, XMLNode, DataFiles))
+							AddCase(Case, fCountOnly);
+
+						break;
+					}
+
+				XMLNode = XMLNode.NextSibling;
+				}
+			}
+
+		//============================================================================*
+		// ImportCount Property
+		//============================================================================*
+
+		public int ImportCount
+			{
+			get
+				{
+				return (m_nImportCount);
+				}
+			}
+
+		//============================================================================*
+		// NewCount Property
+		//============================================================================*
+
+		public int NewCount
+			{
+			get
+				{
+				return (m_nNewCount);
+				}
+			}
+
+		//============================================================================*
 		// RecalulateInventory()
 		//============================================================================*
 
@@ -113,6 +193,20 @@ namespace ReloadersWorkShop
 			{
 			foreach (cSupply Supply in this)
 				Supply.RecalculateInventory(DataFiles);
+			}
+
+		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public bool ResolveIdentities(cDataFiles Datafiles)
+			{
+			bool fChanged = false;
+
+			foreach (cCase Case in this)
+				fChanged = Case.ResolveIdentities(Datafiles) ? true : fChanged;
+
+			return (fChanged);
 			}
 
 		//============================================================================*
@@ -132,6 +226,18 @@ namespace ReloadersWorkShop
 					}
 
 				return (nCount);
+				}
+			}
+
+		//============================================================================*
+		// UpdateCount Property
+		//============================================================================*
+
+		public int UpdateCount
+			{
+			get
+				{
+				return (m_nUpdateCount);
 				}
 			}
 		}

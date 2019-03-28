@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cBulletCaliber.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -22,7 +22,7 @@ namespace ReloadersWorkShop
 	//============================================================================*
 
 	[Serializable]
-	public class cBulletCaliber
+	public partial class cBulletCaliber
 		{
 		//============================================================================*
 		// Private Data Members
@@ -47,10 +47,50 @@ namespace ReloadersWorkShop
 
 		public cBulletCaliber(cBulletCaliber BulletCaliber)
 			{
-			m_Caliber = BulletCaliber.m_Caliber;
+			Copy(BulletCaliber);
+			}
 
-			m_dCOL = BulletCaliber.m_dCOL;
-			m_dCBTO = BulletCaliber.m_dCBTO;
+		//============================================================================*
+		// Append()
+		//============================================================================*
+
+		public int Append(cBulletCaliber BulletCaliber, bool fCountOnly = false)
+			{
+			int nUpdateCount = 0;
+
+			if (m_dCOL == 0.0 && BulletCaliber.m_dCOL != 0.0)
+				{
+				if (!fCountOnly)
+					m_dCOL = BulletCaliber.m_dCOL;
+
+				nUpdateCount++;
+				}
+
+			if (m_dCBTO == 0.0 && BulletCaliber.m_dCBTO != 0.0)
+				{
+				if (!fCountOnly)
+					m_dCBTO = BulletCaliber.m_dCBTO;
+
+				nUpdateCount++;
+				}
+
+			return (nUpdateCount);
+			}
+
+		//============================================================================*
+		// CBTO Property
+		//============================================================================*
+
+		public double CBTO
+			{
+			get
+				{
+				return (m_dCBTO);
+				}
+			set
+				{
+				m_dCBTO = value;
+				}
 			}
 
 		//============================================================================*
@@ -59,8 +99,14 @@ namespace ReloadersWorkShop
 
 		public cCaliber Caliber
 			{
-			get { return (m_Caliber); }
-			set { m_Caliber = value; }
+			get
+				{
+				return (m_Caliber);
+				}
+			set
+				{
+				m_Caliber = value;
+				}
 			}
 
 		//============================================================================*
@@ -69,8 +115,14 @@ namespace ReloadersWorkShop
 
 		public double COL
 			{
-			get { return (m_dCOL); }
-			set { m_dCOL = value; }
+			get
+				{
+				return (m_dCOL);
+				}
+			set
+				{
+				m_dCOL = value;
+				}
 			}
 
 		//============================================================================*
@@ -122,13 +174,41 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// CBTO Property
+		// Copy()
 		//============================================================================*
 
-		public double CBTO
+		public void Copy(cBulletCaliber BulletCaliber)
 			{
-			get { return (m_dCBTO); }
-			set { m_dCBTO = value; }
+			m_Caliber = BulletCaliber.m_Caliber;
+
+			m_dCOL = BulletCaliber.m_dCOL;
+			m_dCBTO = BulletCaliber.m_dCBTO;
+			}
+
+		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public bool ResolveIdentities(cDataFiles Datafiles)
+			{
+			bool fChanged = false;
+
+			if (m_Caliber.Identity)
+				{
+				foreach (cCaliber Caliber in Datafiles.CaliberList)
+					{
+					if (!Caliber.Identity && Caliber.CompareTo(m_Caliber) == 0)
+						{
+						m_Caliber = Caliber;
+
+						fChanged = true;
+
+						break;
+						}
+					}
+				}
+
+			return (fChanged);
 			}
 
 		//============================================================================*
@@ -154,6 +234,17 @@ namespace ReloadersWorkShop
 		public override string ToString()
 			{
 			return (m_Caliber.Name);
+			}
+
+		//============================================================================*
+		// Validate()
+		//============================================================================*
+
+		public bool Validate()
+			{
+			bool fOK = m_Caliber != null;
+
+			return (fOK);
 			}
 		}
 	}

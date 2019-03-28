@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cSuppliesListView.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -33,6 +33,13 @@ namespace ReloadersWorkShop
 		private cDataFiles m_DataFiles = null;
 
 		private cSupply.eSupplyTypes m_eSupplyType = cSupply.eSupplyTypes.Bullets;
+		private cFirearm.eFireArmType m_eFirearmTypeFilter = cFirearm.eFireArmType.None;
+		private cManufacturer m_ManufacturerFilter = null;
+		private cCaliber m_CaliberFilter = null;
+
+		private bool m_fNonZeroFilter = false;
+		private bool m_fMinStockFilter = false;
+		private bool m_fCheckedFilter = false;
 
 		private string m_strDimensionFormat = "{0:F3}";
 		private string m_strBulletWeightFormat = "{0:F1}";
@@ -52,6 +59,8 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			CheckBoxes = true;
+
+			Font = new System.Drawing.Font(Font, System.Drawing.FontStyle.Bold);
 
 			//----------------------------------------------------------------------------*
 			// Event Handlers
@@ -182,6 +191,54 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// CaliberFilter Property
+		//============================================================================*
+
+		public cCaliber CaliberFilter
+			{
+			get
+				{
+				return (m_CaliberFilter);
+				}
+			set
+				{
+				m_CaliberFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// CheckedFilter Property
+		//============================================================================*
+
+		public bool CheckedFilter
+			{
+			get
+				{
+				return (m_fCheckedFilter);
+				}
+			set
+				{
+				m_fCheckedFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// FirearmTypeFilter Property
+		//============================================================================*
+
+		public cFirearm.eFireArmType FirearmTypeFilter
+			{
+			get
+				{
+				return (m_eFirearmTypeFilter);
+				}
+			set
+				{
+				m_eFirearmTypeFilter = value;
+				}
+			}
+
+		//============================================================================*
 		// HandgunCount Property
 		//============================================================================*
 
@@ -200,6 +257,54 @@ namespace ReloadersWorkShop
 					}
 
 				return (nCount);
+				}
+			}
+
+		//============================================================================*
+		// ManufacturerFilter Property
+		//============================================================================*
+
+		public cManufacturer ManufacturerFilter
+			{
+			get
+				{
+				return (m_ManufacturerFilter);
+				}
+			set
+				{
+				m_ManufacturerFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// MinStockFilter Property
+		//============================================================================*
+
+		public bool MinStockFilter
+			{
+			get
+				{
+				return (m_fMinStockFilter);
+				}
+			set
+				{
+				m_fMinStockFilter = value;
+				}
+			}
+
+		//============================================================================*
+		// NonZeroFilter Property
+		//============================================================================*
+
+		public bool NonZeroFilter
+			{
+			get
+				{
+				return (m_fNonZeroFilter);
+				}
+			set
+				{
+				m_fNonZeroFilter = value;
 				}
 			}
 
@@ -302,17 +407,9 @@ namespace ReloadersWorkShop
 
 		public override void Populate()
 			{
-			m_strCanWeightFormat = "{0:F";
-			m_strCanWeightFormat += String.Format("{0:G0}", cPreferences.CanWeightDecimals);
-			m_strCanWeightFormat += "}";
-
-			m_strDimensionFormat = "{0:F";
-			m_strDimensionFormat += String.Format("{0:G0}", cPreferences.DimensionDecimals);
-			m_strDimensionFormat += "}";
-
-			m_strBulletWeightFormat = "{0:F";
-			m_strBulletWeightFormat += String.Format("{0:G0}", cPreferences.BulletWeightDecimals);
-			m_strBulletWeightFormat += "}";
+			m_strCanWeightFormat = m_DataFiles.Preferences.FormatString(cDataFiles.eDataType.CanWeight);
+			m_strDimensionFormat = m_DataFiles.Preferences.FormatString(cDataFiles.eDataType.Dimension);
+			m_strBulletWeightFormat = m_DataFiles.Preferences.FormatString(cDataFiles.eDataType.BulletWeight);
 
 			Populating = true;
 
@@ -328,14 +425,24 @@ namespace ReloadersWorkShop
 				//----------------------------------------------------------------------------*
 
 				case cSupply.eSupplyTypes.Bullets:
-					foreach (cBullet Bullet in m_DataFiles.BulletList)
+					foreach (cSupply Supply in m_DataFiles.BulletList)
 						{
-						Item = AddBullet(Bullet);
+						double dSupplyQuantity = Math.Round(m_DataFiles.SupplyQuantity(Supply), 4);
+						double dMinStockLevel = Math.Round(Supply.MinimumStockLevel, 4);
 
-						if (Item != null)
+						if ((Supply.CrossUse || m_eFirearmTypeFilter == cFirearm.eFireArmType.None || Supply.FirearmType == m_eFirearmTypeFilter) &&
+							(m_ManufacturerFilter == null || Supply.Manufacturer.CompareTo(m_ManufacturerFilter) == 0) &&
+							(m_CaliberFilter == null || (Supply as cBullet).HasCaliber(m_CaliberFilter)) &&
+							(!m_fNonZeroFilter || dSupplyQuantity > 0.0) &&
+							(!m_fMinStockFilter || dSupplyQuantity < dMinStockLevel))
 							{
-							if (m_DataFiles.Preferences.LastBulletSelected != null && m_DataFiles.Preferences.LastBulletSelected.CompareTo(Bullet) == 0)
-								SelectItem = Item;
+							Item = AddBullet(Supply as cBullet);
+
+							if (Item != null)
+								{
+								if (m_DataFiles.Preferences.LastBulletSelected != null && m_DataFiles.Preferences.LastBulletSelected.CompareTo(Supply as cBullet) == 0)
+									SelectItem = Item;
+								}
 							}
 						}
 
@@ -346,14 +453,21 @@ namespace ReloadersWorkShop
 				//----------------------------------------------------------------------------*
 
 				case cSupply.eSupplyTypes.Cases:
-					foreach (cCase Case in m_DataFiles.CaseList)
+					foreach (cSupply Supply in m_DataFiles.CaseList)
 						{
-						Item = AddCase(Case);
-
-						if (Item != null)
+						if ((Supply.CrossUse || m_eFirearmTypeFilter == cFirearm.eFireArmType.None || Supply.FirearmType == m_eFirearmTypeFilter) &&
+							(m_ManufacturerFilter == null || Supply.Manufacturer.CompareTo(m_ManufacturerFilter) == 0) &&
+							(m_CaliberFilter == null || (Supply as cCase).Caliber.CompareTo(m_CaliberFilter) == 0) &&
+							(!m_fNonZeroFilter || m_DataFiles.SupplyQuantity(Supply) > 0.0) &&
+							(!m_fMinStockFilter || m_DataFiles.SupplyQuantity(Supply) < Supply.MinimumStockLevel))
 							{
-							if (m_DataFiles.Preferences.LastCaseSelected != null && m_DataFiles.Preferences.LastCaseSelected.CompareTo(Case) == 0)
-								SelectItem = Item;
+							Item = AddCase(Supply as cCase);
+
+							if (Item != null)
+								{
+								if (m_DataFiles.Preferences.LastCaseSelected != null && m_DataFiles.Preferences.LastCaseSelected.CompareTo(Supply as cCase) == 0)
+									SelectItem = Item;
+								}
 							}
 						}
 
@@ -364,15 +478,21 @@ namespace ReloadersWorkShop
 				//----------------------------------------------------------------------------*
 
 				case cSupply.eSupplyTypes.Powder:
-					foreach (cPowder Powder in m_DataFiles.PowderList)
+					foreach (cSupply Supply in m_DataFiles.PowderList)
 						{
-						if (Powder.Manufacturer != null)
+						double dSupplyQuantity = Math.Round(m_DataFiles.SupplyQuantity(Supply), m_DataFiles.Preferences.CanWeightDecimals);
+						double dMinStockLevel = Math.Round(Supply.MinimumStockLevel, m_DataFiles.Preferences.CanWeightDecimals);
+
+						if ((Supply.CrossUse || m_eFirearmTypeFilter == cFirearm.eFireArmType.None || Supply.FirearmType == m_eFirearmTypeFilter) &&
+							(m_ManufacturerFilter == null || Supply.Manufacturer.CompareTo(m_ManufacturerFilter) == 0) &&
+							(!m_fNonZeroFilter || dSupplyQuantity > 0.0) &&
+							(!m_fMinStockFilter || dSupplyQuantity < dMinStockLevel))
 							{
-							Item = AddPowder(Powder);
+							Item = AddPowder(Supply as cPowder);
 
 							if (Item != null)
 								{
-								if (m_DataFiles.Preferences.LastPowderSelected != null && m_DataFiles.Preferences.LastPowderSelected.CompareTo(Powder) == 0)
+								if (m_DataFiles.Preferences.LastPowderSelected != null && m_DataFiles.Preferences.LastPowderSelected.CompareTo(Supply as cPowder) == 0)
 									SelectItem = Item;
 								}
 							}
@@ -385,15 +505,18 @@ namespace ReloadersWorkShop
 				//----------------------------------------------------------------------------*
 
 				case cSupply.eSupplyTypes.Primers:
-					foreach (cPrimer Primer in m_DataFiles.PrimerList)
+					foreach (cSupply Supply in m_DataFiles.PrimerList)
 						{
-						if (Primer.Manufacturer != null)
+						if ((Supply.CrossUse || m_eFirearmTypeFilter == cFirearm.eFireArmType.None || Supply.FirearmType == m_eFirearmTypeFilter) &&
+							(m_ManufacturerFilter == null || Supply.Manufacturer.CompareTo(m_ManufacturerFilter) == 0) &&
+							(!m_fNonZeroFilter || m_DataFiles.SupplyQuantity(Supply) > 0.0) &&
+							(!m_fMinStockFilter || m_DataFiles.SupplyQuantity(Supply) < Supply.MinimumStockLevel))
 							{
-							Item = AddPrimer(Primer);
+							Item = AddPrimer(Supply as cPrimer);
 
 							if (Item != null)
 								{
-								if (m_DataFiles.Preferences.LastPrimerSelected != null && m_DataFiles.Preferences.LastPrimerSelected.CompareTo(Primer) == 0)
+								if (m_DataFiles.Preferences.LastPrimerSelected != null && m_DataFiles.Preferences.LastPrimerSelected.CompareTo(Supply as cPrimer) == 0)
 									SelectItem = Item;
 								}
 							}
@@ -449,16 +572,17 @@ namespace ReloadersWorkShop
 						new cListViewColumn(0, "ManufacturerHeader","Manufacturer", HorizontalAlignment.Left, 140),
 						new cListViewColumn(1, "PartHeader","Part #", HorizontalAlignment.Left, 90),
 						new cListViewColumn(2, "TypeHeader","Type", HorizontalAlignment.Left, 160),
-						new cListViewColumn(3, "DiameterHeader", String.Format("Diameter ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension)), HorizontalAlignment.Center, 120),
-						new cListViewColumn(4, "WeightHeader", String.Format("Weight ({0})", cDataFiles.MetricString(cDataFiles.eDataType.BulletWeight)), HorizontalAlignment.Center, 120),
-						new cListViewColumn(5, "LengthHeader", String.Format("Length ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension)), HorizontalAlignment.Center, 120),
-						new cListViewColumn(6, "BCHeader", "B.C.", HorizontalAlignment.Center, 70),
-						new cListViewColumn(7, "SDHeader", "S.D.", HorizontalAlignment.Center, 70),
-						new cListViewColumn(8, "NumCalibersHeader", "# Calibers", HorizontalAlignment.Center, 100),
-						new cListViewColumn(9, "SelfCastHeader", "Self Cast", HorizontalAlignment.Center, 100),
-						new cListViewColumn(10, "TopPunchHeader", "Top Punch", HorizontalAlignment.Center, 80),
-						new cListViewColumn(11, "QtyHeader", (cPreferences.TrackInventory) ? "Qty on Hand" : "Box of", HorizontalAlignment.Center, 80),
-						new cListViewColumn(12, "CostHeader", (cPreferences.TrackInventory) ? String.Format("Value ({0})", m_DataFiles.Preferences.Currency) : String.Format("Cost ({0})", m_DataFiles.Preferences.Currency), HorizontalAlignment.Right, 80)
+						new cListViewColumn(3, "CrossHeader","Cross Use?", HorizontalAlignment.Center, 110),
+						new cListViewColumn(4, "DiameterHeader", String.Format("Diameter ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension)), HorizontalAlignment.Center, 120),
+						new cListViewColumn(5, "WeightHeader", String.Format("Weight ({0})", cDataFiles.MetricString(cDataFiles.eDataType.BulletWeight)), HorizontalAlignment.Center, 120),
+						new cListViewColumn(6, "LengthHeader", String.Format("Length ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension)), HorizontalAlignment.Center, 120),
+						new cListViewColumn(7, "BCHeader", "B.C.", HorizontalAlignment.Center, 70),
+						new cListViewColumn(8, "SDHeader", "S.D.", HorizontalAlignment.Center, 70),
+						new cListViewColumn(9, "NumCalibersHeader", "# Calibers", HorizontalAlignment.Center, 100),
+						new cListViewColumn(10, "SelfCastHeader", "Self Cast", HorizontalAlignment.Center, 100),
+						new cListViewColumn(11, "TopPunchHeader", "Top Punch", HorizontalAlignment.Center, 80),
+						new cListViewColumn(12, "QtyHeader", (m_DataFiles.Preferences.TrackInventory) ? "Qty on Hand" : "Box of", HorizontalAlignment.Center, 80),
+						new cListViewColumn(13, "CostHeader", (m_DataFiles.Preferences.TrackInventory) ? String.Format("Value ({0})", m_DataFiles.Preferences.Currency) : String.Format("Cost ({0})", m_DataFiles.Preferences.Currency), HorizontalAlignment.Right, 80)
 						};
 
 					base.PopulateColumns(arColumns);
@@ -477,10 +601,11 @@ namespace ReloadersWorkShop
 						new cListViewColumn(2, "CaliberHeader","Caliber", HorizontalAlignment.Left, 140),
 						new cListViewColumn(3, "PrimerHeader","Primer", HorizontalAlignment.Left, 100),
 						new cListViewColumn(4, "HeadStampHeader","HeadStamp", HorizontalAlignment.Left, 140),
-						new cListViewColumn(5, "MatchHeader","Match", HorizontalAlignment.Left, 70),
-						new cListViewColumn(6, "MilitaryHeader","Military", HorizontalAlignment.Left, 70),
-						new cListViewColumn(7, "QtyHeader", (cPreferences.TrackInventory) ? "Qty on Hand" : "Box of", HorizontalAlignment.Center, 80),
-						new cListViewColumn(8, "CostHeader", (cPreferences.TrackInventory) ? String.Format("Value ({0})", m_DataFiles.Preferences.Currency) : String.Format("Cost ({0})", m_DataFiles.Preferences.Currency), HorizontalAlignment.Right, 80)
+						new cListViewColumn(5, "CrossHeader","Cross Use?", HorizontalAlignment.Center, 110),
+						new cListViewColumn(6, "MatchHeader","Match", HorizontalAlignment.Left, 70),
+						new cListViewColumn(7, "MilitaryHeader","Military", HorizontalAlignment.Left, 70),
+						new cListViewColumn(8, "QtyHeader", (m_DataFiles.Preferences.TrackInventory) ? "Qty on Hand" : "Box of", HorizontalAlignment.Center, 80),
+						new cListViewColumn(9, "CostHeader", (m_DataFiles.Preferences.TrackInventory) ? String.Format("Value ({0})", m_DataFiles.Preferences.Currency) : String.Format("Cost ({0})", m_DataFiles.Preferences.Currency), HorizontalAlignment.Right, 80)
 						};
 
 					base.PopulateColumns(arColumns);
@@ -492,7 +617,7 @@ namespace ReloadersWorkShop
 				//----------------------------------------------------------------------------*
 
 				case cSupply.eSupplyTypes.Powder:
-					string strQuantity = (cPreferences.TrackInventory) ? "Qty on Hand" : "Can of";
+					string strQuantity = (m_DataFiles.Preferences.TrackInventory) ? "Qty on Hand" : "Can of";
 					strQuantity += String.Format(" ({0}s)", cDataFiles.MetricString(cDataFiles.eDataType.CanWeight));
 
 					arColumns = new cListViewColumn[]
@@ -500,8 +625,9 @@ namespace ReloadersWorkShop
 						new cListViewColumn(0, "ManufacturerHeader","Manufacturer", HorizontalAlignment.Left, 140),
 						new cListViewColumn(1, "TypeHeader","Type", HorizontalAlignment.Left, 120),
 						new cListViewColumn(2, "ShapeHeader","Shape", HorizontalAlignment.Center, 100),
-						new cListViewColumn(3, "QtyHeader", strQuantity, HorizontalAlignment.Center, 80),
-						new cListViewColumn(4, "CostHeader", (cPreferences.TrackInventory) ? String.Format("Value ({0})", m_DataFiles.Preferences.Currency) : String.Format("Cost ({0})", m_DataFiles.Preferences.Currency), HorizontalAlignment.Right, 80)
+						new cListViewColumn(3, "CrossHeader","Cross Use?", HorizontalAlignment.Center, 110),
+						new cListViewColumn(4, "QtyHeader", strQuantity, HorizontalAlignment.Center, 80),
+						new cListViewColumn(5, "CostHeader", (m_DataFiles.Preferences.TrackInventory) ? String.Format("Value ({0})", m_DataFiles.Preferences.Currency) : String.Format("Cost ({0})", m_DataFiles.Preferences.Currency), HorizontalAlignment.Right, 80)
 						};
 
 					base.PopulateColumns(arColumns);
@@ -518,12 +644,13 @@ namespace ReloadersWorkShop
 						new cListViewColumn(0, "ManufacturerHeader","Manufacturer", HorizontalAlignment.Left, 140),
 						new cListViewColumn(1, "ModelHeader", "Model", HorizontalAlignment.Left, 140),
 						new cListViewColumn(2, "SizeHeader", "Size", HorizontalAlignment.Left, 120),
-						new cListViewColumn(3, "StandardHeader", "Standard", HorizontalAlignment.Center, 120),
-						new cListViewColumn(4, "MagnumHeader", "Magnum", HorizontalAlignment.Center, 120),
-						new cListViewColumn(5, "BenchRestHeader", "Bench Rest", HorizontalAlignment.Center, 120),
-						new cListViewColumn(6, "MilitaryHeader", "Military", HorizontalAlignment.Center, 120),
-						new cListViewColumn(7, "QtyHeader", (cPreferences.TrackInventory) ? "Qty on Hand" : "Box of", HorizontalAlignment.Center, 80),
-						new cListViewColumn(8, "CostHeader", (cPreferences.TrackInventory) ? String.Format("Value ({0})", m_DataFiles.Preferences.Currency) : String.Format("Cost ({0})", m_DataFiles.Preferences.Currency), HorizontalAlignment.Right, 80)
+						new cListViewColumn(3, "CrossHeader","Cross Use?", HorizontalAlignment.Center, 110),
+						new cListViewColumn(4, "StandardHeader", "Standard", HorizontalAlignment.Center, 120),
+						new cListViewColumn(5, "MagnumHeader", "Magnum", HorizontalAlignment.Center, 120),
+						new cListViewColumn(6, "BenchRestHeader", "Bench Rest", HorizontalAlignment.Center, 120),
+						new cListViewColumn(7, "MilitaryHeader", "Military", HorizontalAlignment.Center, 120),
+						new cListViewColumn(8, "QtyHeader", (m_DataFiles.Preferences.TrackInventory) ? "Qty on Hand" : "Box of", HorizontalAlignment.Center, 80),
+						new cListViewColumn(9, "CostHeader", (m_DataFiles.Preferences.TrackInventory) ? String.Format("Value ({0})", m_DataFiles.Preferences.Currency) : String.Format("Cost ({0})", m_DataFiles.Preferences.Currency), HorizontalAlignment.Right, 80)
 						};
 
 					base.PopulateColumns(arColumns);
@@ -599,6 +726,7 @@ namespace ReloadersWorkShop
 
 			Item.SubItems.Add(Bullet.PartNumber);
 			Item.SubItems.Add(Bullet.Type);
+			Item.SubItems.Add(Bullet.CrossUse ? "Y" : "");
 			Item.SubItems.Add(String.Format(m_strDimensionFormat, cDataFiles.StandardToMetric(Bullet.Diameter, cDataFiles.eDataType.Dimension)));
 
 			Item.SubItems.Add(String.Format(m_strBulletWeightFormat, cDataFiles.StandardToMetric(Bullet.Weight, cDataFiles.eDataType.BulletWeight)));
@@ -610,7 +738,7 @@ namespace ReloadersWorkShop
 
 			Item.SubItems.Add(String.Format("{0:F3}", Bullet.BallisticCoefficient));
 			Item.SubItems.Add(String.Format("{0:F3}", Bullet.SectionalDensity));
-			Item.SubItems.Add(String.Format("{0:N0}", (Bullet.CaliberList != null) ? Bullet.CaliberList.Count : 0));
+			Item.SubItems.Add(String.Format("{0:N0}", (Bullet.BulletCaliberList != null) ? Bullet.BulletCaliberList.Count : 0));
 			Item.SubItems.Add(Bullet.SelfCast ? "Y" : "");
 			Item.SubItems.Add(Bullet.SelfCast ? String.Format("{0:G}", Bullet.TopPunch) : "-");
 
@@ -665,9 +793,13 @@ namespace ReloadersWorkShop
 			Item.Group = Groups[(int) Case.FirearmType];
 
 			Item.SubItems.Add(Case.PartNumber);
+
+			cCaliber.CurrentFirearmType = Case.Caliber.FirearmType;
 			Item.SubItems.Add(Case.Caliber.ToString());
+
 			Item.SubItems.Add(Case.SmallPrimer ? "Small" : "Large");
 			Item.SubItems.Add(Case.HeadStamp);
+			Item.SubItems.Add(Case.CrossUse ? "Y" : "");
 			Item.SubItems.Add(Case.Match ? "Y" : "");
 			Item.SubItems.Add(Case.Military ? "Y" : "");
 
@@ -706,11 +838,14 @@ namespace ReloadersWorkShop
 			Item.Tag = Powder;
 
 			Item.SubItems.Add(Powder.Model);
-			Item.SubItems.Add(Powder.TypeString);
+			Item.SubItems.Add(cPowder.ShapeString(Powder.Shape));
+			Item.SubItems.Add(Powder.CrossUse ? "Y" : "");
 
 			double dQuantity = m_DataFiles.SupplyQuantity(Powder);
 
 			dQuantity = cDataFiles.StandardToMetric(dQuantity / 7000.0, cDataFiles.eDataType.CanWeight);
+
+			dQuantity = Math.Round(dQuantity, m_DataFiles.Preferences.CanWeightDecimals);
 
 			double dCost = m_DataFiles.SupplyCost(Powder);
 
@@ -747,6 +882,7 @@ namespace ReloadersWorkShop
 
 			Item.SubItems.Add(Primer.Model);
 			Item.SubItems.Add(Primer.SizeString);
+			Item.SubItems.Add(Primer.CrossUse ? "Y" : "");
 			Item.SubItems.Add((Primer.Standard) ? "Y" : "");
 			Item.SubItems.Add((Primer.Magnum) ? "Y" : "");
 			Item.SubItems.Add((Primer.BenchRest) ? "Y" : "");
@@ -835,8 +971,6 @@ namespace ReloadersWorkShop
 
 						break;
 					}
-
-				PopulateColumns(true);
 				}
 			}
 
@@ -1066,7 +1200,7 @@ namespace ReloadersWorkShop
 				{
 				bool fCaliberFound = false;
 
-				foreach (cBulletCaliber BulletCaliber in Bullet.CaliberList)
+				foreach (cBulletCaliber BulletCaliber in Bullet.BulletCaliberList)
 					{
 					if (BulletCaliber.Caliber.Checked)
 						{

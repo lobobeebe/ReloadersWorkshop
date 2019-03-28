@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cListViewEvaluationComparer.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -10,7 +10,6 @@
 //============================================================================*
 
 using System;
-using System.Collections;
 using System.Windows.Forms;
 
 using ReloadersWorkShop.Preferences;
@@ -201,7 +200,21 @@ namespace ReloadersWorkShop
 							}
 
 						rc = strPart1.CompareTo(strPart2);
+
+						if (rc == 0)
+							rc = Item1.Charge.PowderWeight.CompareTo(Item2.Charge.PowderWeight);
 						}
+
+					fSpecial = true;
+
+					break;
+
+				//----------------------------------------------------------------------------*
+				// Charge
+				//----------------------------------------------------------------------------*
+
+				case 4:
+					rc = Item1.Charge.PowderWeight.CompareTo(Item2.Charge.PowderWeight);
 
 					fSpecial = true;
 
@@ -211,7 +224,7 @@ namespace ReloadersWorkShop
 				// Primer
 				//----------------------------------------------------------------------------*
 
-				case 4:
+				case 5:
 					rc = Item1.Load.Primer.Manufacturer.CompareTo(Item2.Load.Primer.Manufacturer);
 
 					if (rc == 0)
@@ -250,7 +263,7 @@ namespace ReloadersWorkShop
 				// Case
 				//----------------------------------------------------------------------------*
 
-				case 5:
+				case 6:
 					rc = Item1.Load.Case.Manufacturer.CompareTo(Item2.Load.Case.Manufacturer);
 
 					if (rc == 0)
@@ -289,11 +302,17 @@ namespace ReloadersWorkShop
 					break;
 
 				//----------------------------------------------------------------------------*
-				// Charge
+				// Num Rounds
 				//----------------------------------------------------------------------------*
 
-				case 6:
-					rc = Item1.Charge.PowderWeight.CompareTo(Item2.Charge.PowderWeight);
+				case 7:
+					int nItem1 = 0;
+					int nItem2 = 0;
+
+					Int32.TryParse((Object1 as ListViewItem).Text, out nItem1);
+					Int32.TryParse((Object2 as ListViewItem).Text, out nItem2);
+
+					rc = nItem1.CompareTo(nItem2);
 
 					fSpecial = true;
 
@@ -303,7 +322,7 @@ namespace ReloadersWorkShop
 				// Best Group
 				//----------------------------------------------------------------------------*
 
-				case 7:
+				case 8:
 					rc = Item1.ChargeTest.BestGroup.CompareTo(Item2.ChargeTest.BestGroup);
 
 					fSpecial = true;
@@ -314,24 +333,24 @@ namespace ReloadersWorkShop
 				// MOA
 				//----------------------------------------------------------------------------*
 
-				case 8:
+				case 9:
 					double Group1 = Item1.ChargeTest.BestGroup;
 					double Group2 = Item2.ChargeTest.BestGroup;
 
 					Group1 = cDataFiles.MetricToStandard(Group1, cDataFiles.eDataType.GroupSize);
 					Group2 = cDataFiles.MetricToStandard(Group2, cDataFiles.eDataType.GroupSize);
 
-					int Range1 = Item1.ChargeTest.BestGroupRange;
-					int Range2 = Item2.ChargeTest.BestGroupRange;
+					double dRange1 = Item1.ChargeTest.BestGroupRange;
+					double dRange2 = Item2.ChargeTest.BestGroupRange;
 
-					if (cPreferences.MetricRanges)
+					if (cPreferences.StaticPreferences.MetricRanges)
 						{
-						Range1 = (int) cConversions.MetersToYards(Range1);
-						Range2 = (int) cConversions.MetersToYards(Range2);
+						dRange1 = cConversions.MetersToYards(dRange1);
+						dRange2 = cConversions.MetersToYards(dRange2);
 						}
 
-					double dMOA1 = (Range1 > 0) ? Group1 / ((double) ((double) Range1 / 100.0) * 1.047) : 0;
-					double dMOA2 = (Range2 > 0) ? Group2 / ((double) ((double) Range2 / 100.0) * 1.047) : 0;
+					double dMOA1 = (dRange1 > 0) ? Group1 / ((dRange1 / 100.0) * 1.047) : 0;
+					double dMOA2 = (dRange2 > 0) ? Group2 / ((dRange2 / 100.0) * 1.047) : 0;
 
 					rc = dMOA1.CompareTo(dMOA2);
 
@@ -343,7 +362,7 @@ namespace ReloadersWorkShop
 				// Best Group Range
 				//----------------------------------------------------------------------------*
 
-				case 9:
+				case 10:
 					rc = Item1.ChargeTest.BestGroupRange.CompareTo(Item2.ChargeTest.BestGroupRange);
 
 					fSpecial = true;
@@ -354,7 +373,7 @@ namespace ReloadersWorkShop
 				// Muzzle Velocity
 				//----------------------------------------------------------------------------*
 
-				case 10:
+				case 11:
 					rc = Item1.ChargeTest.MuzzleVelocity.CompareTo(Item2.ChargeTest.MuzzleVelocity);
 
 					fSpecial = true;
@@ -365,14 +384,14 @@ namespace ReloadersWorkShop
 				// Max Deviation
 				//----------------------------------------------------------------------------*
 
-				case 11:
+				case 12:
 					Batch1 = m_DataFiles.GetBatchByID(Item1.ChargeTest.BatchID);
 					Batch2 = m_DataFiles.GetBatchByID(Item2.ChargeTest.BatchID);
 
 					if (Batch1 == null || Batch1.BatchTest == null || Batch1.BatchTest.TestShotList == null || Batch2 == null || Batch2.BatchTest == null || Batch2.BatchTest.TestShotList == null)
 						rc = 0;
 					else
-						rc = Batch1.BatchTest.TestShotList.GetStatistics(Batch1.NumRounds).MaxDeviation.CompareTo(Batch2.BatchTest.TestShotList.GetStatistics(Batch2.NumRounds).MaxDeviation);
+						rc = Batch1.BatchTest.TestShotList.Statistics.MaxDeviation.CompareTo(Batch2.BatchTest.TestShotList.Statistics.MaxDeviation);
 
 					fSpecial = true;
 
@@ -382,14 +401,14 @@ namespace ReloadersWorkShop
 				// Std Deviation
 				//----------------------------------------------------------------------------*
 
-				case 12:
+				case 13:
 					Batch1 = m_DataFiles.GetBatchByID(Item1.ChargeTest.BatchID);
 					Batch2 = m_DataFiles.GetBatchByID(Item2.ChargeTest.BatchID);
 
 					if (Batch1 == null || Batch1.BatchTest == null || Batch1.BatchTest.TestShotList == null || Batch2 == null || Batch2.BatchTest == null || Batch2.BatchTest.TestShotList == null)
 						rc = 0;
 					else
-						rc = Batch1.BatchTest.TestShotList.GetStatistics(Batch1.NumRounds).StdDev.CompareTo(Batch2.BatchTest.TestShotList.GetStatistics(Batch2.NumRounds).StdDev);
+						rc = Batch1.BatchTest.TestShotList.Statistics.StdDev.CompareTo(Batch2.BatchTest.TestShotList.Statistics.StdDev);
 
 					fSpecial = true;
 

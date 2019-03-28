@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cTestShotList.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -46,7 +46,7 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// Export() - CSV
+		// Export()
 		//============================================================================*
 
 		public void Export(StreamWriter Writer)
@@ -54,14 +54,14 @@ namespace ReloadersWorkShop
 			if (Count <= 0)
 				return;
 
-			Writer.WriteLine(",,TestShots");
+			Writer.WriteLine(ExportName);
 			Writer.WriteLine();
 
-			Writer.WriteLine(",," + cTestShot.CSVLineHeader);
+			Writer.WriteLine(cTestShot.CSVLineHeader);
 			Writer.WriteLine();
 
 			foreach (cTestShot TestShot in this)
-				TestShot.Export(Writer);
+				Writer.WriteLine(TestShot.CSVLine);
 
 			Writer.WriteLine();
 			}
@@ -70,11 +70,11 @@ namespace ReloadersWorkShop
 		// Export() - XML
 		//============================================================================*
 
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
+		public void Export(cRWXMLDocument XMLDocument, XmlElement XMLParentElement)
 			{
 			if (Count > 0)
 				{
-				XmlElement XMLElement = XMLDocument.CreateElement(string.Empty, "TestShots", string.Empty);
+				XmlElement XMLElement = XMLDocument.CreateElement(ExportName);
 				XMLParentElement.AppendChild(XMLElement);
 
 				foreach (cTestShot TestShot in this)
@@ -83,47 +83,57 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// GetStatistics()
+		// ExportName Property
 		//============================================================================*
 
-		public cTestStatistics GetStatistics(int nNumRounds)
+		public static string ExportName
 			{
-			cTestStatistics Statistics = new cTestStatistics();
-			Statistics.NumRounds = nNumRounds;
-
-			int nTotalVelocity = 0;
-
-			foreach (cTestShot TestShot in this)
+			get
 				{
-				if (TestShot.MuzzleVelocity > 0 && !TestShot.Misfire && !TestShot.Squib)
-					{
-					Statistics.NumShots++;
-					nTotalVelocity += TestShot.MuzzleVelocity;
-
-					if (Statistics.MinVelocity == 0 || TestShot.MuzzleVelocity < Statistics.MinVelocity)
-						Statistics.MinVelocity = TestShot.MuzzleVelocity;
-
-					if (Statistics.MaxVelocity == 0 || TestShot.MuzzleVelocity > Statistics.MaxVelocity)
-						Statistics.MaxVelocity = TestShot.MuzzleVelocity;
-					}
+				return ("TestShotList");
 				}
+			}
 
-			if (Statistics.NumShots > 0 && nTotalVelocity > 0)
+		//============================================================================*
+		// Import()
+		//============================================================================*
+
+		public void Import(cRWXMLDocument XMLDocument, XmlNode XMLThisNode, cDataFiles DataFiles)
+			{
+			Clear();
+
+			XmlNode XMLNode = XMLThisNode.FirstChild;
+
+			while (XMLNode != null)
 				{
-				Statistics.AverageVelocity = (double) nTotalVelocity / (double) Statistics.NumShots;
-
-				foreach (cTestShot TestShot in this)
+				switch (XMLNode.Name)
 					{
-					if (TestShot.MuzzleVelocity > 0 && !TestShot.Misfire && !TestShot.Squib)
-						Statistics.Variance += (((double) TestShot.MuzzleVelocity - Statistics.AverageVelocity) * ((double) TestShot.MuzzleVelocity - Statistics.AverageVelocity));
+					case "TestShot":
+						cTestShot TestShot = new cTestShot();
+
+						if (TestShot.Import(XMLDocument, XMLNode, DataFiles))
+							{
+							if (TestShot.Validate())
+								Add(TestShot);
+							}
+
+						break;
 					}
 
-				Statistics.Variance /= (double) (Statistics.NumShots - 1);
-
-				Statistics.StdDev = Math.Sqrt(Statistics.Variance);
+				XMLNode = XMLNode.NextSibling;
 				}
+			}
 
-			return (Statistics);
+		//============================================================================*
+		// Statistics Property
+		//============================================================================*
+
+		public cTestStatistics Statistics
+			{
+			get
+				{
+				return (new cTestStatistics(this));
+				}
 			}
 		}
 	}

@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cBulletCaliberForm.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -285,11 +285,11 @@ namespace ReloadersWorkShop
 				{
 				if ((Math.Round(CheckCaliber.MinBulletDiameter, 3) <= Math.Round(m_Bullet.Diameter,  3) && Math.Round(CheckCaliber.MaxBulletDiameter, 3) >= Math.Round(m_Bullet.Diameter, 3)) &&
 					(Math.Round(CheckCaliber.MinBulletWeight, 3) <= Math.Round(m_Bullet.Weight, 3) && Math.Round(CheckCaliber.MaxBulletWeight, 3) >= Math.Round(m_Bullet.Weight, 3)) &&
-					(m_Bullet.CrossUse || CheckCaliber.FirearmType == m_Bullet.FirearmType))
+					(m_Bullet.CrossUse || CheckCaliber.FirearmType == m_Bullet.FirearmType) && !CheckCaliber.Rimfire)
 					{
 					bool fAlreadyAdded = false;
 
-					foreach (cBulletCaliber BulletCaliber in m_Bullet.CaliberList)
+					foreach (cBulletCaliber BulletCaliber in m_Bullet.BulletCaliberList)
 						{
 						if (BulletCaliber.Caliber.CompareTo(CheckCaliber) == 0)
 							{
@@ -353,7 +353,7 @@ namespace ReloadersWorkShop
 		private void SetMaxCOALLabel(cCaliber Caliber)
 			{
 			string strFormat = "{0:F";
-			strFormat += String.Format("{0:G0}", cPreferences.DimensionDecimals);
+			strFormat += String.Format("{0:G0}", m_DataFiles.Preferences.DimensionDecimals);
 			strFormat += "}";
 
 			MaxCOLLabel.Text = String.Format(strFormat, (Caliber != null) ? cDataFiles.StandardToMetric(Caliber.MaxCOL, cDataFiles.eDataType.Dimension) : 0.0);

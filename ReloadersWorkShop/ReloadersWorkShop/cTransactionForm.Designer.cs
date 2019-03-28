@@ -50,9 +50,9 @@
 			this.TaxLabel = new System.Windows.Forms.Label();
 			this.CostLabel = new System.Windows.Forms.Label();
 			this.label7 = new System.Windows.Forms.Label();
-			this.TransactionOKButton = new System.Windows.Forms.Button();
-			this.TransactionCancelButton = new System.Windows.Forms.Button();
 			this.ComponentLabel = new System.Windows.Forms.Label();
+			this.OKButton = new CommonLib.Controls.cOKButton();
+			this.FormCancelButton = new CommonLib.Controls.cCancelButton();
 			this.TransactionGroupBox.SuspendLayout();
 			this.CostsGroup.SuspendLayout();
 			this.SuspendLayout();
@@ -362,26 +362,6 @@
 			this.label7.TabIndex = 4;
 			this.label7.Text = "Quantity:";
 			// 
-			// TransactionOKButton
-			// 
-			this.TransactionOKButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.TransactionOKButton.Location = new System.Drawing.Point(176, 327);
-			this.TransactionOKButton.Name = "TransactionOKButton";
-			this.TransactionOKButton.Size = new System.Drawing.Size(75, 23);
-			this.TransactionOKButton.TabIndex = 3;
-			this.TransactionOKButton.Text = "OK";
-			this.TransactionOKButton.UseVisualStyleBackColor = true;
-			// 
-			// TransactionCancelButton
-			// 
-			this.TransactionCancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.TransactionCancelButton.Location = new System.Drawing.Point(271, 327);
-			this.TransactionCancelButton.Name = "TransactionCancelButton";
-			this.TransactionCancelButton.Size = new System.Drawing.Size(75, 23);
-			this.TransactionCancelButton.TabIndex = 4;
-			this.TransactionCancelButton.Text = "Cancel";
-			this.TransactionCancelButton.UseVisualStyleBackColor = true;
-			// 
 			// ComponentLabel
 			// 
 			this.ComponentLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -392,17 +372,41 @@
 			this.ComponentLabel.Text = "Component Description";
 			this.ComponentLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
+			// OKButton
+			// 
+			this.OKButton.ButtonType = CommonLib.Controls.cOKButton.eButtonTypes.OK;
+			this.OKButton.DialogResult = System.Windows.Forms.DialogResult.OK;
+			this.OKButton.Location = new System.Drawing.Point(177, 327);
+			this.OKButton.Name = "OKButton";
+			this.OKButton.ShowToolTips = true;
+			this.OKButton.Size = new System.Drawing.Size(75, 23);
+			this.OKButton.TabIndex = 6;
+			this.OKButton.Text = "OK";
+			this.OKButton.ToolTip = "Click to accept changes and exit.";
+			this.OKButton.UseVisualStyleBackColor = true;
+			// 
+			// FormCancelButton
+			// 
+			this.FormCancelButton.ButtonType = CommonLib.Controls.cCancelButton.eButtonTypes.Cancel;
+			this.FormCancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.FormCancelButton.Location = new System.Drawing.Point(281, 327);
+			this.FormCancelButton.Name = "FormCancelButton";
+			this.FormCancelButton.ShowToolTips = true;
+			this.FormCancelButton.Size = new System.Drawing.Size(75, 23);
+			this.FormCancelButton.TabIndex = 7;
+			this.FormCancelButton.Text = "Cancel";
+			this.FormCancelButton.ToolTip = "Click to cancel changes and exit.";
+			this.FormCancelButton.UseVisualStyleBackColor = true;
+			// 
 			// cTransactionForm
 			// 
-			this.AcceptButton = this.TransactionOKButton;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.CancelButton = this.TransactionCancelButton;
-			this.ClientSize = new System.Drawing.Size(523, 376);
+			this.ClientSize = new System.Drawing.Size(533, 372);
 			this.ControlBox = false;
+			this.Controls.Add(this.FormCancelButton);
+			this.Controls.Add(this.OKButton);
 			this.Controls.Add(this.ComponentLabel);
-			this.Controls.Add(this.TransactionCancelButton);
-			this.Controls.Add(this.TransactionOKButton);
 			this.Controls.Add(this.CostsGroup);
 			this.Controls.Add(this.TransactionGroupBox);
 			this.DoubleBuffered = true;
@@ -435,8 +439,6 @@
 		private System.Windows.Forms.Label TaxLabel;
 		private System.Windows.Forms.Label CostLabel;
 		private System.Windows.Forms.Label label7;
-		private System.Windows.Forms.Button TransactionOKButton;
-		private System.Windows.Forms.Button TransactionCancelButton;
 		private System.Windows.Forms.Label AvgCostLabel;
 		private System.Windows.Forms.Label AvgCostEachLabel;
 		private CommonLib.Controls.cDoubleValueTextBox TotalTextBox;
@@ -449,5 +451,7 @@
 		private CommonLib.Controls.cDoubleValueTextBox QuantityTextBox;
 		private System.Windows.Forms.Label ComponentLabel;
 		private System.Windows.Forms.Label StartDateLabel;
+		private CommonLib.Controls.cOKButton OKButton;
+		private CommonLib.Controls.cCancelButton FormCancelButton;
 		}
 	}

@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cFirearmListView.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -37,15 +37,16 @@ namespace ReloadersWorkShop
 			new cListViewColumn(0, "ManufacturerHeader","Manufacturer", HorizontalAlignment.Left, 140),
 			new cListViewColumn(1, "ModelHeader", "Model", HorizontalAlignment.Left, 140),
 			new cListViewColumn(2, "SerialHeader", "Serial #", HorizontalAlignment.Left, 140),
-			new cListViewColumn(3, "CaliberHeader", "Primary Caliber", HorizontalAlignment.Left, 160),
-			new cListViewColumn(4, "BarrelLengthHeader", "Barrel Length", HorizontalAlignment.Center, 115),
-			new cListViewColumn(5, "TwistHeader", "Twist", HorizontalAlignment.Center, 115),
-			new cListViewColumn(6, "ScopedHeader", "Scoped", HorizontalAlignment.Center, 60),
-			new cListViewColumn(7, "TurretClickHeader", "Turret Click", HorizontalAlignment.Center, 120),
-			new cListViewColumn(8, "ZeroRangeHeader", "Zero Range", HorizontalAlignment.Center, 115),
-			new cListViewColumn(9, "SightHeightHeader", "Sight Height", HorizontalAlignment.Center, 115),
-			new cListViewColumn(10, "HeadspaceHeader", "Headspace", HorizontalAlignment.Center, 115),
-			new cListViewColumn(11, "NeckSizeHeader", "Neck Size", HorizontalAlignment.Center, 115)
+			new cListViewColumn(3, "DescriptionHeader", "Description", HorizontalAlignment.Left, 160),
+			new cListViewColumn(4, "CaliberHeader", "Primary Caliber", HorizontalAlignment.Left, 160),
+			new cListViewColumn(5, "SourceHeader", "Acquired from", HorizontalAlignment.Left, 200),
+			new cListViewColumn(6, "DateHeader", "Date", HorizontalAlignment.Center, 80),
+			new cListViewColumn(7, "PriceHeader", "Price", HorizontalAlignment.Right, 80),
+			new cListViewColumn(8, "TaxHeader", "Tax", HorizontalAlignment.Right, 80),
+			new cListViewColumn(9, "ShippingHeader", "Shipping", HorizontalAlignment.Right, 80),
+			new cListViewColumn(10, "TransferFeesHeader", "Transfer Fees", HorizontalAlignment.Right, 100),
+			new cListViewColumn(11, "OtherFeesHeader", "Other Fees", HorizontalAlignment.Right, 100),
+			new cListViewColumn(12, "TotalHeader", "Total", HorizontalAlignment.Right, 80)
 			};
 
 		//============================================================================*
@@ -64,6 +65,8 @@ namespace ReloadersWorkShop
 			SetColumns();
 
 			CheckBoxes = true;
+
+			Font = new System.Drawing.Font(Font, System.Drawing.FontStyle.Bold);
 
 			//----------------------------------------------------------------------------*
 			// Event Handlers
@@ -195,11 +198,12 @@ namespace ReloadersWorkShop
 
 		public void SetColumns()
 			{
-			m_arColumns[4].Text = String.Format("Barrel Length ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Firearm));
-			m_arColumns[8].Text = String.Format("Zero Range ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Range));
-			m_arColumns[9].Text = String.Format("Sight Height ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Firearm));
-			m_arColumns[10].Text = String.Format("Headspace ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
-			m_arColumns[11].Text = String.Format("Neck Size ({0})", cDataFiles.MetricString(cDataFiles.eDataType.Dimension));
+			m_arColumns[7].Text = String.Format("Price ({0})", m_DataFiles.Preferences.Currency);
+			m_arColumns[8].Text = String.Format("Tax ({0})", m_DataFiles.Preferences.Currency);
+			m_arColumns[9].Text = String.Format("Shipping ({0})", m_DataFiles.Preferences.Currency);
+			m_arColumns[10].Text = String.Format("Transfer Fees ({0})", m_DataFiles.Preferences.Currency);
+			m_arColumns[11].Text = String.Format("Other Fees ({0})", m_DataFiles.Preferences.Currency);
+			m_arColumns[12].Text = String.Format("Total ({0})", m_DataFiles.Preferences.Currency);
 
 			PopulateColumns(m_arColumns);
 			}
@@ -221,29 +225,25 @@ namespace ReloadersWorkShop
 
 			Item.Checked = Firearm.Checked;
 
-			string strLengthFormat = "{0:F";
-			strLengthFormat += String.Format("{0:G0}", cPreferences.FirearmDecimals);
-			strLengthFormat += "}";
+			Item.SubItems.Add(Firearm.PartNumber);
+			Item.SubItems.Add(Firearm.SerialNumber);
+			Item.SubItems.Add(Firearm.Description);
+			Item.SubItems.Add(Firearm.PrimaryCaliber.ToString());
+			Item.SubItems.Add(Firearm.Source);
 
-			string strDimensionFormat = "{0:F";
-			strDimensionFormat += String.Format("{0:G0}", cPreferences.DimensionDecimals);
-			strDimensionFormat += "}";
+			if (Firearm.PurchaseDate.Year == 1)
+				Firearm.PurchaseDate = DateTime.Today;
 
-			string strTwistFormat = "1 in {0:F";
-			strTwistFormat += String.Format("{0:G0}", cPreferences.FirearmDecimals);
-			strTwistFormat += "} {1}";
+			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source)? String.Format("{0}", Firearm.PurchaseDate.ToShortDateString()) : "");
+			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source) && Firearm.PurchasePrice !=  0.0? String.Format("{0:F2}", Firearm.PurchasePrice) : "-");
+			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source) && Firearm.Tax != 0.0 ? String.Format("{0:F2}", Firearm.Tax) : "-");
+			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source) && Firearm.Shipping != 0.0 ? String.Format("{0:F2}", Firearm.Shipping) : "-");
+			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source) && Firearm.TransferFees != 0.0 ? String.Format("{0:F2}", Firearm.TransferFees) : "-");
+			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source) && Firearm.OtherFees != 0.0 ? String.Format("{0:F2}", Firearm.OtherFees) : "-");
 
-			Item.SubItems.Add(String.Format("{0}", Firearm.Model));
-			Item.SubItems.Add(String.Format("{0}", Firearm.SerialNumber));
-			Item.SubItems.Add(String.Format("{0}", Firearm.PrimaryCaliber));
-			Item.SubItems.Add(String.Format(strLengthFormat, cDataFiles.StandardToMetric(Firearm.BarrelLength, cDataFiles.eDataType.Firearm)));
-			Item.SubItems.Add(Firearm.Twist == 0.0 ? "N/A" : String.Format(strTwistFormat, cDataFiles.StandardToMetric(Firearm.Twist, cDataFiles.eDataType.Firearm), cDataFiles.MetricString(cDataFiles.eDataType.Firearm)));
-			Item.SubItems.Add(Firearm.Scoped ? "Y" : "");
-			Item.SubItems.Add(Firearm.TurretClickString);
-			Item.SubItems.Add(String.Format("{0:N0}", cDataFiles.StandardToMetric(Firearm.ZeroRange, cDataFiles.eDataType.Range)));
-			Item.SubItems.Add(String.Format(strLengthFormat, cDataFiles.StandardToMetric(Firearm.SightHeight, cDataFiles.eDataType.Firearm)));
-			Item.SubItems.Add(Firearm.FirearmType == cFirearm.eFireArmType.Rifle ? String.Format(strDimensionFormat, cDataFiles.StandardToMetric(Firearm.HeadSpace, cDataFiles.eDataType.Dimension)) : "-");
-			Item.SubItems.Add(Firearm.FirearmType == cFirearm.eFireArmType.Rifle ? String.Format(strDimensionFormat, cDataFiles.StandardToMetric(Firearm.Neck, cDataFiles.eDataType.Dimension)) : "-");
+			double dTotal = Firearm.PurchasePrice + Firearm.Tax + Firearm.Shipping + Firearm.TransferFees + Firearm.OtherFees;
+
+			Item.SubItems.Add(!String.IsNullOrEmpty(Firearm.Source) && dTotal != 0.0 && Firearm.PurchaseDate.Year > 1 ? String.Format("{0:F2}", dTotal) : "-");
 			}
 
 		//============================================================================*

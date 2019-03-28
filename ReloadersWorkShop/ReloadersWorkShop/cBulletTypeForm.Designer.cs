@@ -37,7 +37,6 @@
 			System.Windows.Forms.Label label7;
 			this.GeneralGroupBox = new System.Windows.Forms.GroupBox();
 			this.textBox1 = new System.Windows.Forms.TextBox();
-			this.ModelTextBox = new System.Windows.Forms.TextBox();
 			this.CaliberLabel = new System.Windows.Forms.Label();
 			this.FirearmTypeLabel = new System.Windows.Forms.Label();
 			this.ManufacturerLabel = new System.Windows.Forms.Label();
@@ -70,10 +69,11 @@
 			this.VarmintCheckBox = new System.Windows.Forms.CheckBox();
 			this.CombatTargetCheckBox = new System.Windows.Forms.CheckBox();
 			this.MatchCheckBox = new System.Windows.Forms.CheckBox();
-			this.CustomTextBox = new System.Windows.Forms.TextBox();
 			this.ResultLabel = new System.Windows.Forms.Label();
 			this.BulletTypeOKButton = new System.Windows.Forms.Button();
 			this.BulletTypeCancelButton = new System.Windows.Forms.Button();
+			this.ModelTextBox = new CommonLib.Controls.cTextBox();
+			this.CustomTextBox = new CommonLib.Controls.cTextBox();
 			label5 = new System.Windows.Forms.Label();
 			label2 = new System.Windows.Forms.Label();
 			label4 = new System.Windows.Forms.Label();
@@ -172,9 +172,9 @@
 			// 
 			// GeneralGroupBox
 			// 
+			this.GeneralGroupBox.Controls.Add(this.ModelTextBox);
 			this.GeneralGroupBox.Controls.Add(label5);
 			this.GeneralGroupBox.Controls.Add(this.textBox1);
-			this.GeneralGroupBox.Controls.Add(this.ModelTextBox);
 			this.GeneralGroupBox.Controls.Add(label2);
 			this.GeneralGroupBox.Controls.Add(this.CaliberLabel);
 			this.GeneralGroupBox.Controls.Add(label4);
@@ -204,16 +204,6 @@
 			this.textBox1.Size = new System.Drawing.Size(76, 19);
 			this.textBox1.TabIndex = 4;
 			this.textBox1.TabStop = false;
-			// 
-			// ModelTextBox
-			// 
-			this.ModelTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.ModelTextBox.Location = new System.Drawing.Point(250, 71);
-			this.ModelTextBox.Margin = new System.Windows.Forms.Padding(2);
-			this.ModelTextBox.MaxLength = 30;
-			this.ModelTextBox.Name = "ModelTextBox";
-			this.ModelTextBox.Size = new System.Drawing.Size(126, 19);
-			this.ModelTextBox.TabIndex = 0;
 			// 
 			// CaliberLabel
 			// 
@@ -628,12 +618,12 @@
 			// 
 			// groupBox4
 			// 
+			this.groupBox4.Controls.Add(this.CustomTextBox);
 			this.groupBox4.Controls.Add(this.CannelureCheckBox);
 			this.groupBox4.Controls.Add(this.HornetCheckBox);
 			this.groupBox4.Controls.Add(this.VarmintCheckBox);
 			this.groupBox4.Controls.Add(this.CombatTargetCheckBox);
 			this.groupBox4.Controls.Add(this.MatchCheckBox);
-			this.groupBox4.Controls.Add(this.CustomTextBox);
 			this.groupBox4.Controls.Add(label6);
 			this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.groupBox4.ForeColor = System.Drawing.SystemColors.HotTrack;
@@ -716,17 +706,6 @@
 			this.MatchCheckBox.Text = "Match";
 			this.MatchCheckBox.UseVisualStyleBackColor = true;
 			// 
-			// CustomTextBox
-			// 
-			this.CustomTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.CustomTextBox.ForeColor = System.Drawing.SystemColors.WindowText;
-			this.CustomTextBox.Location = new System.Drawing.Point(52, 46);
-			this.CustomTextBox.Margin = new System.Windows.Forms.Padding(2);
-			this.CustomTextBox.MaxLength = 30;
-			this.CustomTextBox.Name = "CustomTextBox";
-			this.CustomTextBox.Size = new System.Drawing.Size(324, 19);
-			this.CustomTextBox.TabIndex = 5;
-			// 
 			// ResultLabel
 			// 
 			this.ResultLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -759,13 +738,41 @@
 			this.BulletTypeCancelButton.Text = "Cancel";
 			this.BulletTypeCancelButton.UseVisualStyleBackColor = true;
 			// 
+			// ModelTextBox
+			// 
+			this.ModelTextBox.BackColor = System.Drawing.Color.LightPink;
+			this.ModelTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ModelTextBox.Location = new System.Drawing.Point(252, 71);
+			this.ModelTextBox.MaxLength = 30;
+			this.ModelTextBox.Name = "ModelTextBox";
+			this.ModelTextBox.Required = true;
+			this.ModelTextBox.Size = new System.Drawing.Size(100, 20);
+			this.ModelTextBox.TabIndex = 9;
+			this.ModelTextBox.ToolTip = "";
+			this.ModelTextBox.ValidChars = "";
+			this.ModelTextBox.Value = "";
+			// 
+			// CustomTextBox
+			// 
+			this.CustomTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.CustomTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.CustomTextBox.Location = new System.Drawing.Point(54, 46);
+			this.CustomTextBox.MaxLength = 30;
+			this.CustomTextBox.Name = "CustomTextBox";
+			this.CustomTextBox.Required = false;
+			this.CustomTextBox.Size = new System.Drawing.Size(322, 20);
+			this.CustomTextBox.TabIndex = 10;
+			this.CustomTextBox.ToolTip = "";
+			this.CustomTextBox.ValidChars = "";
+			this.CustomTextBox.Value = "";
+			// 
 			// cBulletTypeForm
 			// 
 			this.AcceptButton = this.BulletTypeOKButton;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.BulletTypeCancelButton;
-			this.ClientSize = new System.Drawing.Size(424, 473);
+			this.ClientSize = new System.Drawing.Size(420, 469);
 			this.ControlBox = false;
 			this.Controls.Add(this.BulletTypeCancelButton);
 			this.Controls.Add(this.BulletTypeOKButton);
@@ -803,7 +810,6 @@
 		private System.Windows.Forms.Label CaliberLabel;
 		private System.Windows.Forms.Label FirearmTypeLabel;
 		private System.Windows.Forms.Label ManufacturerLabel;
-		private System.Windows.Forms.TextBox ModelTextBox;
 		private System.Windows.Forms.GroupBox groupBox2;
 		private System.Windows.Forms.RadioButton CastRadioButton;
 		private System.Windows.Forms.RadioButton LeadRadioButton;
@@ -828,7 +834,6 @@
 		private System.Windows.Forms.GroupBox groupBox4;
 		private System.Windows.Forms.RadioButton TMJRadioButton;
 		private System.Windows.Forms.RadioButton FlatNoseRadioButton;
-		private System.Windows.Forms.TextBox CustomTextBox;
 		private System.Windows.Forms.Label ResultLabel;
 		private System.Windows.Forms.Button BulletTypeOKButton;
 		private System.Windows.Forms.Button BulletTypeCancelButton;
@@ -838,5 +843,7 @@
 		private System.Windows.Forms.CheckBox VarmintCheckBox;
 		private System.Windows.Forms.CheckBox CombatTargetCheckBox;
 		private System.Windows.Forms.CheckBox MatchCheckBox;
+		private CommonLib.Controls.cTextBox ModelTextBox;
+		private CommonLib.Controls.cTextBox CustomTextBox;
 		}
 	}

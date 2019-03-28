@@ -103,11 +103,6 @@ namespace ReloadersWorkShop
 			m_Parms.StartDate = m_DataFiles.FirstTransactionDate;
 			m_Parms.EndDate = m_DataFiles.LastTransactionDate;
 
-			StartDatePicker.MinDate = m_Parms.StartDate;
-			StartDatePicker.MaxDate = m_Parms.EndDate;
-			EndDatePicker.MinDate = m_Parms.StartDate;
-			EndDatePicker.MaxDate = m_Parms.EndDate;
-
 			//----------------------------------------------------------------------------*
 			// Populate the dialog and exit
 			//----------------------------------------------------------------------------*

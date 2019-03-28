@@ -32,6 +32,7 @@
 			this.ExitButton = new System.Windows.Forms.Button();
 			this.ActivateButton = new System.Windows.Forms.Button();
 			this.RegistrationLabel = new System.Windows.Forms.Label();
+			this.CopyrightLabel = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// ContinueButton
@@ -79,15 +80,27 @@
 			// RegistrationLabel
 			// 
 			this.RegistrationLabel.AutoSize = true;
-			this.RegistrationLabel.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+			this.RegistrationLabel.BackColor = System.Drawing.Color.LightCyan;
 			this.RegistrationLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.RegistrationLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.RegistrationLabel.ForeColor = System.Drawing.Color.Yellow;
+			this.RegistrationLabel.ForeColor = System.Drawing.Color.RoyalBlue;
 			this.RegistrationLabel.Location = new System.Drawing.Point(254, 335);
 			this.RegistrationLabel.Name = "RegistrationLabel";
-			this.RegistrationLabel.Size = new System.Drawing.Size(53, 22);
+			this.RegistrationLabel.Size = new System.Drawing.Size(140, 22);
 			this.RegistrationLabel.TabIndex = 3;
-			this.RegistrationLabel.Text = "label1";
+			this.RegistrationLabel.Text = "Registration Label";
+			// 
+			// CopyrightLabel
+			// 
+			this.CopyrightLabel.AutoSize = true;
+			this.CopyrightLabel.BackColor = System.Drawing.Color.Transparent;
+			this.CopyrightLabel.Font = new System.Drawing.Font("Stencil", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.CopyrightLabel.ForeColor = System.Drawing.Color.White;
+			this.CopyrightLabel.Location = new System.Drawing.Point(218, 220);
+			this.CopyrightLabel.Name = "CopyrightLabel";
+			this.CopyrightLabel.Size = new System.Drawing.Size(321, 19);
+			this.CopyrightLabel.TabIndex = 4;
+			this.CopyrightLabel.Text = "Copyright © 2013-2018, Kevin S. Beebe";
 			// 
 			// cMainForm
 			// 
@@ -97,6 +110,7 @@
 			this.CancelButton = this.ExitButton;
 			this.ClientSize = new System.Drawing.Size(683, 468);
 			this.ControlBox = false;
+			this.Controls.Add(this.CopyrightLabel);
 			this.Controls.Add(this.RegistrationLabel);
 			this.Controls.Add(this.ActivateButton);
 			this.Controls.Add(this.ExitButton);
@@ -118,6 +132,7 @@
 		private System.Windows.Forms.Button ExitButton;
 		private System.Windows.Forms.Button ActivateButton;
 		private System.Windows.Forms.Label RegistrationLabel;
+		private System.Windows.Forms.Label CopyrightLabel;
 		}
 	}
 

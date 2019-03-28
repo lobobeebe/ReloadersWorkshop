@@ -52,10 +52,8 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			ModelTextBox.TextChanged += OnTextChanged;
-			ModelTextBox.GotFocus += cControls.OnTextBoxGotFocus;
 
 			CustomTextBox.TextChanged += OnTextChanged;
-			CustomTextBox.GotFocus += cControls.OnTextBoxGotFocus;
 
 			LeadRadioButton.Click += OnLeadButtonClicked;
 			CastRadioButton.Click += OnCastButtonClicked;

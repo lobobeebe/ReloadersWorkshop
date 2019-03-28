@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cAmmo.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -10,7 +10,6 @@
 //============================================================================*
 
 using System;
-using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -23,7 +22,7 @@ namespace ReloadersWorkShop
 	//============================================================================*
 
 	[Serializable]
-	public class cAmmo : cSupply, IComparable
+	public partial class cAmmo : cSupply, IComparable
 		{
 		//============================================================================*
 		// Private Data Members
@@ -48,8 +47,8 @@ namespace ReloadersWorkShop
 		// cAmmo() - Constructor
 		//============================================================================*
 
-		public cAmmo()
-			: base(cSupply.eSupplyTypes.Ammo)
+		public cAmmo(bool fIdentity = false)
+			: base(cSupply.eSupplyTypes.Ammo, fIdentity)
 			{
 			}
 
@@ -79,6 +78,53 @@ namespace ReloadersWorkShop
 		public cAmmo(cAmmo Ammo)
 				: base(Ammo)
 			{
+			Copy(Ammo);
+			}
+
+		//============================================================================*
+		// Append()
+		//============================================================================*
+
+		public int Append(cAmmo Ammo, bool fCountOnly = false)
+			{
+			int nUpdateCount = 0;
+
+			if (m_dBallisticCoefficient == 0.0 && Ammo.m_dBallisticCoefficient != 0.0)
+				{
+				if (!fCountOnly)
+					m_dBallisticCoefficient = Ammo.m_dBallisticCoefficient;
+
+				nUpdateCount++;
+				}
+
+			if (m_dBulletDiameter == 0.0 && Ammo.m_dBulletDiameter != 0.0)
+				{
+				if (!fCountOnly)
+					m_dBulletDiameter = Ammo.m_dBulletDiameter;
+
+				nUpdateCount++;
+				}
+
+			if (m_dBulletWeight == 0.0 && Ammo.m_dBulletWeight != 0.0)
+				{
+				if (!fCountOnly)
+					m_dBulletWeight = Ammo.m_dBulletWeight;
+
+				nUpdateCount++;
+				}
+
+			return (nUpdateCount);
+			}
+
+		//============================================================================*
+		// Copy()
+		//============================================================================*
+
+		public void Copy(cAmmo Ammo, bool fCopyBase = true)
+			{
+			if (fCopyBase)
+				base.Copy(Ammo);
+
 			m_strPartNumber = Ammo.m_strPartNumber;
 			m_strType = Ammo.m_strType;
 			m_nBatchID = Ammo.m_nBatchID;
@@ -243,155 +289,6 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// CSVHeader Property
-		//============================================================================*
-
-		public static string CSVHeader
-			{
-			get
-				{
-				return ("Ammunition");
-				}
-			}
-
-		//============================================================================*
-		// CSVLine Property
-		//============================================================================*
-
-		public string CSVLine
-			{
-			get
-				{
-				string strLine = "";
-
-				strLine += Manufacturer.Name;
-				strLine += ",";
-				strLine += m_strPartNumber;
-				strLine += ",";
-				strLine += m_strType;
-				strLine += ",";
-				strLine += m_Caliber.Name;
-				strLine += ",";
-
-				strLine += m_nBatchID;
-				strLine += ",";
-				strLine += m_fReload ? "Yes," : "-,";
-
-				strLine += m_dBulletDiameter;
-				strLine += ",";
-				strLine += m_dBulletWeight;
-				strLine += ",";
-				strLine += m_dBallisticCoefficient;
-
-				return (strLine);
-				}
-			}
-
-		//============================================================================*
-		// CSVLineHeader Property
-		//============================================================================*
-
-		public static string CSVLineHeader
-			{
-			get
-				{
-				return ("Manufacturer,Part Number,Type,Batch ID,Reload?,Caliber,Bullet Diameter,Bullet Weight,Ballistic Coefficient");
-				}
-			}
-
-		//============================================================================*
-		// Export() - XML Document
-		//============================================================================*
-
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
-			{
-			XmlElement XMLThisElement = XMLDocument.CreateElement("Ammo");
-			XMLParentElement.AppendChild(XMLThisElement);
-
-			// Manufacturer
-
-			XmlElement XMLElement = XMLDocument.CreateElement("Manufacturer");
-			XmlText XMLTextElement = XMLDocument.CreateTextNode(Manufacturer.Name);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Part Number
-
-			XMLElement = XMLDocument.CreateElement("PartNumber");
-			XMLTextElement = XMLDocument.CreateTextNode(m_strPartNumber);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Type
-
-			XMLElement = XMLDocument.CreateElement("Type");
-			XMLTextElement = XMLDocument.CreateTextNode(m_strType);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Firearm Type
-
-			XMLElement = XMLDocument.CreateElement("FirearmType");
-			XMLTextElement = XMLDocument.CreateTextNode(cFirearm.FirearmTypeString(FirearmType));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Caliber
-
-			cCaliber.CurrentFirearmType = FirearmType;
-
-			XMLElement = XMLDocument.CreateElement("Caliber");
-			XMLTextElement = XMLDocument.CreateTextNode(Caliber.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Batch ID
-
-			XMLElement = XMLDocument.CreateElement("BatchID");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nBatchID));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Reload
-
-			XMLElement = XMLDocument.CreateElement("Reload?");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fReload ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Bullet Diameter
-
-			XMLElement = XMLDocument.CreateElement("BulletDiameter");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dBulletDiameter));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Bullet Weight
-
-			XMLElement = XMLDocument.CreateElement("BulletWeight");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dBulletWeight));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Ballistic Coefficient
-
-			XMLElement = XMLDocument.CreateElement("BallisticCoefficient");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dBallisticCoefficient));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-			}
-
-		//============================================================================*
 		// PartNumber Property
 		//============================================================================*
 
@@ -421,6 +318,34 @@ namespace ReloadersWorkShop
 				{
 				m_fReload = value;
 				}
+			}
+
+		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public override bool ResolveIdentities(cDataFiles DataFiles)
+			{
+			bool fChanged = base.ResolveIdentities(DataFiles);
+
+			if (m_Caliber.Identity)
+				{
+				foreach (cCaliber Caliber in DataFiles.CaliberList)
+					{
+					if (!Caliber.Identity && Caliber.CompareTo(m_Caliber) == 0)
+						{
+						m_Caliber = Caliber;
+
+						fChanged = true;
+
+						break;
+						}
+					}
+				}
+
+			fChanged = m_TestList.ResolveIdentities(DataFiles) ? true : fChanged;
+
+			return (fChanged);
 			}
 
 		//============================================================================*
@@ -537,43 +462,27 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// XMLHeader Property
+		// Validate()
 		//============================================================================*
 
-		public static string XMLHeader
+		public override bool Validate(bool fIdentityOK = false)
 			{
-			get
-				{
-				return ("Ammunition");
-				}
-			}
+			if (!base.Validate(fIdentityOK))
+				return (false);
 
-		//============================================================================*
-		// XMLLine Property
-		//============================================================================*
+			if (m_Caliber == null || String.IsNullOrEmpty(m_strPartNumber) || String.IsNullOrEmpty(m_strType))
+				return (false);
 
-		public string XMLLine
-			{
-			get
-				{
-				string strLine = "";
+			if (fIdentityOK && Identity)
+				return (true);
 
-				return (strLine);
-				}
-			}
+			if (Identity)
+				return (false);
 
-		//============================================================================*
-		// XMLLineHeader Property
-		//============================================================================*
+			if (m_dBulletDiameter <= 0.0 || m_dBulletWeight <= 0.0)
+				return (false);
 
-		public static string XMLLineHeader
-			{
-			get
-				{
-				string strLine = "";
-
-				return (strLine);
-				}
+			return (true);
 			}
 		}
 	}

@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cFirearmDetailForm.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -64,6 +64,8 @@ namespace ReloadersWorkShop
 
 		private List<string> m_ImageList = new List<string>();
 
+		private bool m_fUserTax = false;
+
 		//============================================================================*
 		// cFirearmDetailForm() - Constructor
 		//============================================================================*
@@ -93,8 +95,12 @@ namespace ReloadersWorkShop
 				MakePrimaryButton.Click += OnMakePrimaryClicked;
 
 				SourceComboBox.TextChanged += OnSourceChanged;
-				PurchaseDateTimePicker.TextChanged += OnPurchaseDateChanged;
+				PurchaseDatePicker.TextChanged += OnPurchaseDateChanged;
 				PriceTextBox.TextChanged += OnPriceChanged;
+				TaxTextBox.TextChanged += OnTaxChanged;
+				ShippingTextBox.TextChanged += OnShippingChanged;
+				TransferFeesTextBox.TextChanged += OnTransferFeesChanged;
+				OtherFeesTextBox.TextChanged += OnOtherFeesChanged;
 
 				ReceiverFinishComboBox.TextChanged += OnReceiverFinishChanged;
 				ReceiverFinishComboBox.GotFocus += OnFinishComboGotFocus;
@@ -105,19 +111,6 @@ namespace ReloadersWorkShop
 				TypeComboBox.SelectedIndexChanged += OnTypeChanged;
 				ActionComboBox.SelectedIndexChanged += OnActionChanged;
 				HammerComboBox.SelectedIndexChanged += OnHammerChanged;
-
-				ScopeManufacturerComboBox.SelectedIndexChanged += OnScopeManufacturerChanged;
-				ScopeModelTextBox.TextChanged += OnScopeModelChanged;
-				ScopePowerTextBox.TextChanged += OnScopePowerChanged;
-				ScopeObjectiveTextBox.TextChanged += OnScopeObjectiveChanged;
-
-				StockManufacturerComboBox.SelectedIndexChanged += OnStockManufacturerChanged;
-				StockModelTextBox.TextChanged += OnStockModelChanged;
-				StockFinishComboBox.TextChanged += OnStockFinishChanged;
-
-				TriggerManufacturerComboBox.SelectedIndexChanged += OnTriggerManufacturerChanged;
-				TriggerModelTextBox.TextChanged += OnTriggerModelChanged;
-				TriggerPullTextBox.TextChanged += OnTriggerPullChanged;
 
 				MagazineComboBox.SelectedIndexChanged += OnMagazineChanged;
 				CapacityTextBox.TextChanged += OnMagazineCapacityChanged;
@@ -139,6 +132,8 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			PriceLabel.Text = String.Format("Price ({0}):", m_DataFiles.Preferences.Currency);
+			TaxLabel.Text = String.Format("Tax ({0}):", m_DataFiles.Preferences.Currency);
+			ShippingLabel.Text = String.Format("Shipping ({0}):", m_DataFiles.Preferences.Currency);
 
 			//----------------------------------------------------------------------------*
 			// Verify Firearm Image Info
@@ -182,6 +177,10 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 			// Fill in the firearm data
 			//----------------------------------------------------------------------------*
+
+			cDataFiles.SetInputParameters(PriceTextBox, cDataFiles.eDataType.Cost);
+			cDataFiles.SetInputParameters(TaxTextBox, cDataFiles.eDataType.Cost);
+			cDataFiles.SetInputParameters(ShippingTextBox, cDataFiles.eDataType.Cost);
 
 			PopulateFirearmData();
 
@@ -470,6 +469,24 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// OnOtherFeesChanged()
+		//============================================================================*
+
+		protected void OnOtherFeesChanged(object sender, EventArgs e)
+			{
+			if (!m_fInitialized)
+				return;
+
+			m_Firearm.OtherFees = OtherFeesTextBox.Value;
+
+			SetTotal();
+
+			m_fChanged = true;
+
+			UpdateButtons();
+			}
+
+		//============================================================================*
 		// OnPreviousImageClicked()
 		//============================================================================*
 
@@ -519,7 +536,16 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_Firearm.Price = PriceTextBox.Value;
+			m_Firearm.PurchasePrice = PriceTextBox.Value;
+
+			if (m_DataFiles.Preferences.TaxRate != 0.0 && !m_fUserTax)
+				{
+				m_Firearm.Tax = m_Firearm.PurchasePrice * (m_DataFiles.Preferences.TaxRate / 100.0);
+
+				TaxTextBox.Value = m_Firearm.Tax;
+				}
+
+			SetTotal();
 
 			m_fChanged = true;
 
@@ -535,7 +561,14 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			m_Firearm.PurchaseDate = PurchaseDateTimePicker.Value;
+			try
+				{
+				m_Firearm.PurchaseDate = PurchaseDatePicker.Value;
+				}
+			catch
+				{
+				m_Firearm.PurchaseDate = DateTime.Today;
+				}
 
 			m_fChanged = true;
 
@@ -562,116 +595,68 @@ namespace ReloadersWorkShop
 		// OnRemoveImageClicked()
 		//============================================================================*
 
-		private void OnRemoveImageClicked(object sender, EventArgs e)
+		private void OnRemoveImageClicked(object sender, EventArgs args)
 			{
-			DialogResult rc = MessageBox.Show("Warning: Image file will be deleted from the Reloader's WorkShop data folder\n\nAre you sure you wish to remove this photo?", "Image Deletion Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+			DialogResult rc = MessageBox.Show(String.Format("Warning: Image file will be deleted from the {0} data folder\n\nAre you sure you wish to remove this photo?", Application.ProductName), "Image Deletion Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
 
 			if (rc == DialogResult.No)
 				return;
 
+			string strFilePath = m_strCurrentImagePath;
+
+			Bitmap FirearmImage = (Bitmap)FirearmPictureBox.Image;
+
+			FirearmPictureBox.Image = null;
+
+			FirearmImage.Dispose();
+
+			m_ImageList.Remove(m_strCurrentImagePath);
+
+			bool fPrimary = m_Firearm.ImageFile == m_strCurrentImagePath;
+
+			if (m_ImageList.Count > 0)
+				{
+				m_strCurrentImagePath = m_ImageList[0];
+
+				if (fPrimary)
+					m_Firearm.ImageFile = m_strCurrentImagePath;
+				}
+			else
+				{
+				m_strCurrentImagePath = "";
+
+				m_Firearm.ImageFile = m_strCurrentImagePath;
+				}
+
 			try
 				{
-				string strFilePath = m_strCurrentImagePath;
-
-				Image FirearmImage = FirearmPictureBox.Image;
-
-				FirearmPictureBox.Image = null;
-
-				FirearmImage.Dispose();
-
 				File.Delete(strFilePath);
 
-				m_ImageList.Remove(m_strCurrentImagePath);
-
-				bool fPrimary = m_Firearm.ImageFile == m_strCurrentImagePath;
-
-				if (m_ImageList.Count > 0)
-					{
-					m_strCurrentImagePath = m_ImageList[0];
-
-					if (fPrimary)
-						m_Firearm.ImageFile = m_strCurrentImagePath;
-					}
-				else
-					{
-					m_strCurrentImagePath = "";
-
-					m_Firearm.ImageFile = m_strCurrentImagePath;
-					}
-
-				m_fChanged = true;
-
-				PopulateFirearmData();
 				}
 			catch
 				{
 				// No need to do anything here
 				}
 
-			UpdateButtons();
-			}
-
-		//============================================================================*
-		// OnScopeManufacturerChanged()
-		//============================================================================*
-
-		protected void OnScopeManufacturerChanged(object sender, EventArgs e)
-			{
-			if (!m_fInitialized)
-				return;
-
-			m_Firearm.ScopeManufacturer = ScopeManufacturerComboBox.SelectedIndex > 0 ? (cManufacturer) ScopeManufacturerComboBox.SelectedItem : null;
-
-			//			if (m_Firearm.ScopeManufacturer == null)
-			//				m_Firearm.Scoped = false;
-
 			m_fChanged = true;
 
-			UpdateButtons();
-			}
-
-		//============================================================================*
-		// OnScopeModelChanged()
-		//============================================================================*
-
-		protected void OnScopeModelChanged(object sender, EventArgs e)
-			{
-			if (!m_fInitialized)
-				return;
-
-			m_Firearm.ScopeModel = ScopeModelTextBox.Text;
-
-			m_fChanged = true;
+			PopulateFirearmData();
 
 			UpdateButtons();
 			}
 
 		//============================================================================*
-		// OnScopeObjectiveChanged()
+		// OnShippingChanged()
 		//============================================================================*
 
-		protected void OnScopeObjectiveChanged(object sender, EventArgs e)
+		protected void OnShippingChanged(object sender, EventArgs e)
 			{
 			if (!m_fInitialized)
 				return;
 
-			m_Firearm.ScopeObjective = ScopeObjectiveTextBox.Value;
+			m_Firearm.Shipping = ShippingTextBox.Value;
 
-			m_fChanged = true;
-
-			UpdateButtons();
-			}
-
-		//============================================================================*
-		// OnScopePowerChanged()
-		//============================================================================*
-
-		protected void OnScopePowerChanged(object sender, EventArgs e)
-			{
-			if (!m_fInitialized)
-				return;
-
-			m_Firearm.ScopePower = ScopePowerTextBox.Text;
+			SetTotal();
 
 			m_fChanged = true;
 
@@ -689,21 +674,14 @@ namespace ReloadersWorkShop
 
 			m_Firearm.Source = SourceComboBox.Text;
 
-			m_fChanged = true;
+			if (String.IsNullOrEmpty(m_Firearm.Source))
+				{
+				m_Firearm.PurchasePrice = 0.0;
+				m_Firearm.Tax = 0.0;
+				m_Firearm.Shipping = 0.0;
 
-			UpdateButtons();
-			}
-
-		//============================================================================*
-		// OnStockFinishChanged()
-		//============================================================================*
-
-		protected void OnStockFinishChanged(object sender, EventArgs e)
-			{
-			if (!m_fInitialized)
-				return;
-
-			m_Firearm.StockFinish = StockFinishComboBox.Text;
+				PopulateFirearmData();
+				}
 
 			m_fChanged = true;
 
@@ -711,15 +689,19 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// OnStockManufacturerChanged()
+		// OnTaxChanged()
 		//============================================================================*
 
-		protected void OnStockManufacturerChanged(object sender, EventArgs e)
+		protected void OnTaxChanged(object sender, EventArgs e)
 			{
 			if (!m_fInitialized)
 				return;
 
-			m_Firearm.StockManufacturer = (cManufacturer) StockManufacturerComboBox.SelectedItem;
+			m_Firearm.Tax = TaxTextBox.Value;
+
+			m_fUserTax = true;
+
+			SetTotal();
 
 			m_fChanged = true;
 
@@ -727,63 +709,17 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// OnStockModelChanged()
+		// OnTransferFeesChanged()
 		//============================================================================*
 
-		protected void OnStockModelChanged(object sender, EventArgs e)
+		protected void OnTransferFeesChanged(object sender, EventArgs e)
 			{
 			if (!m_fInitialized)
 				return;
 
-			m_Firearm.StockModel = StockModelTextBox.Text;
+			m_Firearm.TransferFees = TransferFeesTextBox.Value;
 
-			m_fChanged = true;
-
-			UpdateButtons();
-			}
-
-		//============================================================================*
-		// OnTriggerManufacturerChanged()
-		//============================================================================*
-
-		protected void OnTriggerManufacturerChanged(object sender, EventArgs e)
-			{
-			if (!m_fInitialized)
-				return;
-
-			m_Firearm.TriggerManufacturer = (cManufacturer) TriggerManufacturerComboBox.SelectedItem;
-
-			m_fChanged = true;
-
-			UpdateButtons();
-			}
-
-		//============================================================================*
-		// OnTriggerModelChanged()
-		//============================================================================*
-
-		protected void OnTriggerModelChanged(object sender, EventArgs e)
-			{
-			if (!m_fInitialized)
-				return;
-
-			m_Firearm.TriggerModel = TriggerModelTextBox.Text;
-
-			m_fChanged = true;
-
-			UpdateButtons();
-			}
-
-		//============================================================================*
-		// OnTriggerPullChanged()
-		//============================================================================*
-
-		protected void OnTriggerPullChanged(object sender, EventArgs e)
-			{
-			if (!m_fInitialized)
-				return;
-
-			m_Firearm.TriggerPull = TriggerPullTextBox.Value;
+			SetTotal();
 
 			m_fChanged = true;
 
@@ -884,7 +820,7 @@ namespace ReloadersWorkShop
 				bool fReceiverFinishFound = false;
 				bool fBarrelFinishFound = false;
 
-				if (Firearm.ReceiverFinish != null && Firearm.ReceiverFinish.Length > 0)
+				if (!String.IsNullOrEmpty(Firearm.ReceiverFinish))
 					{
 					//----------------------------------------------------------------------------*
 					// ReceiverFinishComboBox
@@ -925,7 +861,7 @@ namespace ReloadersWorkShop
 				// Set Selection
 				//----------------------------------------------------------------------------*
 
-				if (m_Firearm.ReceiverFinish != null && m_Firearm.ReceiverFinish.Length > 0)
+				if (!String.IsNullOrEmpty(m_Firearm.ReceiverFinish))
 					{
 					ReceiverFinishComboBox.SelectedItem = m_Firearm.ReceiverFinish;
 
@@ -944,7 +880,7 @@ namespace ReloadersWorkShop
 				fReceiverFinishFound = false;
 				fBarrelFinishFound = false;
 
-				if (Firearm.BarrelFinish != null && Firearm.BarrelFinish.Length > 0)
+				if (!String.IsNullOrEmpty(Firearm.BarrelFinish))
 					{
 					//----------------------------------------------------------------------------*
 					// ReceiverFinishComboBox
@@ -985,7 +921,7 @@ namespace ReloadersWorkShop
 				// Set Selection
 				//----------------------------------------------------------------------------*
 
-				if (m_Firearm.BarrelFinish != null && m_Firearm.BarrelFinish.Length > 0)
+				if (!String.IsNullOrEmpty(m_Firearm.BarrelFinish))
 					{
 					BarrelFinishComboBox.SelectedItem = m_Firearm.BarrelFinish;
 
@@ -1042,7 +978,7 @@ namespace ReloadersWorkShop
 				}
 			catch
 				{
-				MessageBox.Show("One or more images file for this firearm have been moved or deleted.  You will need to select a new image.", "Image File Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show("One or more images file for this firearm have been moved or deleted.  You may need to select new images.", "Image File Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
 				m_Firearm.ImageFile = null;
 
@@ -1053,7 +989,7 @@ namespace ReloadersWorkShop
 				m_fChanged = true;
 				}
 
-			FirearmPictureBox.Image = FirearmImage;
+			FirearmPictureBox.Image = new Bitmap(FirearmImage);
 
 			SetImageDimensions();
 
@@ -1061,12 +997,30 @@ namespace ReloadersWorkShop
 			// Purchase Data
 			//----------------------------------------------------------------------------*
 
-			if (m_Firearm.PurchaseDate >= PurchaseDateTimePicker.MinDate && m_Firearm.PurchaseDate <= PurchaseDateTimePicker.MaxDate)
-				PurchaseDateTimePicker.Value = m_Firearm.PurchaseDate;
-			else
-				PurchaseDateTimePicker.Value = DateTime.Today;
+			try
+				{
+				PurchaseDatePicker.Value = m_Firearm.PurchaseDate;
+				}
+			catch
+				{
+				PurchaseDatePicker.Value = DateTime.Today;
 
-			PriceTextBox.Value = m_Firearm.Price;
+				m_Firearm.PurchaseDate = DateTime.Today;
+
+				m_fChanged = true;
+				}
+
+			//----------------------------------------------------------------------------*
+			// Acquisition Details
+			//----------------------------------------------------------------------------*
+
+			PriceTextBox.Value = m_Firearm.PurchasePrice;
+			TaxTextBox.Value = m_Firearm.Tax;
+			ShippingTextBox.Value = m_Firearm.Shipping;
+			TransferFeesTextBox.Value = m_Firearm.TransferFees;
+			OtherFeesTextBox.Value = m_Firearm.OtherFees;
+
+			SetTotal();
 
 			//----------------------------------------------------------------------------*
 			// Notes
@@ -1105,14 +1059,14 @@ namespace ReloadersWorkShop
 			if (HammerComboBox.SelectedIndex < 0 && HammerComboBox.Items.Count > 0)
 				HammerComboBox.SelectedIndex = 0;
 
-			PopulateScopeData();
+			PopulateMagazineCombo();
 			}
 
 		//============================================================================*
-		// PopulateMagazineData()
+		// PopulateMagazineCombo()
 		//============================================================================*
 
-		private void PopulateMagazineData()
+		private void PopulateMagazineCombo()
 			{
 			MagazineComboBox.Items.Clear();
 
@@ -1132,63 +1086,6 @@ namespace ReloadersWorkShop
 
 			CapacityTextBox.MinValue = 1;
 			CapacityTextBox.Value = m_Firearm.MagazineCapacity;
-
-			PopulateTriggerData();
-			}
-
-		//============================================================================*
-		// PopulateScopeData()
-		//============================================================================*
-
-		private void PopulateScopeData()
-			{
-			//----------------------------------------------------------------------------*
-			// Gather the list of manufacturers
-			//----------------------------------------------------------------------------*
-
-			cManufacturerList ScopeManufacturerList = new cManufacturerList();
-
-			foreach (cManufacturer Manufacturer in m_DataFiles.ManufacturerList)
-				{
-				if (Manufacturer.Scopes)
-					ScopeManufacturerList.Add(Manufacturer);
-				}
-
-			//			ScopeManufacturerList.Sort();
-
-			//----------------------------------------------------------------------------*
-			// Populate the Scope Manufacturer combo
-			//----------------------------------------------------------------------------*
-
-			ScopeManufacturerComboBox.Items.Clear();
-
-			ScopeManufacturerComboBox.Items.Add("None");
-
-			foreach (cManufacturer Manufacturer in ScopeManufacturerList)
-				ScopeManufacturerComboBox.Items.Add(Manufacturer);
-
-			//----------------------------------------------------------------------------*
-			// Select a manufacturer or "None"
-			//----------------------------------------------------------------------------*
-
-			if (m_Firearm.ScopeManufacturer != null)
-				ScopeManufacturerComboBox.SelectedItem = m_Firearm.ScopeManufacturer;
-			else
-				ScopeManufacturerComboBox.SelectedIndex = 0;
-
-			//----------------------------------------------------------------------------*
-			// fill in the other scope data
-			//----------------------------------------------------------------------------*
-
-			ScopeModelTextBox.Text = m_Firearm.ScopeModel != null ? m_Firearm.ScopeModel : "";
-			ScopePowerTextBox.Text = m_Firearm.ScopePower != null ? m_Firearm.ScopePower : "";
-			ScopeObjectiveTextBox.Value = m_Firearm.ScopeObjective;
-
-			//----------------------------------------------------------------------------*
-			// Continue the chain of population code
-			//----------------------------------------------------------------------------*
-
-			PopulateStockData();
 			}
 
 		//============================================================================*
@@ -1199,7 +1096,7 @@ namespace ReloadersWorkShop
 			{
 			SourceComboBox.Items.Clear();
 
-			if (m_Firearm.Source != null && m_Firearm.Source.Length > 0)
+			if (!String.IsNullOrEmpty(m_Firearm.Source))
 				SourceComboBox.Items.Add(m_Firearm.Source);
 
 			foreach (cFirearm Firearm in m_DataFiles.FirearmList)
@@ -1216,112 +1113,13 @@ namespace ReloadersWorkShop
 						}
 					}
 
-				if (!fSourceFound && Firearm.Source != null && Firearm.Source.Length > 0)
+				if (!fSourceFound && !String.IsNullOrEmpty(Firearm.Source))
 					SourceComboBox.Items.Add(Firearm.Source);
 				}
 
 			SourceComboBox.SelectedItem = m_Firearm.Source;
 
 			PopulateTypeCombo();
-			}
-
-		//============================================================================*
-		// PopulateStockData()
-		//============================================================================*
-
-		private void PopulateStockData()
-			{
-			//----------------------------------------------------------------------------*
-			// Manufacturers
-			//----------------------------------------------------------------------------*
-
-			StockManufacturerComboBox.Items.Clear();
-
-			if (m_Firearm.StockManufacturer == null)
-				m_Firearm.StockManufacturer = m_Firearm.Manufacturer;
-
-			foreach (cManufacturer Manufacturer in m_DataFiles.ManufacturerList)
-				{
-				if (Manufacturer.CompareTo(m_Firearm.Manufacturer) == 0 || Manufacturer.Stocks)
-					StockManufacturerComboBox.Items.Add(Manufacturer);
-				}
-
-			StockManufacturerComboBox.SelectedItem = m_Firearm.StockManufacturer;
-
-			//----------------------------------------------------------------------------*
-			// Finishes
-			//----------------------------------------------------------------------------*
-
-			bool fFound = false;
-
-			foreach (cFirearm Firearm in m_DataFiles.FirearmList)
-				{
-				fFound = false;
-
-				for (int i = 0; i < StockFinishComboBox.Items.Count; i++)
-					{
-					if (Firearm.StockFinish != null && StockFinishComboBox.Items[i].ToString().ToUpper() == Firearm.StockFinish.ToUpper())
-						{
-						fFound = true;
-
-						break;
-						}
-					}
-
-				if (!fFound && Firearm.StockFinish != null)
-					StockFinishComboBox.Items.Add(Firearm.StockFinish);
-				}
-
-			fFound = false;
-
-			for (int i = 0; i < StockFinishComboBox.Items.Count; i++)
-				{
-				if (m_Firearm.StockFinish != null && StockFinishComboBox.Items[i].ToString().ToUpper() == m_Firearm.StockFinish.ToUpper())
-					{
-					fFound = true;
-
-					break;
-					}
-				}
-
-			if (!fFound && m_Firearm.StockFinish != null)
-				StockFinishComboBox.Items.Add(m_Firearm.StockFinish);
-
-			if (m_Firearm.StockFinish != null)
-				StockFinishComboBox.SelectedItem = m_Firearm.StockFinish;
-
-			//----------------------------------------------------------------------------*
-			// Model
-			//----------------------------------------------------------------------------*
-
-			StockModelTextBox.Text = m_Firearm.StockModel;
-
-			PopulateMagazineData();
-			}
-
-		//============================================================================*
-		// PopulateTriggerData()
-		//============================================================================*
-
-		private void PopulateTriggerData()
-			{
-			if (m_Firearm.TriggerManufacturer == null)
-				m_Firearm.TriggerManufacturer = m_Firearm.Manufacturer;
-
-			TriggerManufacturerComboBox.Items.Clear();
-
-			foreach (cManufacturer Manufacturer in m_DataFiles.ManufacturerList)
-				{
-				if (Manufacturer.CompareTo(m_Firearm.Manufacturer) == 0 || Manufacturer.Triggers)
-					TriggerManufacturerComboBox.Items.Add(Manufacturer);
-				}
-
-			TriggerManufacturerComboBox.SelectedItem = m_Firearm.TriggerManufacturer;
-
-			TriggerModelTextBox.Text = m_Firearm.TriggerModel;
-			TriggerPullTextBox.Value = m_Firearm.TriggerPull;
-
-			UpdateButtons();
 			}
 
 		//============================================================================*
@@ -1403,7 +1201,7 @@ namespace ReloadersWorkShop
 
 			ReceiverFinishLabel.Text = strReceiver;
 
-			ReceiverFinishLabel.Location = new Point((int) (LabelLocation.X + LabelSize.Width - TextSize.Width), (int) LabelLocation.Y);
+			ReceiverFinishLabel.Location = new Point((int)(LabelLocation.X + LabelSize.Width - TextSize.Width), (int)LabelLocation.Y);
 
 			LabelLocation = BarrelFinishLabel.Location;
 			LabelSize = BarrelFinishLabel.Size;
@@ -1412,7 +1210,7 @@ namespace ReloadersWorkShop
 
 			BarrelFinishLabel.Text = strBarrel;
 
-			BarrelFinishLabel.Location = new Point((int) (LabelLocation.X + LabelSize.Width - TextSize.Width), (int) LabelLocation.Y);
+			BarrelFinishLabel.Location = new Point((int)(LabelLocation.X + LabelSize.Width - TextSize.Width), (int)LabelLocation.Y);
 			}
 
 		//============================================================================*
@@ -1424,45 +1222,45 @@ namespace ReloadersWorkShop
 			if (FirearmPictureBox.Image == null)
 				return;
 
-			FirearmPictureBox.Size = new Size(480, 270);
-			FirearmPictureBox.Location = new Point(126, 23);
+			FirearmPictureBox.Size = new Size(576, 295);
+			FirearmPictureBox.Location = new Point(17, 23);
 
 			double dWidth = FirearmPictureBox.Image.Width;
 			double dHeight = FirearmPictureBox.Image.Height;
 
-			if (dWidth > 480.0 || dHeight > 270.0)
+			if (dWidth > 576.0 || dHeight > 295.0)
 				{
-				if (dWidth > 480.0)
+				if (dWidth > 576.0)
 					{
 					dHeight = dHeight / dWidth;
-					dWidth = 480.0;
+					dWidth = 576.0;
 					dHeight *= dWidth;
 
-					if (dHeight > 270.0)
+					if (dHeight > 295.0)
 						{
 						dWidth = dWidth / dHeight;
-						dHeight = 270.0;
+						dHeight = 295.0;
 						dWidth *= dHeight;
 						}
 					}
 				else
 					{
 					dWidth = dWidth / dHeight;
-					dHeight = 270.0;
+					dHeight = 295.0;
 					dWidth *= dHeight;
 
-					if (dWidth > 480.0)
+					if (dWidth > 576.0)
 						{
 						dHeight = dHeight / dWidth;
-						dWidth = 480.0;
+						dWidth = 576.0;
 						dHeight *= dWidth;
 						}
 					}
 				}
 
-			FirearmPictureBox.Size = new Size((int) dWidth, (int) dHeight);
+			FirearmPictureBox.Size = new Size((int)dWidth, (int)dHeight);
 
-			FirearmPictureBox.Location = new Point((FirearmImageGroupBox.Width / 2) - (FirearmPictureBox.Width / 2), FirearmPictureBox.Location.Y + 135 - (FirearmPictureBox.Height / 2));
+			FirearmPictureBox.Location = new Point((FirearmImageGroupBox.Width / 2) - (FirearmPictureBox.Width / 2), FirearmPictureBox.Location.Y + 148 - (FirearmPictureBox.Height / 2));
 			}
 
 		//============================================================================*
@@ -1474,6 +1272,15 @@ namespace ReloadersWorkShop
 			if (!m_DataFiles.Preferences.ToolTips)
 				return;
 
+			}
+
+		//============================================================================*
+		// SetTotal()
+		//============================================================================*
+
+		private void SetTotal()
+			{
+			TotalLabel.Text = String.Format("{0:F2}", m_Firearm.PurchasePrice + m_Firearm.Tax + m_Firearm.Shipping + m_Firearm.TransferFees + m_Firearm.OtherFees);
 			}
 
 		//============================================================================*
@@ -1528,6 +1335,17 @@ namespace ReloadersWorkShop
 				return;
 
 			//----------------------------------------------------------------------------*
+			// Check Acquisition Details
+			//----------------------------------------------------------------------------*
+
+			PurchaseDatePicker.Enabled = !String.IsNullOrEmpty(m_Firearm.Source);
+			PriceTextBox.ReadOnly = String.IsNullOrEmpty(m_Firearm.Source);
+			TaxTextBox.ReadOnly = String.IsNullOrEmpty(m_Firearm.Source);
+			ShippingTextBox.ReadOnly = String.IsNullOrEmpty(m_Firearm.Source);
+			TransferFeesTextBox.ReadOnly = String.IsNullOrEmpty(m_Firearm.Source);
+			OtherFeesTextBox.ReadOnly = String.IsNullOrEmpty(m_Firearm.Source);
+
+			//----------------------------------------------------------------------------*
 			// Check Type
 			//----------------------------------------------------------------------------*
 
@@ -1544,49 +1362,6 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			if (!CapacityTextBox.ValueOK)
-				fEnableOK = false;
-
-			//----------------------------------------------------------------------------*
-			// Check Stock
-			//----------------------------------------------------------------------------*
-
-			//----------------------------------------------------------------------------*
-			// Check Scope
-			//----------------------------------------------------------------------------*
-
-			if (ScopeManufacturerComboBox.SelectedIndex == 0)
-				{
-				//				m_Firearm.Scoped = false;
-				m_Firearm.ScopeManufacturer = null;
-
-				ScopeModelTextBox.Text = "";
-				ScopeModelTextBox.Enabled = false;
-				ScopeModelTextBox.Required = false;
-
-				ScopePowerTextBox.Text = "";
-				ScopePowerTextBox.Enabled = false;
-				ScopePowerTextBox.Required = false;
-
-				ScopeObjectiveTextBox.Value = 0;
-				ScopeObjectiveTextBox.Enabled = false;
-				ScopeObjectiveTextBox.Required = false;
-				}
-			else
-				{
-				m_Firearm.Scoped = true;
-				m_Firearm.ScopeManufacturer = (cManufacturer) ScopeManufacturerComboBox.SelectedItem;
-
-				ScopeModelTextBox.Enabled = true;
-				ScopeModelTextBox.Required = true;
-
-				ScopePowerTextBox.Enabled = true;
-				ScopePowerTextBox.Required = true;
-
-				ScopeObjectiveTextBox.Enabled = true;
-				ScopeObjectiveTextBox.Required = true;
-				}
-
-			if (!ScopeModelTextBox.ValueOK || !ScopePowerTextBox.ValueOK || !ScopeObjectiveTextBox.ValueOK)
 				fEnableOK = false;
 
 			//----------------------------------------------------------------------------*

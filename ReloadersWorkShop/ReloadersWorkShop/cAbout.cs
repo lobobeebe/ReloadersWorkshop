@@ -40,7 +40,8 @@ namespace ReloadersWorkShop
 			if (Attribs.Length > 0)
 				CopyrightLabel.Text = ((AssemblyCopyrightAttribute) Attribs[0]).Copyright;
 
-			RegistrationLabel.Text = RWRegistry.ActivationStatusString;
+			if (RWRegistry != null)
+				RegistrationLabel.Text = RWRegistry.ActivationStatusString;
 			}
 		}
 	}

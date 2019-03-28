@@ -268,8 +268,15 @@
 			this.FirearmTypeCombo.DropDownWidth = 115;
 			this.FirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmTypeCombo.FormattingEnabled = true;
+			this.FirearmTypeCombo.IncludeAny = false;
 			this.FirearmTypeCombo.IncludeShotgun = false;
 			this.FirearmTypeCombo.Items.AddRange(new object[] {
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
+            "Handgun",
+            "Rifle",
             "Handgun",
             "Rifle",
             "Handgun",
@@ -294,6 +301,7 @@
             "Rifle"});
 			this.FirearmTypeCombo.Location = new System.Drawing.Point(96, 22);
 			this.FirearmTypeCombo.Name = "FirearmTypeCombo";
+			this.FirearmTypeCombo.ShowToolTips = true;
 			this.FirearmTypeCombo.Size = new System.Drawing.Size(100, 21);
 			this.FirearmTypeCombo.TabIndex = 0;
 			this.FirearmTypeCombo.ToolTip = "";
@@ -308,6 +316,7 @@
 			this.ErrorMessageLabel.Name = "ErrorMessageLabel";
 			this.ErrorMessageLabel.Size = new System.Drawing.Size(256, 44);
 			this.ErrorMessageLabel.TabIndex = 32;
+			this.ErrorMessageLabel.Text = "Error Message Label";
 			// 
 			// BulletCOLLabel
 			// 
@@ -423,7 +432,7 @@
 			this.groupBox3.Size = new System.Drawing.Size(697, 128);
 			this.groupBox3.TabIndex = 1;
 			this.groupBox3.TabStop = false;
-			this.groupBox3.Text = "Load";
+			this.groupBox3.Text = "Load Components";
 			// 
 			// label3
 			// 
@@ -702,7 +711,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.LoadCancelButton;
-			this.ClientSize = new System.Drawing.Size(714, 568);
+			this.ClientSize = new System.Drawing.Size(702, 575);
 			this.ControlBox = false;
 			this.Controls.Add(this.PowderChargeGroup);
 			this.Controls.Add(this.LoadCancelButton);

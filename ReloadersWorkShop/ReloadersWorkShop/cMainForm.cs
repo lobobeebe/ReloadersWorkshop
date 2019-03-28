@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cMainForm.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -19,8 +19,6 @@ using System.Windows.Forms;
 //============================================================================*
 // Application Specific Using Statements
 //============================================================================*
-
-using ReloadersWorkShop.Preferences;
 
 using RWCommonLib.Registry;
 using RWCommonLib.Updates;
@@ -133,6 +131,7 @@ namespace ReloadersWorkShop
 			FileBackupMenuItem.Click += OnFileBackupClicked;
 			FileExitMenuItem.Click += OnFileExitClicked;
 			FileExportMenuItem.Click += OnFileExportClicked;
+			FileImportMenuItem.Click += OnFileImportClicked;
 			FilePreferencesMenuItem.Click += OnFilePreferencesClicked;
 			FilePrintAmmoListMenuItem.Click += OnPrintAmmoListClicked;
 			FilePrintCostAnalysisMenuItem.Click += OnPrintCostAnalysisClicked;
@@ -179,19 +178,9 @@ namespace ReloadersWorkShop
 
 			ToolsConversionCalculatorMenuItem.Click += OnToolsConversionCalculatorClicked;
 
-			ToolsSAAMIAmmoFiresMenuItem.Click += OnToolsSAAMIAmmoFiresClicked;
-			ToolsSAAMIFactsMenuItem.Click += OnToolsSAAMIFactsClicked;
-			ToolsSAAMIPistolSpecsMenuItem.Click += OnToolsSAAMIPistolSpecsClicked;
-			ToolsSAAMIPistolVelocityDataMenuItem.Click += OnToolsSAAMIPistolVelocityDataClicked;
-			ToolsSAAMIPrimersMenuItem.Click += OnToolsSAAMIPrimersClicked;
-			ToolsSAAMIRifleSpecsMenuItem.Click += OnToolsSAAMIRifleSpecsClicked;
-			ToolsSAAMIRifleVelocityDataMenuItem.Click += OnToolsSAAMIRifleVelocityDataClicked;
-			ToolsSAAMIRimfireSpecsMenuItem.Click += OnToolsSAAMIRimfireSpecsClicked;
-			ToolsSAAMISafeAmmoStorageMenuItem.Click += OnToolsSAAMISafeAmmoStorageClicked;
-			ToolsSAAMIShotshellSpecsMenuItem.Click += OnToolsSAAMIShotshellSpecsClicked;
-			ToolsSAAMISmokelessPowderMenuItem.Click += OnToolsSAAMISmokelessPowderClicked;
-			ToolsSAAMISportingFirearmsMenuItem.Click += OnToolsSAAMISportingFirearmsClicked;
-			ToolsSAAMIUnsafeArmsAmmoMenuItem.Click += OnToolsSAAMIUnsafeArmsAmmoClicked;
+			ToolsIntegrityCheckerMenuItem.Click += OnToolsIntegrityCheckerClicked;
+
+			ToolsSAAMIWebsiteMenuItem.Click += OnToolsSAAMIWebsiteClicked;
 
 			ToolsStabilityCalculatorMenuItem.Click += OnToolsStabilityCalculatorClicked;
 			ToolsTargetCalculatorMenuItem.Click += OnToolsTargetCalculatorClicked;
@@ -201,7 +190,7 @@ namespace ReloadersWorkShop
 
 			HelpMenuItem.DropDownOpened += OnHelpClicked;
 			HelpAboutMenuItem.Click += OnHelpAboutClicked;
-			HelpSupportForumMenuItem.Click += OnHelpSupportForumClicked;
+			HelpSupportForumMenuItem.Click += OnHelpContactSupportClicked;
 			HelpNotesMenuItem.Click += OnHelpNotesClicked;
 			HelpPurchaseMenuItem.Click += OnHelpPurchaseClicked;
 			HelpProgramUpdateMenuItem.Click += OnHelpProgramUpdateClicked;
@@ -218,7 +207,7 @@ namespace ReloadersWorkShop
 			HelpVideoRWLoadDataMenuItem.Click += OnHelpVideoClicked;
 			HelpVideoRWSettingJumpMenuItem.Click += OnHelpVideoClicked;
 			HelpVideoRWTargetCalculatorMenuItem.Click += OnHelpVideoClicked;
-            HelpVideoRWOperationMenuItem.Click += OnHelpVideoClicked;
+			HelpVideoRWOperationMenuItem.Click += OnHelpVideoClicked;
 			HelpVideoSDBCMenuItem.Click += OnHelpVideoClicked;
 
 			//----------------------------------------------------------------------------*
@@ -264,11 +253,11 @@ namespace ReloadersWorkShop
 
 			SaveFileDialog FileDlg = new SaveFileDialog();
 
-			FileDlg.Title = "Save Reloader's WorkShop Backup File";
+			FileDlg.Title = String.Format("Save {0} Backup File", Application.ProductName);
 			FileDlg.AddExtension = true;
 			FileDlg.DefaultExt = "rwb";
 			FileDlg.InitialDirectory = m_DataFiles.Preferences.BackupFolder;
-			FileDlg.Filter = "Reloader's WorkShop Backup Files (*.rwb)|*.rwb";
+			FileDlg.Filter = String.Format("{0} Backup Files (*.rwb)|*.rwb", Application.ProductName);
 			FileDlg.OverwritePrompt = true;
 			FileDlg.FileName = strDataFileName;
 
@@ -314,10 +303,9 @@ namespace ReloadersWorkShop
 		// DownloadSAAMIDoc()
 		//============================================================================*
 
-		public static bool DownloadSAAMIDoc(cDataFiles DataFiles, string strDocPath)
+		public static bool DownloadSAAMIDoc(cDataFiles DataFiles, string strDocPath, string strLocalFilePath)
 			{
-			string strLocalPath = Path.Combine(DataFiles.GetDataPath(), "SAAMI");
-			string strLocalFilePath = Path.Combine(strLocalPath, Path.GetFileName(strDocPath));
+			string strLocalPath = Path.GetDirectoryName(strLocalFilePath);
 
 			if (!Directory.Exists(strLocalPath))
 				Directory.CreateDirectory(strLocalPath);
@@ -334,25 +322,11 @@ namespace ReloadersWorkShop
 					{
 					string strMessage = "Unable to download the SAAMI document for the following reason:\n\n";
 					strMessage += e.Message;
-					strMessage += "\n\nMake sure you are connected to the Internet and the document name is correct.";
 
 					MessageBox.Show(strMessage, "Download Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
 					return (false);
 					}
-				}
-
-			try
-				{
-				Process.Start(strLocalFilePath);
-				}
-			catch
-				{
-				string strMessage = "Unable to view the PDF file!  Make sure you have the PDF Viewer installed on your PC.";
-
-				MessageBox.Show(strMessage, "View PDF Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-
-				return (false);
 				}
 
 			return (true);
@@ -396,6 +370,7 @@ namespace ReloadersWorkShop
 			InitializeLoadDataTab();
 			InitializeBatchTab();
 			InitializeAmmoTab();
+			InitializeToolTab();
 			InitializeBallisticsTab();
 			}
 
@@ -449,7 +424,7 @@ namespace ReloadersWorkShop
 					EditNewMenuItem.Enabled = AddSupplyButton.Enabled;
 					EditEditMenuItem.Enabled = EditSupplyButton.Enabled;
 					EditRemoveMenuItem.Enabled = RemoveSupplyButton.Enabled;
-					EditInventoryActivityMenuItem.Visible = cPreferences.TrackInventory;
+					EditInventoryActivityMenuItem.Visible = m_DataFiles.Preferences.TrackInventory;
 
 					switch ((cSupply.eSupplyTypes) SupplyTypeCombo.SelectedIndex)
 						{
@@ -514,7 +489,16 @@ namespace ReloadersWorkShop
 					EditEditMenuItem.Enabled = EditAmmoButton.Enabled;
 					EditRemoveMenuItem.Text = "&Remove Ammo";
 					EditRemoveMenuItem.Enabled = RemoveAmmoButton.Enabled;
-					EditInventoryActivityMenuItem.Visible = cPreferences.TrackInventory;
+					EditInventoryActivityMenuItem.Visible = m_DataFiles.Preferences.TrackInventory;
+					break;
+
+				case "ToolsTab":
+					EditNewMenuItem.Text = "&New Tool";
+					EditNewMenuItem.Enabled = AddToolButton.Enabled;
+					EditEditMenuItem.Text = "&Edit Tool";
+					EditEditMenuItem.Enabled = EditToolButton.Enabled;
+					EditRemoveMenuItem.Text = "&Remove Tool";
+					EditRemoveMenuItem.Enabled = RemoveToolButton.Enabled;
 					break;
 
 				case "PreferencesTab":
@@ -570,6 +554,11 @@ namespace ReloadersWorkShop
 					OnAddAmmo(sender, e);
 
 					break;
+
+				case "ToolsTab":
+					OnAddTool(sender, e);
+
+					break;
 				}
 			}
 
@@ -620,6 +609,12 @@ namespace ReloadersWorkShop
 				case "AmmoTab":
 					if (EditAmmoButton.Enabled)
 						OnEditAmmo(sender, e);
+
+					break;
+
+				case "ToolsTab":
+					if (EditToolButton.Enabled)
+						OnEditTool(sender, e);
 
 					break;
 				}
@@ -693,6 +688,8 @@ namespace ReloadersWorkShop
 
 						UpdateBullet((OriginalSupply as cBullet), NewBullet);
 
+						UpdateSuppliesTabButtons();
+
 						break;
 
 					//----------------------------------------------------------------------------*
@@ -703,6 +700,8 @@ namespace ReloadersWorkShop
 						cCase NewCase = new cCase((InventoryForm.Supply as cCase));
 
 						UpdateCase((OriginalSupply as cCase), NewCase);
+
+						UpdateSuppliesTabButtons();
 
 						break;
 
@@ -715,6 +714,8 @@ namespace ReloadersWorkShop
 
 						UpdatePowder((OriginalSupply as cPowder), NewPowder);
 
+						UpdateSuppliesTabButtons();
+
 						break;
 
 					//----------------------------------------------------------------------------*
@@ -726,6 +727,8 @@ namespace ReloadersWorkShop
 
 						UpdatePrimer((OriginalSupply as cPrimer), NewPrimer);
 
+						UpdateSuppliesTabButtons();
+
 						break;
 
 					//----------------------------------------------------------------------------*
@@ -736,6 +739,8 @@ namespace ReloadersWorkShop
 						cAmmo NewAmmo = new cAmmo((InventoryForm.Supply as cAmmo));
 
 						UpdateAmmo((OriginalSupply as cAmmo), NewAmmo);
+
+						UpdateAmmoTabButtons();
 
 						break;
 					}
@@ -791,6 +796,12 @@ namespace ReloadersWorkShop
 						OnRemoveAmmo(sender, e);
 
 					break;
+
+				case "ToolsTab":
+					if (RemoveToolButton.Enabled)
+						OnRemoveTool(sender, e);
+
+					break;
 				}
 			}
 
@@ -837,9 +848,67 @@ namespace ReloadersWorkShop
 
 		public void OnFileExportClicked(Object sender, EventArgs e)
 			{
-			cExportForm ExportForm = new cExportForm(m_DataFiles);
+			cExportForm ExportForm = new cExportForm(m_DataFiles, m_fDev);
 
 			ExportForm.ShowDialog();
+			}
+
+		//============================================================================*
+		// OnFileImportClicked()
+		//============================================================================*
+
+		public void OnFileImportClicked(Object sender, EventArgs args)
+			{
+			//----------------------------------------------------------------------------*
+			// Get the file to import
+			//----------------------------------------------------------------------------*
+
+			OpenFileDialog FileDlg = new OpenFileDialog();
+
+			FileDlg.Title = String.Format("Import {0} XML File", Application.ProductName);
+			FileDlg.AddExtension = true;
+			FileDlg.DefaultExt = "xml";
+			FileDlg.InitialDirectory = m_DataFiles.GetDataPath();
+			FileDlg.Filter = "XML Files (*.xml)|*.xml";
+
+			DialogResult rc = FileDlg.ShowDialog();
+
+			if (rc == DialogResult.Cancel)
+				return;
+
+			//----------------------------------------------------------------------------*
+			// Load the XML document
+			//----------------------------------------------------------------------------*
+
+			string strPath = FileDlg.FileName;
+
+			cRWXMLDocument XMLDocument = new cRWXMLDocument(m_DataFiles);
+
+			try
+				{
+				XMLDocument.Load(strPath);
+				}
+			catch (Exception e)
+				{
+				MessageBox.Show(e.Message, "XML Import Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+				return;
+				}
+
+			//----------------------------------------------------------------------------*
+			// Show the XML Document stats and data differences
+			//----------------------------------------------------------------------------*
+
+			XMLDocument.Import(true, true);
+
+			//----------------------------------------------------------------------------*
+			// Show the Summary dialog
+			//----------------------------------------------------------------------------*
+
+			cImportForm ImportForm = new ReloadersWorkShop.cImportForm(XMLDocument);
+
+			ImportForm.ShowDialog();
+
 			}
 
 		//============================================================================*
@@ -858,10 +927,10 @@ namespace ReloadersWorkShop
 		private void OnFilePrintClicked(Object sender, EventArgs e)
 			{
 			FilePrintAmmoListMenuItem.Enabled = AmmoListPrintButton.Enabled;
-			FilePrintAmmoShoppingListMenuItem.Enabled = cPreferences.TrackInventory && AmmoListPrintButton.Enabled && AmmoPrintBelowStockCheckBox.Checked;
+			FilePrintAmmoShoppingListMenuItem.Enabled = m_DataFiles.Preferences.TrackInventory && AmmoListPrintButton.Enabled && AmmoMinStockCheckBox.Checked;
 
 			FilePrintSupplyListMenuItem.Enabled = SupplyListPrintButton.Enabled;
-			FilePrintSupplyShoppingListMenuItem.Enabled = cPreferences.TrackInventory && SupplyListPrintButton.Enabled && SuppliesPrintBelowStockCheckBox.Checked;
+			FilePrintSupplyShoppingListMenuItem.Enabled = m_DataFiles.Preferences.TrackInventory && SupplyListPrintButton.Enabled && SuppliesMinStockCheckBox.Checked;
 
 			FilePrintLoadShoppingListMenuItem.Enabled = LoadShoppingListButton.Enabled;
 
@@ -927,6 +996,7 @@ namespace ReloadersWorkShop
 			m_DataFiles.Preferences.Maximized = WindowState == FormWindowState.Maximized;
 
 			m_DataFiles.Save();
+			m_DataFiles.ExportRecoveryFile();
 
 			if (m_DataFiles.Preferences.BackupOK && m_DataFiles.Preferences.AutoBackup)
 				{
@@ -971,12 +1041,32 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// OnHelpContactSupportClicked()
+		//============================================================================*
+
+		protected void OnHelpContactSupportClicked(object sender, EventArgs args)
+			{
+			try
+				{
+				System.Diagnostics.Process.Start("mailto:Support@ReloadersWorkShop.com");
+				}
+			catch
+				{
+				MessageBox.Show(String.Format("Unable to start your email program.  Please contact Support@ReloadersWorkShop.com manually.", Application.ProductName), "Email Program Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+			}
+
+		//============================================================================*
 		// OnHelpDataUpdateClicked()
 		//============================================================================*
 
 		protected void OnHelpDataUpdateClicked(object sender, EventArgs args)
 			{
-			this.Cursor = Cursors.WaitCursor;
+			bool fUpdate = true;
+
+			//----------------------------------------------------------------------------*
+			// See if there's a new update file
+			//----------------------------------------------------------------------------*
 
 			cRWUpdater RWUpdater = new cRWUpdater();
 
@@ -984,36 +1074,41 @@ namespace ReloadersWorkShop
 				{
 				string strOutputPath = m_DataFiles.GetDataPath();
 
-				bool fSuccess = RWUpdater.UpdateFile("ReloadersWorkShop.rtf", strOutputPath);
+				bool fSuccess = false;
+
+//				bool fSuccess = RWUpdater.UpdateFile("RWDatabaseUpdate.xml", strOutputPath);
 
 				if (fSuccess)
 					{
-					cDataFiles Datafiles = new cDataFiles();
+					cRWXMLDocument XMLDocument = new cRWXMLDocument(m_DataFiles);
 
-					fSuccess = Datafiles.LoadDataFile("ReloadersWorkShop.rtf");
+					XMLDocument.Load(Path.Combine(strOutputPath, "RWDatabaseUpdate.xml"));
+					XMLDocument.Import(true, true);
 
-					m_DataFiles.Merge(Datafiles, true);
+					cImportForm ImportForm = new cImportForm(XMLDocument);
 
-					InitializeAllTabs();
+					DialogResult rc = ImportForm.ShowDialog();
 					}
 				else
 					{
-					this.Cursor = Cursors.Default;
-
-					MessageBox.Show("No new data updates are available", "No Update Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-					return;
+					fUpdate = false;
 					}
-
 				}
 			catch
 				{
-				this.Cursor = Cursors.Default;
-
-				MessageBox.Show("No new data updates are available", "No Update Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				fUpdate = false;
 				}
 
-			this.Cursor = Cursors.Default;
+			//----------------------------------------------------------------------------*
+			// If a problem was encountered, or no new data is available, display it
+			//----------------------------------------------------------------------------*
+
+			if (!fUpdate)
+				{
+				MessageBox.Show("No new data updates are available", "No Update Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+				return;
+				}
 			}
 
 		//============================================================================*
@@ -1041,7 +1136,7 @@ namespace ReloadersWorkShop
 
 			if (RWUpdater.UpdatesAvailable)
 				{
-				DialogResult rc = MessageBox.Show("A newer version of Reloader's WorkShop is available.\n\nUpdate now? (Reloader's WorkShop will restart)", "Update Available", MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+				DialogResult rc = MessageBox.Show(String.Format("A newer version of {0} is available.\n\nUpdate now? ({0} will restart)", Application.ProductName), "Update Available", MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
 
 				if (rc == DialogResult.No)
 					return;
@@ -1054,7 +1149,7 @@ namespace ReloadersWorkShop
 				}
 			else
 				{
-				MessageBox.Show("Reloader's WorkShop is up to date", "No Update Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				MessageBox.Show(String.Format("{0} is up to date", Application.ProductName), "No Update Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 				return;
 				}
@@ -1072,22 +1167,6 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// OnHelpSupportForumClicked()
-		//============================================================================*
-
-		protected void OnHelpSupportForumClicked(object sender, EventArgs args)
-			{
-			try
-				{
-				System.Diagnostics.Process.Start("https://www.HornadyLoader.com/index.php");
-				}
-			catch
-				{
-				MessageBox.Show("Unable to navigate to the Reloader's WorkShop Support Forum at this time, try again later.  Please make sure you are connected to the Internet.", "Support Forum Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
-			}
-
-		//============================================================================*
 		// OnHelpVideoClicked()
 		//============================================================================*
 
@@ -1095,23 +1174,23 @@ namespace ReloadersWorkShop
 			{
 			try
 				{
-                switch ((sender as ToolStripDropDownItem).Name)
-                    {
-                    case "HelpVideoBulletSelectionMenuItem":
-                        System.Diagnostics.Process.Start("https://www.youtube.com/v/bBy36tpgfTI?autoplay=1&rel=0&showinfo=0");
-                        break;
-                    case "HelpVideoCrimpingMenuItem":
-                        System.Diagnostics.Process.Start("https://www.youtube.com/v/MXWEfLE-tJg?autoplay=1&rel=0&showinfo=0");
-                        break;
-                    case "HelpVideoHeadspaceMenuItem":
-                        System.Diagnostics.Process.Start("https://www.youtube.com/v/OS5bfJ_2HNQ?autoplay=1&rel=0&showinfo=0");
-                        break;
-                    case "HelpVideoRWBallisticsCalculatorMenuItem":
-                        System.Diagnostics.Process.Start("https://www.youtube.com/v/6syoP-_TvZI?autoplay=1&rel=0&showinfo=0");
-                        break;
-                    case "HelpVideoRWBatchEditorMenuItem":
-                        System.Diagnostics.Process.Start("https://www.youtube.com/v/FO5z6Qvo-Lg?autoplay=1&rel=0&showinfo=0");
-                        break;
+				switch ((sender as ToolStripDropDownItem).Name)
+					{
+					case "HelpVideoBulletSelectionMenuItem":
+						System.Diagnostics.Process.Start("https://www.youtube.com/v/bBy36tpgfTI?autoplay=1&rel=0&showinfo=0");
+						break;
+					case "HelpVideoCrimpingMenuItem":
+						System.Diagnostics.Process.Start("https://www.youtube.com/v/MXWEfLE-tJg?autoplay=1&rel=0&showinfo=0");
+						break;
+					case "HelpVideoHeadspaceMenuItem":
+						System.Diagnostics.Process.Start("https://www.youtube.com/v/OS5bfJ_2HNQ?autoplay=1&rel=0&showinfo=0");
+						break;
+					case "HelpVideoRWBallisticsCalculatorMenuItem":
+						System.Diagnostics.Process.Start("https://www.youtube.com/v/6syoP-_TvZI?autoplay=1&rel=0&showinfo=0");
+						break;
+					case "HelpVideoRWBatchEditorMenuItem":
+						System.Diagnostics.Process.Start("https://www.youtube.com/v/FO5z6Qvo-Lg?autoplay=1&rel=0&showinfo=0");
+						break;
 					case "HelpVideoRWCrossUseMenuItem":
 						System.Diagnostics.Process.Start("https://www.youtube.com/v/xiSWuVINOf8?autoplay=1&rel=0&showinfo=0");
 						break;
@@ -1119,25 +1198,25 @@ namespace ReloadersWorkShop
 						System.Diagnostics.Process.Start("https://www.youtube.com/v/kO0X6nvIiCg?autoplay=1&rel=0&showinfo=0");
 						break;
 					case "HelpVideoRWInventoryMenuItem":
-                        System.Diagnostics.Process.Start("https://www.youtube.com/v/xrkLTBP9jZs?autoplay=1&rel=0&showinfo=0");
-                        break;
-                    case "HelpVideoRWLoadDataMenuItem":
-                        System.Diagnostics.Process.Start("https://www.youtube.com/v/w2v_E3GaTbE?autoplay=1&rel=0&showinfo=0");
-                        break;
-                    case "HelpVideoRWOperationMenuItem":
-                        System.Diagnostics.Process.Start("https://www.youtube.com/v/MOWC-ljqo6s?autoplay=1&rel=0&showinfo=0");
-                        break;
+						System.Diagnostics.Process.Start("https://www.youtube.com/v/xrkLTBP9jZs?autoplay=1&rel=0&showinfo=0");
+						break;
+					case "HelpVideoRWLoadDataMenuItem":
+						System.Diagnostics.Process.Start("https://www.youtube.com/v/w2v_E3GaTbE?autoplay=1&rel=0&showinfo=0");
+						break;
+					case "HelpVideoRWOperationMenuItem":
+						System.Diagnostics.Process.Start("https://www.youtube.com/v/MOWC-ljqo6s?autoplay=1&rel=0&showinfo=0");
+						break;
 					case "HelpVideoRWSettingJumpMenuItem":
 						System.Diagnostics.Process.Start("https://www.youtube.com/v/qxTpO5z-Vto?autoplay=1&rel=0&showinfo=0");
 						break;
 					case "HelpVideoRWTargetCalculatorMenuItem":
-                        System.Diagnostics.Process.Start("https://www.youtube.com/v/WgaOR49oU-c?autoplay=1&rel=0&showinfo=0");
-                        break;
-                    case "HelpVideoSDBCMenuItem":
-                        System.Diagnostics.Process.Start("https://www.youtube.com/v/r5JdL_7saWg?autoplay=1&rel=0&showinfo=0");
-                        break;
-                    }
-                }
+						System.Diagnostics.Process.Start("https://www.youtube.com/v/WgaOR49oU-c?autoplay=1&rel=0&showinfo=0");
+						break;
+					case "HelpVideoSDBCMenuItem":
+						System.Diagnostics.Process.Start("https://www.youtube.com/v/r5JdL_7saWg?autoplay=1&rel=0&showinfo=0");
+						break;
+					}
+				}
 			catch
 				{
 				MessageBox.Show("Unable to navigate to YouTube at this time, try again later.  Please make sure you are connected to the Internet.", "YouTube Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -1153,7 +1232,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized)
 				return;
 
-			if ((sender as TabControl).SelectedTab.Name == "InventoryTab" && !cPreferences.TrackInventory)
+			if ((sender as TabControl).SelectedTab.Name == "InventoryTab" && !m_DataFiles.Preferences.TrackInventory)
 				{
 				MessageBox.Show("You must activate Inventory Tracking on the Preferences Tab in order to use the Inventory Tab", "Inventory Tracking Not Activated", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 
@@ -1214,6 +1293,9 @@ namespace ReloadersWorkShop
 
 					if (m_FirearmsListView.SelectedItems.Count > 0)
 						m_FirearmsListView.EnsureVisible(m_FirearmsListView.SelectedItems[0].Index);
+
+					if (m_FirearmAccessoriesListView.SelectedItems.Count > 0)
+						m_FirearmAccessoriesListView.EnsureVisible(m_FirearmAccessoriesListView.SelectedItems[0].Index);
 
 					break;
 
@@ -1326,6 +1408,7 @@ namespace ReloadersWorkShop
 
 			m_DataFiles.Preferences.Maximized = (WindowState == FormWindowState.Maximized);
 
+			MainTabControl.Location = new Point(0, MainMenu.Height);
 			MainTabControl.Size = new Size(ClientRectangle.Width, ClientRectangle.Height - MainMenu.Height);
 
 			//----------------------------------------------------------------------------*
@@ -1379,23 +1462,38 @@ namespace ReloadersWorkShop
 
 			RemoveCaliberButton.Location = new Point(nButtonX, nButtonY);
 
-			m_CalibersListView.Location = new Point(0, CaliberCountLabel.Location.Y + CaliberCountLabel.Height + 20);
-			m_CalibersListView.Size = new Size(MainTabControl.Width, nButtonY - 20 - m_CalibersListView.Location.Y);
-
-			HideUncheckedCalibersCheckBox.Location = new Point(20, nButtonY);
+			m_CalibersListView.Location = new Point(6, CaliberCountLabel.Location.Y + CaliberCountLabel.Height + 12);
+			m_CalibersListView.Size = new Size(MainTabControl.Width - 26, nButtonY - 20 - m_CalibersListView.Location.Y);
 
 			//----------------------------------------------------------------------------*
 			// Firearms Tab
 			//----------------------------------------------------------------------------*
 
-			nButtonY = ClientRectangle.Height - 20 - AddFirearmButton.Height - MainMenu.Height - ((MainTabControl.ItemSize.Height == 0) ? 21 : MainTabControl.ItemSize.Height);
+			// Firearms Group
 
-			nButtonSpacing = ((MainTabControl.Width / 4) - (AddFirearmButton.Width + EditFirearmButton.Width + ViewFirearmButton.Width + RemoveFirearmButton.Width)) / 2;
+			FirearmCollectionGroupBox.Location = new Point(FirearmCostDetailsGroupBox.Location.X + FirearmCostDetailsGroupBox.Width + 6, FirearmCostDetailsGroupBox.Location.Y);
+
+			Rectangle GroupRect = MainTabControl.ClientRectangle;
+
+			GroupRect.X = 6;
+			GroupRect.Y = 6;
+			GroupRect.Height /= 2;
+			GroupRect.Width = GroupRect.Width > FirearmCollectionGroupBox.Location.X + FirearmCollectionGroupBox.Width ? GroupRect.Width - 24 : FirearmCollectionGroupBox.Location.X + FirearmCollectionGroupBox.Width + 6;
+
+			FirearmsGroupBox.Location = GroupRect.Location;
+			FirearmsGroupBox.Size = GroupRect.Size;
+
+			m_FirearmsListView.Location = new Point(10, FirearmCollectionGroupBox.Location.Y + FirearmCollectionGroupBox.Height + 10);
+			m_FirearmsListView.Size = new Size(FirearmsGroupBox.Width - 18, FirearmsGroupBox.Height - AddFirearmButton.Height - FirearmCollectionGroupBox.Location.Y - FirearmCollectionGroupBox.Height - 30);
+
+			nButtonY = FirearmsGroupBox.Height - AddFirearmAccessoryButton.Height - 10;
+
+			nButtonSpacing = ((FirearmsGroupBox.Width / 4) - (AddFirearmButton.Width + EditFirearmButton.Width + ViewFirearmButton.Width + RemoveFirearmButton.Width)) / 2;
 
 			if (nButtonSpacing <= 0)
 				nButtonSpacing = 20;
 
-			nButtonX = (MainTabControl.Size.Width / 2) - ((AddFirearmButton.Width + EditFirearmButton.Width + ViewFirearmButton.Width + RemoveFirearmButton.Width + (nButtonSpacing * 2)) / 2);
+			nButtonX = (FirearmsGroupBox.Size.Width / 2) - ((AddFirearmButton.Width + EditFirearmButton.Width + ViewFirearmButton.Width + RemoveFirearmButton.Width + (nButtonSpacing * 2)) / 2);
 
 			AddFirearmButton.Location = new Point(nButtonX, nButtonY);
 			nButtonX += AddFirearmButton.Width + nButtonSpacing;
@@ -1408,8 +1506,36 @@ namespace ReloadersWorkShop
 
 			RemoveFirearmButton.Location = new Point(nButtonX, nButtonY);
 
-			m_FirearmsListView.Location = new Point(10, FirearmPrintOptionsGroupBox.Location.Y + FirearmPrintOptionsGroupBox.Height + 20);
-			m_FirearmsListView.Size = new Size(MainTabControl.Width - 30, nButtonY - m_FirearmsListView.Location.Y - 20);
+			// Firearms Accessories Group
+
+			GroupRect.Y += (GroupRect.Height + 6);
+			GroupRect.Height = MainTabControl.Height - GroupRect.Y - MainTabControl.ItemSize.Height - 12;
+
+			FirearmAccessoriesGroupBox.Location = GroupRect.Location;
+			FirearmAccessoriesGroupBox.Size = GroupRect.Size;
+
+			m_FirearmAccessoriesListView.Location = new Point(10, FirearmAccessoriesActionsGroupBox.Location.Y + FirearmAccessoriesActionsGroupBox.Height + 10);
+			m_FirearmAccessoriesListView.Size = new Size(FirearmAccessoriesGroupBox.Width - 20, FirearmAccessoriesGroupBox.Height - AddFirearmAccessoryButton.Height - FirearmAccessoriesActionsGroupBox.Location.Y - FirearmAccessoriesActionsGroupBox.Height - 30);
+
+			nButtonY = FirearmAccessoriesGroupBox.Height - AddFirearmAccessoryButton.Height - 10;
+
+			nButtonSpacing = ((FirearmAccessoriesGroupBox.Width / 4) - (AddFirearmAccessoryButton.Width + EditFirearmAccessoryButton.Width + ViewFirearmAccessoryButton.Width + RemoveFirearmAccessoryButton.Width)) / 2;
+
+			if (nButtonSpacing <= 0)
+				nButtonSpacing = 20;
+
+			nButtonX = (FirearmAccessoriesGroupBox.Size.Width / 2) - ((AddFirearmAccessoryButton.Width + EditFirearmAccessoryButton.Width + ViewFirearmAccessoryButton.Width + RemoveFirearmAccessoryButton.Width + (nButtonSpacing * 2)) / 2);
+
+			AddFirearmAccessoryButton.Location = new Point(nButtonX, nButtonY);
+			nButtonX += AddFirearmAccessoryButton.Width + nButtonSpacing;
+
+			EditFirearmAccessoryButton.Location = new Point(nButtonX, nButtonY);
+			nButtonX += EditFirearmAccessoryButton.Width + nButtonSpacing;
+
+			ViewFirearmAccessoryButton.Location = new Point(nButtonX, nButtonY);
+			nButtonX += ViewFirearmAccessoryButton.Width + nButtonSpacing;
+
+			RemoveFirearmAccessoryButton.Location = new Point(nButtonX, nButtonY);
 
 			//----------------------------------------------------------------------------*
 			// Supplies Tab
@@ -1436,13 +1562,8 @@ namespace ReloadersWorkShop
 			RemoveSupplyButton.Location = new Point(nButtonX, nButtonY);
 			nButtonX += ViewSupplyButton.Width + nButtonSpacing;
 
-			m_SuppliesListView.Location = new Point(0, SupplyCountLabel.Location.Y + SupplyCountLabel.Height + 20);
-			m_SuppliesListView.Size = new Size(MainTabControl.Width, nButtonY - m_SuppliesListView.Location.Y - 30);
-
-			HideUncheckedSuppliesCheckBox.Location = new Point(20, nButtonY);
-
-			SelectAllSuppliesButton.Location = new Point(HideUncheckedSuppliesCheckBox.Location.X + HideUncheckedSuppliesCheckBox.Width + 20, m_SuppliesListView.Location.Y + m_SuppliesListView.Height + 10);
-			DeselectAllSuppliesButton.Location = new Point(SelectAllSuppliesButton.Location.X, SelectAllSuppliesButton.Location.Y + SelectAllSuppliesButton.Height + 6);
+			m_SuppliesListView.Location = new Point(6, SupplyCountLabel.Location.Y + SupplyCountLabel.Height + 6);
+			m_SuppliesListView.Size = new Size(MainTabControl.Width - 20, nButtonY - m_SuppliesListView.Location.Y - 20);
 
 			//----------------------------------------------------------------------------*
 			// Load Data Tab
@@ -1468,28 +1589,23 @@ namespace ReloadersWorkShop
 
 			RemoveLoadButton.Location = new Point(nButtonX, nButtonY);
 
-			nButtonY -= 20;
-
-			LoadDataSelectAllButton.Location = new Point(10, nButtonY);
-			LoadDataDeselectAllButton.Location = new Point(10, LoadDataSelectAllButton.Location.Y + LoadDataSelectAllButton.Height + 6);
-
 			LoadDataListViewInfoLabel.Size = new Size(ClientRectangle.Width, LoadDataListViewInfoLabel.Height);
 
-			m_LoadDataListView.Location = new Point(10, LoadDataListViewInfoLabel.Location.Y + LoadDataListViewInfoLabel.Height + 10);
-			m_LoadDataListView.Size = new Size(MainTabControl.Width - 30, nButtonY - m_LoadDataListView.Location.Y - 20);
+			m_LoadDataListView.Location = new Point(6, LoadDataListViewInfoLabel.Location.Y + LoadDataListViewInfoLabel.Height + 6);
+			m_LoadDataListView.Size = new Size(MainTabControl.Width - 26, nButtonY - m_LoadDataListView.Location.Y - 20);
 
 			//----------------------------------------------------------------------------*
 			// Batch Editor Tab
 			//----------------------------------------------------------------------------*
 
-			nButtonY = ClientRectangle.Height - 20 - AddBatchButton.Height - MainMenu.Height - ((MainTabControl.ItemSize.Height == 0) ? 21 : MainTabControl.ItemSize.Height);
+			nButtonY = ClientRectangle.Height - 20 - AddBatchButton.Height - MainMenu.Height - MainTabControl.ItemSize.Height;
 
 			nButtonSpacing = ((MainTabControl.Width / 4) - (AddBatchButton.Width + EditBatchButton.Width + RemoveBatchButton.Width + ViewBatchButton.Width)) / 2;
 
 			if (nButtonSpacing <= 0)
 				nButtonSpacing = 20;
 
-			nButtonX = (MainTabControl.Size.Width / 2) - ((AddBatchButton.Width + EditBatchButton.Width + RemoveBatchButton.Width + ViewBatchButton.Width + (nButtonSpacing * 2)) / 2);
+			nButtonX = (ClientRectangle.Size.Width / 2) - ((AddBatchButton.Width + EditBatchButton.Width + RemoveBatchButton.Width + ViewBatchButton.Width + (nButtonSpacing * 2)) / 2);
 
 			AddBatchButton.Location = new Point(nButtonX, nButtonY);
 			nButtonX += AddBatchButton.Width + nButtonSpacing;
@@ -1504,21 +1620,21 @@ namespace ReloadersWorkShop
 
 			BatchNotTrackedLabel.Location = new Point(10, nButtonY);
 
-			m_BatchListView.Location = new Point(0, BatchFiltersGroupBox.Location.Y + BatchFiltersGroupBox.Height + 20);
-			m_BatchListView.Size = new Size(MainTabControl.Width, nButtonY - m_BatchListView.Location.Y - 20);
+			m_BatchListView.Location = new Point(6, BatchFiltersGroupBox.Location.Y + BatchFiltersGroupBox.Height + 6);
+			m_BatchListView.Size = new Size(MainTabControl.Width - 20, nButtonY - m_BatchListView.Location.Y - 20);
 
 			//----------------------------------------------------------------------------*
 			// Ammo Tab
 			//----------------------------------------------------------------------------*
 
-			nButtonY = ClientRectangle.Height - 20 - AddAmmoButton.Height - MainMenu.Height - ((MainTabControl.ItemSize.Height == 0) ? 21 : MainTabControl.ItemSize.Height);
+			nButtonY = ClientRectangle.Height - 20 - AddAmmoButton.Height - MainMenu.Height - MainTabControl.ItemSize.Height;
 
-			nButtonSpacing = ((MainTabControl.Width / 4) - (AddAmmoButton.Width + EditAmmoButton.Width + RemoveAmmoButton.Width + ViewAmmoButton.Width)) / 2;
+			nButtonSpacing = ((ClientRectangle.Width / 4) - (AddAmmoButton.Width + EditAmmoButton.Width + RemoveAmmoButton.Width + ViewAmmoButton.Width)) / 2;
 
 			if (nButtonSpacing <= 0)
 				nButtonSpacing = 20;
 
-			nButtonX = (MainTabControl.Size.Width / 2) - ((AddAmmoButton.Width + EditAmmoButton.Width + RemoveAmmoButton.Width + ViewAmmoButton.Width + (nButtonSpacing * 2)) / 2);
+			nButtonX = (ClientRectangle.Width / 2) - ((AddAmmoButton.Width + EditAmmoButton.Width + RemoveAmmoButton.Width + ViewAmmoButton.Width + (nButtonSpacing * 2)) / 2);
 
 			AddAmmoButton.Location = new Point(nButtonX, nButtonY);
 			nButtonX += AddAmmoButton.Width + nButtonSpacing;
@@ -1531,8 +1647,35 @@ namespace ReloadersWorkShop
 
 			RemoveAmmoButton.Location = new Point(nButtonX, nButtonY);
 
-			m_AmmoListView.Location = new Point(0, AmmoPrintOptionsGroupBox.Location.Y + AmmoPrintOptionsGroupBox.Height + 20);
-			m_AmmoListView.Size = new Size(MainTabControl.Width, nButtonY - m_AmmoListView.Location.Y - 30);
+			m_AmmoListView.Location = new Point(7, AmmoPrintOptionsGroupBox.Location.Y + AmmoPrintOptionsGroupBox.Height + 6);
+			m_AmmoListView.Size = new Size(ClientRectangle.Width - 24, nButtonY - m_AmmoListView.Location.Y - 20);
+
+			//----------------------------------------------------------------------------*
+			// Tools Tab
+			//----------------------------------------------------------------------------*
+
+			nButtonY = ClientRectangle.Height - 20 - AddLoadButton.Height - MainMenu.Height - ((MainTabControl.ItemSize.Height == 0) ? 21 : MainTabControl.ItemSize.Height);
+
+			nButtonSpacing = ((MainTabControl.Width / 4) - (AddToolButton.Width + EditToolButton.Width + RemoveToolButton.Width + ViewToolButton.Width)) / 2;
+
+			if (nButtonSpacing <= 0)
+				nButtonSpacing = 20;
+
+			nButtonX = (MainTabControl.Size.Width / 2) - ((AddToolButton.Width + EditToolButton.Width + RemoveToolButton.Width + ViewToolButton.Width + (nButtonSpacing * 2)) / 2);
+
+			AddToolButton.Location = new Point(nButtonX, nButtonY);
+			nButtonX += AddToolButton.Width + nButtonSpacing;
+
+			EditToolButton.Location = new Point(nButtonX, nButtonY);
+			nButtonX += EditToolButton.Width + nButtonSpacing;
+
+			ViewToolButton.Location = new Point(nButtonX, nButtonY);
+			nButtonX += ViewToolButton.Width + nButtonSpacing;
+
+			RemoveToolButton.Location = new Point(nButtonX, nButtonY);
+
+			m_ToolsListView.Location = new Point(6, ToolsFiltersGroupBox.Location.Y + ToolsFiltersGroupBox.Height + 6);
+			m_ToolsListView.Size = new Size(MainTabControl.Width - 26, nButtonY - m_ToolsListView.Location.Y - 20);
 			}
 
 		//============================================================================*
@@ -1556,172 +1699,23 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// OnToolsSAAMIAmmoFiresClicked()
+		// OnToolsIntegrityCheckerClicked()
 		//============================================================================*
 
-		private void OnToolsSAAMIAmmoFiresClicked(Object sender, EventArgs e)
+		private void OnToolsIntegrityCheckerClicked(Object sender, EventArgs e)
 			{
-			this.Cursor = Cursors.WaitCursor;
+			cDataIntegrityForm DataIntegrityForm = new cDataIntegrityForm(m_DataFiles);
 
-			DownloadSAAMIDoc(m_DataFiles, "http://www.SAAMI.org/specifications_and_information/publications/download/SAAMI_ITEM_212-Facts_About_Sporting_Ammunition_Fires.pdf");
-
-			this.Cursor = Cursors.Default;
+			DataIntegrityForm.ShowDialog();
 			}
 
 		//============================================================================*
-		// OnToolsSAAMIFactsClicked()
+		// OnToolsSAAMIWebsiteClicked()
 		//============================================================================*
 
-		private void OnToolsSAAMIFactsClicked(Object sender, EventArgs e)
+		private void OnToolsSAAMIWebsiteClicked(Object sender, EventArgs e)
 			{
-			this.Cursor = Cursors.WaitCursor;
-
-			DownloadSAAMIDoc(m_DataFiles, "http://www.SAAMI.org/specifications_and_information/publications/download/SAAMI_ITEM_241-Setting_the_Standard_Safety_and_Technical_Standards_for_Firearms_and_Ammunition.pdf");
-
-			this.Cursor = Cursors.Default;
-			}
-
-		//============================================================================*
-		// OnToolsSAAMIPistolSpecsClicked()
-		//============================================================================*
-
-		private void OnToolsSAAMIPistolSpecsClicked(Object sender, EventArgs e)
-			{
-			this.Cursor = Cursors.WaitCursor;
-
-			DownloadSAAMIDoc(m_DataFiles, "http://www.SAAMI.org/specifications_and_information/publications/download/205.pdf");
-
-			this.Cursor = Cursors.Default;
-			}
-
-		//============================================================================*
-		// OnToolsSAAMIPistolVelocityDataClicked()
-		//============================================================================*
-
-		private void OnToolsSAAMIPistolVelocityDataClicked(Object sender, EventArgs e)
-			{
-			this.Cursor = Cursors.WaitCursor;
-
-			DownloadSAAMIDoc(m_DataFiles, "http://www.SAAMI.org/specifications_and_information/Specifications/Velocity_Pressure_CFPR.pdf");
-
-			this.Cursor = Cursors.Default;
-			}
-
-		//============================================================================*
-		// OnToolsSAAMIPrimersClicked()
-		//============================================================================*
-
-		private void OnToolsSAAMIPrimersClicked(Object sender, EventArgs e)
-			{
-			this.Cursor = Cursors.WaitCursor;
-
-			DownloadSAAMIDoc(m_DataFiles, "http://www.SAAMI.org/specifications_and_information/publications/download/SAAMI_ITEM_201-Primers.pdf");
-
-			this.Cursor = Cursors.Default;
-			}
-
-		//============================================================================*
-		// OnToolsSAAMIRifleSpecsClicked()
-		//============================================================================*
-
-		private void OnToolsSAAMIRifleSpecsClicked(Object sender, EventArgs e)
-			{
-			this.Cursor = Cursors.WaitCursor;
-
-			DownloadSAAMIDoc(m_DataFiles, "http://www.SAAMI.org/specifications_and_information/publications/download/206.pdf");
-
-			this.Cursor = Cursors.Default;
-			}
-
-		//============================================================================*
-		// OnToolsSAAMIRifleVelocityDataClicked()
-		//============================================================================*
-
-		private void OnToolsSAAMIRifleVelocityDataClicked(Object sender, EventArgs e)
-			{
-			this.Cursor = Cursors.WaitCursor;
-
-			DownloadSAAMIDoc(m_DataFiles, "http://www.SAAMI.org/specifications_and_information/Specifications/Velocity_Pressure_CFR.pdf");
-
-			this.Cursor = Cursors.Default;
-			}
-
-		//============================================================================*
-		// OnToolsSAAMIRimfireSpecsClicked()
-		//============================================================================*
-
-		private void OnToolsSAAMIRimfireSpecsClicked(Object sender, EventArgs e)
-			{
-			this.Cursor = Cursors.WaitCursor;
-
-			DownloadSAAMIDoc(m_DataFiles, "http://www.SAAMI.org/specifications_and_information/publications/download/208.pdf");
-
-			this.Cursor = Cursors.Default;
-			}
-
-		//============================================================================*
-		// OnToolsSAAMISafeAmmoStorageClicked()
-		//============================================================================*
-
-		private void OnToolsSAAMISafeAmmoStorageClicked(Object sender, EventArgs e)
-			{
-			this.Cursor = Cursors.WaitCursor;
-
-			DownloadSAAMIDoc(m_DataFiles, "http://www.SAAMI.org/PDF/SAAMI_AmmoStorage.pdf");
-
-			this.Cursor = Cursors.Default;
-			}
-
-		//============================================================================*
-		// OnToolsSAAMIShotshellSpecsClicked()
-		//============================================================================*
-
-		private void OnToolsSAAMIShotshellSpecsClicked(Object sender, EventArgs e)
-			{
-			this.Cursor = Cursors.WaitCursor;
-
-			DownloadSAAMIDoc(m_DataFiles, "http://www.SAAMI.org/specifications_and_information/publications/download/209.pdf");
-
-			this.Cursor = Cursors.Default;
-			}
-
-		//============================================================================*
-		// OnToolsSAAMISmokelessPowderClicked()
-		//============================================================================*
-
-		private void OnToolsSAAMISmokelessPowderClicked(Object sender, EventArgs e)
-			{
-			this.Cursor = Cursors.WaitCursor;
-
-			DownloadSAAMIDoc(m_DataFiles, "http://www.SAAMI.org/specifications_and_information/publications/download/SAAMI_ITEM_200-Smokeless_Powder.pdf");
-
-			this.Cursor = Cursors.Default;
-			}
-
-		//============================================================================*
-		// OnToolsSAAMISportingFirearmsClicked()
-		//============================================================================*
-
-		private void OnToolsSAAMISportingFirearmsClicked(Object sender, EventArgs e)
-			{
-			this.Cursor = Cursors.WaitCursor;
-
-			DownloadSAAMIDoc(m_DataFiles, "http://www.SAAMI.org/specifications_and_information/publications/download/SAAMI_ITEM_203-Sporting_Firearms.pdf");
-
-			this.Cursor = Cursors.Default;
-			}
-
-		//============================================================================*
-		// OnToolsSAAMIUnsafeArmsAmmoClicked()
-		//============================================================================*
-
-		private void OnToolsSAAMIUnsafeArmsAmmoClicked(Object sender, EventArgs e)
-			{
-			this.Cursor = Cursors.WaitCursor;
-
-			DownloadSAAMIDoc(m_DataFiles, "http://www.SAAMI.org/specifications_and_information/publications/download/SAAMI_ITEM_211-Unsafe_Arms_and_Ammunition_Combinations.pdf");
-
-			this.Cursor = Cursors.Default;
+			Process.Start("http://www.SAAMI.org/");
 			}
 
 		//============================================================================*
@@ -1829,13 +1823,13 @@ namespace ReloadersWorkShop
 		private void OnViewClicked(Object sender, EventArgs e)
 			{
 			ViewInventoryActivityMenuItem.Visible = false;
+			ViewCheckedMenuItem.Text = "Checked Only";
 
 			switch (MainTabControl.SelectedTab.Name)
 				{
 				case "ManufacturersTab":
 					ViewViewMenuItem.Text = "&View Manufacturer";
 					ViewViewMenuItem.Enabled = ViewManufacturerButton.Enabled;
-					ViewCheckedMenuItem.Text = "Checked Only";
 					ViewCheckedMenuItem.Visible = false;
 					ViewCheckedMenuItem.Checked = false;
 
@@ -1853,7 +1847,6 @@ namespace ReloadersWorkShop
 				case "FirearmsTab":
 					ViewViewMenuItem.Text = "&View Firearm";
 					ViewViewMenuItem.Enabled = ViewFirearmButton.Enabled;
-					ViewCheckedMenuItem.Text = "Checked Only";
 					ViewCheckedMenuItem.Visible = false;
 					ViewCheckedMenuItem.Checked = false;
 
@@ -1865,7 +1858,7 @@ namespace ReloadersWorkShop
 					ViewCheckedMenuItem.Text = "Checked Supplies &Only";
 					ViewCheckedMenuItem.Checked = m_DataFiles.Preferences.HideUncheckedSupplies;
 					ViewCheckedMenuItem.Visible = true;
-					ViewInventoryActivityMenuItem.Visible = cPreferences.TrackInventory;
+					ViewInventoryActivityMenuItem.Visible = m_DataFiles.Preferences.TrackInventory;
 
 					switch ((cSupply.eSupplyTypes) SupplyTypeCombo.SelectedIndex)
 						{
@@ -1891,7 +1884,6 @@ namespace ReloadersWorkShop
 				case "LoadDataTab":
 					ViewViewMenuItem.Text = "&View Load";
 					ViewViewMenuItem.Enabled = ViewLoadButton.Enabled;
-					ViewCheckedMenuItem.Text = "Checked Only";
 					ViewCheckedMenuItem.Visible = false;
 					ViewCheckedMenuItem.Checked = false;
 
@@ -1900,7 +1892,6 @@ namespace ReloadersWorkShop
 				case "BatchEditorTab":
 					ViewViewMenuItem.Text = "&View Batch";
 					ViewViewMenuItem.Enabled = ViewBatchButton.Enabled;
-					ViewCheckedMenuItem.Text = "Checked Only";
 					ViewCheckedMenuItem.Visible = false;
 					ViewCheckedMenuItem.Checked = false;
 
@@ -1920,7 +1911,15 @@ namespace ReloadersWorkShop
 					ViewCheckedMenuItem.Text = "Checked Only";
 					ViewCheckedMenuItem.Visible = false;
 					ViewCheckedMenuItem.Checked = false;
-					ViewInventoryActivityMenuItem.Visible = cPreferences.TrackInventory;
+					ViewInventoryActivityMenuItem.Visible = m_DataFiles.Preferences.TrackInventory;
+
+					break;
+
+				case "ToolsTab":
+					ViewViewMenuItem.Text = "&View Tool";
+					ViewViewMenuItem.Enabled = ViewToolButton.Enabled;
+					ViewCheckedMenuItem.Visible = false;
+					ViewCheckedMenuItem.Checked = false;
 
 					break;
 				}
@@ -2069,6 +2068,10 @@ namespace ReloadersWorkShop
 				case "AmmoTab":
 					OnViewAmmo(sender, e);
 					break;
+
+				case "ToolsTab":
+					OnViewTool(sender, e);
+					break;
 				}
 			}
 
@@ -2080,52 +2083,29 @@ namespace ReloadersWorkShop
 			{
 			OpenFileDialog FileDlg = new OpenFileDialog();
 
-			FileDlg.Title = "Restore Reloader's WorkShop Backup File";
+			FileDlg.Title = String.Format("Restore {0} Backup File", Application.ProductName);
 			FileDlg.AddExtension = true;
 			FileDlg.DefaultExt = "rwb";
 			FileDlg.InitialDirectory = m_DataFiles.Preferences.BackupFolder;
-			FileDlg.Filter = "Reloader's WorkShop Backup Files (*.rwb)|*.rwb";
+			FileDlg.Filter = String.Format("{0} Backup Files (*.rwb)|*.rwb", Application.ProductName);
 
 			DialogResult rc = FileDlg.ShowDialog();
 
 			if (rc == DialogResult.Cancel)
 				return;
 
-			rc = MessageBox.Show("Merge this backup file with your current data?\n\nNote: When merging, your current preferences will not be modified.", "Merge Data?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button3);
-
-			if (rc == DialogResult.Cancel)
-				return;
-
 			string strPath = FileDlg.FileName;
 
-			bool fLoadOK = true;
-			bool fReinitialize = true;
+			string strText = String.Format("Warning: Your current data will be replaced with the data contained in \n\n{0}\n\nAre you sure you wish to continue?", strPath);
+
+			rc = MessageBox.Show(strText, "Data Restoration Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
 
 			if (rc == DialogResult.Yes)
 				{
-				cDataFiles DataFiles = new cDataFiles();
-
-				fLoadOK = DataFiles.LoadDataFile(strPath, true);
+				bool fLoadOK = m_DataFiles.Load(strPath, true);
 
 				if (fLoadOK)
-					{
-					if (!m_DataFiles.Merge(DataFiles))
-						fReinitialize = false;
-					}
-				}
-			else
-				fLoadOK = m_DataFiles.Load(strPath, true);
-
-			if (fLoadOK && fReinitialize)
-				{
-				InitializeManufacturerTab();
-				InitializeCaliberTab();
-				InitializeFirearmTab();
-				InitializeSuppliesTab();
-				InitializeLoadDataTab();
-				InitializeBatchTab();
-				InitializeAmmoTab();
-				InitializeBallisticsTab();
+					InitializeAllTabs();
 				}
 
 			UpdateButtons();

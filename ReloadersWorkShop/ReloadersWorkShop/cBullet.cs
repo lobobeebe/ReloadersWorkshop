@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cBullet.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -31,20 +31,20 @@ namespace ReloadersWorkShop
 	//============================================================================*
 
 	[Serializable]
-	public class cBullet : cSupply
+	public partial class cBullet : cSupply
 		{
 		//============================================================================*
 		// Private Static Data Members
 		//============================================================================*
 
-        private static double sm_dMinBulletWeight = cBullet.MinBulletWeight;
-        private static double sm_dMaxBulletWeight = cBullet.MaxBulletWeight;
+		private static double sm_dMinBulletWeight = cBullet.MinBulletWeight;
+		private static double sm_dMaxBulletWeight = cBullet.MaxBulletWeight;
 
-        //============================================================================*
-        // Private Data Members
-        //============================================================================*
+		//============================================================================*
+		// Private Data Members
+		//============================================================================*
 
-        private string m_strPartNumber = "";
+		private string m_strPartNumber = "";
 		private string m_strType = "";
 		private Double m_dDiameter = 0.0;
 		private double m_dLength = 0.0;
@@ -54,14 +54,14 @@ namespace ReloadersWorkShop
 		private bool m_fSelfCast = false;
 		private int m_nTopPunch = 0;
 
-		private cBulletCaliberList m_CaliberList = new cBulletCaliberList();
+		private cBulletCaliberList m_BulletCaliberList = new cBulletCaliberList();
 
 		//============================================================================*
 		// cBullet() - Constructor
 		//============================================================================*
 
-		public cBullet()
-			: base(cSupply.eSupplyTypes.Bullets)
+		public cBullet(bool fIdentity = false)
+			: base(cSupply.eSupplyTypes.Bullets,fIdentity)
 			{
 			}
 
@@ -73,6 +73,66 @@ namespace ReloadersWorkShop
 			: base(Bullet)
 			{
 			Copy(Bullet, false);
+			}
+
+		//============================================================================*
+		// Append()
+		//============================================================================*
+
+		public int Append(cBullet Bullet, bool fCountOnly = false)
+			{
+			int nUpdateCount = base.Append(Bullet, fCountOnly);
+
+			if (String.IsNullOrEmpty(m_strType) && !String.IsNullOrEmpty(Bullet.m_strType))
+				{
+				m_strType = Bullet.m_strType;
+
+				nUpdateCount++;
+				}
+
+			if (m_dDiameter == 0.0 && m_dDiameter != 0.0)
+				{
+				m_dDiameter = Bullet.m_dDiameter;
+
+				nUpdateCount++;
+				}
+
+			if (m_dLength == 0.0 && Bullet.m_dLength != 0.0)
+				{
+				m_dLength = Bullet.m_dLength;
+
+				nUpdateCount++;
+				}
+
+			if (m_dWeight == 0.0 && Bullet.m_dWeight != 0.0)
+				{
+				m_dWeight = Bullet.m_dWeight;
+
+				nUpdateCount++;
+				}
+
+			if (m_dBallisticCoefficient == 0.0 && Bullet.m_dBallisticCoefficient != 0.0)
+				{
+				m_dBallisticCoefficient = Bullet.m_dBallisticCoefficient;
+
+				nUpdateCount++;
+				}
+
+			if (!m_fSelfCast && Bullet.m_fSelfCast)
+				{
+				m_fSelfCast = Bullet.m_fSelfCast;
+
+				nUpdateCount++;
+				}
+
+			if (m_nTopPunch == 0 && Bullet.m_nTopPunch != 0)
+				{
+				m_nTopPunch = Bullet.m_nTopPunch;
+
+				nUpdateCount++;
+				}
+
+			return (nUpdateCount);
 			}
 
 		//============================================================================*
@@ -97,9 +157,12 @@ namespace ReloadersWorkShop
 
 		public cBulletCaliber BulletCaliber(cCaliber Caliber)
 			{
+			if (m_BulletCaliberList == null)
+				m_BulletCaliberList = new cBulletCaliberList();
+
 			cBulletCaliber BulletCaliber = null;
 
-			foreach (cBulletCaliber CheckBulletCaliber in CaliberList)
+			foreach (cBulletCaliber CheckBulletCaliber in m_BulletCaliberList)
 				{
 				if (CheckBulletCaliber.Caliber.CompareTo(Caliber) == 0)
 					{
@@ -110,6 +173,22 @@ namespace ReloadersWorkShop
 				}
 
 			return (BulletCaliber);
+			}
+
+		//============================================================================*
+		// BulletCaliberList Property
+		//============================================================================*
+
+		public cBulletCaliberList BulletCaliberList
+			{
+			get
+				{
+				return (m_BulletCaliberList);
+				}
+			set
+				{
+				m_BulletCaliberList = value;
+				}
 			}
 
 		//============================================================================*
@@ -130,22 +209,6 @@ namespace ReloadersWorkShop
 				}
 
 			return (dSectionalDensity);
-			}
-
-		//============================================================================*
-		// CaliberList Property
-		//============================================================================*
-
-		public cBulletCaliberList CaliberList
-			{
-			get
-				{
-				return (m_CaliberList);
-				}
-			set
-				{
-				m_CaliberList = value;
-				}
 			}
 
 		//============================================================================*
@@ -245,83 +308,10 @@ namespace ReloadersWorkShop
 			m_fSelfCast = Bullet.m_fSelfCast;
 			m_nTopPunch = Bullet.m_nTopPunch;
 
-			if (Bullet.CaliberList != null)
-				m_CaliberList = new cBulletCaliberList(Bullet.CaliberList);
+			if (Bullet.BulletCaliberList != null)
+				m_BulletCaliberList = new cBulletCaliberList(Bullet.BulletCaliberList);
 			else
-				m_CaliberList = new cBulletCaliberList();
-			}
-
-		//============================================================================*
-		// CSVHeader Property
-		//============================================================================*
-
-		public static string CSVHeader
-			{
-			get
-				{
-				return ("Bullets");
-				}
-			}
-
-		//============================================================================*
-		// CSVLine Property
-		//============================================================================*
-
-		public string CSVLine
-			{
-			get
-				{
-				string strLine = "";
-
-				strLine += Manufacturer.Name;
-				strLine += ",";
-				strLine += m_strPartNumber;
-				strLine += ",";
-				strLine += m_strType;
-				strLine += ",";
-
-				switch (FirearmType)
-					{
-					case cFirearm.eFireArmType.Handgun:
-						strLine += "Handgun,";
-						break;
-					case cFirearm.eFireArmType.Rifle:
-						strLine += "Rifle,";
-						break;
-					case cFirearm.eFireArmType.Shotgun:
-						strLine += "Shotgun,";
-						break;
-					default:
-						strLine += ",";
-						break;
-					}
-
-				strLine += CrossUse ? "Yes," : "-,";
-
-				strLine += m_dDiameter;
-				strLine += ",";
-				strLine += m_dLength;
-				strLine += ",";
-				strLine += m_dWeight;
-				strLine += ",";
-				strLine += m_dBallisticCoefficient;
-
-				return (strLine);
-				}
-			}
-
-		//============================================================================*
-		// CSVLineHeader Property
-		//============================================================================*
-
-		public static string CSVLineHeader
-			{
-			get
-				{
-				string strLine = "Manufacturer,Part Number,Type,Firearm Type,Cross Use,Diameter,Length,Weight,Ballistic Coefficient";
-
-				return (strLine);
-				}
+				m_BulletCaliberList = new cBulletCaliberList();
 			}
 
 		//============================================================================*
@@ -341,94 +331,15 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// Export() - XML Document
-		//============================================================================*
-
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
-			{
-			XmlElement XMLThisElement = XMLDocument.CreateElement("Bullet");
-			XMLParentElement.AppendChild(XMLThisElement);
-
-			// Manufacturer
-
-			XmlElement XMLElement = XMLDocument.CreateElement("Manufacturer");
-			XmlText XMLTextElement = XMLDocument.CreateTextNode(Manufacturer.Name);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Part Number
-
-			XMLElement = XMLDocument.CreateElement("PartNumber");
-			XMLTextElement = XMLDocument.CreateTextNode(m_strPartNumber);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Type
-
-			XMLElement = XMLDocument.CreateElement("Type");
-			XMLTextElement = XMLDocument.CreateTextNode(m_strType);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Firearm Type
-
-			XMLElement = XMLDocument.CreateElement("FirearmType");
-			XMLTextElement = XMLDocument.CreateTextNode(cFirearm.FirearmTypeString(FirearmType));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Cross Use
-
-			XMLElement = XMLDocument.CreateElement("CrossUse");
-			XMLTextElement = XMLDocument.CreateTextNode(CrossUse ? "Yes," : "-,");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Diameter
-
-			XMLElement = XMLDocument.CreateElement("Diameter");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dDiameter));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Length
-
-			XMLElement = XMLDocument.CreateElement("Length");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dLength));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Weight
-
-			XMLElement = XMLDocument.CreateElement("Weight");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dWeight));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Ballistic Coefficient
-
-			XMLElement = XMLDocument.CreateElement("BallisticCoefficient");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dBallisticCoefficient));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-			}
-
-		//============================================================================*
 		// HasCaliber()
 		//============================================================================*
 
 		public bool HasCaliber(cCaliber Caliber, bool fHideCalibers = false)
 			{
-			foreach (cBulletCaliber CheckCaliber in m_CaliberList)
+			if (m_BulletCaliberList == null)
+				m_BulletCaliberList = new cBulletCaliberList();
+
+			foreach (cBulletCaliber CheckCaliber in m_BulletCaliberList)
 				{
 				if (CheckCaliber.CompareTo(Caliber) == 0)
 					{
@@ -456,29 +367,29 @@ namespace ReloadersWorkShop
 				}
 			}
 
-        //============================================================================*
-        // MaxBulletWeight Property
-        //============================================================================*
+		//============================================================================*
+		// MaxBulletWeight Property
+		//============================================================================*
 
-        public static double MaxBulletWeight
-            {
-            get
-                {
-                return (sm_dMinBulletWeight);
-                }
-            }
+		public static double MaxBulletWeight
+			{
+			get
+				{
+				return (sm_dMinBulletWeight);
+				}
+			}
 
-        //============================================================================*
-        // MinBulletWeight Property
-        //============================================================================*
+		//============================================================================*
+		// MinBulletWeight Property
+		//============================================================================*
 
-        public static double MinBulletWeight
-            {
-            get
-                {
-                return (sm_dMinBulletWeight);
-                }
-            }
+		public static double MinBulletWeight
+			{
+			get
+				{
+				return (sm_dMinBulletWeight);
+				}
+			}
 
 		//============================================================================*
 		// PartNumber Property
@@ -498,6 +409,22 @@ namespace ReloadersWorkShop
 				{
 				m_strPartNumber = value;
 				}
+			}
+
+		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public override bool ResolveIdentities(cDataFiles DataFiles)
+			{
+			bool fChanged = base.ResolveIdentities(DataFiles);
+
+			if (m_BulletCaliberList == null)
+				m_BulletCaliberList = new cBulletCaliberList();
+
+			fChanged = m_BulletCaliberList.ResolveIdentities(DataFiles) ? true : fChanged;
+
+			return (fChanged);
 			}
 
 		//============================================================================*
@@ -536,7 +463,10 @@ namespace ReloadersWorkShop
 			{
 			bool fFound = false;
 
-			foreach (cBulletCaliber CheckBulletCaliber in m_CaliberList)
+			if (m_BulletCaliberList == null)
+				m_BulletCaliberList = new ReloadersWorkShop.cBulletCaliberList();
+
+			foreach (cBulletCaliber CheckBulletCaliber in m_BulletCaliberList)
 				fFound = CheckBulletCaliber.Synch(Caliber);
 
 			return (fFound);
@@ -569,10 +499,12 @@ namespace ReloadersWorkShop
 			if (Manufacturer != null)
 				strString = Manufacturer.Name;
 
-			if (m_strPartNumber != null && m_strPartNumber.Length > 0)
+			if (!String.IsNullOrEmpty(m_strPartNumber))
 				strString += String.Format(" {0}, {1}", m_strPartNumber, m_strType);
 			else
 				strString += String.Format(", {0}", m_strType);
+
+			strString = ToCrossUseString(strString);
 
 			return (strString);
 			}
@@ -583,37 +515,36 @@ namespace ReloadersWorkShop
 
 		public override string ToString()
 			{
+
 			string strString = "";
 
 			if (Manufacturer != null)
 				strString = Manufacturer.Name;
 
-			string strDiameterFormat = " {0:F";
-			strDiameterFormat += String.Format("{0:G0}", cPreferences.DimensionDecimals);
-			strDiameterFormat += "}";
+			string strDiameterFormat = cPreferences.StaticPreferences.FormatString(cDataFiles.eDataType.Dimension);
 
-			string strWeightFormat = " {0:F";
-			strWeightFormat += String.Format("{0:G0}", cPreferences.BulletWeightDecimals);
-			strWeightFormat += "}";
+			string strWeightFormat = cPreferences.StaticPreferences.FormatString(cDataFiles.eDataType.BulletWeight);
 
 			bool fType = false;
 
-			if (m_strPartNumber != null && m_strPartNumber.Length > 0)
-				strString += String.Format(" {0}", m_strPartNumber);
+			if (!String.IsNullOrEmpty(m_strPartNumber))
+				strString += String.Format(" {0}, ", m_strPartNumber);
 			else
 				{
-				strString += String.Format(" {0}", m_strType);
+				strString += String.Format(" {0}, ", m_strType);
 
 				fType = true;
 				}
 
-			strString += String.Format(strDiameterFormat, cPreferences.MetricDimensions ?  cConversions.InchesToMillimeters(m_dDiameter) : m_dDiameter);
+			strString += String.Format(strDiameterFormat, cPreferences.StaticPreferences.MetricDimensions ? cConversions.InchesToMillimeters(m_dDiameter) : m_dDiameter);
 
 			strString += cDataFiles.MetricString(cDataFiles.eDataType.Dimension);
 
-			strString += String.Format(strWeightFormat, cPreferences.MetricBulletWeights ? cConversions.GrainsToGrams(m_dWeight) : m_dWeight);
+			strString += " ";
 
-			strString += cPreferences.MetricBulletWeights ? "g" : "gr";
+			strString += String.Format(strWeightFormat, cPreferences.StaticPreferences.MetricBulletWeights ? cConversions.GrainsToGrams(m_dWeight) : m_dWeight);
+
+			strString += cDataFiles.MetricString(cDataFiles.eDataType.BulletWeight);
 
 			if (!fType)
 				strString += String.Format(" {0}", m_strType);
@@ -634,27 +565,25 @@ namespace ReloadersWorkShop
 			if (Manufacturer != null)
 				strString = Manufacturer.Name;
 
-			string strWeightFormat = ", {0:F";
-			strWeightFormat += String.Format("{0:G0}", cPreferences.BulletWeightDecimals);
-			strWeightFormat += "}";
-
 			bool fType = false;
 
-			if (m_strPartNumber != null && m_strPartNumber.Length > 0)
-				strString += String.Format(" {0}", m_strPartNumber);
+			if (!String.IsNullOrEmpty(m_strPartNumber))
+				strString += String.Format(" {0}, ", m_strPartNumber);
 			else
 				{
-				strString += String.Format(", {0}", m_strType);
+				strString += String.Format(", {0}, ", m_strType);
 
 				fType = true;
 				}
 
-			strString += String.Format(strWeightFormat, cPreferences.MetricBulletWeights ? cConversions.GrainsToGrams(m_dWeight) : m_dWeight);
+			strString += String.Format(cPreferences.StaticPreferences.FormatString(cDataFiles.eDataType.BulletWeight), cPreferences.StaticPreferences.MetricBulletWeights ? cConversions.GrainsToGrams(m_dWeight) : m_dWeight);
 
-			strString += cPreferences.MetricBulletWeights ? " g" : " gr";
+			strString += cPreferences.StaticPreferences.MetricBulletWeights ? " g" : " gr";
 
 			if (!fType)
 				strString += String.Format(", {0}", m_strType);
+
+			strString = ToCrossUseString(strString);
 
 			return (strString);
 			}
@@ -676,6 +605,42 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// Validate()
+		//============================================================================*
+
+		public override bool Validate(bool fIdentityOK = false)
+			{
+			//----------------------------------------------------------------------------*
+			// Check the basic identity info
+			//----------------------------------------------------------------------------*
+
+			if (!base.Validate(fIdentityOK))
+				return (false);
+
+			if (String.IsNullOrEmpty(m_strPartNumber))
+				return (false);
+
+			//----------------------------------------------------------------------------*
+			// If this is an identity, return now
+			//----------------------------------------------------------------------------*
+
+			if (fIdentityOK && Identity)
+				return (true);
+
+			if (Identity)
+				return (false);
+
+			//----------------------------------------------------------------------------*
+			// Otherwise, check the full monte for this item
+			//----------------------------------------------------------------------------*
+
+			if (m_dDiameter == 0.0 || m_dWeight == 0.0)
+				return(false);
+
+			return (true);
+			}
+
+		//============================================================================*
 		// Weight Property
 		//============================================================================*
 
@@ -690,33 +655,6 @@ namespace ReloadersWorkShop
 				m_dWeight = value;
 				}
 			}
-
-		//============================================================================*
-		// XMLLine Property
-		//============================================================================*
-
-		public string XMLLine
-			{
-			get
-				{
-				string strLine = "";
-
-				return (strLine);
-				}
-			}
-
-		//============================================================================*
-		// XMLLineHeader Property
-		//============================================================================*
-
-		public static string XMLLineHeader
-			{
-			get
-				{
-				string strLine = "Firearm Type,Name,Headstamp,Handgun Type,Small Primer,Large Primer,Magnum Primer,Min Bullet Dia.,Max Bullet Dia.,Min Bullet Weight,Max Bullet Weight,Case Trim Length,Max Case Length,Max COAL,Max Neck Dia";
-
-				return (strLine);
-				}
-			}
 		}
 	}
+

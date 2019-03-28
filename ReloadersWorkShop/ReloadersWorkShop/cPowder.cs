@@ -23,13 +23,13 @@ namespace ReloadersWorkShop
 	//============================================================================*
 
 	[Serializable]
-	public class cPowder : cSupply
+	public partial class cPowder : cSupply
 		{
 		//----------------------------------------------------------------------------*
 		// Public Enumerations
 		//----------------------------------------------------------------------------*
 
-		public enum ePowderType
+		public enum ePowderShapes
 			{
 			Spherical = 0,
 			Extruded,
@@ -42,14 +42,14 @@ namespace ReloadersWorkShop
 		//============================================================================*
 
 		private string m_strType = "";
-		private ePowderType m_ePowderType = ePowderType.Other;
+		private ePowderShapes m_eShape = ePowderShapes.Other;
 
 		//============================================================================*
 		// cPowder() - Constructor
 		//============================================================================*
 
-		public cPowder()
-			: base(cSupply.eSupplyTypes.Powder)
+		public cPowder(bool fIdentity = false)
+			: base(cSupply.eSupplyTypes.Powder, fIdentity)
 			{
 			}
 
@@ -61,6 +61,17 @@ namespace ReloadersWorkShop
 			: base(Powder)
 			{
 			Copy(Powder, false);
+			}
+
+		//============================================================================*
+		// Append()
+		//============================================================================*
+
+		public int Append(cPowder Powder, bool fCountOnly = false)
+			{
+			int nUpdateCount = base.Append(Powder, fCountOnly);
+
+			return (nUpdateCount);
 			}
 
 		//============================================================================*
@@ -79,7 +90,7 @@ namespace ReloadersWorkShop
 			else
 				{
 				if (Powder2 == null)
-					return(1);
+					return (1);
 				}
 
 			return (Powder1.CompareTo(Powder2));
@@ -103,7 +114,7 @@ namespace ReloadersWorkShop
 			int rc = base.CompareTo(Supply);
 
 			//----------------------------------------------------------------------------*
-			// Model
+			// Type
 			//----------------------------------------------------------------------------*
 
 			if (rc == 0)
@@ -126,106 +137,7 @@ namespace ReloadersWorkShop
 				base.Copy(Powder);
 
 			m_strType = Powder.m_strType;
-			m_ePowderType = Powder.m_ePowderType;
-			}
-
-		//============================================================================*
-		// CSVHeader Property
-		//============================================================================*
-
-		public static string CSVHeader
-			{
-			get
-				{
-				return ("Powders");
-				}
-			}
-
-		//============================================================================*
-		// CSVLine Property
-		//============================================================================*
-
-		public string CSVLine
-			{
-			get
-				{
-				string strLine = "";
-
-				strLine += Manufacturer.Name;
-				strLine += ",";
-				strLine += m_strType;
-				strLine += ",";
-				strLine += TypeString;
-				strLine += ",";
-
-				strLine += cFirearm.FirearmTypeString(FirearmType);
-				strLine += ",";
-				strLine += CrossUse ? "Yes" : "-";
-
-				return (strLine);
-				}
-			}
-
-		//============================================================================*
-		// CSVLineHeader Property
-		//============================================================================*
-
-		public static string CSVLineHeader
-			{
-			get
-				{
-				return ("Manufacturer,Type,Shape,Firearm Type,Cross Use");
-				}
-			}
-
-		//============================================================================*
-		// Export() - XML Document
-		//============================================================================*
-
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement)
-			{
-			XmlElement XMLThisElement = XMLDocument.CreateElement("Powder");
-			XMLParentElement.AppendChild(XMLThisElement);
-
-			// Manufacture Name
-
-			XmlElement XMLElement = XMLDocument.CreateElement("ManufactureName");
-			XmlText XMLTextElement = XMLDocument.CreateTextNode(Manufacturer.Name);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Type
-
-			XMLElement = XMLDocument.CreateElement("Type");
-			XMLTextElement = XMLDocument.CreateTextNode(m_strType);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Firearm Type
-
-			XMLElement = XMLDocument.CreateElement("FirearmType");
-			XMLTextElement = XMLDocument.CreateTextNode(cFirearm.FirearmTypeString(FirearmType));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Shape
-
-			XMLElement = XMLDocument.CreateElement("Shape");
-			XMLTextElement = XMLDocument.CreateTextNode(TypeString);
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Cross Use
-
-			XMLElement = XMLDocument.CreateElement("CrossUse");
-			XMLTextElement = XMLDocument.CreateTextNode(CrossUse ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
+			m_eShape = Powder.m_eShape;
 			}
 
 		//============================================================================*
@@ -234,18 +146,82 @@ namespace ReloadersWorkShop
 
 		public string Model
 			{
-			get { return (m_strType); }
-			set { m_strType = value; }
+			get
+				{
+				return (m_strType);
+				}
+			set
+				{
+				m_strType = value;
+				}
 			}
 
 		//============================================================================*
-		// PowderType Property
+		// ResolveIdentities()
 		//============================================================================*
 
-		public ePowderType PowderType
+		public override bool ResolveIdentities(cDataFiles DataFiles)
 			{
-			get { return (m_ePowderType); }
-			set { m_ePowderType = value; }
+			return (base.ResolveIdentities(DataFiles));
+			}
+
+		//============================================================================*
+		// Shape Property
+		//============================================================================*
+
+		public ePowderShapes Shape
+			{
+			get
+				{
+				return (m_eShape);
+				}
+			set
+				{
+				m_eShape = value;
+				}
+			}
+
+
+		//============================================================================*
+		// ShapeFromString()
+		//============================================================================*
+
+		public static ePowderShapes ShapeFromString(string strString)
+			{
+			switch (strString)
+				{
+				case "Spherical":
+					return (ePowderShapes.Spherical);
+
+				case "Extruded":
+					return (ePowderShapes.Extruded);
+
+				case "Flake":
+					return (ePowderShapes.Flake);
+				}
+
+			return (ePowderShapes.Other);
+			}
+
+		//============================================================================*
+		// ShapeString Property
+		//============================================================================*
+
+		public static string ShapeString(cPowder.ePowderShapes eShape)
+			{
+			switch (eShape)
+				{
+				case ePowderShapes.Spherical:
+					return ("Spherical");
+
+				case ePowderShapes.Extruded:
+					return ("Extruded");
+
+				case ePowderShapes.Flake:
+					return ("Flake");
+				}
+
+			return ("Other");
 			}
 
 		//============================================================================*
@@ -255,7 +231,7 @@ namespace ReloadersWorkShop
 		public override string ToString()
 			{
 			string strString = "";
-			
+
 			if (Manufacturer != null && m_strType != null)
 				strString = String.Format("{0} {1}", Manufacturer.Name, m_strType);
 
@@ -270,72 +246,29 @@ namespace ReloadersWorkShop
 
 		public string Type
 			{
-			get { return(m_strType); }
-			set { m_strType = value; }
-			}
-
-		//============================================================================*
-		// TypeString Property
-		//============================================================================*
-
-		public string TypeString
-			{
 			get
 				{
-				switch(m_ePowderType)
-					{
-					case ePowderType.Spherical:
-						return("Spherical");
-
-					case ePowderType.Extruded:
-						return ("Extruded");
-
-					case ePowderType.Flake:
-						return ("Flake");
-					}
-
-				return ("Other");
-				}	
-			}
-
-		//============================================================================*
-		// XMLHeader Property
-		//============================================================================*
-
-		public static string XMLHeader
-			{
-			get
+				return (m_strType);
+				}
+			set
 				{
-				return ("Powders");
+				m_strType = value;
 				}
 			}
 
 		//============================================================================*
-		// XMLLine Property
+		// Validate()
 		//============================================================================*
 
-		public string XMLLine
+		public override bool Validate(bool fIdentityOK = false)
 			{
-			get
-				{
-				string strLine = "";
+			if (!base.Validate(fIdentityOK))
+				return (false);
 
-				return (strLine);
-				}
-			}
+			if (String.IsNullOrEmpty(m_strType))
+				return (false);
 
-		//============================================================================*
-		// XMLLineHeader Property
-		//============================================================================*
-
-		public static string XMLLineHeader
-			{
-			get
-				{
-				string strLine = "Firearm Type,Name,Headstamp,Handgun Type,Small Primer,Large Primer,Magnum Primer,Min Bullet Dia.,Max Bullet Dia.,Min Bullet Weight,Max Bullet Weight,Case Trim Length,Max Case Length,Max COAL,Max Neck Dia";
-
-				return (strLine);
-				}
+			return (true);
 			}
 		}
 	}

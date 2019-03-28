@@ -39,6 +39,7 @@
 			System.Windows.Forms.Label label12;
 			System.Windows.Forms.Label label16;
 			System.Windows.Forms.Label label18;
+			System.Windows.Forms.Label label2;
 			this.HeadspaceMeasurementLabel = new System.Windows.Forms.Label();
 			this.NeckSizeMeasurementLabel = new System.Windows.Forms.Label();
 			this.BarrelMeasurementLabel = new System.Windows.Forms.Label();
@@ -49,14 +50,15 @@
 			this.OKButton = new System.Windows.Forms.Button();
 			this.FirearmCancelButton = new System.Windows.Forms.Button();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.FirearmDetailsButton = new System.Windows.Forms.Button();
+			this.DescriptionTextBox = new CommonLib.Controls.cTextBox();
 			this.SerialNumberTextBox = new CommonLib.Controls.cTextBox();
 			this.ModelTextBox = new CommonLib.Controls.cTextBox();
 			this.FirearmTypeCombo = new ReloadersWorkShop.Controls.cFirearmTypeCombo();
+			this.FirearmDetailsButton = new System.Windows.Forms.Button();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.TurretTypeCombo = new ReloadersWorkShop.Controls.cTurretTypeCombo();
 			this.SightHeightMeasurementLabel = new System.Windows.Forms.Label();
 			this.ScopedCheckBox = new System.Windows.Forms.CheckBox();
-			this.TurretTypeComboBox = new System.Windows.Forms.ComboBox();
 			this.NeckTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			this.HeadSpaceTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			this.ZeroRangeTextBox = new CommonLib.Controls.cIntegerValueTextBox();
@@ -84,6 +86,7 @@
 			label12 = new System.Windows.Forms.Label();
 			label16 = new System.Windows.Forms.Label();
 			label18 = new System.Windows.Forms.Label();
+			label2 = new System.Windows.Forms.Label();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.CartridgeSpecsGroupBox.SuspendLayout();
@@ -222,6 +225,18 @@
 			label18.TabIndex = 27;
 			label18.Text = "Turret Click:";
 			// 
+			// label2
+			// 
+			label2.AutoSize = true;
+			label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			label2.ForeColor = System.Drawing.SystemColors.ControlText;
+			label2.Location = new System.Drawing.Point(32, 127);
+			label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			label2.Name = "label2";
+			label2.Size = new System.Drawing.Size(63, 13);
+			label2.TabIndex = 17;
+			label2.Text = "Description:";
+			// 
 			// HeadspaceMeasurementLabel
 			// 
 			this.HeadspaceMeasurementLabel.AutoSize = true;
@@ -287,7 +302,7 @@
 			this.ManufacturerCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
 			this.ManufacturerCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.ManufacturerCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.ManufacturerCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ManufacturerCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.ManufacturerCombo.FormattingEnabled = true;
 			this.ManufacturerCombo.Location = new System.Drawing.Point(100, 47);
 			this.ManufacturerCombo.Margin = new System.Windows.Forms.Padding(2);
@@ -301,7 +316,7 @@
 			this.CaliberCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
 			this.CaliberCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.CaliberCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.CaliberCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.CaliberCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.CaliberCombo.ForeColor = System.Drawing.SystemColors.WindowText;
 			this.CaliberCombo.FormattingEnabled = true;
 			this.CaliberCombo.Location = new System.Drawing.Point(7, 134);
@@ -334,7 +349,8 @@
 			// 
 			// groupBox1
 			// 
-			this.groupBox1.Controls.Add(this.FirearmDetailsButton);
+			this.groupBox1.Controls.Add(this.DescriptionTextBox);
+			this.groupBox1.Controls.Add(label2);
 			this.groupBox1.Controls.Add(this.SerialNumberTextBox);
 			this.groupBox1.Controls.Add(this.ModelTextBox);
 			this.groupBox1.Controls.Add(this.FirearmTypeCombo);
@@ -354,18 +370,19 @@
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "General";
 			// 
-			// FirearmDetailsButton
+			// DescriptionTextBox
 			// 
-			this.FirearmDetailsButton.AutoSize = true;
-			this.FirearmDetailsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.FirearmDetailsButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmDetailsButton.Location = new System.Drawing.Point(100, 125);
-			this.FirearmDetailsButton.Margin = new System.Windows.Forms.Padding(2);
-			this.FirearmDetailsButton.Name = "FirearmDetailsButton";
-			this.FirearmDetailsButton.Size = new System.Drawing.Size(215, 23);
-			this.FirearmDetailsButton.TabIndex = 4;
-			this.FirearmDetailsButton.Text = "Edit Firearm Details";
-			this.FirearmDetailsButton.UseVisualStyleBackColor = true;
+			this.DescriptionTextBox.BackColor = System.Drawing.Color.LightPink;
+			this.DescriptionTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.DescriptionTextBox.Location = new System.Drawing.Point(100, 124);
+			this.DescriptionTextBox.MaxLength = 50;
+			this.DescriptionTextBox.Name = "DescriptionTextBox";
+			this.DescriptionTextBox.Required = true;
+			this.DescriptionTextBox.Size = new System.Drawing.Size(215, 20);
+			this.DescriptionTextBox.TabIndex = 16;
+			this.DescriptionTextBox.ToolTip = "";
+			this.DescriptionTextBox.ValidChars = "";
+			this.DescriptionTextBox.Value = "";
 			// 
 			// SerialNumberTextBox
 			// 
@@ -378,6 +395,7 @@
 			this.SerialNumberTextBox.Size = new System.Drawing.Size(215, 20);
 			this.SerialNumberTextBox.TabIndex = 3;
 			this.SerialNumberTextBox.ToolTip = "";
+			this.SerialNumberTextBox.ValidChars = "";
 			this.SerialNumberTextBox.Value = "";
 			// 
 			// ModelTextBox
@@ -391,16 +409,36 @@
 			this.ModelTextBox.Size = new System.Drawing.Size(215, 20);
 			this.ModelTextBox.TabIndex = 2;
 			this.ModelTextBox.ToolTip = "";
+			this.ModelTextBox.ValidChars = "";
 			this.ModelTextBox.Value = "";
 			// 
 			// FirearmTypeCombo
 			// 
 			this.FirearmTypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.FirearmTypeCombo.DropDownWidth = 115;
-			this.FirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmTypeCombo.FormattingEnabled = true;
+			this.FirearmTypeCombo.IncludeAny = false;
 			this.FirearmTypeCombo.IncludeShotgun = true;
 			this.FirearmTypeCombo.Items.AddRange(new object[] {
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
+            "Handgun",
+            "Rifle",
+            "Shotgun",
             "Handgun",
             "Rifle",
             "Shotgun",
@@ -484,16 +522,31 @@
             "Shotgun"});
 			this.FirearmTypeCombo.Location = new System.Drawing.Point(100, 22);
 			this.FirearmTypeCombo.Name = "FirearmTypeCombo";
+			this.FirearmTypeCombo.ShowToolTips = true;
 			this.FirearmTypeCombo.Size = new System.Drawing.Size(100, 21);
 			this.FirearmTypeCombo.TabIndex = 0;
 			this.FirearmTypeCombo.ToolTip = "";
 			this.FirearmTypeCombo.Value = ReloadersWorkShop.cFirearm.eFireArmType.Handgun;
 			// 
+			// FirearmDetailsButton
+			// 
+			this.FirearmDetailsButton.AutoSize = true;
+			this.FirearmDetailsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FirearmDetailsButton.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FirearmDetailsButton.Location = new System.Drawing.Point(71, 126);
+			this.FirearmDetailsButton.Margin = new System.Windows.Forms.Padding(2);
+			this.FirearmDetailsButton.Name = "FirearmDetailsButton";
+			this.FirearmDetailsButton.Size = new System.Drawing.Size(215, 23);
+			this.FirearmDetailsButton.TabIndex = 4;
+			this.FirearmDetailsButton.Text = "Edit Firearm Details";
+			this.FirearmDetailsButton.UseVisualStyleBackColor = true;
+			// 
 			// groupBox2
 			// 
+			this.groupBox2.Controls.Add(this.TurretTypeCombo);
+			this.groupBox2.Controls.Add(this.FirearmDetailsButton);
 			this.groupBox2.Controls.Add(this.SightHeightMeasurementLabel);
 			this.groupBox2.Controls.Add(this.ScopedCheckBox);
-			this.groupBox2.Controls.Add(this.TurretTypeComboBox);
 			this.groupBox2.Controls.Add(this.NeckTextBox);
 			this.groupBox2.Controls.Add(this.HeadSpaceTextBox);
 			this.groupBox2.Controls.Add(this.ZeroRangeTextBox);
@@ -524,6 +577,23 @@
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Firearm Specs";
 			// 
+			// TurretTypeCombo
+			// 
+			this.TurretTypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.TurretTypeCombo.DropDownWidth = 100;
+			this.TurretTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TurretTypeCombo.FormattingEnabled = true;
+			this.TurretTypeCombo.Items.AddRange(new object[] {
+            "MOA",
+            "MilDot"});
+			this.TurretTypeCombo.Location = new System.Drawing.Point(275, 44);
+			this.TurretTypeCombo.Name = "TurretTypeCombo";
+			this.TurretTypeCombo.ShowToolTips = true;
+			this.TurretTypeCombo.Size = new System.Drawing.Size(69, 21);
+			this.TurretTypeCombo.TabIndex = 31;
+			this.TurretTypeCombo.ToolTip = "Select a turret type.";
+			this.TurretTypeCombo.Value = ReloadersWorkShop.cFirearm.eTurretType.MOA;
+			// 
 			// SightHeightMeasurementLabel
 			// 
 			this.SightHeightMeasurementLabel.AutoSize = true;
@@ -549,21 +619,6 @@
 			this.ScopedCheckBox.TabIndex = 3;
 			this.ScopedCheckBox.Text = "Scoped:";
 			this.ScopedCheckBox.UseVisualStyleBackColor = true;
-			// 
-			// TurretTypeComboBox
-			// 
-			this.TurretTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.TurretTypeComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.TurretTypeComboBox.ForeColor = System.Drawing.SystemColors.WindowText;
-			this.TurretTypeComboBox.FormattingEnabled = true;
-			this.TurretTypeComboBox.Items.AddRange(new object[] {
-            "MOA",
-            "Mil"});
-			this.TurretTypeComboBox.Location = new System.Drawing.Point(274, 46);
-			this.TurretTypeComboBox.Margin = new System.Windows.Forms.Padding(2);
-			this.TurretTypeComboBox.Name = "TurretTypeComboBox";
-			this.TurretTypeComboBox.Size = new System.Drawing.Size(55, 21);
-			this.TurretTypeComboBox.TabIndex = 28;
 			// 
 			// NeckTextBox
 			// 
@@ -737,7 +792,7 @@
 			// 
 			// CaliberListBox
 			// 
-			this.CaliberListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.CaliberListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.CaliberListBox.FormattingEnabled = true;
 			this.CaliberListBox.HorizontalScrollbar = true;
 			this.CaliberListBox.Location = new System.Drawing.Point(7, 20);
@@ -806,7 +861,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.FirearmCancelButton;
-			this.ClientSize = new System.Drawing.Size(705, 478);
+			this.ClientSize = new System.Drawing.Size(681, 454);
 			this.ControlBox = false;
 			this.Controls.Add(this.UsableCartridgeGroup);
 			this.Controls.Add(this.CartridgeSpecsGroupBox);
@@ -856,7 +911,6 @@
 		private System.Windows.Forms.Label ZeroRangeDistancelabel;
 		private CommonLib.Controls.cTextBox SerialNumberTextBox;
 		private CommonLib.Controls.cTextBox ModelTextBox;
-		private System.Windows.Forms.ComboBox TurretTypeComboBox;
 		private System.Windows.Forms.CheckBox ScopedCheckBox;
 		private System.Windows.Forms.Label BarrelMeasurementLabel;
 		private System.Windows.Forms.Label TwistMeasurementLabel;
@@ -869,5 +923,7 @@
 		private System.Windows.Forms.Button RemoveCartridgeButton;
 		private System.Windows.Forms.Button AddCartridgeButton;
 		private System.Windows.Forms.Button MakePrimaryButton;
+		private CommonLib.Controls.cTextBox DescriptionTextBox;
+		private Controls.cTurretTypeCombo TurretTypeCombo;
 		}
 	}

@@ -117,17 +117,17 @@ namespace ReloadersWorkShop
 
 			COALTextBox.MinValue = cDataFiles.StandardToMetric(m_Caliber.CaseTrimLength, cDataFiles.eDataType.Dimension);
 			COALTextBox.MaxValue = cDataFiles.StandardToMetric(m_Caliber.MaxCOL, cDataFiles.eDataType.Dimension);
-			COALTextBox.NumDecimals = cPreferences.DimensionDecimals;
+			COALTextBox.NumDecimals = m_DataFiles.Preferences.DimensionDecimals;
 			COALTextBox.ToolTip = cm_strCOLToolTip;
 
 			CBTOTextBox.MinValue = 0.0;
 			CBTOTextBox.MaxValue = cDataFiles.StandardToMetric(m_Caliber.MaxCOL, cDataFiles.eDataType.Dimension);
-			CBTOTextBox.NumDecimals = cPreferences.DimensionDecimals;
+			CBTOTextBox.NumDecimals = m_DataFiles.Preferences.DimensionDecimals;
 			CBTOTextBox.ToolTip = cm_strCBTOToolTip;
 
 			JumpTextBox.MinValue = 0.0;
 			JumpTextBox.MaxValue = cDataFiles.StandardToMetric(0.5, cDataFiles.eDataType.Dimension);
-			JumpTextBox.NumDecimals = cPreferences.DimensionDecimals;
+			JumpTextBox.NumDecimals = m_DataFiles.Preferences.DimensionDecimals;
 			JumpTextBox.ToolTip = cm_strJumpToolTip;
 
 			//----------------------------------------------------------------------------*

@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cBatch.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -30,7 +30,7 @@ namespace ReloadersWorkShop
 	//============================================================================*
 
 	[Serializable]
-	public class cBatch : IComparable
+	public partial class cBatch : IComparable
 		{
 		//============================================================================*
 		// Private Data Members
@@ -70,6 +70,7 @@ namespace ReloadersWorkShop
 		private bool m_fNeckSized = false;
 		private bool m_fExpandedNeck = false;
 
+		private bool m_fGasCheck = false;
 		private bool m_fNeckTurned = false;
 		private bool m_fAnnealed = false;
 		private bool m_fModifiedBullet = false;
@@ -77,7 +78,9 @@ namespace ReloadersWorkShop
 		private bool m_fJumpSet = false;
 		private double m_dJump = 0.0;
 
-		private cBatchTest m_BatchTest = null;
+		private int m_nOCWBatchID = 0;
+
+		private cBatchTestList m_BatchTestList = new cBatchTestList();
 
 		//----------------------------------------------------------------------------*
 		// Miscellaneous
@@ -153,6 +156,34 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// BatchIDString Property
+		//============================================================================*
+
+		public string BatchIDString
+			{
+			get
+				{
+				string strID = String.Format("{0:G0}", m_nBatchID);
+
+				if (m_nOCWBatchID != 0)
+					{
+					if (m_nBatchID == m_nOCWBatchID)
+						strID += " - ocw";
+					else
+						strID += String.Format(" - ocw {0:G0}", m_nOCWBatchID);
+					}
+
+				if (m_fArchive)
+					strID += " - Archived";
+
+				if (cPreferences.StaticPreferences.TrackInventory && !m_fTrackInventory)
+					strID += " *";
+
+				return (strID);
+				}
+			}
+
+		//============================================================================*
 		// BatchCost Property
 		//============================================================================*
 
@@ -182,11 +213,35 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				return (m_BatchTest);
+				if (m_BatchTestList != null && m_BatchTestList.Count > 0)
+					return (m_BatchTestList[0]);
+
+				return (null);
 				}
 			set
 				{
-				m_BatchTest = value;
+				if (m_BatchTestList == null)
+					m_BatchTestList = new cBatchTestList();
+
+				m_BatchTestList.Clear();
+
+				if (value != null)
+					m_BatchTestList.Add(value);
+				}
+			}
+
+		//============================================================================*
+		// BatchTestList Property
+		//============================================================================*
+
+		public cBatchTestList BatchTestList
+			{
+			get
+				{
+				if (m_BatchTestList == null)
+					m_BatchTestList = new cBatchTestList();
+
+				return (m_BatchTestList);
 				}
 			}
 
@@ -226,9 +281,9 @@ namespace ReloadersWorkShop
 					dCaseCost = Load.Case.CostEach;
 
 					if (m_nTimesFired > 0)
-						dCaseCost = dCaseCost / (double) ((double) m_nTimesFired + 1.0);
+						dCaseCost = dCaseCost / (double)((double)m_nTimesFired + 1.0);
 
-					dPowderCost = Load.Powder.CostEach * (m_dPowderWeight / (cPreferences.MetricCanWeights ? 1000.0 : 7000.0));
+					dPowderCost = Load.Powder.CostEach * (m_dPowderWeight / (cPreferences.StaticPreferences.MetricCanWeights ? 1000.0 : 7000.0));
 
 					dPrimerCost = Load.Primer.CostEach;
 					}
@@ -250,6 +305,22 @@ namespace ReloadersWorkShop
 			set
 				{
 				m_dCaseTrimLength = value;
+				}
+			}
+
+		//============================================================================*
+		// CBTO Property
+		//============================================================================*
+
+		public double CBTO
+			{
+			get
+				{
+				return (m_dCBTO);
+				}
+			set
+				{
+				m_dCBTO = value;
 				}
 			}
 
@@ -316,7 +387,7 @@ namespace ReloadersWorkShop
 			if (obj == null)
 				return (1);
 
-			cBatch Batch = (cBatch) obj;
+			cBatch Batch = (cBatch)obj;
 
 			//----------------------------------------------------------------------------*
 			// Batch ID
@@ -332,6 +403,7 @@ namespace ReloadersWorkShop
 		public void Copy(cBatch Batch)
 			{
 			m_nBatchID = Batch.m_nBatchID;
+			m_nOCWBatchID = Batch.m_nOCWBatchID;
 			m_strUserID = Batch.m_strUserID;
 			m_DateLoaded = new DateTime(Batch.DateLoaded.Ticks);
 			m_dPowderWeight = Batch.m_dPowderWeight;
@@ -349,6 +421,7 @@ namespace ReloadersWorkShop
 			m_fNeckSized = Batch.m_fNeckSized;
 			m_fExpandedNeck = Batch.m_fExpandedNeck;
 
+			m_fGasCheck = Batch.m_fGasCheck;
 			m_fNeckTurned = Batch.m_fNeckTurned;
 			m_fAnnealed = Batch.m_fAnnealed;
 			m_fModifiedBullet = Batch.m_fModifiedBullet;
@@ -360,7 +433,7 @@ namespace ReloadersWorkShop
 
 			m_Load = Batch.m_Load;
 
-			m_BatchTest = Batch.BatchTest;
+			m_BatchTestList = new cBatchTestList(Batch.BatchTestList);
 
 			m_fArchive = Batch.m_fArchive;
 
@@ -376,18 +449,6 @@ namespace ReloadersWorkShop
 			get
 				{
 				return (CartridgeCost * m_nNumRounds);
-				}
-			}
-
-		//============================================================================*
-		// CSVHeader Property
-		//============================================================================*
-
-		public static string CSVHeader
-			{
-			get
-				{
-				return ("Batches");
 				}
 			}
 
@@ -445,6 +506,7 @@ namespace ReloadersWorkShop
 				strLine += m_fFullLengthSized ? "Yes," : "-,";
 				strLine += m_fNeckSized ? "Yes," : "-,";
 				strLine += m_fExpandedNeck ? "Yes," : "-,";
+				strLine += m_fGasCheck ? "Yes," : "-,";
 				strLine += m_fNeckTurned ? "Yes," : "-,";
 				strLine += m_fAnnealed ? "Yes," : "-,";
 				strLine += m_fModifiedBullet ? "Yes," : "-,";
@@ -468,7 +530,7 @@ namespace ReloadersWorkShop
 			get
 				{
 				string strLine = "Batch ID,User Batch ID,Date Loaded,Bullet,Powder,Primer,Case,Firearm,Powder Weight,Num Rounds,Times Case Fired,COAL,CBTO,Headspace,Neck Size,Neck Wall,";
-				strLine += "Case Trim Length,Bullet Diameter,Full-Length Sized,Neck Sized,Expanded Neck,Nect Turned,Annealed,Modified Bullet,Jumpset,Jump,Archived";
+				strLine += "Case Trim Length,Bullet Diameter,Full-Length Sized,GasCheck,Neck Sized,Expanded Neck,Nect Turned,Annealed,Modified Bullet,Jumpset,Jump,Archived";
 
 				return (strLine);
 				}
@@ -507,257 +569,6 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// Export() - CSV
-		//============================================================================*
-
-		public void Export(StreamWriter Writer, bool fIncludeTests = true)
-			{
-			Writer.WriteLine(CSVLine);
-
-			if (fIncludeTests && m_BatchTest != null)
-				{
-				Writer.WriteLine();
-
-				m_BatchTest.Export(Writer);
-				}
-			}
-
-		//============================================================================*
-		// Export() - XML Document
-		//============================================================================*
-
-		public void Export(XmlDocument XMLDocument, XmlElement XMLParentElement, bool fIncludeTests = true)
-			{
-			XmlElement XMLThisElement = XMLDocument.CreateElement("Batch");
-			XMLParentElement.AppendChild(XMLThisElement);
-
-			// Batch ID
-
-			XmlElement XMLElement = XMLDocument.CreateElement("BatchID");
-			XmlText XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nBatchID));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// User Batch ID
-
-			if (!String.IsNullOrEmpty(m_strUserID))
-				{
-				XMLElement = XMLDocument.CreateElement("UserBatchID");
-				XMLTextElement = XMLDocument.CreateTextNode(m_strUserID);
-				XMLElement.AppendChild(XMLTextElement);
-
-				XMLThisElement.AppendChild(XMLElement);
-				}
-
-			// Date Loaded
-
-			XMLElement = XMLDocument.CreateElement("DateLoaded");
-			XMLTextElement = XMLDocument.CreateTextNode(m_DateLoaded.ToShortDateString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Bullet
-
-			XMLElement = XMLDocument.CreateElement("Bullet");
-			XMLTextElement = XMLDocument.CreateTextNode(m_Load.Bullet.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Powder
-
-			XMLElement = XMLDocument.CreateElement("Powder");
-			XMLTextElement = XMLDocument.CreateTextNode(m_Load.Powder.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Primer
-
-			XMLElement = XMLDocument.CreateElement("Primer");
-			XMLTextElement = XMLDocument.CreateTextNode(m_Load.Primer.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Case
-
-			XMLElement = XMLDocument.CreateElement("Case");
-			XMLTextElement = XMLDocument.CreateTextNode(m_Load.Case.ToString());
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Firearm
-
-			if (m_Firearm != null)
-				{
-				XMLElement = XMLDocument.CreateElement("Firearm");
-				XMLTextElement = XMLDocument.CreateTextNode(m_Firearm.ToString());
-				XMLElement.AppendChild(XMLTextElement);
-
-				XMLThisElement.AppendChild(XMLElement);
-				}
-
-			// Powder Weight
-
-			XMLElement = XMLDocument.CreateElement("PowderWeight");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dPowderWeight));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Num Rounds
-
-			XMLElement = XMLDocument.CreateElement("NumRounds");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nNumRounds));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Cases Fired
-
-			XMLElement = XMLDocument.CreateElement("CasesFired");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_nTimesFired));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// COAL
-
-			XMLElement = XMLDocument.CreateElement("COAL");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dCOL));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// CBTO
-
-			XMLElement = XMLDocument.CreateElement("CBTO");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dCBTO));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Headspace
-
-			XMLElement = XMLDocument.CreateElement("Headspace");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dHeadSpace));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Neck Size
-
-			XMLElement = XMLDocument.CreateElement("NeckSize");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dNeckSize));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Neck Wall
-
-			XMLElement = XMLDocument.CreateElement("NeckWall");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dNeckWall));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Case Trim Length
-
-			XMLElement = XMLDocument.CreateElement("CaseTrimLength");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dCaseTrimLength));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Bullet Diameter
-
-			XMLElement = XMLDocument.CreateElement("BulletDiameter");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dBulletDiameter));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Full Length Sized
-
-			XMLElement = XMLDocument.CreateElement("FullLengthSized");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fFullLengthSized ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Neck Sized
-
-			XMLElement = XMLDocument.CreateElement("NeckSized");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fNeckSized ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Expanded Neck
-
-			XMLElement = XMLDocument.CreateElement("ExpandedNeck");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fExpandedNeck ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Neck Turned
-
-			XMLElement = XMLDocument.CreateElement("NeckTurned");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fNeckTurned ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Annealed
-
-			XMLElement = XMLDocument.CreateElement("Annealed");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fAnnealed ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Modified Bullet
-
-			XMLElement = XMLDocument.CreateElement("ModifiedBullet");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fModifiedBullet ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Jump Set
-
-			XMLElement = XMLDocument.CreateElement("JumpSet");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fJumpSet ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Jump
-
-			XMLElement = XMLDocument.CreateElement("Jump");
-			XMLTextElement = XMLDocument.CreateTextNode(String.Format("{0}", m_dJump));
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			// Archived
-
-			XMLElement = XMLDocument.CreateElement("Archived");
-			XMLTextElement = XMLDocument.CreateTextNode(m_fArchive ? "Yes" : "-");
-			XMLElement.AppendChild(XMLTextElement);
-
-			XMLThisElement.AppendChild(XMLElement);
-
-			if (m_BatchTest != null && fIncludeTests)
-				m_BatchTest.Export(XMLDocument, XMLThisElement);
-			}
-
-		//============================================================================*
 		// Firearm Property
 		//============================================================================*
 
@@ -786,6 +597,22 @@ namespace ReloadersWorkShop
 			set
 				{
 				m_fFullLengthSized = value;
+				}
+			}
+
+		//============================================================================*
+		// GasCheck Property
+		//============================================================================*
+
+		public bool GasCheck
+			{
+			get
+				{
+				return (m_fGasCheck);
+				}
+			set
+				{
+				m_fGasCheck = value;
 				}
 			}
 
@@ -966,18 +793,18 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// CBTO Property
+		// OCWBatchID Property
 		//============================================================================*
 
-		public double CBTO
+		public int OCWBatchID
 			{
 			get
 				{
-				return (m_dCBTO);
+				return (m_nOCWBatchID);
 				}
 			set
 				{
-				m_dCBTO = value;
+				m_nOCWBatchID = value;
 				}
 			}
 
@@ -989,12 +816,53 @@ namespace ReloadersWorkShop
 			{
 			get
 				{
-				return (m_dPowderWeight);
+				return (Math.Round(m_dPowderWeight, cPreferences.StaticPreferences.PowderWeightDecimals));
 				}
 			set
 				{
-				m_dPowderWeight = value;
+				m_dPowderWeight = Math.Round(value, cPreferences.StaticPreferences.PowderWeightDecimals);
 				}
+			}
+
+		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public bool ResolveIdentities(cDataFiles DataFiles)
+			{
+			bool fChanged = false;
+
+			if (m_Firearm != null && m_Firearm.Identity)
+				{
+				foreach (cFirearm Firearm in DataFiles.FirearmList)
+					{
+					if (!Firearm.Identity && m_Firearm.CompareTo(Firearm) == 0)
+						{
+						m_Firearm = Firearm;
+
+						fChanged = true;
+
+						break;
+						}
+					}
+				}
+
+			if (m_Load != null && m_Load.Identity)
+				{
+				foreach (cLoad Load in DataFiles.LoadList)
+					{
+					if (!Load.Identity && m_Load.CompareTo(Load) == 0)
+						{
+						m_Load = Load;
+
+						fChanged = true;
+
+						break;
+						}
+					}
+				}
+
+			return (fChanged);
 			}
 
 		//============================================================================*
@@ -1003,8 +871,11 @@ namespace ReloadersWorkShop
 
 		public bool Synch()
 			{
-			if (m_BatchTest != null)
-				m_BatchTest.Batch = this;
+			if (m_BatchTestList == null)
+				m_BatchTestList = new cBatchTestList();
+
+			foreach (cBatchTest BatchTest in m_BatchTestList)
+				BatchTest.Batch = this;
 
 			return (true);
 			}
@@ -1085,44 +956,27 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// XMLHeader Property
+		// Validate()
 		//============================================================================*
 
-		public static string XMLHeader
+		public bool Validate()
 			{
-			get
-				{
-				return ("Batches");
-				}
-			}
+			if (m_fArchive)
+				return (true);
 
-		//============================================================================*
-		// XMLLine Property
-		//============================================================================*
+			if (m_nBatchID == 0)
+				return (false);
 
-		public string XMLLine
-			{
-			get
-				{
-				string strLine = "";
+			if (m_Load == null)
+				return (false);
 
+			if (!m_Load.Validate())
+				return (false);
 
-				return (strLine);
-				}
-			}
+			if (m_dPowderWeight == 0.0)
+				return (false);
 
-		//============================================================================*
-		// XMLLineHeader Property
-		//============================================================================*
-
-		public static string XMLLineHeader
-			{
-			get
-				{
-				string strLine = "Firearm Type,Name,Headstamp,Handgun Type,Small Primer,Large Primer,Magnum Primer,Min Bullet Dia.,Max Bullet Dia.,Min Bullet Weight,Max Bullet Weight,Case Trim Length,Max Case Length,Max COAL,Max Neck Dia";
-
-				return (strLine);
-				}
+			return (true);
 			}
 		}
 	}

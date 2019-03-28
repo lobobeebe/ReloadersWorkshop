@@ -11,6 +11,8 @@
 
 using System;
 using System.Drawing;
+using System.Drawing.Printing;
+using System.Windows.Forms;
 
 //============================================================================*
 // Namespace
@@ -40,6 +42,24 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// cPrintObject() - Copy Constructor
+		//============================================================================*
+
+		public cPrintObject(cPrintObject PrintObj)
+			{
+			Copy(PrintObj);
+			}
+
+		//============================================================================*
+		// Copy()
+		//============================================================================*
+
+		public void Copy(cPrintObject PrintObj)
+			{
+			m_fPrinted = PrintObj.m_fPrinted;
+			}
+
+		//============================================================================*
 		// Printed Property
 		//============================================================================*
 
@@ -50,10 +70,10 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
-		// Printed Property
+		// PrintReportTitle()
 		//============================================================================*
 
-		public static float PrintReportTitle(string strReportTitle, Rectangle PageRect, Graphics g)
+		public static float PrintReportTitle(string strReportTitle, PrintPageEventArgs e,  Rectangle PageRect)
 			{
 			Font TitleFont = new Font("Trebuchet MS", 16, FontStyle.Bold);
 			Font DataFont = new Font("Trebuchet MS", 8, FontStyle.Regular);
@@ -62,29 +82,29 @@ namespace ReloadersWorkShop
 
 			string strText = DateTime.Now.ToShortDateString();
 
-			g.DrawString(strText, DataFont, Brushes.Black, PageRect.Left, nY);
+			e.Graphics.DrawString(strText, DataFont, Brushes.Black, PageRect.Left, nY);
 
-			strText = DateTime.Now.ToLongTimeString();
+			strText = DateTime.Now.ToShortTimeString();
 
-			SizeF TextSize = g.MeasureString(strText, DataFont);
+			SizeF TextSize = e.Graphics.MeasureString(strText, DataFont);
 
-			g.DrawString(strText, DataFont, Brushes.Black, PageRect.Right - TextSize.Width, nY);
+			e.Graphics.DrawString(strText, DataFont, Brushes.Black, PageRect.Right - TextSize.Width, nY);
 
-			strText = "Reloader's WorkShop";
+			strText = Application.ProductName;
 
-			TextSize = g.MeasureString(strText, TitleFont);
+			TextSize = e.Graphics.MeasureString(strText, TitleFont);
 
-			g.DrawString(strText, TitleFont, Brushes.Black, PageRect.Left + (PageRect.Width / 2) - (TextSize.Width / 2), nY);
+			e.Graphics.DrawString(strText, TitleFont, Brushes.Black, e.MarginBounds.Left + (e.MarginBounds.Width / 2) - (TextSize.Width / 2), nY);
 
 			nY += TextSize.Height;
 
 			strText = strReportTitle;
 
-			TextSize = g.MeasureString(strText, TitleFont);
+			TextSize = e.Graphics.MeasureString(strText, TitleFont);
 
-			g.DrawString(strText, TitleFont, Brushes.Black, PageRect.Left + (PageRect.Width / 2) - (TextSize.Width / 2), nY);
+			e.Graphics.DrawString(strText, TitleFont, Brushes.Black, e.MarginBounds.Left + (e.MarginBounds.Width / 2) - (TextSize.Width / 2), nY);
 
-			nY += (int) (TextSize.Height * 1.5);
+			nY += (int) TextSize.Height;
 
 			return (nY);
 			}

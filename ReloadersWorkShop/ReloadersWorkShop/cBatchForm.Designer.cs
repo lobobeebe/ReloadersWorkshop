@@ -40,10 +40,6 @@
 			System.Windows.Forms.Label label18;
 			System.Windows.Forms.Label label4;
 			System.Windows.Forms.Label label14;
-			System.Windows.Forms.Label label22;
-			System.Windows.Forms.Label label12;
-			System.Windows.Forms.Label label7;
-			System.Windows.Forms.Label label2;
 			System.Windows.Forms.Label label19;
 			System.Windows.Forms.Label label15;
 			System.Windows.Forms.Label label16;
@@ -57,10 +53,16 @@
 			System.Windows.Forms.Label label28;
 			System.Windows.Forms.Label label3;
 			System.Windows.Forms.Label label29;
+			this.LoadMuzzleVelocityLabel = new System.Windows.Forms.Label();
+			this.LoadFillRatioLabel = new System.Windows.Forms.Label();
+			this.LoadCOALLabel = new System.Windows.Forms.Label();
+			this.PowderChargeLabel = new System.Windows.Forms.Label();
+			this.LoadPressureLabel = new System.Windows.Forms.Label();
 			this.PowderChargeMeasurementLabel = new System.Windows.Forms.Label();
 			this.BatchOKButton = new System.Windows.Forms.Button();
 			this.BatchCancelButton = new System.Windows.Forms.Button();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.JumpMeasurementLabel = new System.Windows.Forms.Label();
 			this.JumpLabel = new System.Windows.Forms.Label();
 			this.JumpSetCheckBox = new System.Windows.Forms.CheckBox();
 			this.ModifiedBulletCheckBox = new System.Windows.Forms.CheckBox();
@@ -98,19 +100,21 @@
 			this.FirearmCOLLabel = new System.Windows.Forms.Label();
 			this.FirearmCombo = new System.Windows.Forms.ComboBox();
 			this.LoadDetailsGroup = new System.Windows.Forms.GroupBox();
-			this.label35 = new System.Windows.Forms.Label();
+			this.OCWLabel = new System.Windows.Forms.Label();
+			this.OCWCheckBox = new System.Windows.Forms.CheckBox();
+			this.PressureLabel = new System.Windows.Forms.Label();
+			this.FillRatioPctLabel = new System.Windows.Forms.Label();
 			this.LoadCOLMeasurementLabel = new System.Windows.Forms.Label();
 			this.MuzzleVelocityLabel = new System.Windows.Forms.Label();
 			this.FillRatioLabel = new System.Windows.Forms.Label();
 			this.LoadCOLLabel = new System.Windows.Forms.Label();
 			this.ChargeCombo = new System.Windows.Forms.ComboBox();
 			this.LoadDataGroupBox = new System.Windows.Forms.GroupBox();
-			this.AlwaysShowBatchLoadLabel = new System.Windows.Forms.Label();
+			this.BatchLoadLabel = new System.Windows.Forms.Label();
 			this.PowderCombo = new System.Windows.Forms.ComboBox();
 			this.BulletCombo = new System.Windows.Forms.ComboBox();
 			this.CaliberCombo = new System.Windows.Forms.ComboBox();
 			this.PrintButton = new System.Windows.Forms.Button();
-			this.JumpMeasurementLabel = new System.Windows.Forms.Label();
 			this.JumpTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			this.UserIDTextBox = new CommonLib.Controls.cTextBox();
 			this.BulletDiameterTextBox = new CommonLib.Controls.cDoubleValueTextBox();
@@ -122,7 +126,9 @@
 			this.CBTOTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			this.COALTextBox = new CommonLib.Controls.cDoubleValueTextBox();
 			this.CaseTrimLengthTextBox = new CommonLib.Controls.cDoubleValueTextBox();
+			this.ViewChargeButton = new CommonLib.Controls.cButton();
 			this.FirearmTypeCombo = new ReloadersWorkShop.Controls.cFirearmTypeCombo();
+			this.GasCheckCheckBox = new System.Windows.Forms.CheckBox();
 			label13 = new System.Windows.Forms.Label();
 			label10 = new System.Windows.Forms.Label();
 			label1 = new System.Windows.Forms.Label();
@@ -135,10 +141,6 @@
 			label18 = new System.Windows.Forms.Label();
 			label4 = new System.Windows.Forms.Label();
 			label14 = new System.Windows.Forms.Label();
-			label22 = new System.Windows.Forms.Label();
-			label12 = new System.Windows.Forms.Label();
-			label7 = new System.Windows.Forms.Label();
-			label2 = new System.Windows.Forms.Label();
 			label19 = new System.Windows.Forms.Label();
 			label15 = new System.Windows.Forms.Label();
 			label16 = new System.Windows.Forms.Label();
@@ -163,7 +165,7 @@
 			label13.AutoSize = true;
 			label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			label13.ForeColor = System.Drawing.SystemColors.ControlText;
-			label13.Location = new System.Drawing.Point(30, 155);
+			label13.Location = new System.Drawing.Point(148, 151);
 			label13.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			label13.Name = "label13";
 			label13.Size = new System.Drawing.Size(62, 13);
@@ -175,7 +177,7 @@
 			label10.AutoSize = true;
 			label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			label10.ForeColor = System.Drawing.SystemColors.ControlText;
-			label10.Location = new System.Drawing.Point(16, 132);
+			label10.Location = new System.Drawing.Point(11, 151);
 			label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			label10.Name = "label10";
 			label10.Size = new System.Drawing.Size(76, 13);
@@ -223,7 +225,7 @@
 			label11.AutoSize = true;
 			label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			label11.ForeColor = System.Drawing.SystemColors.ControlText;
-			label11.Location = new System.Drawing.Point(412, 30);
+			label11.Location = new System.Drawing.Point(438, 30);
 			label11.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			label11.Name = "label11";
 			label11.Size = new System.Drawing.Size(57, 13);
@@ -235,7 +237,7 @@
 			label6.AutoSize = true;
 			label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			label6.ForeColor = System.Drawing.SystemColors.ControlText;
-			label6.Location = new System.Drawing.Point(273, 30);
+			label6.Location = new System.Drawing.Point(299, 30);
 			label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			label6.Name = "label6";
 			label6.Size = new System.Drawing.Size(46, 13);
@@ -271,7 +273,7 @@
 			label18.AutoSize = true;
 			label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			label18.ForeColor = System.Drawing.SystemColors.ControlText;
-			label18.Location = new System.Drawing.Point(61, 70);
+			label18.Location = new System.Drawing.Point(46, 70);
 			label18.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			label18.Name = "label18";
 			label18.Size = new System.Drawing.Size(39, 13);
@@ -283,7 +285,7 @@
 			label4.AutoSize = true;
 			label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			label4.ForeColor = System.Drawing.SystemColors.ControlText;
-			label4.Location = new System.Drawing.Point(22, 24);
+			label4.Location = new System.Drawing.Point(7, 24);
 			label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			label4.Name = "label4";
 			label4.Size = new System.Drawing.Size(44, 13);
@@ -295,60 +297,12 @@
 			label14.AutoSize = true;
 			label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			label14.ForeColor = System.Drawing.SystemColors.ControlText;
-			label14.Location = new System.Drawing.Point(62, 50);
+			label14.Location = new System.Drawing.Point(47, 50);
 			label14.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			label14.Name = "label14";
 			label14.Size = new System.Drawing.Size(38, 13);
 			label14.TabIndex = 18;
 			label14.Text = "COAL:";
-			// 
-			// label22
-			// 
-			label22.AutoSize = true;
-			label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			label22.ForeColor = System.Drawing.SystemColors.ControlText;
-			label22.Location = new System.Drawing.Point(8, 70);
-			label22.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			label22.Name = "label22";
-			label22.Size = new System.Drawing.Size(61, 13);
-			label22.TabIndex = 27;
-			label22.Text = "Muzzle Vel:";
-			// 
-			// label12
-			// 
-			label12.AutoSize = true;
-			label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			label12.ForeColor = System.Drawing.SystemColors.ControlText;
-			label12.Location = new System.Drawing.Point(139, 50);
-			label12.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			label12.Name = "label12";
-			label12.Size = new System.Drawing.Size(50, 13);
-			label12.TabIndex = 25;
-			label12.Text = "Fill Ratio:";
-			// 
-			// label7
-			// 
-			label7.AutoSize = true;
-			label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			label7.ForeColor = System.Drawing.SystemColors.ControlText;
-			label7.Location = new System.Drawing.Point(5, 50);
-			label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			label7.Name = "label7";
-			label7.Size = new System.Drawing.Size(38, 13);
-			label7.TabIndex = 5;
-			label7.Text = "COAL:";
-			// 
-			// label2
-			// 
-			label2.AutoSize = true;
-			label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			label2.ForeColor = System.Drawing.SystemColors.ControlText;
-			label2.Location = new System.Drawing.Point(32, 24);
-			label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			label2.Name = "label2";
-			label2.Size = new System.Drawing.Size(83, 13);
-			label2.TabIndex = 5;
-			label2.Text = "Powder Charge:";
 			// 
 			// label19
 			// 
@@ -403,7 +357,7 @@
 			label23.AutoSize = true;
 			label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			label23.ForeColor = System.Drawing.SystemColors.ControlText;
-			label23.Location = new System.Drawing.Point(192, 50);
+			label23.Location = new System.Drawing.Point(177, 50);
 			label23.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			label23.Name = "label23";
 			label23.Size = new System.Drawing.Size(67, 13);
@@ -415,7 +369,7 @@
 			label25.AutoSize = true;
 			label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			label25.ForeColor = System.Drawing.SystemColors.ControlText;
-			label25.Location = new System.Drawing.Point(224, 70);
+			label25.Location = new System.Drawing.Point(209, 70);
 			label25.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			label25.Name = "label25";
 			label25.Size = new System.Drawing.Size(36, 13);
@@ -487,7 +441,7 @@
 			label3.AutoSize = true;
 			label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			label3.ForeColor = System.Drawing.SystemColors.ControlText;
-			label3.Location = new System.Drawing.Point(111, 30);
+			label3.Location = new System.Drawing.Point(137, 30);
 			label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			label3.Name = "label3";
 			label3.Size = new System.Drawing.Size(46, 13);
@@ -499,19 +453,79 @@
 			label29.AutoSize = true;
 			label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			label29.ForeColor = System.Drawing.SystemColors.ControlText;
-			label29.Location = new System.Drawing.Point(65, 90);
+			label29.Location = new System.Drawing.Point(50, 90);
 			label29.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			label29.Name = "label29";
 			label29.Size = new System.Drawing.Size(35, 13);
 			label29.TabIndex = 40;
 			label29.Text = "Jump:";
 			// 
+			// LoadMuzzleVelocityLabel
+			// 
+			this.LoadMuzzleVelocityLabel.AutoSize = true;
+			this.LoadMuzzleVelocityLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.LoadMuzzleVelocityLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.LoadMuzzleVelocityLabel.Location = new System.Drawing.Point(7, 69);
+			this.LoadMuzzleVelocityLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.LoadMuzzleVelocityLabel.Name = "LoadMuzzleVelocityLabel";
+			this.LoadMuzzleVelocityLabel.Size = new System.Drawing.Size(61, 13);
+			this.LoadMuzzleVelocityLabel.TabIndex = 27;
+			this.LoadMuzzleVelocityLabel.Text = "Muzzle Vel:";
+			// 
+			// LoadFillRatioLabel
+			// 
+			this.LoadFillRatioLabel.AutoSize = true;
+			this.LoadFillRatioLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.LoadFillRatioLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.LoadFillRatioLabel.Location = new System.Drawing.Point(139, 50);
+			this.LoadFillRatioLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.LoadFillRatioLabel.Name = "LoadFillRatioLabel";
+			this.LoadFillRatioLabel.Size = new System.Drawing.Size(50, 13);
+			this.LoadFillRatioLabel.TabIndex = 25;
+			this.LoadFillRatioLabel.Text = "Fill Ratio:";
+			// 
+			// LoadCOALLabel
+			// 
+			this.LoadCOALLabel.AutoSize = true;
+			this.LoadCOALLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.LoadCOALLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.LoadCOALLabel.Location = new System.Drawing.Point(5, 50);
+			this.LoadCOALLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.LoadCOALLabel.Name = "LoadCOALLabel";
+			this.LoadCOALLabel.Size = new System.Drawing.Size(38, 13);
+			this.LoadCOALLabel.TabIndex = 5;
+			this.LoadCOALLabel.Text = "COAL:";
+			// 
+			// PowderChargeLabel
+			// 
+			this.PowderChargeLabel.AutoSize = true;
+			this.PowderChargeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.PowderChargeLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.PowderChargeLabel.Location = new System.Drawing.Point(86, 24);
+			this.PowderChargeLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.PowderChargeLabel.Name = "PowderChargeLabel";
+			this.PowderChargeLabel.Size = new System.Drawing.Size(83, 13);
+			this.PowderChargeLabel.TabIndex = 5;
+			this.PowderChargeLabel.Text = "Powder Charge:";
+			// 
+			// LoadPressureLabel
+			// 
+			this.LoadPressureLabel.AutoSize = true;
+			this.LoadPressureLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.LoadPressureLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.LoadPressureLabel.Location = new System.Drawing.Point(17, 90);
+			this.LoadPressureLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.LoadPressureLabel.Name = "LoadPressureLabel";
+			this.LoadPressureLabel.Size = new System.Drawing.Size(51, 13);
+			this.LoadPressureLabel.TabIndex = 41;
+			this.LoadPressureLabel.Text = "Pressure:";
+			// 
 			// PowderChargeMeasurementLabel
 			// 
 			this.PowderChargeMeasurementLabel.AutoSize = true;
 			this.PowderChargeMeasurementLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.PowderChargeMeasurementLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.PowderChargeMeasurementLabel.Location = new System.Drawing.Point(178, 24);
+			this.PowderChargeMeasurementLabel.Location = new System.Drawing.Point(232, 24);
 			this.PowderChargeMeasurementLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.PowderChargeMeasurementLabel.Name = "PowderChargeMeasurementLabel";
 			this.PowderChargeMeasurementLabel.Size = new System.Drawing.Size(16, 13);
@@ -542,6 +556,7 @@
 			// 
 			// groupBox2
 			// 
+			this.groupBox2.Controls.Add(this.GasCheckCheckBox);
 			this.groupBox2.Controls.Add(this.JumpMeasurementLabel);
 			this.groupBox2.Controls.Add(this.JumpTextBox);
 			this.groupBox2.Controls.Add(this.JumpLabel);
@@ -603,6 +618,18 @@
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Batch Details";
 			// 
+			// JumpMeasurementLabel
+			// 
+			this.JumpMeasurementLabel.AutoSize = true;
+			this.JumpMeasurementLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.JumpMeasurementLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.JumpMeasurementLabel.Location = new System.Drawing.Point(592, 121);
+			this.JumpMeasurementLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.JumpMeasurementLabel.Name = "JumpMeasurementLabel";
+			this.JumpMeasurementLabel.Size = new System.Drawing.Size(18, 13);
+			this.JumpMeasurementLabel.TabIndex = 52;
+			this.JumpMeasurementLabel.Text = "in.";
+			// 
 			// JumpLabel
 			// 
 			this.JumpLabel.AutoSize = true;
@@ -659,7 +686,7 @@
 			this.NeckTurnedCheckBox.AutoSize = true;
 			this.NeckTurnedCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.NeckTurnedCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.NeckTurnedCheckBox.Location = new System.Drawing.Point(190, 120);
+			this.NeckTurnedCheckBox.Location = new System.Drawing.Point(191, 120);
 			this.NeckTurnedCheckBox.Name = "NeckTurnedCheckBox";
 			this.NeckTurnedCheckBox.Size = new System.Drawing.Size(89, 17);
 			this.NeckTurnedCheckBox.TabIndex = 14;
@@ -713,7 +740,7 @@
 			this.NumRoundsRangeLabel.AutoSize = true;
 			this.NumRoundsRangeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.NumRoundsRangeLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.NumRoundsRangeLabel.Location = new System.Drawing.Point(524, 30);
+			this.NumRoundsRangeLabel.Location = new System.Drawing.Point(550, 30);
 			this.NumRoundsRangeLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.NumRoundsRangeLabel.Name = "NumRoundsRangeLabel";
 			this.NumRoundsRangeLabel.Size = new System.Drawing.Size(79, 13);
@@ -844,7 +871,7 @@
 			// 
 			this.BatchCostLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BatchCostLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.BatchCostLabel.Location = new System.Drawing.Point(88, 153);
+			this.BatchCostLabel.Location = new System.Drawing.Point(206, 149);
 			this.BatchCostLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.BatchCostLabel.Name = "BatchCostLabel";
 			this.BatchCostLabel.Size = new System.Drawing.Size(62, 14);
@@ -855,7 +882,7 @@
 			// 
 			this.CartridgeCostLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.CartridgeCostLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.CartridgeCostLabel.Location = new System.Drawing.Point(91, 130);
+			this.CartridgeCostLabel.Location = new System.Drawing.Point(86, 149);
 			this.CartridgeCostLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.CartridgeCostLabel.Name = "CartridgeCostLabel";
 			this.CartridgeCostLabel.Size = new System.Drawing.Size(62, 14);
@@ -866,7 +893,7 @@
 			// 
 			this.BatchDateTimePicker.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BatchDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-			this.BatchDateTimePicker.Location = new System.Drawing.Point(318, 28);
+			this.BatchDateTimePicker.Location = new System.Drawing.Point(344, 28);
 			this.BatchDateTimePicker.Margin = new System.Windows.Forms.Padding(2);
 			this.BatchDateTimePicker.Name = "BatchDateTimePicker";
 			this.BatchDateTimePicker.Size = new System.Drawing.Size(80, 19);
@@ -874,13 +901,12 @@
 			// 
 			// BatchIDLabel
 			// 
-			this.BatchIDLabel.AutoSize = true;
-			this.BatchIDLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BatchIDLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BatchIDLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.BatchIDLabel.Location = new System.Drawing.Point(51, 28);
+			this.BatchIDLabel.Location = new System.Drawing.Point(50, 30);
 			this.BatchIDLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.BatchIDLabel.Name = "BatchIDLabel";
-			this.BatchIDLabel.Size = new System.Drawing.Size(53, 17);
+			this.BatchIDLabel.Size = new System.Drawing.Size(83, 17);
 			this.BatchIDLabel.TabIndex = 9;
 			this.BatchIDLabel.Text = "99999";
 			// 
@@ -906,11 +932,11 @@
 			this.groupBox4.Controls.Add(label14);
 			this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.groupBox4.ForeColor = System.Drawing.SystemColors.HotTrack;
-			this.groupBox4.Location = new System.Drawing.Point(271, 283);
+			this.groupBox4.Location = new System.Drawing.Point(314, 283);
 			this.groupBox4.Margin = new System.Windows.Forms.Padding(2);
 			this.groupBox4.Name = "groupBox4";
 			this.groupBox4.Padding = new System.Windows.Forms.Padding(2);
-			this.groupBox4.Size = new System.Drawing.Size(364, 116);
+			this.groupBox4.Size = new System.Drawing.Size(321, 116);
 			this.groupBox4.TabIndex = 5;
 			this.groupBox4.TabStop = false;
 			this.groupBox4.Text = "Firearm Specific";
@@ -919,7 +945,7 @@
 			// 
 			this.FirearmTransferButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmTransferButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmTransferButton.Location = new System.Drawing.Point(208, 85);
+			this.FirearmTransferButton.Location = new System.Drawing.Point(193, 85);
 			this.FirearmTransferButton.Name = "FirearmTransferButton";
 			this.FirearmTransferButton.Size = new System.Drawing.Size(75, 23);
 			this.FirearmTransferButton.TabIndex = 43;
@@ -931,7 +957,7 @@
 			this.FirearmJumpMeasurementLabel.AutoSize = true;
 			this.FirearmJumpMeasurementLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmJumpMeasurementLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmJumpMeasurementLabel.Location = new System.Drawing.Point(161, 90);
+			this.FirearmJumpMeasurementLabel.Location = new System.Drawing.Point(146, 90);
 			this.FirearmJumpMeasurementLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.FirearmJumpMeasurementLabel.Name = "FirearmJumpMeasurementLabel";
 			this.FirearmJumpMeasurementLabel.Size = new System.Drawing.Size(18, 13);
@@ -942,7 +968,7 @@
 			// 
 			this.FirearmJumpLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmJumpLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmJumpLabel.Location = new System.Drawing.Point(104, 88);
+			this.FirearmJumpLabel.Location = new System.Drawing.Point(89, 88);
 			this.FirearmJumpLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.FirearmJumpLabel.Name = "FirearmJumpLabel";
 			this.FirearmJumpLabel.Size = new System.Drawing.Size(53, 14);
@@ -954,7 +980,7 @@
 			this.FirearmNeckMeasurementLabel.AutoSize = true;
 			this.FirearmNeckMeasurementLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmNeckMeasurementLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmNeckMeasurementLabel.Location = new System.Drawing.Point(311, 70);
+			this.FirearmNeckMeasurementLabel.Location = new System.Drawing.Point(296, 70);
 			this.FirearmNeckMeasurementLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.FirearmNeckMeasurementLabel.Name = "FirearmNeckMeasurementLabel";
 			this.FirearmNeckMeasurementLabel.Size = new System.Drawing.Size(18, 13);
@@ -966,7 +992,7 @@
 			this.FirearmCOLMeasurementLabel.AutoSize = true;
 			this.FirearmCOLMeasurementLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmCOLMeasurementLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmCOLMeasurementLabel.Location = new System.Drawing.Point(161, 50);
+			this.FirearmCOLMeasurementLabel.Location = new System.Drawing.Point(146, 50);
 			this.FirearmCOLMeasurementLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.FirearmCOLMeasurementLabel.Name = "FirearmCOLMeasurementLabel";
 			this.FirearmCOLMeasurementLabel.Size = new System.Drawing.Size(18, 13);
@@ -978,7 +1004,7 @@
 			this.FirearmCBTOMeasurementLabel.AutoSize = true;
 			this.FirearmCBTOMeasurementLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmCBTOMeasurementLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmCBTOMeasurementLabel.Location = new System.Drawing.Point(161, 70);
+			this.FirearmCBTOMeasurementLabel.Location = new System.Drawing.Point(146, 70);
 			this.FirearmCBTOMeasurementLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.FirearmCBTOMeasurementLabel.Name = "FirearmCBTOMeasurementLabel";
 			this.FirearmCBTOMeasurementLabel.Size = new System.Drawing.Size(18, 13);
@@ -990,7 +1016,7 @@
 			this.FirearmHeadSpaceMeasurementLabel.AutoSize = true;
 			this.FirearmHeadSpaceMeasurementLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmHeadSpaceMeasurementLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmHeadSpaceMeasurementLabel.Location = new System.Drawing.Point(311, 50);
+			this.FirearmHeadSpaceMeasurementLabel.Location = new System.Drawing.Point(296, 50);
 			this.FirearmHeadSpaceMeasurementLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.FirearmHeadSpaceMeasurementLabel.Name = "FirearmHeadSpaceMeasurementLabel";
 			this.FirearmHeadSpaceMeasurementLabel.Size = new System.Drawing.Size(18, 13);
@@ -1001,7 +1027,7 @@
 			// 
 			this.FirearmNeckLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmNeckLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmNeckLabel.Location = new System.Drawing.Point(254, 68);
+			this.FirearmNeckLabel.Location = new System.Drawing.Point(239, 68);
 			this.FirearmNeckLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.FirearmNeckLabel.Name = "FirearmNeckLabel";
 			this.FirearmNeckLabel.Size = new System.Drawing.Size(53, 14);
@@ -1012,7 +1038,7 @@
 			// 
 			this.FirearmHeadSpaceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmHeadSpaceLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmHeadSpaceLabel.Location = new System.Drawing.Point(254, 48);
+			this.FirearmHeadSpaceLabel.Location = new System.Drawing.Point(239, 48);
 			this.FirearmHeadSpaceLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.FirearmHeadSpaceLabel.Name = "FirearmHeadSpaceLabel";
 			this.FirearmHeadSpaceLabel.Size = new System.Drawing.Size(53, 14);
@@ -1023,7 +1049,7 @@
 			// 
 			this.FirearmCBTOLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmCBTOLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmCBTOLabel.Location = new System.Drawing.Point(104, 68);
+			this.FirearmCBTOLabel.Location = new System.Drawing.Point(89, 68);
 			this.FirearmCBTOLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.FirearmCBTOLabel.Name = "FirearmCBTOLabel";
 			this.FirearmCBTOLabel.Size = new System.Drawing.Size(53, 14);
@@ -1034,7 +1060,7 @@
 			// 
 			this.FirearmCOLLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmCOLLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.FirearmCOLLabel.Location = new System.Drawing.Point(104, 48);
+			this.FirearmCOLLabel.Location = new System.Drawing.Point(89, 48);
 			this.FirearmCOLLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.FirearmCOLLabel.Name = "FirearmCOLLabel";
 			this.FirearmCOLLabel.Size = new System.Drawing.Size(53, 14);
@@ -1047,7 +1073,7 @@
 			this.FirearmCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmCombo.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.FirearmCombo.FormattingEnabled = true;
-			this.FirearmCombo.Location = new System.Drawing.Point(71, 22);
+			this.FirearmCombo.Location = new System.Drawing.Point(56, 22);
 			this.FirearmCombo.Margin = new System.Windows.Forms.Padding(2);
 			this.FirearmCombo.Name = "FirearmCombo";
 			this.FirearmCombo.Size = new System.Drawing.Size(250, 21);
@@ -1055,16 +1081,21 @@
 			// 
 			// LoadDetailsGroup
 			// 
-			this.LoadDetailsGroup.Controls.Add(this.label35);
+			this.LoadDetailsGroup.Controls.Add(this.OCWLabel);
+			this.LoadDetailsGroup.Controls.Add(this.OCWCheckBox);
+			this.LoadDetailsGroup.Controls.Add(this.ViewChargeButton);
+			this.LoadDetailsGroup.Controls.Add(this.LoadPressureLabel);
+			this.LoadDetailsGroup.Controls.Add(this.PressureLabel);
+			this.LoadDetailsGroup.Controls.Add(this.FillRatioPctLabel);
 			this.LoadDetailsGroup.Controls.Add(this.LoadCOLMeasurementLabel);
 			this.LoadDetailsGroup.Controls.Add(this.MuzzleVelocityLabel);
-			this.LoadDetailsGroup.Controls.Add(label22);
+			this.LoadDetailsGroup.Controls.Add(this.LoadMuzzleVelocityLabel);
 			this.LoadDetailsGroup.Controls.Add(this.FillRatioLabel);
-			this.LoadDetailsGroup.Controls.Add(label12);
+			this.LoadDetailsGroup.Controls.Add(this.LoadFillRatioLabel);
 			this.LoadDetailsGroup.Controls.Add(this.LoadCOLLabel);
-			this.LoadDetailsGroup.Controls.Add(label7);
+			this.LoadDetailsGroup.Controls.Add(this.LoadCOALLabel);
 			this.LoadDetailsGroup.Controls.Add(this.ChargeCombo);
-			this.LoadDetailsGroup.Controls.Add(label2);
+			this.LoadDetailsGroup.Controls.Add(this.PowderChargeLabel);
 			this.LoadDetailsGroup.Controls.Add(this.PowderChargeMeasurementLabel);
 			this.LoadDetailsGroup.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.LoadDetailsGroup.ForeColor = System.Drawing.SystemColors.HotTrack;
@@ -1072,22 +1103,55 @@
 			this.LoadDetailsGroup.Margin = new System.Windows.Forms.Padding(2);
 			this.LoadDetailsGroup.Name = "LoadDetailsGroup";
 			this.LoadDetailsGroup.Padding = new System.Windows.Forms.Padding(2);
-			this.LoadDetailsGroup.Size = new System.Drawing.Size(260, 116);
+			this.LoadDetailsGroup.Size = new System.Drawing.Size(303, 116);
 			this.LoadDetailsGroup.TabIndex = 4;
 			this.LoadDetailsGroup.TabStop = false;
 			this.LoadDetailsGroup.Text = "Load Details";
 			// 
-			// label35
+			// OCWLabel
 			// 
-			this.label35.AutoSize = true;
-			this.label35.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label35.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label35.Location = new System.Drawing.Point(234, 50);
-			this.label35.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.label35.Name = "label35";
-			this.label35.Size = new System.Drawing.Size(15, 13);
-			this.label35.TabIndex = 38;
-			this.label35.Text = "%";
+			this.OCWLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.OCWLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.OCWLabel.Location = new System.Drawing.Point(249, 90);
+			this.OCWLabel.Name = "OCWLabel";
+			this.OCWLabel.Size = new System.Drawing.Size(33, 13);
+			this.OCWLabel.TabIndex = 44;
+			this.OCWLabel.Text = "OCW";
+			// 
+			// OCWCheckBox
+			// 
+			this.OCWCheckBox.AutoSize = true;
+			this.OCWCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.OCWCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.OCWCheckBox.Location = new System.Drawing.Point(10, 24);
+			this.OCWCheckBox.Name = "OCWCheckBox";
+			this.OCWCheckBox.Size = new System.Drawing.Size(58, 17);
+			this.OCWCheckBox.TabIndex = 43;
+			this.OCWCheckBox.Text = "OCW?";
+			this.OCWCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// PressureLabel
+			// 
+			this.PressureLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.PressureLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.PressureLabel.Location = new System.Drawing.Point(72, 88);
+			this.PressureLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.PressureLabel.Name = "PressureLabel";
+			this.PressureLabel.Size = new System.Drawing.Size(176, 14);
+			this.PressureLabel.TabIndex = 40;
+			this.PressureLabel.Text = "Pressure";
+			// 
+			// FillRatioPctLabel
+			// 
+			this.FillRatioPctLabel.AutoSize = true;
+			this.FillRatioPctLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FillRatioPctLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.FillRatioPctLabel.Location = new System.Drawing.Point(234, 50);
+			this.FillRatioPctLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.FillRatioPctLabel.Name = "FillRatioPctLabel";
+			this.FillRatioPctLabel.Size = new System.Drawing.Size(15, 13);
+			this.FillRatioPctLabel.TabIndex = 38;
+			this.FillRatioPctLabel.Text = "%";
 			// 
 			// LoadCOLMeasurementLabel
 			// 
@@ -1140,7 +1204,7 @@
 			this.ChargeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.ChargeCombo.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.ChargeCombo.FormattingEnabled = true;
-			this.ChargeCombo.Location = new System.Drawing.Point(118, 22);
+			this.ChargeCombo.Location = new System.Drawing.Point(172, 22);
 			this.ChargeCombo.Margin = new System.Windows.Forms.Padding(2);
 			this.ChargeCombo.Name = "ChargeCombo";
 			this.ChargeCombo.Size = new System.Drawing.Size(56, 21);
@@ -1148,7 +1212,7 @@
 			// 
 			// LoadDataGroupBox
 			// 
-			this.LoadDataGroupBox.Controls.Add(this.AlwaysShowBatchLoadLabel);
+			this.LoadDataGroupBox.Controls.Add(this.BatchLoadLabel);
 			this.LoadDataGroupBox.Controls.Add(this.FirearmTypeCombo);
 			this.LoadDataGroupBox.Controls.Add(this.PowderCombo);
 			this.LoadDataGroupBox.Controls.Add(label36);
@@ -1159,6 +1223,7 @@
 			this.LoadDataGroupBox.Controls.Add(this.LoadDetailsGroup);
 			this.LoadDataGroupBox.Controls.Add(label19);
 			this.LoadDataGroupBox.Controls.Add(this.groupBox4);
+			this.LoadDataGroupBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.LoadDataGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.LoadDataGroupBox.ForeColor = System.Drawing.SystemColors.HotTrack;
 			this.LoadDataGroupBox.Location = new System.Drawing.Point(10, 10);
@@ -1168,18 +1233,18 @@
 			this.LoadDataGroupBox.Size = new System.Drawing.Size(650, 410);
 			this.LoadDataGroupBox.TabIndex = 0;
 			this.LoadDataGroupBox.TabStop = false;
-			this.LoadDataGroupBox.Text = "Load Data";
+			this.LoadDataGroupBox.Text = "Load Selection";
 			// 
-			// AlwaysShowBatchLoadLabel
+			// BatchLoadLabel
 			// 
-			this.AlwaysShowBatchLoadLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.AlwaysShowBatchLoadLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.AlwaysShowBatchLoadLabel.Location = new System.Drawing.Point(5, 71);
-			this.AlwaysShowBatchLoadLabel.Name = "AlwaysShowBatchLoadLabel";
-			this.AlwaysShowBatchLoadLabel.Size = new System.Drawing.Size(630, 13);
-			this.AlwaysShowBatchLoadLabel.TabIndex = 31;
-			this.AlwaysShowBatchLoadLabel.Text = "The current batch load will always be displayed regardless of filters";
-			this.AlwaysShowBatchLoadLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+			this.BatchLoadLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BatchLoadLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.BatchLoadLabel.Location = new System.Drawing.Point(5, 71);
+			this.BatchLoadLabel.Name = "BatchLoadLabel";
+			this.BatchLoadLabel.Size = new System.Drawing.Size(630, 13);
+			this.BatchLoadLabel.TabIndex = 31;
+			this.BatchLoadLabel.Text = "Double-Click a Load below to view it.";
+			this.BatchLoadLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
 			// PowderCombo
 			// 
@@ -1227,18 +1292,6 @@
 			this.PrintButton.Text = "Print";
 			this.PrintButton.UseVisualStyleBackColor = true;
 			// 
-			// JumpMeasurementLabel
-			// 
-			this.JumpMeasurementLabel.AutoSize = true;
-			this.JumpMeasurementLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.JumpMeasurementLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.JumpMeasurementLabel.Location = new System.Drawing.Point(592, 121);
-			this.JumpMeasurementLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.JumpMeasurementLabel.Name = "JumpMeasurementLabel";
-			this.JumpMeasurementLabel.Size = new System.Drawing.Size(18, 13);
-			this.JumpMeasurementLabel.TabIndex = 52;
-			this.JumpMeasurementLabel.Text = "in.";
-			// 
 			// JumpTextBox
 			// 
 			this.JumpTextBox.BackColor = System.Drawing.SystemColors.Window;
@@ -1260,13 +1313,14 @@
 			// 
 			this.UserIDTextBox.BackColor = System.Drawing.SystemColors.Window;
 			this.UserIDTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.UserIDTextBox.Location = new System.Drawing.Point(162, 27);
+			this.UserIDTextBox.Location = new System.Drawing.Point(188, 27);
 			this.UserIDTextBox.MaxLength = 15;
 			this.UserIDTextBox.Name = "UserIDTextBox";
 			this.UserIDTextBox.Required = false;
 			this.UserIDTextBox.Size = new System.Drawing.Size(105, 20);
 			this.UserIDTextBox.TabIndex = 0;
 			this.UserIDTextBox.ToolTip = "";
+			this.UserIDTextBox.ValidChars = "";
 			this.UserIDTextBox.Value = "";
 			// 
 			// BulletDiameterTextBox
@@ -1324,7 +1378,7 @@
 			// 
 			this.NumRoundsTextBox.BackColor = System.Drawing.Color.LightPink;
 			this.NumRoundsTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.NumRoundsTextBox.Location = new System.Drawing.Point(474, 27);
+			this.NumRoundsTextBox.Location = new System.Drawing.Point(500, 27);
 			this.NumRoundsTextBox.MaxLength = 5;
 			this.NumRoundsTextBox.MaxValue = 0;
 			this.NumRoundsTextBox.MinValue = 1;
@@ -1420,60 +1474,28 @@
 			this.CaseTrimLengthTextBox.Value = 0D;
 			this.CaseTrimLengthTextBox.ZeroAllowed = true;
 			// 
+			// ViewChargeButton
+			// 
+			this.ViewChargeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ViewChargeButton.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.ViewChargeButton.Location = new System.Drawing.Point(253, 20);
+			this.ViewChargeButton.Name = "ViewChargeButton";
+			this.ViewChargeButton.ShowToolTips = true;
+			this.ViewChargeButton.Size = new System.Drawing.Size(39, 20);
+			this.ViewChargeButton.TabIndex = 42;
+			this.ViewChargeButton.Text = "View";
+			this.ViewChargeButton.ToolTip = "";
+			this.ViewChargeButton.UseVisualStyleBackColor = true;
+			// 
 			// FirearmTypeCombo
 			// 
 			this.FirearmTypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.FirearmTypeCombo.DropDownWidth = 115;
 			this.FirearmTypeCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FirearmTypeCombo.FormattingEnabled = true;
+			this.FirearmTypeCombo.IncludeAny = false;
 			this.FirearmTypeCombo.IncludeShotgun = false;
 			this.FirearmTypeCombo.Items.AddRange(new object[] {
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
-            "Handgun",
-            "Rifle",
             "Handgun",
             "Rifle",
             "Handgun",
@@ -1488,10 +1510,24 @@
             "Rifle"});
 			this.FirearmTypeCombo.Location = new System.Drawing.Point(91, 21);
 			this.FirearmTypeCombo.Name = "FirearmTypeCombo";
+			this.FirearmTypeCombo.ShowToolTips = true;
 			this.FirearmTypeCombo.Size = new System.Drawing.Size(100, 21);
 			this.FirearmTypeCombo.TabIndex = 0;
 			this.FirearmTypeCombo.ToolTip = "";
 			this.FirearmTypeCombo.Value = ReloadersWorkShop.cFirearm.eFireArmType.Handgun;
+			// 
+			// GasCheckCheckBox
+			// 
+			this.GasCheckCheckBox.AutoCheck = false;
+			this.GasCheckCheckBox.AutoSize = true;
+			this.GasCheckCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.GasCheckCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.GasCheckCheckBox.Location = new System.Drawing.Point(98, 120);
+			this.GasCheckCheckBox.Name = "GasCheckCheckBox";
+			this.GasCheckCheckBox.Size = new System.Drawing.Size(79, 17);
+			this.GasCheckCheckBox.TabIndex = 53;
+			this.GasCheckCheckBox.Text = "Gas Check";
+			this.GasCheckCheckBox.UseVisualStyleBackColor = true;
 			// 
 			// cBatchForm
 			// 
@@ -1499,7 +1535,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.BatchCancelButton;
-			this.ClientSize = new System.Drawing.Size(670, 641);
+			this.ClientSize = new System.Drawing.Size(685, 632);
 			this.ControlBox = false;
 			this.Controls.Add(this.PrintButton);
 			this.Controls.Add(this.BatchCancelButton);
@@ -1557,7 +1593,7 @@
 		private System.Windows.Forms.Label FirearmCOLMeasurementLabel;
 		private System.Windows.Forms.Label FirearmCBTOMeasurementLabel;
 		private System.Windows.Forms.Label FirearmHeadSpaceMeasurementLabel;
-		private System.Windows.Forms.Label label35;
+		private System.Windows.Forms.Label FillRatioPctLabel;
 		private System.Windows.Forms.Button TestDataButton;
 		private System.Windows.Forms.Button PrintButton;
 		private System.Windows.Forms.ComboBox PowderCombo;
@@ -1578,7 +1614,7 @@
 		private System.Windows.Forms.Label NeckWallMeasurementLabel;
 		private CommonLib.Controls.cDoubleValueTextBox BulletDiameterTextBox;
 		private System.Windows.Forms.Label BulletDiameterMeasurementLabel;
-		private System.Windows.Forms.Label AlwaysShowBatchLoadLabel;
+		private System.Windows.Forms.Label BatchLoadLabel;
 		private System.Windows.Forms.Label NumRoundsRangeLabel;
 		private System.Windows.Forms.Label PowderChargeMeasurementLabel;
 		private System.Windows.Forms.RadioButton ExpandedNeckRadioButton;
@@ -1595,5 +1631,15 @@
 		private System.Windows.Forms.Label FirearmJumpLabel;
 		private System.Windows.Forms.Button FirearmTransferButton;
 		private System.Windows.Forms.Label JumpMeasurementLabel;
+		private System.Windows.Forms.Label PressureLabel;
+		private CommonLib.Controls.cButton ViewChargeButton;
+		private System.Windows.Forms.Label OCWLabel;
+		private System.Windows.Forms.CheckBox OCWCheckBox;
+		private System.Windows.Forms.Label PowderChargeLabel;
+		private System.Windows.Forms.Label LoadCOALLabel;
+		private System.Windows.Forms.Label LoadFillRatioLabel;
+		private System.Windows.Forms.Label LoadMuzzleVelocityLabel;
+		private System.Windows.Forms.Label LoadPressureLabel;
+		private System.Windows.Forms.CheckBox GasCheckCheckBox;
 		}
 	}

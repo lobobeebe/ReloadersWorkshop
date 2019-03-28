@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cSupply.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -22,7 +22,7 @@ namespace ReloadersWorkShop
 	//============================================================================*
 
 	[Serializable]
-	public class cSupply : cPrintObject, IComparable
+	public partial class cSupply : cPrintObject, IComparable
 		{
 		//----------------------------------------------------------------------------*
 		// Public Enumerations
@@ -30,6 +30,7 @@ namespace ReloadersWorkShop
 
 		public enum eSupplyTypes
 			{
+			Unknown = -1,
 			Bullets = 0,
 			Cases,
 			Powder,
@@ -71,13 +72,20 @@ namespace ReloadersWorkShop
 
 		private cTransactionList m_TransactionList = new cTransactionList();
 
+		//----------------------------------------------------------------------------*
+		// Temp Variables - No need to export or import
+		//----------------------------------------------------------------------------*
+
+		private bool m_fIdentity = false;
+
 		//============================================================================*
 		// cSupply() - Constructor
 		//============================================================================*
 
-		public cSupply(eSupplyTypes eType)
+		public cSupply(eSupplyTypes eType, bool fIdentity = false)
 			{
 			m_eType = eType;
+			m_fIdentity = fIdentity;
 
 			m_TransactionList = new cTransactionList();
 			}
@@ -89,6 +97,121 @@ namespace ReloadersWorkShop
 		public cSupply(cSupply Supply)
 			{
 			Copy(Supply);
+			}
+
+		//============================================================================*
+		// Append()
+		//============================================================================*
+
+		public int Append(cSupply Supply, bool fCountOnly = false)
+			{
+			int nUpdateCount = 0;
+
+			if (m_dQuantity == 0.0 && Supply.m_dQuantity != 0.0)
+				{
+				if (!fCountOnly)
+					m_dQuantity = Supply.m_dQuantity;
+
+				nUpdateCount++;
+				}
+
+			if (m_dCost == 0.0 && Supply.m_dCost != 0.0)
+				{
+				if (!fCountOnly)
+					m_dCost = Supply.m_dCost;
+
+				nUpdateCount++;
+				}
+
+			if (m_dQuantityOnHand == 0.0 && Supply.m_dQuantityOnHand != 0.0)
+				{
+				if (!fCountOnly)
+					m_dQuantityOnHand = Supply.m_dQuantityOnHand;
+
+				nUpdateCount++;
+				}
+
+			if (m_dCostEach == 0.0 && Supply.m_dCostEach != 0.0)
+				{
+				if (!fCountOnly)
+					m_dCostEach = Supply.m_dCostEach;
+
+				nUpdateCount++;
+				}
+
+			if (m_dTotalPurchaseQty == 0.0 && Supply.m_dTotalPurchaseQty != 0.0)
+				{
+				if (!fCountOnly)
+					m_dTotalPurchaseQty = Supply.m_dTotalPurchaseQty;
+
+				nUpdateCount++;
+				}
+
+			if (m_dTotalPurchaseCost == 0.0 && Supply.m_dTotalPurchaseCost != 0.0)
+				{
+				if (!fCountOnly)
+					m_dTotalPurchaseCost = Supply.m_dTotalPurchaseCost;
+
+				nUpdateCount++;
+				}
+
+			if (m_dTotalAdjustQty == 0.0 && Supply.m_dTotalAdjustQty != 0.0)
+				{
+				if (!fCountOnly)
+					m_dTotalAdjustQty = Supply.m_dTotalAdjustQty;
+
+				nUpdateCount++;
+				}
+
+			if (m_dTotalUsedQty == 0.0 && Supply.m_dTotalUsedQty != 0.0)
+				{
+				if (!fCountOnly)
+					m_dTotalUsedQty = Supply.m_dTotalUsedQty;
+
+				nUpdateCount++;
+				}
+
+			if (m_dLastPurchaseQty == 0.0 && Supply.m_dLastPurchaseQty != 0.0)
+				{
+				if (!fCountOnly)
+					m_dLastPurchaseQty = Supply.m_dLastPurchaseQty;
+
+				nUpdateCount++;
+				}
+
+			if (m_dLastPurchaseCost == 0.0 && Supply.m_dLastPurchaseCost != 0.0)
+				{
+				if (!fCountOnly)
+					m_dLastPurchaseCost = Supply.m_dLastPurchaseCost;
+
+				nUpdateCount++;
+				}
+
+			if (m_dMinimumStockLevel == 0.0 && Supply.m_dMinimumStockLevel != 0.0)
+				{
+				if (!fCountOnly)
+					m_dMinimumStockLevel = Supply.m_dMinimumStockLevel;
+
+				nUpdateCount++;
+				}
+
+			if (!m_fCrossUse && Supply.m_fCrossUse)
+				{
+				if (!fCountOnly)
+					m_fCrossUse = Supply.m_fCrossUse;
+
+				nUpdateCount++;
+				}
+
+			if (!m_fChecked && Supply.m_fChecked)
+				{
+				if (!fCountOnly)
+					m_fChecked = Supply.m_fChecked;
+
+				nUpdateCount++;
+				}
+
+			return (nUpdateCount);
 			}
 
 		//============================================================================*
@@ -142,7 +265,7 @@ namespace ReloadersWorkShop
 			// Supply Type
 			//----------------------------------------------------------------------------*
 
-			cSupply Supply = (cSupply) obj;
+			cSupply Supply = (cSupply)obj;
 
 			int rc = m_eType.CompareTo(Supply.m_eType);
 
@@ -213,6 +336,8 @@ namespace ReloadersWorkShop
 				m_TransactionList = new cTransactionList(Supply.m_TransactionList);
 			else
 				m_TransactionList = new cTransactionList();
+
+			m_fIdentity = Supply.m_fIdentity;
 			}
 
 		//============================================================================*
@@ -275,6 +400,18 @@ namespace ReloadersWorkShop
 			set
 				{
 				m_eFirearmType = value;
+				}
+			}
+
+		//============================================================================*
+		// Identity Property
+		//============================================================================*
+
+		public bool Identity
+			{
+			get
+				{
+				return (m_fIdentity);
 				}
 			}
 
@@ -485,6 +622,11 @@ namespace ReloadersWorkShop
 
 			foreach (cTransaction Transaction in m_TransactionList)
 				{
+				Transaction.Cost = Math.Round(Transaction.Cost, 4);
+				Transaction.Quantity = Math.Round(Transaction.Quantity, 4);
+				Transaction.Shipping = Math.Round(Transaction.Shipping, 4);
+				Transaction.Tax = Math.Round(Transaction.Tax, 4);
+
 				//----------------------------------------------------------------------------*
 				// If this is a batch transaction, recalculate the current costs
 				//----------------------------------------------------------------------------*
@@ -712,6 +854,17 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public virtual bool ResolveIdentities(cDataFiles DataFiles)
+			{
+			bool fChanged = m_TransactionList.ResolveIdentities(DataFiles);
+
+			return (fChanged);
+			}
+
+		//============================================================================*
 		// SupplyType Property
 		//============================================================================*
 
@@ -737,21 +890,44 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// SupplyTypeFromString()
+		//============================================================================*
+
+		public static cSupply.eSupplyTypes SupplyTypeFromString(string strType)
+			{
+			switch (strType)
+				{
+				case "Bullets":
+					return (cSupply.eSupplyTypes.Bullets);
+				case "Cases":
+					return (cSupply.eSupplyTypes.Cases);
+				case "Powder":
+					return (cSupply.eSupplyTypes.Powder);
+				case "Primers":
+					return (cSupply.eSupplyTypes.Primers);
+				case "Ammo":
+					return (cSupply.eSupplyTypes.Ammo);
+				}
+
+			return (cSupply.eSupplyTypes.Unknown);
+			}
+
+		//============================================================================*
 		// SupplyTypeString() - eSupplyType
 		//============================================================================*
 
-		public static string SupplyTypeString(eSupplyTypes eSupplyType)
+		public static string SupplyTypeString(eSupplyTypes eSupplyType, bool fPlural = true)
 			{
 			string strTypeString = "";
 
 			switch (eSupplyType)
 				{
 				case cSupply.eSupplyTypes.Bullets:
-					strTypeString = "Bullets";
+					strTypeString = "Bullet";
 					break;
 
 				case cSupply.eSupplyTypes.Cases:
-					strTypeString = "Cases";
+					strTypeString = "Case";
 					break;
 
 				case cSupply.eSupplyTypes.Powder:
@@ -759,13 +935,20 @@ namespace ReloadersWorkShop
 					break;
 
 				case cSupply.eSupplyTypes.Primers:
-					strTypeString = "Primers";
+					strTypeString = "Primer";
 					break;
 
 				case cSupply.eSupplyTypes.Ammo:
 					strTypeString = "Ammo";
 					break;
+
+				default:
+					strTypeString = "Unknown!";
+					break;
 				}
+
+			if (fPlural && (eSupplyType == eSupplyTypes.Bullets || eSupplyType == eSupplyTypes.Cases || eSupplyType == eSupplyTypes.Primers))
+				strTypeString += "s";
 
 			return (strTypeString);
 			}
@@ -903,6 +1086,18 @@ namespace ReloadersWorkShop
 				{
 				m_TransactionList = value;
 				}
+			}
+
+		//============================================================================*
+		// Validate()
+		//============================================================================*
+
+		public virtual bool Validate(bool fIdentityOK = false)
+			{
+			if (m_Manufacturer == null)
+				return (false);
+
+			return (true);
 			}
 		}
 	}

@@ -487,7 +487,7 @@ namespace ReloadersWorkShop
 
 		private void PopulateStatistics()
 			{
-			cTestStatistics Statistics = m_AmmoTest.TestShotList.GetStatistics(m_AmmoTest.NumRounds);
+			cTestStatistics Statistics = new cTestStatistics(m_AmmoTest.TestShotList);
 
 			m_AmmoTest.MuzzleVelocity = (int) Statistics.AverageVelocity;
 

@@ -1,7 +1,7 @@
 ﻿//============================================================================*
-// cBulletForm.cs
+// cFirearmCOLForm.cs
 //
-// Copyright © 2013, Lobo Specialties LLC
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 

@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cTransaction.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -10,7 +10,7 @@
 //============================================================================*
 
 using System;
-using System.Collections;
+using System.Xml;
 
 //============================================================================*
 // NameSpace
@@ -23,7 +23,7 @@ namespace ReloadersWorkShop
 	//============================================================================*
 
 	[Serializable]
-	public class cTransaction : IComparable
+	public partial class cTransaction : IComparable
 		{
 		//============================================================================*
 		// Public Enumerations
@@ -76,6 +76,34 @@ namespace ReloadersWorkShop
 		//============================================================================*
 
 		public cTransaction(cTransaction Transaction)
+			{
+			Copy(Transaction);
+			}
+
+		//============================================================================*
+		// Append()
+		//============================================================================*
+
+		public void Append(cTransaction Transaction)
+			{
+			m_strSource = String.IsNullOrEmpty(m_strSource) ? Transaction.m_strSource : m_strSource;
+
+			m_Supply = m_Supply == null ? Transaction.m_Supply : m_Supply;
+
+			m_dQuantity = m_dQuantity == 0.0 ? Transaction.m_dQuantity : m_dQuantity;
+			m_dCost = m_dCost == 0.0 ? Transaction.m_dCost : m_dCost;
+			m_dTax = m_dTax == 0.0 ? Transaction.m_dTax : m_dTax;
+			m_dShipping = m_dShipping == 0.0 ? Transaction.m_dShipping : m_dShipping;
+			m_fApplyTax = !m_fApplyTax ? Transaction.m_fApplyTax : false;
+
+			m_fChecked = !m_fChecked ? Transaction.m_fChecked : false;
+			}
+
+		//============================================================================*
+		// Copy()
+		//============================================================================*
+
+		public void Copy(cTransaction Transaction)
 			{
 			m_fAutoTrans = Transaction.m_fAutoTrans;
 
@@ -262,24 +290,24 @@ namespace ReloadersWorkShop
 								{
 								switch (m_Supply.SupplyType)
 									{
+									case cSupply.eSupplyTypes.Ammo:
+										rc = (m_Supply as cAmmo).CompareTo(Transaction.m_Supply as cAmmo);
+										break;
+
 									case cSupply.eSupplyTypes.Bullets:
-										rc = (m_Supply as cBullet).CompareTo((Transaction.m_Supply as cBullet));
+										rc = (m_Supply as cBullet).CompareTo(Transaction.m_Supply as cBullet);
 										break;
 
 									case cSupply.eSupplyTypes.Cases:
-										rc = (m_Supply as cCase).CompareTo((Transaction.m_Supply as cCase));
+										rc = (m_Supply as cCase).CompareTo(Transaction.m_Supply as cCase);
 										break;
 
 									case cSupply.eSupplyTypes.Powder:
-										rc = (m_Supply as cPowder).CompareTo((Transaction.m_Supply as cPowder));
+										rc = (m_Supply as cPowder).CompareTo(Transaction.m_Supply as cPowder);
 										break;
 
 									case cSupply.eSupplyTypes.Primers:
-										rc = (m_Supply as cPrimer).CompareTo((Transaction.m_Supply as cPrimer));
-										break;
-
-									case cSupply.eSupplyTypes.Ammo:
-										rc = (m_Supply as cAmmo).CompareTo((Transaction.m_Supply as cAmmo));
+										rc = (m_Supply as cPrimer).CompareTo(Transaction.m_Supply as cPrimer);
 										break;
 									}
 								}
@@ -319,6 +347,118 @@ namespace ReloadersWorkShop
 			{
 			get { return (m_dQuantity); }
 			set { m_dQuantity = value; }
+			}
+
+		//============================================================================*
+		// ResolveIdentities()
+		//============================================================================*
+
+		public bool ResolveIdentities(cDataFiles Datafiles)
+			{
+			bool fChanged = false;
+
+			if (m_Supply.Identity)
+				{
+				switch (m_Supply.SupplyType)
+					{
+					//----------------------------------------------------------------------------*
+					// Ammo
+					//----------------------------------------------------------------------------*
+
+					case cSupply.eSupplyTypes.Ammo:
+						foreach (cAmmo Ammo in Datafiles.AmmoList)
+							{
+							if (!Ammo.Identity && (m_Supply as cAmmo).CompareTo(Ammo) == 0)
+								{
+								m_Supply = Ammo;
+
+								fChanged = true;
+
+								break;
+								}
+							}
+
+						break;
+
+					//----------------------------------------------------------------------------*
+					// Bullets
+					//----------------------------------------------------------------------------*
+
+					case cSupply.eSupplyTypes.Bullets:
+						foreach (cBullet Bullet in Datafiles.BulletList)
+							{
+							if (!Bullet.Identity && (m_Supply as cBullet).CompareTo(Bullet) == 0)
+								{
+								m_Supply = Bullet;
+
+								fChanged = true;
+
+								break;
+								}
+							}
+
+						break;
+
+					//----------------------------------------------------------------------------*
+					// Cases
+					//----------------------------------------------------------------------------*
+
+					case cSupply.eSupplyTypes.Cases:
+						foreach (cCase Case in Datafiles.CaseList)
+							{
+							if (!Case.Identity && (m_Supply as cCase).CompareTo(Case) == 0)
+								{
+								m_Supply = Case;
+
+								fChanged = true;
+
+								break;
+								}
+							}
+
+						break;
+
+					//----------------------------------------------------------------------------*
+					// Primers
+					//----------------------------------------------------------------------------*
+
+					case cSupply.eSupplyTypes.Primers:
+						foreach (cPrimer Primer in Datafiles.PrimerList)
+							{
+							if (!Primer.Identity && (m_Supply as cPrimer).CompareTo(Primer) == 0)
+								{
+								m_Supply = Primer;
+
+								fChanged = true;
+
+								break;
+								}
+							}
+
+						break;
+
+					//----------------------------------------------------------------------------*
+					// Powder
+					//----------------------------------------------------------------------------*
+
+					case cSupply.eSupplyTypes.Powder:
+						foreach (cPowder Powder in Datafiles.PowderList)
+							{
+							if (!Powder.Identity && (m_Supply as cPowder).CompareTo(Powder) == 0)
+								{
+								m_Supply = Powder;
+
+								fChanged = true;
+
+								break;
+								}
+							}
+
+						break;
+					}
+				}
+
+			return (fChanged);
 			}
 
 		//============================================================================*
@@ -493,6 +633,33 @@ namespace ReloadersWorkShop
 			}
 
 		//============================================================================*
+		// TransactionDescriptionFromString()
+		//============================================================================*
+
+		public static cTransaction.eTransactionType TransactionDescriptionFromString(string strString)
+			{
+			switch (strString)
+				{
+				case "Purchase":
+					return (eTransactionType.Purchase);
+
+				case "Increase Stock":
+					return (eTransactionType.AddStock);
+
+				case "Fired Ammo":
+					return (eTransactionType.Fired);
+
+				case "Reduce Stock":
+					return (eTransactionType.ReduceStock);
+
+				case "Initial Stock":
+					return (eTransactionType.SetStockLevel);
+				}
+
+			return (eTransactionType.Purchase);
+			}
+
+		//============================================================================*
 		// TransactionType Property
 		//============================================================================*
 
@@ -563,6 +730,24 @@ namespace ReloadersWorkShop
 				}
 
 			return ("** Unknown **");
+			}
+
+		//============================================================================*
+		// Validate()
+		//============================================================================*
+
+		public bool Validate(bool fIdentityOK = false)
+			{
+			if (m_Supply == null)
+				return (false);
+
+			if (!m_Supply.Validate(fIdentityOK))
+				return (false);
+
+			if (m_dQuantity == 0.0)
+				return (false);
+
+			return (true);
 			}
 		}
 	}

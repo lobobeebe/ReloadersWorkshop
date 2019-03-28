@@ -27,7 +27,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <ApplicationVersion>1.1.007.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -40,6 +40,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -48,7 +49,7 @@
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>3</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Resources\ReloadersWorkShop.ico</ApplicationIcon>
@@ -84,15 +85,18 @@
     <Compile Include="cAbout.Designer.cs">
       <DependentUpon>cAbout.cs</DependentUpon>
     </Compile>
+    <Compile Include="cAmmo.Export.cs" />
     <Compile Include="cAmmoListPreviewDialog.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="cAmmoTest.Export.cs" />
     <Compile Include="cAtmospherics.cs" />
     <Compile Include="cBallistics.cs" />
     <Compile Include="cBallisticsPreviewDialog.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="cBatch.cs" />
+    <Compile Include="cBatch.Export.cs" />
     <Compile Include="cBatchForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -113,6 +117,7 @@
       <DependentUpon>cBatchPrintForm.cs</DependentUpon>
     </Compile>
     <Compile Include="cBatchTest.cs" />
+    <Compile Include="cBatchTest.Export.cs" />
     <Compile Include="cBatchTestForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -120,7 +125,9 @@
       <DependentUpon>cBatchTestForm.cs</DependentUpon>
     </Compile>
     <Compile Include="cBatchTestList.cs" />
+    <Compile Include="cBullet.Export.cs" />
     <Compile Include="cBulletCaliber.cs" />
+    <Compile Include="cBulletCaliber.Export.cs" />
     <Compile Include="cBulletCaliberForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -137,9 +144,11 @@
     <Compile Include="cBulletTypeForm.Designer.cs">
       <DependentUpon>cBulletTypeForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="cCaliber.Export.cs" />
     <Compile Include="cCaliberListView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="cCase.Export.cs" />
     <Compile Include="cCaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -165,12 +174,14 @@
     <Compile Include="cCase.cs" />
     <Compile Include="cCaseList.cs" />
     <Compile Include="cCharge.cs" />
+    <Compile Include="cCharge.Export.cs" />
     <Compile Include="cChargeComparer.cs" />
     <Compile Include="cChargeList.cs" />
     <Compile Include="cChargeListView.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="cChargeTest.cs" />
+    <Compile Include="cChargeTest.Export.cs" />
     <Compile Include="cChargeTestComparer.cs" />
     <Compile Include="cChargeTestForm.cs">
       <SubType>Form</SubType>
@@ -235,7 +246,66 @@
     <Compile Include="cAmmoTestListView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="cDataIntegrity.cs" />
+    <Compile Include="cDataIntegrityForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="cDataIntegrityForm.Designer.cs">
+      <DependentUpon>cDataIntegrityForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="cEvaluationItem.cs" />
+    <Compile Include="cFirearm.Export.cs" />
+    <Compile Include="cFirearmAccessoryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="cFirearmAccessoryForm.Designer.cs">
+      <DependentUpon>cFirearmAccessoryForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="cFirearmAccessoryListPreviewDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="cFirearmAccessoryListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="cFirearmBullet.Export.cs" />
+    <Compile Include="cFirearmCaliber.Export.cs" />
+    <Compile Include="cGear.cs" />
+    <Compile Include="cGear.Export.cs" />
+    <Compile Include="cGearList.cs" />
+    <Compile Include="cImportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="cImportForm.Designer.cs">
+      <DependentUpon>cImportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="cLight.cs" />
+    <Compile Include="cListViewFirearmAccessoryComparer.cs" />
+    <Compile Include="cListViewToolComparer.cs" />
+    <Compile Include="cLoad.Export.cs" />
+    <Compile Include="cMagnifier.cs" />
+    <Compile Include="cMainForm.ToolsTab.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="cManufacturer.Export.cs" />
+    <Compile Include="cOCWForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="cOCWForm.Designer.cs">
+      <DependentUpon>cOCWForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\cViewButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\cTurretTypeCombo.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="cPowder.Export.cs" />
+    <Compile Include="cPrimer.Export.cs" />
+    <Compile Include="cRedDot.cs" />
+    <Compile Include="cRWXMLDocument.cs" />
+    <Compile Include="cScope.cs" />
+    <Compile Include="cScope.Export.cs" />
+    <Compile Include="cSupply.Export.cs" />
     <Compile Include="cTarget.cs" />
     <Compile Include="cTargetCalibrationForm.cs">
       <SubType>Form</SubType>
@@ -261,6 +331,7 @@
     <Compile Include="cTargetShotListView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="cTestShot.Export.cs" />
     <Compile Include="cTestStatistics.cs" />
     <Compile Include="cEvaluationListView.cs">
       <SubType>Component</SubType>
@@ -417,7 +488,20 @@
       <DependentUpon>cTestShotForm.cs</DependentUpon>
     </Compile>
     <Compile Include="cTestShotList.cs" />
+    <Compile Include="cTool.cs" />
+    <Compile Include="cTool.Export.cs" />
+    <Compile Include="cToolForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="cToolForm.Designer.cs">
+      <DependentUpon>cToolForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="cToolList.cs" />
+    <Compile Include="cToolListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="cTransaction.cs" />
+    <Compile Include="cTransaction.Export.cs" />
     <Compile Include="cTransactionList.cs" />
     <Compile Include="cTransactionListView.cs">
       <SubType>Component</SubType>
@@ -473,6 +557,7 @@
     <Compile Include="cPrimerList.cs" />
     <Compile Include="cSupply.cs" />
     <Compile Include="Preferences\cColumn.cs" />
+    <Compile Include="Preferences\cPreferences.Export.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -541,8 +626,14 @@
     <EmbeddedResource Include="cCostAnalysisForm.resx">
       <DependentUpon>cCostAnalysisForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="cDataIntegrityForm.resx">
+      <DependentUpon>cDataIntegrityForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="cExportForm.resx">
       <DependentUpon>cExportForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="cFirearmAccessoryForm.resx">
+      <DependentUpon>cFirearmAccessoryForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="cFirearmBulletForm.resx">
       <DependentUpon>cFirearmBulletForm.cs</DependentUpon>
@@ -552,6 +643,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="cFirearmForm.resx">
       <DependentUpon>cFirearmForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="cImportForm.resx">
+      <DependentUpon>cImportForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="cInventoryForm.resx">
       <DependentUpon>cInventoryForm.cs</DependentUpon>
@@ -571,6 +665,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="cChargeForm.resx">
       <DependentUpon>cChargeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="cOCWForm.resx">
+      <DependentUpon>cOCWForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="cPowderForm.resx">
       <DependentUpon>cPowderForm.cs</DependentUpon>
@@ -602,6 +699,9 @@
     <EmbeddedResource Include="cTestShotForm.resx">
       <DependentUpon>cTestShotForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="cToolForm.resx">
+      <DependentUpon>cToolForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -612,7 +712,6 @@
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="app.manifest" />
-    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -645,6 +744,7 @@
     <None Include="Resources\Images\DriftChartShooter.png" />
     <None Include="Resources\BuyNowButton.gif" />
     <None Include="Resources\OpenTarget.bmp" />
+    <None Include="Resources\ViewButton.png" />
     <Content Include="SAAMI_README.txt" />
     <Content Include="Share_README.TXT.txt" />
     <None Include="Resources\Images\SortDescending.bmp" />

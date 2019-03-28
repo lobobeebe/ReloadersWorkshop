@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cManuacturerForm.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -12,6 +12,12 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+
+//============================================================================*
+// Application Specific Using Statements
+//============================================================================*
+
+using CommonLib.Controls;
 
 //============================================================================*
 // NameSpace
@@ -25,21 +31,18 @@ namespace ReloadersWorkShop
 
 	public partial class cManufacturerForm : Form
 		{
-		//----------------------------------------------------------------------------*
+		//============================================================================*
 		// Private Constant Data Members
-		//----------------------------------------------------------------------------*
+		//============================================================================*
 
 		private const string cm_strNameToolTip = "Name of Manufacturer.";
-		private const string cm_strWebsiteToolTip = "Manufacturer's Webiste (optional).";
+		private const string cm_strWebsiteToolTip = "Manufacturer's Website (optional).";
 		private const string cm_strHeadStampToolTip = "Manufacturer's name as found on case heads.";
 		private const string cm_strProductsToolTip = "Check if this manufacturer supplies this product.";
 
-		private const string cm_strManufacturerOKButtonToolTip = "Click to add or update the manufacturer with the above data.";
-		private const string cm_strManufacturerCancelButtonToolTip = "Click to cancel changes and return to the main window.";
-
-		//----------------------------------------------------------------------------*
+		//============================================================================*
 		// Private Data Members
-		//----------------------------------------------------------------------------*
+		//============================================================================*
 
 		private bool m_fAdd = false;
 		private bool m_fViewOnly = false;
@@ -55,9 +58,6 @@ namespace ReloadersWorkShop
 		private ToolTip m_WebsiteToolTip = new ToolTip();
 		private ToolTip m_HeadStampToolTip = new ToolTip();
 		private ToolTip m_ProductsToolTip = new ToolTip();
-
-		private ToolTip m_ManufacturerOKButtonToolTip = new ToolTip();
-		private ToolTip m_ManufacturerCancelButtonToolTip = new ToolTip();
 
 		private cDataFiles m_DataFiles = null;
 
@@ -81,7 +81,7 @@ namespace ReloadersWorkShop
 
 				m_fAdd = true;
 
-				ManufacturerOKButton.Text = "Add";
+				OKButton.ButtonType = cOKButton.eButtonTypes.Add;
 				}
 			else
 				{
@@ -90,18 +90,18 @@ namespace ReloadersWorkShop
 
 				if (m_fViewOnly)
 					{
-					ManufacturerOKButton.Visible = false;
-					ManufacturerCancelButton.Text = "Close";
+					OKButton.Visible = false;
+					FormCancelButton.ButtonType = cCancelButton.eButtonTypes.Close;
 
-					int nButtonX = (this.Size.Width / 2) - (ManufacturerCancelButton.Width / 2);
+					int nButtonX = (this.Size.Width / 2) - (FormCancelButton.Width / 2);
 
-					ManufacturerCancelButton.Location = new Point(nButtonX, ManufacturerCancelButton.Location.Y);
+					FormCancelButton.Location = new Point(nButtonX, FormCancelButton.Location.Y);
 					}
 				else
-					ManufacturerOKButton.Text = "Update";
+					OKButton.ButtonType = cOKButton.eButtonTypes.Update;
 				}
 
-			SetClientSizeCore(FirearmsGroup.Location.X + FirearmsGroup.Width + 10, ManufacturerCancelButton.Location.Y + ManufacturerCancelButton.Height + 20);
+			SetClientSizeCore(FirearmsGroup.Location.X + FirearmsGroup.Width + 10, FormCancelButton.Location.Y + FormCancelButton.Height + 20);
 
 			//----------------------------------------------------------------------------*
 			// Set Control Event Handlers
@@ -124,12 +124,47 @@ namespace ReloadersWorkShop
 				RiflesCheckBox.Click += OnCheckBoxClicked;
 				ShotgunsCheckBox.Click += OnCheckBoxClicked;
 
+				ToolsCheckBox.Click += OnCheckBoxClicked;
+
 				ScopesCheckBox.Click += OnCheckBoxClicked;
+				LasersCheckBox.Click += OnCheckBoxClicked;
+				RedDotsCheckBox.Click += OnCheckBoxClicked;
+				MagnifiersCheckBox.Click += OnCheckBoxClicked;
+				LightsCheckBox.Click += OnCheckBoxClicked;
 				TriggersCheckBox.Click += OnCheckBoxClicked;
-				StocksCheckBox.Click += OnCheckBoxClicked;
+				FurnitureCheckBox.Click += OnCheckBoxClicked;
+				BipodsCheckBox.Click += OnCheckBoxClicked;
+				PartsCheckBox.Click += OnCheckBoxClicked;
+				OtherCheckBox.Click += OnCheckBoxClicked;
+				}
+			else
+				{
+				AmmoCheckBox.AutoCheck = false;
+				BulletsCheckBox.AutoCheck = false;
+				CasesCheckBox.AutoCheck = false;
+				PowderCheckBox.AutoCheck = false;
+				PrimersCheckBox.AutoCheck = false;
+				BulletMoldsCheckBox.AutoCheck = false;
+
+				HandgunsCheckBox.AutoCheck = false;
+				RiflesCheckBox.AutoCheck = false;
+				ShotgunsCheckBox.AutoCheck = false;
+
+				ToolsCheckBox.AutoCheck = false;
+
+				ScopesCheckBox.AutoCheck = false;
+				LasersCheckBox.AutoCheck = false;
+				RedDotsCheckBox.AutoCheck = false;
+				MagnifiersCheckBox.AutoCheck = false;
+				LightsCheckBox.AutoCheck = false;
+				TriggersCheckBox.AutoCheck = false;
+				FurnitureCheckBox.AutoCheck = false;
+				BipodsCheckBox.AutoCheck = false;
+				PartsCheckBox.AutoCheck = false;
+				OtherCheckBox.AutoCheck = false;
 				}
 
-			ManufacturerOKButton.Click += OnOKClicked;
+			OKButton.Click += OnOKClicked;
 
 			//----------------------------------------------------------------------------*
 			// Populate the data fields
@@ -163,9 +198,18 @@ namespace ReloadersWorkShop
 			RiflesCheckBox.Checked = m_Manufacturer.Rifles;
 			ShotgunsCheckBox.Checked = m_Manufacturer.Shotguns;
 
+			ToolsCheckBox.Checked = m_Manufacturer.Tools;
+
 			ScopesCheckBox.Checked = m_Manufacturer.Scopes;
+			LasersCheckBox.Checked = m_Manufacturer.Lasers;
+			RedDotsCheckBox.Checked = m_Manufacturer.RedDots;
+			MagnifiersCheckBox.Checked = m_Manufacturer.Magnifiers;
+			LightsCheckBox.Checked = m_Manufacturer.Lights;
 			TriggersCheckBox.Checked = m_Manufacturer.Triggers;
-			StocksCheckBox.Checked = m_Manufacturer.Stocks;
+			FurnitureCheckBox.Checked = m_Manufacturer.Furniture;
+			BipodsCheckBox.Checked = m_Manufacturer.Bipods;
+			PartsCheckBox.Checked = m_Manufacturer.Parts;
+			OtherCheckBox.Checked = m_Manufacturer.Misc;
 
 			//----------------------------------------------------------------------------*
 			// Build Title String
@@ -258,8 +302,11 @@ namespace ReloadersWorkShop
 			int nStockCount = 0;
 
 			if (m_OriginalManufacturer.Handguns || m_OriginalManufacturer.Rifles || m_OriginalManufacturer.Shotguns ||
-				m_OriginalManufacturer.Scopes || m_OriginalManufacturer.Triggers || m_OriginalManufacturer.Stocks ||
-				m_OriginalManufacturer.Bullets || m_OriginalManufacturer.BulletMolds || m_OriginalManufacturer.Cases || m_OriginalManufacturer.Powder || m_OriginalManufacturer.Primers || m_OriginalManufacturer.Ammo)
+				m_OriginalManufacturer.Scopes || m_OriginalManufacturer.RedDots || m_OriginalManufacturer.Lights ||
+				m_OriginalManufacturer.Triggers || m_OriginalManufacturer.Furniture || m_OriginalManufacturer.Bipods ||
+				m_OriginalManufacturer.Parts || m_OriginalManufacturer.Misc || m_OriginalManufacturer.Tools ||
+				m_OriginalManufacturer.Bullets || m_OriginalManufacturer.BulletMolds || m_OriginalManufacturer.Cases || 
+				m_OriginalManufacturer.Powder || m_OriginalManufacturer.Primers || m_OriginalManufacturer.Ammo)
 				{
 				foreach (cFirearm Firearm in m_DataFiles.FirearmList)
 					{
@@ -281,27 +328,6 @@ namespace ReloadersWorkShop
 								ShotgunsCheckBox.Enabled = false;
 								break;
 							}
-						}
-
-					if (Firearm.StockManufacturer != null && Firearm.StockManufacturer.CompareTo(m_OriginalManufacturer) == 0)
-						{
-						nStockCount++;
-
-						StocksCheckBox.Enabled = false;
-						}
-
-					if (Firearm.TriggerManufacturer != null && Firearm.TriggerManufacturer.CompareTo(m_OriginalManufacturer) == 0)
-						{
-						nTriggerCount++;
-
-						TriggersCheckBox.Enabled = false;
-						}
-
-					if (Firearm.ScopeManufacturer != null && Firearm.ScopeManufacturer.CompareTo(m_OriginalManufacturer) == 0)
-						{
-						nScopeCount++;
-
-						ScopesCheckBox.Enabled = false;
 						}
 					}
 
@@ -500,6 +526,37 @@ namespace ReloadersWorkShop
 						}
 					}
 
+				//----------------------------------------------------------------------------*
+				// Tools
+				//----------------------------------------------------------------------------*
+
+				int nToolCount = 0;
+
+				if (m_Manufacturer.Tools)
+					{
+					foreach (cTool Tool in m_DataFiles.ToolList)
+						{
+						if (Tool.Manufacturer.CompareTo(m_OriginalManufacturer) == 0)
+							nToolCount++;
+						}
+
+					if (nToolCount > 0)
+						{
+						ToolsCheckBox.Enabled = false;
+
+						if (strProducts.Length > 0)
+							{
+							strProducts += ", ";
+
+							nLastCommaIndex = strProducts.IndexOf(',', nLastCommaIndex > 0 ? nLastCommaIndex + 1 : 0);
+							}
+
+						strProducts += String.Format("{0:N0} tool{1}", nToolCount, nToolCount > 1 ? "s" : "");
+
+						nProductCount++;
+						}
+					}
+
 				if (strProducts.Length > 0)
 					{
 					if (nLastCommaIndex > 0)
@@ -551,8 +608,6 @@ namespace ReloadersWorkShop
 			{
 			CheckBox CheckBox = (CheckBox) sender;
 
-			CheckBox.Checked = !CheckBox.Checked;
-
 			switch (CheckBox.Name)
 				{
 				case "AmmoCheckBox":
@@ -595,12 +650,44 @@ namespace ReloadersWorkShop
 					m_Manufacturer.Scopes = CheckBox.Checked;
 					break;
 
+				case "LasersCheckBox":
+					m_Manufacturer.Lasers = CheckBox.Checked;
+					break;
+
+				case "RedDotsCheckBox":
+					m_Manufacturer.RedDots = CheckBox.Checked;
+					break;
+
+				case "MagnifiersCheckBox":
+					m_Manufacturer.Magnifiers = CheckBox.Checked;
+					break;
+
+				case "LightsCheckBox":
+					m_Manufacturer.Lights = CheckBox.Checked;
+					break;
+
 				case "TriggersCheckBox":
 					m_Manufacturer.Triggers = CheckBox.Checked;
 					break;
 
-				case "StocksCheckBox":
-					m_Manufacturer.Stocks = CheckBox.Checked;
+				case "ToolsCheckBox":
+					m_Manufacturer.Tools = CheckBox.Checked;
+					break;
+
+				case "FurnitureCheckBox":
+					m_Manufacturer.Furniture = CheckBox.Checked;
+					break;
+
+				case "BipodsCheckBox":
+					m_Manufacturer.Bipods = CheckBox.Checked;
+					break;
+
+				case "PartsCheckBox":
+					m_Manufacturer.Parts = CheckBox.Checked;
+					break;
+
+				case "OtherCheckBox":
+					m_Manufacturer.Misc = CheckBox.Checked;
 					break;
 				}
 
@@ -680,6 +767,9 @@ namespace ReloadersWorkShop
 
 		private void SetStaticToolTips()
 			{
+			OKButton.ShowToolTips = m_DataFiles.Preferences.ToolTips;
+			FormCancelButton.ShowToolTips = m_DataFiles.Preferences.ToolTips;
+
 			if (!m_DataFiles.Preferences.ToolTips)
 				return;
 
@@ -702,13 +792,18 @@ namespace ReloadersWorkShop
 			m_ProductsToolTip.SetToolTip(RiflesCheckBox, cm_strProductsToolTip);
 			m_ProductsToolTip.SetToolTip(ShotgunsCheckBox, cm_strProductsToolTip);
 
-			m_ManufacturerOKButtonToolTip.ShowAlways = true;
-			m_ManufacturerOKButtonToolTip.RemoveAll();
-			m_ManufacturerOKButtonToolTip.SetToolTip(ManufacturerOKButton, cm_strManufacturerOKButtonToolTip);
+			m_ProductsToolTip.SetToolTip(ToolsCheckBox, cm_strProductsToolTip);
 
-			m_ManufacturerCancelButtonToolTip.ShowAlways = true;
-			m_ManufacturerCancelButtonToolTip.RemoveAll();
-			m_ManufacturerCancelButtonToolTip.SetToolTip(ManufacturerCancelButton, cm_strManufacturerCancelButtonToolTip);
+			m_ProductsToolTip.SetToolTip(ScopesCheckBox, cm_strProductsToolTip);
+			m_ProductsToolTip.SetToolTip(LasersCheckBox, cm_strProductsToolTip);
+			m_ProductsToolTip.SetToolTip(RedDotsCheckBox, cm_strProductsToolTip);
+			m_ProductsToolTip.SetToolTip(MagnifiersCheckBox, cm_strProductsToolTip);
+			m_ProductsToolTip.SetToolTip(LightsCheckBox, cm_strProductsToolTip);
+			m_ProductsToolTip.SetToolTip(TriggersCheckBox, cm_strProductsToolTip);
+			m_ProductsToolTip.SetToolTip(FurnitureCheckBox, cm_strProductsToolTip);
+			m_ProductsToolTip.SetToolTip(BipodsCheckBox, cm_strProductsToolTip);
+			m_ProductsToolTip.SetToolTip(PartsCheckBox, cm_strProductsToolTip);
+			m_ProductsToolTip.SetToolTip(OtherCheckBox, cm_strProductsToolTip);
 			}
 
 		//============================================================================*
@@ -805,8 +900,16 @@ namespace ReloadersWorkShop
 				!RiflesCheckBox.Checked &&
 				!ShotgunsCheckBox.Checked &&
 				!ScopesCheckBox.Checked &&
+				!LasersCheckBox.Checked &&
+				!RedDotsCheckBox.Checked &&
+				!MagnifiersCheckBox.Checked &&
+				!LightsCheckBox.Checked &&
 				!TriggersCheckBox.Checked &&
-				!StocksCheckBox.Checked)
+				!FurnitureCheckBox.Checked &&
+				!BipodsCheckBox.Checked &&
+				!PartsCheckBox.Checked &&
+				!ToolsCheckBox.Checked &&
+				!OtherCheckBox.Checked)
 				{
 				fEnableOK = false;
 
@@ -820,9 +923,18 @@ namespace ReloadersWorkShop
 				RiflesCheckBox.BackColor = Color.LightPink;
 				ShotgunsCheckBox.BackColor = Color.LightPink;
 
+				ToolsCheckBox.BackColor = Color.LightPink;
+
 				ScopesCheckBox.BackColor = Color.LightPink;
+				LasersCheckBox.BackColor = Color.LightPink;
+				RedDotsCheckBox.BackColor = Color.LightPink;
+				MagnifiersCheckBox.BackColor = Color.LightPink;
+				LightsCheckBox.BackColor = Color.LightPink;
 				TriggersCheckBox.BackColor = Color.LightPink;
-				StocksCheckBox.BackColor = Color.LightPink;
+				FurnitureCheckBox.BackColor = Color.LightPink;
+				BipodsCheckBox.BackColor = Color.LightPink;
+				PartsCheckBox.BackColor = Color.LightPink;
+				OtherCheckBox.BackColor = Color.LightPink;
 
 				strToolTip += "\n\nYou must select at least one product type.";
 				}
@@ -838,9 +950,18 @@ namespace ReloadersWorkShop
 				RiflesCheckBox.BackColor = SystemColors.Control;
 				ShotgunsCheckBox.BackColor = SystemColors.Control;
 
+				ToolsCheckBox.BackColor = SystemColors.Control;
+
 				ScopesCheckBox.BackColor = SystemColors.Control;
+				LasersCheckBox.BackColor = SystemColors.Control;
+				RedDotsCheckBox.BackColor = SystemColors.Control;
+				MagnifiersCheckBox.BackColor = SystemColors.Control;
+				LightsCheckBox.BackColor = SystemColors.Control;
 				TriggersCheckBox.BackColor = SystemColors.Control;
-				StocksCheckBox.BackColor = SystemColors.Control;
+				FurnitureCheckBox.BackColor = SystemColors.Control;
+				BipodsCheckBox.BackColor = SystemColors.Control;
+				PartsCheckBox.BackColor = SystemColors.Control;
+				OtherCheckBox.BackColor = SystemColors.Control;
 				}
 
 			if (m_DataFiles.Preferences.ToolTips)
@@ -856,9 +977,18 @@ namespace ReloadersWorkShop
 				m_ProductsToolTip.SetToolTip(RiflesCheckBox, strToolTip);
 				m_ProductsToolTip.SetToolTip(ShotgunsCheckBox, strToolTip);
 
+				m_ProductsToolTip.SetToolTip(ToolsCheckBox, strToolTip);
+
 				m_ProductsToolTip.SetToolTip(ScopesCheckBox, strToolTip);
+				m_ProductsToolTip.SetToolTip(LasersCheckBox, strToolTip);
+				m_ProductsToolTip.SetToolTip(RedDotsCheckBox, strToolTip);
+				m_ProductsToolTip.SetToolTip(MagnifiersCheckBox, strToolTip);
+				m_ProductsToolTip.SetToolTip(LightsCheckBox, strToolTip);
 				m_ProductsToolTip.SetToolTip(TriggersCheckBox, strToolTip);
-				m_ProductsToolTip.SetToolTip(StocksCheckBox, strToolTip);
+				m_ProductsToolTip.SetToolTip(FurnitureCheckBox, strToolTip);
+				m_ProductsToolTip.SetToolTip(BipodsCheckBox, strToolTip);
+				m_ProductsToolTip.SetToolTip(PartsCheckBox, strToolTip);
+				m_ProductsToolTip.SetToolTip(OtherCheckBox, strToolTip);
 				}
 
 			//----------------------------------------------------------------------------*
@@ -877,7 +1007,7 @@ namespace ReloadersWorkShop
 			// Enable or disable the Ok button
 			//----------------------------------------------------------------------------*
 
-			ManufacturerOKButton.Enabled = fEnableOK;
+			OKButton.Enabled = fEnableOK;
 			}
 
 		//============================================================================*

@@ -80,16 +80,6 @@
 			label4.TabIndex = 4;
 			label4.Text = "COAL:";
 			// 
-			// COALMeasurementLabel
-			// 
-			this.COALMeasurementLabel.AutoSize = true;
-			this.COALMeasurementLabel.Location = new System.Drawing.Point(119, 79);
-			this.COALMeasurementLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.COALMeasurementLabel.Name = "COALMeasurementLabel";
-			this.COALMeasurementLabel.Size = new System.Drawing.Size(15, 13);
-			this.COALMeasurementLabel.TabIndex = 6;
-			this.COALMeasurementLabel.Text = "in";
-			// 
 			// label2
 			// 
 			label2.AutoSize = true;
@@ -109,6 +99,16 @@
 			label7.Size = new System.Drawing.Size(39, 13);
 			label7.TabIndex = 13;
 			label7.Text = "CBTO:";
+			// 
+			// COALMeasurementLabel
+			// 
+			this.COALMeasurementLabel.AutoSize = true;
+			this.COALMeasurementLabel.Location = new System.Drawing.Point(119, 79);
+			this.COALMeasurementLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.COALMeasurementLabel.Name = "COALMeasurementLabel";
+			this.COALMeasurementLabel.Size = new System.Drawing.Size(15, 13);
+			this.COALMeasurementLabel.TabIndex = 6;
+			this.COALMeasurementLabel.Text = "in";
 			// 
 			// CBTOMeasurementLabel
 			// 

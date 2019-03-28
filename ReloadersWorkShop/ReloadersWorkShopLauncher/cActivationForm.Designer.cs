@@ -41,6 +41,7 @@
 			this.PurchaseGroup = new System.Windows.Forms.GroupBox();
 			this.PurchaseButton = new System.Windows.Forms.Button();
 			this.label5 = new System.Windows.Forms.Label();
+			this.ErrorLabel = new System.Windows.Forms.Label();
 			this.KeyGroup.SuspendLayout();
 			this.PurchaseGroup.SuspendLayout();
 			this.SuspendLayout();
@@ -83,7 +84,7 @@
 			this.CloseButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.CloseButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.CloseButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.CloseButton.Location = new System.Drawing.Point(251, 167);
+			this.CloseButton.Location = new System.Drawing.Point(251, 156);
 			this.CloseButton.Name = "CloseButton";
 			this.CloseButton.Size = new System.Drawing.Size(75, 23);
 			this.CloseButton.TabIndex = 11;
@@ -95,7 +96,7 @@
 			this.OKButton.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.OKButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.OKButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.OKButton.Location = new System.Drawing.Point(135, 167);
+			this.OKButton.Location = new System.Drawing.Point(135, 156);
 			this.OKButton.Name = "OKButton";
 			this.OKButton.Size = new System.Drawing.Size(75, 23);
 			this.OKButton.TabIndex = 12;
@@ -106,16 +107,17 @@
 			// 
 			this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label4.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label4.Location = new System.Drawing.Point(11, 117);
+			this.label4.Location = new System.Drawing.Point(11, 107);
 			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(438, 49);
+			this.label4.Size = new System.Drawing.Size(438, 42);
 			this.label4.TabIndex = 13;
-			this.label4.Text = "Enter your Activation Key and other data above EXACTLY the way it appears on the " +
-    "email you received. (Case Sensitive)";
+			this.label4.Text = "Enter your Name, Email Address, AND Activation Key EXACTLY the way they appear on" +
+    " the email you received. (Case Sensitive)";
 			this.label4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
 			// KeyGroup
 			// 
+			this.KeyGroup.Controls.Add(this.ErrorLabel);
 			this.KeyGroup.Controls.Add(this.label1);
 			this.KeyGroup.Controls.Add(this.label4);
 			this.KeyGroup.Controls.Add(this.label2);
@@ -146,6 +148,7 @@
 			this.NameTextBox.Size = new System.Drawing.Size(300, 20);
 			this.NameTextBox.TabIndex = 8;
 			this.NameTextBox.ToolTip = "";
+			this.NameTextBox.ValidChars = "";
 			this.NameTextBox.Value = "";
 			// 
 			// KeyTextBox
@@ -160,6 +163,7 @@
 			this.KeyTextBox.Size = new System.Drawing.Size(300, 20);
 			this.KeyTextBox.TabIndex = 10;
 			this.KeyTextBox.ToolTip = "";
+			this.KeyTextBox.ValidChars = "";
 			this.KeyTextBox.Value = "";
 			// 
 			// EmailTextBox
@@ -173,6 +177,7 @@
 			this.EmailTextBox.Size = new System.Drawing.Size(300, 20);
 			this.EmailTextBox.TabIndex = 9;
 			this.EmailTextBox.ToolTip = "";
+			this.EmailTextBox.ValidChars = "";
 			this.EmailTextBox.Value = "";
 			// 
 			// PurchaseGroup
@@ -209,6 +214,18 @@
 			this.label5.TabIndex = 14;
 			this.label5.Text = "Click the Purchase Button below for instructions on how to get one.";
 			this.label5.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+			// 
+			// ErrorLabel
+			// 
+			this.ErrorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ErrorLabel.ForeColor = System.Drawing.Color.OrangeRed;
+			this.ErrorLabel.Location = new System.Drawing.Point(14, 187);
+			this.ErrorLabel.Name = "ErrorLabel";
+			this.ErrorLabel.Size = new System.Drawing.Size(435, 13);
+			this.ErrorLabel.TabIndex = 14;
+			this.ErrorLabel.Text = "label6";
+			this.ErrorLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+			this.ErrorLabel.Visible = false;
 			// 
 			// cActivationForm
 			// 
@@ -247,5 +264,6 @@
 		private System.Windows.Forms.GroupBox PurchaseGroup;
 		private System.Windows.Forms.Button PurchaseButton;
 		private System.Windows.Forms.Label label5;
+		private System.Windows.Forms.Label ErrorLabel;
 		}
 	}

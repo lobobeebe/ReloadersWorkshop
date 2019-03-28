@@ -1,7 +1,7 @@
 ﻿//============================================================================*
-// cMainForm.LoadDataTab.cs
+// cMainForm.BatchTab.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -217,6 +217,7 @@ namespace ReloadersWorkShop
 				BatchCaliberCombo.SelectedIndexChanged += OnBatchCaliberSelected;
 				BatchPowderCombo.SelectedIndexChanged += OnBatchPowderSelected;
 
+				CopyBatchButton.Click += OnAddBatch;
 				ArchiveCheckedButton.Click += OnArchiveChecked;
 				UnarchiveCheckedButton.Click += OnUnarchiveChecked;
 
@@ -245,23 +246,89 @@ namespace ReloadersWorkShop
 
 		protected void OnAddBatch(object sender, EventArgs args)
 			{
+			cBatch Batch = null;
+
+			if (sender is Button)
+				{
+				if ((sender as Button).Name == "CopyBatchButton")
+					{
+					if (m_BatchListView.SelectedItems.Count > 0)
+						Batch = (cBatch) m_BatchListView.SelectedItems[0].Tag;
+					}
+				}
+
 			//----------------------------------------------------------------------------*
 			// Start the dialog
 			//----------------------------------------------------------------------------*
 
-			cBatchForm BatchForm = new cBatchForm(null, m_DataFiles, m_RWRegistry, BatchFirearmTypeCombo.Value);
+			cBatchForm BatchForm = new cBatchForm(Batch, m_DataFiles, m_RWRegistry, BatchFirearmTypeCombo.Value, false, true);
 
 			if (BatchForm.ShowDialog() == DialogResult.OK)
 				{
 				//----------------------------------------------------------------------------*
-				// Get the new Load Data
+				// Create OCW batches
 				//----------------------------------------------------------------------------*
 
-				cBatch NewBatch = new cBatch(BatchForm.Batch);
+				if (BatchForm.OCW)
+					{
+					rOCW OCWSettings = BatchForm.OCWSettings;
 
-				m_DataFiles.Preferences.LastBatch = BatchForm.Batch;
+					cBatch NewBatch = new cBatch(BatchForm.Batch);
 
-				AddBatch(NewBatch);
+					int nOCWBatchID = NewBatch.BatchID;
+
+					int nNumBatches = cBatchForm.OCWBatchCount(OCWSettings, NewBatch, m_DataFiles);
+
+					if (nNumBatches > OCWSettings.m_nMaxBatches)
+						nNumBatches = OCWSettings.m_nMaxBatches;
+
+					double dPowderWeight = OCWSettings.m_dStartCharge;
+
+					for (int i = 0; i < nNumBatches; i++)
+						{
+						if (NewBatch == null)
+							{
+							NewBatch = new cBatch(BatchForm.Batch);
+							NewBatch.BatchID = m_DataFiles.Preferences.NextBatchID++;
+							}
+
+						NewBatch.NumRounds = OCWSettings.m_nNumRounds;
+						NewBatch.OCWBatchID = nOCWBatchID;
+						NewBatch.PowderWeight = dPowderWeight;
+
+						cCharge Charge = new cCharge();
+						Charge.PowderWeight = Math.Round(dPowderWeight, m_DataFiles.Preferences.PowderWeightDecimals);
+
+						NewBatch.Load.ChargeList.AddCharge(Charge);
+
+						m_DataFiles.Preferences.LastBatch = BatchForm.Batch;
+
+						AddBatch(NewBatch);
+
+						NewBatch = null;
+
+						dPowderWeight = Math.Round(dPowderWeight + OCWSettings.m_dChargeIncrement, m_DataFiles.Preferences.PowderWeightDecimals);
+						}
+
+					InitializeLoadDataTab();
+					}
+
+				//----------------------------------------------------------------------------*
+				// Create single batch
+				//----------------------------------------------------------------------------*
+
+				else
+					{
+					cBatch NewBatch = new cBatch(BatchForm.Batch);
+
+					m_DataFiles.Preferences.LastBatch = BatchForm.Batch;
+
+					AddBatch(NewBatch);
+					}
+
+				//----------------------------------------------------------------------------*
+				// Reset all affected tabs and exit
+				//----------------------------------------------------------------------------*
 
 				InitializeBallisticsTab();
 
@@ -457,7 +524,7 @@ namespace ReloadersWorkShop
 			{
 			cBatchList BatchList = new cBatchList();
 
-			for (int i = 0;i < m_BatchListView.CheckedItems.Count;i++)
+			for (int i = 0; i < m_BatchListView.CheckedItems.Count; i++)
 				{
 				cBatch Batch = (m_BatchListView.CheckedItems[i].Tag as cBatch);
 
@@ -502,24 +569,24 @@ namespace ReloadersWorkShop
 
 			if (MessageBox.Show(this, "Are you sure you wish to remove this batch?", "Data Deletion Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
 				{
-				RemoveBatchTransactions(Batch);
+				if (m_DataFiles.DeleteBatch(Batch))
+					{
 
-				m_DataFiles.DeleteBatch(Batch);
+					RemoveBatchTransactions(Batch);
 
-				m_BatchListView.Items.Remove(Item);
+					m_BatchListView.Items.Remove(Item);
 
-				m_DataFiles.SetNextBatchID();
+					m_DataFiles.SetNextBatchID();
 
-				InitializeSuppliesTab();
-				InitializeLoadDataTab();
-				InitializeBatchTab();
-				InitializeBallisticsTab();
-				InitializeAmmoTab();
+					InitializeSuppliesTab();
+					InitializeLoadDataTab();
+					InitializeBatchTab();
+					InitializeBallisticsTab();
+					InitializeAmmoTab();
 
-				UpdateBatchTabButtons();
+					UpdateBatchTabButtons();
+					}
 				}
-
-			UpdateBatchTabButtons();
 			}
 
 		//============================================================================*
@@ -593,6 +660,8 @@ namespace ReloadersWorkShop
 
 		private void PopulateBatchBulletCombo()
 			{
+			cCaliber.CurrentFirearmType = BatchFirearmTypeCombo.Value;
+
 			m_fPopulating = true;
 
 			BatchBulletCombo.Items.Clear();
@@ -608,9 +677,7 @@ namespace ReloadersWorkShop
 
 			foreach (cBullet CheckBullet in m_DataFiles.BulletList)
 				{
-				cCaliber.CurrentFirearmType = CheckBullet.FirearmType;
-
-				if (CheckBullet.FirearmType == BatchFirearmTypeCombo.Value)
+				if (CheckBullet.CrossUse || CheckBullet.FirearmType == BatchFirearmTypeCombo.Value)
 					{
 					bool fBulletUsed = false;
 
@@ -665,14 +732,15 @@ namespace ReloadersWorkShop
 
 			foreach (cCaliber CheckCaliber in m_DataFiles.CaliberList)
 				{
-				if (CheckCaliber.FirearmType == BatchFirearmTypeCombo.Value)
+				if (CheckCaliber.FirearmType == BatchFirearmTypeCombo.Value &&
+					(!m_DataFiles.Preferences.HideUncheckedCalibers || CheckCaliber.Checked))
 					{
 					bool fCaliberUsed = false;
 
 					foreach (cBatch Batch in m_DataFiles.BatchList)
 						{
 						if ((m_DataFiles.Preferences.ShowArchivedBatches || !Batch.Archived) &&
-							Batch.Load.Caliber.CompareTo(CheckCaliber) == 0)
+							(Batch.Load != null && Batch.Load.Caliber != null && Batch.Load.Caliber.CompareTo(CheckCaliber) == 0))
 							{
 							fCaliberUsed = true;
 
@@ -729,6 +797,8 @@ namespace ReloadersWorkShop
 
 		private void PopulateBatchPowderCombo()
 			{
+			cCaliber.CurrentFirearmType = BatchFirearmTypeCombo.Value;
+
 			m_fPopulating = true;
 
 			BatchPowderCombo.Items.Clear();
@@ -739,7 +809,7 @@ namespace ReloadersWorkShop
 
 			foreach (cPowder CheckPowder in m_DataFiles.PowderList)
 				{
-				if (CheckPowder.FirearmType == BatchFirearmTypeCombo.Value)
+				if (CheckPowder.CrossUse || CheckPowder.FirearmType == BatchFirearmTypeCombo.Value)
 					{
 					bool fPowderUsed = false;
 
@@ -758,8 +828,6 @@ namespace ReloadersWorkShop
 
 					if (fPowderUsed)
 						{
-						cCaliber.CurrentFirearmType = CheckPowder.FirearmType;
-
 						BatchPowderCombo.Items.Add(CheckPowder);
 
 						if (CheckPowder.CompareTo(m_DataFiles.Preferences.LastBatchPowderSelected) == 0)
@@ -988,6 +1056,12 @@ namespace ReloadersWorkShop
 		public void UpdateBatchTabButtons()
 			{
 			//----------------------------------------------------------------------------*
+			// Copy Batch Button
+			//----------------------------------------------------------------------------*
+
+			CopyBatchButton.Enabled = m_BatchListView.SelectedItems.Count != 0;
+
+			//----------------------------------------------------------------------------*
 			// Archive Buttons
 			//----------------------------------------------------------------------------*
 
@@ -1048,7 +1122,7 @@ namespace ReloadersWorkShop
 
 			NoInventoryWarningLabel.Text = "";
 
-			if (cPreferences.TrackInventory)
+			if (m_DataFiles.Preferences.TrackInventory)
 				{
 				bool fEnableAddBatch = false;
 
@@ -1085,7 +1159,7 @@ namespace ReloadersWorkShop
 			// Inventory Tracking Label
 			//----------------------------------------------------------------------------*
 
-			BatchNotTrackedLabel.Visible = cPreferences.TrackInventory && fUntrackedBatches;
+			BatchNotTrackedLabel.Visible = m_DataFiles.Preferences.TrackInventory && fUntrackedBatches;
 			}
 
 		//============================================================================*

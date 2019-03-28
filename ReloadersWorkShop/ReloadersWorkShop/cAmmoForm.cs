@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cAmmoForm.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -11,10 +11,9 @@
 
 using System;
 using System.Drawing;
-using System.Windows;
 using System.Windows.Forms;
 
-using ReloadersWorkShop.Controls;
+using CommonLib.Controls;
 using ReloadersWorkShop.Preferences;
 
 //============================================================================*
@@ -33,21 +32,21 @@ namespace ReloadersWorkShop
 		// Private Constant Data Members
 		//----------------------------------------------------------------------------*
 
-		private const string cm_strFirearmTypeToolTip = "Type of firearm for which this ammo is used.";
-		private const string cm_strManufacturerToolTip = "Manufacturer of this ammo.";
-		private const string cm_strCaliberToolTip = "Caliber of this ammo.";
-		private const string cm_strBulletWeightToolTip = "Bullet weight in grains.";
-		private const string cm_strBulletDiameterToolTip = "Bullet diameter in inches.";
+		private const string cm_strFirearmTypeToolTip = "Type of firearm for which this ammunition is used.";
+		private const string cm_strManufacturerToolTip = "Manufacturer of this ammunition.";
+		private const string cm_strCaliberToolTip = "Caliber of this ammunition.";
+		private const string cm_strBulletWeightToolTip = "Bullet weight (should be listed on the box).";
+		private const string cm_strBulletDiameterToolTip = "Bullet diameter (should be listed on the box).";
 		private const string cm_strPartNumberToolTip = "Manufacturer's part number.";
-		private const string cm_strBulletTypeToolTip = "Manufacturer's Brand name for the ammo.";
-		private const string cm_strBallisticCoefficientToolTip = "Ballistic Coefficient for this ammo.";
-		private const string cm_strTestListToolTip = "List of tests for this ammo.";
-		private const string cm_strOKButtonToolTip = "Click to add or update the ammo with the above data.";
-		private const string cm_strCancelButtonToolTip = "Click to cancel changes and return to the main window.";
+		private const string cm_strBulletTypeToolTip = "Manufacturer's Brand name for the ammunition.";
+		private const string cm_strBallisticCoefficientToolTip = "Ballistic Coefficient for the bullet used in this ammunition.";
+		private const string cm_strTestListToolTip = "List of tests performed for this ammunition.";
 
 		private const string cm_strAddTestButtonToolTip = "Click to add a test for this ammo.";
 		private const string cm_strEditTestButtonToolTip = "Click to edit the selected test.";
 		private const string cm_strRemoveTestButtonToolTip = "Click to remove the selected test.";
+
+		private const string cm_strPrintButtonToolTip = "Click to print labels for this ammunition.";
 
 		//----------------------------------------------------------------------------*
 		// Private Data Members
@@ -70,13 +69,8 @@ namespace ReloadersWorkShop
 		private bool m_fInitialized = false;
 		private bool m_fPopulating = false;
 
-		//		private cBulletCaliberListView m_BulletCalibersListView = null;
-
 		private ToolTip m_FirearmTypeToolTip = new ToolTip();
 		private ToolTip m_ManufacturerToolTip = new ToolTip();
-		private ToolTip m_TestListToolTip = new ToolTip();
-		private ToolTip m_OKButtonToolTip = new ToolTip();
-		private ToolTip m_CancelButtonToolTip = new ToolTip();
 
 		private ToolTip m_AddTestToolTip = new ToolTip();
 		private ToolTip m_EditTestToolTip = new ToolTip();
@@ -120,7 +114,7 @@ namespace ReloadersWorkShop
 
 					m_Ammo.TestList.Clear();
 
-					OKButton.Text = "Add";
+					OKButton.ButtonType = cOKButton.eButtonTypes.Add;
 					}
 				}
 			else
@@ -128,7 +122,7 @@ namespace ReloadersWorkShop
 				m_Ammo = new cAmmo(Ammo);
 				}
 
-			SetClientSizeCore(GeneralGroupBox.Location.X + GeneralGroupBox.Width + 10, CancelAmmoButton.Location.Y + CancelAmmoButton.Height + 20);
+			SetClientSizeCore(GeneralGroupBox.Location.X + GeneralGroupBox.Width + 10, FormCancelButton.Location.Y + FormCancelButton.Height + 20);
 
 			//----------------------------------------------------------------------------*
 			// Record Original Data
@@ -147,6 +141,8 @@ namespace ReloadersWorkShop
 			SetInputParameters();
 
 			PopulateComboBoxes();
+
+			SetFirearmType();
 
 			PopulateAmmoData();
 
@@ -182,7 +178,10 @@ namespace ReloadersWorkShop
 
 		public cAmmo Ammo
 			{
-			get { return (m_Ammo); }
+			get
+				{
+				return (m_Ammo);
+				}
 			}
 
 		//============================================================================*
@@ -191,16 +190,21 @@ namespace ReloadersWorkShop
 
 		private void Initialize()
 			{
+			FirearmTypeCombo.ShowToolTips = cPreferences.StaticPreferences.ToolTips;
+
+			OKButton.ShowToolTips = cPreferences.StaticPreferences.ToolTips;
+			FormCancelButton.ShowToolTips = cPreferences.StaticPreferences.ToolTips;
+
 			if (!m_fViewOnly)
 				{
 				OKButton.Visible = true;
 
 				if (m_fAdd)
-					OKButton.Text = "Add";
+					OKButton.ButtonType = cOKButton.eButtonTypes.Add;
 				else
-					OKButton.Text = "Update";
+					OKButton.ButtonType = cOKButton.eButtonTypes.Update;
 
-				int nButtonX = (this.Size.Width / 2) - ((OKButton.Width + PrintButton.Width + CancelAmmoButton.Width + 40) / 2);
+				int nButtonX = (this.Size.Width / 2) - ((OKButton.Width + PrintButton.Width + FormCancelButton.Width + 40) / 2);
 
 				OKButton.Location = new Point(nButtonX, OKButton.Location.Y);
 				nButtonX += OKButton.Width + 20;
@@ -208,22 +212,22 @@ namespace ReloadersWorkShop
 				PrintButton.Location = new Point(nButtonX, PrintButton.Location.Y);
 				nButtonX += PrintButton.Width + 20;
 
-				CancelAmmoButton.Location = new Point(nButtonX, CancelAmmoButton.Location.Y);
+				FormCancelButton.Location = new Point(nButtonX, FormCancelButton.Location.Y);
 
-				CancelAmmoButton.Text = "Cancel";
+				FormCancelButton.ButtonType = cCancelButton.eButtonTypes.Cancel;
 				}
 			else
 				{
 				OKButton.Visible = false;
 
-				int nButtonX = (this.Size.Width / 2) - ((PrintButton.Width + CancelAmmoButton.Width + 20) / 2);
+				int nButtonX = (this.Size.Width / 2) - ((PrintButton.Width + FormCancelButton.Width + 20) / 2);
 
 				PrintButton.Location = new Point(nButtonX, PrintButton.Location.Y);
 				nButtonX += PrintButton.Width + 20;
 
-				CancelAmmoButton.Location = new Point(nButtonX, CancelAmmoButton.Location.Y);
+				FormCancelButton.Location = new Point(nButtonX, FormCancelButton.Location.Y);
 
-				CancelAmmoButton.Text = "Close";
+				FormCancelButton.ButtonType = cCancelButton.eButtonTypes.Close;
 				}
 
 			//----------------------------------------------------------------------------*
@@ -244,15 +248,13 @@ namespace ReloadersWorkShop
 
 			if (!m_fViewOnly)
 				{
-				if (m_Ammo.TestList.Count > 0)
-					{
-					FirearmTypeCombo.Enabled = false;
-					ManufacturerCombo.Enabled = false;
-					CaliberCombo.Enabled = false;
-					BulletDiameterTextBox.Enabled = false;
-					BulletWeightTextBox.Enabled = false;
-					}
-				else
+				FirearmTypeCombo.Enabled = m_fAdd && m_Ammo.TestList.Count == 0;
+				ManufacturerCombo.Enabled = m_Ammo.TestList.Count == 0;
+				CaliberCombo.Enabled = m_Ammo.TestList.Count == 0;
+				BulletDiameterTextBox.Enabled = m_Ammo.TestList.Count == 0;
+				BulletWeightTextBox.Enabled = m_Ammo.TestList.Count == 0;
+
+				if (m_Ammo.TestList.Count == 0)
 					{
 					FirearmTypeCombo.SelectedIndexChanged += OnFirearmTypeSelected;
 					ManufacturerCombo.SelectedIndexChanged += OnManufacturerSelected;
@@ -283,9 +285,12 @@ namespace ReloadersWorkShop
 				}
 			else
 				{
+				FirearmTypeCombo.Enabled = false;
 				PartNumberTextBox.ReadOnly = true;
+				ReloadCheckBox.Enabled = false;
 				TypeTextBox.ReadOnly = true;
 				BallisticCoefficientTextBox.ReadOnly = true;
+				BulletDiameterTextBox.ReadOnly = true;
 				BulletWeightTextBox.ReadOnly = true;
 				QuantityTextBox.ReadOnly = true;
 				CostTextBox.ReadOnly = true;
@@ -303,7 +308,7 @@ namespace ReloadersWorkShop
 			// Set Labels for inventory tracking if needed
 			//----------------------------------------------------------------------------*
 
-			if (cPreferences.TrackInventory)
+			if (m_DataFiles.Preferences.TrackInventory)
 				{
 				QuantityLabel.Text = "Qty on Hand:";
 
@@ -429,7 +434,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			cCaliber Caliber = (cCaliber)CaliberCombo.SelectedItem;
+			cCaliber Caliber = (cCaliber) CaliberCombo.SelectedItem;
 
 			if (Caliber.CompareTo(m_Ammo.Caliber) == 0)
 				return;
@@ -461,7 +466,7 @@ namespace ReloadersWorkShop
 			// Start the dialog
 			//----------------------------------------------------------------------------*
 
-			cAmmoTest OldAmmoTest = (cAmmoTest)m_TestListView.SelectedItems[0].Tag;
+			cAmmoTest OldAmmoTest = (cAmmoTest) m_TestListView.SelectedItems[0].Tag;
 
 			cAmmoTestForm AmmoTestForm = new cAmmoTestForm(m_Ammo, OldAmmoTest, m_DataFiles);
 
@@ -506,6 +511,8 @@ namespace ReloadersWorkShop
 			m_Ammo.Caliber = (cCaliber) CaliberCombo.SelectedItem;
 			m_Ammo.Manufacturer = (cManufacturer) ManufacturerCombo.SelectedItem;
 
+			SetFirearmType();
+
 			PopulateBulletData();
 
 			m_fChanged = true;
@@ -540,7 +547,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			cManufacturer Manufacturer = (cManufacturer)ManufacturerCombo.SelectedItem;
+			cManufacturer Manufacturer = (cManufacturer) ManufacturerCombo.SelectedItem;
 
 			if (Manufacturer == null || Manufacturer.CompareTo(m_Ammo.Manufacturer) == 0)
 				return;
@@ -663,7 +670,7 @@ namespace ReloadersWorkShop
 
 			if (MessageBox.Show(this, "Are you SURE you wish to delete this test?", "Data Deletion Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
 				{
-				cAmmoTest Test = (cAmmoTest)m_TestListView.SelectedItems[0].Tag;
+				cAmmoTest Test = (cAmmoTest) m_TestListView.SelectedItems[0].Tag;
 
 				m_TestListView.Items.Remove(m_TestListView.SelectedItems[0]);
 
@@ -712,7 +719,7 @@ namespace ReloadersWorkShop
 			if (!m_fInitialized || m_fPopulating)
 				return;
 
-			m_Ammo.BulletWeight = cDataFiles.MetricToStandard(BulletWeightTextBox.Value, cDataFiles.eDataType.BulletWeight);
+			m_Ammo.BulletWeight = cDataFiles.MetricToStandard(BulletWeightTextBox.Value, m_Ammo.FirearmType != cFirearm.eFireArmType.Shotgun ? cDataFiles.eDataType.BulletWeight : cDataFiles.eDataType.ShotWeight);
 
 			SetSectionalDensity();
 
@@ -751,10 +758,10 @@ namespace ReloadersWorkShop
 			m_fPopulating = true;
 
 			if (m_Ammo.Manufacturer == null)
-				m_Ammo.Manufacturer = (cManufacturer)ManufacturerCombo.SelectedItem;
+				m_Ammo.Manufacturer = (cManufacturer) ManufacturerCombo.SelectedItem;
 
 			if (m_Ammo.Caliber == null)
-				m_Ammo.Caliber = (cCaliber)CaliberCombo.SelectedItem;
+				m_Ammo.Caliber = (cCaliber) CaliberCombo.SelectedItem;
 
 			//----------------------------------------------------------------------------*
 			// Bullet Text Boxes
@@ -764,14 +771,21 @@ namespace ReloadersWorkShop
 			TypeTextBox.Value = m_Ammo.Type;
 			ReloadCheckBox.Checked = m_Ammo.Reload;
 
-			if (m_Ammo.BulletDiameter == 0.0 && m_Ammo.Caliber != null)
-				m_Ammo.BulletDiameter = m_Ammo.Caliber.MinBulletDiameter;
+			if (m_Ammo.BulletWeight == 0.0 && m_Ammo.Caliber != null)
+				m_Ammo.BulletWeight = m_Ammo.Caliber.MinBulletWeight;
+
+			if (m_Ammo.FirearmType == cFirearm.eFireArmType.Shotgun)
+				{
+				if (m_Ammo.BallisticCoefficient == 0.0 && m_Ammo.Caliber != null)
+					m_Ammo.BallisticCoefficient = m_Ammo.Caliber.CaseTrimLength;
+				}
 
 			BulletDiameterTextBox.Value = cDataFiles.StandardToMetric(m_Ammo.BulletDiameter, cDataFiles.eDataType.Dimension);
 			BulletWeightTextBox.Value = cDataFiles.StandardToMetric(m_Ammo.BulletWeight, cDataFiles.eDataType.BulletWeight);
 			BallisticCoefficientTextBox.Value = m_Ammo.BallisticCoefficient;
 
-			SetSectionalDensity();
+			if (m_Ammo.FirearmType != cFirearm.eFireArmType.Shotgun)
+				SetSectionalDensity();
 
 			m_fPopulating = false;
 			}
@@ -783,6 +797,8 @@ namespace ReloadersWorkShop
 		private void PopulateCaliberCombo()
 			{
 			m_fPopulating = true;
+
+			cCaliber.CurrentFirearmType = FirearmTypeCombo.Value;
 
 			CaliberCombo.Items.Clear();
 
@@ -845,11 +861,11 @@ namespace ReloadersWorkShop
 
 		private void PopulateInventoryData()
 			{
-			QuantityTextBox.Value = (int)m_DataFiles.SupplyQuantity(m_Ammo);
+			QuantityTextBox.Value = (int) m_DataFiles.SupplyQuantity(m_Ammo);
 
 			CostTextBox.Value = m_DataFiles.SupplyCost(m_Ammo);
 
-			if (cPreferences.TrackInventory)
+			if (m_DataFiles.Preferences.TrackInventory)
 				CostTextBox.Text = String.Format("{0}{1:F2}", m_DataFiles.Preferences.Currency, m_DataFiles.SupplyCost(m_Ammo));
 
 			SetCostEach();
@@ -901,7 +917,7 @@ namespace ReloadersWorkShop
 					{
 					ManufacturerCombo.SelectedIndex = 0;
 
-					m_Ammo.Manufacturer = (cManufacturer)ManufacturerCombo.SelectedItem;
+					m_Ammo.Manufacturer = (cManufacturer) ManufacturerCombo.SelectedItem;
 					}
 				}
 
@@ -925,13 +941,79 @@ namespace ReloadersWorkShop
 			{
 			m_fPopulating = true;
 
-			QuantityTextBox.Value = (int)m_DataFiles.SupplyQuantity(m_Ammo);
+			QuantityTextBox.Value = (int) m_DataFiles.SupplyQuantity(m_Ammo);
 
 			CostTextBox.Value = m_DataFiles.SupplyCost(m_Ammo);
 
 			CostEachLabel.Text = String.Format("{0}{1:F2}", m_DataFiles.Preferences.Currency, m_DataFiles.SupplyCostEach(m_Ammo));
 
 			m_fPopulating = false;
+			}
+
+		//============================================================================*
+		// SetFirearmType()
+		//============================================================================*
+
+		private void SetFirearmType()
+			{
+			bool fShotgun = FirearmTypeCombo.Value == cFirearm.eFireArmType.Shotgun;
+
+			SectionalDensityFieldLabel.Visible = !fShotgun;
+			SectionalDensityLabel.Visible = !fShotgun;
+
+			BulletDiameterTextBox.NumDecimals = m_DataFiles.Preferences.DimensionDecimals;
+			BulletDiameterTextBox.MaxLength = m_DataFiles.Preferences.DimensionDecimals + 2;
+
+			if (fShotgun)
+				{
+				BulletDataGroupBox.Text = "Shot Data";
+
+				BulletDiameterFieldLabel.Text = "Shot Size:";
+				BulletDiameterMeasurementLabel.Visible = false;
+
+				BulletWeightFieldLabel.Text = "Shot Weight:";
+				cDataFiles.MetricLabel(BulletWeightMeasurementLabel, cDataFiles.eDataType.ShotWeight);
+				BulletWeightTextBox.NumDecimals = m_DataFiles.Preferences.ShotWeightDecimals;
+				BulletWeightTextBox.MaxLength = m_DataFiles.Preferences.ShotWeightDecimals + 3;
+
+				BallisticCoefficientFieldLabel.Text = "Shell Length:";
+				BallisticCoefficientTextBox.NumDecimals = m_DataFiles.Preferences.DimensionDecimals;
+				BallisticCoefficientTextBox.MaxLength = m_DataFiles.Preferences.DimensionDecimals + 3;
+				ShellLengthMeasurementLabel.Visible = true;
+				cDataFiles.MetricLabel(ShellLengthMeasurementLabel, cDataFiles.eDataType.Dimension);
+
+				TestDataGroupBox.Visible = false;
+
+				InventoryGroupBox.Location = new Point(InventoryGroupBox.Location.X, BulletDataGroupBox.Location.Y + BulletDataGroupBox.Height + 6);
+				}
+			else
+				{
+				BulletDataGroupBox.Text = "Bullet Data";
+
+				BulletDiameterFieldLabel.Text = "Bullet Diameter:";
+				BulletDiameterMeasurementLabel.Visible = true;
+				cDataFiles.MetricLabel(BulletDiameterMeasurementLabel, cDataFiles.eDataType.Dimension);
+
+				BulletWeightFieldLabel.Text = "Bullet Weight:";
+				cDataFiles.MetricLabel(BulletWeightMeasurementLabel, cDataFiles.eDataType.BulletWeight);
+				BulletWeightTextBox.NumDecimals = m_DataFiles.Preferences.BulletWeightDecimals;
+				BulletWeightTextBox.MaxLength = m_DataFiles.Preferences.BulletWeightDecimals + 4;
+
+				BallisticCoefficientFieldLabel.Text = "Ballistic Coefficient:";
+				BallisticCoefficientTextBox.NumDecimals = 3;
+				BallisticCoefficientTextBox.MaxLength = 5;
+				ShellLengthMeasurementLabel.Visible = false;
+
+				TestDataGroupBox.Visible = true;
+
+				InventoryGroupBox.Location = new Point(InventoryGroupBox.Location.X, TestDataGroupBox.Location.Y + TestDataGroupBox.Height + 6);
+				}
+
+			OKButton.Location = new Point(OKButton.Location.X, InventoryGroupBox.Location.Y + InventoryGroupBox.Height + 10);
+			PrintButton.Location = new Point(PrintButton.Location.X, OKButton.Location.Y);
+			FormCancelButton.Location = new Point(FormCancelButton.Location.X, OKButton.Location.Y);
+
+			SetClientSizeCore(GeneralGroupBox.Location.X + GeneralGroupBox.Width + 10, FormCancelButton.Location.Y + FormCancelButton.Height + 20);
 			}
 
 		//============================================================================*
@@ -964,7 +1046,7 @@ namespace ReloadersWorkShop
 		private void SetMinMax()
 			{
 			if (m_Ammo.Caliber == null)
-				m_Ammo.Caliber = (cCaliber)CaliberCombo.SelectedItem;
+				m_Ammo.Caliber = (cCaliber) CaliberCombo.SelectedItem;
 
 			if (m_Ammo.Caliber != null)
 				{
@@ -982,6 +1064,9 @@ namespace ReloadersWorkShop
 
 		private void SetSectionalDensity()
 			{
+			if (m_Ammo.FirearmType == cFirearm.eFireArmType.Shotgun)
+				return;
+
 			SectionalDensityLabel.Text = String.Format("{0:F3}", cBullet.CalculateSectionalDensity(m_Ammo.BulletDiameter, m_Ammo.BulletWeight));
 			}
 
@@ -994,9 +1079,7 @@ namespace ReloadersWorkShop
 			if (!m_DataFiles.Preferences.ToolTips)
 				return;
 
-			m_FirearmTypeToolTip.ShowAlways = true;
-			m_FirearmTypeToolTip.RemoveAll();
-			m_FirearmTypeToolTip.SetToolTip(FirearmTypeCombo, cm_strFirearmTypeToolTip);
+			FirearmTypeCombo.ToolTip = cm_strFirearmTypeToolTip;
 
 			m_ManufacturerToolTip.ShowAlways = true;
 			m_ManufacturerToolTip.RemoveAll();
@@ -1012,29 +1095,13 @@ namespace ReloadersWorkShop
 
 			BallisticCoefficientTextBox.ToolTip = cm_strBallisticCoefficientToolTip;
 
-			m_TestListToolTip.ShowAlways = true;
-			m_TestListToolTip.RemoveAll();
-			m_TestListToolTip.SetToolTip(m_TestListView, cm_strTestListToolTip);
+			m_TestListView.ToolTip = cm_strTestListToolTip;
 
-			m_OKButtonToolTip.ShowAlways = true;
-			m_OKButtonToolTip.RemoveAll();
-			m_OKButtonToolTip.SetToolTip(OKButton, cm_strOKButtonToolTip);
+			AddTestButton.ToolTip = cm_strAddTestButtonToolTip;
+			EditTestButton.ToolTip = cm_strEditTestButtonToolTip;
+			RemoveTestButton.ToolTip = cm_strRemoveTestButtonToolTip;
 
-			m_CancelButtonToolTip.ShowAlways = true;
-			m_CancelButtonToolTip.RemoveAll();
-			m_CancelButtonToolTip.SetToolTip(CancelAmmoButton, cm_strCancelButtonToolTip);
-
-			m_AddTestToolTip.ShowAlways = true;
-			m_AddTestToolTip.RemoveAll();
-			m_AddTestToolTip.SetToolTip(AddTestButton, cm_strAddTestButtonToolTip);
-
-			m_EditTestToolTip.ShowAlways = true;
-			m_EditTestToolTip.RemoveAll();
-			m_EditTestToolTip.SetToolTip(EditTestButton, cm_strEditTestButtonToolTip);
-
-			m_RemoveTestToolTip.ShowAlways = true;
-			m_RemoveTestToolTip.RemoveAll();
-			m_RemoveTestToolTip.SetToolTip(RemoveTestButton, cm_strRemoveTestButtonToolTip);
+			PrintButton.ToolTip = cm_strPrintButtonToolTip;
 			}
 
 		//============================================================================*
@@ -1047,6 +1114,7 @@ namespace ReloadersWorkShop
 				return;
 
 			bool fEnableOK = m_fChanged;
+			bool fPrintOK = true;
 			string strToolTip;
 
 			SetMinMax();
@@ -1068,6 +1136,7 @@ namespace ReloadersWorkShop
 			if (ManufacturerCombo.SelectedIndex == -1)
 				{
 				fEnableOK = false;
+				fPrintOK = false;
 
 				ManufacturerCombo.BackColor = Color.LightPink;
 
@@ -1083,7 +1152,17 @@ namespace ReloadersWorkShop
 			// Check Part Number
 			//----------------------------------------------------------------------------*
 
-			cManufacturer Manufacturer = (cManufacturer)ManufacturerCombo.SelectedItem;
+			if (!PartNumberTextBox.ValueOK)
+				{
+				fEnableOK = false;
+				fPrintOK = false;
+				}
+
+			//----------------------------------------------------------------------------*
+			// Check Part Number
+			//----------------------------------------------------------------------------*
+
+			cManufacturer Manufacturer = (cManufacturer) ManufacturerCombo.SelectedItem;
 
 			strToolTip = cm_strPartNumberToolTip;
 
@@ -1109,28 +1188,40 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			if (!TypeTextBox.ValueOK)
+				{
 				fEnableOK = false;
+				fPrintOK = false;
+				}
 
 			//----------------------------------------------------------------------------*
 			// Check Bullet Diameter
 			//----------------------------------------------------------------------------*
 
 			if (!BulletDiameterTextBox.ValueOK)
+				{
 				fEnableOK = false;
+				fPrintOK = false;
+				}
 
 			//----------------------------------------------------------------------------*
 			// Check BallisticCoefficient
 			//----------------------------------------------------------------------------*
 
 			if (!BallisticCoefficientTextBox.ValueOK)
+				{
 				fEnableOK = false;
+				fPrintOK = false;
+				}
 
 			//----------------------------------------------------------------------------*
 			// Check Weight
 			//----------------------------------------------------------------------------*
 
 			if (!BulletWeightTextBox.ValueOK)
+				{
 				fEnableOK = false;
+				fPrintOK = false;
+				}
 
 			//----------------------------------------------------------------------------*
 			// Add, Edit, Remove Test Buttons
@@ -1142,7 +1233,7 @@ namespace ReloadersWorkShop
 
 			if (m_TestListView.SelectedItems.Count > 0)
 				{
-				cAmmoTest AmmoTest = (cAmmoTest)m_TestListView.SelectedItems[0].Tag;
+				cAmmoTest AmmoTest = (cAmmoTest) m_TestListView.SelectedItems[0].Tag;
 
 				if (AmmoTest != null)
 					{
@@ -1174,6 +1265,7 @@ namespace ReloadersWorkShop
 			//----------------------------------------------------------------------------*
 
 			OKButton.Enabled = fEnableOK;
+			PrintButton.Enabled = fPrintOK;
 			}
 
 		//============================================================================*

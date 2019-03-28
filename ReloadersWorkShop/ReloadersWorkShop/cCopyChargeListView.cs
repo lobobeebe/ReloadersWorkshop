@@ -1,7 +1,7 @@
 ﻿//============================================================================*
 // cCopyChargeListView.cs
 //
-// Copyright © 2013-2014, Kevin S. Beebe
+// Copyright © 2013-2017, Kevin S. Beebe
 // All Rights Reserved
 //============================================================================*
 
@@ -156,9 +156,8 @@ namespace ReloadersWorkShop
 					Item.Selected = true;
 					}
 				}
-			catch (Exception e)
+			catch
 				{
-				cControls.InternalErrorMessageBox(e);
 				}
 
 			return (Item);
