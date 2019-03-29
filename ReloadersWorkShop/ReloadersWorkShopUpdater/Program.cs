@@ -17,7 +17,6 @@ using System.Windows.Forms;
 // Application Specific Using Statements
 //============================================================================*
 
-using RWCommonLib.Registry;
 using RWCommonLib.Updates;
 
 //============================================================================*
@@ -40,54 +39,15 @@ namespace ReloadersWorkShopUpdater
 		static void Main(string[] args)
 			{
 			bool fInstall = false;
-			bool fActivate = false;
-
-			string strName = "";
-			string strEmail = "";
-			string strKey = "";
-			string strVersion = "";
 
 			foreach (string strArg in args)
 				{
 				if (strArg.ToUpper() == "/INSTALL")
 					fInstall = true;
-
-				if (strArg.ToUpper() == "/ACTIVATE")
-					fActivate = true;
-
-				if (strArg.Length > 6 && strArg.Substring(0, 6).ToUpper() == "/NAME=")
-					strName = strArg.Substring(6);
-
-				if (strArg.Length > 7 && strArg.Substring(0, 7).ToUpper() == "/EMAIL=")
-					strEmail = strArg.Substring(7);
-
-				if (strArg.Length > 5 && strArg.Substring(0, 5).ToUpper() == "/KEY=")
-					strKey = strArg.Substring(5);
-
-				if (strArg.Length > 9 && strArg.Substring(0, 9).ToUpper() == "/VERSION=")
-					strVersion = strArg.Substring(9);
 				}
-
-			//----------------------------------------------------------------------------*
-			// Create the RWRegistry object
-			//----------------------------------------------------------------------------*
-
-			cRWRegistry RWRegistry = new cRWRegistry();
-
-			RWRegistry.UpdateVersion();
-
-			//----------------------------------------------------------------------------*
-			// If this is just an install operation, setup the registry if needed
-			//----------------------------------------------------------------------------*
-
-			if (fInstall || RWRegistry.FreshInstall)
+			
+			if (fInstall)
 				{
-				//----------------------------------------------------------------------------*
-				// Setup the initial Registry entries
-				//----------------------------------------------------------------------------*
-
-				RWRegistry.SetupRegistry(fInstall);
-
 				//----------------------------------------------------------------------------*
 				// Start the launcher and exit
 				//----------------------------------------------------------------------------*
@@ -97,38 +57,6 @@ namespace ReloadersWorkShopUpdater
 				return;
 				}
 
-			//----------------------------------------------------------------------------*
-			// If this is an activate operation, setup the activation entries
-			//----------------------------------------------------------------------------*
-
-			if (fActivate)
-				{
-				//----------------------------------------------------------------------------*
-				// Set the registry entries
-				//----------------------------------------------------------------------------*
-
-				RWRegistry.Activate(strKey, strName, strEmail, strVersion);
-
-				//----------------------------------------------------------------------------*
-				// Start the launcher and exit
-				//----------------------------------------------------------------------------*
-
-				Process.Start("ReloadersWorkShopLauncher.exe");
-
-				return;
-				}
-
-			//----------------------------------------------------------------------------*
-			// Check to see if it's a trial version and if it is, check to see if it's expired
-			//----------------------------------------------------------------------------*
-/*
-			if (RWRegistry.Trial && RWRegistry.TrialExpired)
-				{
-				Process.Start("ReloadersWorkShopLauncher.exe");
-
-				return;
-				}
-*/
 			//----------------------------------------------------------------------------*
 			// Check for updates
 			//----------------------------------------------------------------------------*

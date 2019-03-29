@@ -48,12 +48,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\CommonLib\CommonLib\Registry\cRegistry.cs">
-      <Link>RegistryTools\cRegistry.cs</Link>
-    </Compile>
-    <Compile Include="..\RWCommonLib\Registry\cRWRegistry.cs">
-      <Link>RegistryTools\cRWRegistry.cs</Link>
-    </Compile>
     <Compile Include="..\RWCommonLib\Updates\cRWUpdater.cs">
       <Link>cRWUpdater.cs</Link>
     </Compile>

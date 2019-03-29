@@ -710,7 +710,7 @@ namespace ReloadersWorkShop
 
 							if (Batch != null)
 								{
-								cBatchForm BatchForm = new cBatchForm(Batch, m_DataFiles, null, cFirearm.eFireArmType.None, true);
+								cBatchForm BatchForm = new cBatchForm(Batch, m_DataFiles, cFirearm.eFireArmType.None, true);
 
 								BatchForm.ShowDialog();
 								}

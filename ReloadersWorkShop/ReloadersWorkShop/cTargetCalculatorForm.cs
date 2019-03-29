@@ -20,8 +20,6 @@ using WIA;
 
 using ReloadersWorkShop.Preferences;
 
-using RWCommonLib.Registry;
-
 //============================================================================*
 // NameSpace
 //============================================================================*
@@ -65,7 +63,6 @@ namespace ReloadersWorkShop
 		private eMode m_eMode = eMode.LoadTarget;
 
 		private cDataFiles m_DataFiles = null;
-		private cRWRegistry m_RWRegistry = null;
 		private cBatchTest m_BatchTest = null;
 
 		private string m_strFileName = "";
@@ -92,12 +89,11 @@ namespace ReloadersWorkShop
 		// cTargetCalculatorForm()
 		//============================================================================*
 
-		public cTargetCalculatorForm(cDataFiles DataFiles, cRWRegistry RWRegistry)
+		public cTargetCalculatorForm(cDataFiles DataFiles)
 			{
 			InitializeComponent();
 
 			m_DataFiles = DataFiles;
-			m_RWRegistry = RWRegistry;
 
 			m_fBatchTest = false;
 
@@ -108,12 +104,11 @@ namespace ReloadersWorkShop
 		// cTargetCalculatorForm()
 		//============================================================================*
 
-		public cTargetCalculatorForm(cDataFiles DataFiles, cRWRegistry RWRegistry, cBatchTest BatchTest = null)
+		public cTargetCalculatorForm(cDataFiles DataFiles, cBatchTest BatchTest = null)
 			{
 			InitializeComponent();
 
 			m_DataFiles = DataFiles;
-			m_RWRegistry = RWRegistry;
 
 			m_BatchTest = BatchTest;
 
@@ -1256,7 +1251,7 @@ namespace ReloadersWorkShop
 
 		protected void OnHelpAboutClicked(object sender, EventArgs args)
 			{
-			AboutDialog AboutDlg = new AboutDialog(m_RWRegistry);
+			AboutDialog AboutDlg = new AboutDialog();
 
 			AboutDlg.ShowDialog();
 			}

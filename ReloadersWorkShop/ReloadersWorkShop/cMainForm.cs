@@ -20,9 +20,7 @@ using System.Windows.Forms;
 // Application Specific Using Statements
 //============================================================================*
 
-using RWCommonLib.Registry;
 using RWCommonLib.Updates;
-using RWCommonLib.Forms;
 
 //============================================================================*
 // NameSpace
@@ -44,9 +42,7 @@ namespace ReloadersWorkShop
 
 		private bool m_fInitialized = false;
 		private bool m_fPopulating = false;
-
-		private cRWRegistry m_RWRegistry = null;
-
+		
 		private Timer m_SaveTimer = new Timer();
 
 		private bool m_fDev = false;
@@ -55,21 +51,17 @@ namespace ReloadersWorkShop
 		// cMainForm() - Constructor
 		//============================================================================*
 
-		public cMainForm(cRWRegistry RWRegistry, bool fDev)
+		public cMainForm(bool fDev)
 			{
 			InitializeComponent();
-
-			m_RWRegistry = RWRegistry;
+			
 			m_fDev = fDev;
 
 			//----------------------------------------------------------------------------*
 			// Set the title text
 			//----------------------------------------------------------------------------*
-
-			if (RWRegistry.Trial)
-				Text = String.Format("{0} Trial - v{1}", Application.ProductName, Application.ProductVersion);
-			else
-				Text = String.Format("{0} - v{1}", Application.ProductName, Application.ProductVersion);
+			
+			Text = String.Format("{0} - v{1}", Application.ProductName, Application.ProductVersion);
 
 			//----------------------------------------------------------------------------*
 			// Load the data
@@ -187,12 +179,10 @@ namespace ReloadersWorkShop
 
 
 			// Help Menu
-
-			HelpMenuItem.DropDownOpened += OnHelpClicked;
+			
 			HelpAboutMenuItem.Click += OnHelpAboutClicked;
 			HelpSupportForumMenuItem.Click += OnHelpContactSupportClicked;
 			HelpNotesMenuItem.Click += OnHelpNotesClicked;
-			HelpPurchaseMenuItem.Click += OnHelpPurchaseClicked;
 			HelpProgramUpdateMenuItem.Click += OnHelpProgramUpdateClicked;
 			HelpDataUpdateMenuItem.Click += OnHelpDataUpdateClicked;
 
@@ -1018,28 +1008,11 @@ namespace ReloadersWorkShop
 
 		protected void OnHelpAboutClicked(object sender, EventArgs args)
 			{
-			AboutDialog AboutDlg = new AboutDialog(m_RWRegistry);
+			AboutDialog AboutDlg = new AboutDialog();
 
 			AboutDlg.ShowDialog();
 			}
-
-		//============================================================================*
-		// OnHelpClicked()
-		//============================================================================*
-
-		private void OnHelpClicked(Object sender, EventArgs e)
-			{
-			if (m_RWRegistry.Trial)
-				HelpPurchaseMenuItem.Text = "Purchase Single-User &License";
-			else
-				{
-				if (m_RWRegistry.ValidateKey())
-					HelpPurchaseMenuItem.Text = "Purchase Additional &License";
-				else
-					HelpPurchaseMenuItem.Text = "Purchase Single-User &License";
-				}
-			}
-
+			
 		//============================================================================*
 		// OnHelpContactSupportClicked()
 		//============================================================================*
@@ -1154,18 +1127,7 @@ namespace ReloadersWorkShop
 				return;
 				}
 			}
-
-		//============================================================================*
-		// OnHelpPurchaseClicked()
-		//============================================================================*
-
-		private void OnHelpPurchaseClicked(Object sender, EventArgs e)
-			{
-			cPurchaseKeyForm PurchaseForm = new cPurchaseKeyForm(m_RWRegistry);
-
-			PurchaseForm.ShowDialog();
-			}
-
+			
 		//============================================================================*
 		// OnHelpVideoClicked()
 		//============================================================================*
@@ -1735,7 +1697,7 @@ namespace ReloadersWorkShop
 
 		private void OnToolsTargetCalculatorClicked(Object sender, EventArgs e)
 			{
-			cTargetCalculatorForm TargetCalculatorForm = new cTargetCalculatorForm(m_DataFiles, m_RWRegistry);
+			cTargetCalculatorForm TargetCalculatorForm = new cTargetCalculatorForm(m_DataFiles);
 
 			TargetCalculatorForm.ShowDialog();
 			}

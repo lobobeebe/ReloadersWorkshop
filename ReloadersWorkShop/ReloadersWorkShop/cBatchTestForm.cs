@@ -13,8 +13,6 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-using RWCommonLib.Registry;
-
 //============================================================================*
 // NameSpace
 //============================================================================*
@@ -61,7 +59,6 @@ namespace ReloadersWorkShop
 
 		private cBatchTest m_BatchTest = null;
 		private cDataFiles m_DataFiles = null;
-        private cRWRegistry m_RWRegistry = null;
 
 		private bool m_fViewOnly = false;
 		private bool m_fInitialized = false;
@@ -92,12 +89,11 @@ namespace ReloadersWorkShop
 		// cBatchTestForm() - Constructor
 		//============================================================================*
 
-		public cBatchTestForm(cBatch Batch, cDataFiles DataFiles, cRWRegistry RWRegistry, bool fViewOnly = false)
+		public cBatchTestForm(cBatch Batch, cDataFiles DataFiles, bool fViewOnly = false)
 			{
 			InitializeComponent();
 
 			m_DataFiles = DataFiles;
-            m_RWRegistry = RWRegistry;
             m_fViewOnly = fViewOnly;
 
 			string strTitle = "";
@@ -581,7 +577,7 @@ namespace ReloadersWorkShop
 
 		public void OnTargetCalculatorClicked(object sender, EventArgs args)
 			{
-			cTargetCalculatorForm TargetCalculatorForm = new cTargetCalculatorForm(m_DataFiles, m_RWRegistry, m_BatchTest);
+			cTargetCalculatorForm TargetCalculatorForm = new cTargetCalculatorForm(m_DataFiles, m_BatchTest);
 
 			if (TargetCalculatorForm.ShowDialog() == DialogResult.OK)
 				{

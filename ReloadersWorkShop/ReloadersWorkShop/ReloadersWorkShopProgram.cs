@@ -15,12 +15,6 @@ using System.Threading;
 using System.Windows.Forms;
 
 //============================================================================*
-// Application Specific Using Statements
-//============================================================================*
-
-using RWCommonLib.Registry;
-
-//============================================================================*
 // NameSpace
 //============================================================================*
 
@@ -72,16 +66,7 @@ namespace ReloadersWorkShop
 
 				return;
 				}
-
-			//----------------------------------------------------------------------------*
-			// If this is a trial and we're expired, exit
-			//----------------------------------------------------------------------------*
-
-			cRWRegistry RWRegistry = new cRWRegistry();
-
-			if ((RWRegistry.Trial && RWRegistry.TrialExpired) || RWRegistry.InvalidRegistry || !RWRegistry.ValidateKey())
-				return;
-
+				
 			//----------------------------------------------------------------------------*
 			// See if we're already running
 			//----------------------------------------------------------------------------*
@@ -102,7 +87,7 @@ namespace ReloadersWorkShop
 
 					try
 						{
-						Application.Run(new cMainForm(RWRegistry, fDev));
+						Application.Run(new cMainForm(fDev));
 						}
 					catch (Exception e)
 						{

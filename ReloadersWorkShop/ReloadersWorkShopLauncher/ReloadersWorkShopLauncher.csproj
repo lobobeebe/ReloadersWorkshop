@@ -56,12 +56,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="cActivationForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="cActivationForm.Designer.cs">
-      <DependentUpon>cActivationForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="cMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,9 +65,6 @@
     <Compile Include="NativeMethods.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="cActivationForm.resx">
-      <DependentUpon>cActivationForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="cMainForm.resx">
       <DependentUpon>cMainForm.cs</DependentUpon>
     </EmbeddedResource>

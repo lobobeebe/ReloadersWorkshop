@@ -30,8 +30,6 @@
 			{
 			this.ContinueButton = new System.Windows.Forms.Button();
 			this.ExitButton = new System.Windows.Forms.Button();
-			this.ActivateButton = new System.Windows.Forms.Button();
-			this.RegistrationLabel = new System.Windows.Forms.Label();
 			this.CopyrightLabel = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
@@ -63,33 +61,6 @@
 			this.ExitButton.Text = "Exit";
 			this.ExitButton.UseVisualStyleBackColor = false;
 			// 
-			// ActivateButton
-			// 
-			this.ActivateButton.AutoSize = true;
-			this.ActivateButton.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-			this.ActivateButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.ActivateButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.ActivateButton.ForeColor = System.Drawing.Color.Yellow;
-			this.ActivateButton.Location = new System.Drawing.Point(275, 380);
-			this.ActivateButton.Name = "ActivateButton";
-			this.ActivateButton.Size = new System.Drawing.Size(77, 28);
-			this.ActivateButton.TabIndex = 2;
-			this.ActivateButton.Text = "Activate";
-			this.ActivateButton.UseVisualStyleBackColor = false;
-			// 
-			// RegistrationLabel
-			// 
-			this.RegistrationLabel.AutoSize = true;
-			this.RegistrationLabel.BackColor = System.Drawing.Color.LightCyan;
-			this.RegistrationLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.RegistrationLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.RegistrationLabel.ForeColor = System.Drawing.Color.RoyalBlue;
-			this.RegistrationLabel.Location = new System.Drawing.Point(254, 335);
-			this.RegistrationLabel.Name = "RegistrationLabel";
-			this.RegistrationLabel.Size = new System.Drawing.Size(140, 22);
-			this.RegistrationLabel.TabIndex = 3;
-			this.RegistrationLabel.Text = "Registration Label";
-			// 
 			// CopyrightLabel
 			// 
 			this.CopyrightLabel.AutoSize = true;
@@ -111,8 +82,6 @@
 			this.ClientSize = new System.Drawing.Size(683, 468);
 			this.ControlBox = false;
 			this.Controls.Add(this.CopyrightLabel);
-			this.Controls.Add(this.RegistrationLabel);
-			this.Controls.Add(this.ActivateButton);
 			this.Controls.Add(this.ExitButton);
 			this.Controls.Add(this.ContinueButton);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -130,8 +99,6 @@
 
 		private System.Windows.Forms.Button ContinueButton;
 		private System.Windows.Forms.Button ExitButton;
-		private System.Windows.Forms.Button ActivateButton;
-		private System.Windows.Forms.Label RegistrationLabel;
 		private System.Windows.Forms.Label CopyrightLabel;
 		}
 	}

@@ -15,7 +15,6 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 
-using RWCommonLib.Registry;
 using RWCommonLib.Updates;
 
 //============================================================================*
@@ -111,71 +110,16 @@ namespace ReloadersWorkShopLauncher
 							//----------------------------------------------------------------------------*
 							// Check for updates
 							//----------------------------------------------------------------------------*
-
-							cRWRegistry RWRegistry = new cRWRegistry();
-
-							bool fUpdating = false;
-
-							if (!RWRegistry.Trial || !RWRegistry.TrialExpired)
-								fUpdating = CheckForUpdates();
-
-							//----------------------------------------------------------------------------*
-							// If we're not updating, check the registry
-							//----------------------------------------------------------------------------*
-
+							
+							bool fUpdating = CheckForUpdates();
+							
 							if (!fUpdating)
 								{
-								//----------------------------------------------------------------------------*
-								// See if this is a fresh install
-								//----------------------------------------------------------------------------*
-
-								if (RWRegistry.FreshInstall)
-									{
-									Process.Start("ReloadersWorkShopUpdater.exe", "/INSTALL");
-
-									return;
-									}
-
-								//----------------------------------------------------------------------------*
-								// Make sure the registry has not been tampered with
-								//----------------------------------------------------------------------------*
-
-								if (RWRegistry.InvalidRegistry)
-									{
-									MessageBox.Show("The registry entries for Reloader's WorkShop are either corrupted or have been tampered with and needs to be repaired.  You will need to reenter your Activation Key and other info.", "Corrupted Registry", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-
-									Process.Start("ReloadersWorkShopUpdater.exe", "/INSTALL");
-
-									return;
-									}
-
-								//----------------------------------------------------------------------------*
-								// See if this is a Trial Version and check the date if it is
-								//----------------------------------------------------------------------------*
-
-								if (!RWRegistry.Trial && !RWRegistry.ValidateKey())
-									{
-									MessageBox.Show("Your Activation Key is not valid.  You will need to reenter your Activation Key and other info.", "Invalid Activation Key", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-
-									Process.Start("ReloadersWorkShopUpdater.exe", "/INSTALL");
-
-									return;
-									}
-
-								//----------------------------------------------------------------------------*
-								// Check the license info
-								//----------------------------------------------------------------------------*
-/*
-								cRWLicense RWLicense = new cRWLicense();
-
-								if (!RWLicense.ValidateLicense())
-									return;
-*/
 								//----------------------------------------------------------------------------*
 								// If we get to here, everything is good to go, start the Main Form
 								//----------------------------------------------------------------------------*
 
-								Application.Run(new cMainForm(RWRegistry));
+								Application.Run(new cMainForm());
 								}
 							}
 						}

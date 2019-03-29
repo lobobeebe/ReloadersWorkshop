@@ -13,8 +13,6 @@ using System.Reflection;
 
 using System.Windows.Forms;
 
-using RWCommonLib.Registry;
-
 //============================================================================*
 // NameSpace
 //============================================================================*
@@ -27,7 +25,7 @@ namespace ReloadersWorkShop
 
 	public partial class AboutDialog : Form
 		{
-		public AboutDialog(cRWRegistry RWRegistry)
+		public AboutDialog()
 			{
 			InitializeComponent();
 
@@ -39,9 +37,6 @@ namespace ReloadersWorkShop
 
 			if (Attribs.Length > 0)
 				CopyrightLabel.Text = ((AssemblyCopyrightAttribute) Attribs[0]).Copyright;
-
-			if (RWRegistry != null)
-				RegistrationLabel.Text = RWRegistry.ActivationStatusString;
 			}
 		}
 	}

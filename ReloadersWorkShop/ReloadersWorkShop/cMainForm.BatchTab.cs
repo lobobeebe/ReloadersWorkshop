@@ -261,7 +261,7 @@ namespace ReloadersWorkShop
 			// Start the dialog
 			//----------------------------------------------------------------------------*
 
-			cBatchForm BatchForm = new cBatchForm(Batch, m_DataFiles, m_RWRegistry, BatchFirearmTypeCombo.Value, false, true);
+			cBatchForm BatchForm = new cBatchForm(Batch, m_DataFiles, BatchFirearmTypeCombo.Value, false, true);
 
 			if (BatchForm.ShowDialog() == DialogResult.OK)
 				{
@@ -496,7 +496,7 @@ namespace ReloadersWorkShop
 			// Start the dialog
 			//----------------------------------------------------------------------------*
 
-			cBatchForm BatchForm = new cBatchForm(Batch, m_DataFiles, m_RWRegistry);
+			cBatchForm BatchForm = new cBatchForm(Batch, m_DataFiles);
 
 			if (BatchForm.ShowDialog() == DialogResult.OK)
 				{
@@ -647,7 +647,7 @@ namespace ReloadersWorkShop
 			// Start the dialog
 			//----------------------------------------------------------------------------*
 
-			cBatchForm BatchForm = new cBatchForm(Batch, m_DataFiles, m_RWRegistry, cFirearm.eFireArmType.None, true);
+			cBatchForm BatchForm = new cBatchForm(Batch, m_DataFiles, cFirearm.eFireArmType.None, true);
 
 			BatchForm.ShowDialog();
 
